@@ -1,0 +1,118 @@
+{
+    "Me": {
+        "id": 65331,
+        "name": "PTPClientTimeStatusMessage",
+        "access": "CreatedByONU",
+        "type": "Config",
+        "action": [
+			"Get"
+        ],
+        "instance": {
+            "type": "Dynamic",
+            "value": 0
+        },
+        "attributes": {
+            "attribute": [
+                {
+                    "name": "Domain number",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Flag Field",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "currentUtcOffset",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Priority1",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "clockClass",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Accuracy",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "offsetScaledLogVariance",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Priority2",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Grandmaster ID",
+                    "size": 8,
+                    "format": "Bytes",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Steps removed",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Time source",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                }				
+            ]
+        }
+    }
+}

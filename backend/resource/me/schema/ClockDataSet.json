@@ -1,0 +1,88 @@
+{
+    "Me": {
+        "id": 65314,
+        "name": "ClockDataSet",
+        "access": "CreatedByOLT",
+        "type": "Config",
+        "action": [
+			"Create",
+			"Delete",
+			"Get",
+			"Set"
+        ],
+        "instance": {
+            "type": "Fixed",
+            "value": 0
+        },
+        "attributes": {
+            "attribute": [
+                {
+                    "name": "Domain",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Clock class",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Clock accuracy",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Clock priority1",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Clock priority2",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Clock Time Source",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC"
+                    ],
+                    "category": "Mandatory"
+                }
+            ]
+        }
+    }
+}

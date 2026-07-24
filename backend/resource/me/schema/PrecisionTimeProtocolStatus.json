@@ -1,0 +1,171 @@
+{
+    "Me": {
+        "id": 466,
+        "name": "PrecisionTimeProtocolStatus",
+        "access": "CreatedByONU",
+        "type": "Config",
+        "action": [
+            "Get",
+            "Get next"
+        ],
+        "instance": {
+            "type": "Fixed",
+            "value": 0
+        },
+        "attributes": {
+            "attribute": [
+                {
+                    "name": "Clock identity",
+                    "size": 8,
+                    "format": "Bytes",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Clock state",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Clock state change time",
+                    "size": 4,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Tx sync messages",
+                    "size": 4,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Tx follow up messages",
+                    "size": 4,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Tx announce messages",
+                    "size": 4,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Rx delay request messages",
+                    "size": 4,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Tx delay response messages",
+                    "size": 4,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "PTP slave table",
+                    "size": 26,
+                    "format": "Array Structure",
+                    "table": true,
+                    "tableGetNextIncompleteRows": true,
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory",
+                    "structure": {
+                        "fields": [
+                            {
+                                "name": "MAC address",
+                                "size": 48,
+                                "format": "Bytes"
+                            },
+                            {
+                                "name": "Source IP address",
+                                "size": 128,
+                                "format": "Bytes"
+                            },
+                            {
+                                "name": "Timestamp",
+                                "size": 32,
+                                "format": "UnsignedInteger"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "Enhanced PTP slave table",
+                    "size": 29,
+                    "format": "Array Structure",
+                    "table": true,
+                    "tableGetNextIncompleteRows": true,
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional",
+                    "structure": {
+                        "fields": [
+                            {
+                                "name": "MAC address",
+                                "size": 48,
+                                "format": "Bytes"
+                            },
+                            {
+                                "name": "Clock identity",
+                                "size": 64,
+                                "format": "Bytes"
+                            },
+                            {
+                                "name": "Port number",
+                                "size": 16,
+                                "format": "UnsignedInteger"
+                            },
+                            {
+                                "name": "Domain number",
+                                "size": 8,
+                                "format": "UnsignedInteger"
+                            },
+                            {
+                                "name": "Reserved Attribute",
+                                "size": 96,
+                                "format": "Bytes"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "Current ToD Timestamp",
+                    "size": 10,
+                    "format": "Bytes",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                }
+            ]
+        }
+    }
+}

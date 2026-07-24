@@ -1,0 +1,82 @@
+{
+    "Me": {
+        "id": 65305,
+        "name": "DownstreamVLANTagEgressBehaviorSupplemental1",
+        "access": "CreatedByONU",
+        "type": "Config",
+        "action": [
+            "Set"
+        ],
+        "instance": {
+            "type": "Dynamic",
+            "value": 0
+        },
+        "attributes": {
+            "attribute": [
+                {
+                    "name": "UNI Default TxMode Tag Behavior",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "VLAN TxMode Tag Behavior Table",
+                    "size": 6,
+                    "format": "Array Structure",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "Optional",
+                    "structure": {
+                        "fields": [
+                            {
+                                "name": "EntryNumber",
+                                "size": 8,
+                                "format": "UnsignedInteger"
+                            },
+                            {
+                                "name": "VLANAction",
+                                "size": 8,
+                                "format": "Array Structure",
+                                "structure": {
+                                    "fields": [
+                                        {
+                                            "name": "AddRemove",
+                                            "size": 1,
+                                            "format": "UnsignedInteger"
+                                        },
+                                        {
+                                            "name": "Reserved",
+                                            "size": 5,
+                                            "format": "UnsignedInteger"
+                                        },
+                                        {
+                                            "name": "Action",
+                                            "size": 2,
+                                            "format": "UnsignedInteger"
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "name": "VLANID",
+                                "size": 16,
+                                "format": "UnsignedInteger"
+                            },
+                            {
+                                "name": "Reserved",
+                                "size": 16,
+                                "format": "UnsignedInteger"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    }
+}

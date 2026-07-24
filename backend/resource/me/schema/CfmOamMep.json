@@ -1,0 +1,270 @@
+{
+	"Me": {
+		"id": 302,
+		"name": "CfmOamMep",	
+		"access": "CreatedByOLT",
+		"type": "Config",
+		"action": [
+			"Create",
+			"Delete",
+			"Get",
+			"Set"
+		],
+		"instance": {
+			"type": "Dynamic",
+			"value": 0
+		},
+		"attributes": {
+			"attribute": [
+				{
+					"name": "Layer 2 entity pointer",
+					"size": 2,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"SBC"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Layer 2 type",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"SBC"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "MA pointer",
+					"size": 2,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"SBC"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "MEP ID",
+					"size": 2,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"SBC"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "MEP control",
+					"size": 1,
+					"format": "Array Structure",
+					"access": [
+						"R",
+						"W",
+						"SBC"
+					],
+					"category": "Mandatory",
+					"structure": {
+						"fields": [
+							{
+								"name": "Reserved",
+								"size": 3,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "MEP Direction",
+								"size": 1,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "Ethernet AIS status",
+								"size": 1,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "Server MEP function status",
+								"size": 1,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "CCM Message",
+								"size": 1,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "Reserved",
+								"size": 1,
+								"format": "UnsignedInteger"
+							}
+						]
+					}
+				},
+				{
+					"name": "Primary VLAN",
+					"size": 2,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"SBC"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Administrative state",
+					"size": 1,
+					"format": "Boolean",
+					"access": [
+						"R",
+						"W",
+						"SBC"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "CCM and LTM priority",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"SBC"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Egress identifier",
+					"size": 8,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"SBC"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Peer MEP IDs",
+					"size": 24,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "ETH AIS control",
+					"size": 1,
+					"format": "Array Structure",
+					"access": [
+						"R",
+						"W",
+						"SBC"
+					],
+					"category": "Mandatory",
+					"structure": {
+						"fields": [
+							{
+								"name": "Reserved",
+								"size": 1,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "Maintenance Level",
+								"size": 3,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "Priority",
+								"size": 3,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "Transmission Period",
+								"size": 1,
+								"format": "UnsignedInteger"
+							}
+						]
+					}
+				},
+				{
+					"name": "Fault alarm threshold",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"SBC"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Alarm declaration soak time",
+					"size": 2,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Alarm clear soak time",
+					"size": 2,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W"
+					],
+					"category": "Mandatory"
+				}
+			]
+		},
+		"alarms": {
+			"alarm": [
+				{
+					"number": 0,
+					"name": "RDI CCM",
+					"description": "RDI received in CCM from peer MEP."
+				},
+				{
+					"number": 1,
+					"name": "MAC status",
+					"description": "Port or interface status failure at peer MEP."
+				},
+				{
+					"number": 2,
+					"name": "Remote CCM",
+					"description": "Loss of continuity with peer MEP"
+				},
+				{
+					"number": 3,
+					"name": "Error CCM",
+					"description": "Invalid CCMs received."
+				},
+				{
+					"number": 4,
+					"name": "Xcon CCM",
+					"description": "CCMs received from other MA or lower MD level."
+				},
+				{
+					"number": 5,
+					"name": "Unexpected period",
+					"description": "Unexpected periodP"
+				},
+				{
+					"number": 6,
+					"name": "AIS",
+					"description": "Ethernet AIS received"
+				}
+			]
+		}
+	}
+}

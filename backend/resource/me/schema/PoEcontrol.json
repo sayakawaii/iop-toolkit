@@ -1,0 +1,154 @@
+{
+    "Me": {
+        "id": 349,
+        "name": "PoEControl",
+        "access": "CreatedByONU",
+        "type": "Config",
+        "action": [
+            "Get",
+            "Set",
+            "Dummy"
+        ],
+        "instance": {
+            "type": "Dynamic",
+            "value": 0
+        },
+        "attributes": {
+            "attribute": [
+                {
+                    "name": "PoE capabilities",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Power pair pinout control",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Operational state",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Power detection status",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "optional"
+                },
+                {
+                    "name": "Power classification status",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "optional"
+                },
+                {
+                    "name": "Power priority",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "optional"
+                },
+                {
+                    "name": "Invalid signature counter",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "optional"
+                },
+                {
+                    "name": "Power denied counter",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "optional"
+                },
+                {
+                    "name": "Overload counter",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "optional"
+                },
+                {
+                    "name": "Short counter",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "optional"
+                },
+                {
+                    "name": "MPS absent counter",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "optional"
+                },
+                {
+                    "name": "PsE class control",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "optional"
+                },
+                {
+                    "name": "Current Power Consumption",
+                    "size": 4,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "optional"
+                }
+            ]
+        }
+    }
+}

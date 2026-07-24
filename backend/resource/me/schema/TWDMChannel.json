@@ -1,0 +1,56 @@
+{
+	"Me": {
+		"id": 443,
+		"name": "TWDMChannel",
+		"access": "CreatedByONU",
+		"type": "Config",
+		"action": [
+			"Get",
+			"Set"
+		],
+		"instance": {
+			"type": "Fixed",
+			"value": 0
+		},
+		"attributes": {
+			"attribute": [
+				{
+					"name": "Active channel indication",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Operational channel indication",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Downstream wavelength channel",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Upstream wavelength channel",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				}
+			]
+		}
+	}
+}

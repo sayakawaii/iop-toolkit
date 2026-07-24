@@ -1,0 +1,144 @@
+{
+	"Me": {
+		"id": 401,
+		"name": "PPTPRS232UNI",
+		"access": "CreatedByONU",
+		"type": "Config",
+		"action": [
+			"Get",
+			"Set",
+			"Dummy"
+		],
+		"instance": {
+			"type": "Dynamic",
+			"value": 0
+		},
+		"attributes": {
+			"attribute": [
+				{
+					"name": "Administrative state",
+					"size": 1,
+					"format": "Boolean",
+					"access": [
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Operational state",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"Dummy"
+					],
+					"category": "Optional"
+				},
+				{
+					"name": "Port mode",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Baud_rate",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"SBC",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Data_bits",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"SBC",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Parity",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"SBC",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Stop_bits",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"SBC",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Flow_control",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"SBC",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Min_send_payload",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Min_send_time",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Reserve",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category": "Optional"
+				}
+			]
+		}
+	}
+}

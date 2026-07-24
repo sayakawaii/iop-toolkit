@@ -1,0 +1,112 @@
+{
+	"Me":{
+		"id":145,
+		"name":"NetworkDialPlanTable",
+		"access":"CreatedByOLT",
+		"type":"Config",
+		"action":[
+			"Get",
+			"Get next",
+			"Create",
+			"Delete",
+			"Set",
+			"Set table",
+			"Dummy"
+		],
+		"instance":{
+			"type":"Dynamic",
+			"value":0
+		},
+		"attributes":{
+			"attribute":[
+				{
+					"name":"Dial plan number",
+					"size":2,
+					"format":"UnsignedInteger",
+					"access":[
+						"R",
+						"Dummy"
+					],
+					"category":"Mandatory"
+				},
+				{
+					"name":"Dial plan table max size",
+					"size":2,
+					"format":"UnsignedInteger",
+					"access":[
+						"R",
+						"SBC",
+						"Dummy"
+					],
+					"category":"Mandatory"
+				},
+				{
+					"name":"Critical dial timeout",
+					"size":2,
+					"format":"UnsignedInteger",
+					"access":[
+						"R",
+						"W",
+						"SBC",
+						"Dummy"
+					],
+					"category":"Mandatory"
+				},
+				{
+					"name":"Partial dial timeout",
+					"size":2,
+					"format":"UnsignedInteger",
+					"access":[
+						"R",
+						"W",
+						"SBC",
+						"Dummy"
+					],
+					"category":"Mandatory"
+				},
+				{
+					"name":"Dial plan format",
+					"size":1,
+					"format":"UnsignedInteger",
+					"access":[
+						"R",
+						"W",
+						"SBC",
+						"Dummy"
+					],
+					"category":"Mandatory"
+				},
+				{
+					"name":"Dial plan table",
+					"size":300,
+					"format":"Array Structure",
+					"access":[
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category":"Mandatory",
+					"structure": {
+						"fields": [
+							{
+								"name":"Dial plan ID",
+								"size":8,
+								"format":"UnsignedInteger"
+							},
+							{
+								"name":"Action",
+								"size":8,
+								"format":"UnsignedInteger"
+							},
+							{
+								"name":"Dial plan token",
+								"size":224,
+								"format":"String"
+							}
+						]
+					}
+				}
+			]
+		}
+	}
+}

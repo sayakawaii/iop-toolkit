@@ -1,0 +1,195 @@
+{
+       "Me": {
+               "id": 454,
+               "name": "EnhancedTCPerformanceMonitoringHistoryData",
+               "access": "CreatedByOLT",
+               "type": "Config",
+               "action": [
+                       "Create",
+                       "Delete",
+                       "Get",
+                       "Set",
+                       "Get current data"
+               ],
+               "instance": {
+                       "type": "Dynamic",
+                       "value": 0
+               },
+               "attributes": {
+                       "attribute": [
+                               {
+                                      "name": "Interval end time",
+                                      "size": 1,
+                                      "format": "UnsignedInteger",
+                                      "access": [
+                                              "R",
+                                              "Dummy"
+                                      ],
+                                      "category": "Mandatory"
+                              },
+                              {
+                                      "name": "Threshold data 64 bit ID",
+                                      "size": 2,
+                                      "format": "UnsignedInteger",
+                                      "access": [
+                                              "R",
+                                              "W",
+                                              "SBC",
+                                              "Dummy"
+                                      ],
+                                      "category": "Mandatory"
+                              },
+                              {
+                                      "name": "PSBd HEC error count",
+                                      "size": 4,
+                                      "format": "UnsignedInteger",
+                                      "access": [
+                                              "R"
+                                      ],
+                                      "category": "Optional"
+                              },
+                              {
+                                      "name": "XGTC HEC error count",
+                                      "size": 4,
+                                      "format": "UnsignedInteger",
+                                      "access": [
+                                              "R"
+                                      ],
+                                      "category": "Optional"
+                              },
+                              {
+                                      "name": "Unknown profile count",
+                                      "size": 4,
+                                      "format": "UnsignedInteger",
+                                      "access": [
+                                              "R"
+                                      ],
+                                      "category": "Optional"
+                              },
+                              {
+                                      "name": "Transmitted XGEM frames",
+                                      "size": 8,
+                                      "format": "UnsignedInteger",
+                                      "access": [
+                                              "R"
+                                      ],
+                                      "category": "Mandatory"
+                              },
+                              {
+                                      "name": "Fragment XGEM frames",
+                                      "size": 8,
+                                      "format": "UnsignedInteger",
+                                      "access": [
+                                              "R"
+                                      ],
+                                      "category": "Optional"
+                              },
+                              {
+                                      "name": "XGEM HEC lost words count",
+                                      "size": 8,
+                                      "format": "UnsignedInteger",
+                                      "access": [
+                                              "R"
+                                      ],
+                                      "category": "Optional"
+                              },
+                              {
+                                      "name": "XGEM key errors",
+                                      "size": 8,
+                                      "format": "UnsignedInteger",
+                                      "access": [
+                                              "R"
+                                      ],
+                                      "category": "Mandatory"
+                              },
+                              {
+                                      "name": "XGEM HEC error count",
+                                      "size": 8,
+                                      "format": "UnsignedInteger",
+                                      "access": [
+                                              "R"
+                                      ],
+                                      "category": "Mandatory"
+                              },
+                              {
+                                      "name": "Transmitted bytes in non-idle XGEM frames",
+                                      "size": 8,
+                                      "format": "UnsignedInteger",
+                                      "access": [
+                                              "R"
+                                      ],
+                                      "category": "Mandatory"
+                              },
+                              {
+                                      "name": "Received bytes in non-idle XGEM frames",
+                                      "size": 8,
+                                      "format": "UnsignedInteger",
+                                      "access": [
+                                              "R"
+                                      ],
+                                      "category": "Optional"
+                              },
+                              {
+                                      "name": "LODS event count",
+                                      "size": 4,
+                                      "format": "UnsignedInteger",
+                                      "access": [
+                                              "R"
+                                      ],
+                                      "category": "Optional"
+                              },
+                              {
+                                      "name": "LODS event restored count",
+                                      "size": 4,
+                                      "format": "UnsignedInteger",
+                                      "access": [
+                                              "R"
+                                      ],
+                                      "category": "Optional"
+                              },
+                              {
+                                      "name": "ONU reactivation by LODS events",
+                                      "size": 4,
+                                      "format": "UnsignedInteger",
+                                      "access": [
+                                              "R"
+                                      ],
+                                      "category": "Optional"
+                              }
+                       ]
+               },
+               "alarms": {
+                       "alarm": [
+                               {
+                                      "number": 1,
+                                      "name": "PSBd HEC error count",
+                                      "description": "The Downstream Physical sync block HEC error count has crossed the set threshold value"
+                               },
+                               {
+                                      "number": 2,
+                                      "name": "XGTC HEC error count",
+                                      "description": "The XGPON Transmission Convergence layer HEC error count has crossed the set threshold value"
+                               },
+                               {
+                                      "number": 3,
+                                      "name": "Unknown profile count",
+                                      "description": "The number of grants received for the unknown profile has crossed the set threshold value"                               },
+                               {
+                                      "number": 4,
+                                      "name": "XGEM HEC loss count",
+                                      "description": "The number of 4 byte words lost because of XGEM frame HEC error has crossed the set threshold value"
+                               },
+                               {
+                                      "number": 5,
+                                      "name": "XGEM key errors",
+                                      "description": "The number of downstream XGEM frames received with an invalid key specification has crossed the set threshold value"
+                               },
+                               {
+                                      "number": 6,
+                                      "name": "XGEM HEC error count",
+                                      "description": "The number of instances of XGEM frame HEC error has crossed the set threshold value"
+                               }
+                      ]
+              }
+      }
+}

@@ -1,0 +1,114 @@
+{
+    "Me": {
+        "id": 305,
+        "name": "CfmOamStack",
+        "access": "CreatedByONU",
+        "type": "Config",
+        "action": [
+            "Get",
+            "Get next"
+        ],
+        "instance": {
+            "type": "Dynamic",
+            "value": 0
+        },
+        "attributes": {
+            "attribute": [
+                {
+                    "name": "Layer 2 type",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "MP status table",
+                    "size": 18,
+                    "format": "Array Structure",
+                    "table": true,
+                    "tableGetNextIncompleteRows": true,
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory",
+                    "structure": {
+                        "fields": [
+                            {
+                                "name": "Port ID",
+                                "size": 16,
+                                "format": "UnsignedInteger"
+                            },
+                            {
+                                "name": "Level",
+                                "size": 8,
+                                "format": "UnsignedInteger"
+                            },
+                            {
+                                "name": "Direction",
+                                "size": 8,
+                                "format": "UnsignedInteger"
+                            },
+                            {
+                                "name": "Vlan ID",
+                                "size": 16,
+                                "format": "UnsignedInteger"
+                            },
+                            {
+                                "name": "MD",
+                                "size": 16,
+                                "format": "UnsignedInteger"
+                            },
+                            {
+                                "name": "MA",
+                                "size": 16,
+                                "format": "UnsignedInteger"
+                            },
+                            {
+                                "name": "MEP ID",
+                                "size": 16,
+                                "format": "UnsignedInteger"
+                            },
+                            {
+                                "name": "MAC address",
+                                "size": 48,
+                                "format": "Bytes"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "Configuration error list table",
+                    "size": 5,
+                    "format": "Array Structure",
+                    "table": true,
+                    "tableGetNextIncompleteRows": true,
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory",
+                    "structure": {
+                        "fields": [
+                            {
+                                "name": "Vlan ID",
+                                "size": 16,
+                                "format": "UnsignedInteger"
+                            },
+                            {
+                                "name": "Port ID",
+                                "size": 16,
+                                "format": "UnsignedInteger"
+                            },
+                            {
+                                "name": "Detected Configuration Error",
+                                "size": 8,
+                                "format": "UnsignedInteger"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    }
+}

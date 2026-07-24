@@ -1,0 +1,301 @@
+/isam/slot_default/OnuMgntOlt/log # cat traces.log 
+0
+[01/08/1972-20:28:26.596845],[yproto],on_request proto msg
+[01/08/1972-20:28:26.596881],[yproto],{
+ "onuDetectNotificationMsg": {
+  "ctObjectIndex": {
+   "index": 517
+  },
+  "vaniObjectIndex": {
+   "index": 0
+  },
+  "notifIsOn": false,
+  "serialNumber": "Channelpair ont detect alarm OFF, PON: 32, SN: ALCLF941B465",
+  "onuId": 258,
+  "rangingState": 1,
+  "detectedRegistrationId": "HIGHFIVES!",
+  "detectedUpstreamRate": 0,
+  "fiberDistance": 0,
+  "multiVani": false,
+  "onuStatus": 1,
+  "onuAid": 1025
+ }
+}
+
+[01/08/1972-20:28:26.596908],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleNotification.cpp],[659],[processOnuDetectNotificationMsg],[OnuMgntOlt] process MsgOnuDetectNotification msg
+[01/08/1972-20:28:26.596936],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleNotification.cpp],[695],[processOnuDetectNotificationMsg],[OnuMgntOlt] ontIndex[1025], ponOhmObjIndex[517], onuOhmObjIndex[0], onuId[258], notificationFlag[0],        registrationId[HIGHFIVES!], detected_upstream_rate[0], fiber_distance[0.000000], hasRangingState[1], rangingState[1], hasOnStandby[0], multivani[0] onu_status[1]
+[01/08/1972-20:28:26.597036],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleNotification.cpp],[704],[processOnuDetectNotificationMsg],[OnuMgntOlt] serialNumber is :ALCLF941B465, len is 59
+[01/08/1972-20:28:26.597065],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleNotification.cpp],[756],[processOnuDetectNotificationMsg],[OnuMgntOlt] sn:ALCLF941B465 erased in OntdetectInfoMap[517] newsize:2
+[01/08/1972-20:28:26.597084],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleNotification.cpp],[787],[processOnuDetectNotificationMsg],[OnuMgntOlt] onuOhmObjIndex is :0, onu_status is 1
+[01/08/1972-20:28:26.597102],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleNotification.cpp],[851],[processOnuDetectNotificationMsg],[OnuMgntOlt] ----------update onuState------------
+[01/08/1972-20:28:26.597131],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CModifyVonuState.cpp],[1181],[CModifyVonuState],[OnuMgntOlt] sn = ALCLF941B465, onuState = 12, onuId = 258, ponOhmObjIndex = 517, onuOhmObjIndex = 0, registrationId = HIGHFIVES!, loidId = , detected_upstream_rate = 0, distance = 0.000000, authMode = 0, vaniName = , ctName = , alarms = 0x0
+[01/08/1972-20:28:26.597160],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CModifyVonuState.cpp],[1401],[AsyncBeginProc],[OnuMgntOlt] CModifyVonuState AsyncBeginProc
+[01/08/1972-20:28:26.597180],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CModifyVonuState.cpp],[895],[GponAsyncGetCtName],[OnuMgntOlt] enter GponAsyncGetCtName
+[01/08/1972-20:28:26.597266],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleNotification.cpp],[868],[processOnuDetectNotificationMsg],[OnuMgntOlt] ----------CHandleOntDetectNotification------------
+[01/08/1972-20:28:26.597293],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntDetectNotification.cpp],[616],[CHandleOntDetectNotification],[OnuMgntOlt] ***sn = ALCLF941B465, isNotifyOn = off, onuId = 258, ponOhmObjIndex = 517, onuOhmObjIndex = 0***
+[01/08/1972-20:28:26.597315],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntDetectNotification.cpp],[617],[CHandleOntDetectNotification],[OnuMgntOlt] ***onuState = 12, registrationId = HIGHFIVES!, authMode = 0, detected_upstream_rate = 0 multivan=0 onuAid=255, alarms = 0x0***
+[01/08/1972-20:28:26.597337],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntDetectNotification.cpp],[638],[CHandleOntDetectNotification],[OnuMgntOlt] ***this->multivani=0, vAniName=, ctName=***
+[01/08/1972-20:28:26.597358],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntDetectNotification.cpp],[18],[GponAsyncCtNameById],[OnuMgntOlt] enter GponAsyncCtNameById
+[01/08/1972-20:28:26.597376],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntDetectNotification.cpp],[29],[GponAsyncCtNameById],[OnuMgntOlt] ponOhmObjIndex = 517
+[01/08/1972-20:28:26.597508],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleNotification.cpp],[899],[processOnuDetectNotificationMsg],[OnuMgntOlt] [processOnuDetectNotificationMsg]:state = E_BulkAlarm_Normal, no in audit stage and omit updating onu_detect_count.
+[01/08/1972-20:28:26.597568],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonCallBack/OHMCallBack.cpp],[23],[getOHMInfo_CallBackSerial],[OnuMgntOlt] enter getOHMInfo_CallBackSerial
+[01/08/1972-20:28:26.597590],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CModifyVonuState.cpp],[910],[GponAsyncGetCtNameResult],[OnuMgntOlt] enter GponAsyncGetCtNameResult
+[01/08/1972-20:28:26.597609],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CModifyVonuState.cpp],[918],[GponAsyncGetCtNameResult],[OnuMgntOlt] Ct Name = ct_cp_ont1_pon1
+[01/08/1972-20:28:26.597627],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CModifyVonuState.cpp],[1113],[GponCheckIfOnuUpBefore],[OnuMgntOlt] enter GponCheckIfOnuUpBefore
+[01/08/1972-20:28:26.597647],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CModifyVonuState.cpp],[1126],[GponCheckIfOnuUpBefore],[OnuMgntOlt] getCtObjIndex = 517 cmd->getOnuId() = 258 sn Name = ALCLF941B465
+[01/08/1972-20:28:26.597665],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CModifyVonuState.cpp],[1130],[GponCheckIfOnuUpBefore],[OnuMgntOlt] cmd->getOnuId() = 258 it->second.onuId = 258
+[01/08/1972-20:28:26.597683],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CModifyVonuState.cpp],[928],[GponAsyncDeleteOnuState],[OnuMgntOlt] enter GponAsyncDeleteOnuState
+[01/08/1972-20:28:26.597899],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CModifyVonuState.cpp],[940],[GponAsyncDeleteOnuState],[OnuMgntOlt] GponAsyncDeleteOnuState ctName = ct_cp_ont1_pon1, vaniName = , SN = ALCLF941B465, ret = 0
+[01/08/1972-20:28:26.597943],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonCallBack/OHMCallBack.cpp],[97],[getOHMInfo_CallBack],[OnuMgntOlt] enter getOHMInfo_CallBack
+[01/08/1972-20:28:26.597963],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntDetectNotification.cpp],[36],[GponAsyncCtNameByIdResult],[OnuMgntOlt] enter GponAsyncCtNameByIdResult
+[01/08/1972-20:28:26.597983],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntDetectNotification.cpp],[48],[GponAsyncCtNameByIdResult],[OnuMgntOlt] ctName is ct_cp_ont1_pon1
+[01/08/1972-20:28:26.598000],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntDetectNotification.cpp],[62],[GponAsyncGetObjIndexByCtName],[OnuMgntOlt] enter GponAsyncGetObjIndexByCtName
+[01/08/1972-20:28:26.598049],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntDetectNotification.cpp],[77],[GponAsyncGetObjIndexByCtName],[OnuMgntOlt] get Ct index by Ct name: ct_cp_ont1_pon1
+[01/08/1972-20:28:26.598128],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonCallBack/OHMCallBack.cpp],[80],[getOHMInfo_CallBack_UserProc],[OnuMgntOlt] enter getOHMInfo_CallBack_UserProc
+[01/08/1972-20:28:26.598148],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonCallBack/OHMCallBack.cpp],[81],[getOHMInfo_CallBack_UserProc],[OnuMgntOlt] enter getOHMInfo_CallBack_UserProc
+[01/08/1972-20:28:26.598167],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntDetectNotification.cpp],[83],[GponAsyncGetObjIndexByCtNameResult],[OnuMgntOlt] enter GponAsyncGetObjIndexByCtNameResult
+[01/08/1972-20:28:26.598185],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntDetectNotification.cpp],[112],[GponAsyncGetObjIndexByCtNameResult],[OnuMgntOlt] ulIndex:517
+[01/08/1972-20:28:26.598203],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntDetectNotification.cpp],[132],[GponAsyncGetObjIndexByCtNameResult],[OnuMgntOlt] scgObjIndex: 516 get_loidEnable: 0
+[01/08/1972-20:28:26.598233],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntDetectNotification.cpp],[187],[GponAsyncSendOnuStateNotif],[OnuMgntOlt] enter GponAsyncSendOnuStateNotif
+[01/08/1972-20:28:26.598281],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/common/utility/DateConvert.cpp],[28],[convertLocalTime2DateAndTime],[OnuMgntOlt] 1972-8-1-20-28-26
+[01/08/1972-20:28:26.598300],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonUtils/commonUtil.cpp],[94],[getOnuStateByEnum],[OnuMgntOlt] enter getOnuStateByEnum
+[01/08/1972-20:28:26.598331],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonUtils/commonUtil.cpp],[95],[getOnuStateByEnum],[OnuMgntOlt] onuState: 12
+[01/08/1972-20:28:26.598350],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonUtils/commonUtil.cpp],[144],[getOnuStateByEnum],[OnuMgntOlt] onuState: onu-not-present-without-v-ani
+[01/08/1972-20:28:26.598380],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonUtils/commonUtil.cpp],[576],[convertStringToHexAscii],[OnuMgntOlt] convertStringToHexAscii, ascii = 48494748464956455321
+[01/08/1972-20:28:26.598408],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntDetectNotification.cpp],[268],[GponAsyncSendOnuStateNotif],[OnuMgntOlt] set to DMSP(onu state change notification), detected_upstream_rate is :0, distance is 0.000, dist is 0
+[01/08/1972-20:28:26.598428],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntDetectNotification.cpp],[295],[GponAsyncSendOnuStateNotif],[OnuMgntOlt] send onuStateChange notification with ctName:ct_cp_ont1_pon1, vAniName:, sn:ALCLF941B465, onuId:258, detected-registration-id:HIGHFIVES!, detected-upstream-rate:detected-upstream-rate-10
+[01/08/1972-20:28:26.598708],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntDetectNotification.cpp],[298],[GponAsyncSendOnuStateNotif],[OnuMgntOlt] ret = 0
+[01/08/1972-20:28:26.598730],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntDetectNotification.cpp],[369],[GponAsyncSendOnuStateNotif],[OnuMgntOlt] ************* delete serialNumMap entry *********************
+[01/08/1972-20:28:26.598751],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntDetectNotification.cpp],[376],[GponAsyncSendOnuStateNotif],[OnuMgntOlt] delete ponOhmObjIndex[517] SN[ALCLF941B465] - RegistrationId[] in serialNumMap!
+[01/08/1972-20:28:26.598789],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntDetectNotification.cpp],[510],[GponAsyncSendUnprovisonedOnuAlarm],[OnuMgntOlt] enter GponAsyncSendUnprovisonedOnuAlarm
+[01/08/1972-20:28:26.598826],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonUtils/commonUtil.cpp],[597],[convertStringToHexFmt],[OnuMgntOlt] convertStringToHexFmt, ascii = 0x48494748464956455321
+[01/08/1972-20:28:26.598846],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntDetectNotification.cpp],[558],[GponAsyncSendUnprovisonedOnuAlarm],[OnuMgntOlt] ----------send onu-present-and-no-v-ani-known-and-in-o5 alarm------------
+[01/08/1972-20:28:26.598863],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntDetectNotification.cpp],[559],[GponAsyncSendUnprovisonedOnuAlarm],[OnuMgntOlt] Serial-Number:ALCLF941B465
+[01/08/1972-20:28:26.598880],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntDetectNotification.cpp],[560],[GponAsyncSendUnprovisonedOnuAlarm],[OnuMgntOlt] alarms:0x1
+[01/08/1972-20:28:26.598897],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntDetectNotification.cpp],[561],[GponAsyncSendUnprovisonedOnuAlarm],[OnuMgntOlt] xpath:/if:interfaces-state/if:interface[if:name='ct_cp_ont1_pon1']/bbf-xpon:channel-termination/bbf-xpon-onu-s:onus-present-on-local-channel-termination/bbf-xpon-onu-s:onu[bbf-xpon-onu-s:detected-serial-number='ALCLF941B465']
+[01/08/1972-20:28:26.598926],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntDetectNotification.cpp],[562],[GponAsyncSendUnprovisonedOnuAlarm],[OnuMgntOlt] additionalInfo:Detected-Reg-Id = 0x48494748464956455321, Detected-Upstream-Rate = 10G
+[01/08/1972-20:28:26.598949],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntDetectNotification.cpp],[563],[GponAsyncSendUnprovisonedOnuAlarm],[OnuMgntOlt] Multivani is:0
+[01/08/1972-20:28:26.598976],[alarmItf],[File: alarmInterface.cpp, Func: send_alarm_new, Line: 82]
+Number of alarms received from application = 1
+[01/08/1972-20:28:26.599009],[alarmItf],[File: alarmCommon.cpp, Func: validate_alarmInfoWithXpath, Line: 49]
+Received alarm data: alarmType = 14, bitmap = 0 overruled_severity = 0
+[01/08/1972-20:28:26.599049],[alarmItf],[File: alarmCommon.cpp, Func: validate_alarmInfoWithXpath, Line: 55]
+objectXpath = /if:interfaces-state/if:interface[if:name='ct_cp_ont1_pon1']/bbf-xpon:channel-termination/bbf-xpon-onu-s:onus-present-on-local-channel-termination/bbf-xpon-onu-s:onu[bbf-xpon-onu-s:detected-serial-number='ALCLF941B465']
+[01/08/1972-20:28:26.599073],[alarmItf],[File: alarmCommon.cpp, Func: validate_alarmInfoWithXpath, Line: 62]
+entityName = ALCLF941B465
+[01/08/1972-20:28:26.599090],[alarmItf],[File: alarmCommon.cpp, Func: validate_alarmInfoWithXpath, Line: 69]
+entityType = Serial-Number
+[01/08/1972-20:28:26.599109],[alarmItf],[File: alarmCommon.cpp, Func: validate_alarmInfoWithXpath, Line: 101]
+AddnInfo = Detected-Reg-Id = 0x48494748464956455321, Detected-Upstream-Rate = 10G
+[01/08/1972-20:28:26.599422],[yproto],send_oneway proto msg
+[01/08/1972-20:28:26.599442],[yproto],{
+ "alarmData": {
+  "action": "NEW",
+  "alarmInfo": [
+   {
+    "alarmType": 14,
+    "bitmap": 0,
+    "objectId": 0,
+    "objectXpath": "/if:interfaces-state/if:interface[if:name='ct_cp_ont1_pon1']/bbf-xpon:channel-termination/bbf-xpon-onu-s:onus-present-on-local-channel-termination/bbf-xpon-onu-s:onu[bbf-xpon-onu-s:detected-serial-number='ALCLF941B465']",
+    "entityName": "ALCLF941B465",
+    "entityType": "Serial-Number",
+    "addInfo": "Detected-Reg-Id = 0x48494748464956455321, Detected-Upstream-Rate = 10G",
+    "severity": [
+     {
+      "position": 1,
+      "severity": "NO_OVERRULESEVERITY"
+     }
+    ],
+    "timestamp": 81548906
+   }
+  ],
+  "label": ""
+ }
+}
+
+[01/08/1972-20:28:26.599484],[alarmItf],[File: alarmClient.cpp, Func: send_gpb_message, Line: 112]
+GPB sent to alarm app successfully
+[01/08/1972-20:28:26.599507],[alarmItf],[File: alarmNew.cpp, Func: send_bulk_alarms, Line: 107]
+Send alarm bulk GPB message success
+[01/08/1972-20:28:26.599529],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntDetectNotification.cpp],[590],[GponAsyncSendUnprovisonedOnuAlarm],[OnuMgntOlt] alarmItf::send_alarm_new [succeeded]
+[01/08/1972-20:28:26.599549],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntDetectNotification.cpp],[794],[AsyncFinishProc],[OnuMgntOlt] AsyncFinishProc curState=6, curIndex=6
+[01/08/1972-20:28:26.599566],[OnuMgntOlt_app],AsyncFinishProc curState=6, curIndex=6
+[01/08/1972-20:28:26.599650],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonCallBack/CommonDmspCallBack.cpp],[10],[onDmspCommonRespSerial],[OnuMgntOlt] enter onDmspCommonRespSerial
+[01/08/1972-20:28:26.599672],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonCallBack/CommonDmspCallBack.cpp],[14],[onDmspCommonRespSerial],[OnuMgntOlt] Get DataObject Resp - request Id [19]
+[01/08/1972-20:28:26.599690],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonCallBack/CommonDmspCallBack.cpp],[15],[onDmspCommonRespSerial],[OnuMgntOlt] Get DataObject Resp - result [0]
+[01/08/1972-20:28:26.599746],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CModifyVonuState.cpp],[949],[GponAsyncDeleteOnuStateResult],[OnuMgntOlt] enter GponAsyncDeleteOnuStateResult
+[01/08/1972-20:28:26.599769],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CModifyVonuState.cpp],[963],[GponAsyncDeleteOnuStateResult],[OnuMgntOlt] GponAsyncDeleteOnuStateResult success for  ALCLF941B465
+[01/08/1972-20:29:08.095805],[yproto],on_request proto msg
+[01/08/1972-20:29:08.095841],[yproto],{
+ "onuDetectNotificationMsg": {
+  "ctObjectIndex": {
+   "index": 517
+  },
+  "vaniObjectIndex": {
+   "index": 0
+  },
+  "notifIsOn": true,
+  "serialNumber": "Channelpair ont detect alarm ON, PON: 32, SN: ALCLF941B465",
+  "onuId": 258,
+  "rangingState": 1,
+  "detectedRegistrationId": "",
+  "detectedUpstreamRate": 0,
+  "fiberDistance": 0,
+  "multiVani": false,
+  "onuStatus": 2,
+  "onuAid": 1025
+ }
+}
+
+[01/08/1972-20:29:08.095876],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleNotification.cpp],[659],[processOnuDetectNotificationMsg],[OnuMgntOlt] process MsgOnuDetectNotification msg
+[01/08/1972-20:29:08.095916],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleNotification.cpp],[695],[processOnuDetectNotificationMsg],[OnuMgntOlt] ontIndex[1025], ponOhmObjIndex[517], onuOhmObjIndex[0], onuId[258], notificationFlag[1],        registrationId[], detected_upstream_rate[0], fiber_distance[0.000000], hasRangingState[1], rangingState[1], hasOnStandby[0], multivani[0] onu_status[2]
+[01/08/1972-20:29:08.096114],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleNotification.cpp],[704],[processOnuDetectNotificationMsg],[OnuMgntOlt] serialNumber is :ALCLF941B465, len is 58
+[01/08/1972-20:29:08.096169],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleNotification.cpp],[733],[processOnuDetectNotificationMsg],[OnuMgntOlt] sn:ALCLF941B465 OnuDetectMgnt not FOUND
+[01/08/1972-20:29:08.096205],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleNotification.cpp],[823],[processOnuDetectNotificationMsg],[OnuMgntOlt] add ponOhmObjIndex[517] SN[ALCLF941B465] - RegistrationId[], detectedUpstreamRate[0] onuAid[1025] in serialNumMap
+[01/08/1972-20:29:08.096225],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleNotification.cpp],[851],[processOnuDetectNotificationMsg],[OnuMgntOlt] ----------update onuState------------
+[01/08/1972-20:29:08.096261],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleNotification.cpp],[868],[processOnuDetectNotificationMsg],[OnuMgntOlt] ----------CHandleOntDetectNotification------------
+[01/08/1972-20:29:08.096285],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntDetectNotification.cpp],[616],[CHandleOntDetectNotification],[OnuMgntOlt] ***sn = ALCLF941B465, isNotifyOn = on, onuId = 258, ponOhmObjIndex = 517, onuOhmObjIndex = 0***
+[01/08/1972-20:29:08.096306],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntDetectNotification.cpp],[617],[CHandleOntDetectNotification],[OnuMgntOlt] ***onuState = 7, registrationId = , authMode = 0, detected_upstream_rate = 0 multivan=0 onuAid=255, alarms = 0x0***
+[01/08/1972-20:29:08.096328],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntDetectNotification.cpp],[638],[CHandleOntDetectNotification],[OnuMgntOlt] ***this->multivani=0, vAniName=, ctName=***
+[01/08/1972-20:29:08.096352],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntDetectNotification.cpp],[18],[GponAsyncCtNameById],[OnuMgntOlt] enter GponAsyncCtNameById
+[01/08/1972-20:29:08.096386],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntDetectNotification.cpp],[29],[GponAsyncCtNameById],[OnuMgntOlt] ponOhmObjIndex = 517
+[01/08/1972-20:29:08.096513],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleNotification.cpp],[899],[processOnuDetectNotificationMsg],[OnuMgntOlt] [processOnuDetectNotificationMsg]:state = E_BulkAlarm_Normal, no in audit stage and omit updating onu_detect_count.
+[01/08/1972-20:29:08.096682],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonCallBack/OHMCallBack.cpp],[97],[getOHMInfo_CallBack],[OnuMgntOlt] enter getOHMInfo_CallBack
+[01/08/1972-20:29:08.096705],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntDetectNotification.cpp],[36],[GponAsyncCtNameByIdResult],[OnuMgntOlt] enter GponAsyncCtNameByIdResult
+[01/08/1972-20:29:08.096725],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntDetectNotification.cpp],[48],[GponAsyncCtNameByIdResult],[OnuMgntOlt] ctName is ct_cp_ont1_pon1
+[01/08/1972-20:29:08.096789],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntDetectNotification.cpp],[62],[GponAsyncGetObjIndexByCtName],[OnuMgntOlt] enter GponAsyncGetObjIndexByCtName
+[01/08/1972-20:29:08.096851],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntDetectNotification.cpp],[77],[GponAsyncGetObjIndexByCtName],[OnuMgntOlt] get Ct index by Ct name: ct_cp_ont1_pon1
+[01/08/1972-20:29:08.096926],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonCallBack/OHMCallBack.cpp],[80],[getOHMInfo_CallBack_UserProc],[OnuMgntOlt] enter getOHMInfo_CallBack_UserProc
+[01/08/1972-20:29:08.096947],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonCallBack/OHMCallBack.cpp],[81],[getOHMInfo_CallBack_UserProc],[OnuMgntOlt] enter getOHMInfo_CallBack_UserProc
+[01/08/1972-20:29:08.096966],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntDetectNotification.cpp],[83],[GponAsyncGetObjIndexByCtNameResult],[OnuMgntOlt] enter GponAsyncGetObjIndexByCtNameResult
+[01/08/1972-20:29:08.096984],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntDetectNotification.cpp],[112],[GponAsyncGetObjIndexByCtNameResult],[OnuMgntOlt] ulIndex:517
+[01/08/1972-20:29:08.097003],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntDetectNotification.cpp],[132],[GponAsyncGetObjIndexByCtNameResult],[OnuMgntOlt] scgObjIndex: 516 get_loidEnable: 0
+[01/08/1972-20:29:08.097021],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntDetectNotification.cpp],[187],[GponAsyncSendOnuStateNotif],[OnuMgntOlt] enter GponAsyncSendOnuStateNotif
+[01/08/1972-20:29:08.097067],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/common/utility/DateConvert.cpp],[28],[convertLocalTime2DateAndTime],[OnuMgntOlt] 1972-8-1-20-29-8
+[01/08/1972-20:29:08.097086],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonUtils/commonUtil.cpp],[94],[getOnuStateByEnum],[OnuMgntOlt] enter getOnuStateByEnum
+[01/08/1972-20:29:08.097103],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonUtils/commonUtil.cpp],[95],[getOnuStateByEnum],[OnuMgntOlt] onuState: 7
+[01/08/1972-20:29:08.097121],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonUtils/commonUtil.cpp],[144],[getOnuStateByEnum],[OnuMgntOlt] onuState: onu-present-and-no-v-ani-known-and-in-o5
+[01/08/1972-20:29:08.097149],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntDetectNotification.cpp],[268],[GponAsyncSendOnuStateNotif],[OnuMgntOlt] set to DMSP(onu state change notification), detected_upstream_rate is :0, distance is 0.000, dist is 0
+[01/08/1972-20:29:08.097168],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntDetectNotification.cpp],[277],[GponAsyncSendOnuStateNotif],[OnuMgntOlt] NOT send onuStateChange notification for ALCLF941B465 with loid and onuState(7), cache it
+[01/08/1972-20:29:08.097195],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonUtils/commonUtil.cpp],[597],[convertStringToHexFmt],[OnuMgntOlt] convertStringToHexFmt, ascii =
+[01/08/1972-20:29:08.097229],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/OnuAuth/COnuAuthentication.cpp],[711],[COnuAuthentication],[OnuMgntOlt] onuId = 258,scgOhmObjIndex = 516, authType = 3, authMode=0, detected_upstream_rate=0
+[01/08/1972-20:29:08.097247],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/OnuAuth/COnuAuthentication.cpp],[712],[COnuAuthentication],[OnuMgntOlt] onu_detect_sn =ALCLF941B465
+[01/08/1972-20:29:08.097275],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/OnuAuth/COnuAuthentication.cpp],[1823],[AsyncBeginProc],[OnuMgntOlt] COnuAuthentication AsyncBeginProc
+[01/08/1972-20:29:08.097294],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/OnuAuth/COnuAuthentication.cpp],[285],[GponAsyncDetectMsgOnuAuth],[OnuMgntOlt] enter GponAsyncDetectMsgOnuAuth
+[01/08/1972-20:29:08.097316],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/OnuAuth/COnuAuthentication.cpp],[318],[GponAsyncDetectMsgOnuAuth],[OnuMgntOlt] GponAsyncDetectMsgOnuAuth [ctObjectIndex 517] SN[ALCLF941B465] onustatus[2]
+[01/08/1972-20:29:08.097345],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/OnuAuth/COnuAuthentication.cpp],[352],[GponAsyncDetectMsgOnuAuth],[OnuMgntOlt] GponAsyncDetectMsgOnuAuth detect sn[ALCLF941B465], ct_object[517]
+[01/08/1972-20:29:08.097369],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/gpon_common_itf/src/CGponAsyncInterface.cpp],[564],[OnuAuthResult],[OnuMgntOlt] ---------------msgid is: ONU_GET_ONUAUTH_REQUEST
+[01/08/1972-20:29:08.097388],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/onuMgntOltCfgWrapperClient.cpp],[43],[sendIpcOneWayRequest],[OnuMgntOlt] onuMgntOltCfgWrapperClient-->pClient != NULL
+[01/08/1972-20:29:08.097971],[yproto],send_oneway proto msg
+[01/08/1972-20:29:08.097990],[yproto],{
+ "onuAuthResultInform": {
+  "channelObjectIndex": {
+   "index": 517
+  },
+  "serialNumber": "ALCLF941B465"
+ }
+}
+
+[01/08/1972-20:29:08.098025],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/gpon_common_itf/src/CGponAsyncInterface.cpp],[567],[OnuAuthResult],[OnuMgntOlt] OnuAuthResult, send the encoded buffer succ
+[01/08/1972-20:29:08.098045],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/OnuAuth/COnuAuthentication.cpp],[483],[GponAsyncDetectMsgOnuAuth],[OnuMgntOlt] GponAsyncDetectMsgOnuAuth: send onu_auth_result_inform
+[01/08/1972-20:29:08.098068],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/OnuAuth/COnuAuthentication.cpp],[1924],[AsyncFinishProc],[OnuMgntOlt] COnuAuthentication AsyncFinishProc
+[01/08/1972-20:29:08.098086],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/OnuAuth/COnuAuthentication.cpp],[1930],[AsyncFinishProc],[OnuMgntOlt] AsyncFinishProc curState=5, curIndex=5
+[01/08/1972-20:29:08.098102],[OnuMgntOlt_app],AsyncFinishProc curState=5, curIndex=5
+[01/08/1972-20:29:08.098119],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/OnuAuth/COnuAuthentication.cpp],[1933],[AsyncFinishProc],[OnuMgntOlt] COnuAuthentication::AsyncFinishProc SN[].
+[01/08/1972-20:29:08.098227],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntOmciGet.cpp],[214],[SendOnuPresenceStateChangeNotif],[OnuMgntOlt] *************SendOnuPresenceStateChangeNotif with detected-loid() *********************
+[01/08/1972-20:29:08.098253],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/common/utility/DateConvert.cpp],[28],[convertLocalTime2DateAndTime],[OnuMgntOlt] 1972-8-1-20-29-8
+[01/08/1972-20:29:08.098278],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntOmciGet.cpp],[254],[SendOnuPresenceStateChangeNotif],[OnuMgntOlt] *************SendOnuPresenceStateChangeNotif with serialNumMap detected-loid() *********************
+[01/08/1972-20:29:08.098299],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntOmciGet.cpp],[267],[SendOnuPresenceStateChangeNotif],[OnuMgntOlt] send onuStateChange notification with ctName:ct_cp_ont1_pon1, vAniName:, detected-loid:, sn:ALCLF941B465, onuId:258, detected-registration-id:, detected-upstream-rate:detected-upstream-rate-10
+[01/08/1972-20:29:08.098552],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntOmciGet.cpp],[270],[SendOnuPresenceStateChangeNotif],[OnuMgntOlt] ret = 0
+[01/08/1972-20:29:08.098596],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntOmciGet.cpp],[367],[raiseUnprovisonedOnuAlarm],[OnuMgntOlt] ----------send onu-present-and-no-v-ani-known-and-in-o5 alarm, SN[ALCLF941B465] alarms[2]------------
+[01/08/1972-20:29:08.098616],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntOmciGet.cpp],[368],[raiseUnprovisonedOnuAlarm],[OnuMgntOlt] Serial-Number:ALCLF941B465
+[01/08/1972-20:29:08.098633],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntOmciGet.cpp],[369],[raiseUnprovisonedOnuAlarm],[OnuMgntOlt] alarms:0x2
+[01/08/1972-20:29:08.098651],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntOmciGet.cpp],[370],[raiseUnprovisonedOnuAlarm],[OnuMgntOlt] xpath:/if:interfaces-state/if:interface[if:name='ct_cp_ont1_pon1']/bbf-xpon:channel-termination/bbf-xpon-onu-s:onus-present-on-local-channel-termination/bbf-xpon-onu-s:onu[bbf-xpon-onu-s:detected-serial-number='ALCLF941B465']
+[01/08/1972-20:29:08.098675],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntOmciGet.cpp],[371],[raiseUnprovisonedOnuAlarm],[OnuMgntOlt] additionalInfo:Detected-Reg-Id = , Detected-Upstream-Rate = 10G
+[01/08/1972-20:29:08.098706],[alarmItf],[File: alarmInterface.cpp, Func: send_alarm_new, Line: 82]
+Number of alarms received from application = 1
+[01/08/1972-20:29:08.098738],[alarmItf],[File: alarmCommon.cpp, Func: validate_alarmInfoWithXpath, Line: 49]
+Received alarm data: alarmType = 14, bitmap = 2 overruled_severity = 0
+[01/08/1972-20:29:08.098759],[alarmItf],[File: alarmCommon.cpp, Func: validate_alarmInfoWithXpath, Line: 55]
+objectXpath = /if:interfaces-state/if:interface[if:name='ct_cp_ont1_pon1']/bbf-xpon:channel-termination/bbf-xpon-onu-s:onus-present-on-local-channel-termination/bbf-xpon-onu-s:onu[bbf-xpon-onu-s:detected-serial-number='ALCLF941B465']
+[01/08/1972-20:29:08.098776],[alarmItf],[File: alarmCommon.cpp, Func: validate_alarmInfoWithXpath, Line: 62]
+entityName = ALCLF941B465
+[01/08/1972-20:29:08.098792],[alarmItf],[File: alarmCommon.cpp, Func: validate_alarmInfoWithXpath, Line: 69]
+entityType = Serial-Number
+[01/08/1972-20:29:08.098810],[alarmItf],[File: alarmCommon.cpp, Func: validate_alarmInfoWithXpath, Line: 101]
+AddnInfo = Detected-Reg-Id = , Detected-Upstream-Rate = 10G
+[01/08/1972-20:29:08.099081],[yproto],send_oneway proto msg
+[01/08/1972-20:29:08.099101],[yproto],{
+ "alarmData": {
+  "action": "NEW",
+  "alarmInfo": [
+   {
+    "alarmType": 14,
+    "bitmap": 2,
+    "objectId": 0,
+    "objectXpath": "/if:interfaces-state/if:interface[if:name='ct_cp_ont1_pon1']/bbf-xpon:channel-termination/bbf-xpon-onu-s:onus-present-on-local-channel-termination/bbf-xpon-onu-s:onu[bbf-xpon-onu-s:detected-serial-number='ALCLF941B465']",
+    "entityName": "ALCLF941B465",
+    "entityType": "Serial-Number",
+    "addInfo": "Detected-Reg-Id = , Detected-Upstream-Rate = 10G",
+    "severity": [
+     {
+      "position": 1,
+      "severity": "NO_OVERRULESEVERITY"
+     }
+    ],
+    "timestamp": 81548948
+   }
+  ],
+  "label": ""
+ }
+}
+
+[01/08/1972-20:29:08.099142],[alarmItf],[File: alarmClient.cpp, Func: send_gpb_message, Line: 112]
+GPB sent to alarm app successfully
+[01/08/1972-20:29:08.099166],[alarmItf],[File: alarmNew.cpp, Func: send_bulk_alarms, Line: 107]
+Send alarm bulk GPB message success
+[01/08/1972-20:29:08.099187],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntOmciGet.cpp],[398],[raiseUnprovisonedOnuAlarm],[OnuMgntOlt] alarmItf::send_alarm_new [succeeded]
+[01/08/1972-20:29:08.099206],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntOmciGet.cpp],[275],[SendXponNewOnuRaisedNotif],[OnuMgntOlt] SendXponNewOnuRaisedNotif, ALCLF941B465
+[01/08/1972-20:29:08.099227],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/gpon_common_itf/src/CGponAsyncInterface.cpp],[573],[newOnuAuthResult],[OnuMgntOlt] ---------------msgid is: NEW_ONU_GET_ONUAUTH_REQUEST
+[01/08/1972-20:29:08.099246],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/onuMgntOltCfgWrapperClient.cpp],[43],[sendIpcOneWayRequest],[OnuMgntOlt] onuMgntOltCfgWrapperClient-->pClient != NULL
+[01/08/1972-20:29:08.099699],[yproto],send_oneway proto msg
+[01/08/1972-20:29:08.099718],[yproto],{
+ "newOnuAlarmRaisedInform": {
+  "channelObjectIndex": {
+   "index": 517
+  },
+  "serialNumber": "ALCLF941B465"
+ }
+}
+
+[01/08/1972-20:29:08.099757],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/gpon_common_itf/src/CGponAsyncInterface.cpp],[576],[newOnuAuthResult],[OnuMgntOlt] newOnuAuthResult, send the encoded buffer succ
+[01/08/1972-20:29:08.099797],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CModifyVonuState.cpp],[1181],[CModifyVonuState],[OnuMgntOlt] sn = ALCLF941B465, onuState = 7, onuId = 258, ponOhmObjIndex = 517, onuOhmObjIndex = 0, registrationId = , loidId = , detected_upstream_rate = 0, distance = 0.000000, authMode = 0, vaniName = , ctName = , alarms = 0x0
+[01/08/1972-20:29:08.099836],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CModifyVonuState.cpp],[1401],[AsyncBeginProc],[OnuMgntOlt] CModifyVonuState AsyncBeginProc
+[01/08/1972-20:29:08.099856],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CModifyVonuState.cpp],[895],[GponAsyncGetCtName],[OnuMgntOlt] enter GponAsyncGetCtName
+[01/08/1972-20:29:08.099959],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CHandleOntDetectNotification.cpp],[794],[AsyncFinishProc],[OnuMgntOlt] AsyncFinishProc curState=6, curIndex=6
+[01/08/1972-20:29:08.099981],[OnuMgntOlt_app],AsyncFinishProc curState=6, curIndex=6
+[01/08/1972-20:29:08.100547],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonCallBack/OHMCallBack.cpp],[23],[getOHMInfo_CallBackSerial],[OnuMgntOlt] enter getOHMInfo_CallBackSerial
+[01/08/1972-20:29:08.100593],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CModifyVonuState.cpp],[910],[GponAsyncGetCtNameResult],[OnuMgntOlt] enter GponAsyncGetCtNameResult
+[01/08/1972-20:29:08.100614],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CModifyVonuState.cpp],[918],[GponAsyncGetCtNameResult],[OnuMgntOlt] Ct Name = ct_cp_ont1_pon1
+[01/08/1972-20:29:08.100634],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CModifyVonuState.cpp],[1113],[GponCheckIfOnuUpBefore],[OnuMgntOlt] enter GponCheckIfOnuUpBefore
+[01/08/1972-20:29:08.100655],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CModifyVonuState.cpp],[1126],[GponCheckIfOnuUpBefore],[OnuMgntOlt] getCtObjIndex = 517 cmd->getOnuId() = 258 sn Name = ALCLF941B465
+[01/08/1972-20:29:08.100673],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CModifyVonuState.cpp],[1130],[GponCheckIfOnuUpBefore],[OnuMgntOlt] cmd->getOnuId() = 258 it->second.onuId = 258
+[01/08/1972-20:29:08.100692],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CModifyVonuState.cpp],[973],[GponAsyncUpdateOnuState],[OnuMgntOlt] enter GponAsyncUpdateOnuState
+[01/08/1972-20:29:08.100713],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonUtils/commonUtil.cpp],[94],[getOnuStateByEnum],[OnuMgntOlt] enter getOnuStateByEnum
+[01/08/1972-20:29:08.100730],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonUtils/commonUtil.cpp],[95],[getOnuStateByEnum],[OnuMgntOlt] onuState: 7
+[01/08/1972-20:29:08.100750],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonUtils/commonUtil.cpp],[144],[getOnuStateByEnum],[OnuMgntOlt] onuState: onu-present-and-no-v-ani-known-and-in-o5
+[01/08/1972-20:29:08.100778],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/common/utility/DateConvert.cpp],[28],[convertLocalTime2DateAndTime],[OnuMgntOlt] 1972-8-1-20-29-8
+[01/08/1972-20:29:08.100799],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/common/utility/DateConvert.cpp],[28],[convertLocalTime2DateAndTime],[OnuMgntOlt] 1972-8-1-20-29-8
+[01/08/1972-20:29:08.100821],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CModifyVonuState.cpp],[1077],[GponAsyncUpdateOnuState],[OnuMgntOlt] set to DMSP(onu state), detected_upstream_rate is :0
+[01/08/1972-20:29:08.101256],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CModifyVonuState.cpp],[1081],[GponAsyncUpdateOnuState],[OnuMgntOlt] ctName = ct_cp_ont1_pon1, SN = ALCLF941B465, ret = 0
+[01/08/1972-20:29:08.102613],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonCallBack/CommonDmspCallBack.cpp],[10],[onDmspCommonRespSerial],[OnuMgntOlt] enter onDmspCommonRespSerial
+[01/08/1972-20:29:08.102658],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonCallBack/CommonDmspCallBack.cpp],[14],[onDmspCommonRespSerial],[OnuMgntOlt] Get DataObject Resp - request Id [20]
+[01/08/1972-20:29:08.102677],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonCallBack/CommonDmspCallBack.cpp],[15],[onDmspCommonRespSerial],[OnuMgntOlt] Get DataObject Resp - result [0]
+[01/08/1972-20:29:08.102717],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CModifyVonuState.cpp],[1089],[GponAsyncUpdateOnuStateResult],[OnuMgntOlt] enter GponAsyncUpdateOnuStateResult
+/isam/slot_default/OnuMgntOlt/log # cd ..
+/isam/slot_default/OnuMgntOlt # cd ..
+/isam/slot_default # cd xponInfraMgnt/log/
+/isam/slot_default/xponInfraMgnt/log # ls -l
+total 8
+-rw-r--r--    1 root     root          1687 Jul 29 02:51 error_records
+-rw-r--r--    1 root     root             2 Aug  1 20:24 traces.log

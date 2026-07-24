@@ -1,0 +1,166 @@
+{
+    "Me": {
+        "id": 465,
+        "name": "PrecisionTimeProtocol",
+        "access": "CreatedByONU",
+        "type": "Config",
+        "action": [
+            "Set",
+            "Get",
+            "Dummy"
+        ],
+        "instance": {
+            "type": "Fixed",
+            "value": 0
+        },
+        "attributes": {
+            "attribute": [
+                {
+                    "name": "Administrative state",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Communication model",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Network transport protocol",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Multicast address mode",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "PTP source address",
+                    "size": 4,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Downstream Packet TCI",
+                    "size": 3,
+                    "format": "Array Structure",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory",
+                    "structure": {
+                        "fields": [
+                            {
+                                "name": "Control Type",
+                                "size": 8,
+                                "format": "UnsignedInteger"
+                            },
+                            {
+                                "name": "Priority Code Point(PCP)",
+                                "size": 3,
+                                "format": "UnsignedInteger"
+                            },
+                            {
+                                "name": "Drop Eligible Indicator(DEI)",
+                                "size": 1,
+                                "format": "UnsignedInteger"
+                            },
+                            {
+                                "name": "VLAN Identifier(VID)",
+                                "size": 12,
+                                "format": "UnsignedInteger"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "Clock step",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Log announce interval",
+                    "size": 1,
+                    "format": "SignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Log sync interval",
+                    "size": 1,
+                    "format": "SignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "ToD update interval",
+                    "size": 2,
+                    "format": "SignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Log minimum delay request interval",
+                    "size": 1,
+                    "format": "SignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                }
+            ]
+        }
+    }
+}

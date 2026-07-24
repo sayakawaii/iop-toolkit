@@ -1,0 +1,124 @@
+{
+    "Me": {
+        "id": 464,
+        "name": "synchronousEthernetOperation",
+        "access": "CreatedByONU",
+        "type": "Config",
+        "action": [
+            "Set",
+            "Get",
+            "Dummy"
+        ],
+        "instance": {
+            "type": "Fixed",
+            "value": 0
+        },
+        "attributes": {
+            "attribute": [
+                {
+                    "name": "Administrative state",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Options",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "ESMC QL state",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "ESMC QL generation",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Tx ESMC Informational PDUs",
+                    "size": 4,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Rx ESMC Informational PDUs",
+                    "size": 4,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Tx ESMC Event PDUs",
+                    "size": 4,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Rx ESMC Event PDUs",
+                    "size": 4,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "QL-DNU Event counter",
+                    "size": 4,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "ESMC VLAN",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                }
+            ]
+        }
+    }
+}

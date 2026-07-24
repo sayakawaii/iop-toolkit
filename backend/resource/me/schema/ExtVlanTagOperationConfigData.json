@@ -1,0 +1,198 @@
+  {
+	"Me": {
+		"id": 171,
+		"name": "ExtVlanTagOperationConfigData",
+		"access": "CreatedByOLT",
+		"type": "Config",
+		"action": [
+			"Create",
+			"Delete",
+			"Get",
+			"Set"
+		],
+		"instance": {
+			"type": "Dynamic",
+			"value": 0
+		},
+		"attributes": {
+			"attribute": [
+				{
+					"name": "Association type",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"SBC"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Received frame vlan tag operation table max size",
+					"size": 2,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Input TPID",
+					"size": 2,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Output TPID",
+					"size": 2,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Downstream mode",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Received frame VLAN tagging operation data",
+					"size": 16,
+					"format": "Array Structure",
+					"access": [
+						"R",
+						"W"
+					],
+					"category": "Mandatory",
+					"structure": {
+						"fields": [
+							{
+								"name": "FilterOuterPriority",
+								"size": 4,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "FilterOuterVID",
+								"size": 13,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "FilterOuterTPID",
+								"size": 3,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "Pad1",
+								"size": 12,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "FilterInnerPriority",
+								"size": 4,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "FilterInnerVID",
+								"size": 13,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "FilterInnerTPID",
+								"size": 3,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "Pad2",
+								"size": 8,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "FilterEthertype",
+								"size": 4,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "TreatmentTagsToRemove",
+								"size": 2,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "Pad3",
+								"size": 10,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "TreatmentOuterPriority",
+								"size": 4,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "TreatmentOuterVID",
+								"size": 13,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "TreatmentOuterTPID",
+								"size": 3,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "Pad4",
+								"size": 12,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "TreatmentInnerPriority",
+								"size": 4,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "TreatmentInnerVID",
+								"size": 13,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "TreatmentInnerTPID",
+								"size": 3,
+								"format": "UnsignedInteger"
+							}
+						]
+					}
+				},
+				{
+					"name": "Associated me pointer",
+					"size": 2,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"SBC"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "DSCP to p-bit mapping",
+					"size": 24,
+					"format": "Bytes",
+					"access": [
+						"R",
+						"W"
+					],
+					"category": "Optional"
+				}
+			]
+		}
+	}
+}

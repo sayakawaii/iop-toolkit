@@ -1,0 +1,308 @@
+>> [10/09/1973-18:58:18.726215],[xponhwa:main],handleAdminStChgWhenPonSpeedMonitorEnabled: PON admin status changed on channel termination(id:329), from admin-up to admin-down.
+[10/09/1973-18:58:18.726414],[xponhwa:main],delayProcCtLosByCtAdmStatus come in, isCtEnable = 0, ctAdminState = 1!
+[10/09/1973-18:58:18.727854],[typeb:main],
+ execOnTransition event = ACTIVE_ADMIN_DOWN_EVT
+[10/09/1973-18:58:18.727941],[typeb:main],before transition pon(32)_typebcurrState = UNKNOWN_ST
+[10/09/1973-18:58:18.727996],[typeb:main],pon (32), typeb nextState (10) event(12) currStateis(0) not a valid state tag !!!
+[10/09/1973-18:58:18.728059],[operState:main],PonStateEventNotify:physicalPonIndex:[32] Pon state notify[event = 16]!
+[10/09/1973-18:58:18.728122],[operState:main],[ReactionHandler::Process] trigger by (event = 16 : EVENT_CT_LASER_UPDATE)
+[10/09/1973-18:58:18.728198],[operState:main],judgePonOpState:active/non-typeb pon[32] oper-state [0], laser_status[0] defect_status[0x0] ponFaultInfo.localDefects[0] isAnyOnuOnline[1]
+[10/09/1973-18:58:18.728268],[xponhwa:main],[notifyCtStatusChanged]: pon(32), ctObjIndex(1030), ct_opState(0) isBurstModeMismatch(0)!
+[10/09/1973-18:58:18.728388],[operState:main],[StatePublisher::PonStatePublish] send pon[32] oper-state notify msg!
+[10/09/1973-18:58:18.730015],[xponhwa:main],ConfigChangeMonitor::onChanges physicalPonId[32] type[5] value 0!
+[10/09/1973-18:58:18.730143],[xponhwa:main],xPonHwAPonFault::physicalPonIndex[32] is added to ponFaultInfoMap
+[10/09/1973-18:58:18.730224],[xponhwa:main],ConfigChangeMonitor::onChanges physicalPonId[32] type[6] value 0!
+[10/09/1973-18:58:18.730277],[xponhwa:main],xPonHwAPonFault::physicalPonIndex[32] is added to ponFaultInfoMap
+[10/09/1973-18:58:18.736483],[ponIntr:ponredundrt],notifyPonInterrupt physicalPonIndex:#32, FPGA/ASIC PonEvents:0x8d, configuredMask:0x4
+[10/09/1973-18:58:19.144200],[Notification:main],[ng2_get_ONU_Detect_Notification] physicalPonIndex 32 channel 2 SN ALCLFA6F41E3 regId HIGHFIVES! onuId 1 onuAid 2 hwId 65535 oldStatus 3 onuStatus 1 actualUsRate 1 detAlms 0x1 distance 0.000
+[10/09/1973-18:58:19.144402],[Notification:main],Send onu alarm To Clients: Interface Index: physicalPonIndex: 32, onuId: 1
+[10/09/1973-18:58:19.144616],[xponhwa:main],onOnuDetNotif_ResetOntCipherSwitch: invoked with ponIdx[32], onuIdx[1], onu_status[1]
+[10/09/1973-18:58:19.144718],[xponhwa:main],[sendOntDetectNotify] Channelpair ont detect alarm OFF, PON: 32, SN: ALCLFA6F41E3, onu_id: 1, ontId 2, reg_id: JKlm001, status 1, detected_us_rate: 1, onStandby: 0, typebPonState: 1, ctObjIndex: 1030, vaniObjIndex: 1031
+[10/09/1973-18:58:19.144786],[Notification:main],Send onu alarm To Clients: Interface Index: physicalPonIndex: 32, onuId: 1
+[10/09/1973-18:58:19.144887],[operState:main],WrapperOnuStateNtfCallback:physicalPonIndex:[32] onuIndex[2] onu status callback[sn = ALCLFA6F41E3] [status:1] [distance:0.000000] [onu_id:1] [ont_id:2] [detected_upstream_rate:1] [detected_registration_id:JKlm001]         DetAlms[0x1] Alms[0x0] OnuAlmOpState[1]!
+[10/09/1973-18:58:19.144953],[operState:main],[ReactionHandler::Process] trigger by (event = 6 : EVENT_ONT_OFFLINE)
+[10/09/1973-18:58:19.145021],[operState:main],[Process]  onuStateInfo.preOnuOpState = 1, onuStateInfo.onuOpState = 0, onuStateInfo.publishState = 0
+[10/09/1973-18:58:19.145126],[operState:main],[StatePublisher::OnuStatePublish] send onu oper-state notify msg(pon[32] onu[1] defects:0x100 defects_changed:0x100 sn:ALCLFA6F41E3 preOline:1 onLine:0 notifyType:2, isNotifyOn:1,             regid:JKlm001, usRate:1, last-down-reason:lobi, connectState:0)!
+[10/09/1973-18:58:19.145218],[operState:main],[StatePublisher::OnuStatePublish] send onu connect-state notify msg(pon[32] onuId[1] connectState:0 preonuConnectState:1, cpType:[2], primary_ctObjIndex:[0])!
+[10/09/1973-18:58:19.145332],[Notification:main],[ng2_get_ONU_Detect_Notification] physicalPonIndex 32 channel 2 SN ALCLFA5FECDD regId HIGHFIVES! onuId 256 onuAid 1025 hwId 65535 oldStatus 2 onuStatus 1 actualUsRate 1 detAlms 0x1 distance 0.000
+[10/09/1973-18:58:19.145400],[Notification:main],[updateOnuDetInfo] physicalPonIndex32 new ONU SN ALCLFA5FECDD is offline and will be erased from ONU_DETECT_INFO_MAP!
+[10/09/1973-18:58:19.145567],[xponhwa:main],onOnuDetNotif_ResetOntCipherSwitch: invoked with ponIdx[32], onuIdx[256], onu_status[1]
+[10/09/1973-18:58:19.145662],[Notification:main],Send onu alarm To Clients: Interface Index: physicalPonIndex: 32, onuId: 255
+[10/09/1973-18:58:19.145770],[xponhwa:main],[sendOntDetectNotify] Channelpair ont detect alarm OFF, PON: 32, SN: ALCLFA5FECDD, onu_id: 256, ontId 1025, reg_id: HIGHFIVES!, status 1, detected_us_rate: 1, onStandby: 0, typebPonState: 1, ctObjIndex: 1030, vaniObjIndex: 0
+[10/09/1973-18:58:19.145842],[Notification:main],Send onu alarm To Clients: Interface Index: physicalPonIndex: 32, onuId: 256
+[10/09/1973-18:58:19.146003],[operState:main],WrapperOnuAlmNtfCallback:physicalPonIndex:[32] onuIndex[2] onu status callback[sn = ALCLFA6F41E3] [status:1] [distance:-1.000000] [onu_id:1] [ont_id:2] [detected_upstream_rate:0] [detected_registration_id:] [alarm:0x100]!
+[10/09/1973-18:58:19.146074],[operState:main],[ReactionHandler::Process] trigger by (event = 9 : EVENT_ONT_ALM_CHANGE)
+[10/09/1973-18:58:19.146163],[xponhwa:main],[isAllOnuOfflineUnderPon] Pon[32] all onus offline!
+[10/09/1973-18:58:19.146219],[xponhwa:main],[handleOnuStatusChange] all onus offline under pon[32]!
+[10/09/1973-18:58:19.146272],[operState:main],PonStateEventNotify:physicalPonIndex:[32] Pon state notify[event = 14]!
+[10/09/1973-18:58:19.146351],[operState:main],[ReactionHandler::Process] trigger by (event = 14 : EVENT_CT_STATE_DOWN)
+[10/09/1973-18:58:19.146410],[xponhwa:main],[onAllOnuOffline] Pon[32] notify CT_OperState down
+[10/09/1973-18:58:19.146482],[xponhwa:main],[generateAdditionalInfoType] Pon [32] isAllOnuOfflineByDGi = 0, offline_dgi = 0, offline_num = 2, matchThreshold = 0!
+[10/09/1973-18:58:19.146811],[xponhwa:main],[onAllOnuOffline] Pon[32] lastOntSN[ALCLFA6F41E3] additionalInfoType[0], onuNumUnderCt[1]!
+[10/09/1973-18:58:19.296609],[Faults:main],getploam valid current oatd defect(0x00000140) for PON[32] ONU[2]
+[10/09/1973-18:58:19.297155],[Faults:main],call sendOnuBulkAlarmToClients: physicalPonIndex(32),ontId(2),notifyType(26) defectStatus(0x0),defectChangedReport(0x1), isOntPlomDebug (0) distance(0.56) oatdDefects(0x140)
+[10/09/1973-18:58:19.297285],[xponhwa:main],[sendOnuBulkAlarmNotify] omit to persist alarm(0)!
+[10/09/1973-18:58:25.348121],[xponhwa:main],handleAdminStChgWhenPonSpeedMonitorEnabled: PON admin status changed on channel termination(id:329), from admin-down to admin-up.
+[10/09/1973-18:58:25.348273],[xponhwa:main],delayProcCtLosByCtAdmStatus come in, isCtEnable = 1, ctAdminState = 0!
+[10/09/1973-18:58:25.348331],[xponhwa:main],[startTimerToSetCtLosAlmBit] PON[32] onuNumUnderCt[1] timeLen[10000]
+[10/09/1973-18:58:25.350117],[typeb:main],
+ execOnTransition event = ACTIVE_ADMIN_DOWN_EVT
+[10/09/1973-18:58:25.350184],[typeb:main],before transition pon(32)_typebcurrState = UNKNOWN_ST
+[10/09/1973-18:58:25.350238],[typeb:main],pon (32), typeb nextState (10) event(12) currStateis(0) not a valid state tag !!!
+[10/09/1973-18:58:25.350292],[operState:main],PonStateEventNotify:physicalPonIndex:[32] Pon state notify[event = 16]!
+[10/09/1973-18:58:25.350345],[operState:main],[ReactionHandler::Process] trigger by (event = 16 : EVENT_CT_LASER_UPDATE)
+[10/09/1973-18:58:25.350412],[operState:main],judgePonOpState:active/non-typeb pon[32] oper-state [0], laser_status[1] defect_status[0x0] ponFaultInfo.localDefects[0] isAnyOnuOnline[0]
+[10/09/1973-18:58:25.351867],[xponhwa:main],ConfigChangeMonitor::onChanges physicalPonId[32] type[5] value 1!
+[10/09/1973-18:58:25.351931],[xponhwa:main],xPonHwAPonFault::physicalPonIndex[32] is added to ponFaultInfoMap
+[10/09/1973-18:58:25.352002],[xponhwa:main],ConfigChangeMonitor::onChanges physicalPonId[32] type[6] value 1!
+[10/09/1973-18:58:25.352056],[xponhwa:main],xPonHwAPonFault::physicalPonIndex[32] is added to ponFaultInfoMap
+[10/09/1973-18:58:31.144371],[operState:main],WrapperOnuAlmNtfCallback:physicalPonIndex:[32] onuIndex[2] onu status callback[sn = ALCLFA6F41E3] [status:1] [distance:-1.000000] [onu_id:1] [ont_id:2] [detected_upstream_rate:0] [detected_registration_id:] [alarm:0x0]!
+[10/09/1973-18:58:31.144543],[operState:main],[ReactionHandler::Process] trigger by (event = 9 : EVENT_ONT_ALM_CHANGE)
+[10/09/1973-18:58:31.144613],[operState:main],[OnuAlmChangeReaction::isUpdateBindingReason] No binding down-reason : current timestamp[0x6f230d7] historic timestamp[0x6f230cb]
+[10/09/1973-18:58:31.644335],[Notification:main],[ng2_get_ONU_Detect_Notification] physicalPonIndex 32 channel 2 SN ALCLFA6F41E3 regId JKlm001 onuId 1 onuAid 2 hwId 0 oldStatus 1 onuStatus 3 actualUsRate 1 detAlms 0x0 distance 0.565
+[10/09/1973-18:58:31.644605],[xponhwa:main],[updateCtOperStateBaseOnOnt] Pon[32]   operStatus 1 !
+[10/09/1973-18:58:31.644666],[operState:main],PonStateEventNotify:physicalPonIndex:[32] Pon state notify[event = 15]!
+[10/09/1973-18:58:31.644720],[operState:main],[ReactionHandler::Process] trigger by (event = 15 : EVENT_CT_STATE_UPDATE)
+[10/09/1973-18:58:31.644780],[operState:main],judgePonOpState:active/non-typeb pon[32] oper-state [1], laser_status[1] defect_status[0x0] ponFaultInfo.localDefects[0] isAnyOnuOnline[1]
+[10/09/1973-18:58:31.644844],[xponhwa:main],[notifyCtStatusChanged]: pon(32), ctObjIndex(1030), ct_opState(1) isBurstModeMismatch(0)!
+[10/09/1973-18:58:31.644959],[operState:main],[StatePublisher::PonStatePublish] send pon[32] oper-state notify msg!
+[10/09/1973-18:58:31.645229],[Notification:main],Send onu alarm To Clients: Interface Index: physicalPonIndex: 32, onuId: 1
+[10/09/1973-18:58:31.647437],[Notification:main],[ng2_get_ONU_Detect_Notification] physicalPonIndex 32 channel 2 SN ALCLFA5FECDD regId abcd001 onuId 256 onuAid 1025 hwId 1 oldStatus 0 onuStatus 2 actualUsRate 1 detAlms 0x0 distance 0.564
+[10/09/1973-18:58:31.647674],[xponhwa:main],[updateCtOperStateBaseOnOnt] Pon[32]   already ct_opState 1 !
+[10/09/1973-18:58:31.647743],[operState:main],PonStateEventNotify:physicalPonIndex:[32] Pon state notify[event = 15]!
+[10/09/1973-18:58:31.647799],[operState:main],[ReactionHandler::Process] trigger by (event = 15 : EVENT_CT_STATE_UPDATE)
+[10/09/1973-18:58:31.647863],[operState:main],judgePonOpState:active/non-typeb pon[32] oper-state [1], laser_status[1] defect_status[0x0] ponFaultInfo.localDefects[0] isAnyOnuOnline[1]
+[10/09/1973-18:58:31.649745],[xponhwa:main],[sendOntDetectNotify] Channelpair ont detect alarm ON, PON: 32, SN: ALCLFA5FECDD, onu_id: 256, ontId 1025, reg_id: abcd001, status 2, detected_us_rate: 1, onStandby: 0, typebPonState: 1, ctObjIndex: 1030, vaniObjIndex: 0
+[10/09/1973-18:58:31.649911],[Notification:main],Send onu alarm To Clients: Interface Index: physicalPonIndex: 32, onuId: 256
+[10/09/1973-18:58:31.650272],[xponhwa:main],[sendOntDetectNotify] Channelpair ont detect alarm ON, PON: 32, SN: ALCLFA6F41E3, onu_id: 1, ontId 2, reg_id: JKlm001, status 3, detected_us_rate: 1, onStandby: 0, typebPonState: 1, ctObjIndex: 1030, vaniObjIndex: 1031
+[10/09/1973-18:58:31.650373],[Notification:main],Send onu alarm To Clients: Interface Index: physicalPonIndex: 32, onuId: 1
+[10/09/1973-18:58:31.650497],[operState:main],WrapperOnuStateNtfCallback:physicalPonIndex:[32] onuIndex[2] onu status callback[sn = ALCLFA6F41E3] [status:2] [distance:0.565425] [onu_id:1] [ont_id:2] [detected_upstream_rate:1] [detected_registration_id:JKlm001]         DetAlms[0x0] Alms[0x0] OnuAlmOpState[1]!
+[10/09/1973-18:58:31.650563],[operState:main],[ReactionHandler::Process] trigger by (event = 5 : EVENT_ONT_ONLINE)
+[10/09/1973-18:58:31.650639],[operState:main],[judgeOnuOpState] physicalPonIndex[32], onuIndex[2] adminState[1] rangeState[1] isAuthorized[0] onuOpStat:[0]!
+[10/09/1973-18:58:31.650693],[operState:main],[OnuStateOnlineReaction::Process]  onuStateInfo.preOnuOpState = 1, onuStateInfo.onuOpState = 0, onuStateInfo.publishState = 1
+[10/09/1973-18:58:31.650766],[operState:main],WrapperOnuAlmNtfCallback:physicalPonIndex:[32] onuIndex[2] onu status callback[sn = ALCLFA6F41E3] [status:2] [distance:-1.000000] [onu_id:1] [ont_id:2] [detected_upstream_rate:0] [detected_registration_id:] [alarm:0x0]!
+[10/09/1973-18:58:31.650826],[operState:main],[ReactionHandler::Process] trigger by (event = 0 : EVENT_START)
+[10/09/1973-18:58:31.650876],[operState:main],[DecisionProcess] not found Decision handler by (event = 0 : EVENT_START)
+[10/09/1973-18:58:31.651587],[Notification:main],Send onu alarm To Clients: Interface Index: physicalPonIndex: 32, onuId: 255
+[10/09/1973-18:58:31.653045],[operState:main],OnuAuthNtfCallback:physicalPonIndex:[32] onu:[2] auth-result[0]!
+[10/09/1973-18:58:31.653222],[operState:main],[ReactionHandler::Process] trigger by (event = 8 : EVENT_ONT_AUTH)
+[10/09/1973-18:58:31.653302],[operState:main],[judgeOnuOpState] physicalPonIndex[32], onuIndex[2] adminState[1] rangeState[1] isAuthorized[1] onuOpStat:[1]!
+[10/09/1973-18:58:31.653386],[operState:main],[OnuAuthReaction::Process]  onuStateInfo.preonuConnectState = 0, onuStateInfo.onuConnectState = 1,         onuStateInfo.preOnuOpState = 0, onuStateInfo.onuOpState = 1, onuStateInfo.preauthResultType = 1, onuStateInfo.authResultType = 0,         onuStateInfo.publishState = 0
+[10/09/1973-18:58:31.653562],[operState:main],[StatePublisher::OnuStatePublish] send onu oper-state notify msg(pon[32] onu[1] defects:0x1 defects_changed:0x0 sn:ALCLFA6F41E3 preOline:0 onLine:1 notifyType:26, isNotifyOn:0,             regid:JKlm001, usRate:1, last-down-reason:lobi, connectState:1)!
+[10/09/1973-18:58:31.653692],[operState:main],[StatePublisher::OnuStatePublish] send onu connect-state notify msg(pon[32] onuId[1] connectState:1 preonuConnectState:0, cpType:[2], primary_ctObjIndex:[0])!
+[10/09/1973-18:58:31.660629],[OMCI:OmciTxRx],isConnectionWithSwitch 0, isConnectionWithUglobSim 0, isConnectionWithApp 1
+[10/09/1973-18:58:31.660766],[OMCI:OmciTxRx],omci_packet TX: len[55], ponOhmIndex[0x406] PON[32] Counter[489] ONUid[1] 34 c7 49 0a 00 02 00 00  80 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 28
+[10/09/1973-18:58:31.660797],[OMCI:OmciTxRx],omci_packet TX to switch - physicalPonIndex [32], ONUid 1
+[10/09/1973-18:58:31.660820],[OMCI:OmciTxRx],set packetSwitch shaper 15 >>> 0
+[10/09/1973-18:58:31.660862],[OMCI:OmciTxRx],finish ! set packetSwitch shaper >>> 15
+[10/09/1973-18:58:31.660890],[OMCI:OmciTxRx],>> out omci len [55], ctx [0xf6f5f2e0] msg_type[0] last_packet[1]
+[10/09/1973-18:58:31.660913],[OMCI:OmciTxRx],OMCI request are ready to be received on the UDS! ypacket[0xf6f5f2e0]
+[10/09/1973-18:58:31.662955],[OMCI:OmciTxRx],isConnectionWithSwitch 1, isConnectionWithUglobSim 0, isConnectionWithApp 0
+[10/09/1973-18:58:31.663088],[OMCI:OmciTxRx],omci_packet RX: ctObjIndex[0x406] physicalPonIndex[32] Counter[492] ONUid[1] 34 c7 29 0a 00 02 00 00  00 80 00 06 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 28 de 18 79 4d
+[10/09/1973-18:58:31.663113],[OMCI:OmciTxRx],omci_packet RX: received OMCI message without mic ERROR, set micErrCount=0
+[10/09/1973-18:58:31.663135],[OMCI:OmciTxRx],set packetApp shaper 15 >>> 0
+[10/09/1973-18:58:31.663171],[OMCI:OmciTxRx],finish ! set packetApp shaper >>> 15
+[10/09/1973-18:58:31.663196],[OMCI:OmciTxRx],<< in  omci len [61], ctx [0xf6f5f200] msg_type[0] last_packet[1]
+[10/09/1973-18:58:31.663215],[OMCI:OmciTxRx],OMCI response are ready to be received on the UDS! ypacket[0xf6f5f200]
+[10/09/1973-18:58:31.679423],[OMCI:OmciTxRx],isConnectionWithSwitch 0, isConnectionWithUglobSim 0, isConnectionWithApp 1
+[10/09/1973-18:58:31.679543],[OMCI:OmciTxRx],omci_packet TX: len[55], ponOhmIndex[0x406] PON[32] Counter[490] ONUid[1] 34 c8 4b 0a 00 02 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 28
+[10/09/1973-18:58:31.679578],[OMCI:OmciTxRx],omci_packet TX to switch - physicalPonIndex [32], ONUid 1
+[10/09/1973-18:58:31.679615],[OMCI:OmciTxRx],>> out omci len [55], ctx [0xf6f5f2e0] msg_type[0] last_packet[1]
+[10/09/1973-18:58:31.679634],[OMCI:OmciTxRx],OMCI request are ready to be received on the UDS! ypacket[0xf6f5f2e0]
+[10/09/1973-18:58:31.694752],[OMCI:OmciTxRx],omciServer->isRxStopped[0], ypacket space:[3145728]
+[10/09/1973-18:58:31.711802],[OMCI:OmciTxRx],isConnectionWithSwitch 1, isConnectionWithUglobSim 0, isConnectionWithApp 0
+[10/09/1973-18:58:31.711914],[OMCI:OmciTxRx],omci_packet RX: ctObjIndex[0x406] physicalPonIndex[32] Counter[493] ONUid[1] 34 c8 2b 0a 00 02 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 28 e7 17 86 1c
+[10/09/1973-18:58:31.711939],[OMCI:OmciTxRx],omci_packet RX: received OMCI message without mic ERROR, set micErrCount=0
+[10/09/1973-18:58:31.711974],[OMCI:OmciTxRx],<< in  omci len [61], ctx [0xf6f5f200] msg_type[0] last_packet[1]
+[10/09/1973-18:58:31.711993],[OMCI:OmciTxRx],OMCI response are ready to be received on the UDS! ypacket[0xf6f5f200]
+[10/09/1973-18:58:31.727065],[OMCI:OmciTxRx],omciServer->isRxStopped[0], ypacket space:[131072]
+[10/09/1973-18:58:31.728748],[OMCI:OmciTxRx],isConnectionWithSwitch 0, isConnectionWithUglobSim 0, isConnectionWithApp 1
+[10/09/1973-18:58:31.728832],[OMCI:OmciTxRx],omci_packet TX: len[55], ponOhmIndex[0x406] PON[32] Counter[491] ONUid[1] 34 c9 49 0a 01 c8 00 00  10 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 28
+[10/09/1973-18:58:31.728860],[OMCI:OmciTxRx],omci_packet TX to switch - physicalPonIndex [32], ONUid 1
+[10/09/1973-18:58:31.728878],[OMCI:OmciTxRx],set packetSwitch shaper 15 >>> 0
+[10/09/1973-18:58:31.728908],[OMCI:OmciTxRx],finish ! set packetSwitch shaper >>> 15
+[10/09/1973-18:58:31.728933],[OMCI:OmciTxRx],>> out omci len [55], ctx [0xf6f5f2e0] msg_type[0] last_packet[1]
+[10/09/1973-18:58:31.728967],[OMCI:OmciTxRx],OMCI request are ready to be received on the UDS! ypacket[0xf6f5f2e0]
+[10/09/1973-18:58:31.729842],[OMCI:OmciTxRx],isConnectionWithSwitch 1, isConnectionWithUglobSim 0, isConnectionWithApp 0
+[10/09/1973-18:58:31.729897],[OMCI:OmciTxRx],omci_packet RX: ctObjIndex[0x406] physicalPonIndex[32] Counter[494] ONUid[1] 34 c9 29 0a 01 c8 00 00  04 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 28 90 a3 54 9c
+[10/09/1973-18:58:31.729920],[OMCI:OmciTxRx],omci_packet RX: received OMCI message without mic ERROR, set micErrCount=0
+[10/09/1973-18:58:31.729939],[OMCI:OmciTxRx],set packetApp shaper 15 >>> 0
+[10/09/1973-18:58:31.729964],[OMCI:OmciTxRx],finish ! set packetApp shaper >>> 15
+[10/09/1973-18:58:31.729986],[OMCI:OmciTxRx],<< in  omci len [61], ctx [0xf6f5f200] msg_type[0] last_packet[1]
+[10/09/1973-18:58:31.730004],[OMCI:OmciTxRx],OMCI response are ready to be received on the UDS! ypacket[0xf6f5f200]
+[10/09/1973-18:58:31.730436],[OMCI:OmciTxRx],isConnectionWithSwitch 0, isConnectionWithUglobSim 0, isConnectionWithApp 1
+[10/09/1973-18:58:31.730483],[OMCI:OmciTxRx],omci_packet TX: len[55], ponOhmIndex[0x406] PON[32] Counter[492] ONUid[1] 34 ca 49 0a ff 10 00 00  00 08 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 28
+[10/09/1973-18:58:31.730506],[OMCI:OmciTxRx],omci_packet TX to switch - physicalPonIndex [32], ONUid 1
+[10/09/1973-18:58:31.730523],[OMCI:OmciTxRx],set packetSwitch shaper 15 >>> 0
+[10/09/1973-18:58:31.730548],[OMCI:OmciTxRx],finish ! set packetSwitch shaper >>> 15
+[10/09/1973-18:58:31.730569],[OMCI:OmciTxRx],>> out omci len [55], ctx [0xf6f5f2e0] msg_type[0] last_packet[1]
+[10/09/1973-18:58:31.730586],[OMCI:OmciTxRx],OMCI request are ready to be received on the UDS! ypacket[0xf6f5f2e0]
+[10/09/1973-18:58:31.732649],[OMCI:OmciTxRx],isConnectionWithSwitch 1, isConnectionWithUglobSim 0, isConnectionWithApp 0
+[10/09/1973-18:58:31.732696],[OMCI:OmciTxRx],omci_packet RX: ctObjIndex[0x406] physicalPonIndex[32] Counter[495] ONUid[1] 34 ca 29 0a ff 10 00 00  00 00 08 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 28 89 53 e7 d6
+[10/09/1973-18:58:31.732717],[OMCI:OmciTxRx],omci_packet RX: received OMCI message without mic ERROR, set micErrCount=0
+[10/09/1973-18:58:31.732735],[OMCI:OmciTxRx],set packetApp shaper 15 >>> 0
+[10/09/1973-18:58:31.732758],[OMCI:OmciTxRx],finish ! set packetApp shaper >>> 15
+[10/09/1973-18:58:31.732779],[OMCI:OmciTxRx],<< in  omci len [61], ctx [0xf6f5f200] msg_type[0] last_packet[1]
+[10/09/1973-18:58:31.732797],[OMCI:OmciTxRx],OMCI response are ready to be received on the UDS! ypacket[0xf6f5f200]
+[10/09/1973-18:58:31.733509],[OMCI:OmciTxRx],isConnectionWithSwitch 0, isConnectionWithUglobSim 0, isConnectionWithApp 1
+[10/09/1973-18:58:31.733564],[OMCI:OmciTxRx],omci_packet TX: len[55], ponOhmIndex[0x406] PON[32] Counter[493] ONUid[1] 34 cb 49 0a 01 00 00 00  c0 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 28
+[10/09/1973-18:58:31.733588],[OMCI:OmciTxRx],omci_packet TX to switch - physicalPonIndex [32], ONUid 1
+[10/09/1973-18:58:31.733663],[OMCI:OmciTxRx],set packetSwitch shaper 15 >>> 0
+[10/09/1973-18:58:31.733706],[OMCI:OmciTxRx],finish ! set packetSwitch shaper >>> 15
+[10/09/1973-18:58:31.733732],[OMCI:OmciTxRx],>> out omci len [55], ctx [0xf6f5f2e0] msg_type[0] last_packet[1]
+[10/09/1973-18:58:31.733751],[OMCI:OmciTxRx],OMCI request are ready to be received on the UDS! ypacket[0xf6f5f2e0]
+[10/09/1973-18:58:31.736713],[OMCI:OmciTxRx],isConnectionWithSwitch 1, isConnectionWithUglobSim 0, isConnectionWithApp 0
+[10/09/1973-18:58:31.736785],[OMCI:OmciTxRx],omci_packet RX: ctObjIndex[0x406] physicalPonIndex[32] Counter[496] ONUid[1] 34 cb 29 0a 01 00 00 00  00 c0 00 41 4c 43 4c 33  46 45 34 38 33 30 39 41  41 41 41 30 31 00 00 00  00 00 00 00 00 00 00 00  00 00 00 28 b8 7a 4a 42
+[10/09/1973-18:58:31.736808],[OMCI:OmciTxRx],omci_packet RX: received OMCI message without mic ERROR, set micErrCount=0
+[10/09/1973-18:58:31.736839],[OMCI:OmciTxRx],set packetApp shaper 15 >>> 0
+[10/09/1973-18:58:31.736866],[OMCI:OmciTxRx],finish ! set packetApp shaper >>> 15
+[10/09/1973-18:58:31.736889],[OMCI:OmciTxRx],<< in  omci len [61], ctx [0xf6f5f200] msg_type[0] last_packet[1]
+[10/09/1973-18:58:31.736907],[OMCI:OmciTxRx],OMCI response are ready to be received on the UDS! ypacket[0xf6f5f200]
+[10/09/1973-18:58:31.737319],[OMCI:OmciTxRx],isConnectionWithSwitch 0, isConnectionWithUglobSim 0, isConnectionWithApp 1
+[10/09/1973-18:58:31.737372],[OMCI:OmciTxRx],omci_packet TX: len[55], ponOhmIndex[0x406] PON[32] Counter[494] ONUid[1] 34 cc 49 0a 01 00 00 00  20 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 28
+[10/09/1973-18:58:31.737397],[OMCI:OmciTxRx],omci_packet TX to switch - physicalPonIndex [32], ONUid 1
+[10/09/1973-18:58:31.737415],[OMCI:OmciTxRx],set packetSwitch shaper 15 >>> 0
+[10/09/1973-18:58:31.737440],[OMCI:OmciTxRx],finish ! set packetSwitch shaper >>> 15
+[10/09/1973-18:58:31.737463],[OMCI:OmciTxRx],>> out omci len [55], ctx [0xf6f5f2e0] msg_type[0] last_packet[1]
+[10/09/1973-18:58:31.737480],[OMCI:OmciTxRx],OMCI request are ready to be received on the UDS! ypacket[0xf6f5f2e0]
+[10/09/1973-18:58:31.739667],[OMCI:OmciTxRx],isConnectionWithSwitch 1, isConnectionWithUglobSim 0, isConnectionWithApp 0
+[10/09/1973-18:58:31.739736],[OMCI:OmciTxRx],omci_packet RX: ctObjIndex[0x406] physicalPonIndex[32] Counter[497] ONUid[1] 34 cc 29 0a 01 00 00 00  00 20 00 41 4c 43 4c fa  6f 41 e3 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 28 4d 32 43 8e
+[10/09/1973-18:58:31.739757],[OMCI:OmciTxRx],omci_packet RX: received OMCI message without mic ERROR, set micErrCount=0
+[10/09/1973-18:58:31.739775],[OMCI:OmciTxRx],set packetApp shaper 15 >>> 0
+[10/09/1973-18:58:31.739800],[OMCI:OmciTxRx],finish ! set packetApp shaper >>> 15
+[10/09/1973-18:58:31.739829],[OMCI:OmciTxRx],<< in  omci len [61], ctx [0xf6f5f200] msg_type[0] last_packet[1]
+[10/09/1973-18:58:31.739852],[OMCI:OmciTxRx],OMCI response are ready to be received on the UDS! ypacket[0xf6f5f200]
+[10/09/1973-18:58:31.740196],[OMCI:OmciTxRx],isConnectionWithSwitch 0, isConnectionWithUglobSim 0, isConnectionWithApp 1
+[10/09/1973-18:58:31.740247],[OMCI:OmciTxRx],omci_packet TX: len[55], ponOhmIndex[0x406] PON[32] Counter[495] ONUid[1] 34 cd 49 0a 01 01 00 00  80 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 28
+[10/09/1973-18:58:31.740271],[OMCI:OmciTxRx],omci_packet TX to switch - physicalPonIndex [32], ONUid 1
+[10/09/1973-18:58:31.740288],[OMCI:OmciTxRx],set packetSwitch shaper 15 >>> 0
+[10/09/1973-18:58:31.740313],[OMCI:OmciTxRx],finish ! set packetSwitch shaper >>> 15
+[10/09/1973-18:58:31.740335],[OMCI:OmciTxRx],>> out omci len [55], ctx [0xf6f5f2e0] msg_type[0] last_packet[1]
+[10/09/1973-18:58:31.740352],[OMCI:OmciTxRx],OMCI request are ready to be received on the UDS! ypacket[0xf6f5f2e0]
+[10/09/1973-18:58:31.742648],[OMCI:OmciTxRx],isConnectionWithSwitch 1, isConnectionWithUglobSim 0, isConnectionWithApp 0
+[10/09/1973-18:58:31.742708],[OMCI:OmciTxRx],omci_packet RX: ctObjIndex[0x406] physicalPonIndex[32] Counter[498] ONUid[1] 34 cd 29 0a 01 01 00 00  00 80 00 20 20 20 20 20  30 30 30 30 30 58 47 30  32 30 58 41 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 28 0f ec 59 ef
+[10/09/1973-18:58:31.742737],[OMCI:OmciTxRx],omci_packet RX: received OMCI message without mic ERROR, set micErrCount=0
+[10/09/1973-18:58:31.742761],[OMCI:OmciTxRx],set packetApp shaper 15 >>> 0
+[10/09/1973-18:58:31.742786],[OMCI:OmciTxRx],finish ! set packetApp shaper >>> 15
+[10/09/1973-18:58:31.742808],[OMCI:OmciTxRx],<< in  omci len [61], ctx [0xf6f5f200] msg_type[0] last_packet[1]
+[10/09/1973-18:58:31.742826],[OMCI:OmciTxRx],OMCI response are ready to be received on the UDS! ypacket[0xf6f5f200]
+[10/09/1973-18:58:31.743128],[OMCI:OmciTxRx],isConnectionWithSwitch 0, isConnectionWithUglobSim 0, isConnectionWithApp 1
+[10/09/1973-18:58:31.743188],[OMCI:OmciTxRx],omci_packet TX: len[55], ponOhmIndex[0x406] PON[32] Counter[496] ONUid[1] 34 ce 49 0a ff 10 00 00  00 08 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 28
+[10/09/1973-18:58:31.743211],[OMCI:OmciTxRx],omci_packet TX to switch - physicalPonIndex [32], ONUid 1
+[10/09/1973-18:58:31.743229],[OMCI:OmciTxRx],set packetSwitch shaper 15 >>> 0
+[10/09/1973-18:58:31.743253],[OMCI:OmciTxRx],finish ! set packetSwitch shaper >>> 15
+[10/09/1973-18:58:31.743274],[OMCI:OmciTxRx],>> out omci len [55], ctx [0xf6f5f2e0] msg_type[0] last_packet[1]
+[10/09/1973-18:58:31.743291],[OMCI:OmciTxRx],OMCI request are ready to be received on the UDS! ypacket[0xf6f5f2e0]
+[10/09/1973-18:58:31.745668],[OMCI:OmciTxRx],isConnectionWithSwitch 1, isConnectionWithUglobSim 0, isConnectionWithApp 0
+[10/09/1973-18:58:31.745722],[OMCI:OmciTxRx],omci_packet RX: ctObjIndex[0x406] physicalPonIndex[32] Counter[499] ONUid[1] 34 ce 29 0a ff 10 00 00  00 00 08 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 28 e0 a3 6d 90
+[10/09/1973-18:58:31.745743],[OMCI:OmciTxRx],omci_packet RX: received OMCI message without mic ERROR, set micErrCount=0
+[10/09/1973-18:58:31.745761],[OMCI:OmciTxRx],set packetApp shaper 15 >>> 0
+[10/09/1973-18:58:31.745811],[OMCI:OmciTxRx],finish ! set packetApp shaper >>> 15
+[10/09/1973-18:58:31.745832],[OMCI:OmciTxRx],<< in  omci len [61], ctx [0xf6f5f200] msg_type[0] last_packet[1]
+[10/09/1973-18:58:31.745849],[OMCI:OmciTxRx],OMCI response are ready to be received on the UDS! ypacket[0xf6f5f200]
+[10/09/1973-18:58:31.752929],[OMCI:OmciTxRx],isConnectionWithSwitch 0, isConnectionWithUglobSim 0, isConnectionWithApp 1
+[10/09/1973-18:58:31.753064],[OMCI:OmciTxRx],omci_packet TX: len[55], ponOhmIndex[0x406] PON[32] Counter[497] ONUid[1] 34 cf 49 0a 00 07 00 00  f0 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 28
+[10/09/1973-18:58:31.753093],[OMCI:OmciTxRx],omci_packet TX to switch - physicalPonIndex [32], ONUid 1
+[10/09/1973-18:58:31.753112],[OMCI:OmciTxRx],set packetSwitch shaper 15 >>> 0
+[10/09/1973-18:58:31.753146],[OMCI:OmciTxRx],finish ! set packetSwitch shaper >>> 15
+[10/09/1973-18:58:31.753173],[OMCI:OmciTxRx],>> out omci len [55], ctx [0xf6f5f2e0] msg_type[0] last_packet[1]
+[10/09/1973-18:58:31.753200],[OMCI:OmciTxRx],OMCI request are ready to be received on the UDS! ypacket[0xf6f5f2e0]
+[10/09/1973-18:58:31.755856],[OMCI:OmciTxRx],isConnectionWithSwitch 1, isConnectionWithUglobSim 0, isConnectionWithApp 0
+[10/09/1973-18:58:31.755931],[OMCI:OmciTxRx],omci_packet RX: ctObjIndex[0x406] physicalPonIndex[32] Counter[500] ONUid[1] 34 cf 29 0a 00 07 00 00  00 f0 00 33 46 45 34 37  30 35 39 42 46 48 42 32  31 01 01 01 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 28 ac 88 3f 62
+[10/09/1973-18:58:31.755954],[OMCI:OmciTxRx],omci_packet RX: received OMCI message without mic ERROR, set micErrCount=0
+[10/09/1973-18:58:31.755974],[OMCI:OmciTxRx],set packetApp shaper 15 >>> 0
+[10/09/1973-18:58:31.756004],[OMCI:OmciTxRx],finish ! set packetApp shaper >>> 15
+[10/09/1973-18:58:31.756029],[OMCI:OmciTxRx],<< in  omci len [61], ctx [0xf6f5f200] msg_type[0] last_packet[1]
+[10/09/1973-18:58:31.756047],[OMCI:OmciTxRx],OMCI response are ready to be received on the UDS! ypacket[0xf6f5f200]
+[10/09/1973-18:58:31.756925],[OMCI:OmciTxRx],isConnectionWithSwitch 0, isConnectionWithUglobSim 0, isConnectionWithApp 1
+[10/09/1973-18:58:31.756994],[OMCI:OmciTxRx],omci_packet TX: len[55], ponOhmIndex[0x406] PON[32] Counter[498] ONUid[1] 34 d0 49 0a 00 07 00 01  f0 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 28
+[10/09/1973-18:58:31.757020],[OMCI:OmciTxRx],omci_packet TX to switch - physicalPonIndex [32], ONUid 1
+[10/09/1973-18:58:31.757038],[OMCI:OmciTxRx],set packetSwitch shaper 15 >>> 0
+[10/09/1973-18:58:31.757065],[OMCI:OmciTxRx],finish ! set packetSwitch shaper >>> 15
+[10/09/1973-18:58:31.757089],[OMCI:OmciTxRx],>> out omci len [55], ctx [0xf6f5f2e0] msg_type[0] last_packet[1]
+[10/09/1973-18:58:31.757121],[OMCI:OmciTxRx],OMCI request are ready to be received on the UDS! ypacket[0xf6f5f2e0]
+[10/09/1973-18:58:31.758673],[OMCI:OmciTxRx],isConnectionWithSwitch 1, isConnectionWithUglobSim 0, isConnectionWithApp 0
+[10/09/1973-18:58:31.758727],[OMCI:OmciTxRx],omci_packet RX: ctObjIndex[0x406] physicalPonIndex[32] Counter[501] ONUid[1] 34 d0 29 0a 00 07 00 01  00 f0 00 33 46 45 34 37  30 35 39 42 46 48 42 32  31 00 00 01 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 28 e6 dd c8 ee
+[10/09/1973-18:58:31.758748],[OMCI:OmciTxRx],omci_packet RX: received OMCI message without mic ERROR, set micErrCount=0
+[10/09/1973-18:58:31.758766],[OMCI:OmciTxRx],set packetApp shaper 15 >>> 0
+[10/09/1973-18:58:31.758792],[OMCI:OmciTxRx],finish ! set packetApp shaper >>> 15
+[10/09/1973-18:58:31.758813],[OMCI:OmciTxRx],<< in  omci len [61], ctx [0xf6f5f200] msg_type[0] last_packet[1]
+[10/09/1973-18:58:31.758831],[OMCI:OmciTxRx],OMCI response are ready to be received on the UDS! ypacket[0xf6f5f200]
+[10/09/1973-18:58:31.760614],[OMCI:OmciTxRx],isConnectionWithSwitch 0, isConnectionWithUglobSim 0, isConnectionWithApp 1
+[10/09/1973-18:58:31.760693],[OMCI:OmciTxRx],omci_packet TX: len[55], ponOhmIndex[0x406] PON[32] Counter[499] ONUid[1] 34 d1 49 0a 00 07 00 02  f0 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 28
+[10/09/1973-18:58:31.760719],[OMCI:OmciTxRx],omci_packet TX to switch - physicalPonIndex [32], ONUid 1
+[10/09/1973-18:58:31.760737],[OMCI:OmciTxRx],set packetSwitch shaper 15 >>> 0
+[10/09/1973-18:58:31.760766],[OMCI:OmciTxRx],finish ! set packetSwitch shaper >>> 15
+[10/09/1973-18:58:31.760833],[OMCI:OmciTxRx],>> out omci len [55], ctx [0xf6f5f2e0] msg_type[0] last_packet[1]
+[10/09/1973-18:58:31.760853],[OMCI:OmciTxRx],OMCI request are ready to be received on the UDS! ypacket[0xf6f5f2e0]
+[10/09/1973-18:58:31.762728],[OMCI:OmciTxRx],isConnectionWithSwitch 1, isConnectionWithUglobSim 0, isConnectionWithApp 0
+[10/09/1973-18:58:31.762798],[OMCI:OmciTxRx],omci_packet RX: ctObjIndex[0x406] physicalPonIndex[32] Counter[502] ONUid[1] 34 d1 29 0a 00 07 00 02  00 f0 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 01 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 28 16 7f 86 2a
+[10/09/1973-18:58:31.762821],[OMCI:OmciTxRx],omci_packet RX: received OMCI message without mic ERROR, set micErrCount=0
+[10/09/1973-18:58:31.762841],[OMCI:OmciTxRx],set packetApp shaper 15 >>> 0
+[10/09/1973-18:58:31.762868],[OMCI:OmciTxRx],finish ! set packetApp shaper >>> 15
+[10/09/1973-18:58:31.762891],[OMCI:OmciTxRx],<< in  omci len [61], ctx [0xf6f5f200] msg_type[0] last_packet[1]
+[10/09/1973-18:58:31.762909],[OMCI:OmciTxRx],OMCI response are ready to be received on the UDS! ypacket[0xf6f5f200]
+[10/09/1973-18:58:31.763595],[OMCI:OmciTxRx],isConnectionWithSwitch 0, isConnectionWithUglobSim 0, isConnectionWithApp 1
+[10/09/1973-18:58:31.763654],[OMCI:OmciTxRx],omci_packet TX: len[55], ponOhmIndex[0x406] PON[32] Counter[500] ONUid[1] 34 d2 49 0a 00 07 00 03  f0 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 28
+[10/09/1973-18:58:31.763683],[OMCI:OmciTxRx],omci_packet TX to switch - physicalPonIndex [32], ONUid 1
+[10/09/1973-18:58:31.763701],[OMCI:OmciTxRx],set packetSwitch shaper 15 >>> 0
+[10/09/1973-18:58:31.763727],[OMCI:OmciTxRx],finish ! set packetSwitch shaper >>> 15
+[10/09/1973-18:58:31.763749],[OMCI:OmciTxRx],>> out omci len [55], ctx [0xf6f5f2e0] msg_type[0] last_packet[1]
+[10/09/1973-18:58:31.763767],[OMCI:OmciTxRx],OMCI request are ready to be received on the UDS! ypacket[0xf6f5f2e0]
+[10/09/1973-18:58:31.765669],[OMCI:OmciTxRx],isConnectionWithSwitch 1, isConnectionWithUglobSim 0, isConnectionWithApp 0
+[10/09/1973-18:58:31.765738],[OMCI:OmciTxRx],omci_packet RX: ctObjIndex[0x406] physicalPonIndex[32] Counter[503] ONUid[1] 34 d2 29 0a 00 07 00 03  00 f0 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 28 38 8c 38 32
+[10/09/1973-18:58:31.765777],[OMCI:OmciTxRx],omci_packet RX: received OMCI message without mic ERROR, set micErrCount=0
+[10/09/1973-18:58:31.765796],[OMCI:OmciTxRx],set packetApp shaper 15 >>> 0
+[10/09/1973-18:58:31.765821],[OMCI:OmciTxRx],finish ! set packetApp shaper >>> 15
+[10/09/1973-18:58:31.765843],[OMCI:OmciTxRx],<< in  omci len [61], ctx [0xf6f5f200] msg_type[0] last_packet[1]
+[10/09/1973-18:58:31.765866],[OMCI:OmciTxRx],OMCI response are ready to be received on the UDS! ypacket[0xf6f5f200]
+[10/09/1973-18:58:31.767596],[OMCI:OmciTxRx],isConnectionWithSwitch 0, isConnectionWithUglobSim 0, isConnectionWithApp 1
+[10/09/1973-18:58:31.767674],[OMCI:OmciTxRx],omci_packet TX: len[55], ponOhmIndex[0x406] PON[32] Counter[501] ONUid[1] 34 d3 49 0a 00 07 00 04  f0 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 28
+[10/09/1973-18:58:31.767700],[OMCI:OmciTxRx],omci_packet TX to switch - physicalPonIndex [32], ONUid 1
+[10/09/1973-18:58:31.767718],[OMCI:OmciTxRx],set packetSwitch shaper 15 >>> 0
+[10/09/1973-18:58:31.767746],[OMCI:OmciTxRx],finish ! set packetSwitch shaper >>> 15
+[10/09/1973-18:58:31.767769],[OMCI:OmciTxRx],>> out omci len [55], ctx [0xf6f5f2e0] msg_type[0] last_packet[1]
+[10/09/1973-18:58:31.767787],[OMCI:OmciTxRx],OMCI request are ready to be received on the UDS! ypacket[0xf6f5f2e0]
+[10/09/1973-18:58:31.769719],[OMCI:OmciTxRx],isConnectionWithSwitch 1, isConnectionWithUglobSim 0, isConnectionWithApp 0
+[10/09/1973-18:58:31.769775],[OMCI:OmciTxRx],omci_packet RX: ctObjIndex[0x406] physicalPonIndex[32] Counter[504] ONUid[1] 34 d3 29 0a 00 07 00 04  00 f0 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 01 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 28 6b 81 ba af
+[10/09/1973-18:58:31.769798],[OMCI:OmciTxRx],omci_packet RX: received OMCI message without mic ERROR, set micErrCount=0
+[10/09/1973-18:58:31.769816],[OMCI:OmciTxRx],set packetApp shaper 15 >>> 0
+[10/09/1973-18:58:31.769842],[OMCI:OmciTxRx],finish ! set packetApp shaper >>> 15
+[10/09/1973-18:58:31.769863],[OMCI:OmciTxRx],<< in  omci len [61], ctx [0xf6f5f200] msg_type[0] last_packet[1]
+[10/09/1973-18:58:31.769881],[OMCI:OmciTxRx],OMCI response are ready to be received on the UDS! ypacket[0xf6f5f200]
+[10/09/1973-18:58:31.770518],[OMCI:OmciTxRx],isConnectionWithSwitch 0, isConnectionWithUglobSim 0, isConnectionWithApp 1
+[10/09/1973-18:58:31.770575],[OMCI:OmciTxRx],omci_packet TX: len[55], ponOhmIndex[0x406] PON[32] Counter[502] ONUid[1] 34 d4 49 0a 00 07 00 05  f0 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 28
+[10/09/1973-18:58:31.770599],[OMCI:OmciTxRx],omci_packet TX to switch - physicalPonIndex [32], ONUid 1
+[10/09/1973-18:58:31.770618],[OMCI:OmciTxRx],set packetSwitch shaper 15 >>> 0
+[10/09/1973-18:58:31.770644],[OMCI:OmciTxRx],finish ! set packetSwitch shaper >>> 15
+[10/09/1973-18:58:31.770666],[OMCI:OmciTxRx],>> out omci len [55], ctx [0xf6f5f2e0] msg_type[0] last_packet[1]
+[10/09/1973-18:58:31.770683],[OMCI:OmciTxRx],OMCI request are ready to be received on the UDS! ypacket[0xf6f5f2e0]
+[10/09/1973-18:58:31.772685],[OMCI:OmciTxRx],isConnectionWithSwitch 1, isConnectionWithUglobSim 0, isConnectionWithApp 0
+[10/09/1973-18:58:31.772740],[OMCI:OmciTxRx],omci_packet RX: ctObjIndex[0x406] physicalPonIndex[32] Counter[505] ONUid[1] 34 d4 29 0a 00 07 00 05  00 f0 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 28 7a 19 6c cc
+[10/09/1973-18:58:31.772762],[OMCI:OmciTxRx],omci_packet RX: received OMCI message without mic ERROR, set micErrCount=0
+[10/09/1973-18:58:31.772781],[OMCI:OmciTxRx],set packetApp shaper 15 >>> 0
+[10/09/1973-18:58:31.772834],[OMCI:OmciTxRx],finish ! set packetApp shaper >>> 15
+[10/09/1973-18:58:31.772856],[OMCI:OmciTxRx],<< in  omci len [61], ctx [0xf6f5f200] msg_type[0] last_packet[1]
+[10/09/1973-18:58:31.772874],[OMCI:OmciTxRx],OMCI response are ready to be received on the UDS! ypacket[0xf6f5f200]
+[10/09/1973-18:58:31.781843],[OMCI:OmciTxRx],isConnectionWithSwitch 0, isConnectionWithUglobSim 0, isConnectionWithApp 1
+[10/09/1973-18:58:31.781980],[OMCI:OmciTxRx],omci_packet TX: len[55], ponOhmIndex[0x406] PON[32] Counter[503] ONUid[1] 34 d5 49 0a 01 07 80 01  80 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 28
+[10/09/1973-18:58:31.782010],[OMCI:OmciTxRx],omci_packet TX to switch - physicalPonIndex [32], ONUid 1
+[10/09/1973-18:58:31.782029],[OMCI:OmciTxRx],set packetSwitch shaper 15 >>> 0
+[10/09/1973-18:58:31.782062],[OMCI:OmciTxRx],finish ! set packetSwitch shaper >>> 15
+[10/09/1973-18:58:31.782089],[OMCI:OmciTxRx],>> out omci len [55], ctx [0xf6f5f2e0] msg_type[0] last_packet[1]
+[10/09/1973-18:58:31.782107],[OMCI:OmciTxRx],OMCI request are ready to be received on the UDS! ypacket[0xf6f5f2e0]
+[10/09/1973-18:58:31.784747],[OMCI:OmciTxRx],isConnectionWithSwitch 1, isConnectionWithUglobSim 0, isConnectionWithApp 0
+[10/09/1973-18:58:31.784818],[OMCI:OmciTxRx],omci_packet RX: ctObjIndex[0x406] physicalPonIndex[32] Counter[506] ONUid[1] 34 d5 29 0a 01 07 80 01  00 80 00 01 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 28 b6 2f a4 f4
+[10/09/1973-18:58:31.784842],[OMCI:OmciTxRx],omci_packet RX: received OMCI message without mic ERROR, set micErrCount=0
+[10/09/1973-18:58:31.784862],[OMCI:OmciTxRx],set packetApp shaper 15 >>> 0
+[10/09/1973-18:58:31.784890],[OMCI:OmciTxRx],finish ! set packetApp shaper >>> 15
+[10/09/1973-18:58:31.784917],[OMCI:OmciTxRx],<< in  omci len [61], ctx [0xf6f5f200] msg_type[0] last_packet[1]
+[10/09/1973-18:58:31.784935],[OMCI:OmciTxRx],OMCI response are ready to be received on the UDS! ypacket[0xf6f5f200]
+[10/09/1973-18:58:31.796729],[xponhwa:main],start waitTimer for Pon[32]
+[10/09/1973-18:58:31.797260],[Faults:main],call sendOnuBulkAlarmToClients: physicalPonIndex(32),ontId(2),notifyType(2) defectStatus(0x1),defectChangedReport(0x1), isOntPlomDebug (0) distance(0.57) oatdDefects(0x0)
+
+>> 
+>> 
+>> 
+>> 
+>> 

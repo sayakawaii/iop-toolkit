@@ -1,0 +1,256 @@
+{
+    "Me": {
+        "id": 334,
+        "name": "EthernetFrameExtendedPM",
+        "access": "CreatedByOLT",
+        "type": "Config",
+        "action": [
+            "Create",
+            "Delete",
+            "Get",
+            "Set",
+            "Get current data"
+        ],
+        "instance": {
+            "type": "Dynamic",
+            "value": 0
+        },
+        "attributes": {
+            "attribute": [
+                {
+                    "name": "Interval end time",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Control block",
+                    "size": 16,
+                    "format": "Array Structure",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC"
+                    ],
+                    "category": "Mandatory",
+                    "structure": {
+                        "fields": [
+                            {
+                                "name": "Threshold data 1/2 ID",
+                                "size": 16,
+                                "format": "UnsignedInteger"
+                            },
+                            {
+                                "name": "Parent ME class",
+                                "size": 16,
+                                "format": "UnsignedInteger"
+                            },
+                            {
+                                "name": "Parent ME instance",
+                                "size": 16,
+                                "format": "UnsignedInteger"
+                            },
+                            {
+                                "name": "Accumulation disable",
+                                "size": 16,
+                                "format": "UnsignedInteger"
+                            },
+                            {
+                                "name": "TCA disable",
+                                "size": 16,
+                                "format": "UnsignedInteger"
+                            },
+                            {
+                                "name": "Control fields",
+                                "size": 16,
+                                "format": "UnsignedInteger"
+                            },
+                            {
+                                "name": "TCI",
+                                "size": 16,
+                                "format": "Array Structure",
+                                "structure": {
+                                    "fields": [
+                                        {
+                                            "name": "Priority Code Point(PCP)",
+                                            "size": 3,
+                                            "format": "UnsignedInteger"
+                                        },
+                                        {
+                                            "name": "Drop Eligible Indicator(DEI)",
+                                            "size": 1,
+                                            "format": "UnsignedInteger"
+                                        },
+                                        {
+                                            "name": "VLAN Identifier(VID)",
+                                            "size": 12,
+                                            "format": "UnsignedInteger"
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "name": "Reserved",
+                                "size": 16,
+                                "format": "UnsignedInteger"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "Drop events",
+                    "size": 4,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Octets",
+                    "size": 4,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Frames",
+                    "size": 4,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Broadcast frames",
+                    "size": 4,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Multicast frames",
+                    "size": 4,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "CRC errored frames",
+                    "size": 4,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Undersize frames",
+                    "size": 4,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Oversize frames",
+                    "size": 4,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Frames 64 octets",
+                    "size": 4,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Frames 65 to 127 octets",
+                    "size": 4,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Frames 128 to 255 octets",
+                    "size": 4,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Frames 256 to 511 octets",
+                    "size": 4,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Frames 512 to 1023 octets",
+                    "size": 4,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Frames 1024 to 1518 octets",
+                    "size": 4,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                }
+            ]
+        },
+        "alarms": {
+            "alarm": [
+                {
+                    "number": 0,
+                    "name": "Drop events",
+                    "description": "Drop events threshold crossing alert"
+                },
+                {
+                    "number": 1,
+                    "name": "CRC errored packets",
+                    "description": "Upstream packets with correct length but wrong FCS threshold crossing alert"
+                },
+                {
+                    "number": 2,
+                    "name": "Undersize packets",
+                    "description": "Packets with less than 64 octets length threshold crossing alert"
+                },
+                {
+                    "number": 3,
+                    "name": "Oversize packets",
+                    "description": "Packets with more than 1518 octets length threshold crossing alert"
+                }
+            ]
+        }
+    }
+}

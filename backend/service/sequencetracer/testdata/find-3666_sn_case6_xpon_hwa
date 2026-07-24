@@ -1,0 +1,176 @@
+/isam/logs/app_logs/xpon_hwa_app # cat traces.log 
+0
+[23/04/1972-22:36:12.465493],[xponhwa:main],-------------mbxSendHdl[0] is not null!--------------
+[23/04/1972-22:36:12.470537],[xponhwa:main],Command response message received
+[23/04/1972-22:36:12.470573],[xponhwa:main],main thread handle_CmdRespMsg: cpu 0 command_code is: 0x63
+[23/04/1972-22:36:12.470594],[xponhwa:main],main thread handle_CmdRespMsg: PonIndex is: 32 response: 0(0-Accepted)
+[23/04/1972-22:36:12.470619],[xponhwa:main],main thread handle_CmdRespMsg: cmd 0x63 succeeded response. opInd=0
+[23/04/1972-22:36:42.465556],[xponhwa:main],-------------mbxSendHdl[0] is not null!--------------
+[23/04/1972-22:36:42.470863],[xponhwa:main],Command response message received
+[23/04/1972-22:36:42.470922],[xponhwa:main],main thread handle_CmdRespMsg: cpu 0 command_code is: 0x63
+[23/04/1972-22:36:42.470943],[xponhwa:main],main thread handle_CmdRespMsg: PonIndex is: 32 response: 0(0-Accepted)
+[23/04/1972-22:36:42.470967],[xponhwa:main],main thread handle_CmdRespMsg: cmd 0x63 succeeded response. opInd=0
+[23/04/1972-22:36:48.734474],[yproto:main],on_request proto msg
+[23/04/1972-22:36:48.734516],[yproto:main],{
+ "dmsCommitInform": {
+  "dmsCommitState": "DMS_COMMIT_STATE_BEGIN"
+ }
+}
+
+[23/04/1972-22:36:48.734539],[xponhwa:main],xponInfraCfgWrapperServer::on_request - The Msg(281 kDmsCommitInform) is received
+[23/04/1972-22:36:48.734568],[xponhwa:main],processPhysicalPonConfigRequest::on_request - The Msg(281) is received
+[23/04/1972-22:36:48.747630],[yproto:main],on_request proto msg
+[23/04/1972-22:36:48.747671],[yproto:main],{
+ "onuDeleteRequest": {
+  "vaniObjectIndex": {
+   "index": 519
+  },
+  "channelObjectIndex": {
+   "index": 517
+  }
+ }
+}
+
+[23/04/1972-22:36:48.747695],[xponhwa:main],onuMgntOltCfgWrapperServer::on_request - The Msg(3 kOnuDeleteRequest) is received from client OnuMgntOlt
+[23/04/1972-22:36:48.747714],[xponhwa:main],OnuMsgHandler::processConfigureOnuRequest() - The Msg(3) is received from client
+[23/04/1972-22:36:48.747731],[xponhwa:main],>processOnuDeleteRequest()
+[23/04/1972-22:36:48.747749],[xponhwa:main],Delete onuId with vaniObjIndex[519]
+[23/04/1972-22:36:48.747780],[xponhwa:main],delete_vani_list_element Calling modify context
+.
+[23/04/1972-22:36:48.747800],[xponhwa:main],operator():IN CT  329 deleted vani is: 519
+[23/04/1972-22:36:48.747818],[xponhwa:main],Insert physicalPonIndex for PON CAC when onu is deleted.
+[23/04/1972-22:36:48.747838],[xponhwa:main],insert PhysicalPonIndex 32, total 1
+[23/04/1972-22:36:48.747864],[xponhwa:main],[PON 32] updateDetectInfo SN[ALCLF941B466] - RegistrationId[] in OntdetectInfoMap action[2] onuIndex is [2]
+[23/04/1972-22:36:48.747888],[FastRecover:main],DataId [8] is changed in state [0]!
+[23/04/1972-22:36:48.748928],[xponhwa:main],[PON 32] DELETE_SER_NUM command processed SN ALCLf941b466
+[23/04/1972-22:36:48.748956],[xponhwa:main],-------------mbxSendHdl[0] is not null!--------------
+[23/04/1972-22:36:48.749008],[onuProtect:main],delOnuCfgIndex onuOhmObjIndex[519],OnuIndex[2],physicalPonIndex[32]
+[23/04/1972-22:36:48.749028],[onuProtect:main],the count found in onuCfgIndexMap:1
+[23/04/1972-22:36:48.749045],[onuProtect:main],found Onu in onuCfgIndexMap! Delete it
+[23/04/1972-22:36:48.749064],[xponhwa:main],OnuCfgMgnt::OnuIndex[2],physicalPonIndex[32] is deleted from OnuCfgInfoMap
+[23/04/1972-22:36:48.749084],[FastRecover:main],DataId [1] is changed in state [0]!
+[23/04/1972-22:36:48.749648],[FastRecover:main],DataId [2] is changed in state [0]!
+[23/04/1972-22:36:48.750179],[xponhwa:main],Delete onuObjIdxCfg
+[23/04/1972-22:36:48.750202],[xponhwa:main],ponId(32), hw_id(0), ontId(2), onuId(1), serial_number(ALCLF941B466), isRanged(0), ohmObjIndex(519), ctIndex(329)
+[23/04/1972-22:36:48.750827],[xponhwa:main],[processOnuDeleteRequest] notify all onts are deleted under pon[32]!
+[23/04/1972-22:36:48.750867],[xponhwa:main],[onAllOnuDeletedUnderPon] all onus are deleted under pon[32]!
+[23/04/1972-22:36:48.750887],[xponhwa:main],[onAllOnuDeletedUnderPon] No Ct-los exist and nothing need to do!
+[23/04/1972-22:36:48.750911],[xponhwa:main],processOnuDeleteRequest: send response before
+[23/04/1972-22:36:48.751546],[yproto:main],send_response proto msg
+[23/04/1972-22:36:48.751568],[yproto:main],{
+ "onuDeleteResponse": {
+  "vaniObjectIndex": {
+   "index": 519
+  },
+  "channelObjectIndex": {
+   "index": 517
+  },
+  "returnCode": "NO_ERROR"
+ }
+}
+
+[23/04/1972-22:36:48.751621],[xponhwa:main],processOnuDeleteRequest: send response message succeed
+[23/04/1972-22:36:48.755151],[yproto:main],on_request proto msg
+[23/04/1972-22:36:48.755196],[yproto:main],{
+ "dmsCommitInform": {
+  "dmsCommitState": "DMS_COMMIT_STATE_END"
+ }
+}
+
+[23/04/1972-22:36:48.755218],[xponhwa:main],xponInfraCfgWrapperServer::on_request - The Msg(281 kDmsCommitInform) is received
+[23/04/1972-22:36:48.755237],[xponhwa:main],processPhysicalPonConfigRequest::on_request - The Msg(281) is received
+[23/04/1972-22:36:48.755262],[xponhwa:main],getPonCacResultMapSize: 1
+[23/04/1972-22:36:48.755282],[xponhwa:main],xPonHwaPonCAC::loadPonCacCfgInfo(): 32
+[23/04/1972-22:36:48.755313],[xponhwa:main],Get physicalPonCfgInfo: pon_type = 2, upstream_channel_speed=2, polling_period =100, differtial_fiber_distance =20, burstOverhead =0
+[23/04/1972-22:36:48.755342],[xponcac:main],load Channel Pair CfgData(cpIdx=32,cpType=2,upSpeed=0,ponType=2,burstReduced=0)
+[23/04/1972-22:36:48.755396],[xponcac:main],getRWOFactor, quietWinLen = 250 us, pollingPeriod = 10000 ms rwoFactor = 0.000100.
+[23/04/1972-22:36:48.755433],[xponcac:main],Calculate Basic Pon Overhead: ponType = 2, RWO = 996, THW = 0, basicOverhead = 996.
+[23/04/1972-22:36:48.755473],[xponhwa:main],getDsPonCapacity(): ponType(2), fecStatus(1), dsPonCapacity(8637993)
+[23/04/1972-22:36:48.755490],[xponhwa:main],Set CAC result: dsPonCapacity:8637993
+[23/04/1972-22:36:48.755514],[xponcac:main],Calculate default VAni resources when there is no VAni in the ChannelPair, clear burstReduced.
+[23/04/1972-22:36:48.755535],[xponcac:main],Get sumTcontsPerFrame = 12500, Ont maxTcontsPerFrame = 1600000, sumTcontsPerFramePlouOrig = 0.
+[23/04/1972-22:36:48.755552],[xponcac:main],Get sumTcontsPerFrame = 12500, Ont sumTcontsPerFrameDbru = 0, sumTcontsPerFramePlou = 12500.
+[23/04/1972-22:36:48.755572],[xponcac:main],getReservedOntMgntBW: input ponType(2), fecFactor(2), bwAIR(0), ontUpSpeed(6), tcontPerOntDbru(0), tcontPerOntPlou(12500),burstReduced(0).
+[23/04/1972-22:36:48.755591],[xponcac:main],getAirBw: bwAIR(0),factorA(1.230000).
+[23/04/1972-22:36:48.755617],[xponcac:main],getPloamOmciBW: maxPloamuOverhead(48.000000),maxOmciOverhead(512.000000),factorA(1.230000).
+[23/04/1972-22:36:48.755642],[xponcac:main],getPlouDbruBW: plouLength = 1360, dbruLength = 4, tcontPerFrameDbru = 0.000000, tcontPerFramePlou = 0.125000, factorA = 1.230000, factorB = 1.000700,burstReduced = 0
+[23/04/1972-22:36:48.755668],[xponcac:main],getPlouDbruBW: FEC2 plouDbru = 10887616.
+[23/04/1972-22:36:48.755686],[xponcac:main],getReservedOntMgntBW: ponType(2), airBw(0), ploamOmci(689), plouDbru(10888).
+[23/04/1972-22:36:48.755703],[xponcac:main],getReservedOntMgntBW total = 11577
+[23/04/1972-22:36:48.755720],[xponcac:main],getAirBw: bwAIR(0),factorA(1.100000).
+[23/04/1972-22:36:48.755741],[xponcac:main],getPloamOmciBW: maxPloamuOverhead(48.000000),maxOmciOverhead(512.000000),factorA(1.100000).
+[23/04/1972-22:36:48.755763],[xponcac:main],getPlouDbruBW: plouLength = 496, dbruLength = 4, tcontPerFrameDbru = 0.000000, tcontPerFramePlou = 0.125000, factorA = 1.100000, factorB = 1.001600,burstReduced = 0
+[23/04/1972-22:36:48.755780],[xponcac:main],getPlouDbruBW: FEC2 plouDbru = 3974349.
+[23/04/1972-22:36:48.755797],[xponcac:main],getReservedOntMgntBW: XGPON airBw(0)* XGS_FACTOR, ploamOmci(616)* XGS_FACTOR, plouDbru(3975)*airFactor(1).
+[23/04/1972-22:36:48.755814],[xponcac:main],getReservedOntMgntBW: XGPON bw = 18364
+[23/04/1972-22:36:48.755830],[xponcac:main],getReservedOntMgntBW XGSPON repalce total = max(XGSPON bw(11577), XGPON bw(18364)) = 18364
+[23/04/1972-22:36:48.755848],[xponcac:main],Calculate reserved resources for ChannelPair(32), basicPonOverhead = 996, totalVAniResources = 18364.
+[23/04/1972-22:36:48.755868],[xponcac:main],Calculate default VAni resources when there is no VAni in the ChannelPair, clear burstReduced.
+[23/04/1972-22:36:48.755886],[xponcac:main],Get sumTcontsPerFrame = 12500, Ont maxTcontsPerFrame = 1600000, sumTcontsPerFramePlouOrig = 0.
+[23/04/1972-22:36:48.755903],[xponcac:main],Get sumTcontsPerFrame = 12500, Ont sumTcontsPerFrameDbru = 0, sumTcontsPerFramePlou = 12500.
+[23/04/1972-22:36:48.755921],[xponcac:main],getReservedOntMgntBW: input ponType(2), fecFactor(2), bwAIR(0), ontUpSpeed(6), tcontPerOntDbru(0), tcontPerOntPlou(12500),burstReduced(0).
+[23/04/1972-22:36:48.755938],[xponcac:main],getAirBw: bwAIR(0),factorA(1.230000).
+[23/04/1972-22:36:48.755959],[xponcac:main],getPloamOmciBW: maxPloamuOverhead(48.000000),maxOmciOverhead(512.000000),factorA(1.230000).
+[23/04/1972-22:36:48.755981],[xponcac:main],getPlouDbruBW: plouLength = 1360, dbruLength = 4, tcontPerFrameDbru = 0.000000, tcontPerFramePlou = 0.125000, factorA = 1.230000, factorB = 1.000700,burstReduced = 0
+[23/04/1972-22:36:48.755998],[xponcac:main],getPlouDbruBW: FEC2 plouDbru = 10887616.
+[23/04/1972-22:36:48.756015],[xponcac:main],getReservedOntMgntBW: ponType(2), airBw(0), ploamOmci(689), plouDbru(10888).
+[23/04/1972-22:36:48.756031],[xponcac:main],getReservedOntMgntBW total = 11577
+[23/04/1972-22:36:48.756055],[xponcac:main],getAirBw: bwAIR(0),factorA(1.100000).
+[23/04/1972-22:36:48.756076],[xponcac:main],getPloamOmciBW: maxPloamuOverhead(48.000000),maxOmciOverhead(512.000000),factorA(1.100000).
+[23/04/1972-22:36:48.756107],[xponcac:main],getPlouDbruBW: plouLength = 496, dbruLength = 4, tcontPerFrameDbru = 0.000000, tcontPerFramePlou = 0.125000, factorA = 1.100000, factorB = 1.001600,burstReduced = 0
+[23/04/1972-22:36:48.756224],[xponcac:main],getPlouDbruBW: FEC2 plouDbru = 3974349.
+[23/04/1972-22:36:48.756246],[xponcac:main],getReservedOntMgntBW: XGPON airBw(0)* XGS_FACTOR, ploamOmci(616)* XGS_FACTOR, plouDbru(3975)*airFactor(1).
+[23/04/1972-22:36:48.756263],[xponcac:main],getReservedOntMgntBW: XGPON bw = 18364
+[23/04/1972-22:36:48.756280],[xponcac:main],getReservedOntMgntBW XGSPON repalce total = max(XGSPON bw(11577), XGPON bw(18364)) = 18364
+[23/04/1972-22:36:48.756297],[xponcac:main],Calculate reserved resources for ChannelPair(32), basicPonOverhead = 996, totalVAniResources = 18364.
+[23/04/1972-22:36:48.756326],[xponhwa:main],sendPonCacResultNotifMsgToApp()
+[23/04/1972-22:36:48.756632],[yproto:main],send_oneway proto msg
+[23/04/1972-22:36:48.756658],[yproto:main],{
+ "ponCacResultNotificationMsg": {
+  "cacList": [
+   {
+    "ctObjectIndex": {
+     "index": 517
+    },
+    "availableUsBw": "9933920",
+    "usL2Capacity": "9718550",
+    "dsL2Capacity": "8637993"
+   }
+  ]
+ }
+}
+
+[23/04/1972-22:36:48.756758],[xponhwa:main],Command response message received
+[23/04/1972-22:36:48.756779],[xponhwa:main],main thread handle_CmdRespMsg: cpu 0 command_code is: 0x3
+[23/04/1972-22:36:48.756803],[xponhwa:main],main thread handle_CmdRespMsg: PonIndex is: 32 response: 0(0-Accepted)
+[23/04/1972-22:36:48.756834],[xponhwa:main],main thread handle_CmdRespMsg: cmd 0x3 succeeded response. opInd=0
+[23/04/1972-22:37:12.465800],[xponhwa:main],-------------mbxSendHdl[0] is not null!--------------
+[23/04/1972-22:37:12.470844],[xponhwa:main],Command response message received
+[23/04/1972-22:37:12.470879],[xponhwa:main],main thread handle_CmdRespMsg: cpu 0 command_code is: 0x63
+[23/04/1972-22:37:12.470900],[xponhwa:main],main thread handle_CmdRespMsg: PonIndex is: 32 response: 0(0-Accepted)
+[23/04/1972-22:37:12.470925],[xponhwa:main],main thread handle_CmdRespMsg: cmd 0x63 succeeded response. opInd=0
+[23/04/1972-22:37:42.465862],[xponhwa:main],-------------mbxSendHdl[0] is not null!--------------
+[23/04/1972-22:37:42.470897],[xponhwa:main],Command response message received
+[23/04/1972-22:37:42.470933],[xponhwa:main],main thread handle_CmdRespMsg: cpu 0 command_code is: 0x63
+[23/04/1972-22:37:42.470955],[xponhwa:main],main thread handle_CmdRespMsg: PonIndex is: 32 response: 0(0-Accepted)
+[23/04/1972-22:37:42.470979],[xponhwa:main],main thread handle_CmdRespMsg: cmd 0x63 succeeded response. opInd=0
+[23/04/1972-22:38:12.466310],[xponhwa:main],-------------mbxSendHdl[0] is not null!--------------
+[23/04/1972-22:38:12.471434],[xponhwa:main],Command response message received
+[23/04/1972-22:38:12.471470],[xponhwa:main],main thread handle_CmdRespMsg: cpu 0 command_code is: 0x63
+[23/04/1972-22:38:12.471491],[xponhwa:main],main thread handle_CmdRespMsg: PonIndex is: 32 response: 0(0-Accepted)
+[23/04/1972-22:38:12.471515],[xponhwa:main],main thread handle_CmdRespMsg: cmd 0x63 succeeded response. opInd=0
+[23/04/1972-22:38:42.465897],[xponhwa:main],-------------mbxSendHdl[0] is not null!--------------
+[23/04/1972-22:38:42.470987],[xponhwa:main],Command response message received
+[23/04/1972-22:38:42.471026],[xponhwa:main],main thread handle_CmdRespMsg: cpu 0 command_code is: 0x63
+[23/04/1972-22:38:42.471047],[xponhwa:main],main thread handle_CmdRespMsg: PonIndex is: 32 response: 0(0-Accepted)
+[23/04/1972-22:38:42.471071],[xponhwa:main],main thread handle_CmdRespMsg: cmd 0x63 succeeded response. opInd=0
+[23/04/1972-22:39:12.466237],[xponhwa:main],-------------mbxSendHdl[0] is not null!--------------
+[23/04/1972-22:39:12.471298],[xponhwa:main],Command response message received
+[23/04/1972-22:39:12.471333],[xponhwa:main],main thread handle_CmdRespMsg: cpu 0 command_code is: 0x63
+[23/04/1972-22:39:12.471363],[xponhwa:main],main thread handle_CmdRespMsg: PonIndex is: 32 response: 0(0-Accepted)
+[23/04/1972-22:39:12.471387],[xponhwa:main],main thread handle_CmdRespMsg: cmd 0x63 succeeded response. opInd=0
+[23/04/1972-22:39:42.465828],[xponhwa:main],-------------mbxSendHdl[0] is not null!--------------
+[23/04/1972-22:39:42.470857],[xponhwa:main],Command response message received
+[23/04/1972-22:39:42.470893],[xponhwa:main],main thread handle_CmdRespMsg: cpu 0 command_code is: 0x63
+[23/04/1972-22:39:42.470914],[xponhwa:main],main thread handle_CmdRespMsg: PonIndex is: 32 response: 0(0-Accepted)
+[23/04/1972-22:39:42.470939],[xponhwa:main],main thread handle_CmdRespMsg: cmd 0x63 succeeded response. opInd=0

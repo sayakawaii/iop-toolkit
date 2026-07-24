@@ -1,0 +1,302 @@
+/isam/logs/app_logs/OnuMgntOlt # cat traces.log 
+0
+[23/04/1972-22:36:48.741581],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/AsyncCallBack/OnuMgntOltvAniItfSubs.cpp],[111],[OnDeleteCommit],[OnuMgntOlt] enter OnDeleteCommit
+[23/04/1972-22:36:48.741651],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/AsyncCallBack/OnuMgntOltvAniItfSubs.cpp],[114],[OnDeleteCommit],[OnuMgntOlt] vani name= ont1
+[23/04/1972-22:36:48.741812],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/common/yangDataContainer/C_ngpon2_vontani.cpp],[150],[C_ngpon2_vontani],[OnuMgntOlt] speed_monitoring_enabled is : 0
+[23/04/1972-22:36:48.741840],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonUtils/commonUtil.cpp],[543],[convertHexAsciiToString],[OnuMgntOlt] convertHexAsciiToString, str =
+[23/04/1972-22:36:48.741861],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CDeleteVontani.cpp],[763],[CDeleteVontani],[OnuMgntOlt] vontani name = ont1, objectIndex = 519
+[23/04/1972-22:36:48.741881],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CDeleteVontani.cpp],[768],[CDeleteVontani],[OnuMgntOlt] vontani name = ont1, onuName = ONT1, onuId = 1, sn = ALCLF941B466, scgName = scg_pon1, preferCpName = cp_pon1, protectedCpName =
+[23/04/1972-22:36:48.741907],[OnuMgntOlt_app],CDeleteVontani AsyncBeginProc
+[23/04/1972-22:36:48.741926],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CDeleteVontani.cpp],[22],[GponAsyncGetVaniState],[OnuMgntOlt] enter GponAsyncGetVaniState
+[23/04/1972-22:36:48.742099],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CDeleteVontani.cpp],[39],[GponAsyncGetVaniState],[OnuMgntOlt] l_interface.deleteWithKey ret = 0
+[23/04/1972-22:36:48.742637],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonCallBack/CommonDmspCallBack.cpp],[10],[onDmspCommonRespSerial],[OnuMgntOlt] enter onDmspCommonRespSerial
+[23/04/1972-22:36:48.742667],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonCallBack/CommonDmspCallBack.cpp],[14],[onDmspCommonRespSerial],[OnuMgntOlt] Get DataObject Resp - request Id [60]
+[23/04/1972-22:36:48.742689],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonCallBack/CommonDmspCallBack.cpp],[15],[onDmspCommonRespSerial],[OnuMgntOlt] Get DataObject Resp - result [0]
+[23/04/1972-22:36:48.742710],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CDeleteVontani.cpp],[47],[GponAsyncGetVaniStateResult],[OnuMgntOlt] enter GponAsyncGetVaniStateResult
+[23/04/1972-22:36:48.742729],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonUtils/commonUtil.cpp],[10],[getOnuStateByIdentity],[OnuMgntOlt] enter getOnuStateByIdentity
+[23/04/1972-22:36:48.742748],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonUtils/commonUtil.cpp],[14],[getOnuStateByIdentity],[OnuMgntOlt] onuState identity_m: onu-not-present-with-v-ani
+[23/04/1972-22:36:48.742772],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonUtils/commonUtil.cpp],[15],[getOnuStateByIdentity],[OnuMgntOlt] onuState ns_m: urn:bbf:yang:bbf-xpon-onu-types
+[23/04/1972-22:36:48.742796],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonUtils/commonUtil.cpp],[88],[getOnuStateByIdentity],[OnuMgntOlt] onuState: 11
+[23/04/1972-22:36:48.742817],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CDeleteVontani.cpp],[85],[GponAsyncDeleteVaniState],[OnuMgntOlt] enter GponAsyncDeleteVaniState
+[23/04/1972-22:36:48.742835],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CDeleteVontani.cpp],[94],[GponAsyncDeleteVaniState],[OnuMgntOlt] vontaniObjIndex:519
+[23/04/1972-22:36:48.742940],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CDeleteVontani.cpp],[106],[GponAsyncDeleteVaniState],[OnuMgntOlt] Deleting vani entry from ExtODB
+[23/04/1972-22:36:48.742967],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/COnuLastDownReason.cpp],[282],[AsyncBeginProc],[OnuMgntOlt] COnuLastDownReason AsyncBeginProc
+[23/04/1972-22:36:48.742986],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/COnuLastDownReason.cpp],[8],[GponAsyncDownReasonGetExtODB],[OnuMgntOlt] enter GponAsyncDownReasonGetExtODB
+[23/04/1972-22:36:48.743101],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/COnuLastDownReason.cpp],[22],[GponAsyncDownReasonGetExtODB],[OnuMgntOlt] key:ont1 ret:0
+[23/04/1972-22:36:48.743143],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CDeleteVontani.cpp],[111],[GponAsyncDeleteVaniState],[OnuMgntOlt] l_interface.deleteWithKey ret = 0
+[23/04/1972-22:36:48.743227],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonCallBack/CommonDmspCallBack.cpp],[10],[onDmspCommonRespSerial],[OnuMgntOlt] enter onDmspCommonRespSerial
+[23/04/1972-22:36:48.743249],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonCallBack/CommonDmspCallBack.cpp],[14],[onDmspCommonRespSerial],[OnuMgntOlt] Get DataObject Resp - request Id [61]
+[23/04/1972-22:36:48.743267],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonCallBack/CommonDmspCallBack.cpp],[15],[onDmspCommonRespSerial],[OnuMgntOlt] Get DataObject Resp - result [0]
+[23/04/1972-22:36:48.743286],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CDeleteVontani.cpp],[120],[GponAsyncDeleteVaniStateResult],[OnuMgntOlt] enter GponAsyncDeleteVaniStateResult
+[23/04/1972-22:36:48.743304],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CDeleteVontani.cpp],[128],[GponAsyncDeleteVaniStateResult],[OnuMgntOlt] delete vani state success for vontani ont1
+[23/04/1972-22:36:48.743322],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CDeleteVontani.cpp],[135],[GponAsyncDeleteVontaniInterfaceState],[OnuMgntOlt] enter GponAsyncDeleteVontaniInterfaceState
+[23/04/1972-22:36:48.743470],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CDeleteVontani.cpp],[147],[GponAsyncDeleteVontaniInterfaceState],[OnuMgntOlt] l_interface.deleteWithKey ret = 0
+[23/04/1972-22:36:48.743567],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonCallBack/CommonDmspCallBack.cpp],[29],[onDmspCommonResp],[OnuMgntOlt] enter onDmspCommonResp
+[23/04/1972-22:36:48.743595],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonCallBack/CommonDmspCallBack.cpp],[33],[onDmspCommonResp],[OnuMgntOlt] Get DataObject Resp - request Id [62]
+[23/04/1972-22:36:48.743614],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonCallBack/CommonDmspCallBack.cpp],[34],[onDmspCommonResp],[OnuMgntOlt] Get DataObject Resp - result [2]
+[23/04/1972-22:36:48.743633],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/COnuLastDownReason.cpp],[31],[GponAsyncDownReasonGetExtODBResult],[OnuMgntOlt] enter GponAsyncDownReasonGetExtODBResult
+[23/04/1972-22:36:48.743650],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/COnuLastDownReason.cpp],[47],[GponAsyncDownReasonGetExtODBResult],[OnuMgntOlt] get result failed.
+[23/04/1972-22:36:48.743669],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/COnuLastDownReason.cpp],[294],[AsyncErrorProc],[OnuMgntOlt] AsyncErrorProc curState=2, curIndex=2
+[23/04/1972-22:36:48.743838],[OnuMgntOlt_app],AsyncErrorProc curState=2, curIndex=2
+[23/04/1972-22:36:48.743965],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonCallBack/CommonDmspCallBack.cpp],[10],[onDmspCommonRespSerial],[OnuMgntOlt] enter onDmspCommonRespSerial
+[23/04/1972-22:36:48.743987],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonCallBack/CommonDmspCallBack.cpp],[14],[onDmspCommonRespSerial],[OnuMgntOlt] Get DataObject Resp - request Id [63]
+[23/04/1972-22:36:48.744005],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonCallBack/CommonDmspCallBack.cpp],[15],[onDmspCommonRespSerial],[OnuMgntOlt] Get DataObject Resp - result [0]
+[23/04/1972-22:36:48.744025],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CDeleteVontani.cpp],[155],[GponAsyncDeleteVontaniInterfaceStateResult],[OnuMgntOlt] enter GponAsyncDeleteVontaniInterfaceStateResult
+[23/04/1972-22:36:48.744044],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CDeleteVontani.cpp],[163],[GponAsyncDeleteVontaniInterfaceStateResult],[OnuMgntOlt] delete ifindex success for vontani ont1
+[23/04/1972-22:36:48.744061],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CDeleteVontani.cpp],[170],[GponAsyncGetAppDataVaniConfigInfo],[OnuMgntOlt] enter GponAsyncGetAppDataVaniConfigInfo
+[23/04/1972-22:36:48.744088],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CDeleteVontani.cpp],[178],[GponAsyncGetAppDataVaniConfigInfo],[OnuMgntOlt] vontani objType: 297, objIndex: 519
+[23/04/1972-22:36:48.744779],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonCallBack/OHMCallBack.cpp],[23],[getOHMInfo_CallBackSerial],[OnuMgntOlt] enter getOHMInfo_CallBackSerial
+[23/04/1972-22:36:48.744805],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CDeleteVontani.cpp],[188],[GponAsyncGetAppDataVaniConfigInfoResult],[OnuMgntOlt] enter GponAsyncGetAppDataVaniConfigInfoResult
+[23/04/1972-22:36:48.744824],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CDeleteVontani.cpp],[207],[GponAsyncGetAppDataVaniConfigInfoResult],[OnuMgntOlt] preferredChannelPairObjIndex: 516, protectionChannelPairObjIndex: 0
+[23/04/1972-22:36:48.744842],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CDeleteVontani.cpp],[222],[GponAsyncGetChannelterminationSharedData],[OnuMgntOlt] enter GponAsyncGetChannelterminationSharedData
+[23/04/1972-22:36:48.744860],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CDeleteVontani.cpp],[230],[GponAsyncGetChannelterminationSharedData],[OnuMgntOlt] parentRefName is scg_pon1
+[23/04/1972-22:36:48.745474],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonCallBack/OHMCallBack.cpp],[23],[getOHMInfo_CallBackSerial],[OnuMgntOlt] enter getOHMInfo_CallBackSerial
+[23/04/1972-22:36:48.745499],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CDeleteVontani.cpp],[252],[GponAsyncGetChannelterminationSharedDataResult],[OnuMgntOlt] enter GponAsyncGetChannelterminationSharedDataResult
+[23/04/1972-22:36:48.745526],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CDeleteVontani.cpp],[301],[GponAsyncGetChannelterminationSharedDataResult],[OnuMgntOlt] channel termination ulIndex:517
+[23/04/1972-22:36:48.745545],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CDeleteVontani.cpp],[957],[getChannelterminationInfo],[OnuMgntOlt] Not found OHM ctInfo for:517.
+[23/04/1972-22:36:48.745563],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CDeleteVontani.cpp],[307],[GponAsyncGetChannelterminationSharedDataResult],[OnuMgntOlt] ctId: 329
+[23/04/1972-22:36:48.745581],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CDeleteVontani.cpp],[941],[updateChannelterminationInfo],[OnuMgntOlt] Not found OHM ctInfo for:517, add!
+[23/04/1972-22:36:48.745602],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CDeleteVontani.cpp],[283],[GponAsyncGetChannelterminationSharedDataResult],[OnuMgntOlt] channel termination ulIndex:517
+[23/04/1972-22:36:48.745622],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CDeleteVontani.cpp],[291],[GponAsyncGetChannelterminationSharedDataResult],[OnuMgntOlt] ctName: ct_cp_pon1, ctlocation: inside-olt, channelPairRef: cp_pon1
+[23/04/1972-22:36:48.745640],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CDeleteVontani.cpp],[946],[updateChannelterminationInfo],[OnuMgntOlt] Found OHM ctInfo and update for:517.
+[23/04/1972-22:36:48.745658],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CDeleteVontani.cpp],[312],[GponAsyncGetChannelterminationSharedDataResult],[OnuMgntOlt] get_objIndex: 515
+[23/04/1972-22:36:48.745675],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CDeleteVontani.cpp],[313],[GponAsyncGetChannelterminationSharedDataResult],[OnuMgntOlt] get_objType: 295
+[23/04/1972-22:36:48.745692],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CDeleteVontani.cpp],[314],[GponAsyncGetChannelterminationSharedDataResult],[OnuMgntOlt] get_objName: scg_pon1
+[23/04/1972-22:36:48.745709],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CDeleteVontani.cpp],[315],[GponAsyncGetChannelterminationSharedDataResult],[OnuMgntOlt] get_authenticationMethod: 0
+[23/04/1972-22:36:48.745734],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CDeleteVontani.cpp],[321],[GponAsyncGetChannelterminationSharedDataResult],[OnuMgntOlt] ctNum:1.
+[23/04/1972-22:36:48.745752],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CDeleteVontani.cpp],[334],[GponAsyncGetCtObjInfoByObjIndex],[OnuMgntOlt] enter GponAsyncGetCtObjInfoByObjIndex
+[23/04/1972-22:36:48.745771],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CDeleteVontani.cpp],[354],[GponAsyncGetCtObjInfoByObjIndex],[OnuMgntOlt] ctName:ct_cp_pon1, ctLocation:inside-olt, cpNamect:cp_pon1, ctId:329 for ct[517]
+[23/04/1972-22:36:48.745789],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CDeleteVontani.cpp],[362],[GponAsyncGetCtObjInfoByObjIndex],[OnuMgntOlt] *********ct[517] is inside-olt*********
+[23/04/1972-22:36:48.745809],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CDeleteVontani.cpp],[537],[GponAsyncSendOnuStateMsg2Onuside],[OnuMgntOlt] enter GponAsyncSendOnuStateMsg2Onuside
+[23/04/1972-22:36:48.745830],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/gpon_common_itf/src/CGponAsyncInterface.cpp],[667],[SendOnuConnStatusMsg],[OnuMgntOlt] SendOnuConnStatusMsg:ponId:517, onuId:1, onuName:ONT1, connStatus:0, vaniObjIndex:519, detectReason:0, ponType:0
+[23/04/1972-22:36:48.745854],[OnuMgntOlt_sys],On PON (517) ONU (1 ONT1) goes offline being no reason
+[23/04/1972-22:36:48.745871],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/gpon_common_itf/src/CGponAsyncInterface.cpp],[522],[SendOnewayRequest_HypervisorSide],[OnuMgntOlt] enter SendOnewayRequest_HypervisorSide
+[23/04/1972-22:36:48.745889],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/gpon_common_itf/src/CGponAsyncInterface.cpp],[527],[SendOnewayRequest_HypervisorSide],[OnuMgntOlt] -------------OnuMgntCoordinationWrapperServer is ok !
+--------------------------
+[23/04/1972-22:36:48.745910],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/OnuMgntCoordinationWrapperServer.cpp],[50],[sendIpcOneWayRequestToOnumgntHypervisor],[OnuMgntOlt] OnuMgntCoordinationWrapperServer::sendIpcOneWayRequest
+[23/04/1972-22:36:48.745930],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/OnuMgntCoordinationWrapperServer.cpp],[60],[sendIpcOneWayRequestToOnumgntHypervisor],[OnuMgntOlt] start send message to client onumgnt_hypervisor_app
+[23/04/1972-22:36:48.746310],[yproto],send_oneway proto msg
+[23/04/1972-22:36:48.746329],[yproto],{
+ "objType": "VANI",
+ "vaniConnectStatusNotification": {
+  "ctObjectIndex": {
+   "index": 517
+  },
+  "onuId": 1,
+  "status": "DISCONNECT",
+  "onuName": "ONT1",
+  "vaniObjectIndex": {
+   "index": 519
+  },
+  "detectReason": "NO_REASON"
+ }
+}
+
+[23/04/1972-22:36:48.746371],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CDeleteVontani.cpp],[555],[GponAsyncOnuDeleteRequest],[OnuMgntOlt] enter GponAsyncOnuDeleteRequest
+[23/04/1972-22:36:48.746391],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CDeleteVontani.cpp],[564],[GponAsyncOnuDeleteRequest],[OnuMgntOlt] [ASYNC]Config data: keyname = ont1
+[23/04/1972-22:36:48.746409],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CDeleteVontani.cpp],[565],[GponAsyncOnuDeleteRequest],[OnuMgntOlt] [ASYNC]Config data: channelterminationIndex = 329
+[23/04/1972-22:36:48.746426],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CDeleteVontani.cpp],[566],[GponAsyncOnuDeleteRequest],[OnuMgntOlt] [ASYNC]Config data: onuId = 1
+[23/04/1972-22:36:48.746447],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/onuMgntOltCfgWrapperClient.cpp],[59],[sendIpcRequest],[OnuMgntOlt] onuMgntOltCfgWrapperClient:sendIpcRequest()
+[23/04/1972-22:36:48.746938],[yproto],send_request proto msg
+[23/04/1972-22:36:48.746958],[yproto],{
+ "onuDeleteRequest": {
+  "vaniObjectIndex": {
+   "index": 519
+  },
+  "channelObjectIndex": {
+   "index": 517
+  }
+ }
+}
+
+[23/04/1972-22:36:48.747006],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/onuMgntOltCfgWrapperClient.cpp],[75],[sendIpcRequest],[OnuMgntOlt] onuMgntOltCfgWrapperClient successfully sent data to server xpon_hwa
+[23/04/1972-22:36:48.752230],[yproto],on_response proto msg
+[23/04/1972-22:36:48.752259],[yproto],{
+ "onuDeleteResponse": {
+  "vaniObjectIndex": {
+   "index": 519
+  },
+  "channelObjectIndex": {
+   "index": 517
+  },
+  "returnCode": "NO_ERROR"
+ }
+}
+
+[23/04/1972-22:36:48.752283],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/onuMgntOltCfgWrapperClient.cpp],[88],[on_response],[OnuMgntOlt] onuMgntOltCfgWrapperClient::on_response - The Msg(4) is received from server xpon_hwa_app
+[23/04/1972-22:36:48.752302],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/gpon_common_itf/src/CGponAsyncInterface.cpp],[636],[hwAbsResponseReceivedSerial],[OnuMgntOlt] enter hwAbsResponseReceivedSerial
+[23/04/1972-22:36:48.752326],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CDeleteVontani.cpp],[594],[GponAsyncOnuDeleteResponse],[OnuMgntOlt] return_code = 0
+[23/04/1972-22:36:48.752346],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CDeleteVontani.cpp],[606],[GponAsyncOnuDeleteResponse],[OnuMgntOlt] Onu Delete succ
+[23/04/1972-22:36:48.752366],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonUtils/venetAuthMapMgnt.cpp],[347],[delOnuDataMap],[OnuMgntOlt] enter delOnuDataMap
+[23/04/1972-22:36:48.752389],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CDeleteVontani.cpp],[665],[GponAsyncClearVontaniAlarm],[OnuMgntOlt] enter GponAsyncClearVontaniAlarm
+[23/04/1972-22:36:48.752406],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CDeleteVontani.cpp],[673],[GponAsyncClearVontaniAlarm],[OnuMgntOlt] vontaniObjIndex:519
+[23/04/1972-22:36:48.752434],[alarmItf],[File: alarmInterface.cpp, Func: send_alarm_new, Line: 103]
+Number of alarms received from application = 4
+[23/04/1972-22:36:48.752459],[alarmItf],[File: alarmCommon.cpp, Func: validate_alarmInfo, Line: 93]
+Received alarm data: alarmType = 11, bitmap = 0 overruled_severity = 0, objectIndex = 519, objectType = 297
+[23/04/1972-22:36:48.752484],[alarmItf],[File: alarmCommon.cpp, Func: validate_alarmInfo, Line: 96]
+AddnInfo = NULL is passed
+[23/04/1972-22:36:48.752501],[alarmItf],[File: alarmCommon.cpp, Func: validate_alarmInfo, Line: 125]
+Interface type entity type
+[23/04/1972-22:36:48.752520],[alarmItf],[File: alarmCommon.cpp, Func: validate_alarmInfo, Line: 93]
+Received alarm data: alarmType = 34, bitmap = 0 overruled_severity = 0, objectIndex = 519, objectType = 297
+[23/04/1972-22:36:48.752536],[alarmItf],[File: alarmCommon.cpp, Func: validate_alarmInfo, Line: 96]
+AddnInfo = NULL is passed
+[23/04/1972-22:36:48.752551],[alarmItf],[File: alarmCommon.cpp, Func: validate_alarmInfo, Line: 125]
+Interface type entity type
+[23/04/1972-22:36:48.752569],[alarmItf],[File: alarmCommon.cpp, Func: validate_alarmInfo, Line: 93]
+Received alarm data: alarmType = 46, bitmap = 0 overruled_severity = 0, objectIndex = 519, objectType = 297
+[23/04/1972-22:36:48.752585],[alarmItf],[File: alarmCommon.cpp, Func: validate_alarmInfo, Line: 96]
+AddnInfo = NULL is passed
+[23/04/1972-22:36:48.752599],[alarmItf],[File: alarmCommon.cpp, Func: validate_alarmInfo, Line: 125]
+Interface type entity type
+[23/04/1972-22:36:48.752617],[alarmItf],[File: alarmCommon.cpp, Func: validate_alarmInfo, Line: 93]
+Received alarm data: alarmType = 47, bitmap = 0 overruled_severity = 0, objectIndex = 519, objectType = 297
+[23/04/1972-22:36:48.752645],[alarmItf],[File: alarmCommon.cpp, Func: validate_alarmInfo, Line: 96]
+AddnInfo = NULL is passed
+[23/04/1972-22:36:48.752661],[alarmItf],[File: alarmCommon.cpp, Func: validate_alarmInfo, Line: 125]
+Interface type entity type
+[23/04/1972-22:36:48.752683],[alarmItf],[File: alarmCommon.cpp, Func: establishOhmLibConn, Line: 296]
+Ipc handler has already been assigned from OHM library
+[23/04/1972-22:36:48.752834],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CDeleteVontani.cpp],[701],[GponAsyncClearVontaniAlarm],[OnuMgntOlt] send_alarm_new success
+[23/04/1972-22:36:48.752901],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/cmdType/CDeleteVontani.cpp],[989],[AsyncFinishProc],[OnuMgntOlt] AsyncFinishProc curState=13, curIndex=10
+[23/04/1972-22:36:48.752919],[OnuMgntOlt_app],AsyncFinishProc curState=13, curIndex=10
+[23/04/1972-22:36:48.752945],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/OnuAuth/COnuAuthentication.cpp],[711],[COnuAuthentication],[OnuMgntOlt] onuId = 1,scgOhmObjIndex = 515, authType = 2, authMode=0, detected_upstream_rate=255
+[23/04/1972-22:36:48.752963],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/OnuAuth/COnuAuthentication.cpp],[712],[COnuAuthentication],[OnuMgntOlt] onu_detect_sn =
+[23/04/1972-22:36:48.752993],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/OnuAuth/COnuAuthentication.cpp],[1805],[AsyncBeginProc],[OnuMgntOlt] COnuAuthentication AsyncBeginProc
+[23/04/1972-22:36:48.753015],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/OnuAuth/COnuAuthentication.cpp],[227],[GponAsynDeleteVaniOnuAuth],[OnuMgntOlt] enter GponAsynDeleteVaniOnuAuth
+[23/04/1972-22:36:48.753035],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonUtils/vaniCfgMgnt.cpp],[94],[getVaniCfgInfo],[OnuMgntOlt] Obtain VaniCfgMgnt::OnuIndex[1],scgObjectIndex[515] from VaniCfgInfoMap
+[23/04/1972-22:36:48.753054],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonUtils/vaniCfgMgnt.cpp],[105],[getVaniCfgInfo],[OnuMgntOlt] Found onuId in vaniCfgInfoMap!
+[23/04/1972-22:36:48.753073],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/OnuAuth/COnuAuthentication.cpp],[246],[GponAsynDeleteVaniOnuAuth],[OnuMgntOlt] GponAsynDeleteVaniOnuAuth sn[ALCLF941B466], regID[], authMode[0]
+[23/04/1972-22:36:48.753092],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonUtils/vaniCfgMgnt.cpp],[59],[delVaniCfgInfo],[OnuMgntOlt] VaniCfgMgnt::OnuIndex[1],scgObjectIndex[515] is deleted from VaniCfgInfoMap
+[23/04/1972-22:36:48.753109],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonUtils/vaniCfgMgnt.cpp],[69],[delVaniCfgInfo],[OnuMgntOlt] find onuId in vaniCfgInfoMap!
+[23/04/1972-22:36:48.753133],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/OnuAuth/COnuAuthentication.cpp],[1899],[AsyncFinishProc],[OnuMgntOlt] COnuAuthentication AsyncFinishProc
+[23/04/1972-22:36:48.753151],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/OnuAuth/COnuAuthentication.cpp],[1905],[AsyncFinishProc],[OnuMgntOlt] AsyncFinishProc curState=5, curIndex=5
+[23/04/1972-22:36:48.753169],[OnuMgntOlt_app],AsyncFinishProc curState=5, curIndex=5
+[23/04/1972-22:36:48.753186],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/OnuAuth/COnuAuthentication.cpp],[1908],[AsyncFinishProc],[OnuMgntOlt] COnuAuthentication::AsyncFinishProc SN[].
+[23/04/1972-22:36:48.753333],[OnuMgntOlt],[vobs/dsl/sw/y/src/OnuMgntOlt/logic/src/commonCallBack/GponCallBack.cpp],[58],[yipcRespCommonCallBackSerial],[OnuMgntOlt] 
+ ==== GponCallBack:: yipcRespCommonCallBack  ====
+[23/04/1972-22:36:48.753496],[alarmItf],[File: alarmNew.cpp, Func: OhmAlarmBulk_CallBack, Line: 113]
+Enter OhmAlarmBulk_CallBack
+[23/04/1972-22:36:48.753521],[alarmItf],[File: alarmNew.cpp, Func: OhmAlarmBulk_CallBack, Line: 160]
+Translated object XPath is [/if:interfaces/if:interface[if:name='ont1']]
+[23/04/1972-22:36:48.753540],[alarmItf],[File: alarmNew.cpp, Func: OhmAlarmBulk_CallBack, Line: 149]
+Translated objectName is [ont1]
+[23/04/1972-22:36:48.753557],[alarmItf],[File: alarmNew.cpp, Func: OhmAlarmBulk_CallBack, Line: 160]
+Translated object XPath is [/if:interfaces/if:interface[if:name='ont1']]
+[23/04/1972-22:36:48.753573],[alarmItf],[File: alarmNew.cpp, Func: OhmAlarmBulk_CallBack, Line: 149]
+Translated objectName is [ont1]
+[23/04/1972-22:36:48.753589],[alarmItf],[File: alarmNew.cpp, Func: OhmAlarmBulk_CallBack, Line: 160]
+Translated object XPath is [/if:interfaces/if:interface[if:name='ont1']]
+[23/04/1972-22:36:48.753606],[alarmItf],[File: alarmNew.cpp, Func: OhmAlarmBulk_CallBack, Line: 149]
+Translated objectName is [ont1]
+[23/04/1972-22:36:48.753623],[alarmItf],[File: alarmNew.cpp, Func: OhmAlarmBulk_CallBack, Line: 160]
+Translated object XPath is [/if:interfaces/if:interface[if:name='ont1']]
+[23/04/1972-22:36:48.753642],[alarmItf],[File: alarmNew.cpp, Func: OhmAlarmBulk_CallBack, Line: 149]
+Translated objectName is [ont1]
+[23/04/1972-22:36:48.753661],[alarmItf],[File: alarmNew.cpp, Func: send_bulk_alarms, Line: 279]
+Enter send_bulk_alarms
+[23/04/1972-22:36:48.753689],[alarmItf],[File: alarmCommon.cpp, Func: validate_alarmGpbMsgWithXpath, Line: 171]
+Received alarm data: alarmType = 11, bitmap = 0 overruled_severity = 0
+[23/04/1972-22:36:48.753705],[alarmItf],[File: alarmCommon.cpp, Func: validate_alarmGpbMsgWithXpath, Line: 177]
+objectXpath = /if:interfaces/if:interface[if:name='ont1']
+[23/04/1972-22:36:48.753721],[alarmItf],[File: alarmCommon.cpp, Func: validate_alarmGpbMsgWithXpath, Line: 184]
+entityName = ont1
+[23/04/1972-22:36:48.753737],[alarmItf],[File: alarmCommon.cpp, Func: validate_alarmGpbMsgWithXpath, Line: 191]
+entityType = interface
+[23/04/1972-22:36:48.753765],[alarmItf],[File: alarmCommon.cpp, Func: validate_alarmGpbMsgWithXpath, Line: 171]
+Received alarm data: alarmType = 34, bitmap = 0 overruled_severity = 0
+[23/04/1972-22:36:48.753783],[alarmItf],[File: alarmCommon.cpp, Func: validate_alarmGpbMsgWithXpath, Line: 177]
+objectXpath = /if:interfaces/if:interface[if:name='ont1']
+[23/04/1972-22:36:48.753801],[alarmItf],[File: alarmCommon.cpp, Func: validate_alarmGpbMsgWithXpath, Line: 184]
+entityName = ont1
+[23/04/1972-22:36:48.753818],[alarmItf],[File: alarmCommon.cpp, Func: validate_alarmGpbMsgWithXpath, Line: 191]
+entityType = interface
+[23/04/1972-22:36:48.753838],[alarmItf],[File: alarmCommon.cpp, Func: validate_alarmGpbMsgWithXpath, Line: 171]
+Received alarm data: alarmType = 46, bitmap = 0 overruled_severity = 0
+[23/04/1972-22:36:48.753854],[alarmItf],[File: alarmCommon.cpp, Func: validate_alarmGpbMsgWithXpath, Line: 177]
+objectXpath = /if:interfaces/if:interface[if:name='ont1']
+[23/04/1972-22:36:48.753869],[alarmItf],[File: alarmCommon.cpp, Func: validate_alarmGpbMsgWithXpath, Line: 184]
+entityName = ont1
+[23/04/1972-22:36:48.753891],[alarmItf],[File: alarmCommon.cpp, Func: validate_alarmGpbMsgWithXpath, Line: 191]
+entityType = interface
+[23/04/1972-22:36:48.753911],[alarmItf],[File: alarmCommon.cpp, Func: validate_alarmGpbMsgWithXpath, Line: 171]
+Received alarm data: alarmType = 47, bitmap = 0 overruled_severity = 0
+[23/04/1972-22:36:48.753927],[alarmItf],[File: alarmCommon.cpp, Func: validate_alarmGpbMsgWithXpath, Line: 177]
+objectXpath = /if:interfaces/if:interface[if:name='ont1']
+[23/04/1972-22:36:48.753942],[alarmItf],[File: alarmCommon.cpp, Func: validate_alarmGpbMsgWithXpath, Line: 184]
+entityName = ont1
+[23/04/1972-22:36:48.753958],[alarmItf],[File: alarmCommon.cpp, Func: validate_alarmGpbMsgWithXpath, Line: 191]
+entityType = interface
+[23/04/1972-22:36:48.754370],[yproto],send_oneway proto msg
+[23/04/1972-22:36:48.754395],[yproto],{
+ "alarmData": {
+  "action": "NEW",
+  "alarmInfo": [
+   {
+    "alarmType": 11,
+    "bitmap": 0,
+    "objectId": 519,
+    "objectXpath": "/if:interfaces/if:interface[if:name='ont1']",
+    "entityName": "ont1",
+    "entityType": "interface",
+    "severity": [
+     {
+      "position": 1,
+      "severity": "NO_OVERRULESEVERITY"
+     }
+    ],
+    "timestamp": 72916608
+   },
+   {
+    "alarmType": 34,
+    "bitmap": 0,
+    "objectId": 519,
+    "objectXpath": "/if:interfaces/if:interface[if:name='ont1']",
+    "entityName": "ont1",
+    "entityType": "interface",
+    "severity": [
+     {
+      "position": 1,
+      "severity": "NO_OVERRULESEVERITY"
+     }
+    ],
+    "timestamp": 72916608
+   },
+   {
+    "alarmType": 46,
+    "bitmap": 0,
+    "objectId": 519,
+    "objectXpath": "/if:interfaces/if:interface[if:name='ont1']",
+    "entityName": "ont1",
+    "entityType": "interface",
+    "severity": [
+     {
+      "position": 1,
+      "severity": "NO_OVERRULESEVERITY"
+     }
+    ],
+    "timestamp": 72916608
+   },
+   {
+    "alarmType": 47,
+    "bitmap": 0,
+    "objectId": 519,
+    "objectXpath": "/if:interfaces/if:interface[if:name='ont1']",
+    "entityName": "ont1",
+    "entityType": "interface",
+    "severity": [
+     {
+      "position": 1,
+      "severity": "NO_OVERRULESEVERITY"
+     }
+    ],
+    "timestamp": 72916608
+   }
+  ],
+  "label": ""
+ }
+}
+
+[23/04/1972-22:36:48.755285],[alarmItf],[File: alarmClient.cpp, Func: send_gpb_message, Line: 112]
+GPB sent to alarm app successfully

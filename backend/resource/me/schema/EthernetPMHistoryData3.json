@@ -1,0 +1,193 @@
+{
+	"Me": {
+		"id": 296,
+		"name": "EthernetPMHistoryData3",
+		"access": "CreatedByOLT",
+		"type": "Config",
+		"action": [
+			"Create",
+			"Delete",
+			"Get",
+			"Set",
+			"Get current data"
+		],
+		"instance": {
+			"type": "Dynamic",
+			"value": 0
+		},
+		"attributes": {
+			"attribute": [
+				{
+					"name": "Interval end time",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Threshold data 1/2 ID",
+					"size": 2,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"SBC"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Drop events",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Octets",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Packets",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Broadcast packets",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Multicast packets",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Undersize packets",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Fragments",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Jabbers",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Packets 64 octets",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Packets 65 to 127 octets",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Packets 128 to 255 octets",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Packets 256 to 511 octets",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Packets 512 to 1023 octets",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Packets 1024 to 1518 octets",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				}
+			]
+		},
+		"alarms": {
+			"alarm": [
+				{
+					"number": 0,
+					"name": "Drop events",
+					"description": ""
+				},
+				{
+					"number": 1,
+					"name": "Undersize packets",
+					"description": ""
+				},
+				{
+					"number": 2,
+					"name": "Fragments",
+					"description": ""
+				},
+				{
+					"number": 3,
+					"name": "Jabbers",
+					"description": ""
+				}
+			]
+		}
+	}
+}

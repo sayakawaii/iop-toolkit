@@ -1,0 +1,117 @@
+{
+	"Me": {
+		"id": 140,
+		"name": "CallControlPM",
+		"access": "CreatedByOLT",
+		"type": "Config",
+		"action": [
+			"Create",
+			"Delete",
+			"Get",
+			"Set",
+			"Get current data"
+		],
+		"instance": {
+			"type": "Dynamic",
+			"value": 0
+		},
+		"attributes": {
+			"attribute": [
+				{
+					"name": "Interval end time",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Threshold data 1/2 ID",
+					"size": 2,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"SBC"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Call setup failures",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Call setup timer",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Call terminate failures",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Analog port releases",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Analog port off-hook timer",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				}
+			]
+		},
+		"alarms": {
+			"alarm": [
+				{
+					"number": 0,
+					"name": "CCPM call setup fail",
+					"description": ""
+				},
+				{
+					"number": 1,
+					"name": "CCPM setup timeout",
+					"description": ""
+				},
+				{
+					"number": 2,
+					"name": "CCPM call terminate",
+					"description": ""
+				},
+				{
+					"number": 3,
+					"name": "CCPM port release with no dialling",
+					"description": ""
+				},
+				{
+					"number": 4,
+					"name": "CCPM port offhook timeout",
+					"description": ""
+				}
+			]
+		}
+	}
+}

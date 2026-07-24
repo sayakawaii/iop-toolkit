@@ -1,0 +1,355 @@
+{
+	"Me":{
+		"id":58,
+		"name":"VoiceServiceProfile",
+		"access":"CreatedByOLT",
+		"type":"Config",
+		"action":[
+			"Get",
+			"Create",
+			"Delete",
+			"Set",
+			"Set table",
+			"Dummy"
+		],
+		"instance":{
+			"type":"Dynamic",
+			"value":0
+		},
+		"attributes":{
+			"attribute":[
+				{
+					"name":"Announcement type",
+					"size":1,
+					"format":"UnsignedInteger",
+					"access":[
+						"R",
+						"W",
+						"SBC",
+						"Dummy"
+					],
+					"category":"Mandatory"
+				},
+				{
+					"name":"Jitter target",
+					"size":2,
+					"format":"UnsignedInteger",
+					"access":[
+						"R",
+						"W",
+						"SBC",
+						"Dummy"
+					],
+					"category":"Optional"
+				},
+				{
+					"name":"Jitter buffer max",
+					"size":2,
+					"format":"UnsignedInteger",
+					"access":[
+						"R",
+						"W",
+						"SBC",
+						"Dummy"
+					],
+					"category":"Mandatory"
+				},
+				{
+					"name":"Echo cancel ind",
+					"size":1,
+					"format":"Boolean",
+					"access":[
+						"R",
+						"W",
+						"SBC",
+						"Dummy"
+					],
+					"category":"Mandatory"
+				},
+				{
+					"name":"PSTN protocol variant",
+					"size":2,
+					"format":"UnsignedInteger",
+					"access":[
+						"R",
+						"W",
+						"SBC",
+						"Dummy"
+					],
+					"category":"Optional"
+				},
+				{
+					"name":"DTMF digit levels",
+					"size":2,
+					"format":"UnsignedInteger",
+					"access":[
+						"R",
+						"W",
+						"SBC",
+						"Dummy"
+					],
+					"category":"Optional"
+				},
+				{
+					"name":"DTMF digit duration",
+					"size":2,
+					"format":"UnsignedInteger",
+					"access":[
+						"R",
+						"W",
+						"SBC",
+						"Dummy"
+					],
+					"category":"Optional"
+				},
+				{
+					"name":"Hook flash minimum time",
+					"size":2,
+					"format":"UnsignedInteger",
+					"access":[
+						"R",
+						"W",
+						"SBC",
+						"Dummy"
+					],
+					"category":"Optional"
+				},
+				{
+					"name":"Hook flash maximum time",
+					"size":2,
+					"format":"UnsignedInteger",
+					"access":[
+						"R",
+						"W",
+						"SBC",
+						"Dummy"
+					],
+					"category":"Optional"
+				},
+				{
+					"name":"Tone pattern table",
+					"size":20,
+					"format":"Array Structure",
+					"access":[
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category":"Optional",
+					"structure": {
+						"fields": [
+							{
+								"name":"Index",
+								"size":8,
+								"format":"UnsignedInteger"
+							},
+							{
+								"name":"Tone on",
+								"size":8,
+								"format":"Boolean"
+							},
+							{
+								"name":"Frequency 1",
+								"size":16,
+								"format":"UnsignedInteger"
+							},
+							{
+								"name":"Power 1",
+								"size":8,
+								"format":"Float"
+							},
+							{
+								"name":"Frequency 2",
+								"size":16,
+								"format":"UnsignedInteger"
+							},
+							{
+								"name":"Power 2",
+								"size":8,
+								"format":"Float"
+							},
+							{
+								"name":"Frequency 3",
+								"size":16,
+								"format":"UnsignedInteger"
+							},
+							{
+								"name":"Power 3",
+								"size":8,
+								"format":"Float"
+							},
+							{
+								"name":"Frequency 4",
+								"size":16,
+								"format":"UnsignedInteger"
+							},
+							{
+								"name":"Power 4",
+								"size":8,
+								"format":"Float"
+							},
+							{
+								"name":"Modulation frequency",
+								"size":16,
+								"format":"UnsignedInteger"
+							},
+							{
+								"name":"Modulation power",
+								"size":8,
+								"format":"Float"
+							},
+							{
+								"name":"Duration",
+								"size":16,
+								"format":"UnsignedInteger"
+							},
+							{
+								"name":"Next entry",
+								"size":8,
+								"format":"UnsignedInteger"
+							}
+						]
+					}
+				},
+				{
+					"name":"Tone event table",
+					"size":7,
+					"format":"Array Structure",
+					"table": true,
+					"access":[
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category":"Optional",
+					"structure": {
+						"fields": [
+							{
+								"name":"Event",
+								"size":8,
+								"format":"UnsignedInteger"
+							},
+							{
+								"name":"Tone pattern",
+								"size":8,
+								"format":"UnsignedInteger"
+							},
+							{
+								"name":"Tone file",
+								"size":16,
+								"format":"UnsignedInteger"
+							},
+							{
+								"name":"Tone file repetitions",
+								"size":8,
+								"format":"UnsignedInteger"
+							},
+							{
+								"name":"Reserved",
+								"size":16,
+								"format":"Bytes"
+							}
+						]
+					}
+				},
+				{
+					"name":"Ringing pattern table",
+					"size":5,
+					"format":"Array Structure",
+					"table": true,
+					"access":[
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category":"Optional",
+					"structure": {
+						"fields": [
+							{
+								"name":"Index",
+								"size":8,
+								"format":"UnsignedInteger"
+							},
+							{
+								"name":"Ringing on",
+								"size":8,
+								"format":"UnsignedInteger"
+							},
+							{
+								"name":"Duration",
+								"size":16,
+								"format":"UnsignedInteger"
+							},
+							{
+								"name":"Next entry",
+								"size":8,
+								"format":"UnsignedInteger"
+							}
+						]
+					}
+				},
+				{
+					"name":"Ringing event table",
+					"size":7,
+					"format":"Array Structure",
+					"table": true,
+					"access":[
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category":"Optional",
+					"structure": {
+						"fields": [
+							{
+								"name":"Event",
+								"size":8,
+								"format":"UnsignedInteger"
+							},
+							{
+								"name":"Ringing pattern",
+								"size":8,
+								"format":"UnsignedInteger"
+							},
+							{
+								"name":"Ringing file",
+								"size":16,
+								"format":"UnsignedInteger"
+							},
+							{
+								"name":"Ringing file repetitions",
+								"size":8,
+								"format":"UnsignedInteger"
+							},
+							{
+								"name":"Ringing text",
+								"size":16,
+								"format":"UnsignedInteger"
+							}
+						]
+					}
+				},
+				{
+					"name":"Network specific extensions pointer",
+					"size":2,
+					"format":"UnsignedInteger",
+					"access":[
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category":"Optional"
+				}
+			]
+		},
+		"alarms":{
+			"alarm":[
+				{
+					"number":1,
+					"name":"File not found",
+					"description":"The voice service profile attempted to access a network specific extensions file that is not available."
+				}
+			]
+		}
+	}
+}

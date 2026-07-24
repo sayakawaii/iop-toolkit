@@ -1,0 +1,195 @@
+  {
+    "Me": {
+        "id": 47,
+        "name": "MACBridgePortConfigurationData",
+        "access": "CreatedByOLT",
+        "type": "Config",
+        "action": [
+            "Get",
+            "Set",
+            "Create",
+            "Delete",
+            "Dummy"
+        ],
+        "instance": {
+            "type": "Dynamic",
+            "value": 0
+        },
+        "attributes": {
+            "attribute": [
+                {
+                    "name": "Bridge id pointer",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },                
+                {
+                    "name": "Port num",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },                
+                {
+                    "name": "TP type",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },                
+                {
+                    "name": "TP pointer",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },                
+                {
+                    "name": "Port priority",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC",
+                        "Dummy"
+                    ],
+                    "category": "Optional"
+                },                
+                {
+                    "name": "Port path cost",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },                
+                {
+                    "name": "Port spanning tree ind",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },                
+                {
+                    "name": "Deprecated 1",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC",
+                        "Dummy"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Deprecated 2",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC",
+                        "Dummy"
+                    ],
+                    "category": "Optional"
+                },                
+                {
+                    "name": "Port MAC address",
+                    "size": 6,
+                    "format": "Bytes",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },                
+                {
+                    "name": "Outbound TD pointer",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "Optional"
+                },                
+                {
+                    "name": "Inbound TD pointer",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "Optional"
+                },                
+                {
+                    "name": "MAC learning depth",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC",
+                        "Dummy"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "LASP ID pointer",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC",
+                        "Dummy"
+                    ],
+                    "category": "Optional"
+                }
+            ]
+        },
+		"alarms": {
+			"alarm": [
+				{
+					"number": 0,
+					"name": "Port blocking",
+					"description": "This port has been blocked due to loop detection in accordance with [IEEE 802.1D]"
+				}
+			]
+		}
+    }
+  }

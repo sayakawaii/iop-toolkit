@@ -1,0 +1,408 @@
+{
+    "Me": {
+        "id": 263,
+        "name": "AniG",
+        "access": "CreatedByONU",
+        "type": "Config",
+        "action": [
+            "Get",
+            "Set",
+            "Test",
+            "Dummy"
+        ],
+        "instance": {
+            "type": "Dynamic",
+            "value": 0
+        },
+        "attributes": {
+            "attribute": [
+                {
+                    "name": "SR indication",
+                    "size": 1,
+                    "format": "Boolean",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Total T CONT number",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "GEM block length",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Piggyback DBA reporting",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Deprecated-1",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "DEP",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "SF threshold",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "SD threshold",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "ARC",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "ARC interval",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Optical signal level",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Lower optical threshold",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Upper optical threshold",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "ONU response time",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Transmit optical level",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Lower transmit power threshold",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Upper transmit power threshold",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "Optional"
+                }
+            ]
+        },
+        "testRequestAttrs": {
+            "attribute": [
+                {
+                    "name": "select test",
+                    "position": 0,
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "PointerToGeneralBuffer",
+                    "position": 1,
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "PointerToOctetStringME",
+                    "position": 3,
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                }
+            ]
+        },
+        "testResultAttrs": {
+            "attribute": [
+                {
+                    "name": "PowerFeedVoltage",
+                    "position": 0,
+                    "size": 3,
+                    "format": "TestStructure",
+                    "structure": {
+                        "fields": [
+                            {
+                                "name": "Type1",
+                                "size": 8,
+                                "format": "UnsignedInteger",
+                                "expectedValue": 1
+                            },
+                            {
+                                "name": "ValueType1",
+                                "size": 16,
+                                "format": "UnsignedInteger"
+                            }
+                        ]
+                    },
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "ReceivedOpticalPower",
+                    "position": 3,
+                    "size": 3,
+                    "format": "TestStructure",
+                    "structure": {
+                        "fields": [
+                            {
+                                "name": "Type2",
+                                "size": 8,
+                                "format": "UnsignedInteger",
+                                "expectedValue": 3
+                            },
+                            {
+                                "name": "ValueType2",
+                                "size": 16,
+                                "format": "SignedInteger"
+                            }
+                        ]
+                    },
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "MeanOpticalLaunchPower",
+                    "position": 6,
+                    "size": 3,
+                    "format": "TestStructure",
+                    "structure": {
+                        "fields": [
+                            {
+                                "name": "Type2",
+                                "size": 8,
+                                "format": "UnsignedInteger",
+                                "expectedValue": 5
+                            },
+                            {
+                                "name": "ValueType2",
+                                "size": 16,
+                                "format": "SignedInteger"
+                            }
+                        ]
+                    },
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "LaserBiasCurrent",
+                    "position": 9,
+                    "size": 3,
+                    "format": "TestStructure",
+                    "structure": {
+                        "fields": [
+                            {
+                                "name": "Type2",
+                                "size": 8,
+                                "format": "UnsignedInteger",
+                                "expectedValue": 9
+                            },
+                            {
+                                "name": "ValueType2",
+                                "size": 16,
+                                "format": "UnsignedInteger"
+                            }
+                        ]
+                    },
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "TemperatureDegreesCelsius",
+                    "position": 12,
+                    "size": 3,
+                    "format": "TestStructure",
+                    "structure": {
+                        "fields": [
+                            {
+                                "name": "Type2",
+                                "size": 8,
+                                "format": "UnsignedInteger",
+                                "expectedValue": 12
+                            },
+                            {
+                                "name": "ValueType2",
+                                "size": 16,
+                                "format": "SignedInteger"
+                            }
+                        ]
+                    },
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "PointerToGeneralBuffer",
+                    "position": 15,
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                }
+            ]
+        },
+        "alarms": {
+            "alarm": [
+                {
+                    "number": 0,
+                    "name": "Low received optical power",
+                    "description": "Received downstream optical power below threshold",
+                    "sub-group": "Rx Optical Power"
+                },
+                {
+                    "number": 1,
+                    "name": "High received optical power",
+                    "description": "Received downstream optical power above threshold",
+                    "sub-group": "Rx Optical Power"
+                },
+                {
+                    "number": 2,
+                    "name": "SF",
+                    "description": "Bit error-based signal fail. Industry practice normally expects the BER to improve by at least an order of magnitude before clearing the alarm"
+                },
+                {
+                    "number": 3,
+                    "name": "SD",
+                    "description": "Bit error-based signal degrade. Industry practice normally expects the BER to improve by at least an order of magnitude before clearing the alarm"
+                },
+                {
+                    "number": 4,
+                    "name": "Low transmit optical power",
+                    "description": "Transmit optical power below lower threshold",
+                    "sub-group": "Tx Optical Power"
+                },
+                {
+                    "number": 5,
+                    "name": "High transmit optical power",
+                    "description": "Transmit optical power above upper threshold",
+                    "sub-group": "Tx Optical Power"
+                },
+                {
+                    "number": 6,
+                    "name": "Laser bias current",
+                    "description": "Laser bias current above threshold determined by vendor; laser end of life pending",
+                    "sub-group": "Bias"
+                }
+            ]
+        }
+    }
+}

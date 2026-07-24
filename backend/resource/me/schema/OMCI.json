@@ -1,0 +1,42 @@
+  {
+    "Me": {
+        "id": 287,
+        "name": "OMCI",
+        "access": "CreatedByONU",
+        "type": "Config",
+        "action": [
+            "Get",
+            "Get next"
+        ],
+        "instance": {
+            "type": "Fixed",
+            "value": 0
+        },
+        "attributes": {
+            "attribute": [
+                {
+                    "name": "ME type table",
+                    "size": 2,
+                    "format": "Array UnsignedInteger 16",
+                    "table": true,
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Message type table",
+                    "size": 1,
+                    "format": "Array UnsignedInteger 8",
+                    "table": true,
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                }
+            ]
+        }
+    }
+  }

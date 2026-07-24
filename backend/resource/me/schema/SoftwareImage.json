@@ -1,0 +1,85 @@
+  {
+    "Me": {
+        "id": 7,
+        "name": "SoftwareImage",
+        "access": "CreatedByONU",
+        "type": "Config",
+        "action": [
+            "Get",
+            "Start download",
+            "Download section",
+            "End download",
+            "Activate image",
+            "Commit image",
+            "Dummy"
+        ],
+        "instance": {
+            "type": "Dynamic",
+            "value": 0
+        },
+        "attributes": {
+            "attribute": [
+                {
+                    "name": "Version",
+                    "size": 14,
+                    "format": "String",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Is committed",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },                
+                {
+                    "name": "Is active",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },                
+                {
+                    "name": "Is valid",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },                
+                {
+                    "name": "Product code",
+                    "size": 25,
+                    "format": "String",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Image hash",
+                    "size": 16,
+                    "format": "Bytes",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "Optional"
+                }
+            ]
+        }
+    }
+  }

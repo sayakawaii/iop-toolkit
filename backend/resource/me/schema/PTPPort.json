@@ -1,0 +1,85 @@
+{
+    "Me": {
+        "id": 65316,
+        "name": "PTPPort",
+        "access": "CreatedByOLT",
+        "type": "Config",
+        "action": [
+            "Create",
+            "Delete",
+            "Get",
+            "Set"
+        ],
+        "instance": {
+            "type": "Dynamic",
+            "value": 0
+        },
+        "attributes": {
+            "attribute": [
+                {
+                    "name": "PTP Master Configure Data pointer",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "PPTP UNI pointer",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Admin state",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "TCI",
+                    "size": 2,
+                    "format": "Array Structure",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC"
+                    ],
+                    "category": "Mandatory",
+                    "structure": {
+                        "fields": [
+                            {
+                                "name": "Priority Code Point(PCP)",
+                                "size": 3,
+                                "format": "UnsignedInteger"
+                            },
+                            {
+                                "name": "Drop Eligible Indicator(DEI)",
+                                "size": 1,
+                                "format": "UnsignedInteger"
+                            },
+                            {
+                                "name": "VLAN Identifier(VID)",
+                                "size": 12,
+                                "format": "UnsignedInteger"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    }
+}

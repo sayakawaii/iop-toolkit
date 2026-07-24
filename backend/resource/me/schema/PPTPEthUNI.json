@@ -1,0 +1,225 @@
+  {
+	"Me": {
+		"id": 11,
+		"name": "PPTPEthUNI",
+		"access": "CreatedByONU",
+		"type": "Config",
+		"action": [
+			"Get",
+			"Set",
+			"Dummy"
+		],
+		"instance": {
+			"type": "Dynamic",
+			"value": 0
+		},
+		"attributes": {
+			"attribute": [
+				{
+					"name": "Expected type",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Sensed type",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Auto detection configuration",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Ethernet loopback configuration",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Administrative state",
+					"size": 1,
+                    			"format": "Boolean",
+					"access": [
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Operational state",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"Dummy"
+					],
+					"category": "Optional"
+				},
+				{
+					"name": "Configuration ind",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Max frame size",
+					"size": 2,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "DTE or DCE ind",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Pause time",
+					"size": 2,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category": "Optional"
+				},
+				{
+					"name": "Bridged or IP ind",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category": "Optional"
+				},
+				{
+					"name": "ARC",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category": "Optional"
+				},
+				{
+					"name": "ARC interval",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category": "Optional"
+				},
+				{
+					"name": "PPPoE filter",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category": "Optional"
+				},
+				{
+					"name": "Power control",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category": "Optional"
+				},
+				{
+					"name": "Disable packet-based time synchronization",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category": "Optional"
+				}
+			]
+		},
+		"avcs": {
+			"avc": [
+				{
+					"number": 2,
+					"name": "Sensed type",
+                    "value": 0,
+					"description": "Sensed type of Ethernet interface. Valid values are as follows.1 (10BASE-T) 2 (100BASE-T) 3 (Gigabit Ethernet) 4 (10G Ethernet)."
+				},
+				{
+					"number": 6,
+					"name": "Op state",
+                    "value": 0,
+					"description": "Operational state Valid values are enabled (0) and disabled (1)"
+				},
+				{
+					"number": 12,
+					"name": "ARC",
+                    "value": 0,
+					"description": "ARC timer expiration"
+				}
+			]
+		},
+		"alarms": {
+			"alarm": [
+				{
+					"number": 0,
+					"name": "LAN-LOS",
+					"description": "No carrier at the Ethernet UNI"
+				}
+			]
+		}
+	}
+}

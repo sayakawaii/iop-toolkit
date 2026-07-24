@@ -1,0 +1,180 @@
+  {
+    "Me": {
+        "id": 6,
+        "name": "CircuitPack",
+        "access": "CreatedByONU",
+        "type": "Config",
+        "action": [
+            "Get",
+            "Set",
+            "Create",
+            "Delete",
+            "Reboot",
+            "Test",
+            "Dummy"
+        ],
+        "instance": {
+            "type": "Dynamic",
+            "value": 0
+        },
+        "attributes": {
+            "attribute": [
+                {
+                    "name": "Type",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "SBC",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Number of ports",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "Optional"
+                }, 
+                {
+                    "name": "Serial number",
+                    "size": 8,
+                    "format": "String",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },                
+                {
+                    "name": "Version",
+                    "size": 14,
+                    "format": "String",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },                
+                {
+                    "name": "Vendor id",
+                    "size": 4,
+                    "format": "String",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "AdministrativeState",
+                    "size": 1,
+                    "format": "Boolean",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },                
+                {
+                    "name": "OperationalState",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "Optional"
+                },                
+                {
+                    "name": "Bridged or IP ind",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "Optional"
+                },                
+                {
+                    "name": "Equipment id",
+                    "size": 20,
+                    "format": "String",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "Optional"
+                },                
+                {
+                    "name": "Card configuration",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },                
+                {
+                    "name": "Total T-CONT buffer number",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },               
+                {
+                    "name": "Total priority queue number",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Total traffic scheduler number",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Power shed override",
+                    "size": 4,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "Optional"
+                }
+            ]
+        },
+        "alarms": {
+                     "alarm": [
+                                {
+                                    "number": 0,
+                                    "name": "Equipment alarm",
+                                    "description": "A failure on an internal interface or failed self-test"
+                                }
+                     ]
+        }
+    }
+  }

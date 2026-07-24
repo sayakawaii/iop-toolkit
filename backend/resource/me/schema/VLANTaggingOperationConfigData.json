@@ -1,0 +1,101 @@
+{
+    "Me": {
+        "id": 78,
+        "name": "VLANTaggingOperationConfigData",
+        "access": "CreatedByOLT",
+        "type": "Config",
+        "action": [
+            "Create",
+            "Delete",
+            "Get",
+            "Set"
+        ],
+        "instance": {
+            "type": "Dynamic",
+            "value": 0
+        },
+        "attributes": {
+            "attribute": [
+                {
+                    "name": "Upstream VLAN tagging operation mode",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Upstream VLAN tag TCI value",
+                    "size": 2,
+                    "format": "Array Structure",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory",
+                    "structure": {
+                        "fields": [
+                            {
+                                "name": "Priority Code Point(PCP)",
+                                "size": 3,
+                                "format": "UnsignedInteger"
+                            },
+                            {
+                                "name": "Drop Eligible Indicator(DEI)",
+                                "size": 1,
+                                "format": "UnsignedInteger"
+                            },
+                            {
+                                "name": "VLAN Identifier(VID)",
+                                "size": 12,
+                                "format": "UnsignedInteger"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "Downstream VLAN tagging operation mode",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Association type",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC",
+                        "Dummy"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Associated ME pointer",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC",
+                        "Dummy"
+                    ],
+                    "category": "Optional"
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,101 @@
+{
+	"Me": {
+		"id": 273,
+		"name": "ThresholdData1",
+		"access": "CreatedByOLT",
+		"type": "Config",
+		"action": [
+			"Create",
+			"Delete",
+			"Get",
+			"Set"
+		],
+		"instance": {
+			"type": "Dynamic",
+			"value": 0
+		},
+		"attributes": {
+			"attribute": [
+				{
+					"name": "Threshold Value 1",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"SBC"
+					],
+					"category": "Mandatory"
+				},
+                {
+					"name": "Threshold Value 2",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"SBC"
+					],
+					"category": "Mandatory"
+				},
+                {
+					"name": "Threshold Value 3",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"SBC"
+					],
+					"category": "Mandatory"
+				},
+                {
+					"name": "Threshold Value 4",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"SBC"
+					],
+					"category": "Mandatory"
+				},
+                {
+					"name": "Threshold Value 5",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"SBC"
+					],
+					"category": "Mandatory"
+				},
+                {
+					"name": "Threshold Value 6",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"SBC"
+					],
+					"category": "Mandatory"
+				},
+                {
+					"name": "Threshold Value 7",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"SBC"
+					],
+					"category": "Mandatory"
+				}
+			]
+		}
+	}
+}
+
+

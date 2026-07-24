@@ -1,0 +1,149 @@
+{
+	"Me": {
+		"id": 440,
+		"name": "TimeStatusMessage",
+		"access": "CreatedByONU",
+		"type": "Config",
+		"action": [
+			"Get",
+			"Set"
+		],
+		"instance": {
+			"type": "Fixed",
+			"value": 0
+		},
+		"attributes": {
+			"attribute": [
+				{
+					"name": "Domain number",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Flag Field",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "currentUtcOffset",
+					"size": 2,
+					"format": "SignedInteger",
+					"access": [
+						"R",
+						"W"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Priority1",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "clockClass",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Accuracy",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "offsetScaledLogVariance",
+					"size": 2,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Priority2",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Grandmaster ID",
+					"size": 8,
+					"format": "Bytes",
+					"access": [
+						"R",
+						"W"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Steps removed",
+					"size": 2,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Time source",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W"
+					],
+					"category": "Mandatory"
+				}
+			]
+		},
+		"alarms": {
+			"alarm": [
+				{
+					"number": 0,
+					"name": "Clock unlock",
+					"description": "The status of the system clock is unlocked"
+				},
+				{
+					"number": 1,
+					"name": "ESMC loss",
+					"description": "No valid ESM PDU is received for 5 seconds"
+				},
+				{
+					"number": 2,
+					"name": "Time Unlock",
+					"description": "The system time is unlocked to the time source"
+				}
+			]
+		}
+	}
+}

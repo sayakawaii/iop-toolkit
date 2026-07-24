@@ -1,0 +1,118 @@
+{
+	"Me": {
+		"id": 453,
+		"name": "EnhancedFECPerformanceMonitoringHistoryData",
+		"access": "CreatedByOLT",
+		"type": "Config",
+		"action": [
+			"Create",
+			"Delete",
+			"Get",
+			"Set",
+			"Get current data"
+		],
+		"instance": {
+			"type": "Dynamic",
+			"value": 0
+		},
+		"attributes": {
+			"attribute": [
+				{
+					"name": "Interval end time",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Threshold data 64 bit ID",
+					"size": 2,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"SBC",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Corrected bytes",
+					"size": 8,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Corrected code words",
+					"size": 8,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Uncorrectable code words",
+					"size": 8,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Total code words",
+					"size": 8,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "FEC seconds",
+					"size": 2,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				}
+			]
+		},
+		"alarms": {
+			"alarm": [
+				{
+					"number": 0,
+					"name": "Corrected bytes",
+					"description": "The number of bytes that were corrected by the FEC function has crossed the set threshold value"
+				},
+				{
+					"number": 1,
+					"name": "Corrected code words",
+					"description": "The number of code words that were corrected by the FEC function has crossed the set threshold value"
+				},
+				{
+					"number": 2,
+					"name": "Uncorrectable code words",
+					"description": "The number of errored code words that couldn't be corrected by the FEC function has crossed the set threshold value"
+				},
+				{
+					"number": 4,
+					"name": "FEC seconds",
+					"description": "The number of seconds during which at least one uncorrectable FEC codeword was received has crossed the set threshold value"
+				}
+			]
+		}
+	}
+}

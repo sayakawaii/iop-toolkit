@@ -1,0 +1,59 @@
+  {
+    "Me": {
+        "id": 455,
+        "name": "LinkAggregationServiceProfile",
+        "access": "CreatedByOLT",
+        "type": "Config",
+        "action": [
+            "Get",
+            "Set",
+            "Create",
+            "Delete",
+            "Dummy"
+        ],
+        "instance": {
+            "type": "Dynamic",
+            "value": 0
+        },
+        "attributes": {
+            "attribute": [
+                {
+                    "name": "Frame distribution and collection mode",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },                
+                {
+                    "name": "Type",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },                
+                {
+                    "name": "MAC bridge service profile ID pointer",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                }
+            ]
+        }
+    }
+  }

@@ -1,0 +1,37 @@
+  {
+    "Me": {
+        "id": 2,
+        "name": "OnuData",
+        "access": "CreatedByONU",
+        "type": "Config",
+        "action": [
+            "Get",
+            "Set",
+            "Get all alarms",
+            "Get all alarms next",
+            "MIB reset",
+            "MIB upload",
+            "MIB upload next",
+            "Dummy"
+        ],
+        "instance": {
+            "type": "Fixed",
+            "value": 0
+        },
+        "attributes": {
+            "attribute": [
+                {
+                    "name": "MIB data sync",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                }
+            ]
+        }
+    }
+  }

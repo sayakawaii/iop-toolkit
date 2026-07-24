@@ -1,0 +1,131 @@
+{
+	"Me": {
+		"id": 144,
+		"name": "RtpPM",
+		"access": "CreatedByOLT",
+		"type": "Config",
+		"action": [
+			"Create",
+			"Delete",
+			"Get",
+			"Set",
+			"Get current data"
+		],
+		"instance": {
+			"type": "Dynamic",
+			"value": 0
+		},
+		"attributes": {
+			"attribute": [
+				{
+					"name": "Interval end time",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Threshold data 1/2 ID",
+					"size": 2,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"SBC"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "RTP errors",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Packet loss",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Maximum jitter",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Maximum time between RTCP packets",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Buffer underflows",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Buffer overflows",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				}
+			]
+		},
+		"alarms": {
+			"alarm": [
+				{
+					"number": 0,
+					"name": "RTP errors",
+					"description": ""
+				},
+				{
+					"number": 1,
+					"name": "Packet loss",
+					"description": ""
+				},
+				{
+					"number": 2,
+					"name": "Maximum jitter",
+					"description": ""
+				},
+				{
+					"number": 3,
+					"name": "Max time between RTCP packets",
+					"description": ""
+				},
+				{
+					"number": 4,
+					"name": "Buffer underflows",
+					"description": ""
+				},
+				{
+					"number": 5,
+					"name": "Buffer overflows",
+					"description": ""
+				}
+			]
+		}
+	}
+}

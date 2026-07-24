@@ -1,0 +1,20 @@
+[
+    {
+        "from": "vonumgmt",
+        "to": "hypervisor",
+        "event": [
+            "handleResponseMsg\\](\\w+),\\s+received\\s+([A-Z\\-]+)\\s+response reason:\\s+(.+)"
+        ],
+        "notes": "",
+        "alias": "handleResponseMsg"
+    },
+    {
+        "from": "vonumgmt",
+        "to": "hypervisor",
+        "event": [
+            "receiveKafkaDeviceMsg\\](\\w+),\\s+\\[payload\\]\\s+is\\s+(.+)"
+        ],
+        "notes": "",
+        "alias": "receiveKafkaDeviceMsg"
+    }
+]

@@ -1,0 +1,133 @@
+{
+	"Me":{
+		"id":65284,
+		"name":"VoIPCallStatistics",
+		"access":"CreatedByOLT",
+		"type":"Config",
+		"action":[
+			"Get",
+			"Create",
+            "Delete",
+            "Get next",
+			"Dummy"
+		],
+		"instance":{
+			"type":"Dynamic",
+			"value":0
+		},
+		"attributes":{
+			"attribute":[
+				{
+					"name":"Call History Table",
+					"size":120,
+					"format": "Array Structure",
+                    "table": true,
+                    "tableGetNextIncompleteRows": true,
+					"access":[
+						"R"
+					],
+					"category": "Mandatory",
+                    "structure": {
+                        "fields": [
+                        {
+                            "name": "Date",
+                            "size": 64,
+                            "format": "String"
+                        },
+                        {
+                            "name": "Time",
+                            "size": 64,
+                            "format": "String"
+                        },
+                        {
+                            "name": "Call Duration",
+                            "size": 32,
+                            "format": "SignedInteger"
+                        },
+                        {
+                            "name": "Called Number",
+                            "size": 200,
+                            "format": "String"
+                        },
+                        {
+                            "name": "Calling Number",
+                            "size": 200,
+                            "format": "String"
+                        },
+                        {
+                            "name": "RTP Tx Packets",
+                            "size": 32,
+                            "format": "SignedInteger"
+                        },
+                        {
+                            "name": "RTP Rx Packets",
+                            "size": 32,
+                            "format": "SignedInteger"
+                        },
+                        {
+                            "name": "RTP Rx Packets Lost",
+                            "size": 32,
+                            "format": "SignedInteger"
+                        },
+                        {
+                            "name": "RTP Packets Discarded",
+                            "size": 32,
+                            "format": "SignedInteger"
+                        },
+                        {
+                            "name": "RTP Over-runs",
+                            "size": 32,
+                            "format": "SignedInteger"
+                        },
+                        {
+                            "name": "RTP Under-runs",
+                            "size": 32,
+                            "format": "SignedInteger"
+                        },
+                        {
+                            "name": "Average Jitter",
+                            "size": 32,
+                            "format": "SignedInteger"
+                        },
+                        {
+                            "name": "RTCP Participation",
+                            "size": 8,
+                            "format": "UnsignedInteger"
+                        },
+                        {
+                            "name": "Peak Jitter",
+                            "size": 32,
+                            "format": "SignedInteger"
+                        },
+                        {
+                            "name": "Average Jitter Buffer Depth",
+                            "size": 32,
+                            "format": "SignedInteger"
+                        },
+                        {
+                            "name": "RTCP-XR Participation",
+                            "size": 8,
+                            "format": "UnsignedInteger"
+                        },
+                        {
+                            "name": "Average MOS",
+                            "size": 32,
+                            "format": "SignedInteger"
+                        },
+                        {
+                            "name": "Peak Round Trip Delay",
+                            "size": 32,
+                            "format": "SignedInteger"
+                        },
+                        {
+                            "name": "Average Round Trip Delay",
+                            "size": 32,
+                            "format": "SignedInteger"
+                        }
+                        ]
+                    }
+                }
+            ]
+		}
+    }
+}

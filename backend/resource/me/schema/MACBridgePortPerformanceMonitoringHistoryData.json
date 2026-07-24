@@ -1,0 +1,107 @@
+{
+	"Me": {
+		"id": 52,
+		"name": "MACBridgePortPerformanceMonitoringHistoryData",
+		"access": "CreatedByOLT",
+		"type": "Config",
+		"action": [
+			"Create",
+			"Delete",
+			"Get",
+			"Set",
+			"Get current data"
+		],
+		"instance": {
+			"type": "Dynamic",
+			"value": 0
+		},
+		"attributes": {
+			"attribute": [
+				{
+					"name": "Interval end time",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Threshold data 1/2 ID",
+					"size": 2,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"SBC"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Forwarded frame counter",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Delay exceeded discard counter",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Maximum transmission unit (MTU) exceeded discard counter",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Received frame counter",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Received and discarded counter",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				}
+			]
+		},
+		"alarms": {
+			"alarm": [
+				{
+					"number": 1,
+					"name": "Delay exceeded discard",
+					"description": ""
+				},
+				{
+					"number": 2,
+					"name": "MTU exceeded discard",
+					"description": ""
+				},
+				{
+					"number": 4,
+					"name": "Received and discarded",
+					"description": ""
+				}
+			]
+		}
+	}
+}

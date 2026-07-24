@@ -1,0 +1,126 @@
+{
+	"message-type-info": {
+		"timeout": 1,
+		"retries": 2,
+		"device-busy-timeout": 0,
+		"device-busy-retries": 0,
+		"message-types": [
+			{
+				"name": "Create",
+				"id": 4,
+				"increment-mib-data-sync": true
+			},
+			{
+				"name": "Delete",
+				"id": 6,
+				"increment-mib-data-sync": true
+			},
+			{
+				"name": "Set",
+				"id": 8,
+				"increment-mib-data-sync": true
+			},
+			{
+				"name": "Get",
+				"id": 9,
+				"increment-mib-data-sync": false
+			},
+			{
+				"name": "Get all alarms",
+				"id": 11,
+				"increment-mib-data-sync": false
+			},
+			{
+				"name": "Get all alarms next",
+				"id": 12,
+				"increment-mib-data-sync": false
+			},
+			{
+				"name": "MIB upload",
+				"id": 13,
+				"increment-mib-data-sync": false
+			},
+			{
+				"name": "MIB upload next",
+				"id": 14,
+				"increment-mib-data-sync": false
+			},
+			{
+				"name": "MIB reset",
+				"id": 15,
+				"increment-mib-data-sync": false
+			},
+			{
+				"name": "Alarm",
+				"id": 16,
+				"debouncing":4,
+				"increment-mib-data-sync": false
+			},
+			{
+				"name": "Attribute value change",
+				"id": 17,
+				"increment-mib-data-sync": false
+			},
+			{
+				"name": "Test",
+				"id": 18,
+				"increment-mib-data-sync": false
+			},
+			{
+				"name": "Start software download",
+				"id": 19,
+				"increment-mib-data-sync": true,
+				"device-busy-timeout": 20,
+				"device-busy-retries": 10
+			},
+			{
+				"name": "Download section",
+				"id": 20,
+				"increment-mib-data-sync": false,
+				"timeout": 6
+			},
+			{
+				"name": "End software download",
+				"id": 21,
+				"increment-mib-data-sync": true,
+				"device-busy-timeout": 10,
+				"device-busy-retries": 80
+			},
+			{
+				"name": "Activate software",
+				"id": 22,
+				"increment-mib-data-sync": true
+			},
+			{
+				"name": "Commit software",
+				"id": 23,
+				"increment-mib-data-sync": true
+			},
+			{
+				"name": "Synchronize time",
+				"id": 24,
+				"increment-mib-data-sync": false
+			},
+			{
+				"name": "Reboot",
+				"id": 25,
+				"increment-mib-data-sync": false
+			},
+			{
+				"name": "Get next",
+				"id": 26,
+				"increment-mib-data-sync": false
+			},
+			{
+				"name": "Test result",
+				"id": 27,
+				"increment-mib-data-sync": false
+			},
+			{
+				"name": "Get current data",
+				"id": 28,
+				"increment-mib-data-sync": false
+			}
+		]
+	}
+}

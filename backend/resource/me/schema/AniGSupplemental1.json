@@ -1,0 +1,291 @@
+{
+    "Me": {
+        "id": 65312,
+        "name": "AniGSupplemental1",
+        "access": "CreatedByONU",
+        "type": "Config",
+        "action": [
+            "Get",
+            "Set",
+            "Dummy"
+        ],
+        "instance": {
+            "type": "Dynamic",
+            "value": 0
+        },
+        "attributes": {
+            "attribute": [
+                {
+                    "name": "High Temp Threshold",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "optional"
+                },
+                {
+                    "name": "High Voltage Threshold",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "optional"
+                },
+                {
+                    "name": "High Bias Threshold",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "optional"
+                },
+                {
+                    "name": "Low Temp alarm Threshold",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "optional"
+                },
+                {
+                    "name": "Low Voltage alarm Threshold",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "optional"
+                },
+                {
+                    "name": "Low Bias alarm Threshold",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "optional"
+                },
+                {
+                    "name": "High Temp warning Threshold",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "optional"
+                },
+                {
+                    "name": "High Voltage warning Threshold",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "optional"
+                },
+                {
+                    "name": "High Bias warning Threshold",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "optional"
+                },
+                {
+                    "name": "Low Temp warning Threshold",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "optional"
+                },
+                {
+                    "name": "Low Voltage warning Threshold",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "optional"
+                },
+                {
+                    "name": "Low Bias warning Threshold",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "optional"
+                },
+                {
+                    "name": "High Receive power warning Threshold",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "optional"
+                },
+                {
+                    "name": "Low Receive power warning Threshold",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "optional"
+                },
+                {
+                    "name": "High Transmit power warning Threshold",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "optional"
+                },
+                {
+                    "name": "Low Transmit power warning Threshold",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "optional"
+                }
+            ]
+        },
+        "alarms": {
+            "alarm": [
+                {
+                    "number": 0,
+                    "name": "High Temperature",
+                    "description": "Indicates the temperature level of optical module crossed the high threshold",
+                    "sub-group": "Temperature"
+                },
+                {
+                    "number": 1,
+                    "name": "High Voltage",
+                    "description": "Indicates the power feed voltage level of optical module crossed the high threshold",
+                    "sub-group": "Voltage"
+                },
+                {
+                    "number": 2,
+                    "name": "Temp Low",
+                    "description": "Indicates the temperature level of optical module crossed the low threshold",
+                    "sub-group": "Temperature"
+                },
+                {
+                    "number": 3,
+                    "name": "Voltage Low",
+                    "description": "Indicates the power feed voltage level of optical module crossed the low threshold",
+                    "sub-group": "Voltage"
+                },
+                {
+                    "number": 4,
+                    "name": "Bias Low",
+                    "description": "Indicates the bias level of optical module crossed the low threshold",
+                    "sub-group": "Bias"
+                },
+                {
+                    "number": 5,
+                    "name": "Temp Warning High",
+                    "description": "Indicates the temperature level of optical module crossed the high warning threshold",
+                    "sub-group": "Temperature"
+                },
+                {
+                    "number": 6,
+                    "name": "Voltage Warning High",
+                    "description": "Indicates the power feed voltage level of optical module crossed the high warning threshold",
+                    "sub-group": "Voltage"
+                },
+                {
+                    "number": 7,
+                    "name": "Bias Warning High",
+                    "description": "Indicates the bias level of optical module crossed the high warning threshold",
+                    "sub-group": "Bias"
+                },
+                {
+                    "number": 8,
+                    "name": "Temp Warning Low",
+                    "description": "Indicates the temperature level of optical module crossed the low warning threshold",
+                    "sub-group": "Temperature"
+                },
+                {
+                    "number": 9,
+                    "name": "Voltage Warning Low",
+                    "description": "Indicates the power feed voltage level of optical module crossed the low warning threshold",
+                    "sub-group": "Voltage"
+                },
+                {
+                    "number": 10,
+                    "name": "Bias Warning Low",
+                    "description": "Indicates the bias level of optical module crossed the low warning threshold",
+                    "sub-group": "Bias"
+                },
+                {
+                    "number": 11,
+                    "name": "Rx Power Warning High",
+                    "description": "Indicates the receive power level of optical module crossed the high warning threshold",
+                    "sub-group": "Rx Optical Power"
+                },
+                {
+                    "number": 12,
+                    "name": "Rx Power Warning Low",
+                    "description": "Indicates the receive power level of optical module crossed the low warning threshold",
+                    "sub-group": "Rx Optical Power"
+                },
+                {
+                    "number": 13,
+                    "name": "Tx Power Warning High",
+                    "description": "Indicates the transmit power level of optical module crossed the high warning threshold",
+                    "sub-group": "Tx Optical Power"
+                },
+                {
+                    "number": 14,
+                    "name": "Tx Power Warning Low",
+                    "description": "Indicates the transmit power level of optical module crossed the low warning threshold",
+                    "sub-group": "Tx Optical Power"
+                }
+            ]
+        }
+    }
+}

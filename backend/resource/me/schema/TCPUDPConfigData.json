@@ -1,0 +1,70 @@
+{
+	"Me": {
+		"id": 136,
+		"name": "TCPUDPConfigData",
+		"access": "CreatedByOLT",
+		"type": "Config",
+		"action": [
+			"Create",
+			"Delete",
+			"Set",
+			"Get"
+		],
+		"instance": {
+			"type": "Dynamic",
+			"value": 0
+		},
+		"attributes": {
+			"attribute": [
+				{
+					"name": "Port ID",
+					"size": 2,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"SBC",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Protocol",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"SBC",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "TOS/diffserv field",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"SBC",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "IP host pointer",
+					"size": 2,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"SBC",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				}
+			]
+		}
+	}
+}

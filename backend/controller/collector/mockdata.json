@@ -1,0 +1,91 @@
+{
+    "ntinfo": {
+        "name": "Board-Nta",
+        "type": "nt",
+        "parent": "Slot-Nt-A",
+        "model": "FANT-F",
+        "state": {
+            "state_last_changed": "1973-09-12T23:11:40+00:00",
+            "admin_state": "unlocked",
+            "oper_state": "enabled",
+            "standby_state": "providing-service"
+        },
+        "ltinfo": [
+            {
+                "name": "Slot-4_FWLT-C",
+                "type": "lt",
+                "parent": "Slot-Lt-4",
+                "model": "FWLT-C",
+                "state": {
+                    "state_last_changed": "1973-09-15T22:37:45+00:00",
+                    "admin_state": "unlocked",
+                    "oper_state": "enabled",
+                    "standby_state": "providing-service"
+                },
+                "poninfo": [
+                    {
+                        "name": "C1_Sfp",
+                        "type": "transceiver",
+                        "parent": "C1",
+                        "model": "3FE47548AA",
+                        "state": {
+                            "state_last_changed": "1973-09-22T22:01:03+00:00",
+                            "admin_state": "unlocked",
+                            "oper_state": "disabled",
+                            "standby_state": ""
+                        },
+                        "onuinfo": []
+                    }
+                ]
+            },
+            {
+                "name": "Slot-6_FWLT-C",
+                "type": "lt",
+                "parent": "Slot-Lt-6",
+                "model": "FWLT-C",
+                "state": {
+                    "state_last_changed": "1973-09-24T17:39:08+00:00",
+                    "admin_state": "unlocked",
+                    "oper_state": "enabled",
+                    "standby_state": "providing-service"
+                },
+                "poninfo": [
+                    {
+                        "name": "C6_Sfp",
+                        "type": "transceiver",
+                        "parent": "C6",
+                        "model": "3FE47581AD",
+                        "state": {
+                            "state_last_changed": "1973-09-24T17:38:50+00:00",
+                            "admin_state": "unlocked",
+                            "oper_state": "disabled",
+                            "standby_state": "providing-service"
+                        },
+                        "onuinfo": [
+                            {
+                                "name": "ont1",
+                                "type": "v-ani",
+                                "admin_state": "up",
+                                "oper_state": "up",
+                                "last_changed": "1973-09-24T17:38:50+00:00",
+                                "if_index": "1031",
+                                "lower_layer_if": "scg_pon1",
+                                "vani": {
+                                    "onu_id": 2,
+                                    "management_tcont_alloc_id": 2,
+                                    "management_gemport_id": 2,
+                                    "onu_presence_state": "bbf-xpon-onu-types:onu-present-and-on-intended-channel-termination",
+                                    "onu_presentt": {
+                                        "onu_fiber_distance": 78,
+                                        "detected_serial_number": "ALCLFA5F81A4",
+                                        "detected_registration_id": "61626364303031"
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

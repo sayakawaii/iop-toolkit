@@ -1,0 +1,12 @@
+.git
+.github
+.venv
+.vscode
+omciAnalyzer
+**/__pycache__
+*.log
+docs
+README.md
+install.sh
+omcianalyzer_infra_centos.sh
+redis.conf

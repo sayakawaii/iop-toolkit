@@ -1,0 +1,83 @@
+/isam/logs/app_logs/xponInfraMgnt # cat traces.log 
+0
+[23/04/1972-22:36:48.732703],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/DMSPCallBack.cpp],[58],[transactionCB],[xponInfraMgnt] receive transactionCB: Type [1] Flag [0]
+[23/04/1972-22:36:48.732745],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/DMSPCallBack.cpp],[112],[transactionCB],[xponInfraMgnt] received CONFIG_COMMIT transaction callback: DmsProxy::TRANS_BEGIN
+[23/04/1972-22:36:48.732770],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/cmdType/xponInfraCfgWrapperClient.cpp],[47],[sendIpcOneWayRequest],[xponInfraMgnt] xponInfraCfgWrapperClient:sendIpcOneWayRequest()
+[23/04/1972-22:36:48.732788],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/cmdType/xponInfraCfgWrapperClient.cpp],[54],[sendIpcOneWayRequest],[xponInfraMgnt] xponInfraCfgWrapperClient-->pClient != NULL
+[23/04/1972-22:36:48.733653],[yproto],send_oneway proto msg
+[23/04/1972-22:36:48.733683],[yproto],{
+ "dmsCommitInform": {
+  "dmsCommitState": "DMS_COMMIT_STATE_BEGIN"
+ }
+}
+
+[23/04/1972-22:36:48.753456],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/DMSPCallBack.cpp],[58],[transactionCB],[xponInfraMgnt] receive transactionCB: Type [1] Flag [4]
+[23/04/1972-22:36:48.753503],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/DMSPCallBack.cpp],[116],[transactionCB],[xponInfraMgnt] received CONFIG_COMMIT transaction callback: DmsProxy::TRANS_END
+[23/04/1972-22:36:48.753527],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/cmdType/xponInfraCfgWrapperClient.cpp],[47],[sendIpcOneWayRequest],[xponInfraMgnt] xponInfraCfgWrapperClient:sendIpcOneWayRequest()
+[23/04/1972-22:36:48.753546],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/cmdType/xponInfraCfgWrapperClient.cpp],[54],[sendIpcOneWayRequest],[xponInfraMgnt] xponInfraCfgWrapperClient-->pClient != NULL
+[23/04/1972-22:36:48.754213],[yproto],send_oneway proto msg
+[23/04/1972-22:36:48.754243],[yproto],{
+ "dmsCommitInform": {
+  "dmsCommitState": "DMS_COMMIT_STATE_END"
+ }
+}
+
+[23/04/1972-22:36:48.757263],[yproto],on_request proto msg
+[23/04/1972-22:36:48.757292],[yproto],{
+ "ponCacResultNotificationMsg": {
+  "cacList": [
+   {
+    "ctObjectIndex": {
+     "index": 517
+    },
+    "availableUsBw": "9933920",
+    "usL2Capacity": "9718550",
+    "dsL2Capacity": "8637993"
+   }
+  ]
+ }
+}
+
+[23/04/1972-22:36:48.757317],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/cmdType/xponInfraNotifWrapperClient.cpp],[83],[on_request],[xponInfraMgnt] xponInfraNotifWrapperClient::on_request - The Msg(2) is received from server xpon_hwa_app
+[23/04/1972-22:36:48.757338],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/cmdType/CHandleNotification.cpp],[425],[processCacResultNotification],[xponInfraMgnt] processCacResultNotification: process MsgXponCacResultNotification msg
+[23/04/1972-22:36:48.757356],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/cmdType/CHandleNotification.cpp],[428],[processCacResultNotification],[xponInfraMgnt] cacListSize 1
+[23/04/1972-22:36:48.757379],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/cmdType/CHandleNotification.cpp],[454],[processCacResultNotification],[xponInfraMgnt] cac_data: ct= 517, availableUsBw=9933920, usL2Capacity=9718550, dsL2Capacity=8637993
+[23/04/1972-22:36:48.757403],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/cmdType/CModifyCpCacState.cpp],[286],[CModifyCpCacState],[xponInfraMgnt] ctObjIndex = 517, availableUsBw = 9933920, usL2Capacity = 9718550, dsL2Capacity = 8637993
+[23/04/1972-22:36:48.757424],[ponmgnt_app],CModifyCpCacState AsyncBeginProc
+[23/04/1972-22:36:48.758967],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/OHMCallBack.cpp],[34],[getOHMInfo_CallBack],[xponInfraMgnt] enter getOHMInfo_CallBack
+[23/04/1972-22:36:48.759014],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/cmdType/CModifyCpCacState.cpp],[49],[GponAsyncGetCpNameFromOHMResult],[xponInfraMgnt] get ChannelPair Name cp_pon1
+[23/04/1972-22:36:48.759035],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/cmdType/CModifyCpCacState.cpp],[61],[GponAsyncGetCacStateByCpName],[xponInfraMgnt] enter GponAsyncGetCacStateByCpName
+[23/04/1972-22:36:48.759151],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/cmdType/CModifyCpCacState.cpp],[76],[GponAsyncGetCacStateByCpName],[xponInfraMgnt] The channel pair key is cp_pon1
+[23/04/1972-22:36:48.759277],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/cmdType/CModifyCpCacState.cpp],[78],[GponAsyncGetCacStateByCpName],[xponInfraMgnt] cpInterfaceState.getWithKey ret = 0
+[23/04/1972-22:36:48.760930],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/CommonDmspCallBack.cpp],[10],[onDmspCommonResp],[xponInfraMgnt] enter onDmspCommonResp
+[23/04/1972-22:36:48.760968],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/CommonDmspCallBack.cpp],[14],[onDmspCommonResp],[xponInfraMgnt] Get DataObject Resp - request Id [2602316]
+[23/04/1972-22:36:48.760987],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/CommonDmspCallBack.cpp],[15],[onDmspCommonResp],[xponInfraMgnt] Get DataObject Resp - result [0]
+[23/04/1972-22:36:48.761025],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/cmdType/CModifyCpCacState.cpp],[87],[GponAsyncGetCacStateByCpNameResult],[xponInfraMgnt] enter GponAsyncGetCacStateByCpNameResult
+[23/04/1972-22:36:48.761047],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/cmdType/CModifyCpCacState.cpp],[113],[GponAsyncGetCacStateByCpNameResult],[xponInfraMgnt] Get dmspAvailableUsBw:9934172,  dmspUsL2Capacity:9718796, dmspDsL2Capacity:8637993
+[23/04/1972-22:36:48.761065],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/cmdType/CModifyCpCacState.cpp],[129],[GponAsyncGetCacStateByCpNameResult],[xponInfraMgnt] It should be written to DMSP and send notification
+[23/04/1972-22:36:48.761084],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/cmdType/CModifyCpCacState.cpp],[141],[GponAsyncSetCacStateByCpName],[xponInfraMgnt] enter GponAsyncSetCacStateByCpName
+[23/04/1972-22:36:48.761133],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/common/utility/DateConvert.cpp],[28],[convertLocalTime2DateAndTime],[xponInfraMgnt] 1972-4-23-22-36-48
+[23/04/1972-22:36:48.761670],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/cmdType/CModifyCpCacState.cpp],[184],[GponAsyncSetCacStateByCpName],[xponInfraMgnt] l_interface.setWithKey ret = 0
+[23/04/1972-22:36:48.762544],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/CommonDmspCallBack.cpp],[10],[onDmspCommonResp],[xponInfraMgnt] enter onDmspCommonResp
+[23/04/1972-22:36:48.762572],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/CommonDmspCallBack.cpp],[14],[onDmspCommonResp],[xponInfraMgnt] Get DataObject Resp - request Id [2602316]
+[23/04/1972-22:36:48.762591],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/CommonDmspCallBack.cpp],[15],[onDmspCommonResp],[xponInfraMgnt] Get DataObject Resp - result [0]
+[23/04/1972-22:36:48.762613],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/cmdType/CModifyCpCacState.cpp],[192],[GponAsyncSetCacStateByCpNameResult],[xponInfraMgnt] enter GponAsyncSetCacStateByCpNameResult
+[23/04/1972-22:36:48.762633],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/cmdType/CModifyCpCacState.cpp],[210],[GponAsyncSetCacStateByCpNameResult],[xponInfraMgnt] set availableUsBw state for channelpair cp_pon1
+[23/04/1972-22:36:48.762651],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/cmdType/CModifyCpCacState.cpp],[219],[GponAsyncSendCacNotification],[xponInfraMgnt] enter GponAsyncSendCacNotification
+[23/04/1972-22:36:48.762983],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/cmdType/CModifyCpCacState.cpp],[240],[GponAsyncSendCacNotification],[xponInfraMgnt] Send CAC Notify CpName cp_pon1 and availUsUnicastBw 9933920
+[23/04/1972-22:36:48.763028],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/cmdType/CModifyCpCacState.cpp],[255],[GponAsyncSendCacNotification],[xponInfraMgnt] Send CAC Notify CpName cp_pon1 and usL2Capacity 9718550
+[23/04/1972-22:36:48.763147],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/cmdType/CModifyCpCacState.cpp],[324],[AsyncFinishProc],[xponInfraMgnt] AsyncFinishProc curState=4, curIndex=4
+[23/04/1972-22:36:48.772493],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/OHMCallBack.cpp],[207],[higherObjChangeNotifyForCp_CallBack],[xponInfraMgnt] enter higherObjChangeNotifyForCp_CallBack
+[23/04/1972-22:36:48.772580],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/OHMCallBack.cpp],[226],[higherObjChangeNotifyForCp_CallBack],[xponInfraMgnt] lower layer interface name :cp_pon1
+[23/04/1972-22:36:48.772600],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/OHMCallBack.cpp],[227],[higherObjChangeNotifyForCp_CallBack],[xponInfraMgnt] number of higher layer notify:1
+[23/04/1972-22:36:48.772620],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/OHMCallBack.cpp],[244],[higherObjChangeNotifyForCp_CallBack],[xponInfraMgnt] layer notify name:scg_pon1, objType = 295
+[23/04/1972-22:36:48.772819],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/OHMCallBack.cpp],[164],[lowerObjChangeNotifyForCp_CallBack],[xponInfraMgnt] enter lowerObjChangeNotifyForCp_CallBack
+[23/04/1972-22:36:48.772860],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/OHMCallBack.cpp],[182],[lowerObjChangeNotifyForCp_CallBack],[xponInfraMgnt] higher layer interface name :cp_pon1
+[23/04/1972-22:36:48.772880],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/OHMCallBack.cpp],[183],[lowerObjChangeNotifyForCp_CallBack],[xponInfraMgnt] number of lower layer notify:1
+[23/04/1972-22:36:48.772899],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/OHMCallBack.cpp],[192],[lowerObjChangeNotifyForCp_CallBack],[xponInfraMgnt] layer notify name:ct_cp_pon1, objType = 298
+[23/04/1972-22:36:48.773240],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/CommonDmspCallBack.cpp],[10],[onDmspCommonResp],[xponInfraMgnt] enter onDmspCommonResp
+[23/04/1972-22:36:48.773265],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/CommonDmspCallBack.cpp],[14],[onDmspCommonResp],[xponInfraMgnt] Get DataObject Resp - request Id [2602316]
+[23/04/1972-22:36:48.773283],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/CommonDmspCallBack.cpp],[15],[onDmspCommonResp],[xponInfraMgnt] Get DataObject Resp - result [0]
+[23/04/1972-22:36:48.773463],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/CommonDmspCallBack.cpp],[10],[onDmspCommonResp],[xponInfraMgnt] enter onDmspCommonResp
+[23/04/1972-22:36:48.773487],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/CommonDmspCallBack.cpp],[14],[onDmspCommonResp],[xponInfraMgnt] Get DataObject Resp - request Id [2602316]
+[23/04/1972-22:36:48.773506],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/CommonDmspCallBack.cpp],[15],[onDmspCommonResp],[xponInfraMgnt] Get DataObject Resp - result [0]

@@ -1,0 +1,769 @@
+{
+  "schemaVersion": "1.0.0",
+  "generatedAt": "2026-03-31",
+  "purpose": "Machine-readable API catalog for external skill integration",
+  "baseUrls": {
+    "devProxy": "/api",
+    "direct": "http://10.101.15.238:8080"
+  },
+  "notes": [
+    "Most endpoints are called directly via the direct base URL in frontend code.",
+    "In Vite dev mode, /api is proxied to http://localhost:8080.",
+    "Authentication requirements are not defined in frontend code and must be handled externally if needed."
+  ],
+  "endpoints": [
+    {
+      "operationId": "librarySearch",
+      "tag": "library",
+      "method": "POST",
+      "path": "/api/library/search",
+      "contentType": "multipart/form-data",
+      "request": {
+        "multipart": {
+          "search": {
+            "type": "string",
+            "required": false
+          }
+        }
+      }
+    },
+    {
+      "operationId": "libraryAddRecord",
+      "tag": "library",
+      "method": "POST",
+      "path": "/api/library/addRecord",
+      "contentType": "multipart/form-data",
+      "request": {
+        "multipart": {
+          "Customer": {
+            "type": "string",
+            "required": true
+          },
+          "RcrNum": {
+            "type": "string",
+            "required": true
+          },
+          "Vendor": {
+            "type": "string",
+            "required": true
+          },
+          "OnuType": {
+            "type": "string",
+            "required": true
+          },
+          "PonType": {
+            "type": "string",
+            "required": true
+          },
+          "RGMode": {
+            "type": "string",
+            "required": true
+          },
+          "EquipID": {
+            "type": "string",
+            "required": false
+          },
+          "HwVersion": {
+            "type": "string",
+            "required": false
+          },
+          "SwVersion": {
+            "type": "string",
+            "required": false
+          },
+          "LSRelease": {
+            "type": "string",
+            "required": false
+          },
+          "Comments": {
+            "type": "string",
+            "required": false
+          },
+          "file-input-log": {
+            "type": "file",
+            "required": false,
+            "multiple": false
+          }
+        }
+      }
+    },
+    {
+      "operationId": "libraryUpdateRecord",
+      "tag": "library",
+      "method": "POST",
+      "path": "/api/library/updateRecord",
+      "contentType": "multipart/form-data",
+      "request": {
+        "multipart": {
+          "ID": {
+            "type": "string",
+            "required": true
+          },
+          "Customer": {
+            "type": "string",
+            "required": true
+          },
+          "RcrNum": {
+            "type": "string",
+            "required": true
+          },
+          "Vendor": {
+            "type": "string",
+            "required": true
+          },
+          "OnuType": {
+            "type": "string",
+            "required": true
+          },
+          "PonType": {
+            "type": "string",
+            "required": true
+          },
+          "RGMode": {
+            "type": "string",
+            "required": true
+          },
+          "EquipID": {
+            "type": "string",
+            "required": false
+          },
+          "HwVersion": {
+            "type": "string",
+            "required": false
+          },
+          "SwVersion": {
+            "type": "string",
+            "required": false
+          },
+          "LSRelease": {
+            "type": "string",
+            "required": false
+          },
+          "Comments": {
+            "type": "string",
+            "required": false
+          },
+          "file-input-log": {
+            "type": "file",
+            "required": false,
+            "multiple": false
+          }
+        }
+      }
+    },
+    {
+      "operationId": "libraryDeleteRecord",
+      "tag": "library",
+      "method": "POST",
+      "path": "/api/library/deleteRecord",
+      "contentType": "multipart/form-data",
+      "request": {
+        "multipart": {
+          "ID": {
+            "type": "string",
+            "required": true
+          }
+        }
+      }
+    },
+    {
+      "operationId": "libraryCustomers",
+      "tag": "library",
+      "method": "GET",
+      "path": "/api/library/customers",
+      "request": {
+        "query": {}
+      }
+    },
+    {
+      "operationId": "libraryVendors",
+      "tag": "library",
+      "method": "GET",
+      "path": "/api/library/vendors",
+      "request": {
+        "query": {}
+      }
+    },
+    {
+      "operationId": "libraryAddCustomer",
+      "tag": "library",
+      "method": "POST",
+      "path": "/api/library/addCustomer",
+      "contentType": "multipart/form-data",
+      "request": {
+        "multipart": {
+          "name": {
+            "type": "string",
+            "required": true
+          }
+        }
+      }
+    },
+    {
+      "operationId": "libraryAddVendor",
+      "tag": "library",
+      "method": "POST",
+      "path": "/api/library/addVendor",
+      "contentType": "multipart/form-data",
+      "request": {
+        "multipart": {
+          "name": {
+            "type": "string",
+            "required": true
+          }
+        }
+      }
+    },
+    {
+      "operationId": "libraryDownload",
+      "tag": "library",
+      "method": "GET",
+      "path": "/api/library/download",
+      "request": {
+        "query": {
+          "requestKey": {
+            "type": "string",
+            "required": true
+          }
+        }
+      }
+    },
+    {
+      "operationId": "omciAnalyzerRequest",
+      "tag": "omcianalyzer",
+      "method": "POST",
+      "path": "/api/omcianalyzer/request",
+      "contentType": "multipart/form-data",
+      "request": {
+        "multipart": {
+          "omcianalyzerFile": {
+            "type": "file",
+            "required": true,
+            "multiple": true
+          }
+        }
+      }
+    },
+    {
+      "operationId": "omciAnalyzerProgress",
+      "tag": "omcianalyzer",
+      "method": "POST",
+      "path": "/api/omcianalyzer/progress",
+      "contentType": "multipart/form-data",
+      "request": {
+        "multipart": {
+          "requestKey": {
+            "type": "string",
+            "required": true,
+            "repeatable": true
+          }
+        }
+      }
+    },
+    {
+      "operationId": "omciAnalyzerHistory",
+      "tag": "omcianalyzer",
+      "method": "POST",
+      "path": "/api/omcianalyzer/history",
+      "contentType": "multipart/form-data",
+      "request": {
+        "multipart": {}
+      }
+    },
+    {
+      "operationId": "omciAnalyzerCounters",
+      "tag": "omcianalyzer",
+      "method": "GET",
+      "path": "/api/omcianalyzer/counters",
+      "request": {
+        "query": {}
+      }
+    },
+    {
+      "operationId": "omciAnalyzerOnus",
+      "tag": "omcianalyzer",
+      "method": "GET",
+      "path": "/api/omcianalyzer/onus",
+      "request": {
+        "query": {
+          "requestKey": {
+            "type": "string",
+            "required": true
+          }
+        }
+      }
+    },
+    {
+      "operationId": "omciAnalyzerOmci",
+      "tag": "omcianalyzer",
+      "method": "GET",
+      "path": "/api/omcianalyzer/omci",
+      "request": {
+        "query": {
+          "requestKey": {
+            "type": "string",
+            "required": true
+          },
+          "onuName": {
+            "type": "string",
+            "required": false
+          }
+        }
+      }
+    },
+    {
+      "operationId": "omciAnalyzerOmciDetail",
+      "tag": "omcianalyzer",
+      "method": "GET",
+      "path": "/api/omcianalyzer/omci/detail",
+      "request": {
+        "query": {
+          "requestKey": {
+            "type": "string",
+            "required": true
+          },
+          "id": {
+            "type": "string",
+            "required": true
+          }
+        }
+      }
+    },
+    {
+      "operationId": "omciAnalyzerDiagram",
+      "tag": "omcianalyzer",
+      "method": "GET",
+      "path": "/api/omcianalyzer/diagram",
+      "request": {
+        "query": {
+          "requestKey": {
+            "type": "string",
+            "required": true
+          },
+          "onuName": {
+            "type": "string",
+            "required": false
+          }
+        }
+      }
+    },
+    {
+      "operationId": "omciAnalyzerMinio",
+      "tag": "omcianalyzer",
+      "method": "POST",
+      "path": "/api/omcianalyzer/minio",
+      "contentType": "application/json",
+      "request": {
+        "json": {
+          "minio": {
+            "type": "string",
+            "required": true
+          }
+        }
+      }
+    },
+    {
+      "operationId": "sequenceTracerRequest",
+      "tag": "sequencetracer",
+      "method": "POST",
+      "path": "/api/sequencetracer/request",
+      "contentType": "multipart/form-data",
+      "request": {
+        "multipart": {
+          "sequencetracerFile": {
+            "type": "file",
+            "required": true,
+            "multiple": true
+          }
+        }
+      }
+    },
+    {
+      "operationId": "collectorConnect",
+      "tag": "collector",
+      "method": "POST",
+      "path": "/api/collector/connect",
+      "contentType": "application/json",
+      "request": {
+        "json": {
+          "oamIp": {
+            "type": "string",
+            "required": true
+          },
+          "username": {
+            "type": "string",
+            "required": true
+          },
+          "password": {
+            "type": "string",
+            "required": true
+          }
+        }
+      }
+    },
+    {
+      "operationId": "collectorQuery",
+      "tag": "collector",
+      "method": "GET",
+      "path": "/api/collector/query",
+      "request": {
+        "query": {
+          "request_id": {
+            "type": "string",
+            "required": true
+          }
+        }
+      }
+    },
+    {
+      "operationId": "collectorWs",
+      "tag": "collector",
+      "transport": "websocket",
+      "method": "GET",
+      "path": "/api/collector/ws",
+      "request": {
+        "query": {
+          "request_id": {
+            "type": "string",
+            "required": true
+          }
+        }
+      }
+    },
+    {
+      "operationId": "collectorLoggerGet",
+      "tag": "collector",
+      "method": "GET",
+      "path": "/api/collector/loggerGet",
+      "request": {
+        "query": {}
+      }
+    },
+    {
+      "operationId": "collectorLoggerSet",
+      "tag": "collector",
+      "method": "POST",
+      "path": "/api/collector/loggerSet",
+      "contentType": "application/json",
+      "request": {
+        "json": {
+          "request_id": {
+            "type": "string",
+            "required": true
+          },
+          "logger_modules": {
+            "type": "object",
+            "required": true
+          },
+          "action": {
+            "type": "string",
+            "required": true,
+            "enum": [
+              "enable",
+              "disable",
+              "overlay"
+            ]
+          },
+          "request_parent": {
+            "type": "string",
+            "required": true
+          }
+        }
+      }
+    },
+    {
+      "operationId": "collectorLoggerGetLogs",
+      "tag": "collector",
+      "method": "GET",
+      "path": "/api/collector/loggerGetLogs",
+      "request": {
+        "query": {
+          "request_id": {
+            "type": "string",
+            "required": true
+          }
+        }
+      }
+    },
+    {
+      "operationId": "downloadsList",
+      "tag": "downloads",
+      "method": "GET",
+      "path": "/api/downloads/list",
+      "request": {
+        "query": {
+          "path": {
+            "type": "string",
+            "required": false
+          }
+        }
+      }
+    },
+    {
+      "operationId": "downloadsDownload",
+      "tag": "downloads",
+      "method": "GET",
+      "path": "/api/downloads/download",
+      "request": {
+        "query": {
+          "path": {
+            "type": "string",
+            "required": true
+          }
+        }
+      }
+    },
+    {
+      "operationId": "downloadsZip",
+      "tag": "downloads",
+      "method": "POST",
+      "path": "/api/downloads/zip",
+      "contentType": "application/json",
+      "request": {
+        "json": {
+          "paths": {
+            "type": "array",
+            "required": true,
+            "items": "string"
+          }
+        }
+      }
+    },
+    {
+      "operationId": "downloadsPreview",
+      "tag": "downloads",
+      "method": "GET",
+      "path": "/api/downloads/preview",
+      "request": {
+        "query": {
+          "path": {
+            "type": "string",
+            "required": true
+          }
+        }
+      }
+    },
+    {
+      "operationId": "omciAnalyzerFullJson",
+      "tag": "omcianalyzer",
+      "method": "GET",
+      "path": "/api/omcianalyzer/full-json",
+      "contentType": "application/json",
+      "availability": "vite-dev-server",
+      "request": {
+        "query": {
+          "requestKey": {
+            "type": "string",
+            "required": true
+          },
+          "onuName": {
+            "type": "string",
+            "required": false
+          }
+        }
+      },
+      "response": {
+        "type": "application/json file",
+        "description": "Aggregated full OMCI list + detail records as downloadable JSON"
+      }
+    }
+  ],
+  "uploadEndpoints": [
+    {
+      "operationId": "omciAnalyzerRequest",
+      "path": "/api/omcianalyzer/request",
+      "fields": [
+        {
+          "name": "omcianalyzerFile",
+          "type": "file",
+          "multiple": true
+        }
+      ]
+    },
+    {
+      "operationId": "sequenceTracerRequest",
+      "path": "/api/sequencetracer/request",
+      "fields": [
+        {
+          "name": "sequencetracerFile",
+          "type": "file",
+          "multiple": true
+        }
+      ]
+    },
+    {
+      "operationId": "libraryAddRecord",
+      "path": "/api/library/addRecord",
+      "fields": [
+        {
+          "name": "Customer",
+          "type": "string"
+        },
+        {
+          "name": "RcrNum",
+          "type": "string"
+        },
+        {
+          "name": "Vendor",
+          "type": "string"
+        },
+        {
+          "name": "OnuType",
+          "type": "string"
+        },
+        {
+          "name": "PonType",
+          "type": "string"
+        },
+        {
+          "name": "RGMode",
+          "type": "string"
+        },
+        {
+          "name": "EquipID",
+          "type": "string"
+        },
+        {
+          "name": "HwVersion",
+          "type": "string"
+        },
+        {
+          "name": "SwVersion",
+          "type": "string"
+        },
+        {
+          "name": "LSRelease",
+          "type": "string"
+        },
+        {
+          "name": "Comments",
+          "type": "string"
+        },
+        {
+          "name": "file-input-log",
+          "type": "file",
+          "multiple": false
+        }
+      ]
+    },
+    {
+      "operationId": "libraryUpdateRecord",
+      "path": "/api/library/updateRecord",
+      "fields": [
+        {
+          "name": "ID",
+          "type": "string"
+        },
+        {
+          "name": "Customer",
+          "type": "string"
+        },
+        {
+          "name": "RcrNum",
+          "type": "string"
+        },
+        {
+          "name": "Vendor",
+          "type": "string"
+        },
+        {
+          "name": "OnuType",
+          "type": "string"
+        },
+        {
+          "name": "PonType",
+          "type": "string"
+        },
+        {
+          "name": "RGMode",
+          "type": "string"
+        },
+        {
+          "name": "EquipID",
+          "type": "string"
+        },
+        {
+          "name": "HwVersion",
+          "type": "string"
+        },
+        {
+          "name": "SwVersion",
+          "type": "string"
+        },
+        {
+          "name": "LSRelease",
+          "type": "string"
+        },
+        {
+          "name": "Comments",
+          "type": "string"
+        },
+        {
+          "name": "file-input-log",
+          "type": "file",
+          "multiple": false
+        }
+      ]
+    },
+    {
+      "operationId": "libraryDeleteRecord",
+      "path": "/api/library/deleteRecord",
+      "fields": [
+        {
+          "name": "ID",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "operationId": "libraryAddCustomer",
+      "path": "/api/library/addCustomer",
+      "fields": [
+        {
+          "name": "name",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "operationId": "libraryAddVendor",
+      "path": "/api/library/addVendor",
+      "fields": [
+        {
+          "name": "name",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "operationId": "omciAnalyzerProgress",
+      "path": "/api/omcianalyzer/progress",
+      "fields": [
+        {
+          "name": "requestKey",
+          "type": "string",
+          "repeatable": true
+        }
+      ]
+    },
+    {
+      "operationId": "omciAnalyzerHistory",
+      "path": "/api/omcianalyzer/history",
+      "fields": []
+    }
+  ],
+  "sources": [
+    "src/pages/index.tsx",
+    "src/pages/library/index.tsx",
+    "src/pages/omcianalyzer/index.tsx",
+    "src/pages/omcianalyzer/onus.tsx",
+    "src/pages/omcianalyzer/omci.tsx",
+    "src/pages/omcianalyzer/diagram.tsx",
+    "src/pages/sequencetracer/index.tsx",
+    "src/pages/collector/index.tsx",
+    "src/pages/collector/LoggerModal.tsx",
+    "src/pages/collector/logs.tsx",
+    "src/pages/downloads/index.tsx",
+    "vite.config.ts"
+  ]
+}

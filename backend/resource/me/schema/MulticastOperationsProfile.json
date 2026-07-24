@@ -1,0 +1,533 @@
+{
+    "Me": {
+        "id": 309,
+        "name": "MulticastOperationsProfile",
+        "access": "CreatedByOLT",
+        "type": "Config",
+        "action": [
+            "Create",
+            "Delete",
+            "Get",
+            "Set"
+        ],
+        "instance": {
+            "type": "Dynamic",
+            "value": 1
+        },
+        "attributes": {
+            "attribute": [
+                {
+                    "name": "IGMP version",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "IGMP function",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Immediate leave",
+                    "size": 1,
+                    "format": "Boolean",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Upstream IGMP TCI",
+                    "size": 2,
+                    "format": "Array Structure",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC"
+                    ],
+                    "category": "Optional",
+                    "structure": {
+                        "fields": [
+                            {
+                                "name": "Priority Code Point(PCP)",
+                                "size": 3,
+                                "format": "UnsignedInteger"
+                            },
+                            {
+                                "name": "Drop Eligible Indicator(DEI)",
+                                "size": 1,
+                                "format": "UnsignedInteger"
+                            },
+                            {
+                                "name": "VLAN Identifier(VID)",
+                                "size": 12,
+                                "format": "UnsignedInteger"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "Upstream IGMP tag control",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Upstream IGMP rate",
+                    "size": 4,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Dynamic access control list table",
+                    "size": 24,
+                    "format": "Array Structure",
+                    "table": true,
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "Mandatory",
+                    "structure": {
+                        "fields": [
+                            {
+                                "name": "Table control",
+                                "size": 16,
+                                "format": "Array Structure",
+                                "structure": {
+                                    "fields": [
+                                        {
+                                            "name": "Set ctrl",
+                                            "size": 2,
+                                            "format": "UnsignedInteger"
+                                        },
+                                        {
+                                            "name": "Row part ID",
+                                            "size": 3,
+                                            "format": "UnsignedInteger"
+                                        },
+                                        {
+                                            "name": "Test",
+                                            "size": 1,
+                                            "format": "UnsignedInteger"
+                                        },
+                                        {
+                                            "name": "Row key",
+                                            "size": 10,
+                                            "format": "UnsignedInteger"
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "name": "Table content",
+                                "size": 176,
+                                "format": "KeyBasedParser",
+                                "structure": {
+                                    "fields": [
+                                        {
+                                            "name": "Row part 0",
+                                            "size": 176,
+                                            "format": "Array Structure",
+                                            "structure": {
+                                                "fields": [
+                                                    {
+                                                        "name": "GEM port ID",
+                                                        "size": 16,
+                                                        "format": "UnsignedInteger"
+                                                    },
+                                                    {
+                                                        "name": "VLAN ID ANI",
+                                                        "size": 16,
+                                                        "format": "UnsignedInteger"
+                                                    },
+                                                    {
+                                                        "name": "Source IP address",
+                                                        "size": 32,
+                                                        "format": "Bytes"
+                                                    },
+                                                    {
+                                                        "name": "Destination IP address start of range",
+                                                        "size": 32,
+                                                        "format": "Bytes"
+                                                    },
+                                                    {
+                                                        "name": "Destination IP address end of range",
+                                                        "size": 32,
+                                                        "format": "Bytes"
+                                                    },
+                                                    {
+                                                        "name": "Imputed group bandwidth",
+                                                        "size": 32,
+                                                        "format": "UnsignedInteger"
+                                                    },
+                                                    {
+                                                        "name": "Reserved",
+                                                        "size": 16,
+                                                        "format": "UnsignedInteger"
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "name": "Row part 1",
+                                            "size": 176,
+                                            "format": "Array Structure",
+                                            "structure": {
+                                                "fields": [
+                                                    {
+                                                        "name": "Leading bytes of IPv6 source address",
+                                                        "size": 96,
+                                                        "format": "Bytes"
+                                                    },
+                                                    {
+                                                        "name": "Preview length",
+                                                        "size": 16,
+                                                        "format": "UnsignedInteger"
+                                                    },
+                                                    {
+                                                        "name": "Preview repeat time",
+                                                        "size": 16,
+                                                        "format": "UnsignedInteger"
+                                                    },
+                                                    {
+                                                        "name": "Preview repeat count",
+                                                        "size": 16,
+                                                        "format": "UnsignedInteger"
+                                                    },
+                                                    {
+                                                        "name": "Preview reset time",
+                                                        "size": 16,
+                                                        "format": "UnsignedInteger"
+                                                    },
+                                                    {
+                                                        "name": "Reserved",
+                                                        "size": 16,
+                                                        "format": "UnsignedInteger"
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "name": "Row part 2",
+                                            "size": 176,
+                                            "format": "Array Structure",
+                                            "structure": {
+                                                "fields": [
+                                                    {
+                                                        "name": "Leading bytes of IPv6 destination address",
+                                                        "size": 96,
+                                                        "format": "Bytes"
+                                                    },
+                                                    {
+                                                        "name": "Reserved",
+                                                        "size": 80,
+                                                        "format": "UnsignedInteger"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "Static access control list table",
+                    "size": 24,
+                    "format": "Array Structure",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "Mandatory",
+                    "structure": {
+                        "fields": [
+                            {
+                                "name": "Table control",
+                                "size": 16,
+                                "format": "Array Structure",
+                                "structure": {
+                                    "fields": [
+                                        {
+                                            "name": "Set ctrl",
+                                            "size": 2,
+                                            "format": "UnsignedInteger"
+                                        },
+                                        {
+                                            "name": "Row part ID",
+                                            "size": 3,
+                                            "format": "UnsignedInteger"
+                                        },
+                                        {
+                                            "name": "Test",
+                                            "size": 1,
+                                            "format": "UnsignedInteger"
+                                        },
+                                        {
+                                            "name": "Row key",
+                                            "size": 10,
+                                            "format": "UnsignedInteger"
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "name": "Table content",
+                                "size": 176,
+                                "format": "KeyBasedParser",
+                                "structure": {
+                                    "fields": [
+                                        {
+                                            "name": "Row part 0",
+                                            "size": 176,
+                                            "format": "Array Structure",
+                                            "structure": {
+                                                "fields": [
+                                                    {
+                                                        "name": "GEM port ID",
+                                                        "size": 16,
+                                                        "format": "UnsignedInteger"
+                                                    },
+                                                    {
+                                                        "name": "VLAN ID ANI",
+                                                        "size": 16,
+                                                        "format": "UnsignedInteger"
+                                                    },
+                                                    {
+                                                        "name": "Source IP address",
+                                                        "size": 32,
+                                                        "format": "Bytes"
+                                                    },
+                                                    {
+                                                        "name": "Destination IP address start of range",
+                                                        "size": 32,
+                                                        "format": "Bytes"
+                                                    },
+                                                    {
+                                                        "name": "Destination IP address end of range",
+                                                        "size": 32,
+                                                        "format": "Bytes"
+                                                    },
+                                                    {
+                                                        "name": "Imputed group bandwidth",
+                                                        "size": 32,
+                                                        "format": "UnsignedInteger"
+                                                    },
+                                                    {
+                                                        "name": "Reserved",
+                                                        "size": 16,
+                                                        "format": "UnsignedInteger"
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "name": "Row part 1",
+                                            "size": 176,
+                                            "format": "Array Structure",
+                                            "structure": {
+                                                "fields": [
+                                                    {
+                                                        "name": "Leading bytes of IPv6 source address",
+                                                        "size": 96,
+                                                        "format": "Bytes"
+                                                    },
+                                                    {
+                                                        "name": "Preview length",
+                                                        "size": 16,
+                                                        "format": "UnsignedInteger"
+                                                    },
+                                                    {
+                                                        "name": "Preview repeat time",
+                                                        "size": 16,
+                                                        "format": "UnsignedInteger"
+                                                    },
+                                                    {
+                                                        "name": "Preview repeat count",
+                                                        "size": 16,
+                                                        "format": "UnsignedInteger"
+                                                    },
+                                                    {
+                                                        "name": "Preview reset time",
+                                                        "size": 16,
+                                                        "format": "UnsignedInteger"
+                                                    },
+                                                    {
+                                                        "name": "Reserved",
+                                                        "size": 16,
+                                                        "format": "UnsignedInteger"
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "name": "Row part 2",
+                                            "size": 176,
+                                            "format": "Array Structure",
+                                            "structure": {
+                                                "fields": [
+                                                    {
+                                                        "name": "Leading bytes of IPv6 destination address",
+                                                        "size": 96,
+                                                        "format": "Bytes"
+                                                    },
+                                                    {
+                                                        "name": "Reserved",
+                                                        "size": 80,
+                                                        "format": "UnsignedInteger"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "Lost groups list table",
+                    "size": 10,
+                    "format": "Array Structure",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional",
+                    "structure": {
+                        "fields": [
+                            {
+                                "name": "VLAN ID",
+                                "size": 16,
+                                "format": "UnsignedInteger"
+                            },
+                            {
+                                "name": "Source IP address",
+                                "size": 32,
+                                "format": "UnsignedInteger"
+                            },
+                            {
+                                "name": "Multicast destination IP address",
+                                "size": 32,
+                                "format": "UnsignedInteger"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "Robustness",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Querier IP address",
+                    "size": 4,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Query interval",
+                    "size": 4,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Query max response time",
+                    "size": 4,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Last member query interval",
+                    "size": 4,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Unauthorized join request behaviour",
+                    "size": 1,
+                    "format": "Boolean",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Downstream IGMP and multicast TCI",
+                    "size": 3,
+                    "format": "Array Structure",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC"
+                    ],
+                    "category": "Optional",
+                    "structure": {
+                        "fields": [
+                            {
+                                "name": "Control type",
+                                "size": 8,
+                                "format": "UnsignedInteger"
+                            },
+                            {
+                                "name": "VLAN ID",
+                                "size": 16,
+                                "format": "UnsignedInteger"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    }
+}

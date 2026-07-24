@@ -1,0 +1,35 @@
+  {
+    "Me": {
+        "id": 272,
+        "name": "GALEthernetProfile",
+        "access": "CreatedByOLT",
+        "type": "Config",
+        "action": [
+            "Get",
+            "Set",
+            "Create",
+            "Delete",
+            "Dummy"
+        ],
+        "instance": {
+            "type": "Dynamic",
+            "value": 0
+        },
+        "attributes": {
+            "attribute": [
+                {
+                    "name": "Maximum GEM payload size",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                }
+            ]
+        }
+    }
+  }

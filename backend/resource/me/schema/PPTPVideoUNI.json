@@ -1,0 +1,94 @@
+{
+	"Me": {
+		"id": 82,
+		"name": "PPTPVideoUNI",
+		"access": "CreatedByONU",
+		"type": "Config",
+		"action": [
+			"Get",
+			"Set",
+			"Dummy"
+		],
+		"instance": {
+			"type": "Dynamic",
+			"value": 0
+		},
+		"attributes": {
+			"attribute": [
+				{
+					"name": "Administrative state",
+					"size": 1,
+                    "format": "Boolean",
+					"access": [
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+                {
+					"name": "Operational state",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"Dummy"
+					],
+					"category": "Optional"
+				},
+				{
+					"name": "ARC",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category": "Optional"
+				},
+				{
+					"name": "ARC interval",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category": "Optional"
+				},
+				{
+					"name": "Power Control",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+                        "W",
+						"Dummy"
+					],
+					"category": "Optional"
+				}
+			]
+		},
+		"alarms": {
+			"alarm": [
+				{
+					"number": 0,
+					"name": "Video LOS",
+					"description": "No signal at the video UNI"
+				},
+				{
+					"number": 1,
+					"name": "Video OOR low",
+					"description": "RF output below rated value"
+				},
+				{
+					"number": 2,
+					"name": "Video OOR high",
+					"description": "RF output above rated value"
+				}
+			]
+		}
+	}
+}

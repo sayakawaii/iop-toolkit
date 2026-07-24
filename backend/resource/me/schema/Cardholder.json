@@ -1,0 +1,126 @@
+  {
+    "Me": {
+        "id": 5,
+        "name": "Cardholder",
+        "access": "CreatedByONU",
+        "type": "Config",
+        "action": [
+            "Get",
+            "Set"
+        ],
+        "instance": {
+            "type": "Dynamic",
+            "value": 0
+        },
+        "attributes": {
+            "attribute": [
+                {
+                    "name": "Actual plug-in unit type",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Expected plug-in unit type",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Expected port count",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Expected equipment ID",
+                    "size": 20,
+                    "format": "String",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Actual equipment ID",
+                    "size": 20,
+                    "format": "String",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Protection profile pointer",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "ARC",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "ARC interval",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "Optional"
+                }
+            ]
+        },
+        "alarms": {
+                     "alarm": [
+                                {
+                                    "number": 0,
+                                    "name": "Plug-in circuit pack missing",
+                                    "description": "Configured circuit pack is not present. If this alarm is active, none of the mismatch alarms are declared."
+                                },
+                                {
+                                    "number": 1,
+                                    "name": "Plug-in type mismatch alarm",
+                                    "description": "Inserted circuit pack is wrong type"
+                                },
+                                {
+                                    "number": 2,
+                                    "name": "Improper card removal",
+                                    "description": "Circuit pack has been removed without being de-provisioned or administratively locked."
+                                },
+                                {
+                                    "number": 3,
+                                    "name": "Plug-in equipment ID mismatch alarm",
+                                    "description": "Inserted circuit pack has the wrong equipment ID"
+                                },
+                                {
+                                    "number": 4,
+                                    "name": "Protection switch",
+                                    "description": "An autonomous equipment protection switch has occurred. This notification is reported by the protected cardholder."
+                                }
+                     ]
+        }
+    }
+  }

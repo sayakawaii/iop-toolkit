@@ -1,0 +1,208 @@
+{
+	"Me": {
+		"id": 90,
+		"name": "PPTPVideoANI",
+		"access": "CreatedByONU",
+		"type": "Config",
+		"action": [
+			"Get",
+			"Set",
+			"Dummy"
+		],
+		"instance": {
+			"type": "Dynamic",
+			"value": 0
+		},
+		"attributes": {
+			"attribute": [
+				{
+					"name": "Administrative state",
+					"size": 1,
+					"format": "Boolean",
+					"access": [
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Operational state",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"Dummy"
+					],
+					"category": "Optional"
+				},
+				{
+					"name": "ARC",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category": "Optional"
+				},
+				{
+					"name": "ARC interval",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category": "Optional"
+				},
+				{
+					"name": "Frequency range low",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Frequency range high",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Signal capability",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Optical signal level",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"Dummy"
+					],
+					"category": "Optional"
+				},
+				{
+					"name": "Pilot signal level",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"Dummy"
+					],
+					"category": "Optional"
+				},
+				{
+					"name": "Signal level min",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Signal level max",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Pilot frequency",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category": "Optional"
+				},
+				{
+					"name": "AGC mode",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category": "Optional"
+				},
+				{
+					"name": "AGC setting",
+					"size": 1,
+					"format": "SignedInteger",
+					"access": [
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category": "Optional"
+				},
+                {
+					"name": "Video lower optical threshold",
+					"size": 1,
+					"format": "SignedInteger",
+					"access": [
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category": "Optional"
+				},
+				{
+					"name": "Video upper optical threshold",
+					"size": 1,
+					"format": "SignedInteger",
+					"access": [
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category": "Optional"
+				}
+			]
+		},
+		"alarms": {
+			"alarm": [
+				{
+					"number": 0,
+					"name": "Video LOS",
+					"description": "No signal at the video ANI"
+				},
+				{
+					"number": 1,
+					"name": "Video OOR low",
+					"description": "Signal strength below lower optical threshold (optional)"
+				},
+				{
+					"number": 2,
+					"name": "Video OOR high",
+					"description": "Signal strength above upper optical threshold (optional)"
+				}
+			]
+		}
+	}
+}

@@ -1,0 +1,118 @@
+{
+	"Me": {
+		"id": 312,
+		"name": "FECPerformanceMonitoringHistoryData",
+		"access": "CreatedByOLT",
+		"type": "Config",
+		"action": [
+			"Create",
+			"Delete",
+			"Get",
+			"Set",
+			"Get current data"
+		],
+		"instance": {
+			"type": "Dynamic",
+			"value": 0
+		},
+		"attributes": {
+			"attribute": [
+				{
+					"name": "Interval end time",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Threshold data 1/2 ID",
+					"size": 2,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"SBC",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Corrected bytes",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Corrected code words",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Uncorrectable code words",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Total code words",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "FEC seconds",
+					"size": 2,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				}
+			]
+		},
+		"alarms": {
+			"alarm": [
+				{
+					"number": 0,
+					"name": "Corrected bytes",
+					"description": "Corrected bytes threshold crossing alert"
+				},
+				{
+					"number": 1,
+					"name": "Corrected code words",
+					"description": "Corrected code words threshold crossing alert"
+				},
+				{
+					"number": 2,
+					"name": "Uncorrectable code words",
+					"description": "Uncorrectable code words threshold crossing alert"
+				},
+				{
+					"number": 4,
+					"name": "FEC seconds",
+					"description": "FEC seconds threshold crossing alert"
+				}
+			]
+		}
+	}
+}

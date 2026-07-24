@@ -1,0 +1,58 @@
+  {
+	"Me": {
+		"id": 84,
+		"name": "VlanTagFilterData",
+		"access": "CreatedByOLT",
+		"type": "Config",
+		"action": [
+			"Create",
+			"Delete",
+			"Get",
+			"Set"
+		],
+		"instance": {
+			"type": "Dynamic",
+			"value": 0
+		},
+		"attributes": {
+			"attribute": [
+				{
+					"name": "Vlan filter list",
+					"size": 24,
+					"format": "Array UnsignedInteger 16",
+					"access": [
+						"R",
+						"W",
+						"SBC",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Forward operation",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"SBC",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Number of entries",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"SBC",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				}
+			]
+		}
+	}
+}

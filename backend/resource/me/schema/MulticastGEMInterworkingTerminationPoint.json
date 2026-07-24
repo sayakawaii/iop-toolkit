@@ -1,0 +1,179 @@
+{
+	"Me": {
+		"id": 281,
+		"name": "MulticastGEMInterworkingTerminationPoint",
+		"access": "CreatedByOLT",
+        "type": "Config",
+        "action" : [
+        	"Create",
+        	"Delete",
+        	"Get",
+        	"Set"
+        ],
+        "instance": {
+        	"type": "Dynamic",
+        	"value": 0
+        },
+        "attributes": {
+        	"attribute": [
+        		{
+        			"name": "GEM port network CTP connectivity pointer",
+        			"size": 2,
+        			"format": "UnsignedInteger",
+        			"access": [
+        				"R",
+                        "W",
+                        "SBC"
+        			],
+        			"category": "Mandatory"
+        		},
+        		{
+                    "name": "Interworking option",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Service profile pointer",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Not used 1",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "PPTP counter",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Operational state",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "GAL profile pointer",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Not used 2",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC"
+                    ],
+                    "category": "Mandatory"
+                },
+        		{
+        			"name": "IPv4 multicast address table",
+        			"size": 12,
+        			"format": "Array Structure",
+        			"access": [
+        				"R",
+                        "W"
+        			],
+        			"category": "Mandatory",
+        			"structure": {
+        				"fields": [
+        					{
+        						"name": "GEM port-ID",
+        						"size": 16,
+        						"format": "UnsignedInteger"
+        					},
+        					{
+        						"name": "Secondary key",
+        						"size": 16,
+        						"format": "UnsignedInteger"
+        					},
+        					{
+        						"name": "IP multicast destination address range start",
+        						"size": 32,
+        						"format": "UnsignedInteger"
+        					},
+        					{
+        						"name": "IP multicast destination address range stop",
+        						"size": 32,
+        						"format": "UnsignedInteger"
+        					}
+        				]
+        			}
+        		},
+        		{
+        			"name": "IPv6 multicast address table",
+        			"size": 24,
+        			"format": "Array Structure",
+        			"access": [
+        				"R",
+                        "W"
+        			],
+        			"category": "Optional",
+        			"structure": {
+        				"fields": [
+        					{
+        						"name": "GEM port-ID",
+        						"size": 16,
+        						"format": "UnsignedInteger"
+        					},
+        					{
+        						"name": "Secondary key",
+        						"size": 16,
+        						"format": "UnsignedInteger"
+        					},
+        					{
+        						"name": "IP multicast destination address range start",
+        						"size": 32,
+        						"format": "UnsignedInteger"
+        					},
+        					{
+        						"name": "IP multicast destination address range stop",
+        						"size": 32,
+        						"format": "UnsignedInteger"
+        					},
+        					{
+        						"name": "IP destination address",
+        						"size": 96,
+        						"format": "Bytes"
+        					}
+        				]
+        			}
+        		}
+        	]
+        }
+	}
+}

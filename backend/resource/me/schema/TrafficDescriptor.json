@@ -1,0 +1,110 @@
+{
+    "Me": {
+        "id": 280,
+        "name": "TrafficDescriptor",
+        "access": "CreatedByOLT",
+        "type": "Config",
+        "action": [
+            "Create",
+            "Delete",
+            "Get",
+            "Set"
+        ],
+        "instance": {
+            "type": "Dynamic",
+            "value": 0
+        },
+        "attributes": {
+            "attribute": [
+                {
+                    "name": "CIR",
+                    "size": 4,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "PIR",
+                    "size": 4,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "CBS",
+                    "size": 4,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "PBS",
+                    "size": 4,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Colour mode",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Ingress colour marking",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Egress colour marking",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Meter type",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC"
+                    ],
+                    "category": "Optional"
+                }
+            ]
+        }
+    }
+}

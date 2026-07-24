@@ -1,0 +1,256 @@
+{
+	"Me":{
+		"id":150,
+		"name":"SIPAgentConfigData",
+		"access":"CreatedByOLT",
+		"type":"Config",
+		"action":[
+			"Get",
+			"Create",
+			"Delete",
+			"Set",
+			"Set table",
+			"Dummy"
+		],
+		"instance":{
+			"type":"Fixed",
+			"value":0
+		},
+		"attributes":{
+			"attribute":[
+				{
+					"name":"Proxy server address pointer",
+					"size":2,
+					"format": "UnsignedInteger",
+					"access":[
+						"R",
+						"W",
+						"SBC",
+						"Dummy"
+					],
+					"category":"Mandatory"
+				},
+				{
+					"name":"Outbound proxy address pointer",
+					"size":2,
+					"format": "UnsignedInteger",
+					"access":[
+						"R",
+						"W",
+						"SBC",
+						"Dummy"
+					],
+					"category":"Mandatory"
+				},
+				{
+					"name":"Primary SIP DNS",
+					"size":4,
+					"format": "UnsignedInteger",
+					"access":[
+						"R",
+						"W",
+						"SBC",
+						"Dummy"
+					],
+					"category":"Mandatory"
+				},
+				{
+					"name":"Secondary SIP DNS",
+					"size":4,
+					"format": "UnsignedInteger",
+					"access":[
+						"R",
+						"W",
+						"SBC",
+						"Dummy"
+					],
+					"category":"Mandatory"
+				},
+				{
+					"name":"TCP/UDP pointer",
+					"size":2,
+					"format": "UnsignedInteger",
+					"access":[
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category":"Mandatory"
+				},
+				{
+					"name":"SIP reg exp time",
+					"size":4,
+					"format":"UnsignedInteger",
+					"access":[
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category":"Mandatory"
+				},
+				{
+					"name":"SIP rereg head start time",
+					"size":4,
+					"format":"UnsignedInteger",
+					"access":[
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category":"Mandatory"
+				},
+				{
+					"name":"Host part URI",
+					"size":2,
+					"format": "UnsignedInteger",
+					"access":[
+						"R",
+						"W",
+						"SBC",
+						"Dummy"
+					],
+					"category":"Mandatory"
+				},
+				{
+					"name":"SIP status",
+					"size":1,
+					"format":"UnsignedInteger",
+					"access":[
+						"R",
+						"Dummy"
+					],
+					"category":"Mandatory"
+				},
+				{
+					"name":"SIP registrar",
+					"size":2,
+					"format": "UnsignedInteger",
+					"access":[
+						"R",
+						"W",
+						"SBC",
+						"Dummy"
+					],
+					"category":"Mandatory"
+				},
+				{
+					"name":"Softswitch",
+					"size":4,
+					"format":"Bytes",
+					"access":[
+						"R",
+						"W",
+						"SBC",
+						"Dummy"
+					],
+					"category":"Mandatory"
+				},
+				{
+					"name":"SIP response table",
+					"size":5,
+					"format":"Array Structure",
+					"table": true,
+					"access":[
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category":"Optional",
+					"structure": {
+						"fields": [
+							{
+								"name":"SIP response code",
+								"size":2,
+								"format":"UnsignedInteger"
+							},
+							{
+								"name":"Tone",
+								"size":1,
+								"format":"Bytes"
+							},
+							{
+								"name":"Text message",
+								"size":2,
+								"format":"String"
+							}
+						]
+					}
+				},
+				{
+					"name":"SIP option transmit control",
+					"size":1,
+					"format":"Boolean",
+					"access":[
+						"R",
+						"W",
+						"SBC",
+						"Dummy"
+					],
+					"category":"Optional"
+				},
+				{
+					"name":"SIP URI format",
+					"size":1,
+					"format":"UnsignedInteger",
+					"access":[
+						"R",
+						"W",
+						"SBC",
+						"Dummy"
+					],
+					"category":"Optional"
+				},
+				{
+					"name":"Redundant SIP agent pointer",
+					"size":2,
+					"format": "UnsignedInteger",
+					"access":[
+						"R",
+						"W",
+						"SBC",
+						"Dummy"
+					],
+					"category":"Optional"
+				}
+			]
+		},
+		"alarms":{
+			"alarm":[
+				{
+					"number":0,
+					"name":"SIP UA register name",
+					"description":"Failed to resolve the registration server name"
+				},
+				{
+					"number":1,
+					"name":"SIP UA register reach",
+					"description": "Cannot reach a registration server (the port cannot be reached, ICMP errors)"
+				},
+				{
+					"number":2,
+					"name":"SIP UA register connect",
+					"description": "Cannot connect to a registration server (due to bad credentials or other faults after the port has responded)"
+				},
+				{
+					"number":3,
+					"name":"SIP UA register validate",
+					"description": "Cannot validate a registration server"
+				},
+				{
+					"number":4,
+					"name":"SIP UA register auth",
+					"description": "Cannot authenticate a registration session (e.g., missing credentials)"
+				},
+				{
+					"number":5,
+					"name":"SIP UA register timeout",
+					"description": "Timeout waiting for response from a registration server"
+				},
+				{   "number":6,
+					"name":"SIP UA register fail",
+					"description": "Failure response received from a registration server"
+				}
+			]
+		}
+	}
+}

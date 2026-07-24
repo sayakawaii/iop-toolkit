@@ -1,0 +1,100 @@
+{
+    "Me": {
+        "id": 456,
+        "name": "OnuManufacturingData",
+        "access": "CreatedByONU",
+        "type": "Config",
+        "action": [
+            "Get",
+            "Dummy"
+        ],
+        "instance": {
+            "type": "Fixed",
+            "value": 0
+        },
+        "attributes": {
+            "attribute": [
+                {
+                    "name": "Manufacturer name",
+                    "size": 25,
+                    "format": "String",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Serial number part 1",
+                    "size": 25,
+                    "format": "Bytes",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "optional"
+                },
+                {
+                    "name": "Serial number part 2",
+                    "size": 25,
+                    "format": "Bytes",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "optional"
+                },
+                {
+                    "name": "Model name",
+                    "size": 25,
+                    "format": "String",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Manufacturing date",
+                    "size": 25,
+                    "format": "String",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Hardware-revision",
+                    "size": 25,
+                    "format": "String",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Firmware-revision",
+                    "size": 25,
+                    "format": "String",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "MAC address",
+                    "size": 6,
+                    "format": "Bytes",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "Optional"
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,460 @@
+/isam/logs/app_logs/OnuMgntOlt # cd ..
+/isam/slot_default/OnuMgntOlt # cd ..
+/isam/slot_default # cd xpon_hwa_app/log/
+/isam/logs/app_logs/xpon_hwa_app # ls -l
+total 56
+-rw-r--r--    1 root     root          2409 Sep 16 05:22 error_records
+-rw-r--r--    1 root     root         50264 Sep 16 05:44 traces.log
+/isam/logs/app_logs/xpon_hwa_app # cat traces.log 
+0
+[16/09/1972-05:43:05.313147],[xponhwa:main],updateUndetectStatus: Delete onuObjIdxCfg
+[16/09/1972-05:43:05.313216],[xponhwa:main],printIter: ponId(32), hw_id(1), ontId(27), onuId(26), serial_number(ALCLFA5F81A4), isRanged(1), ohmObjIndex(0), ctIndex(0)
+[16/09/1972-05:43:05.313265],[xponhwa:main],Obtain OnuCfgMgnt::OnuIndex[27],physicalPonIndex[32] from OnuCfgInfoMap
+[16/09/1972-05:43:05.313313],[xponhwa:main],handleSetAesCmdMessage()
+[16/09/1972-05:43:05.313363],[xponhwa:main],[PON 33] XSet_AES_Cmd command processed onu 27 isAESEnabled 1
+[16/09/1972-05:43:05.313405],[xponhwa:main],SendOnewayRequestToMbxSend()
+[16/09/1972-05:43:05.313447],[xponhwa:main],-------------mbxSendHdl[0] is not null!--------------
+[16/09/1972-05:43:05.313511],[xponhwa:main],OnuCfgMgnt::OnuIndex[27],physicalPonIndex[32] is added to OnuCfgInfoMap
+[16/09/1972-05:43:05.313560],[FastRecover:main],DataId [1] is changed in state [0]!
+[16/09/1972-05:43:05.313722],[xponhwa:main],a_id 27 send E_SET_AES_CMD_PB_CFG_API to GLOB
+[16/09/1972-05:43:05.313764],[xponhwa:mbxSend0],mbxHandleCmdRspMessage: glob_id 0 channel 1 set CMD RSP to true
+[16/09/1972-05:43:05.313772],[xponhwa:main],Auth SN[ALCLFA5F81A4] is already existed in OntdetectInfoMap, ploam msg status is [1] status [3]!
+[16/09/1972-05:43:05.313946],[xponhwa:main],ONU status 1 ploam msg statue [1]
+[16/09/1972-05:43:05.313992],[xponhwa:main],Obtain OnuCfgMgnt::OnuIndex[27],physicalPonIndex[32] from OnuCfgInfoMap
+[16/09/1972-05:43:05.314070],[xponhwa:main],clearOntGenAlarm : Recieved clear alarm request, for OntId[27] PhysicalPonIndex[32] Alarm [20000]!
+[16/09/1972-05:43:05.314115],[xponhwa:main],Obtain OnuCfgMgnt::OnuIndex[27],physicalPonIndex[32] from OnuCfgInfoMap
+[16/09/1972-05:43:05.314160],[xponhwa:main],processOntGenAlarm: ponOhmObjIndex is 517, onuOhmObjIndex is 522
+[16/09/1972-05:43:05.314217],[xponhwa:main],processOntGenAlarm : OntId[27] PhysicalPonIndex[32] notifyType [41] isNotifyOn[0]!
+[16/09/1972-05:43:05.314266],[Notification:main],Send Notification To Clients: Interface Index: objectIndex: 26, lowerobjectIndex: 329
+[16/09/1972-05:43:05.314374],[xponhwa:main],Sent notification 41 to handle 0x4137030 SUCCESSFUL.
+[16/09/1972-05:43:05.314429],[xponhwa:main],Clear ONU USRATE alarm, ponId = 32, ontId = 27
+[16/09/1972-05:43:05.314473],[xponhwa:main],OnuCfgMgnt::OnuIndex[27],physicalPonIndex[32] is added to OnuCfgInfoMap
+[16/09/1972-05:43:05.314517],[FastRecover:main],DataId [1] is changed in state [0]!
+[16/09/1972-05:43:05.314653],[onuProtect:main],[NG2PON 33] onuid=26  undetected, set protected state to False
+[16/09/1972-05:43:05.314700],[xponhwa:main],[NG2PON 33] detect SN ALCLfa5f81a4 status=1 aid=27 onuid=26 hwid=1, actual UsRate=0
+[16/09/1972-05:43:05.314742],[xponhwa:main],            alarms 000001
+[16/09/1972-05:43:05.314785],[Faults:main],[ng2_get_ONU_Detect_Notification] onuid=26 MAX_ONUS_PER_PON=256
+[16/09/1972-05:43:05.314836],[xponhwa:main],alarm additional info: Channelpair ont detect alarm OFF, PON: 32, SN: ALCLFA5F81A4, onu_id is 26, reg_id: HIGHFIVES!, detected_us_rate: 0, onStandby: 0, pon_rec[pon].pon_state: 1
+[16/09/1972-05:43:05.314998],[xponhwa:main], sendOntDetectNotify:  SN is ALCLFA5F81A4,onuIdList size is 1 onuid is 27
+[16/09/1972-05:43:05.315058],[xponhwa:main],Obtain OnuCfgMgnt::OnuIndex[27],physicalPonIndex[32] from OnuCfgInfoMap
+[16/09/1972-05:43:05.315117],[xponhwa:main], sendOntDetectNotify:  pon is 32, ontId is 27,  ponOhmObjIndex is 517, onuOhmObjIndex is 522
+[16/09/1972-05:43:05.315218],[xponhwa:main],Skip sending ONU undetected notification for the configured onu
+[16/09/1972-05:43:05.315266],[FastRecover:main],DataId [8] is changed in state [0]!
+[16/09/1972-05:43:05.315403],[xponhwa:main],processAuthDetectOffline pon auth_method[2]
+[16/09/1972-05:43:05.315448],[xponhwa:main],Obtain OnuCfgMgnt::OnuIndex[27],physicalPonIndex[32] from OnuCfgInfoMap
+[16/09/1972-05:43:05.315532],[xponhwa:main],get_ONU_Alarm_Status_Change_Notification Notification Received
+[16/09/1972-05:43:05.315579],[xponhwa:main], get_ONU_Alarm_Status_Change_Notification [BLTD 33] Ont 26 Onu_id 0x1a hw_id 0x1 sernum  opStatus 0x0 alarms:100
+[16/09/1972-05:43:05.315763],[xponhwa:main],[ng2_get_ONU_Detect_Notification] CtLosAlmReportCtrl handle OnuDetect onuid = 26 onu_alarm = 1, onu status = 1
+[16/09/1972-05:43:05.315859],[xponhwa:main],Command response message received
+[16/09/1972-05:43:05.315904],[xponhwa:main],main thread handle_CmdRespMsg: cpu 0 command_code is: 0x36
+[16/09/1972-05:43:05.315955],[xponhwa:main],main thread handle_CmdRespMsg: ponIndex: #32 cmd 0x36 succeeded response. opInd=0
+[16/09/1972-05:43:05.324065],[LTP:MbxRecv0],H1 :[PMSG] deactivate pon 15 sn ALCLfa5f81a4 onuid 0x1a hwid 0x1 alm 0x1 bips 0x00000000
+[16/09/1972-05:43:05.564214],[LTP:MbxRecv0],H1 :[PMSG] deactivate pon 15 sn ALCLfa5f81a4 onuid 0x1a hwid 0x1 alm 0x1 bips 0x00000000
+[16/09/1972-05:43:05.625910],[Faults:main],pon(32) ONTnumber(27)  starttimer 10s oldCachedAlm(0)!
+[16/09/1972-05:43:05.625999],[onuProtect:main],primary ponId: 0 in EncapOnuNotificationMsg GPB
+[16/09/1972-05:43:05.626062],[xponhwa:main],call sendBulkAlarmNotificationToClients: physicalPonIndex(32),ontId(27),isNotifyOn(1),notifyType(26) defectStatus(0x0),defectChangedReport(0x1),isOnuOnlinePrev(1),isOnuOnlineCurr(0), isOntPlomDebug (0) distance(0.08)
+[16/09/1972-05:43:05.626226],[xponhwa:main],Obtain OnuCfgMgnt::OnuIndex[27],physicalPonIndex[32] from OnuCfgInfoMap
+[16/09/1972-05:43:05.626280],[onuProtect:main],Onu Inactive clear alarm,  Previous Tune Action:(NOT expect complete) for Pon: 32, Onu: 26
+[16/09/1972-05:43:05.626439],[Notification:main],Bulk Alarm NOTIFICATION sent to handle: 0x4137030, notifyType = 41
+[16/09/1972-05:43:08.625865],[onuProtect:main],primary ponId: 0 in EncapOnuNotificationMsg GPB
+[16/09/1972-05:43:08.625948],[xponhwa:main],call sendBulkAlarmNotificationToClients: physicalPonIndex(32),ontId(27),isNotifyOn(1),notifyType(26) defectStatus(0x2),defectChangedReport(0x2),isOnuOnlinePrev(0),isOnuOnlineCurr(0), isOntPlomDebug (0) distance(0.08)
+[16/09/1972-05:43:08.626137],[xponhwa:main],Obtain OnuCfgMgnt::OnuIndex[27],physicalPonIndex[32] from OnuCfgInfoMap
+[16/09/1972-05:43:08.626192],[onuProtect:main],Onu Inactive clear alarm,  Previous Tune Action:(NOT expect complete) for Pon: 32, Onu: 26
+[16/09/1972-05:43:08.626365],[Notification:main],Bulk Alarm NOTIFICATION sent to handle: 0x4137030, notifyType = 41
+[16/09/1972-05:43:25.282140],[xponhwa:main],updateCfgFromGlob: Add NEW onuObjIdxCfg
+[16/09/1972-05:43:25.282211],[xponhwa:main],printIter: ponId(32), hw_id(1), ontId(1025), onuId(257), serial_number(ALCLFA5FECDD), isRanged(1), ohmObjIndex(0), ctIndex(0)
+[16/09/1972-05:43:25.282257],[xponhwa:main],Obtain OnuCfgMgnt::OnuIndex[1025],physicalPonIndex[32] from OnuCfgInfoMap
+[16/09/1972-05:43:25.282300],[xponhwa:main],Can't find OnuIndex in OnuCfgInfoMap!
+[16/09/1972-05:43:25.282348],[xponhwa:main],ONU status 2 ploam msg statue [0]
+[16/09/1972-05:43:25.282391],[xponhwa:main],distance 0.564
+[16/09/1972-05:43:25.282436],[xponhwa:main],[NG2PON 33] detect SN ALCLfa5fecdd status=2 aid=1025 onuid=257 hwid=1, actual UsRate=1
+[16/09/1972-05:43:25.282478],[xponhwa:main],            alarms 000000
+[16/09/1972-05:43:25.282521],[xponhwa:main],Authentication pon auth_method[2],ploam msg status is [0]
+[16/09/1972-05:43:25.282564],[xponhwa:main],detectOntAuth sn[ALCLFA5FECDD], regID[SUBFA5FECDD], authMode[2]
+[16/09/1972-05:43:25.282608],[xponhwa:main],Obtain OnuCfgMgnt::OnuIndex[27],physicalPonIndex[32] from OnuCfgInfoMap
+[16/09/1972-05:43:25.282654],[xponhwa:main],detectOntAuth success onuid [27], SN[] regID[SUBFA5FECDD]
+[16/09/1972-05:43:25.282696],[xponhwa:main],detectOntAuth onuindex[27], count[1]
+[16/09/1972-05:43:25.282738],[xponhwa:main],detectOntAuth pon[32], physicalPonIndex[32]
+[16/09/1972-05:43:25.282778],[xponhwa:main],tmp_ontId[27]
+[16/09/1972-05:43:25.282819],[xponhwa:main],Obtain OnuCfgMgnt::OnuIndex[27],physicalPonIndex[32] from OnuCfgInfoMap
+[16/09/1972-05:43:25.282861],[xponhwa:main],registration_id[SUBFA5FECDD], sn []
+[16/09/1972-05:43:25.282904],[xponhwa:main],oldStatus[1] it->second.get_onuIdList().size() [1]
+[16/09/1972-05:43:25.283057],[xponhwa:main],UnregOfflineOnt pon auth_method[2] sn[ALCLFA5F81A4]
+[16/09/1972-05:43:25.283115],[xponhwa:main],Obtain OnuCfgMgnt::OnuIndex[27],physicalPonIndex[32] from OnuCfgInfoMap
+[16/09/1972-05:43:25.283162],[xponhwa:main],UnregOfflineOnt isPloamReg[1] oldStatus[1] authMode[2]
+[16/09/1972-05:43:25.283210],[FastRecover:main],DataId [8] is changed in state [0]!
+[16/09/1972-05:43:25.283370],[xponhwa:main],handleDeleteSerNumCmdMessage()
+[16/09/1972-05:43:25.283422],[xponhwa:main],[PON 33] updateDetectInfo SN[ALCLFA5F81A4] - RegistrationId[] in OntdetectInfoMap action[2] onuIndex is [27]
+[16/09/1972-05:43:25.283465],[FastRecover:main],DataId [8] is changed in state [0]!
+[16/09/1972-05:43:25.283593],[xponhwa:main],[PON 33] DELETE_SER_NUM command processed SN ALCLfa5f81a4
+[16/09/1972-05:43:25.283643],[xponhwa:main],SendOnewayRequestToMbxSend()
+[16/09/1972-05:43:25.283685],[xponhwa:main],-------------mbxSendHdl[0] is not null!--------------
+[16/09/1972-05:43:25.283765],[xponhwa:main],sendOnuLosiNotification : OntId[27] PhysicalPonIndex[32]: notifyType ONU_LOSi!
+[16/09/1972-05:43:25.283833],[xponhwa:main],onuIndex[27], physicalPonIndex[32] distance[0.075801]
+[16/09/1972-05:43:25.283953],[Notification:main],Send Notification To Clients: Interface Index: objectIndex: 26, lowerobjectIndex: 329
+[16/09/1972-05:43:25.283999],[Notification:main],ONU related NOTIFICATION TYPE received
+[16/09/1972-05:43:25.284043],[onuProtect:main],Onu Inactive clear alarm,  Previous Tune Action:(NOT expect complete) for Pon: 32, Onu: 26
+[16/09/1972-05:43:25.284181],[xponhwa:main],Sent notification 2 to handle 0x4137030 SUCCESSFUL.
+[16/09/1972-05:43:25.284248],[xponhwa:main],sendOnuInActiNotification : OntId[27] PhysicalPonIndex[32]: notifyType ONU_INACTi!
+[16/09/1972-05:43:25.284290],[xponhwa:main],sendOnuInActiNotification : SN[ALCLFA5F81A4]
+[16/09/1972-05:43:25.284343],[xponhwa:main],onuIndex[27], physicalPonIndex[32] distance[-1.000000]
+[16/09/1972-05:43:25.284386],[Notification:main],Send Notification To Clients: Interface Index: objectIndex: 26, lowerobjectIndex: 329
+[16/09/1972-05:43:25.284427],[Notification:main],ONU related NOTIFICATION TYPE received
+[16/09/1972-05:43:25.284470],[xponhwa:main],Obtain OnuCfgMgnt::OnuIndex[27],physicalPonIndex[32] from OnuCfgInfoMap
+[16/09/1972-05:43:25.284519],[onuProtect:main],Onu Inactive clear alarm,  Previous Tune Action:(NOT expect complete) for Pon: 32, Onu: 26
+[16/09/1972-05:43:25.284599],[xponhwa:mbxSend0],mbxHandleCmdRspMessage: glob_id 0 channel 1 set CMD RSP to true
+[16/09/1972-05:43:25.284652],[xponhwa:main],Sent notification 26 to handle 0x4137030 SUCCESSFUL.
+[16/09/1972-05:43:25.284708],[xponhwa:main],onuIdList.size[1]
+[16/09/1972-05:43:25.284753],[xponhwa:main],Obtain OnuCfgMgnt::OnuIndex[27],physicalPonIndex[32] from OnuCfgInfoMap
+[16/09/1972-05:43:25.284799],[xponhwa:main],Register onu[27] onuid[26] sn[] sn not reg new sn[ALCLFA5FECDD]
+[16/09/1972-05:43:25.284867],[xponhwa:main],handleRegisterOnuCmdMessage()
+[16/09/1972-05:43:25.284932],[xponhwa:main],pon[32] ONTnumber[27] is already existed in regOnuInfoMap, erase it first!
+[16/09/1972-05:43:25.284989],[xponhwa:main],Add SN[ALCLFA5FECDD]  in regOnuInfoMap pon[32] ONTnumber[27]  !
+[16/09/1972-05:43:25.285044],[xponhwa:main],[PON 33] updateDetectInfo SN[ALCLFA5FECDD] - RegistrationId[] in OntdetectInfoMap action[1] onuIndex is [27]
+[16/09/1972-05:43:25.285090],[FastRecover:main],DataId [8] is changed in state [0]!
+[16/09/1972-05:43:25.285240],[xponhwa:main],[NG2PON 33] Register_ONU SN=ALCLfa5fecdd aid=27 onuid=26 rangingState=1
+[16/09/1972-05:43:25.285283],[xponhwa:main],SendOnewayRequestToMbxSend()
+[16/09/1972-05:43:25.285324],[xponhwa:main],-------------mbxSendHdl[0] is not null!--------------
+[16/09/1972-05:43:25.285453],[FastRecover:main],DataId [8] is changed in state [0]!
+[16/09/1972-05:43:25.285592],[xponhwa:main],[PON 33] insertDetectInfo SN[ALCLFA5FECDD] - RegistrationId[SUBFA5FECDD] in OntdetectInfoMap onuidlist size is [1] seqnum[2] status [2] distance [0.564935] RegSend2TO1 [1]
+[16/09/1972-05:43:25.285639],[xponhwa:main],[ng2_get_ONU_Detect_Notification] onuid=257 MAX_ONUS_PER_PON=256
+[16/09/1972-05:43:25.285695],[xponhwa:main],alarm additional info: Channelpair ont detect alarm ON, PON: 32, SN: ALCLFA5FECDD, onu_id is 257, reg_id: SUBFA5FECDD, detected_us_rate: 1, onStandby: 0, pon_rec[pon].pon_state: 1
+[16/09/1972-05:43:25.285865],[xponhwa:main], sendOntDetectNotify:  SN is ALCLFA5FECDD,onuIdList size is 1 onuid is 27
+[16/09/1972-05:43:25.285921],[xponhwa:main],Obtain OnuCfgMgnt::OnuIndex[1025],physicalPonIndex[32] from OnuCfgInfoMap
+[16/09/1972-05:43:25.285975],[xponhwa:main],Can't find OnuIndex in OnuCfgInfoMap!
+[16/09/1972-05:43:25.286044],[xponhwa:main],Obtain OnuCfgMgnt::onuId[257],physicalPonIndex[32] from OnuCfgInfoMap
+[16/09/1972-05:43:25.286095],[xponhwa:main],Can't find Serial Number in OnuCfgInfoMap!
+[16/09/1972-05:43:25.286207],[xponhwa:mbxSend0],mbxHandleCmdRspMessage: glob_id 0 channel 1 set CMD RSP to true
+[16/09/1972-05:43:25.286255],[xponhwa:main], sendOntDetectNotify:  pon is 32, ontId is 1025,  ponOhmObjIndex is 517, onuOhmObjIndex is 0
+[16/09/1972-05:43:25.286385],[xponhwa:main],isMultiVanForPerVANI sn[ALCLFA5FECDD], regID[SUBFA5FECDD]
+[16/09/1972-05:43:25.286434],[xponhwa:main],Obtain OnuCfgMgnt::OnuIndex[27],physicalPonIndex[32] from OnuCfgInfoMap
+[16/09/1972-05:43:25.286481],[xponhwa:main],isMultiVanForPerVANI onuid [27], SN[] regID[SUBFA5FECDD]
+[16/09/1972-05:43:25.286527],[xponhwa:main],isMultiVani[0]
+[16/09/1972-05:43:25.286581],[Notification:main],Send Notification To Clients: Interface Index: objectIndex: 1025, lowerobjectIndex: 329
+[16/09/1972-05:43:25.286622],[Notification:main],Notification type is ONT Detect
+[16/09/1972-05:43:25.286733],[xponhwa:main],Sent notification 27 to handle 0x4137030 SUCCESSFUL.
+[16/09/1972-05:43:25.286796],[xponhwa:main],Sent notification 27 to handle 0x4137e40 SUCCESSFUL.
+[16/09/1972-05:43:25.287020],[xponhwa:main],[ng2_get_ONU_Detect_Notification] CtLosAlmReportCtrl handle OnuDetect onuid = 257 onu_alarm = 0, onu status = 2
+[16/09/1972-05:43:25.287144],[xponhwa:main],Command response message received
+[16/09/1972-05:43:25.287190],[xponhwa:main],main thread handle_CmdRespMsg: cpu 0 command_code is: 0x3
+[16/09/1972-05:43:25.287240],[xponhwa:main],main thread handle_CmdRespMsg: ponIndex: #32 cmd 0x3 succeeded response. opInd=0
+[16/09/1972-05:43:25.287285],[xponhwa:main],Command response message received
+[16/09/1972-05:43:25.287325],[xponhwa:main],main thread handle_CmdRespMsg: cpu 0 command_code is: 0x2
+[16/09/1972-05:43:25.287369],[xponhwa:main],main thread handle_CmdRespMsg: ponIndex: #32 cmd 0x2 succeeded response. opInd=0
+[16/09/1972-05:43:25.297149],[LTP:MbxRecv0],H1 :[POM ] ont ranged pon 15 onuId 0x101 hwId 0x1 ontaid 65535 sn ALCLfa5fecdd teq 0x92cae us_speed 2.5G
+[16/09/1972-05:43:25.310990],[OMCI:OmciTxRx],omci_packet TX: PON[33] gpbCtId[0x149], Counter[557] ONUid[26] 7a be 49 0a 00 02 00 00   80 00 00 00
+[16/09/1972-05:43:25.311085],[OMCI:OmciTxRx],>> out omci len [68], ctx [0x40fa610] msg_type[0] last_packet[1]
+[16/09/1972-05:43:25.311129],[OMCI:OmciTxRx],OMCI request are ready to be received on the UDS! ypacket[0x40fa610]
+[16/09/1972-05:43:25.317280],[LTP:MbxRecv0],H1 :[PMSG] deactivate pon 15 sn ALCLfa5fecdd onuid 0x101 hwid 0x1 alm 0x0 bips 0x00000000
+[16/09/1972-05:43:25.337408],[LTP:MbxRecv0],H1 :[PMSG] deactivate pon 15 sn ALCLfa5fecdd onuid 0x101 hwid 0x1 alm 0x1 bips 0x00000000
+[16/09/1972-05:43:25.366206],[xponhwa:main],updateUndetectStatus: Delete onuObjIdxCfg
+[16/09/1972-05:43:25.366273],[xponhwa:main],printIter: ponId(32), hw_id(1), ontId(1025), onuId(257), serial_number(ALCLFA5FECDD), isRanged(1), ohmObjIndex(0), ctIndex(0)
+[16/09/1972-05:43:25.366322],[xponhwa:main],Obtain OnuCfgMgnt::OnuIndex[27],physicalPonIndex[32] from OnuCfgInfoMap
+[16/09/1972-05:43:25.366371],[xponhwa:main],handleSetAesCmdMessage()
+[16/09/1972-05:43:25.366419],[xponhwa:main],[PON 33] XSet_AES_Cmd command processed onu 27 isAESEnabled 1
+[16/09/1972-05:43:25.366462],[xponhwa:main],SendOnewayRequestToMbxSend()
+[16/09/1972-05:43:25.366503],[xponhwa:main],-------------mbxSendHdl[0] is not null!--------------
+[16/09/1972-05:43:25.366596],[xponhwa:main],OnuCfgMgnt::OnuIndex[27],physicalPonIndex[32] is added to OnuCfgInfoMap
+[16/09/1972-05:43:25.366648],[FastRecover:main],DataId [1] is changed in state [0]!
+[16/09/1972-05:43:25.366822],[xponhwa:mbxSend0],mbxHandleCmdRspMessage: glob_id 0 channel 1 set CMD RSP to true
+[16/09/1972-05:43:25.366878],[xponhwa:main],a_id 27 send E_SET_AES_CMD_PB_CFG_API to GLOB
+[16/09/1972-05:43:25.366929],[xponhwa:main],Auth SN[ALCLFA5FECDD] is already existed in OntdetectInfoMap, ploam msg status is [1] status [2]!
+[16/09/1972-05:43:25.367082],[xponhwa:main],ONU status 1 ploam msg statue [1]
+[16/09/1972-05:43:25.367127],[xponhwa:main],Obtain OnuCfgMgnt::OnuIndex[27],physicalPonIndex[32] from OnuCfgInfoMap
+[16/09/1972-05:43:25.367176],[xponhwa:main],clearOntGenAlarm : Recieved clear alarm request, but OntId[27] PhysicalPonIndex[32] Alarm [20000] was not raised!
+[16/09/1972-05:43:25.367219],[xponhwa:main],Clear ONU USRATE alarm, ponId = 32, ontId = 27
+[16/09/1972-05:43:25.367261],[xponhwa:main],OnuCfgMgnt::OnuIndex[27],physicalPonIndex[32] is added to OnuCfgInfoMap
+[16/09/1972-05:43:25.367305],[FastRecover:main],DataId [1] is changed in state [0]!
+[16/09/1972-05:43:25.367437],[xponhwa:main],[NG2PON 33] detect SN ALCLfa5fecdd status=1 aid=27 onuid=257 hwid=1, actual UsRate=1
+[16/09/1972-05:43:25.367479],[xponhwa:main],            alarms 000001
+[16/09/1972-05:43:25.367521],[Faults:main],not erase OntdetectInfoMap when ont offline in auth process or disable!
+[16/09/1972-05:43:25.367563],[Faults:main],[ng2_get_ONU_Detect_Notification] onuid=257 MAX_ONUS_PER_PON=256
+[16/09/1972-05:43:25.367763],[xponhwa:main],[ng2_get_ONU_Detect_Notification] CtLosAlmReportCtrl handle OnuDetect onuid = 257 onu_alarm = 1, onu status = 1
+[16/09/1972-05:43:25.367872],[xponhwa:main],Command response message received
+[16/09/1972-05:43:25.367917],[xponhwa:main],main thread handle_CmdRespMsg: cpu 0 command_code is: 0x36
+[16/09/1972-05:43:25.367966],[xponhwa:main],main thread handle_CmdRespMsg: ponIndex: #32 cmd 0x36 succeeded response. opInd=0
+[16/09/1972-05:43:25.577627],[LTP:MbxRecv0],H1 :[PMSG] deactivate pon 15 sn ALCLfa5fecdd onuid 0x101 hwid 0x1 alm 0x1 bips 0x00000000
+[16/09/1972-05:43:25.625890],[Faults:main],pon(32) ONTnumber(27)  starttimer 10s oldCachedAlm(0)!
+[16/09/1972-05:43:25.625983],[onuProtect:main],primary ponId: 0 in EncapOnuNotificationMsg GPB
+[16/09/1972-05:43:25.626044],[xponhwa:main],call sendBulkAlarmNotificationToClients: physicalPonIndex(32),ontId(27),isNotifyOn(1),notifyType(26) defectStatus(0x0),defectChangedReport(0x2),isOnuOnlinePrev(0),isOnuOnlineCurr(0), isOntPlomDebug (0) distance(-1.00)
+[16/09/1972-05:43:25.626211],[xponhwa:main],Obtain OnuCfgMgnt::OnuIndex[27],physicalPonIndex[32] from OnuCfgInfoMap
+[16/09/1972-05:43:25.626266],[onuProtect:main],Onu Inactive clear alarm,  Previous Tune Action:(NOT expect complete) for Pon: 32, Onu: 26
+[16/09/1972-05:43:25.626425],[Notification:main],Bulk Alarm NOTIFICATION sent to handle: 0x4137030, notifyType = 41
+[16/09/1972-05:43:28.625754],[onuProtect:main],primary ponId: 0 in EncapOnuNotificationMsg GPB
+[16/09/1972-05:43:28.625832],[xponhwa:main],call sendBulkAlarmNotificationToClients: physicalPonIndex(32),ontId(27),isNotifyOn(1),notifyType(26) defectStatus(0x8000),defectChangedReport(0x8000),isOnuOnlinePrev(0),isOnuOnlineCurr(0), isOntPlomDebug (0) distance(-1.00)
+[16/09/1972-05:43:28.626006],[xponhwa:main],Obtain OnuCfgMgnt::OnuIndex[27],physicalPonIndex[32] from OnuCfgInfoMap
+[16/09/1972-05:43:28.626062],[onuProtect:main],Onu Inactive clear alarm,  Previous Tune Action:(NOT expect complete) for Pon: 32, Onu: 26
+[16/09/1972-05:43:28.626226],[Notification:main],Bulk Alarm NOTIFICATION sent to handle: 0x4137030, notifyType = 41
+[16/09/1972-05:43:48.857967],[xponhwa:main],updateCfgFromGlob: Add NEW onuObjIdxCfg
+[16/09/1972-05:43:48.858033],[xponhwa:main],printIter: ponId(32), hw_id(1), ontId(1025), onuId(257), serial_number(ALCLFA6F41E3), isRanged(1), ohmObjIndex(0), ctIndex(0)
+[16/09/1972-05:43:48.858078],[xponhwa:main],Obtain OnuCfgMgnt::OnuIndex[1025],physicalPonIndex[32] from OnuCfgInfoMap
+[16/09/1972-05:43:48.858130],[xponhwa:main],Can't find OnuIndex in OnuCfgInfoMap!
+[16/09/1972-05:43:48.858177],[xponhwa:main],ONU status 2 ploam msg statue [0]
+[16/09/1972-05:43:48.858217],[xponhwa:main],distance 0.564
+[16/09/1972-05:43:48.858266],[xponhwa:main],[NG2PON 33] detect SN ALCLfa6f41e3 status=2 aid=1025 onuid=257 hwid=1, actual UsRate=1
+[16/09/1972-05:43:48.858307],[xponhwa:main],            alarms 000000
+[16/09/1972-05:43:48.858349],[xponhwa:main],Authentication pon auth_method[2],ploam msg status is [0]
+[16/09/1972-05:43:48.858391],[xponhwa:main],detectOntAuth sn[ALCLFA6F41E3], regID[SUBFA5FECDD], authMode[2]
+[16/09/1972-05:43:48.858433],[xponhwa:main],Obtain OnuCfgMgnt::OnuIndex[27],physicalPonIndex[32] from OnuCfgInfoMap
+[16/09/1972-05:43:48.858477],[xponhwa:main],detectOntAuth success onuid [27], SN[] regID[SUBFA5FECDD]
+[16/09/1972-05:43:48.858518],[xponhwa:main],detectOntAuth onuindex[27], count[1]
+[16/09/1972-05:43:48.858557],[xponhwa:main],detectOntAuth pon[32], physicalPonIndex[32]
+[16/09/1972-05:43:48.858596],[xponhwa:main],tmp_ontId[27]
+[16/09/1972-05:43:48.858635],[xponhwa:main],Obtain OnuCfgMgnt::OnuIndex[27],physicalPonIndex[32] from OnuCfgInfoMap
+[16/09/1972-05:43:48.858676],[xponhwa:main],registration_id[SUBFA5FECDD], sn []
+[16/09/1972-05:43:48.858717],[xponhwa:main],oldStatus[2] it->second.get_onuIdList().size() [1]
+[16/09/1972-05:43:48.858871],[xponhwa:main],UnregOfflineOnt pon auth_method[2] sn[ALCLFA5FECDD]
+[16/09/1972-05:43:48.858915],[xponhwa:main],Obtain OnuCfgMgnt::OnuIndex[27],physicalPonIndex[32] from OnuCfgInfoMap
+[16/09/1972-05:43:48.858959],[xponhwa:main],UnregOfflineOnt isPloamReg[1] oldStatus[2] authMode[2]
+[16/09/1972-05:43:48.859004],[FastRecover:main],DataId [8] is changed in state [0]!
+[16/09/1972-05:43:48.859167],[xponhwa:main],handleDeleteSerNumCmdMessage()
+[16/09/1972-05:43:48.859216],[xponhwa:main],[PON 33] updateDetectInfo SN[ALCLFA5FECDD] - RegistrationId[] in OntdetectInfoMap action[2] onuIndex is [27]
+[16/09/1972-05:43:48.859257],[FastRecover:main],DataId [8] is changed in state [0]!
+[16/09/1972-05:43:48.859384],[xponhwa:main],[PON 33] DELETE_SER_NUM command processed SN ALCLfa5fecdd
+[16/09/1972-05:43:48.859426],[xponhwa:main],SendOnewayRequestToMbxSend()
+[16/09/1972-05:43:48.859466],[xponhwa:main],-------------mbxSendHdl[0] is not null!--------------
+[16/09/1972-05:43:48.859541],[xponhwa:main],sendOnuLosiNotification : OntId[27] PhysicalPonIndex[32]: notifyType ONU_LOSi!
+[16/09/1972-05:43:48.859603],[xponhwa:main],onuIndex[27], physicalPonIndex[32] distance[-1.000000]
+[16/09/1972-05:43:48.859719],[Notification:main],Send Notification To Clients: Interface Index: objectIndex: 26, lowerobjectIndex: 329
+[16/09/1972-05:43:48.859763],[Notification:main],ONU related NOTIFICATION TYPE received
+[16/09/1972-05:43:48.859805],[onuProtect:main],Onu Inactive clear alarm,  Previous Tune Action:(NOT expect complete) for Pon: 32, Onu: 26
+[16/09/1972-05:43:48.859927],[xponhwa:main],Sent notification 2 to handle 0x4137030 SUCCESSFUL.
+[16/09/1972-05:43:48.859992],[xponhwa:main],sendOnuInActiNotification : OntId[27] PhysicalPonIndex[32]: notifyType ONU_INACTi!
+[16/09/1972-05:43:48.860032],[xponhwa:main],sendOnuInActiNotification : SN[ALCLFA5FECDD]
+[16/09/1972-05:43:48.860083],[xponhwa:main],onuIndex[27], physicalPonIndex[32] distance[-1.000000]
+[16/09/1972-05:43:48.860124],[Notification:main],Send Notification To Clients: Interface Index: objectIndex: 26, lowerobjectIndex: 329
+[16/09/1972-05:43:48.860163],[Notification:main],ONU related NOTIFICATION TYPE received
+[16/09/1972-05:43:48.860204],[xponhwa:main],Obtain OnuCfgMgnt::OnuIndex[27],physicalPonIndex[32] from OnuCfgInfoMap
+[16/09/1972-05:43:48.860251],[onuProtect:main],Onu Inactive clear alarm,  Previous Tune Action:(NOT expect complete) for Pon: 32, Onu: 26
+[16/09/1972-05:43:48.860323],[xponhwa:main],Sent notification 26 to handle 0x4137030 SUCCESSFUL.
+[16/09/1972-05:43:48.860373],[xponhwa:main],onuIdList.size[1]
+[16/09/1972-05:43:48.860402],[xponhwa:mbxSend0],mbxHandleCmdRspMessage: glob_id 0 channel 1 set CMD RSP to true
+[16/09/1972-05:43:48.860419],[xponhwa:main],Obtain OnuCfgMgnt::OnuIndex[27],physicalPonIndex[32] from OnuCfgInfoMap
+[16/09/1972-05:43:48.860489],[xponhwa:main],Register onu[27] onuid[26] sn[] sn not reg new sn[ALCLFA6F41E3]
+[16/09/1972-05:43:48.860533],[xponhwa:main],handleRegisterOnuCmdMessage()
+[16/09/1972-05:43:48.860581],[xponhwa:main],pon[32] ONTnumber[27] is already existed in regOnuInfoMap, erase it first!
+[16/09/1972-05:43:48.860623],[xponhwa:main],Add SN[ALCLFA6F41E3]  in regOnuInfoMap pon[32] ONTnumber[27]  !
+[16/09/1972-05:43:48.860667],[xponhwa:main],[PON 33] updateDetectInfo SN[ALCLFA6F41E3] - RegistrationId[] in OntdetectInfoMap action[1] onuIndex is [27]
+[16/09/1972-05:43:48.860709],[FastRecover:main],DataId [8] is changed in state [0]!
+[16/09/1972-05:43:48.860852],[xponhwa:main],[NG2PON 33] Register_ONU SN=ALCLfa6f41e3 aid=27 onuid=26 rangingState=1
+[16/09/1972-05:43:48.860892],[xponhwa:main],SendOnewayRequestToMbxSend()
+[16/09/1972-05:43:48.860932],[xponhwa:main],-------------mbxSendHdl[0] is not null!--------------
+[16/09/1972-05:43:48.861002],[FastRecover:main],DataId [8] is changed in state [0]!
+[16/09/1972-05:43:48.861132],[xponhwa:main],[PON 33] insertDetectInfo SN[ALCLFA6F41E3] - RegistrationId[SUBFA5FECDD] in OntdetectInfoMap onuidlist size is [1] seqnum[2] status [2] distance [0.564608] RegSend2TO1 [1]
+[16/09/1972-05:43:48.861175],[xponhwa:main],[ng2_get_ONU_Detect_Notification] onuid=257 MAX_ONUS_PER_PON=256
+[16/09/1972-05:43:48.861224],[xponhwa:main],alarm additional info: Channelpair ont detect alarm ON, PON: 32, SN: ALCLFA6F41E3, onu_id is 257, reg_id: SUBFA5FECDD, detected_us_rate: 1, onStandby: 0, pon_rec[pon].pon_state: 1
+[16/09/1972-05:43:48.861343],[xponhwa:main], sendOntDetectNotify:  SN is ALCLFA6F41E3,onuIdList size is 1 onuid is 27
+[16/09/1972-05:43:48.861386],[xponhwa:main],Obtain OnuCfgMgnt::OnuIndex[1025],physicalPonIndex[32] from OnuCfgInfoMap
+[16/09/1972-05:43:48.861427],[xponhwa:main],Can't find OnuIndex in OnuCfgInfoMap!
+[16/09/1972-05:43:48.861468],[xponhwa:main],Obtain OnuCfgMgnt::onuId[257],physicalPonIndex[32] from OnuCfgInfoMap
+[16/09/1972-05:43:48.861507],[xponhwa:main],Can't find Serial Number in OnuCfgInfoMap!
+[16/09/1972-05:43:48.861548],[xponhwa:main], sendOntDetectNotify:  pon is 32, ontId is 1025,  ponOhmObjIndex is 517, onuOhmObjIndex is 0
+[16/09/1972-05:43:48.861827],[xponhwa:main],isMultiVanForPerVANI sn[ALCLFA6F41E3], regID[SUBFA5FECDD]
+[16/09/1972-05:43:48.861881],[xponhwa:main],Obtain OnuCfgMgnt::OnuIndex[27],physicalPonIndex[32] from OnuCfgInfoMap
+[16/09/1972-05:43:48.861904],[xponhwa:mbxSend0],mbxHandleCmdRspMessage: glob_id 0 channel 1 set CMD RSP to true
+[16/09/1972-05:43:48.861943],[xponhwa:main],isMultiVanForPerVANI onuid [27], SN[] regID[SUBFA5FECDD]
+[16/09/1972-05:43:48.861984],[xponhwa:main],isMultiVani[0]
+[16/09/1972-05:43:48.862049],[Notification:main],Send Notification To Clients: Interface Index: objectIndex: 1025, lowerobjectIndex: 329
+[16/09/1972-05:43:48.862090],[Notification:main],Notification type is ONT Detect
+[16/09/1972-05:43:48.862198],[xponhwa:main],Sent notification 27 to handle 0x4137030 SUCCESSFUL.
+[16/09/1972-05:43:48.862259],[xponhwa:main],Sent notification 27 to handle 0x4137e40 SUCCESSFUL.
+[16/09/1972-05:43:48.862480],[xponhwa:main],[ng2_get_ONU_Detect_Notification] CtLosAlmReportCtrl handle OnuDetect onuid = 257 onu_alarm = 0, onu status = 2
+[16/09/1972-05:43:48.862598],[xponhwa:main],Command response message received
+[16/09/1972-05:43:48.862641],[xponhwa:main],main thread handle_CmdRespMsg: cpu 0 command_code is: 0x3
+[16/09/1972-05:43:48.862688],[xponhwa:main],main thread handle_CmdRespMsg: ponIndex: #32 cmd 0x3 succeeded response. opInd=0
+[16/09/1972-05:43:48.862729],[xponhwa:main],Command response message received
+[16/09/1972-05:43:48.862769],[xponhwa:main],main thread handle_CmdRespMsg: cpu 0 command_code is: 0x2
+[16/09/1972-05:43:48.862811],[xponhwa:main],main thread handle_CmdRespMsg: ponIndex: #32 cmd 0x2 succeeded response. opInd=0
+[16/09/1972-05:43:48.966230],[xponhwa:main],updateUndetectStatus: Delete onuObjIdxCfg
+[16/09/1972-05:43:48.966310],[xponhwa:main],printIter: ponId(32), hw_id(1), ontId(1025), onuId(257), serial_number(ALCLFA6F41E3), isRanged(1), ohmObjIndex(0), ctIndex(0)
+[16/09/1972-05:43:48.966358],[xponhwa:main],Obtain OnuCfgMgnt::OnuIndex[27],physicalPonIndex[32] from OnuCfgInfoMap
+[16/09/1972-05:43:48.966404],[xponhwa:main],handleSetAesCmdMessage()
+[16/09/1972-05:43:48.966450],[xponhwa:main],[PON 33] XSet_AES_Cmd command processed onu 27 isAESEnabled 1
+[16/09/1972-05:43:48.966491],[xponhwa:main],SendOnewayRequestToMbxSend()
+[16/09/1972-05:43:48.966531],[xponhwa:main],-------------mbxSendHdl[0] is not null!--------------
+[16/09/1972-05:43:48.966593],[xponhwa:main],OnuCfgMgnt::OnuIndex[27],physicalPonIndex[32] is added to OnuCfgInfoMap
+[16/09/1972-05:43:48.966640],[FastRecover:main],DataId [1] is changed in state [0]!
+[16/09/1972-05:43:48.966800],[xponhwa:main],a_id 27 send E_SET_AES_CMD_PB_CFG_API to GLOB
+[16/09/1972-05:43:48.966812],[xponhwa:mbxSend0],mbxHandleCmdRspMessage: glob_id 0 channel 1 set CMD RSP to true
+[16/09/1972-05:43:48.966848],[xponhwa:main],Auth SN[ALCLFA6F41E3] is already existed in OntdetectInfoMap, ploam msg status is [1] status [2]!
+[16/09/1972-05:43:48.967000],[xponhwa:main],ONU status 1 ploam msg statue [1]
+[16/09/1972-05:43:48.967043],[xponhwa:main],Obtain OnuCfgMgnt::OnuIndex[27],physicalPonIndex[32] from OnuCfgInfoMap
+[16/09/1972-05:43:48.967089],[xponhwa:main],clearOntGenAlarm : Recieved clear alarm request, but OntId[27] PhysicalPonIndex[32] Alarm [20000] was not raised!
+[16/09/1972-05:43:48.967129],[xponhwa:main],Clear ONU USRATE alarm, ponId = 32, ontId = 27
+[16/09/1972-05:43:48.967169],[xponhwa:main],OnuCfgMgnt::OnuIndex[27],physicalPonIndex[32] is added to OnuCfgInfoMap
+[16/09/1972-05:43:48.967210],[FastRecover:main],DataId [1] is changed in state [0]!
+[16/09/1972-05:43:48.967339],[xponhwa:main],[NG2PON 33] detect SN ALCLfa6f41e3 status=1 aid=27 onuid=257 hwid=1, actual UsRate=1
+[16/09/1972-05:43:48.967379],[xponhwa:main],            alarms 000001
+[16/09/1972-05:43:48.967420],[Faults:main],not erase OntdetectInfoMap when ont offline in auth process or disable!
+[16/09/1972-05:43:48.967460],[Faults:main],[ng2_get_ONU_Detect_Notification] onuid=257 MAX_ONUS_PER_PON=256
+[16/09/1972-05:43:48.967659],[xponhwa:main],[ng2_get_ONU_Detect_Notification] CtLosAlmReportCtrl handle OnuDetect onuid = 257 onu_alarm = 1, onu status = 1
+[16/09/1972-05:43:48.967739],[xponhwa:main],Command response message received
+[16/09/1972-05:43:48.967780],[xponhwa:main],main thread handle_CmdRespMsg: cpu 0 command_code is: 0x36
+[16/09/1972-05:43:48.967883],[xponhwa:main],main thread handle_CmdRespMsg: ponIndex: #32 cmd 0x36 succeeded response. opInd=0
+[16/09/1972-05:43:49.065365],[LTP:MbxRecv0],H1 :[POM ] ont ranged pon 15 onuId 0x101 hwId 0x1 ontaid 65535 sn ALCLfa6f41e3 teq 0x92cb6 us_speed 2.5G
+[16/09/1972-05:43:49.085442],[LTP:MbxRecv0],H1 :[PMSG] deactivate pon 15 sn ALCLfa6f41e3 onuid 0x101 hwid 0x1 alm 0x0 bips 0x00000000
+[16/09/1972-05:43:49.105473],[LTP:MbxRecv0],H1 :[PMSG] deactivate pon 15 sn ALCLfa6f41e3 onuid 0x101 hwid 0x1 alm 0x1 bips 0x00000000
+[16/09/1972-05:43:49.185578],[LTP:MbxRecv0],H1 :[PMSG] deactivate pon 15 sn ALCLfa6f41e3 onuid 0x101 hwid 0x1 alm 0x1 bips 0x00000000
+[16/09/1972-05:44:12.441383],[xponhwa:main],updateCfgFromGlob: Add NEW onuObjIdxCfg
+[16/09/1972-05:44:12.441453],[xponhwa:main],printIter: ponId(32), hw_id(1), ontId(27), onuId(26), serial_number(ALCLFA6F41E3), isRanged(1), ohmObjIndex(0), ctIndex(0)
+[16/09/1972-05:44:12.441498],[xponhwa:main],Obtain OnuCfgMgnt::OnuIndex[27],physicalPonIndex[32] from OnuCfgInfoMap
+[16/09/1972-05:44:12.441544],[xponhwa:main],handleSetAesCmdMessage()
+[16/09/1972-05:44:12.441593],[xponhwa:main],[PON 33] XSet_AES_Cmd command processed onu 27 isAESEnabled 1
+[16/09/1972-05:44:12.441633],[xponhwa:main],SendOnewayRequestToMbxSend()
+[16/09/1972-05:44:12.441672],[xponhwa:main],-------------mbxSendHdl[0] is not null!--------------
+[16/09/1972-05:44:12.441735],[xponhwa:main],OnuCfgMgnt::OnuIndex[27],physicalPonIndex[32] is added to OnuCfgInfoMap
+[16/09/1972-05:44:12.441794],[FastRecover:main],DataId [1] is changed in state [0]!
+[16/09/1972-05:44:12.441955],[xponhwa:main],a_id 27 send E_SET_AES_CMD_PB_CFG_API to GLOB
+[16/09/1972-05:44:12.441991],[xponhwa:mbxSend0],mbxHandleCmdRspMessage: glob_id 0 channel 1 set CMD RSP to true
+[16/09/1972-05:44:12.442007],[xponhwa:main],Auth SN[ALCLFA6F41E3] is already existed in OntdetectInfoMap, ploam msg status is [1] status [2]!
+[16/09/1972-05:44:12.442158],[xponhwa:main],ONU status 3 ploam msg statue [1]
+[16/09/1972-05:44:12.442201],[xponhwa:main],Obtain OnuCfgMgnt::OnuIndex[27],physicalPonIndex[32] from OnuCfgInfoMap
+[16/09/1972-05:44:12.442269],[xponhwa:main],OnuCfgMgnt::OnuIndex[27],physicalPonIndex[32] is added to OnuCfgInfoMap
+[16/09/1972-05:44:12.442315],[FastRecover:main],DataId [1] is changed in state [0]!
+[16/09/1972-05:44:12.442445],[xponhwa:main],Update ONU  actual US rate to 1
+[16/09/1972-05:44:12.442488],[xponhwa:main],Obtain OnuCfgMgnt::OnuIndex[27],physicalPonIndex[32] from OnuCfgInfoMap
+[16/09/1972-05:44:12.442534],[xponhwa:main],checkOnuSpeedMismatch: check ONU[], OntId[27], PhysicalPonIndex[32], upstream_channel_speed[2500000000], actualUsRate[1]
+[16/09/1972-05:44:12.442578],[xponhwa:main],clearOntGenAlarm : Recieved clear alarm request, but OntId[27] PhysicalPonIndex[32] Alarm [20000] was not raised!
+[16/09/1972-05:44:12.442625],[xponhwa:main],distance 0.565
+[16/09/1972-05:44:12.442669],[xponhwa:main],[NG2PON 33] detect SN ALCLfa6f41e3 status=3 aid=27 onuid=26 hwid=1, actual UsRate=1
+[16/09/1972-05:44:12.442709],[xponhwa:main],            alarms 000000
+[16/09/1972-05:44:12.442757],[FastRecover:main],DataId [8] is changed in state [0]!
+[16/09/1972-05:44:12.442894],[xponhwa:main],[PON 33] insertDetectInfo SN[ALCLFA6F41E3] - RegistrationId[SUBFA5FECDD] in OntdetectInfoMap onuidlist size is [1] seqnum[2] status [3] distance [0.565261] RegSend2TO1 [1]
+[16/09/1972-05:44:12.442936],[xponhwa:main],detectOntAuth sn[ALCLFA6F41E3], regID[SUBFA5FECDD], authMode[2]
+[16/09/1972-05:44:12.442977],[xponhwa:main],Obtain OnuCfgMgnt::OnuIndex[27],physicalPonIndex[32] from OnuCfgInfoMap
+[16/09/1972-05:44:12.443020],[xponhwa:main],detectOntAuth success onuid [27], SN[] regID[SUBFA5FECDD]
+[16/09/1972-05:44:12.443061],[xponhwa:main],detectOntAuth onuindex[27], count[1]
+[16/09/1972-05:44:12.443100],[xponhwa:main],detectOntAuth pon[32], physicalPonIndex[32]
+[16/09/1972-05:44:12.443138],[xponhwa:main],tmp_ontId[27]
+[16/09/1972-05:44:12.443177],[xponhwa:main],Obtain OnuCfgMgnt::OnuIndex[27],physicalPonIndex[32] from OnuCfgInfoMap
+[16/09/1972-05:44:12.443217],[xponhwa:main],registration_id[SUBFA5FECDD], sn []
+[16/09/1972-05:44:12.443258],[xponhwa:main],onuIdList.size[1]
+[16/09/1972-05:44:12.443299],[xponhwa:main],[ng2_get_ONU_Detect_Notification] onuid=26 MAX_ONUS_PER_PON=256
+[16/09/1972-05:44:12.443347],[xponhwa:main],alarm additional info: Channelpair ont detect alarm ON, PON: 32, SN: ALCLFA6F41E3, onu_id is 26, reg_id: SUBFA5FECDD, detected_us_rate: 1, onStandby: 0, pon_rec[pon].pon_state: 1
+[16/09/1972-05:44:12.443465],[xponhwa:main], sendOntDetectNotify:  SN is ALCLFA6F41E3,onuIdList size is 1 onuid is 27
+[16/09/1972-05:44:12.443507],[xponhwa:main],Obtain OnuCfgMgnt::OnuIndex[27],physicalPonIndex[32] from OnuCfgInfoMap
+[16/09/1972-05:44:12.443550],[xponhwa:main], sendOntDetectNotify:  pon is 32, ontId is 27,  ponOhmObjIndex is 517, onuOhmObjIndex is 522
+[16/09/1972-05:44:12.443654],[xponhwa:main],isMultiVanForPerVANI sn[ALCLFA6F41E3], regID[SUBFA5FECDD]
+[16/09/1972-05:44:12.443698],[xponhwa:main],Obtain OnuCfgMgnt::OnuIndex[27],physicalPonIndex[32] from OnuCfgInfoMap
+[16/09/1972-05:44:12.443740],[xponhwa:main],isMultiVanForPerVANI onuid [27], SN[] regID[SUBFA5FECDD]
+[16/09/1972-05:44:12.443779],[xponhwa:main],isMultiVani[0]
+[16/09/1972-05:44:12.443830],[Notification:main],Send Notification To Clients: Interface Index: objectIndex: 27, lowerobjectIndex: 329
+[16/09/1972-05:44:12.443870],[Notification:main],Notification type is ONT Detect
+[16/09/1972-05:44:12.443990],[xponhwa:main],Sent notification 27 to handle 0x4137030 SUCCESSFUL.
+[16/09/1972-05:44:12.444060],[xponhwa:main],Sent notification 27 to handle 0x4137e40 SUCCESSFUL.
+[16/09/1972-05:44:12.444155],[xponhwa:main],get_ONU_Alarm_Status_Change_Notification Notification Received
+[16/09/1972-05:44:12.444200],[xponhwa:main], get_ONU_Alarm_Status_Change_Notification [BLTD 33] Ont 26 Onu_id 0x1a hw_id 0x1 sernum ALCL oA ?    opStatus 0x1 alarms:0
+[16/09/1972-05:44:12.444243],[xponhwa:main], distance 0.565261
+[16/09/1972-05:44:12.444286],[xponhwa:main],add distance(0.565261) into OntPloamFault
+[16/09/1972-05:44:12.444329],[xponhwa:main],Obtain OnuCfgMgnt::OnuIndex[27],physicalPonIndex[32] from OnuCfgInfoMap
+[16/09/1972-05:44:12.444372],[xponhwa:main],handleSetAesCmdMessage()
+[16/09/1972-05:44:12.444418],[xponhwa:main],[PON 33] XSet_AES_Cmd command processed onu 27 isAESEnabled 1
+[16/09/1972-05:44:12.444459],[xponhwa:main],SendOnewayRequestToMbxSend()
+[16/09/1972-05:44:12.444498],[xponhwa:main],-------------mbxSendHdl[0] is not null!--------------
+[16/09/1972-05:44:12.444610],[xponhwa:main],ontId 27 send E_SET_AES_CMD_PB_CFG_API to GLOB
+[16/09/1972-05:44:12.444655],[xponhwa:main],handleSetFecCmdMessage()
+[16/09/1972-05:44:12.444702],[xponhwa:main],[PON 33] XSet_FEC_Up_Cmd command processed onu 27 isFecEnabled 0
+[16/09/1972-05:44:12.444741],[xponhwa:main],SendOnewayRequestToMbxSend()
+[16/09/1972-05:44:12.444801],[xponhwa:main],-------------mbxSendHdl[0] is not null!--------------
+[16/09/1972-05:44:12.444863],[xponhwa:main],>handleEncryptPortIdCmdMessage()
+[16/09/1972-05:44:12.444884],[xponhwa:mbxSend0],mbxHandleCmdRspMessage: glob_id 0 channel 1 set CMD RSP to true
+[16/09/1972-05:44:12.444924],[xponhwa:main],[PON 33] Encrypt_PortId_cmd command processed onu 27 portid 26 isEncrypted 0
+[16/09/1972-05:44:12.444963],[xponhwa:main],SendOnewayRequestToMbxSend()
+[16/09/1972-05:44:12.445002],[xponhwa:main],-------------mbxSendHdl[0] is not null!--------------
+[16/09/1972-05:44:12.445070],[xponhwa:main],>handleEncryptPortIdCmdMessage()
+[16/09/1972-05:44:12.445123],[xponhwa:main],[PON 33] Encrypt_PortId_cmd command processed onu 27 portid 26 isEncrypted 0
+[16/09/1972-05:44:12.445175],[xponhwa:main],SendOnewayRequestToMbxSend()
+[16/09/1972-05:44:12.445216],[xponhwa:main],-------------mbxSendHdl[0] is not null!--------------
+[16/09/1972-05:44:12.445249],[xponhwa:mbxSend0],mbxHandleCmdRspMessage: glob_id 0 channel 1 set CMD RSP to true
+[16/09/1972-05:44:12.445274],[xponhwa:main],getGemportCfgList: Can't find key in ponOntMap, key: ponId 32, ontId 27
+[16/09/1972-05:44:12.445316],[xponhwa:main],get_ONU_Alarm_Status_Change_Notification: ontId 27 There is no gemPortInfo in Map
+[16/09/1972-05:44:12.445368],[Notification:main],[Pon 33] Ont 26 status change, AlmPrev=0x00000040, AlmReported=0x00000000
+[16/09/1972-05:44:12.445540],[xponhwa:main],[ng2_get_ONU_Detect_Notification] CtLosAlmReportCtrl handle OnuDetect onuid = 26 onu_alarm = 0, onu status = 3
+[16/09/1972-05:44:12.445634],[xponhwa:main],Command response message received
+[16/09/1972-05:44:12.445675],[xponhwa:main],main thread handle_CmdRespMsg: cpu 0 command_code is: 0x36
+[16/09/1972-05:44:12.445722],[xponhwa:main],main thread handle_CmdRespMsg: ponIndex: #32 cmd 0x36 succeeded response. opInd=0
+[16/09/1972-05:44:12.445763],[xponhwa:main],Command response message received
+[16/09/1972-05:44:12.445802],[xponhwa:main],main thread handle_CmdRespMsg: cpu 0 command_code is: 0x36
+[16/09/1972-05:44:12.445844],[xponhwa:main],main thread handle_CmdRespMsg: ponIndex: #32 cmd 0x36 succeeded response. opInd=0
+[16/09/1972-05:44:12.445885],[xponhwa:main],Command response message received
+[16/09/1972-05:44:12.445923],[xponhwa:main],main thread handle_CmdRespMsg: cpu 0 command_code is: 0x6
+[16/09/1972-05:44:12.445971],[xponhwa:main],main thread handle_CmdRespMsg: ponIndex: #32 cmd 0x6 succeeded response. opInd=0
+[16/09/1972-05:44:12.450540],[xponhwa:mbxSend0],mbxHandleCmdRspMessage: glob_id 0 channel 1 set CMD RSP to true
+[16/09/1972-05:44:12.450549],[xponhwa:main],Command response message received
+[16/09/1972-05:44:12.450591],[xponhwa:main],main thread handle_CmdRespMsg: cpu 0 command_code is: 0x7
+[16/09/1972-05:44:12.450646],[xponhwa:main],main thread handle_CmdRespMsg: ponIndex: #32 cmd 0x7 succeeded response. opInd=0
+[16/09/1972-05:44:12.455777],[xponhwa:mbxSend0],mbxHandleCmdRspMessage: glob_id 0 channel 1 set CMD RSP to true
+[16/09/1972-05:44:12.455784],[xponhwa:main],Command response message received
+[16/09/1972-05:44:12.455826],[xponhwa:main],main thread handle_CmdRespMsg: cpu 0 command_code is: 0x7
+[16/09/1972-05:44:12.455870],[xponhwa:main],main thread handle_CmdRespMsg: ponIndex: #32 cmd 0x7 succeeded response. opInd=0
+[16/09/1972-05:44:12.459785],[LTP:MbxRecv0],H1 :[POM ] ont ranged pon 15 onuId 0x1a hwId 0x1 ontaid 27 sn ALCLfa6f41e3 teq 0x92ca6 us_speed 2.5G
+[16/09/1972-05:44:12.625777],[onuProtect:main],primary ponId: 0 in EncapOnuNotificationMsg GPB
+[16/09/1972-05:44:12.625851],[xponhwa:main],call sendBulkAlarmNotificationToClients: physicalPonIndex(32),ontId(27),isNotifyOn(0),notifyType(26) defectStatus(0x1),defectChangedReport(0x8001),isOnuOnlinePrev(0),isOnuOnlineCurr(1), isOntPlomDebug (0) distance(0.57)
+[16/09/1972-05:44:12.626017],[xponhwa:main],Obtain OnuCfgMgnt::OnuIndex[27],physicalPonIndex[32] from OnuCfgInfoMap
+[16/09/1972-05:44:12.626068],[onuProtect:main],Onu Inactive clear alarm,  Previous Tune Action:(NOT expect complete) for Pon: 32, Onu: 26
+[16/09/1972-05:44:12.626230],[Notification:main],Bulk Alarm NOTIFICATION sent to handle: 0x4137030, notifyType = 41
+[16/09/1972-05:44:12.651582],[OMCI:OmciTxRx],omci_packet TX: PON[33] gpbCtId[0x149], Counter[558] ONUid[26] 14 ae 49 0a 00 02 00 00   80 00 00 00
+[16/09/1972-05:44:12.651664],[OMCI:OmciTxRx],>> out omci len [68], ctx [0x40fa610] msg_type[0] last_packet[1]
+[16/09/1972-05:44:12.651706],[OMCI:OmciTxRx],OMCI request are ready to be received on the UDS! ypacket[0x40fa610]
+[16/09/1972-05:44:12.683678],[OMCI:OmciTxRx],omci_packet RX: PON[33] Counter[562] ONUid[26] 14 ae 29 0a 00 02 00 00   00 80 00 04
+[16/09/1972-05:44:12.683758],[OMCI:OmciTxRx],<< in  omci len [73], ctx [0x40eb418] msg_type[0] last_packet[1]
+[16/09/1972-05:44:12.683800],[OMCI:OmciTxRx],OMCI response are ready to be received on the UDS! ypacket[0x40eb418]
+[16/09/1972-05:44:12.719322],[OMCI:OmciTxRx],omci_packet TX: PON[33] gpbCtId[0x149], Counter[559] ONUid[26] 12 76 4b 0a 00 02 00 00   00 00 00 00
+[16/09/1972-05:44:12.719409],[OMCI:OmciTxRx],>> out omci len [68], ctx [0x40fa610] msg_type[0] last_packet[1]
+[16/09/1972-05:44:12.719451],[OMCI:OmciTxRx],OMCI request are ready to be received on the UDS! ypacket[0x40fa610]
+[16/09/1972-05:44:12.751602],[OMCI:OmciTxRx],omci_packet RX: PON[33] Counter[563] ONUid[26] 12 76 2b 0a 00 02 00 00   00 02 00 00
+[16/09/1972-05:44:12.751662],[OMCI:OmciTxRx],<< in  omci len [73], ctx [0x40eb418] msg_type[0] last_packet[1]
+[16/09/1972-05:44:12.751704],[OMCI:OmciTxRx],OMCI response are ready to be received on the UDS! ypacket[0x40eb418]
+[16/09/1972-05:44:12.782397],[OMCI:OmciTxRx],omci_packet TX: PON[33] gpbCtId[0x149], Counter[560] ONUid[26] 12 77 4c 0a 00 02 00 00   00 00 00 00
+[16/09/1972-05:44:12.782479],[OMCI:OmciTxRx],>> out omci len [68], ctx [0x40fa610] msg_type[0] last_packet[1]
+[16/09/1972-05:44:12.782521],[OMCI:OmciTxRx],OMCI request are ready to be received on the UDS! ypacket[0x40fa610]
+[16/09/1972-05:44:12.813581],[OMCI:OmciTxRx],omci_packet RX: PON[33] Counter[564] ONUid[26] 12 77 2c 0a 00 02 00 00   01 07 80 01
+[16/09/1972-05:44:12.813640],[OMCI:OmciTxRx],<< in  omci len [73], ctx [0x40eb418] msg_type[0] last_packet[1]
+[16/09/1972-05:44:12.813681],[OMCI:OmciTxRx],OMCI response are ready to be received on the UDS! ypacket[0x40eb418]
+[16/09/1972-05:44:12.844451],[OMCI:OmciTxRx],omci_packet TX: PON[33] gpbCtId[0x149], Counter[561] ONUid[26] 12 78 4c 0a 00 02 00 00   00 01 00 00
+[16/09/1972-05:44:12.844516],[OMCI:OmciTxRx],>> out omci len [68], ctx [0x40fa610] msg_type[0] last_packet[1]
+[16/09/1972-05:44:12.844558],[OMCI:OmciTxRx],OMCI request are ready to be received on the UDS! ypacket[0x40fa610]
+[16/09/1972-05:44:12.875589],[OMCI:OmciTxRx],omci_packet RX: PON[33] Counter[565] ONUid[26] 12 78 2c 0a 00 02 00 00   ff 20 80 01
+[16/09/1972-05:44:12.875662],[OMCI:OmciTxRx],<< in  omci len [73], ctx [0x40eb418] msg_type[0] last_packet[1]
+[16/09/1972-05:44:12.875704],[OMCI:OmciTxRx],OMCI response are ready to be received on the UDS! ypacket[0x40eb418]
+[16/09/1972-05:44:12.912882],[OMCI:OmciTxRx],omci_packet TX: PON[33] gpbCtId[0x149], Counter[562] ONUid[26] 12 79 49 0a 00 07 00 00   f0 00 00 00
+[16/09/1972-05:44:12.912963],[OMCI:OmciTxRx],>> out omci len [68], ctx [0x40fa610] msg_type[0] last_packet[1]
+[16/09/1972-05:44:12.913005],[OMCI:OmciTxRx],OMCI request are ready to be received on the UDS! ypacket[0x40fa610]
+[16/09/1972-05:44:12.945595],[OMCI:OmciTxRx],omci_packet RX: PON[33] Counter[566] ONUid[26] 12 79 29 0a 00 07 00 00   00 f0 00 33
+[16/09/1972-05:44:12.945653],[OMCI:OmciTxRx],<< in  omci len [73], ctx [0x40eb418] msg_type[0] last_packet[1]
+[16/09/1972-05:44:12.945694],[OMCI:OmciTxRx],OMCI response are ready to be received on the UDS! ypacket[0x40eb418]
+[16/09/1972-05:44:12.977329],[OMCI:OmciTxRx],omci_packet TX: PON[33] gpbCtId[0x149], Counter[563] ONUid[26] 12 7a 49 0a 00 07 00 01   f0 00 00 00
+[16/09/1972-05:44:12.977395],[OMCI:OmciTxRx],>> out omci len [68], ctx [0x40fa610] msg_type[0] last_packet[1]
+[16/09/1972-05:44:12.977437],[OMCI:OmciTxRx],OMCI request are ready to be received on the UDS! ypacket[0x40fa610]
+[16/09/1972-05:44:13.009597],[OMCI:OmciTxRx],omci_packet RX: PON[33] Counter[567] ONUid[26] 12 7a 29 0a 00 07 00 01   00 f0 00 33
+[16/09/1972-05:44:13.009659],[OMCI:OmciTxRx],<< in  omci len [73], ctx [0x40eb418] msg_type[0] last_packet[1]
+[16/09/1972-05:44:13.009700],[OMCI:OmciTxRx],OMCI response are ready to be received on the UDS! ypacket[0x40eb418]
+[16/09/1972-05:44:13.042566],[OMCI:OmciTxRx],omci_packet TX: PON[33] gpbCtId[0x149], Counter[564] ONUid[26] 12 7b 49 0a 00 07 00 02   f0 00 00 00
+[16/09/1972-05:44:13.042641],[OMCI:OmciTxRx],>> out omci len [68], ctx [0x40fa610] msg_type[0] last_packet[1]
+[16/09/1972-05:44:13.042683],[OMCI:OmciTxRx],OMCI request are ready to be received on the UDS! ypacket[0x40fa610]
+[16/09/1972-05:44:13.074586],[OMCI:OmciTxRx],omci_packet RX: PON[33] Counter[568] ONUid[26] 12 7b 29 0a 00 07 00 02   00 f0 00 00
+[16/09/1972-05:44:13.074647],[OMCI:OmciTxRx],<< in  omci len [73], ctx [0x40eb418] msg_type[0] last_packet[1]
+[16/09/1972-05:44:13.074688],[OMCI:OmciTxRx],OMCI response are ready to be received on the UDS! ypacket[0x40eb418]
+[16/09/1972-05:44:13.106320],[OMCI:OmciTxRx],omci_packet TX: PON[33] gpbCtId[0x149], Counter[565] ONUid[26] 12 7c 49 0a 00 07 00 03   f0 00 00 00
+[16/09/1972-05:44:13.106388],[OMCI:OmciTxRx],>> out omci len [68], ctx [0x40fa610] msg_type[0] last_packet[1]
+[16/09/1972-05:44:13.106429],[OMCI:OmciTxRx],OMCI request are ready to be received on the UDS! ypacket[0x40fa610]
+[16/09/1972-05:44:13.138569],[OMCI:OmciTxRx],omci_packet RX: PON[33] Counter[569] ONUid[26] 12 7c 29 0a 00 07 00 03   00 f0 00 00
+[16/09/1972-05:44:13.138629],[OMCI:OmciTxRx],<< in  omci len [73], ctx [0x40eb418] msg_type[0] last_packet[1]
+[16/09/1972-05:44:13.138670],[OMCI:OmciTxRx],OMCI response are ready to be received on the UDS! ypacket[0x40eb418]
+[16/09/1972-05:44:13.172515],[OMCI:OmciTxRx],omci_packet TX: PON[33] gpbCtId[0x149], Counter[566] ONUid[26] 12 7d 49 0a 00 07 00 04   f0 00 00 00
+[16/09/1972-05:44:13.172594],[OMCI:OmciTxRx],>> out omci len [68], ctx [0x40fa610] msg_type[0] last_packet[1]
+[16/09/1972-05:44:13.172636],[OMCI:OmciTxRx],OMCI request are ready to be received on the UDS! ypacket[0x40fa610]
+[16/09/1972-05:44:13.204571],[OMCI:OmciTxRx],omci_packet RX: PON[33] Counter[570] ONUid[26] 12 7d 29 0a 00 07 00 04   00 f0 00 00
+[16/09/1972-05:44:13.204630],[OMCI:OmciTxRx],<< in  omci len [73], ctx [0x40eb418] msg_type[0] last_packet[1]
+[16/09/1972-05:44:13.204671],[OMCI:OmciTxRx],OMCI response are ready to be received on the UDS! ypacket[0x40eb418]
+[16/09/1972-05:44:13.236480],[OMCI:OmciTxRx],omci_packet TX: PON[33] gpbCtId[0x149], Counter[567] ONUid[26] 12 7e 49 0a 00 07 00 05   f0 00 00 00
+[16/09/1972-05:44:13.236552],[OMCI:OmciTxRx],>> out omci len [68], ctx [0x40fa610] msg_type[0] last_packet[1]
+[16/09/1972-05:44:13.236606],[OMCI:OmciTxRx],OMCI request are ready to be received on the UDS! ypacket[0x40fa610]
+[16/09/1972-05:44:13.268578],[OMCI:OmciTxRx],omci_packet RX: PON[33] Counter[571] ONUid[26] 12 7e 29 0a 00 07 00 05   00 f0 00 00
+[16/09/1972-05:44:13.268639],[OMCI:OmciTxRx],<< in  omci len [73], ctx [0x40eb418] msg_type[0] last_packet[1]
+[16/09/1972-05:44:13.268680],[OMCI:OmciTxRx],OMCI response are ready to be received on the UDS! ypacket[0x40eb418]
+[16/09/1972-05:44:14.374569],[OMCI:OmciTxRx],omci_packet RX: PON[33] Counter[572] ONUid[26] 00 00 10 0a ff 20 80 01   00 00 00 00
+[16/09/1972-05:44:14.374652],[OMCI:OmciTxRx],<< in  omci len [73], ctx [0x40eb418] msg_type[0] last_packet[0]
+[16/09/1972-05:44:14.374709],[OMCI:OmciTxRx],omci_packet RX: PON[33] Counter[573] ONUid[26] 00 00 10 0a 01 07 80 01   00 00 00 00
+[16/09/1972-05:44:14.374755],[OMCI:OmciTxRx],<< in  omci len [73], ctx [0x40eb418] msg_type[0] last_packet[1]
+[16/09/1972-05:44:14.374795],[OMCI:OmciTxRx],OMCI response are ready to be received on the UDS! ypacket[0x40eb418]

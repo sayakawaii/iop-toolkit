@@ -1,0 +1,68 @@
+  {
+    "Me": {
+        "id": 329,
+        "name": "VirtualEthernetInterfacePoint",
+        "access": "CreatedByONU",
+        "type": "Config",
+        "action": [
+            "Get",
+            "Set"
+        ],
+        "instance": {
+            "type": "Dynamic",
+            "value": 0
+        },
+        "attributes": {
+            "attribute": [
+                {
+                    "name": "Administrative state",
+                    "size": 1,
+                    "format": "Boolean",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Operational state",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Interdomain name",
+                    "size": 25,
+                    "format": "String",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "TCP/UDP pointer",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "IANA assigned port",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                }
+            ]
+        }
+    }
+  }

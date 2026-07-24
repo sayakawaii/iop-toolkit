@@ -1,0 +1,116 @@
+{
+    "Me": {
+        "id": 267,
+        "name": "GEMPortPerformanceMonitoringHistoryData(obsolete)",
+        "access": "CreatedByOLT",
+        "type": "Config",
+        "action": [
+            "Create",
+            "Delete",
+            "Get",
+            "Set",
+            "Get current data"
+        ],
+        "instance": {
+            "type": "Dynamic",
+            "value": 0
+        },
+        "attributes": {
+            "attribute": [
+                {
+                    "name": "Interval end time",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Threshold data 1/2 ID",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Lost packets",
+                    "size": 4,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Misinserted packets",
+                    "size": 4,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Received packets",
+                    "size": 5,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Received blocks",
+                    "size": 5,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Transmitted blocks",
+                    "size": 5,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Impaired blocks",
+                    "size": 4,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                }
+            ]
+        },
+        "alarms": {
+            "alarm": [
+                {
+                    "number": 0,
+                    "name": "Lost packets",
+                    "description": ""
+                },
+                {
+                    "number": 1,
+                    "name": "Misinserted packets",
+                    "description": ""
+                },
+                {
+                    "number": 2,
+                    "name": "Impaired blocks",
+                    "description": ""
+                }
+            ]
+        }
+    }
+}

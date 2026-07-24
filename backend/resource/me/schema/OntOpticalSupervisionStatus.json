@@ -1,0 +1,109 @@
+{
+    "Me": {
+        "id": 65295,
+        "name": "OntOpticalSupervisionStatus",
+        "access": "CreatedByONU",
+        "type": "Config",
+        "action": [
+            "Get"
+        ],
+        "instance": {
+            "type": "Dynamic",
+            "value": 0
+        },
+        "attributes": {
+            "attribute": [
+                {
+                    "name": "Power feed voltage measurement indicator",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Power Feed Voltage",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Receive optical power measurement indicator",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Receive Optical Power",
+                    "size": 2,
+                    "format": "SignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Transmit optical power measurement indicator",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Transmit Optical Power",
+                    "size": 2,
+                    "format": "SignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Laser Bias Current measurement indicator",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Laser Bias Current",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Temperature measurement indicator",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Temperature",
+                    "size": 2,
+                    "format": "SignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                }
+            ]
+        }
+    }
+}

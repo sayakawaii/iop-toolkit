@@ -1,0 +1,227 @@
+[
+    {
+        "from": "glob", 
+        "to": "xponhwa", 
+        "event": [
+            "lt_gltda_process_rcvd", 
+            "Received", 
+            "ONU_DETECT_NTF_CODE", 
+            "from", 
+            "GLOB"
+        ], 
+        "notes": "receive onu detect from glob",
+        "alias": "Process Onu Detect"
+    },
+    {
+        "from": "dmsp", 
+        "to": "xponhwa", 
+        "event": [
+            "\"dmsCommitInform\": {"
+        ], 
+        "notes": "",
+        "alias": "Recieve dms Commit Inform"
+    },
+    {
+        "from": "xponhwa", 
+        "to": "xponhwa", 
+        "event": [
+            "\"onuEnableRequest\": {"
+        ], 
+        "notes": "",
+        "alias": "Recieve onuEnableRequest"
+    },
+    {
+        "from": "xponhwa", 
+        "to": "onumgntolt", 
+        "event": [
+            "\"onuEnableResponse\": {"
+        ], 
+        "notes": "",
+        "alias": "Send onuEnableResponse"
+    },
+    {
+        "from": "xponhwa", 
+        "to": "onumgntolt", 
+        "event": [
+            "\"onuBulkAlarmMsg\": {"
+        ], 
+        "notes": "",
+        "alias": "Send onu Bulk Alarm Msg"
+    },
+    {
+        "from": "xponhwa", 
+        "to": "onumgntolt", 
+        "event": [
+            "\"onuDetectNotificationMsg\": {"
+        ], 
+        "notes": "",
+        "alias": "Send DetectNotification Msg"
+    },
+    {
+        "from": "xponhwa", 
+        "to": "xponhwa", 
+        "event": [
+            "\"onuAuthResultInform\": {"
+        ], 
+        "notes": "",
+        "alias": "Recieve AuthResultInform Msg"
+    },
+    {
+        "from": "xponhwa", 
+        "to": "onumgntolt", 
+        "event": [
+            "\"onuAlarmMsg\": {"
+        ], 
+        "notes": "",
+        "alias": "Send onu Alarm Msg"
+    },
+    {
+        "from": "xponhwa", 
+        "to": "xponhwa", 
+        "event": [
+            "\"newOnuAlarmRaisedInform\": {"
+        ], 
+        "notes": "",
+        "alias": "Recieve newOnuAlarmRaisedInform Msg"
+    },
+    {
+        "from": "xponhwa", 
+        "to": "xponhwa", 
+        "event": [
+            "\"onuDbruCapabilityInform\": {"
+        ], 
+        "notes": "",
+        "alias": "Recieve onuDbruCapabilityInform Msg"
+    },
+    {
+        "from": "xponhwa", 
+        "to": "xponhwa", 
+        "event": [
+            "onuDeleteRequest"
+        ], 
+        "notes": "",
+        "alias": "Recieve Delete Request"
+    },
+    {
+        "from": "xponhwa", 
+        "to": "onumgntolt", 
+        "event": [
+            "onuDeleteResponse"
+        ], 
+        "notes": "",
+        "alias": "Send Delete Response"
+    },
+    {
+        "from": "xponhwa", 
+        "to": "glob", 
+        "event": [
+            "DELETE_SER_NUM", 
+            "command processed SN"
+        ], 
+        "notes": "",
+        "alias": "Send Delete SN"
+    },
+    {
+        "from": "xponhwa", 
+        "to": "onumgntolt", 
+        "event": [
+            "sendOnuInActiNotification",
+            "OntId", 
+            "PhysicalPonIndex",
+            "notifyType ONU_INACTi!"
+        ], 
+        "notes": "",
+        "alias": "Send ONU_INACTi"
+    },
+    {
+        "from": "xponhwa", 
+        "to": "onumgntolt", 
+        "event": [
+            "sendBulkAlarmNotificationToClients",
+            "physicalPonIndex", 
+            "ontId",
+            "defectStatus",
+            "defectChangedReport"
+        ], 
+        "notes": "",
+        "alias": "Send BulkAlarmNotification"
+    },
+    {
+        "from": "xponhwa", 
+        "to": "xponhwa", 
+        "event": [
+            "detectOntAuth",
+            "sn", 
+            "regID",
+            "authMode"
+        ], 
+        "notes": "",
+        "alias": "DetectOntAuth"
+    },
+    {
+        "from": "xponhwa", 
+        "to": "onumgntolt", 
+        "event": [
+            "sendOnuLosiNotification",
+            "OntId", 
+            "PhysicalPonIndex",
+            "notifyType"
+        ], 
+        "notes": "",
+        "alias": "Send ONU_LOSi"
+    },
+    {
+        "from": "xponinfra", 
+        "to": "xponhwa", 
+        "event": [
+            "\"getCtCurrentStatusRequest\": {"
+        ], 
+        "notes": "",
+        "alias": "Recieve getCtCurrentStatusRequest"
+    },
+    {
+        "from": "xponhwa", 
+        "to": "xponinfra", 
+        "event": [
+            "\"getCtCurrentStatusResponse\": {"
+        ], 
+        "notes": "",
+        "alias": "Send getCtCurrentStatusResponse"
+    },
+    {
+        "from": "xponinfra", 
+        "to": "xponhwa", 
+        "event": [
+            "\"switchPonTypebStatusRequest\": {"
+        ], 
+        "notes": "",
+        "alias": "Recieve switchPonTypebStatusRequest"
+    },
+    {
+        "from": "xponhwa", 
+        "to": "xponinfra", 
+        "event": [
+            "\"switchPonTypebStatusResponse\": {"
+        ], 
+        "notes": "",
+        "alias": "Send switchPonTypebStatusResponse"
+    },
+    {
+        "from": "xponhwa", 
+        "to": "xponinfra", 
+        "event": [
+            "\"typebNotificationMsg\": {"
+        ], 
+        "notes": "",
+        "alias": "Send typebNotificationMsg"
+    },
+    {
+        "from": "xponhwa", 
+        "to": "xponinfra", 
+        "event": [
+            "\"ponDiagActiveNotificationMsg\": {"
+        ], 
+        "notes": "",
+        "alias": "Send ponDiagActiveNotificationMsg"
+    }
+]

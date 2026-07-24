@@ -1,0 +1,32 @@
+# ---- OS / editor ----
+.DS_Store
+.idea/
+.vscode/launch.json
+.vscode/settings.json
+*.code-workspace
+*.swp
+
+# ---- Logs ----
+*.log
+logs/
+
+# ---- Backend (Go) ----
+backend/omciAnalyzer
+backend/.venv/
+backend/config/config.yaml
+
+# ---- Collector (Python) ----
+__pycache__/
+*.pyc
+collector/venv/
+collector/.venv/
+
+# ---- Frontend (Node) ----
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+
+# ---- Deploy secrets / generated ----
+deploy/.env
+deploy/mysql/init/*.sql
+deploy/baseline_238/

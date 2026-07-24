@@ -1,0 +1,243 @@
+{
+	"Me": {
+		"id": 163,
+		"name": "MoCAEthernetperformancemonitoringhistorydata",
+		"access": "CreatedByOLT",
+		"type": "Config",
+		"action": [
+			"Create",
+			"Delete",
+			"Get",
+			"Set",
+			"Get current data"
+		],
+		"instance": {
+			"type": "Dynamic",
+			"value": 0
+		},
+		"attributes": {
+			"attribute": [
+				{
+					"name": "Interval end time",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Threshold data 1/2 ID",
+					"size": 2,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"SBC"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Incoming unicast packets",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Incoming discarded packets",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Incoming errored packets",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Incoming unknown packets",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Incoming multicast packets",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Incoming broadcast packets",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Incoming octets",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Outgoing unicast packets",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Outgoing discarded packets",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Outgoing errored packets",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Outgoing unknown packets",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Outgoing multicast packets",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Outgoing broadcast packets",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Outgoing octets",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+				    ],
+				    "category": "Mandatory"
+				}
+			]
+		},
+		"alarms": {
+			"alarm": [
+				{
+					"number": 0,
+					"name": "Incoming unicast packets",
+					"description": "The number of Incoming Unicast Packets that has crossed the set threshold value"
+				},
+				{
+					"number": 1,
+					"name": "Incoming discarded packets ",
+					"description": "The number of Incoming discarded Packets that has crossed the set threshold value"
+				},
+				{
+					"number": 2,
+					"name": "Incoming errored packets",
+					"description": "The number of Incoming Errored Packets that has crossed the set threshold value"
+				},
+                                {
+                                        "number": 3,
+                                        "name": "Incoming unknown packets ",
+                                        "description": "The number of Incoming Unkown Packets that has crossed the set threshold value"
+                                },
+                                {
+                                        "number": 4,
+                                        "name": "Incoming multicast packets",
+                                        "description": "The number of Incoming Multicast Packets that has crossed the set threshold value"
+                                },
+                                {
+                                        "number": 5,
+                                        "name": "Incoming broadcast packets",
+                                        "description": "The number of Incoming Broadcast Packets that has crossed the set threshold value"
+                                },
+                                {
+                                        "number": 6,
+                                        "name": "Incoming octets",
+                                        "description": "The number of Incoming Octets that has crossed the set threshold value"
+                                },
+                                {
+                                        "number": 7,
+                                        "name": "Outgoing unicast packets",
+                                        "description": "The number of Outgoing Unicast Packets that has crossed the set threshold value"
+                                },
+                                {
+                                        "number": 8,
+                                        "name": "Outgoing discarded packets",
+                                        "description": "The number of Outgoing Discarded Packets that has crossed the set threshold value"
+                                },
+                                {
+                                        "number": 9,
+                                        "name": "Outgoing errored packets",
+                                        "description": "The number of Outgoing Errored Packets that has crossed the set threshold value"
+                                },
+                                {
+                                        "number": 10,
+                                        "name": "Outgoing unknown packets",
+                                        "description": "The number of Outgoing unknown Packets that has crossed the set threshold value"
+                                },
+                                {
+                                        "number": 11,
+                                        "name": "Outgoing multicast packets",
+                                        "description": "The number of Outgoing Multicast Packets that has crossed the set threshold value"
+                                },
+                                {
+                                        "number": 12,
+                                        "name": "Outgoing broadcast packets",
+                                        "description": "The number of Outgoing Broadcast Packets that has crossed the set threshold value"
+                                },
+                                {
+                                        "number": 13,
+                                        "name": "Outgoing octets",
+                                        "description": "The number of Outgoing Octets that has crossed the set threshold value"
+                                }
+			]
+		}					
+	}
+}

@@ -1,0 +1,150 @@
+[
+    {
+        "from": "onumgntolt", 
+        "to": "onumgntolt", 
+        "event": [ 
+            "process", 
+            "MsgOnuDetectNotification", 
+            "msg"
+        ], 
+        "notes": "",
+        "alias": "Process MsgOnuDetectNotification"
+    },
+    {
+        "from": "onumgntolt", 
+        "to": "alarmmgr", 
+        "event": [
+            "\"alarmData\": {"
+        ], 
+        "notes": "",
+        "alias": "Send alarmType"
+    },
+    {
+        "from": "onumgntolt", 
+        "to": "xponhwa", 
+        "event": [
+            "\"onuEnableRequest\": {"
+        ], 
+        "notes": "",
+        "alias": "Send onuEnableRequest"
+    },
+    {
+        "from": "onumgntolt", 
+        "to": "onumgntolt", 
+        "event": [
+            "\"onuEnableResponse\": {"
+        ], 
+        "notes": "",
+        "alias": "Recieve onuEnableResponse"
+    },
+    {
+        "from": "onumgntolt", 
+        "to": "onumgntolt", 
+        "event": [
+            "\"onuBulkAlarmMsg\": {"
+        ], 
+        "notes": "",
+        "alias": "Recieve onu Bulk Alarm Msg"
+    },
+    {
+        "from": "onumgntolt", 
+        "to": "hypervisor", 
+        "event": [
+            "\"vaniConnectStatusNotification\": {"
+        ], 
+        "notes": "",
+        "alias": "Send ONU Connect Status"
+    },
+    {
+        "from": "onumgntolt", 
+        "to": "onumgntolt", 
+        "event": [
+            "\"onuDetectNotificationMsg\": {"
+        ], 
+        "notes": "",
+        "alias": "Recieve DetectNotification Msg"
+    },
+    {
+        "from": "onumgntolt", 
+        "to": "xponhwa", 
+        "event": [
+            "\"onuAuthResultInform\": {"
+        ], 
+        "notes": "",
+        "alias": "Send AuthResultInform Msg"
+    },
+    {
+        "from": "onumgntolt", 
+        "to": "xponhwa", 
+        "event": [
+            "\"newOnuAlarmRaisedInform\": {"
+        ], 
+        "notes": "",
+        "alias": "Send newOnuAlarmRaisedInform Msg"
+    },
+    {
+        "from": "dmsp", 
+        "to": "onumgntolt", 
+        "event": [
+            "CDeleteVontani", 
+            "AsyncBeginProc"
+        ], 
+        "notes": "",
+        "alias": "Recieve Delete V-ani"
+    },
+    {
+        "from": "onumgntolt", 
+        "to": "xponhwa", 
+        "event": [
+            "\"onuDeleteRequest\": {"
+        ], 
+        "notes": "",
+        "alias": "Send Delete Request"
+    },
+    {
+        "from": "onumgntolt", 
+        "to": "onumgntolt", 
+        "event": [
+            "\"onuDeleteResponse\": {"
+        ], 
+        "notes": "",
+        "alias": "Recieve Delete Response"
+    },
+    {
+        "from": "onumgntolt", 
+        "to": "onumgntolt", 
+        "event": [
+            "\"onuAlarmMsg\": {"
+        ], 
+        "notes": "",
+        "alias": "Recieve onu Alarm Msg"
+    },
+    {
+        "from": "onumgntolt", 
+        "to": "onumgntolt", 
+        "event": [
+            "\"syncOnuDot1xRequest\": {"
+        ], 
+        "notes": "",
+        "alias": "Recieve syncOnuDot1xRequest Msg"
+    },
+    {
+        "from": "onumgntolt", 
+        "to": "onumgntolt", 
+        "event": [
+            "\"onuDetectCompletedNotification\": {"
+        ], 
+        "notes": "",
+        "alias": "Recieve onuDetectCompletedNotification Msg"
+    },
+    {
+        "from": "xponhwa", 
+        "to": "alarmmgr", 
+        "event": [
+            "enter", 
+            "GponAsyncClearVontaniAlarm"
+        ], 
+        "notes": "",
+        "alias": "Clear ONU Alarm"
+    }
+]

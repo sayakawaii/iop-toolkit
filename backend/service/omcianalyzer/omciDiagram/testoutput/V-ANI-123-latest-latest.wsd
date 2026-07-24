@@ -1,0 +1,344 @@
+@startuml
+' Split into 4 pages
+' page 2x2
+skinparam pageMargin 10
+skinparam pageExternalColor gray
+skinparam pageBorderColor black
+
+scale 1
+
+header Transport2 eONU
+' footer Page %page% of %lastpage%
+footer Nokia Shanghai Bell
+title Auto Generated OMCI Model
+
+object "TCONT" as TCONT_8001{
+0x8001
+Port ID: 1255
+}
+object "PMapper" as PMapper_8000{
+0x8000
+}
+object "MBPCD" as MBPCD_105{
+0x105
+}
+object "GemITP" as GemITP_8002{
+0x8002
+}
+object "MBSP" as MBSP_202{
+0x202
+LearningInd: false
+}
+object "MBPCD" as MBPCD_101{
+0x101
+}
+object "MBPCD" as MBPCD_102{
+0x102
+}
+object "TcpUdp" as TcpUdp_1b59{
+0x1b59
+}
+object "GemCTP" as GemCTP_100{
+0x100
+Port ID: 1254
+}
+object "GemITP" as GemITP_8003{
+0x8003
+}
+object "VTFD" as VTFD_2101{
+0x2101
+}
+note right of VTFD_2101
+vlanID: 200, Priority: 0
+FWDop: 16
+numOfEntr: 1
+end note
+object "EVTOCD" as EVTOCD_105{
+0x105
+}
+note right of EVTOCD_105
+(15, 4096, 0), (15, 4096, 0), 0 || 0, (15, 0, 0), (0, 104, 4)
+end note
+object "TCONT" as TCONT_8000{
+0x8000
+Port ID: 1254
+}
+object "TCONT" as TCONT_8002{
+0x8002
+Port ID: 1256
+}
+object "GemITP" as GemITP_8000{
+0x8000
+}
+object "GemITP" as GemITP_8001{
+0x8001
+}
+object "EVTOCD" as EVTOCD_104{
+0x104
+}
+note right of EVTOCD_104
+(15, 4096, 0), (15, 4096, 0), 0 || 0, (15, 0, 0), (0, 103, 4)
+end note
+object "GemCTP" as GemCTP_101{
+0x101
+Port ID: 1255
+}
+object "PMapper" as PMapper_8004{
+0x8004
+}
+object "MBPCD" as MBPCD_2104{
+0x2104
+}
+object "VTFD" as VTFD_2102{
+0x2102
+}
+note right of VTFD_2102
+FWDop: 16
+numOfEntr: 1
+vlanID: 101, Priority: 0
+end note
+object "VTFD" as VTFD_2103{
+0x2103
+}
+note right of VTFD_2103
+numOfEntr: 1
+vlanID: 102, Priority: 0
+FWDop: 16
+end note
+object "VTFD" as VTFD_2104{
+0x2104
+}
+note right of VTFD_2104
+FWDop: 16
+numOfEntr: 1
+vlanID: 103, Priority: 0
+end note
+object "MBSP" as MBSP_203{
+0x203
+LearningInd: false
+}
+object "MBSP" as MBSP_204{
+0x204
+LearningInd: false
+}
+object "MBPCD" as MBPCD_2103{
+0x2103
+}
+object "EVTOCD" as EVTOCD_101{
+0x101
+}
+note right of EVTOCD_101
+(15, 4096, 0), (15, 4096, 0), 0 || 0, (15, 0, 0), (0, 200, 4)
+end note
+object "MBSP" as MBSP_205{
+0x205
+LearningInd: false
+}
+object "MBPCD" as MBPCD_2102{
+0x2102
+}
+object "IPV6Host" as IPV6Host_0{
+0x0
+IPv6Options: 9
+}
+object "RS232POCD" as RS232POCD_0{
+0x0
+}
+object "RS232POCD" as RS232POCD_1{
+0x1
+}
+object "PPTPRS232UNI" as PPTPRS232UNI_2003{
+0x2003
+}
+object "PPTPRS232UNI" as PPTPRS232UNI_2004{
+0x2004
+}
+object "TcpUdp" as TcpUdp_1b5c{
+0x1b5c
+}
+object "TCONT" as TCONT_8004{
+0x8004
+Port ID: 1258
+}
+object "PMapper" as PMapper_8001{
+0x8001
+}
+object "PMapper" as PMapper_8002{
+0x8002
+}
+object "MBPCD" as MBPCD_2105{
+0x2105
+}
+object "RS232POCD" as RS232POCD_3{
+0x3
+}
+object "MBPCD" as MBPCD_104{
+0x104
+}
+object "EVTOCD" as EVTOCD_102{
+0x102
+}
+note right of EVTOCD_102
+(15, 4096, 0), (15, 4096, 0), 0 || 0, (15, 0, 0), (0, 101, 4)
+end note
+object "EVTOCD" as EVTOCD_103{
+0x103
+}
+note right of EVTOCD_103
+(15, 4096, 0), (15, 4096, 0), 0 || 0, (15, 0, 0), (0, 102, 4)
+end note
+object "TcpUdp" as TcpUdp_1b5a{
+0x1b5a
+}
+object "GemITP" as GemITP_8004{
+0x8004
+}
+object "PMapper" as PMapper_8003{
+0x8003
+}
+object "MBPCD" as MBPCD_2101{
+0x2101
+}
+object "MBSP" as MBSP_201{
+0x201
+LearningInd: false
+}
+object "TCONT" as TCONT_8003{
+0x8003
+Port ID: 1257
+}
+object "VTFD" as VTFD_2105{
+0x2105
+}
+note right of VTFD_2105
+FWDop: 16
+numOfEntr: 1
+vlanID: 104, Priority: 0
+end note
+object "MBPCD" as MBPCD_103{
+0x103
+}
+object "PPTPRS232UNI" as PPTPRS232UNI_2001{
+0x2001
+}
+object "TcpUdp" as TcpUdp_1b5b{
+0x1b5b
+}
+object "GAL" as GAL_1{
+0x1
+}
+note right of GAL_1
+Maximum GEM payload size:48
+end note
+object "RS232POCD" as RS232POCD_2{
+0x2
+}
+object "GemCTP" as GemCTP_102{
+0x102
+Port ID: 1256
+}
+object "GemCTP" as GemCTP_103{
+0x103
+Port ID: 1257
+}
+object "GemCTP" as GemCTP_104{
+0x104
+Port ID: 1258
+}
+object "PPTPRS232UNI" as PPTPRS232UNI_2002{
+0x2002
+}
+RS232POCD_1 -up-> TcpUdp_1b5a
+RS232POCD_1 -down-> PPTPRS232UNI_2002
+TcpUdp_1b5c -up-> IPV6Host_0
+PMapper_8001 "5" -up-> GemITP_8001
+PMapper_8001 "6" -up-> GemITP_8001
+PMapper_8001 "7" -up-> GemITP_8001
+PMapper_8001 "0" -up-> GemITP_8001
+PMapper_8001 "1" -up-> GemITP_8001
+PMapper_8001 "2" -up-> GemITP_8001
+PMapper_8001 "3" -up-> GemITP_8001
+PMapper_8001 "4" -up-> GemITP_8001
+PMapper_8002 "4" -up-> GemITP_8002
+PMapper_8002 "5" -up-> GemITP_8002
+PMapper_8002 "6" -up-> GemITP_8002
+PMapper_8002 "7" -up-> GemITP_8002
+PMapper_8002 "0" -up-> GemITP_8002
+PMapper_8002 "1" -up-> GemITP_8002
+PMapper_8002 "2" -up-> GemITP_8002
+PMapper_8002 "3" -up-> GemITP_8002
+MBPCD_2105 -up-> PMapper_8004
+MBPCD_2105 -down-> MBSP_205
+RS232POCD_3 -up-> TcpUdp_1b5c
+RS232POCD_3 -down-> PPTPRS232UNI_2004
+MBPCD_104 -up-> MBSP_204
+MBPCD_104 -down-> PPTP_103
+EVTOCD_102 -left-> PPTP_101
+EVTOCD_103 -left-> PPTP_102
+TcpUdp_1b5a -up-> IPV6Host_0
+GemITP_8004 -up-> GemCTP_104
+PMapper_8003 "6" -up-> GemITP_8003
+PMapper_8003 "7" -up-> GemITP_8003
+PMapper_8003 "0" -up-> GemITP_8003
+PMapper_8003 "1" -up-> GemITP_8003
+PMapper_8003 "2" -up-> GemITP_8003
+PMapper_8003 "3" -up-> GemITP_8003
+PMapper_8003 "4" -up-> GemITP_8003
+PMapper_8003 "5" -up-> GemITP_8003
+MBPCD_2101 -down-> MBSP_201
+MBPCD_2101 -up-> PMapper_8000
+VTFD_2105 ..> MBPCD_2105
+MBPCD_103 -up-> MBSP_203
+MBPCD_103 -down-> PPTP_102
+TcpUdp_1b5b -up-> IPV6Host_0
+RS232POCD_2 -up-> TcpUdp_1b5b
+RS232POCD_2 -down-> PPTPRS232UNI_2003
+GemCTP_102 -up-> PQ_8010
+GemCTP_103 -up-> PQ_8018
+GemCTP_104 -up-> PQ_8020
+PMapper_8000 "5" -up-> GemITP_8000
+PMapper_8000 "6" -up-> GemITP_8000
+PMapper_8000 "7" -up-> GemITP_8000
+PMapper_8000 "0" -up-> GemITP_8000
+PMapper_8000 "1" -up-> GemITP_8000
+PMapper_8000 "2" -up-> GemITP_8000
+PMapper_8000 "3" -up-> GemITP_8000
+PMapper_8000 "4" -up-> GemITP_8000
+MBPCD_105 -down-> PPTP_104
+MBPCD_105 -up-> MBSP_205
+GemITP_8002 -up-> GemCTP_102
+MBPCD_101 -up-> MBSP_201
+MBPCD_101 -down-> IPV6Host_0
+MBPCD_102 -down-> PPTP_101
+MBPCD_102 -up-> MBSP_202
+TcpUdp_1b59 -up-> IPV6Host_0
+GemCTP_100 -up-> PQ_8000
+GemITP_8003 -up-> GemCTP_103
+VTFD_2101 ..> MBPCD_2101
+EVTOCD_105 -left-> PPTP_104
+GemITP_8000 -up-> GemCTP_100
+GemITP_8001 -up-> GemCTP_101
+EVTOCD_104 -left-> PPTP_103
+GemCTP_101 -up-> PQ_8008
+PMapper_8004 "7" -up-> GemITP_8004
+PMapper_8004 "0" -up-> GemITP_8004
+PMapper_8004 "1" -up-> GemITP_8004
+PMapper_8004 "2" -up-> GemITP_8004
+PMapper_8004 "3" -up-> GemITP_8004
+PMapper_8004 "4" -up-> GemITP_8004
+PMapper_8004 "5" -up-> GemITP_8004
+PMapper_8004 "6" -up-> GemITP_8004
+MBPCD_2104 -down-> MBSP_204
+MBPCD_2104 -up-> PMapper_8003
+VTFD_2102 ..> MBPCD_2102
+VTFD_2103 ..> MBPCD_2103
+VTFD_2104 ..> MBPCD_2104
+MBPCD_2103 -down-> MBSP_203
+MBPCD_2103 -up-> PMapper_8002
+MBPCD_2102 -up-> PMapper_8001
+MBPCD_2102 -down-> MBSP_202
+RS232POCD_0 -up-> TcpUdp_1b59
+RS232POCD_0 -down-> PPTPRS232UNI_2001
+
+
+@enduml

@@ -1,0 +1,3199 @@
+
+[26/02/1970-01:18:08.469135],[parser],
+[26/02/1970-01:18:08.469165],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:08.469186],[parser],
+[26/02/1970-01:18:08.469210],[parser],bytes[06-13]: 27  a7  49  0a  00  02  00  00
+[26/02/1970-01:18:08.469236],[parser],bytes[14-45]: 80  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:08.469261],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:08.469286],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:08.469306],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:08.469619],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:08.469711],[parser],Msg_type    = GET
+[26/02/1970-01:18:08.469734],[parser],Trans_id    = 01
+[26/02/1970-01:18:08.469755],[parser],Entity_id   = ONT DATA
+[26/02/1970-01:18:08.469775],[parser],Instance_id = 00
+[26/02/1970-01:18:08.469817],[parser],mib_data_sync.status = VALID
+[26/02/1970-01:18:08.470406],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:08.470431],[parser],Msg_type    = GET RESPONSE
+[26/02/1970-01:18:08.470453],[parser],Trans_id    = 01
+[26/02/1970-01:18:08.470473],[parser],Entity_id   = ONT DATA
+[26/02/1970-01:18:08.470494],[parser],Instance_id = 00
+[26/02/1970-01:18:08.470513],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:08.470533],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:08.470555],[parser],mib_data_sync.status = VALID
+[26/02/1970-01:18:08.470578],[parser],mib_data_sync.value = 00
+[26/02/1970-01:18:08.470600],[parser],Duration : 00s:001ms
+[26/02/1970-01:18:08.470620],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:08.470640],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:08.470659],[parser],
+[26/02/1970-01:18:08.470682],[parser],bytes[06-13]: 27  a7  29  0a  00  02  00  00
+[26/02/1970-01:18:08.470707],[parser],bytes[14-45]: 00  80  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:08.470732],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:08.470756],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:08.536185],[parser],
+[26/02/1970-01:18:08.536215],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:08.536235],[parser],
+[26/02/1970-01:18:08.536259],[parser],bytes[06-13]: 27  a8  49  0a  01  00  00  00
+[26/02/1970-01:18:08.536285],[parser],bytes[14-45]: c0  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:08.536310],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:08.536335],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:08.536355],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:08.536470],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:08.536491],[parser],Msg_type    = GET
+[26/02/1970-01:18:08.536512],[parser],Trans_id    = 02
+[26/02/1970-01:18:08.536534],[parser],Entity_id   = ONT G
+[26/02/1970-01:18:08.536553],[parser],Instance_id = 00
+[26/02/1970-01:18:08.536596],[parser],vendor_id.status = VALID
+[26/02/1970-01:18:08.536625],[parser],version.status = VALID
+[26/02/1970-01:18:08.536646],[parser],serial_number.status = NOT VALID
+[26/02/1970-01:18:08.536666],[parser],traffic_management.status = NOT VALID
+[26/02/1970-01:18:08.536686],[parser],vp_connect_function.status = NOT VALID
+[26/02/1970-01:18:08.536705],[parser],battery_backup.status = NOT VALID
+[26/02/1970-01:18:08.536725],[parser],admin_state.status = NOT VALID
+[26/02/1970-01:18:08.536745],[parser],oper_state.status = NOT VALID
+[26/02/1970-01:18:08.536764],[parser],ONU_survival_time.status = NOT VALID
+[26/02/1970-01:18:08.536783],[parser],Logical_ONU_ID.status = NOT VALID
+[26/02/1970-01:18:08.536803],[parser],Logical_Password.status = NOT VALID
+[26/02/1970-01:18:08.536823],[parser],Credentials_Status.status = NOT VALID
+[26/02/1970-01:18:08.537014],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:08.537037],[parser],Msg_type    = GET RESPONSE
+[26/02/1970-01:18:08.537058],[parser],Trans_id    = 02
+[26/02/1970-01:18:08.537078],[parser],Entity_id   = ONT G
+[26/02/1970-01:18:08.537098],[parser],Instance_id = 00
+[26/02/1970-01:18:08.537117],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:08.537137],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:08.537160],[parser],vendor_id.status = VALID
+[26/02/1970-01:18:08.537181],[parser],vendor_id.value =
+[26/02/1970-01:18:08.537200],[parser],A
+[26/02/1970-01:18:08.537219],[parser],L
+[26/02/1970-01:18:08.537238],[parser],C
+[26/02/1970-01:18:08.537257],[parser],L
+[26/02/1970-01:18:08.537275],[parser],
+[26/02/1970-01:18:08.537295],[parser],version.status = VALID
+[26/02/1970-01:18:08.537314],[parser],version.value =
+[26/02/1970-01:18:08.537333],[parser],3
+[26/02/1970-01:18:08.537352],[parser],F
+[26/02/1970-01:18:08.537371],[parser],E
+[26/02/1970-01:18:08.537389],[parser],7
+[26/02/1970-01:18:08.537408],[parser],3
+[26/02/1970-01:18:08.537433],[parser],8
+[26/02/1970-01:18:08.537452],[parser],0
+[26/02/1970-01:18:08.537471],[parser],1
+[26/02/1970-01:18:08.537490],[parser],A
+[26/02/1970-01:18:08.537508],[parser],B
+[26/02/1970-01:18:08.537527],[parser],A
+[26/02/1970-01:18:08.537545],[parser],A
+[26/02/1970-01:18:08.537564],[parser],0
+[26/02/1970-01:18:08.537582],[parser],1
+[26/02/1970-01:18:08.537601],[parser],
+[26/02/1970-01:18:08.537620],[parser],serial_number.status = NOT VALID
+[26/02/1970-01:18:08.537640],[parser],traffic_management.status = NOT VALID
+[26/02/1970-01:18:08.537659],[parser],vp_connect_function.status = NOT VALID
+[26/02/1970-01:18:08.537679],[parser],battery_backup.status = NOT VALID
+[26/02/1970-01:18:08.537699],[parser],admin_state.status = NOT VALID
+[26/02/1970-01:18:08.537718],[parser],oper_state.status = NOT VALID
+[26/02/1970-01:18:08.537738],[parser],ONU_survival_time.status = NOT VALID
+[26/02/1970-01:18:08.537757],[parser],Logical_ONU_ID.status = NOT VALID
+[26/02/1970-01:18:08.537777],[parser],Logical_Password.status = NOT VALID
+[26/02/1970-01:18:08.537796],[parser],Credentials_Status.status = NOT VALID
+[26/02/1970-01:18:08.537818],[parser],Duration : 00s:001ms
+[26/02/1970-01:18:08.537837],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:08.537857],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:08.537875],[parser],
+[26/02/1970-01:18:08.537951],[parser],bytes[06-13]: 27  a8  29  0a  01  00  00  00
+[26/02/1970-01:18:08.537977],[parser],bytes[14-45]: 00  c0  00  41  4c  43  4c  33  46  45  37
+[26/02/1970-01:18:08.538002],[parser],            : 33  38  30  31  41  42  41  41  30  31  00
+[26/02/1970-01:18:08.538026],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:08.601399],[parser],
+[26/02/1970-01:18:08.601432],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:08.601453],[parser],
+[26/02/1970-01:18:08.601477],[parser],bytes[06-13]: 27  a9  49  0a  00  07  00  00
+[26/02/1970-01:18:08.601503],[parser],bytes[14-45]: f0  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:08.601528],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:08.601552],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:08.601572],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:08.601666],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:08.601687],[parser],Msg_type    = GET
+[26/02/1970-01:18:08.601707],[parser],Trans_id    = 03
+[26/02/1970-01:18:08.601727],[parser],Entity_id   = SOFTWARE IMAGE
+[26/02/1970-01:18:08.601747],[parser],Instance_id = 00
+[26/02/1970-01:18:08.601788],[parser],version.status = VALID
+[26/02/1970-01:18:08.601809],[parser],is_committed.status = VALID
+[26/02/1970-01:18:08.601829],[parser],is_active.status = VALID
+[26/02/1970-01:18:08.601849],[parser],is_valid.status = VALID
+[26/02/1970-01:18:08.602088],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:08.602110],[parser],Msg_type    = GET RESPONSE
+[26/02/1970-01:18:08.602131],[parser],Trans_id    = 03
+[26/02/1970-01:18:08.602151],[parser],Entity_id   = SOFTWARE IMAGE
+[26/02/1970-01:18:08.602172],[parser],Instance_id = 00
+[26/02/1970-01:18:08.602191],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:08.602212],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:08.602234],[parser],version.status = VALID
+[26/02/1970-01:18:08.602255],[parser],version.value =
+[26/02/1970-01:18:08.602274],[parser],3
+[26/02/1970-01:18:08.602293],[parser],F
+[26/02/1970-01:18:08.602312],[parser],E
+[26/02/1970-01:18:08.602337],[parser],7
+[26/02/1970-01:18:08.602358],[parser],4
+[26/02/1970-01:18:08.602377],[parser],3
+[26/02/1970-01:18:08.602396],[parser],5
+[26/02/1970-01:18:08.602415],[parser],3
+[26/02/1970-01:18:08.602434],[parser],A
+[26/02/1970-01:18:08.602453],[parser],6
+[26/02/1970-01:18:08.602471],[parser],7
+[26/02/1970-01:18:08.602490],[parser],3
+[26/02/1970-01:18:08.602509],[parser],9
+[26/02/1970-01:18:08.602528],[parser],4
+[26/02/1970-01:18:08.602546],[parser],
+[26/02/1970-01:18:08.602566],[parser],is_committed.status = VALID
+[26/02/1970-01:18:08.602587],[parser],is_committed.value = 01
+[26/02/1970-01:18:08.602607],[parser],is_active.status = VALID
+[26/02/1970-01:18:08.602628],[parser],is_active.value = 01
+[26/02/1970-01:18:08.602648],[parser],is_valid.status = VALID
+[26/02/1970-01:18:08.602668],[parser],is_valid.value = 01
+[26/02/1970-01:18:08.602690],[parser],Duration : 00s:001ms
+[26/02/1970-01:18:08.602709],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:08.602728],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:08.602747],[parser],
+[26/02/1970-01:18:08.602770],[parser],bytes[06-13]: 27  a9  29  0a  00  07  00  00
+[26/02/1970-01:18:08.602794],[parser],bytes[14-45]: 00  f0  00  33  46  45  37  34  33  35  33
+[26/02/1970-01:18:08.602819],[parser],            : 41  36  37  33  39  34  01  01  01  00  00
+[26/02/1970-01:18:08.602843],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:08.667475],[parser],
+[26/02/1970-01:18:08.667502],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:08.667523],[parser],
+[26/02/1970-01:18:08.667554],[parser],bytes[06-13]: 27  aa  49  0a  00  07  00  01
+[26/02/1970-01:18:08.667580],[parser],bytes[14-45]: f0  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:08.667605],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:08.667630],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:08.667650],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:08.667741],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:08.667762],[parser],Msg_type    = GET
+[26/02/1970-01:18:08.667782],[parser],Trans_id    = 04
+[26/02/1970-01:18:08.667802],[parser],Entity_id   = SOFTWARE IMAGE
+[26/02/1970-01:18:08.667822],[parser],Instance_id = 01
+[26/02/1970-01:18:08.667864],[parser],version.status = VALID
+[26/02/1970-01:18:08.667884],[parser],is_committed.status = VALID
+[26/02/1970-01:18:08.667904],[parser],is_active.status = VALID
+[26/02/1970-01:18:08.667924],[parser],is_valid.status = VALID
+[26/02/1970-01:18:08.668138],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:08.668160],[parser],Msg_type    = GET RESPONSE
+[26/02/1970-01:18:08.668181],[parser],Trans_id    = 04
+[26/02/1970-01:18:08.668201],[parser],Entity_id   = SOFTWARE IMAGE
+[26/02/1970-01:18:08.668221],[parser],Instance_id = 01
+[26/02/1970-01:18:08.668241],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:08.668261],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:08.668283],[parser],version.status = VALID
+[26/02/1970-01:18:08.668303],[parser],version.value =
+[26/02/1970-01:18:08.668322],[parser],3
+[26/02/1970-01:18:08.668341],[parser],F
+[26/02/1970-01:18:08.668360],[parser],E
+[26/02/1970-01:18:08.668379],[parser],7
+[26/02/1970-01:18:08.668397],[parser],4
+[26/02/1970-01:18:08.668416],[parser],3
+[26/02/1970-01:18:08.668435],[parser],5
+[26/02/1970-01:18:08.668453],[parser],3
+[26/02/1970-01:18:08.668472],[parser],A
+[26/02/1970-01:18:08.668491],[parser],6
+[26/02/1970-01:18:08.668509],[parser],5
+[26/02/1970-01:18:08.668528],[parser],4
+[26/02/1970-01:18:08.668547],[parser],8
+[26/02/1970-01:18:08.668565],[parser],1
+[26/02/1970-01:18:08.668584],[parser],
+[26/02/1970-01:18:08.668603],[parser],is_committed.status = VALID
+[26/02/1970-01:18:08.668624],[parser],is_committed.value = 00
+[26/02/1970-01:18:08.668644],[parser],is_active.status = VALID
+[26/02/1970-01:18:08.668665],[parser],is_active.value = 00
+[26/02/1970-01:18:08.668685],[parser],is_valid.status = VALID
+[26/02/1970-01:18:08.668705],[parser],is_valid.value = 01
+[26/02/1970-01:18:08.668727],[parser],Duration : 00s:001ms
+[26/02/1970-01:18:08.668747],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:08.668766],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:08.668785],[parser],
+[26/02/1970-01:18:08.668808],[parser],bytes[06-13]: 27  aa  29  0a  00  07  00  01
+[26/02/1970-01:18:08.668832],[parser],bytes[14-45]: 00  f0  00  33  46  45  37  34  33  35  33
+[26/02/1970-01:18:08.668857],[parser],            : 41  36  35  34  38  31  00  00  01  00  00
+[26/02/1970-01:18:08.668881],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:08.735396],[parser],
+[26/02/1970-01:18:08.735437],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:08.735459],[parser],
+[26/02/1970-01:18:08.735483],[parser],bytes[06-13]: 27  ab  48  0a  01  00  00  00
+[26/02/1970-01:18:08.735509],[parser],bytes[14-45]: 06  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:08.735543],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:08.735569],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:08.735590],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:08.735697],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:08.735718],[parser],Msg_type    = SET
+[26/02/1970-01:18:08.735738],[parser],Trans_id    = 05
+[26/02/1970-01:18:08.735760],[parser],Entity_id   = ONT G
+[26/02/1970-01:18:08.735780],[parser],Instance_id = 00
+[26/02/1970-01:18:08.735823],[parser],vendor_id.status = NOT VALID
+[26/02/1970-01:18:08.735843],[parser],version.status = NOT VALID
+[26/02/1970-01:18:08.735863],[parser],serial_number.status = NOT VALID
+[26/02/1970-01:18:08.735882],[parser],traffic_management.status = NOT VALID
+[26/02/1970-01:18:08.735902],[parser],vp_connect_function.status = NOT VALID
+[26/02/1970-01:18:08.735922],[parser],battery_backup.status = VALID
+[26/02/1970-01:18:08.735944],[parser],battery_backup.value = 00
+[26/02/1970-01:18:08.735964],[parser],admin_state.status = VALID
+[26/02/1970-01:18:08.735985],[parser],admin_state.value = 00
+[26/02/1970-01:18:08.736004],[parser],oper_state.status = NOT VALID
+[26/02/1970-01:18:08.736024],[parser],ONU_survival_time.status = NOT VALID
+[26/02/1970-01:18:08.736044],[parser],Logical_ONU_ID.status = NOT VALID
+[26/02/1970-01:18:08.736063],[parser],Logical_Password.status = NOT VALID
+[26/02/1970-01:18:08.736083],[parser],Credentials_Status.status = NOT VALID
+[26/02/1970-01:18:08.736297],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:08.736319],[parser],Msg_type    = SET RESPONSE
+[26/02/1970-01:18:08.736340],[parser],Trans_id    = 05
+[26/02/1970-01:18:08.736361],[parser],Entity_id   = ONT G
+[26/02/1970-01:18:08.736381],[parser],Instance_id = 00
+[26/02/1970-01:18:08.736401],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:08.736421],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:08.736443],[parser],Duration : 00s:000ms
+[26/02/1970-01:18:08.736463],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:08.736482],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:08.736501],[parser],
+[26/02/1970-01:18:08.736524],[parser],bytes[06-13]: 27  ab  28  0a  01  00  00  00
+[26/02/1970-01:18:08.736549],[parser],bytes[14-45]: 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:08.736574],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:08.736598],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:08.799287],[parser],
+[26/02/1970-01:18:08.799315],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:08.799335],[parser],
+[26/02/1970-01:18:08.799359],[parser],bytes[06-13]: 27  ac  48  0a  00  83  00  00
+[26/02/1970-01:18:08.799384],[parser],bytes[14-45]: a0  00  41  4c  43  4c  06  02  04  00  00
+[26/02/1970-01:18:08.799410],[parser],            : 02  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:08.799441],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:08.799461],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:08.799616],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:08.799644],[parser],Msg_type    = SET
+[26/02/1970-01:18:08.799665],[parser],Trans_id    = 06
+[26/02/1970-01:18:08.799686],[parser],Entity_id   =  OLT G
+[26/02/1970-01:18:08.799706],[parser],Instance_id = 00
+[26/02/1970-01:18:08.799750],[parser],olt_vendor_id.status = VALID
+[26/02/1970-01:18:08.799771],[parser],olt_vendor_id.value =
+[26/02/1970-01:18:08.799790],[parser],A
+[26/02/1970-01:18:08.799809],[parser],L
+[26/02/1970-01:18:08.799828],[parser],C
+[26/02/1970-01:18:08.799847],[parser],L
+[26/02/1970-01:18:08.799866],[parser],
+[26/02/1970-01:18:08.799885],[parser],eqpt_id.status = NOT VALID
+[26/02/1970-01:18:08.799905],[parser],olt_version.status = VALID
+[26/02/1970-01:18:08.799925],[parser],olt_version.value =
+[26/02/1970-01:18:08.799945],[parser],06
+[26/02/1970-01:18:08.799965],[parser],02
+[26/02/1970-01:18:08.799984],[parser],04
+[26/02/1970-01:18:08.800003],[parser],00
+[26/02/1970-01:18:08.800023],[parser],00
+[26/02/1970-01:18:08.800042],[parser],02
+[26/02/1970-01:18:08.800062],[parser],00
+[26/02/1970-01:18:08.800096],[parser],00
+[26/02/1970-01:18:08.800118],[parser],00
+[26/02/1970-01:18:08.800138],[parser],00
+[26/02/1970-01:18:08.800157],[parser],00
+[26/02/1970-01:18:08.800177],[parser],00
+[26/02/1970-01:18:08.800196],[parser],00
+[26/02/1970-01:18:08.800216],[parser],00
+[26/02/1970-01:18:08.800234],[parser],
+[26/02/1970-01:18:08.800254],[parser],time_of_day_info.status = NOT VALID
+[26/02/1970-01:18:08.800579],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:08.800601],[parser],Msg_type    = SET RESPONSE
+[26/02/1970-01:18:08.800623],[parser],Trans_id    = 06
+[26/02/1970-01:18:08.800643],[parser],Entity_id   =  OLT G
+[26/02/1970-01:18:08.800664],[parser],Instance_id = 00
+[26/02/1970-01:18:08.800684],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:08.800703],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:08.800725],[parser],Duration : 00s:000ms
+[26/02/1970-01:18:08.800745],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:08.800764],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:08.800783],[parser],
+[26/02/1970-01:18:08.800807],[parser],bytes[06-13]: 27  ac  28  0a  00  83  00  00
+[26/02/1970-01:18:08.800832],[parser],bytes[14-45]: 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:08.800857],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:08.800881],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:08.865985],[parser],
+[26/02/1970-01:18:08.866011],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:08.866032],[parser],
+[26/02/1970-01:18:08.866056],[parser],bytes[06-13]: 27  ad  49  0a  01  00  00  00
+[26/02/1970-01:18:08.866081],[parser],bytes[14-45]: c0  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:08.866107],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:08.866131],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:08.866151],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:08.866241],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:08.866262],[parser],Msg_type    = GET
+[26/02/1970-01:18:08.866282],[parser],Trans_id    = 07
+[26/02/1970-01:18:08.866302],[parser],Entity_id   = ONT G
+[26/02/1970-01:18:08.866322],[parser],Instance_id = 00
+[26/02/1970-01:18:08.866370],[parser],vendor_id.status = VALID
+[26/02/1970-01:18:08.866391],[parser],version.status = VALID
+[26/02/1970-01:18:08.866411],[parser],serial_number.status = NOT VALID
+[26/02/1970-01:18:08.866431],[parser],traffic_management.status = NOT VALID
+[26/02/1970-01:18:08.866451],[parser],vp_connect_function.status = NOT VALID
+[26/02/1970-01:18:08.866471],[parser],battery_backup.status = NOT VALID
+[26/02/1970-01:18:08.866491],[parser],admin_state.status = NOT VALID
+[26/02/1970-01:18:08.866511],[parser],oper_state.status = NOT VALID
+[26/02/1970-01:18:08.866530],[parser],ONU_survival_time.status = NOT VALID
+[26/02/1970-01:18:08.866550],[parser],Logical_ONU_ID.status = NOT VALID
+[26/02/1970-01:18:08.866570],[parser],Logical_Password.status = NOT VALID
+[26/02/1970-01:18:08.866590],[parser],Credentials_Status.status = NOT VALID
+[26/02/1970-01:18:08.866750],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:08.866772],[parser],Msg_type    = GET RESPONSE
+[26/02/1970-01:18:08.866793],[parser],Trans_id    = 07
+[26/02/1970-01:18:08.866813],[parser],Entity_id   = ONT G
+[26/02/1970-01:18:08.866833],[parser],Instance_id = 00
+[26/02/1970-01:18:08.866853],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:08.866873],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:08.866895],[parser],vendor_id.status = VALID
+[26/02/1970-01:18:08.866915],[parser],vendor_id.value =
+[26/02/1970-01:18:08.866934],[parser],A
+[26/02/1970-01:18:08.866953],[parser],L
+[26/02/1970-01:18:08.866972],[parser],C
+[26/02/1970-01:18:08.866991],[parser],L
+[26/02/1970-01:18:08.867010],[parser],
+[26/02/1970-01:18:08.867030],[parser],version.status = VALID
+[26/02/1970-01:18:08.867049],[parser],version.value =
+[26/02/1970-01:18:08.867069],[parser],3
+[26/02/1970-01:18:08.867088],[parser],F
+[26/02/1970-01:18:08.867107],[parser],E
+[26/02/1970-01:18:08.867125],[parser],7
+[26/02/1970-01:18:08.867144],[parser],3
+[26/02/1970-01:18:08.867163],[parser],8
+[26/02/1970-01:18:08.867182],[parser],0
+[26/02/1970-01:18:08.867201],[parser],1
+[26/02/1970-01:18:08.867219],[parser],A
+[26/02/1970-01:18:08.867238],[parser],B
+[26/02/1970-01:18:08.867257],[parser],A
+[26/02/1970-01:18:08.867275],[parser],A
+[26/02/1970-01:18:08.867294],[parser],0
+[26/02/1970-01:18:08.867313],[parser],1
+[26/02/1970-01:18:08.867331],[parser],
+[26/02/1970-01:18:08.867351],[parser],serial_number.status = NOT VALID
+[26/02/1970-01:18:08.867371],[parser],traffic_management.status = NOT VALID
+[26/02/1970-01:18:08.867390],[parser],vp_connect_function.status = NOT VALID
+[26/02/1970-01:18:08.867410],[parser],battery_backup.status = NOT VALID
+[26/02/1970-01:18:08.867436],[parser],admin_state.status = NOT VALID
+[26/02/1970-01:18:08.867457],[parser],oper_state.[26/02/1970-01:18:08.867615],[parser],
+[26/02/1970-01:18:08.867674],[parser],bytes[06-13]: 27  ad  29  0a  01  00  00  00
+[26/02/1970-01:18:08.867730],[parser],bytes[14-45]: 00  c0  00  41  4c  43  4c  33  46  45  37
+[26/02/1970-01:18:08.867759],[parser],            : 33  38  30  31  41  42  41  41  30  31  00
+[26/02/1970-01:18:08.867784],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:08.931349],[parser],
+[26/02/1970-01:18:08.931375],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:08.931395],[parser],
+[26/02/1970-01:18:08.931424],[parser],bytes[06-13]: 27  ae  49  0a  01  00  00  00
+[26/02/1970-01:18:08.931451],[parser],bytes[14-45]: 21  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:08.931476],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:08.931501],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:08.931521],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:08.931609],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:08.931630],[parser],Msg_type    = GET
+[26/02/1970-01:18:08.931650],[parser],Trans_id    = 08
+[26/02/1970-01:18:08.931670],[parser],Entity_id   = ONT G
+[26/02/1970-01:18:08.931690],[parser],Instance_id = 00
+[26/02/1970-01:18:08.931738],[parser],vendor_id.status = NOT VALID
+[26/02/1970-01:18:08.931759],[parser],version.status = NOT VALID
+[26/02/1970-01:18:08.931779],[parser],serial_number.status = VALID
+[26/02/1970-01:18:08.931799],[parser],traffic_management.status = NOT VALID
+[26/02/1970-01:18:08.931819],[parser],vp_connect_function.status = NOT VALID
+[26/02/1970-01:18:08.931839],[parser],battery_backup.status = NOT VALID
+[26/02/1970-01:18:08.931859],[parser],admin_state.status = NOT VALID
+[26/02/1970-01:18:08.931878],[parser],oper_state.status = VALID
+[26/02/1970-01:18:08.931898],[parser],ONU_survival_time.status = NOT VALID
+[26/02/1970-01:18:08.931917],[parser],Logical_ONU_ID.status = NOT VALID
+[26/02/1970-01:18:08.931937],[parser],Logical_Password.status = NOT VALID
+[26/02/1970-01:18:08.931957],[parser],Credentials_Status.status = NOT VALID
+[26/02/1970-01:18:08.932129],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:08.932151],[parser],Msg_type    = GET RESPONSE
+[26/02/1970-01:18:08.932172],[parser],Trans_id    = 08
+[26/02/1970-01:18:08.932192],[parser],Entity_id   = ONT G
+[26/02/1970-01:18:08.932212],[parser],Instance_id = 00
+[26/02/1970-01:18:08.932232],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:08.932252],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:08.932274],[parser],vendor_id.status = NOT VALID
+[26/02/1970-01:18:08.932294],[parser],version.status = NOT VALID
+[26/02/1970-01:18:08.932314],[parser],serial_number.status = VALID
+[26/02/1970-01:18:08.932334],[parser],serial_number.value =
+[26/02/1970-01:18:08.932353],[parser],A
+[26/02/1970-01:18:08.932372],[parser],L
+[26/02/1970-01:18:08.932391],[parser],C
+[26/02/1970-01:18:08.932410],[parser],L
+[26/02/1970-01:18:08.932429],[parser],da
+[26/02/1970-01:18:08.932448],[parser],00
+[26/02/1970-01:18:08.932468],[parser],04
+[26/02/1970-01:18:08.932487],[parser],23
+[26/02/1970-01:18:08.932506],[parser],
+[26/02/1970-01:18:08.932525],[parser],traffic_management.status = NOT VALID
+[26/02/1970-01:18:08.932545],[parser],vp_connect_function.status = NOT VALID
+[26/02/1970-01:18:08.932564],[parser],battery_backup.status = NOT VALID
+[26/02/1970-01:18:08.932584],[parser],admin_state.status = NOT VALID
+[26/02/1970-01:18:08.932603],[parser],oper_state.status = VALID
+[26/02/1970-01:18:08.932624],[parser],oper_state.value = 00
+[26/02/1970-01:18:08.932644],[parser],ONU_survival_time.status = NOT VALID
+[26/02/1970-01:18:08.932663],[parser],Logical_ONU_ID.status = NOT VALID
+[26/02/1970-01:18:08.932683],[parser],Logical_Password.status = NOT VALID
+[26/02/1970-01:18:08.932702],[parser],Credentials_Status.status = NOT VALID
+[26/02/1970-01:18:08.932724],[parser],Duration : 00s:001ms
+[26/02/1970-01:18:08.932744],[parser],OMCI msg con[26/02/1970-01:18:09.196565],[parser],
+[26/02/1970-01:18:09.196591],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:09.196612],[parser],
+[26/02/1970-01:18:09.196636],[parser],bytes[06-13]: 27  b2  49  0a  00  07  00  02
+[26/02/1970-01:18:09.196662],[parser],bytes[14-45]: f0  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:09.196687],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:09.196712],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:09.196732],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:09.196821],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:09.196842],[parser],Msg_type    = GET
+[26/02/1970-01:18:09.196863],[parser],Trans_id    = 0c
+[26/02/1970-01:18:09.196883],[parser],Entity_id   = SOFTWARE IMAGE
+[26/02/1970-01:18:09.196903],[parser],Instance_id = 02
+[26/02/1970-01:18:09.196945],[parser],version.status = VALID
+[26/02/1970-01:18:09.196965],[parser],is_committed.status = VALID
+[26/02/1970-01:18:09.196985],[parser],is_active.status = VALID
+[26/02/1970-01:18:09.197004],[parser],is_valid.status = VALID
+[26/02/1970-01:18:09.197187],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:09.197210],[parser],Msg_type    = GET RESPONSE
+[26/02/1970-01:18:09.197231],[parser],Trans_id    = 0c
+[26/02/1970-01:18:09.197251],[parser],Entity_id   = SOFTWARE IMAGE
+[26/02/1970-01:18:09.197271],[parser],Instance_id = 02
+[26/02/1970-01:18:09.197290],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:09.197310],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:09.197332],[parser],version.status = VALID
+[26/02/1970-01:18:09.197352],[parser],version.value =
+[26/02/1970-01:18:09.197372],[parser], 
+[26/02/1970-01:18:09.197390],[parser], 
+[26/02/1970-01:18:09.197410],[parser], 
+[26/02/1970-01:18:09.197435],[parser], 
+[26/02/1970-01:18:09.197454],[parser], 
+[26/02/1970-01:18:09.197473],[parser], 
+[26/02/1970-01:18:09.197492],[parser], 
+[26/02/1970-01:18:09.197510],[parser], 
+[26/02/1970-01:18:09.197529],[parser], 
+[26/02/1970-01:18:09.197548],[parser], 
+[26/02/1970-01:18:09.197573],[parser], 
+[26/02/1970-01:18:09.197592],[parser], 
+[26/02/1970-01:18:09.197611],[parser], 
+[26/02/1970-01:18:09.197630],[parser], 
+[26/02/1970-01:18:09.197649],[parser],
+[26/02/1970-01:18:09.197668],[parser],is_committed.status = VALID
+[26/02/1970-01:18:09.197689],[parser],is_committed.value = 00
+[26/02/1970-01:18:09.197709],[parser],is_active.status = VALID
+[26/02/1970-01:18:09.197729],[parser],is_active.value = 01
+[26/02/1970-01:18:09.197749],[parser],is_valid.status = VALID
+[26/02/1970-01:18:09.197769],[parser],is_valid.value = 00
+[26/02/1970-01:18:09.197791],[parser],Duration : 00s:000ms
+[26/02/1970-01:18:09.197811],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:09.197830],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:09.197849],[parser],
+[26/02/1970-01:18:09.197872],[parser],bytes[06-13]: 27  b2  29  0a  00  07  00  02
+[26/02/1970-01:18:09.197897],[parser],bytes[14-45]: 00  f0  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:09.197922],[parser],            : 00  00  00  00  00  00  00  01  00  00  00
+[26/02/1970-01:18:09.197946],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:09.262209],[parser],
+[26/02/1970-01:18:09.262237],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:09.262257],[parser],
+[26/02/1970-01:18:09.262281],[parser],bytes[06-13]: 27  b3  49  0a  00  07  00  03
+[26/02/1970-01:18:09.262307],[parser],bytes[14-45]: f0  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:09.262333],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:09.262358],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:09.262378],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:09.262470],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:09.262491],[parser],Msg_type    = GET
+[26/02/1970-01:18:09.262512],[parser],Trans_id    = 0d
+[26/02/1970-01:18:09.262532],[parser],Entity_id   = SOFTWARE IMAGE
+[26/02/1970-01:18:09.262552],[parser],Instance_id = 03
+[26/02/1970-01:18:09.262594],[parser],version.status = VALID
+[26/02/1970-01:18:09.262614],[parser],is_committed.status = VALID
+[26/02/1970-01:18:09.262634],[parser],is_active.status = VALID
+[26/02/1970-01:18:09.262654],[parser],is_valid.status = VALID
+[26/02/1970-01:18:09.262840],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:09.262863],[parser],Msg_type    = GET RESPONSE
+[26/02/1970-01:18:09.262884],[parser],Trans_id    = 0d
+[26/02/1970-01:18:09.262904],[parser],Entity_id   = SOFTWARE IMAGE
+[26/02/1970-01:18:09.262924],[parser],Instance_id = 03
+[26/02/1970-01:18:09.262943],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:09.262963],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:09.262986],[parser],version.status = VALID
+[26/02/1970-01:18:09.263006],[parser],version.value =
+[26/02/1970-01:18:09.263026],[parser], 
+[26/02/1970-01:18:09.263045],[parser], 
+[26/02/1970-01:18:09.263063],[parser], 
+[26/02/1970-01:18:09.263082],[parser], 
+[26/02/1970-01:18:09.263101],[parser], 
+[26/02/1970-01:18:09.263119],[parser], 
+[26/02/1970-01:18:09.263138],[parser], 
+[26/02/1970-01:18:09.263157],[parser], 
+[26/02/1970-01:18:09.263175],[parser], 
+[26/02/1970-01:18:09.263194],[parser], 
+[26/02/1970-01:18:09.263212],[parser], 
+[26/02/1970-01:18:09.263231],[parser], 
+[26/02/1970-01:18:09.263250],[parser], 
+[26/02/1970-01:18:09.263268],[parser], 
+[26/02/1970-01:18:09.263287],[parser],
+[26/02/1970-01:18:09.263314],[parser],is_committed.status = VALID
+[26/02/1970-01:18:09.263336],[parser],is_committed.value = 00
+[26/02/1970-01:18:09.263356],[parser],is_active.status = VALID
+[26/02/1970-01:18:09.263376],[parser],is_active.value = 00
+[26/02/1970-01:18:09.263396],[parser],is_valid.status = VALID
+[26/02/1970-01:18:09.263422],[parser],is_valid.value = 00
+[26/02/1970-01:18:09.263445],[parser],Duration : 00s:001ms
+[26/02/1970-01:18:09.263465],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:09.263484],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:09.263504],[parser],
+[26/02/1970-01:18:09.263527],[parser],bytes[06-13]: 27  b3  29  0a  00  07  00  03
+[26/02/1970-01:18:09.263552],[parser],bytes[14-45]: 00  f0  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:09.263577],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:09.263601],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:09.328760],[parser],
+[26/02/1970-01:18:09.328786],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:09.328806],[parser],
+[26/02/1970-01:18:09.328830],[parser],bytes[06-13]: 27  b4  49  0a  00  07  00  04
+[26/02/1970-01:18:09.328856],[parser],bytes[14-45]: f0  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:09.328881],[parser],            : 0[26/02/1970-01:18:09.545324],[parser],
+[26/02/1970-01:18:09.545350],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:09.545371],[parser],
+[26/02/1970-01:18:09.545394],[parser],bytes[06-13]: 27  b7  49  0a  00  07  00  00
+[26/02/1970-01:18:09.545425],[parser],bytes[14-45]: f0  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:09.545451],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:09.545476],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:09.545497],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:09.545589],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:09.545611],[parser],Msg_type    = GET
+[26/02/1970-01:18:09.545639],[parser],Trans_id    = 11
+[26/02/1970-01:18:09.545659],[parser],Entity_id   = SOFTWARE IMAGE
+[26/02/1970-01:18:09.545679],[parser],Instance_id = 00
+[26/02/1970-01:18:09.545722],[parser],version.status = VALID
+[26/02/1970-01:18:09.545742],[parser],is_committed.status = VALID
+[26/02/1970-01:18:09.545762],[parser],is_active.status = VALID
+[26/02/1970-01:18:09.545782],[parser],is_valid.status = VALID
+[26/02/1970-01:18:09.545994],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:09.546017],[parser],Msg_type    = GET RESPONSE
+[26/02/1970-01:18:09.546038],[parser],Trans_id    = 11
+[26/02/1970-01:18:09.546057],[parser],Entity_id   = SOFTWARE IMAGE
+[26/02/1970-01:18:09.546078],[parser],Instance_id = 00
+[26/02/1970-01:18:09.546097],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:09.546117],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:09.546140],[parser],version.status = VALID
+[26/02/1970-01:18:09.546160],[parser],version.value =
+[26/02/1970-01:18:09.546179],[parser],3
+[26/02/1970-01:18:09.546198],[parser],F
+[26/02/1970-01:18:09.546217],[parser],E
+[26/02/1970-01:18:09.546236],[parser],7
+[26/02/1970-01:18:09.546255],[parser],4
+[26/02/1970-01:18:09.546273],[parser],3
+[26/02/1970-01:18:09.546292],[parser],5
+[26/02/1970-01:18:09.546311],[parser],3
+[26/02/1970-01:18:09.546329],[parser],A
+[26/02/1970-01:18:09.546348],[parser],6
+[26/02/1970-01:18:09.546366],[parser],7
+[26/02/1970-01:18:09.546385],[parser],3
+[26/02/1970-01:18:09.546404],[parser],9
+[26/02/1970-01:18:09.546423],[parser],4
+[26/02/1970-01:18:09.546441],[parser],
+[26/02/1970-01:18:09.546461],[parser],is_committed.status = VALID
+[26/02/1970-01:18:09.546482],[parser],is_committed.value = 01
+[26/02/1970-01:18:09.546502],[parser],is_active.status = VALID
+[26/02/1970-01:18:09.546522],[parser],is_active.value = 01
+[26/02/1970-01:18:09.546541],[parser],is_valid.status = VALID
+[26/02/1970-01:18:09.546562],[parser],is_valid.value = 01
+[26/02/1970-01:18:09.546584],[parser],Duration : 00s:001ms
+[26/02/1970-01:18:09.546603],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:09.546622],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:09.546641],[parser],
+[26/02/1970-01:18:09.546664],[parser],bytes[06-13]: 27  b7  29  0a  00  07  00  00
+[26/02/1970-01:18:09.546688],[parser],bytes[14-45]: 00  f0  00  33  46  45  37  34  33  35  33
+[26/02/1970-01:18:09.546713],[parser],            : 41  36  37  33  39  34  01  01  01  00  00
+[26/02/1970-01:18:09.546737],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:09.609846],[parser],
+[26/02/1970-01:18:09.609904],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:09.609926],[parser],
+[26/02/1970-01:18:09.609951],[parser],bytes[06-13]: 27  b8  49  0a  00  07  00  01
+[26/02/1970-01:18:09.609976],[parser],bytes[14-45]: f0  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:09.610001],[parser],            : 0[26/02/1970-01:18:09.876895],[parser],
+[26/02/1970-01:18:09.876923],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:09.876944],[parser],
+[26/02/1970-01:18:09.876968],[parser],bytes[06-13]: 27  bc  49  0a  00  07  00  05
+[26/02/1970-01:18:09.876993],[parser],bytes[14-45]: f0  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:09.877019],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:09.877043],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:09.877063],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:09.877158],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:09.877179],[parser],Msg_type    = GET
+[26/02/1970-01:18:09.877200],[parser],Trans_id    = 16
+[26/02/1970-01:18:09.877220],[parser],Entity_id   = SOFTWARE IMAGE
+[26/02/1970-01:18:09.877240],[parser],Instance_id = 05
+[26/02/1970-01:18:09.877282],[parser],version.status = VALID
+[26/02/1970-01:18:09.877302],[parser],is_committed.status = VALID
+[26/02/1970-01:18:09.877322],[parser],is_active.status = VALID
+[26/02/1970-01:18:09.877342],[parser],is_valid.status = VALID
+[26/02/1970-01:18:09.877542],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:09.877565],[parser],Msg_type    = GET RESPONSE
+[26/02/1970-01:18:09.877586],[parser],Trans_id    = 16
+[26/02/1970-01:18:09.877606],[parser],Entity_id   = SOFTWARE IMAGE
+[26/02/1970-01:18:09.877626],[parser],Instance_id = 05
+[26/02/1970-01:18:09.877646],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:09.877674],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:09.877697],[parser],version.status = VALID
+[26/02/1970-01:18:09.877717],[parser],version.value =
+[26/02/1970-01:18:09.877737],[parser], 
+[26/02/1970-01:18:09.877756],[parser], 
+[26/02/1970-01:18:09.877776],[parser], 
+[26/02/1970-01:18:09.877794],[parser], 
+[26/02/1970-01:18:09.877813],[parser], 
+[26/02/1970-01:18:09.877832],[parser], 
+[26/02/1970-01:18:09.877850],[parser], 
+[26/02/1970-01:18:09.877869],[parser], 
+[26/02/1970-01:18:09.877888],[parser], 
+[26/02/1970-01:18:09.877907],[parser], 
+[26/02/1970-01:18:09.877926],[parser], 
+[26/02/1970-01:18:09.877944],[parser], 
+[26/02/1970-01:18:09.877963],[parser], 
+[26/02/1970-01:18:09.877981],[parser], 
+[26/02/1970-01:18:09.878000],[parser],
+[26/02/1970-01:18:09.878028],[parser],is_committed.status = VALID
+[26/02/1970-01:18:09.878049],[parser],is_committed.value = 00
+[26/02/1970-01:18:09.878070],[parser],is_active.status = VALID
+[26/02/1970-01:18:09.878090],[parser],is_active.value = 00
+[26/02/1970-01:18:09.878110],[parser],is_valid.status = VALID
+[26/02/1970-01:18:09.878130],[parser],is_valid.value = 00
+[26/02/1970-01:18:09.878152],[parser],Duration : 00s:001ms
+[26/02/1970-01:18:09.878172],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:09.878191],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:09.878210],[parser],
+[26/02/1970-01:18:09.878233],[parser],bytes[06-13]: 27  bc  29  0a  00  07  00  05
+[26/02/1970-01:18:09.878258],[parser],bytes[14-45]: 00  f0  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:09.878283],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:09.878307],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:09.951400],[parser],
+[26/02/1970-01:18:09.951434],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:09.951454],[parser],
+[26/02/1970-01:18:09.951479],[parser],bytes[06-13]: 27  bd  4f  0a  00  02  00  00
+[26/02/1970-01:18:09.951504],[parser],bytes[14-45]: 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:09.951530],[parser],            : 0[26/02/1970-01:18:10.150754],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:10.215267],[parser],
+[26/02/1970-01:18:10.215293],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:10.215314],[parser],
+[26/02/1970-01:18:10.215338],[parser],bytes[06-13]: 27  c1  49  0a  01  01  00  00
+[26/02/1970-01:18:10.215363],[parser],bytes[14-45]: f0  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:10.215396],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:10.215426],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:10.215447],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:10.215537],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:10.215558],[parser],Msg_type    = GET
+[26/02/1970-01:18:10.215579],[parser],Trans_id    = 1b
+[26/02/1970-01:18:10.215599],[parser],Entity_id   = ONT 2G
+[26/02/1970-01:18:10.215619],[parser],Instance_id = 00
+[26/02/1970-01:18:10.215661],[parser],eqpt_id.status = VALID
+[26/02/1970-01:18:10.215681],[parser],omcc_version.status = VALID
+[26/02/1970-01:18:10.215701],[parser],ven_prod_code.status = VALID
+[26/02/1970-01:18:10.215721],[parser],security_capability.status = VALID
+[26/02/1970-01:18:10.215740],[parser],security_mode.status = NOT VALID
+[26/02/1970-01:18:10.215760],[parser],total_priority_queue_nbr.status = NOT VALID
+[26/02/1970-01:18:10.215780],[parser],total_trf_sch_nbr.status = NOT VALID
+[26/02/1970-01:18:10.215799],[parser],mode.status = NOT VALID
+[26/02/1970-01:18:10.215819],[parser],total_gem_ports_supported.status = NOT VALID
+[26/02/1970-01:18:10.215839],[parser],sysUpTime.status = NOT VALID
+[26/02/1970-01:18:10.215859],[parser],connCapability.status = NOT VALID
+[26/02/1970-01:18:10.215878],[parser],currConnMode.status = NOT VALID
+[26/02/1970-01:18:10.215898],[parser],qosConfigFlexibility.status = NOT VALID
+[26/02/1970-01:18:10.215918],[parser],pqScaleFactor.status = NOT VALID
+[26/02/1970-01:18:10.216077],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:10.216098],[parser],Msg_type    = GET RESPONSE
+[26/02/1970-01:18:10.216119],[parser],Trans_id    = 1b
+[26/02/1970-01:18:10.216140],[parser],Entity_id   = ONT 2G
+[26/02/1970-01:18:10.216160],[parser],Instance_id = 00
+[26/02/1970-01:18:10.216180],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:10.216199],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:10.216222],[parser],eqpt_id.status = VALID
+[26/02/1970-01:18:10.216242],[parser],eqpt_id.value =
+[26/02/1970-01:18:10.216262],[parser],5f
+[26/02/1970-01:18:10.216281],[parser],5f
+[26/02/1970-01:18:10.216301],[parser],5f
+[26/02/1970-01:18:10.216320],[parser],5f
+[26/02/1970-01:18:10.216339],[parser],5f
+[26/02/1970-01:18:10.216358],[parser],5f
+[26/02/1970-01:18:10.216378],[parser],5f
+[26/02/1970-01:18:10.216397],[parser],5f
+[26/02/1970-01:18:10.216416],[parser],5f
+[26/02/1970-01:18:10.216435],[parser],5f
+[26/02/1970-01:18:10.216454],[parser],43
+[26/02/1970-01:18:10.216474],[parser],46
+[26/02/1970-01:18:10.216492],[parser],41
+[26/02/1970-01:18:10.216511],[parser],53
+[26/02/1970-01:18:10.216530],[parser],2d
+[26/02/1970-01:18:10.216549],[parser],4a
+[26/02/1970-01:18:10.216569],[parser],5f
+[26/02/1970-01:18:10.216588],[parser],5f
+[26/02/1970-01:18:10.216607],[parser],5f
+[26/02/1970-01:18:10.216626],[parser],5f
+[26/02/1970-01:18:10.216645],[parser],
+[26/02/1970-01:18:10.216664],[parser],omcc_version.status = VALID
+[26/02/1970-01:18:10.216685],[parser],omcc_version.value = 86
+[26/02/1970-01:18:10.216704],[parser],ven_prod_code.status = VALID
+[26/02/1970-01:18:10.216725],[parser],ven_prod_code.value = 004c
+[26/02/1970-01:18:10.216745],[parser],security_capability.status =[26/02/1970-01:18:10.545283],[parser],
+[26/02/1970-01:18:10.545310],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:10.545330],[parser],
+[26/02/1970-01:18:10.545355],[parser],bytes[06-13]: 27  c6  49  0a  00  07  00  03
+[26/02/1970-01:18:10.545380],[parser],bytes[14-45]: f0  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:10.545406],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:10.545436],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:10.545457],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:10.545545],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:10.545565],[parser],Msg_type    = GET
+[26/02/1970-01:18:10.545586],[parser],Trans_id    = 02
+[26/02/1970-01:18:10.545606],[parser],Entity_id   = SOFTWARE IMAGE
+[26/02/1970-01:18:10.545626],[parser],Instance_id = 03
+[26/02/1970-01:18:10.545668],[parser],version.status = VALID
+[26/02/1970-01:18:10.545688],[parser],is_committed.status = VALID
+[26/02/1970-01:18:10.545708],[parser],is_active.status = VALID
+[26/02/1970-01:18:10.545728],[parser],is_valid.status = VALID
+[26/02/1970-01:18:10.545901],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:10.545923],[parser],Msg_type    = GET RESPONSE
+[26/02/1970-01:18:10.545943],[parser],Trans_id    = 02
+[26/02/1970-01:18:10.545964],[parser],Entity_id   = SOFTWARE IMAGE
+[26/02/1970-01:18:10.545984],[parser],Instance_id = 03
+[26/02/1970-01:18:10.546003],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:10.546023],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:10.546045],[parser],version.status = VALID
+[26/02/1970-01:18:10.546065],[parser],version.value =
+[26/02/1970-01:18:10.546084],[parser], 
+[26/02/1970-01:18:10.546104],[parser], 
+[26/02/1970-01:18:10.546123],[parser], 
+[26/02/1970-01:18:10.546141],[parser], 
+[26/02/1970-01:18:10.546160],[parser], 
+[26/02/1970-01:18:10.546179],[parser], 
+[26/02/1970-01:18:10.546197],[parser], 
+[26/02/1970-01:18:10.546216],[parser], 
+[26/02/1970-01:18:10.546235],[parser], 
+[26/02/1970-01:18:10.546254],[parser], 
+[26/02/1970-01:18:10.546272],[parser], 
+[26/02/1970-01:18:10.546291],[parser], 
+[26/02/1970-01:18:10.546310],[parser], 
+[26/02/1970-01:18:10.546329],[parser], 
+[26/02/1970-01:18:10.546382],[parser],
+[26/02/1970-01:18:10.546403],[parser],is_committed.status = VALID
+[26/02/1970-01:18:10.546424],[parser],is_committed.value = 00
+[26/02/1970-01:18:10.546444],[parser],is_active.status = VALID
+[26/02/1970-01:18:10.546465],[parser],is_active.value = 00
+[26/02/1970-01:18:10.546485],[parser],is_valid.status = VALID
+[26/02/1970-01:18:10.546505],[parser],is_valid.value = 00
+[26/02/1970-01:18:10.546527],[parser],Duration : 00s:001ms
+[26/02/1970-01:18:10.546547],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:10.546566],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:10.546585],[parser],
+[26/02/1970-01:18:10.546608],[parser],bytes[06-13]: 27  c6  29  0a  00  07  00  03
+[26/02/1970-01:18:10.546633],[parser],bytes[14-45]: 00  f0  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:10.546658],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:10.546683],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:10.611345],[parser],
+[26/02/1970-01:18:10.611371],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:10.611391],[parser],
+[26/02/1970-01:18:10.611415],[parser],bytes[06-13]: 27  c7  49  0a  00  07  00  04
+[26/02/1970-01:18:10.611446],[parser],bytes[14-45]: f0  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:10.611472],[parser],            : 0[26/02/1970-01:18:10.872227],[parser],
+[26/02/1970-01:18:10.872254],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:10.872281],[parser],
+[26/02/1970-01:18:10.872306],[parser],bytes[06-13]: 27  cb  48  0a  ff  10  00  00
+[26/02/1970-01:18:10.872331],[parser],bytes[14-45]: d8  80  01  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:10.872363],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:10.872388],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:10.872408],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:10.872505],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:10.872526],[parser],Msg_type    = SET
+[26/02/1970-01:18:10.872547],[parser],Trans_id    = 07
+[26/02/1970-01:18:10.872568],[parser],Entity_id   = ONT_GENERIC_V2
+[26/02/1970-01:18:10.872588],[parser],Instance_id = 00
+[26/02/1970-01:18:10.872632],[parser],igmp_enable.status = VALID
+[26/02/1970-01:18:10.872654],[parser],igmp_enable.value = 01
+[26/02/1970-01:18:10.872674],[parser],force_data_storage_cmd.status = VALID
+[26/02/1970-01:18:10.872695],[parser],force_data_storage_cmd.value = 00
+[26/02/1970-01:18:10.872715],[parser],time_of_last_storage_opr.status = NOT VALID
+[26/02/1970-01:18:10.872735],[parser],craft_enable_disable_ind.status = VALID
+[26/02/1970-01:18:10.872757],[parser],craft_enable_disable_ind.value = 00
+[26/02/1970-01:18:10.872776],[parser],port_to_port_enable.status = VALID
+[26/02/1970-01:18:10.872797],[parser],port_to_port_enable.value = 00
+[26/02/1970-01:18:10.872817],[parser],static_mcast_translation_ind.status = NOT VALID
+[26/02/1970-01:18:10.872840],[parser],alu_me_capability_bitmap.status = NOT VALID
+[26/02/1970-01:18:10.872860],[parser],flexible_pq_assignment.status = NOT VALID
+[26/02/1970-01:18:10.872880],[parser],slid_capability.status = VALID
+[26/02/1970-01:18:10.872900],[parser],slid_capability.value = 00
+[26/02/1970-01:18:10.872920],[parser],yp_serial_nbr.status = NOT VALID
+[26/02/1970-01:18:10.872940],[parser],alu_special_behavior_field.status = NOT VALID
+[26/02/1970-01:18:10.872960],[parser],alu_me_capability_bitmap_part2.status = NOT VALID
+[26/02/1970-01:18:10.872979],[parser],olt_avc_handshake_rsp.status = NOT VALID
+[26/02/1970-01:18:10.873409],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:10.873439],[parser],Msg_type    = SET RESPONSE
+[26/02/1970-01:18:10.873461],[parser],Trans_id    = 07
+[26/02/1970-01:18:10.873482],[parser],Entity_id   = ONT_GENERIC_V2
+[26/02/1970-01:18:10.873502],[parser],Instance_id = 00
+[26/02/1970-01:18:10.873522],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:10.873542],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:10.873564],[parser],Duration : 00s:001ms
+[26/02/1970-01:18:10.873584],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:10.873604],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:10.873623],[parser],
+[26/02/1970-01:18:10.873646],[parser],bytes[06-13]: 27  cb  28  0a  ff  10  00  00
+[26/02/1970-01:18:10.873671],[parser],bytes[14-45]: 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:10.873696],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:10.873720],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:10.986798],[parser],
+[26/02/1970-01:18:10.986826],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:10.986846],[parser],
+[26/02/1970-01:18:10.986870],[parser],bytes[06-13]: 27  cc  48  0a  01  01  00  00
+[26/02/1970-01:18:10.986896],[parser],bytes[14-45]: 00  10  05  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:10.986921],[parse[26/02/1970-01:18:11.247271],[parser],
+[26/02/1970-01:18:11.247298],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:11.247318],[parser],
+[26/02/1970-01:18:11.247342],[parser],bytes[06-13]: 27  d0  49  0a  01  01  00  00
+[26/02/1970-01:18:11.247368],[parser],bytes[14-45]: 80  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:11.247393],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:11.247423],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:11.247444],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:11.247533],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:11.247553],[parser],Msg_type    = GET
+[26/02/1970-01:18:11.247574],[parser],Trans_id    = 0c
+[26/02/1970-01:18:11.247594],[parser],Entity_id   = ONT 2G
+[26/02/1970-01:18:11.247614],[parser],Instance_id = 00
+[26/02/1970-01:18:11.247656],[parser],eqpt_id.status = VALID
+[26/02/1970-01:18:11.247676],[parser],omcc_version.status = NOT VALID
+[26/02/1970-01:18:11.247696],[parser],ven_prod_code.status = NOT VALID
+[26/02/1970-01:18:11.247716],[parser],security_capability.status = NOT VALID
+[26/02/1970-01:18:11.247736],[parser],security_mode.status = NOT VALID
+[26/02/1970-01:18:11.247755],[parser],total_priority_queue_nbr.status = NOT VALID
+[26/02/1970-01:18:11.247775],[parser],total_trf_sch_nbr.status = NOT VALID
+[26/02/1970-01:18:11.247795],[parser],mode.status = NOT VALID
+[26/02/1970-01:18:11.247815],[parser],total_gem_ports_supported.status = NOT VALID
+[26/02/1970-01:18:11.247835],[parser],sysUpTime.status = NOT VALID
+[26/02/1970-01:18:11.247854],[parser],connCapability.status = NOT VALID
+[26/02/1970-01:18:11.247874],[parser],currConnMode.status = NOT VALID
+[26/02/1970-01:18:11.247894],[parser],qosConfigFlexibility.status = NOT VALID
+[26/02/1970-01:18:11.247913],[parser],pqScaleFactor.status = NOT VALID
+[26/02/1970-01:18:11.248069],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:11.248091],[parser],Msg_type    = GET RESPONSE
+[26/02/1970-01:18:11.248112],[parser],Trans_id    = 0c
+[26/02/1970-01:18:11.248132],[parser],Entity_id   = ONT 2G
+[26/02/1970-01:18:11.248152],[parser],Instance_id = 00
+[26/02/1970-01:18:11.248171],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:11.248191],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:11.248213],[parser],eqpt_id.status = VALID
+[26/02/1970-01:18:11.248234],[parser],eqpt_id.value =
+[26/02/1970-01:18:11.248254],[parser],5f
+[26/02/1970-01:18:11.248273],[parser],5f
+[26/02/1970-01:18:11.248292],[parser],5f
+[26/02/1970-01:18:11.248311],[parser],5f
+[26/02/1970-01:18:11.248330],[parser],5f
+[26/02/1970-01:18:11.248350],[parser],5f
+[26/02/1970-01:18:11.248369],[parser],5f
+[26/02/1970-01:18:11.248389],[parser],5f
+[26/02/1970-01:18:11.248408],[parser],5f
+[26/02/1970-01:18:11.248428],[parser],5f
+[26/02/1970-01:18:11.248447],[parser],43
+[26/02/1970-01:18:11.248466],[parser],46
+[26/02/1970-01:18:11.248485],[parser],41
+[26/02/1970-01:18:11.248504],[parser],53
+[26/02/1970-01:18:11.248523],[parser],2d
+[26/02/1970-01:18:11.248543],[parser],4a
+[26/02/1970-01:18:11.248562],[parser],5f
+[26/02/1970-01:18:11.248581],[parser],5f
+[26/02/1970-01:18:11.248600],[parser],5f
+[26/02/1970-01:18:11.248619],[parser],5f
+[26/02/1970-01:18:11.248638],[parser],
+[26/02/1970-01:18:11.248657],[parser],omcc_version.status = NOT VALID
+[26/02/1970-01:18:11.248676],[parser],ven_prod_code.status = NOT VALID
+[26/02/1970-01:18:11.248696],[parser],security_capability.status = NOT VALID
+[26/02/1970-01:18:11.248716],[parser],security_mode.status = NOT VALID
+[26/02/1970-01:18:11.2487[26/02/1970-01:18:11.577812],[parser],
+[26/02/1970-01:18:11.577837],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:11.577857],[parser],
+[26/02/1970-01:18:11.577881],[parser],bytes[06-13]: 27  d5  49  0a  00  07  00  03
+[26/02/1970-01:18:11.577907],[parser],bytes[14-45]: f0  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:11.577932],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:11.577957],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:11.577977],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:11.578063],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:11.578085],[parser],Msg_type    = GET
+[26/02/1970-01:18:11.578105],[parser],Trans_id    = 11
+[26/02/1970-01:18:11.578125],[parser],Entity_id   = SOFTWARE IMAGE
+[26/02/1970-01:18:11.578145],[parser],Instance_id = 03
+[26/02/1970-01:18:11.578187],[parser],version.status = VALID
+[26/02/1970-01:18:11.578207],[parser],is_committed.status = VALID
+[26/02/1970-01:18:11.578227],[parser],is_active.status = VALID
+[26/02/1970-01:18:11.578247],[parser],is_valid.status = VALID
+[26/02/1970-01:18:11.578422],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:11.578444],[parser],Msg_type    = GET RESPONSE
+[26/02/1970-01:18:11.578465],[parser],Trans_id    = 11
+[26/02/1970-01:18:11.578485],[parser],Entity_id   = SOFTWARE IMAGE
+[26/02/1970-01:18:11.578505],[parser],Instance_id = 03
+[26/02/1970-01:18:11.578525],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:11.578545],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:11.578568],[parser],version.status = VALID
+[26/02/1970-01:18:11.578588],[parser],version.value =
+[26/02/1970-01:18:11.578607],[parser], 
+[26/02/1970-01:18:11.578626],[parser], 
+[26/02/1970-01:18:11.578645],[parser], 
+[26/02/1970-01:18:11.578664],[parser], 
+[26/02/1970-01:18:11.578683],[parser], 
+[26/02/1970-01:18:11.578701],[parser], 
+[26/02/1970-01:18:11.578720],[parser], 
+[26/02/1970-01:18:11.578739],[parser], 
+[26/02/1970-01:18:11.578758],[parser], 
+[26/02/1970-01:18:11.578777],[parser], 
+[26/02/1970-01:18:11.578795],[parser], 
+[26/02/1970-01:18:11.578814],[parser], 
+[26/02/1970-01:18:11.578833],[parser], 
+[26/02/1970-01:18:11.578852],[parser], 
+[26/02/1970-01:18:11.578876],[parser],
+[26/02/1970-01:18:11.578897],[parser],is_committed.status = VALID
+[26/02/1970-01:18:11.578917],[parser],is_committed.value = 00
+[26/02/1970-01:18:11.578937],[parser],is_active.status = VALID
+[26/02/1970-01:18:11.578958],[parser],is_active.value = 00
+[26/02/1970-01:18:11.578978],[parser],is_valid.status = VALID
+[26/02/1970-01:18:11.578998],[parser],is_valid.value = 00
+[26/02/1970-01:18:11.579020],[parser],Duration : 00s:001ms
+[26/02/1970-01:18:11.579040],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:11.579059],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:11.579078],[parser],
+[26/02/1970-01:18:11.579101],[parser],bytes[06-13]: 27  d5  29  0a  00  07  00  03
+[26/02/1970-01:18:11.579126],[parser],bytes[14-45]: 00  f0  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:11.579151],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:11.579176],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:11.644838],[parser],
+[26/02/1970-01:18:11.644866],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:11.644886],[parser],
+[26/02/1970-01:18:11.644910],[parser],bytes[06-13]: 27  d6  49  0a  00  07  00  04
+[26/02/1970-01:18:11.644936],[parser],bytes[14-45]: f0  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:11.644962],[parser],            : 0[26/02/1970-01:18:11.856629],[parser],
+[26/02/1970-01:18:11.856656],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:11.856676],[parser],
+[26/02/1970-01:18:11.856700],[parser],bytes[06-13]: 27  d9  44  0a  01  0c  07  ff
+[26/02/1970-01:18:11.856725],[parser],bytes[14-45]: 07  ff  00  00  02  00  00  00  00  00  00
+[26/02/1970-01:18:11.856751],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:11.856776],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:11.856796],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:11.856885],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:11.856906],[parser],Msg_type    = CREATE
+[26/02/1970-01:18:11.856926],[parser],Trans_id    = 15
+[26/02/1970-01:18:11.856947],[parser],Entity_id   = GEM PORT CTP
+[26/02/1970-01:18:11.856968],[parser],Instance_id = 7ff
+[26/02/1970-01:18:11.857009],[parser],port_id.status = VALID
+[26/02/1970-01:18:11.857030],[parser],port_id.value = 07ff
+[26/02/1970-01:18:11.857051],[parser],tcont_ptr.status = VALID
+[26/02/1970-01:18:11.857072],[parser],tcont_ptr.value = 0000
+[26/02/1970-01:18:11.857092],[parser],direction.status = VALID
+[26/02/1970-01:18:11.857113],[parser],direction.value = 02
+[26/02/1970-01:18:11.857133],[parser],us_priority_queue_ptr.status = VALID
+[26/02/1970-01:18:11.857153],[parser],us_priority_queue_ptr.value = 0000
+[26/02/1970-01:18:11.857174],[parser],us_td_profile_ptr.status = VALID
+[26/02/1970-01:18:11.857195],[parser],us_td_profile_ptr.value = 0000
+[26/02/1970-01:18:11.857214],[parser],uni_counter.status = NOT VALID
+[26/02/1970-01:18:11.857234],[parser],ds_priority_queue_ptr.status = VALID
+[26/02/1970-01:18:11.857255],[parser],ds_priority_queue_ptr.value = 0000
+[26/02/1970-01:18:11.857274],[parser],encryption_state.status = NOT VALID
+[26/02/1970-01:18:11.857294],[parser],ds_td_profile_ptr.status = VALID
+[26/02/1970-01:18:11.857315],[parser],ds_td_profile_ptr.value = 0000
+[26/02/1970-01:18:11.857335],[parser],encryption_key_ring.status = VALID
+[26/02/1970-01:18:11.857356],[parser],encryption_key_ring.value = 00
+[26/02/1970-01:18:11.857623],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:11.857645],[parser],Msg_type    = CREATE RESPONSE
+[26/02/1970-01:18:11.857667],[parser],Trans_id    = 15
+[26/02/1970-01:18:11.857687],[parser],Entity_id   = GEM PORT CTP
+[26/02/1970-01:18:11.857707],[parser],Instance_id = 7ff
+[26/02/1970-01:18:11.857727],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:11.857746],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:11.857768],[parser],Duration : 00s:000ms
+[26/02/1970-01:18:11.857788],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:11.857808],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:11.857827],[parser],
+[26/02/1970-01:18:11.857850],[parser],bytes[06-13]: 27  d9  24  0a  01  0c  07  ff
+[26/02/1970-01:18:11.857875],[parser],bytes[14-45]: 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:11.857900],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:11.857925],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:11.923562],[parser],
+[26/02/1970-01:18:11.923589],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:11.923610],[parser],
+[26/02/1970-01:18:11.923633],[parser],bytes[06-13]: 27  da  44  0a  01  19  00  01
+[26/02/1970-01:18:11.923659],[parser],bytes[14-45]: 07  ff  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:11.923685],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:11.923710],[parser],            : 00  00  00 [26/02/1970-01:18:12.209451],[parser],
+[26/02/1970-01:18:12.209481],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:12.209502],[parser],
+[26/02/1970-01:18:12.209526],[parser],bytes[06-13]: 27  de  44  0a  00  2d  01  01
+[26/02/1970-01:18:12.209552],[parser],bytes[14-45]: 00  00  00  80  00  14  00  02  00  0f  00
+[26/02/1970-01:18:12.209578],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:12.209603],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:12.209623],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:12.209752],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:12.209773],[parser],Msg_type    = CREATE
+[26/02/1970-01:18:12.209794],[parser],Trans_id    = 1a
+[26/02/1970-01:18:12.209815],[parser],Entity_id   = MAC BRIDGE SERVICE PROFILE
+[26/02/1970-01:18:12.209835],[parser],Instance_id = 101
+[26/02/1970-01:18:12.209880],[parser],spanning_tree_indicator.status = VALID
+[26/02/1970-01:18:12.209903],[parser],spanning_tree_indicator.value = 00
+[26/02/1970-01:18:12.209924],[parser],learning_indicator.status = VALID
+[26/02/1970-01:18:12.209945],[parser],learning_indicator.value = 00
+[26/02/1970-01:18:12.209965],[parser],port_bridging_indicator.status = VALID
+[26/02/1970-01:18:12.209986],[parser],port_bridging_indicator.value = 00
+[26/02/1970-01:18:12.210006],[parser],bridge_priority.status = VALID
+[26/02/1970-01:18:12.210026],[parser],bridge_priority.value = 8000
+[26/02/1970-01:18:12.210046],[parser],max_age.status = VALID
+[26/02/1970-01:18:12.210066],[parser],max_age.value = 1400
+[26/02/1970-01:18:12.210086],[parser],hello_time.status = VALID
+[26/02/1970-01:18:12.210107],[parser],hello_time.value = 0200
+[26/02/1970-01:18:12.210151],[parser],forward_delay.status = VALID
+[26/02/1970-01:18:12.210174],[parser],forward_delay.value = 0f00
+[26/02/1970-01:18:12.210194],[parser],unknown_mac_address_discard.status = VALID
+[26/02/1970-01:18:12.210215],[parser],unknown_mac_address_discard.value = 00
+[26/02/1970-01:18:12.210234],[parser],mac_learning_depth.status = VALID
+[26/02/1970-01:18:12.210255],[parser],mac_learning_depth.value = 00
+[26/02/1970-01:18:12.210275],[parser],dynamic_filter_age_time.status = VALID
+[26/02/1970-01:18:12.210296],[parser],dynamic_filter_age_time.value = 00000000
+[26/02/1970-01:18:12.210699],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:12.210723],[parser],Msg_type    = CREATE RESPONSE
+[26/02/1970-01:18:12.210756],[parser],Trans_id    = 1a
+[26/02/1970-01:18:12.210778],[parser],Entity_id   = MAC BRIDGE SERVICE PROFILE
+[26/02/1970-01:18:12.210798],[parser],Instance_id = 101
+[26/02/1970-01:18:12.210818],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:12.210837],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:12.210859],[parser],Duration : 00s:000ms
+[26/02/1970-01:18:12.210879],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:12.210899],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:12.210918],[parser],
+[26/02/1970-01:18:12.210941],[parser],bytes[06-13]: 27  de  24  0a  00  2d  01  01
+[26/02/1970-01:18:12.210966],[parser],bytes[14-45]: 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:12.210991],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:12.211024],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:12.274053],[parser],
+[26/02/1970-01:18:12.274081],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:12.274102],[parser],
+[26/02/1970-01:18:12.274127],[parser],bytes[06-13]: 27  df  44  0a  00  2f  01  01
+[26/02/1970-01:18:12.274153],[parser],bytes[[26/02/1970-01:18:12.531076],[parser],
+[26/02/1970-01:18:12.531101],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:12.531122],[parser],
+[26/02/1970-01:18:12.531146],[parser],bytes[06-13]: 27  e3  48  0a  01  35  01  01
+[26/02/1970-01:18:12.531171],[parser],bytes[14-45]: 00  02  01  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:12.531197],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:12.531222],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:12.531242],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:12.531331],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:12.531352],[parser],Msg_type    = SET
+[26/02/1970-01:18:12.531372],[parser],Trans_id    = 01
+[26/02/1970-01:18:12.531394],[parser],Entity_id   = MCAST OPERATIONS PROFILE
+[26/02/1970-01:18:12.531414],[parser],Instance_id = 101
+[26/02/1970-01:18:12.531464],[parser],igmp_version.status = NOT VALID
+[26/02/1970-01:18:12.531485],[parser],igmp_function.status = NOT VALID
+[26/02/1970-01:18:12.531505],[parser],immediate_leave.status = NOT VALID
+[26/02/1970-01:18:12.531525],[parser],us_igmp_tci.status = NOT VALID
+[26/02/1970-01:18:12.531545],[parser],us_igmp_tag_control.status = NOT VALID
+[26/02/1970-01:18:12.531565],[parser],us_igmp_rate.status = NOT VALID
+[26/02/1970-01:18:12.531584],[parser],dynamic_access_list_table.status = NOT VALID
+[26/02/1970-01:18:12.531604],[parser],static_access_list_table.status = NOT VALID
+[26/02/1970-01:18:12.531624],[parser],lost_groups_list_table.status = NOT VALID
+[26/02/1970-01:18:12.531643],[parser],robustness.status = NOT VALID
+[26/02/1970-01:18:12.531663],[parser],querier_ip_address.status = NOT VALID
+[26/02/1970-01:18:12.531683],[parser],query_interval.status = NOT VALID
+[26/02/1970-01:18:12.531703],[parser],query_max_response.status = NOT VALID
+[26/02/1970-01:18:12.531722],[parser],last_member_query_interval.status = NOT VALID
+[26/02/1970-01:18:12.531742],[parser],unauthorized_join_request.status = VALID
+[26/02/1970-01:18:12.531763],[parser],unauthorized_join_request.value = 01
+[26/02/1970-01:18:12.531782],[parser],ds_igmp_tci.status = NOT VALID
+[26/02/1970-01:18:12.531937],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:12.531959],[parser],Msg_type    = SET RESPONSE
+[26/02/1970-01:18:12.531979],[parser],Trans_id    = 01
+[26/02/1970-01:18:12.532000],[parser],Entity_id   = MCAST OPERATIONS PROFILE
+[26/02/1970-01:18:12.532020],[parser],Instance_id = 101
+[26/02/1970-01:18:12.532040],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:12.532059],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:12.532081],[parser],Duration : 00s:001ms
+[26/02/1970-01:18:12.532101],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:12.532120],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:12.532146],[parser],
+[26/02/1970-01:18:12.532170],[parser],bytes[06-13]: 27  e3  28  0a  01  35  01  01
+[26/02/1970-01:18:12.532195],[parser],bytes[14-45]: 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:12.532220],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:12.532245],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:12.594047],[parser],
+[26/02/1970-01:18:12.594073],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:12.594093],[parser],
+[26/02/1970-01:18:12.594117],[parser],bytes[06-13]: 27  e4  44  0a  01  36  01  01
+[26/02/1970-01:18:12.594142],[parser],bytes[14-45]: 00  01  01  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:12.594167],[parser],            : 00  00  00  00  00  00  00  00  00  00  0[26/02/1970-01:18:12.870277],[parser],
+[26/02/1970-01:18:12.870304],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:12.870324],[parser],
+[26/02/1970-01:18:12.870348],[parser],bytes[06-13]: 27  e8  44  0a  00  ab  01  02
+[26/02/1970-01:18:12.870374],[parser],bytes[14-45]: 02  01  02  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:12.870399],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:12.870424],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:12.870444],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:12.870544],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:12.870565],[parser],Msg_type    = CREATE
+[26/02/1970-01:18:12.870586],[parser],Trans_id    = 06
+[26/02/1970-01:18:12.870608],[parser],Entity_id   = EXTENDED VLAN CONFIG DATA
+[26/02/1970-01:18:12.870628],[parser],Instance_id = 102
+[26/02/1970-01:18:12.870672],[parser],association_type.status = VALID
+[26/02/1970-01:18:12.870693],[parser],association_type.value = 02
+[26/02/1970-01:18:12.870714],[parser],rcvd_vlan_max_size.status = NOT VALID
+[26/02/1970-01:18:12.870734],[parser],input_tpid.status = NOT VALID
+[26/02/1970-01:18:12.870753],[parser],output_tpid.status = NOT VALID
+[26/02/1970-01:18:12.870773],[parser],down_stream_mode.status = NOT VALID
+[26/02/1970-01:18:12.870793],[parser],rcvd_vlan_opr_table.status = NOT VALID
+[26/02/1970-01:18:12.870813],[parser],associated_me_ptr.status = VALID
+[26/02/1970-01:18:12.870834],[parser],associated_me_ptr.value = 0102
+[26/02/1970-01:18:12.870854],[parser],dscp_map.status = NOT VALID
+[26/02/1970-01:18:12.871042],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:12.871065],[parser],Msg_type    = CREATE RESPONSE
+[26/02/1970-01:18:12.871094],[parser],Trans_id    = 06
+[26/02/1970-01:18:12.871115],[parser],Entity_id   = EXTENDED VLAN CONFIG DATA
+[26/02/1970-01:18:12.871135],[parser],Instance_id = 102
+[26/02/1970-01:18:12.871155],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:12.871174],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:12.871196],[parser],Duration : 00s:001ms
+[26/02/1970-01:18:12.871224],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:12.871244],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:12.871263],[parser],
+[26/02/1970-01:18:12.871286],[parser],bytes[06-13]: 27  e8  24  0a  00  ab  01  02
+[26/02/1970-01:18:12.871312],[parser],bytes[14-45]: 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:12.871337],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:12.871361],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:12.933332],[parser],
+[26/02/1970-01:18:12.933359],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:12.933379],[parser],
+[26/02/1970-01:18:12.933403],[parser],bytes[06-13]: 27  e9  48  0a  00  ab  01  02
+[26/02/1970-01:18:12.933435],[parser],bytes[14-45]: 38  00  81  00  81  00  00  00  00  00  00
+[26/02/1970-01:18:12.933461],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:12.933486],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:12.933506],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:12.933607],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:12.933628],[parser],Msg_type    = SET
+[26/02/1970-01:18:12.933649],[parser],Trans_id    = 07
+[26/02/1970-01:18:12.933670],[parser],Entity_id   = EXTENDED VLAN CONFIG DATA
+[26/02/1970-01:18:12.933690],[parser],Instance_id = 102
+[26/02/1970-01:18:12.933734],[parser],association_type.status = NOT VALID
+[26/02/1970-01:18:12.[26/02/1970-01:18:13.194818],[parser],
+[26/02/1970-01:18:13.194844],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:13.194864],[parser],
+[26/02/1970-01:18:13.194888],[parser],bytes[06-13]: 27  ed  48  0a  00  0b  01  03
+[26/02/1970-01:18:13.194913],[parser],bytes[14-45]: 29  10  00  00  07  d0  00  00  00  00  00
+[26/02/1970-01:18:13.194938],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:13.194963],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:13.194983],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:13.195243],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:13.195265],[parser],Msg_type    = SET
+[26/02/1970-01:18:13.195286],[parser],Trans_id    = 0b
+[26/02/1970-01:18:13.195306],[parser],Entity_id   = PPTP LAN UNI
+[26/02/1970-01:18:13.195326],[parser],Instance_id = 103
+[26/02/1970-01:18:13.195368],[parser],expected_type.status = NOT VALID
+[26/02/1970-01:18:13.195388],[parser],sensed_type.status = NOT VALID
+[26/02/1970-01:18:13.195408],[parser],auto_detect.status = VALID
+[26/02/1970-01:18:13.195435],[parser],auto_detect.value = 00
+[26/02/1970-01:18:13.195456],[parser],ether_loopback.status = NOT VALID
+[26/02/1970-01:18:13.195476],[parser],admin_state.status = VALID
+[26/02/1970-01:18:13.195497],[parser],admin_state.value = 00
+[26/02/1970-01:18:13.195517],[parser],oper_state.status = NOT VALID
+[26/02/1970-01:18:13.195536],[parser],config_ind.status = NOT VALID
+[26/02/1970-01:18:13.195556],[parser],max_frame_size.status = VALID
+[26/02/1970-01:18:13.195576],[parser],max_frame_size.value = 07d0
+[26/02/1970-01:18:13.195596],[parser],dte_or_dce_ind.status = NOT VALID
+[26/02/1970-01:18:13.195616],[parser],pause_time.status = NOT VALID
+[26/02/1970-01:18:13.195635],[parser],bridge_or_ip_ind.status = NOT VALID
+[26/02/1970-01:18:13.195655],[parser],arc.status = VALID
+[26/02/1970-01:18:13.195675],[parser],arc.value = 00
+[26/02/1970-01:18:13.195695],[parser],arc_interval.status = NOT VALID
+[26/02/1970-01:18:13.195715],[parser],pppoe_filter.status = NOT VALID
+[26/02/1970-01:18:13.195734],[parser],pwr_control.status = NOT VALID
+[26/02/1970-01:18:13.195808],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:13.195829],[parser],Msg_type    = SET RESPONSE
+[26/02/1970-01:18:13.195850],[parser],Trans_id    = 0b
+[26/02/1970-01:18:13.195870],[parser],Entity_id   = PPTP LAN UNI
+[26/02/1970-01:18:13.195889],[parser],Instance_id = 103
+[26/02/1970-01:18:13.195909],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:13.195928],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:13.195950],[parser],Duration : 00s:000ms
+[26/02/1970-01:18:13.195969],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:13.195989],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:13.196008],[parser],
+[26/02/1970-01:18:13.196031],[parser],bytes[06-13]: 27  ed  28  0a  00  0b  01  03
+[26/02/1970-01:18:13.196056],[parser],bytes[14-45]: 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:13.196081],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:13.196105],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:13.203518],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:13.203545],[parser],Msg_type    = ALARM
+[26/02/1970-01:18:13.203568],[parser],Trans_id    = 00
+[26/02/1970-01:18:13.203589],[parser],Alarm seq nbr = 03
+[26/02/1970-01:18:13.203610],[parser],Entity_id   = PPTP LAN UNI
+[26/02/1970-01:18:13.203630],[parser],Instance_id = 103
+[26/02/1970-01:18:13.203650],[parser],Alarm mask =
+[26/02/1970-01:18:13.203678],[parse[26/02/1970-01:18:13.536932],[parser],
+[26/02/1970-01:18:13.536958],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:13.536978],[parser],
+[26/02/1970-01:18:13.537002],[parser],bytes[06-13]: 27  f2  44  0a  01  35  01  03
+[26/02/1970-01:18:13.537027],[parser],bytes[14-45]: 03  00  01  00  00  00  00  00  00  40  02
+[26/02/1970-01:18:13.537053],[parser],            : 00  00  00  00  00  00  00  7d  00  00  00
+[26/02/1970-01:18:13.537077],[parser],            : 64  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:13.537097],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:13.537193],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:13.537214],[parser],Msg_type    = CREATE
+[26/02/1970-01:18:13.537235],[parser],Trans_id    = 10
+[26/02/1970-01:18:13.537256],[parser],Entity_id   = MCAST OPERATIONS PROFILE
+[26/02/1970-01:18:13.537276],[parser],Instance_id = 103
+[26/02/1970-01:18:13.537319],[parser],igmp_version.status = VALID
+[26/02/1970-01:18:13.537341],[parser],igmp_version.value = 03
+[26/02/1970-01:18:13.537361],[parser],igmp_function.status = VALID
+[26/02/1970-01:18:13.537381],[parser],igmp_function.value = 00
+[26/02/1970-01:18:13.537402],[parser],immediate_leave.status = VALID
+[26/02/1970-01:18:13.537428],[parser],immediate_leave.value = 01
+[26/02/1970-01:18:13.537449],[parser],us_igmp_tci.status = VALID
+[26/02/1970-01:18:13.537470],[parser],us_igmp_tci.value = 0000
+[26/02/1970-01:18:13.537490],[parser],us_igmp_tag_control.status = VALID
+[26/02/1970-01:18:13.537511],[parser],us_igmp_tag_control.value = 00
+[26/02/1970-01:18:13.537530],[parser],us_igmp_rate.status = VALID
+[26/02/1970-01:18:13.537551],[parser],us_igmp_rate.value = 00000040
+[26/02/1970-01:18:13.537571],[parser],dynamic_access_list_table.status = NOT VALID
+[26/02/1970-01:18:13.537591],[parser],static_access_list_table.status = NOT VALID
+[26/02/1970-01:18:13.537611],[parser],lost_groups_list_table.status = NOT VALID
+[26/02/1970-01:18:13.537631],[parser],robustness.status = VALID
+[26/02/1970-01:18:13.537651],[parser],robustness.value = 02
+[26/02/1970-01:18:13.537671],[parser],querier_ip_address.status = VALID
+[26/02/1970-01:18:13.537691],[parser],querier_ip_address.value = 00000000
+[26/02/1970-01:18:13.537711],[parser],query_interval.status = VALID
+[26/02/1970-01:18:13.537732],[parser],query_interval.value = 0000007d
+[26/02/1970-01:18:13.537752],[parser],query_max_response.status = VALID
+[26/02/1970-01:18:13.537773],[parser],query_max_response.value = 00000064
+[26/02/1970-01:18:13.537792],[parser],last_member_query_interval.status = NOT VALID
+[26/02/1970-01:18:13.537812],[parser],unauthorized_join_request.status = NOT VALID
+[26/02/1970-01:18:13.537831],[parser],ds_igmp_tci.status = VALID
+[26/02/1970-01:18:13.537857],[parser],ds_igmp_tci.value =
+[26/02/1970-01:18:13.537877],[parser],00
+[26/02/1970-01:18:13.537897],[parser],00
+[26/02/1970-01:18:13.537916],[parser],00
+[26/02/1970-01:18:13.537935],[parser],
+[26/02/1970-01:18:13.538089],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:13.538111],[parser],Msg_type    = CREATE RESPONSE
+[26/02/1970-01:18:13.538132],[parser],Trans_id    = 10
+[26/02/1970-01:18:13.538153],[parser],Entity_id   = MCAST OPERATIONS PROFILE
+[26/02/1970-01:18:13.538174],[parser],Instance_id = 103
+[26/02/1970-01:18:13.538193],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:13.538212],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:13.538234],[parser],Duration : 00s:001ms
+[26/02/1970-01:18:13.538254],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:13.538273],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:13.5382[26/02/1970-01:18:13.878900],[parser],
+[26/02/1970-01:18:13.878929],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:13.878950],[parser],
+[26/02/1970-01:18:13.878974],[parser],bytes[06-13]: 27  f7  44  0a  00  2f  01  04
+[26/02/1970-01:18:13.879000],[parser],bytes[14-45]: 01  04  04  01  01  04  00  00  00  01  00
+[26/02/1970-01:18:13.879025],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:13.879051],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:13.879071],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:13.879193],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:13.879215],[parser],Msg_type    = CREATE
+[26/02/1970-01:18:13.879236],[parser],Trans_id    = 15
+[26/02/1970-01:18:13.879257],[parser],Entity_id   = MAC BRIDGE PORT CONFIGURATION DATA
+[26/02/1970-01:18:13.879277],[parser],Instance_id = 104
+[26/02/1970-01:18:13.879333],[parser],bridge_id_pointer.status = VALID
+[26/02/1970-01:18:13.879358],[parser],bridge_id_pointer.value = 0104
+[26/02/1970-01:18:13.879378],[parser],bridge_port_number.status = VALID
+[26/02/1970-01:18:13.879399],[parser],bridge_port_number.value = 04
+[26/02/1970-01:18:13.879425],[parser],termination_point_type.status = VALID
+[26/02/1970-01:18:13.879446],[parser],termination_point_type.value = 01
+[26/02/1970-01:18:13.879466],[parser],termination_point_pointer.status = VALID
+[26/02/1970-01:18:13.879487],[parser],termination_point_pointer.value = 0104
+[26/02/1970-01:18:13.879507],[parser],port_priority.status = VALID
+[26/02/1970-01:18:13.879527],[parser],port_priority.value = 0000
+[26/02/1970-01:18:13.879548],[parser],port_path_cost.status = VALID
+[26/02/1970-01:18:13.879568],[parser],port_path_cost.value = 0001
+[26/02/1970-01:18:13.879588],[parser],port_spanning_tree_indicator.status = VALID
+[26/02/1970-01:18:13.879609],[parser],port_spanning_tree_indicator.value = 00
+[26/02/1970-01:18:13.879629],[parser],encapsulation_method.status = VALID
+[26/02/1970-01:18:13.879649],[parser],encapsulation_method.value = 00
+[26/02/1970-01:18:13.879669],[parser],lan_fcs_indicator.status = VALID
+[26/02/1970-01:18:13.879689],[parser],lan_fcs_indicator.value = 00
+[26/02/1970-01:18:13.879709],[parser],port_mac_address.status = NOT VALID
+[26/02/1970-01:18:13.879729],[parser],outbound_td_pointer.status = NOT VALID
+[26/02/1970-01:18:13.879748],[parser],inbound_td_pointer.status = NOT VALID
+[26/02/1970-01:18:13.879768],[parser],max_learning_depth.status = VALID
+[26/02/1970-01:18:13.879789],[parser],max_learning_depth.value = 00
+[26/02/1970-01:18:13.879995],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:13.880017],[parser],Msg_type    = CREATE RESPONSE
+[26/02/1970-01:18:13.880038],[parser],Trans_id    = 15
+[26/02/1970-01:18:13.880058],[parser],Entity_id   = MAC BRIDGE PORT CONFIGURATION DATA
+[26/02/1970-01:18:13.880078],[parser],Instance_id = 104
+[26/02/1970-01:18:13.880098],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:13.880134],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:13.880157],[parser],Duration : 00s:001ms
+[26/02/1970-01:18:13.880178],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:13.880197],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:13.880216],[parser],
+[26/02/1970-01:18:13.880239],[parser],bytes[06-13]: 27  f7  24  0a  00  2f  01  04
+[26/02/1970-01:18:13.880264],[parser],bytes[14-45]: 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:13.880289],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:13.880314],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:13.966686],[parser],
+[26/02/1970-01:18:13.966716],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:13.966737],[parser],
+[26/02/1970-01:18:13.966761],[parser],bytes[06-13]: 27  f8  44  0a  00  ab  01  04
+[26/02/1970-01:18:13.966787],[parser],bytes[14-45]: 02  01  04  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:13.966813],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:13.966838],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:13.966858],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:13.966981],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:13.967003],[parser],Msg_type    = CREATE
+[26/02/1970-01:18:13.967024],[parser],Trans_id    = 16
+[26/02/1970-01:18:13.967057],[parser],Entity_id   = EXTENDED VLAN CONFIG DATA
+[26/02/1970-01:18:13.967078],[parser],Instance_id = 104
+[26/02/1970-01:18:13.967123],[parser],association_type.status = VALID
+[26/02/1970-01:18:13.967146],[parser],association_type.value = 02
+[26/02/1970-01:18:13.967166],[parser],rcvd_vlan_max_size.status = NOT VALID
+[26/02/1970-01:18:13.967186],[parser],input_tpid.status = NOT VALID
+[26/02/1970-01:18:13.967206],[parser],output_tpid.status = NOT VALID
+[26/02/1970-01:18:13.967226],[parser],down_stream_mode.status = NOT VALID
+[26/02/1970-01:18:13.967245],[parser],rcvd_vlan_opr_table.status = NOT VALID
+[26/02/1970-01:18:13.967265],[parser],associated_me_ptr.status = VALID
+[26/02/1970-01:18:13.967286],[parser],associated_me_ptr.value = 0104
+[26/02/1970-01:18:13.967306],[parser],dscp_map.status = NOT VALID
+[26/02/1970-01:18:13.967678],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:13.967701],[parser],Msg_type    = CREATE RESPONSE
+[26/02/1970-01:18:13.967723],[parser],Trans_id    = 16
+[26/02/1970-01:18:13.967743],[parser],Entity_id   = EXTENDED VLAN CONFIG DATA
+[26/02/1970-01:18:13.967764],[parser],Instance_id = 104
+[26/02/1970-01:18:13.967784],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:13.967804],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:13.967826],[parser],Duration : 00s:000ms
+[26/02/1970-01:18:13.967846],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:13.967866],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:13.967885],[parser],
+[26/02/1970-01:18:13.967908],[parser],bytes[0[26/02/1970-01:18:14.229976],[parser],
+[26/02/1970-01:18:14.230003],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:14.230023],[parser],
+[26/02/1970-01:18:14.230047],[parser],bytes[06-13]: 27  fc  44  0a  01  36  01  04
+[26/02/1970-01:18:14.230087],[parser],bytes[14-45]: 00  01  04  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:14.230115],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:14.230140],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:14.230161],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:14.230254],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:14.230275],[parser],Msg_type    = CREATE
+[26/02/1970-01:18:14.230296],[parser],Trans_id    = 1a
+[26/02/1970-01:18:14.230316],[parser],Entity_id   = MCAST SUBSCRIBER CONFIG INFO
+[26/02/1970-01:18:14.230337],[parser],Instance_id = 104
+[26/02/1970-01:18:14.230381],[parser],me_type.status = VALID
+[26/02/1970-01:18:14.230402],[parser],me_type.value = 00
+[26/02/1970-01:18:14.230423],[parser],mcast_opr_profile_ptr.status = VALID
+[26/02/1970-01:18:14.230444],[parser],mcast_opr_profile_ptr.value = 0104
+[26/02/1970-01:18:14.230464],[parser],max_simultaneous_groups.status = VALID
+[26/02/1970-01:18:14.230485],[parser],max_simultaneous_groups.value = 0000
+[26/02/1970-01:18:14.230505],[parser],max_multicast_bandwidth.status = VALID
+[26/02/1970-01:18:14.230525],[parser],max_multicast_bandwidth.value = 00000000
+[26/02/1970-01:18:14.230545],[parser],bandwidth_enforcement.status = VALID
+[26/02/1970-01:18:14.230566],[parser],bandwidth_enforcement.value = 00
+[26/02/1970-01:18:14.230586],[parser],mcast_service_package_table.status = NOT VALID
+[26/02/1970-01:18:14.230606],[parser],allowed_preview_groups_table.status = NOT VALID
+[26/02/1970-01:18:14.230769],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:14.230791],[parser],Msg_type    = CREATE RESPONSE
+[26/02/1970-01:18:14.230811],[parser],Trans_id    = 1a
+[26/02/1970-01:18:14.230832],[parser],Entity_id   = MCAST SUBSCRIBER CONFIG INFO
+[26/02/1970-01:18:14.230852],[parser],Instance_id = 104
+[26/02/1970-01:18:14.230872],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:14.230891],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:14.230913],[parser],Duration : 00s:000ms
+[26/02/1970-01:18:14.230933],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:14.230952],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:14.230971],[parser],
+[26/02/1970-01:18:14.230994],[parser],bytes[06-13]: 27  fc  24  0a  01  36  01  04
+[26/02/1970-01:18:14.231019],[parser],bytes[14-45]: 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:14.231044],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:14.231068],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:14.304093],[parser],
+[26/02/1970-01:18:14.304120],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:14.304140],[parser],
+[26/02/1970-01:18:14.304164],[parser],bytes[06-13]: 27  fd  48  0a  00  ab  01  01
+[26/02/1970-01:18:14.304190],[parser],bytes[14-45]: 04  00  f8  00  00  00  e8  00  50  00  c0
+[26/02/1970-01:18:14.304215],[parser],            : 0f  00  00  00  0f  80  02  00  00  00  00
+[26/02/1970-01:18:14.304240],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:14.304260],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:14.304353],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:14.304373],[parser],Msg_type    = SET
+[26/02/1970-01:18:14.304394],[parser],Trans_id    = 1b
+[26/02/1970-01:18:14.304415],[parser],[26/02/1970-01:18:14.568761],[parser],
+[26/02/1970-01:18:14.568788],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:14.568808],[parser],
+[26/02/1970-01:18:14.568832],[parser],bytes[06-13]: 28  01  48  0a  00  ab  01  02
+[26/02/1970-01:18:14.568857],[parser],bytes[14-45]: 04  00  e8  00  50  00  e8  00  00  00  c0
+[26/02/1970-01:18:14.568883],[parser],            : 0f  00  00  00  0f  80  03  00  00  00  00
+[26/02/1970-01:18:14.568908],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:14.568928],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:14.569022],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:14.569043],[parser],Msg_type    = SET
+[26/02/1970-01:18:14.569064],[parser],Trans_id    = 01
+[26/02/1970-01:18:14.569084],[parser],Entity_id   = EXTENDED VLAN CONFIG DATA
+[26/02/1970-01:18:14.569104],[parser],Instance_id = 102
+[26/02/1970-01:18:14.569148],[parser],association_type.status = NOT VALID
+[26/02/1970-01:18:14.569168],[parser],rcvd_vlan_max_size.status = NOT VALID
+[26/02/1970-01:18:14.569188],[parser],input_tpid.status = NOT VALID
+[26/02/1970-01:18:14.569208],[parser],output_tpid.status = NOT VALID
+[26/02/1970-01:18:14.569228],[parser],down_stream_mode.status = NOT VALID
+[26/02/1970-01:18:14.569248],[parser],rcvd_vlan_opr_table.status = VALID
+[26/02/1970-01:18:14.569269],[parser],rcvd_vlan_opr_table.value =
+[26/02/1970-01:18:14.569288],[parser],00
+[26/02/1970-01:18:14.569308],[parser],50
+[26/02/1970-01:18:14.569327],[parser],00
+[26/02/1970-01:18:14.569347],[parser],e8
+[26/02/1970-01:18:14.569366],[parser],00
+[26/02/1970-01:18:14.569385],[parser],00
+[26/02/1970-01:18:14.569405],[parser],00
+[26/02/1970-01:18:14.569430],[parser],e8
+[26/02/1970-01:18:14.569451],[parser],00
+[26/02/1970-01:18:14.569470],[parser],00
+[26/02/1970-01:18:14.569490],[parser],0f
+[26/02/1970-01:18:14.569509],[parser],c0
+[26/02/1970-01:18:14.569529],[parser],03
+[26/02/1970-01:18:14.569548],[parser],80
+[26/02/1970-01:18:14.569567],[parser],0f
+[26/02/1970-01:18:14.569587],[parser],00
+[26/02/1970-01:18:14.569606],[parser],
+[26/02/1970-01:18:14.569625],[parser],associated_me_ptr.status = NOT VALID
+[26/02/1970-01:18:14.569645],[parser],dscp_map.status = NOT VALID
+[26/02/1970-01:18:14.569883],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:14.569905],[parser],Msg_type    = SET RESPONSE
+[26/02/1970-01:18:14.569926],[parser],Trans_id    = 01
+[26/02/1970-01:18:14.569947],[parser],Entity_id   = EXTENDED VLAN CONFIG DATA
+[26/02/1970-01:18:14.569967],[parser],Instance_id = 102
+[26/02/1970-01:18:14.569987],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:14.570006],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:14.570028],[parser],Duration : 00s:001ms
+[26/02/1970-01:18:14.570048],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:14.570067],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:14.570108],[parser],
+[26/02/1970-01:18:14.570133],[parser],bytes[06-13]: 28  01  28  0a  00  ab  01  02
+[26/02/1970-01:18:14.570159],[parser],bytes[14-45]: 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:14.570184],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:14.570209],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:14.634319],[parser],
+[26/02/1970-01:18:14.634345],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:14.634365],[parser],
+[26/02/1970-01:18:14.634389],[parser],bytes[06-13]: 28  02  48  0a  00  ab  01  02
+[26/02/1970-01:18:14.634414],[parser],bytes[14-45]: 04  00  f8  00  00  00  f0  00  50  00  c0
+[26/02/1970-01:18:14.634439],[26/02/1970-01:18:14.898602],[parser],
+[26/02/1970-01:18:14.898628],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:14.898648],[parser],
+[26/02/1970-01:18:14.898673],[parser],bytes[06-13]: 28  06  48  0a  00  ab  01  04
+[26/02/1970-01:18:14.898698],[parser],bytes[14-45]: 04  00  f8  00  00  00  e8  00  50  00  c0
+[26/02/1970-01:18:14.898724],[parser],            : 0f  00  00  00  0f  80  02  00  00  00  00
+[26/02/1970-01:18:14.898749],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:14.898769],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:14.898864],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:14.898885],[parser],Msg_type    = SET
+[26/02/1970-01:18:14.898906],[parser],Trans_id    = 06
+[26/02/1970-01:18:14.898928],[parser],Entity_id   = EXTENDED VLAN CONFIG DATA
+[26/02/1970-01:18:14.898948],[parser],Instance_id = 104
+[26/02/1970-01:18:14.898991],[parser],association_type.status = NOT VALID
+[26/02/1970-01:18:14.899012],[parser],rcvd_vlan_max_size.status = NOT VALID
+[26/02/1970-01:18:14.899032],[parser],input_tpid.status = NOT VALID
+[26/02/1970-01:18:14.899052],[parser],output_tpid.status = NOT VALID
+[26/02/1970-01:18:14.899072],[parser],down_stream_mode.status = NOT VALID
+[26/02/1970-01:18:14.899092],[parser],rcvd_vlan_opr_table.status = VALID
+[26/02/1970-01:18:14.899112],[parser],rcvd_vlan_opr_table.value =
+[26/02/1970-01:18:14.899133],[parser],00
+[26/02/1970-01:18:14.899152],[parser],00
+[26/02/1970-01:18:14.899172],[parser],00
+[26/02/1970-01:18:14.899192],[parser],f8
+[26/02/1970-01:18:14.899211],[parser],00
+[26/02/1970-01:18:14.899231],[parser],50
+[26/02/1970-01:18:14.899251],[parser],00
+[26/02/1970-01:18:14.899270],[parser],e8
+[26/02/1970-01:18:14.899290],[parser],00
+[26/02/1970-01:18:14.899309],[parser],00
+[26/02/1970-01:18:14.899329],[parser],0f
+[26/02/1970-01:18:14.899349],[parser],c0
+[26/02/1970-01:18:14.899368],[parser],02
+[26/02/1970-01:18:14.899387],[parser],80
+[26/02/1970-01:18:14.899407],[parser],0f
+[26/02/1970-01:18:14.899432],[parser],00
+[26/02/1970-01:18:14.899451],[parser],
+[26/02/1970-01:18:14.899471],[parser],associated_me_ptr.status = NOT VALID
+[26/02/1970-01:18:14.899491],[parser],dscp_map.status = NOT VALID
+[26/02/1970-01:18:14.899769],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:14.899792],[parser],Msg_type    = SET RESPONSE
+[26/02/1970-01:18:14.899813],[parser],Trans_id    = 06
+[26/02/1970-01:18:14.899833],[parser],Entity_id   = EXTENDED VLAN CONFIG DATA
+[26/02/1970-01:18:14.899854],[parser],Instance_id = 104
+[26/02/1970-01:18:14.899874],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:14.899893],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:14.899915],[parser],Duration : 00s:000ms
+[26/02/1970-01:18:14.899935],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:14.899954],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:14.899974],[parser],
+[26/02/1970-01:18:14.899997],[parser],bytes[06-13]: 28  06  28  0a  00  ab  01  04
+[26/02/1970-01:18:14.900022],[parser],bytes[14-45]: 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:14.900047],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:14.900085],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:14.964569],[parser],
+[26/02/1970-01:18:14.964597],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:14.964617],[parser],
+[26/02/1970-01:18:14.964641],[parser],bytes[06-13]: 28  07  48  0a  00  ab  01  04
+[26/02/1970-01:18:14.964666],[parser],bytes[14-45]: 04  00  e8  00  50  00  e8  00  00  00  c0
+[26/02/1970-01:18:14.964691],[26/02/1970-01:18:15.237344],[parser],
+[26/02/1970-01:18:15.237370],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:15.237391],[parser],
+[26/02/1970-01:18:15.237420],[parser],bytes[06-13]: 28  0b  44  0a  00  18  01  01
+[26/02/1970-01:18:15.237447],[parser],bytes[14-45]: ff  ff  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:15.237473],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:15.237498],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:15.237518],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:15.237621],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:15.237643],[parser],Msg_type    = CREATE
+[26/02/1970-01:18:15.237664],[parser],Trans_id    = 0b
+[26/02/1970-01:18:15.237684],[parser],Entity_id   = ETHER PM HIST DATA
+[26/02/1970-01:18:15.237704],[parser],Instance_id = 101
+[26/02/1970-01:18:15.237746],[parser],interEndTime.status = NOT VALID
+[26/02/1970-01:18:15.237766],[parser],thresholdDataId.status = VALID
+[26/02/1970-01:18:15.237788],[parser],thresholdDataId.value = ffff
+[26/02/1970-01:18:15.237808],[parser],fcsErrors.status = NOT VALID
+[26/02/1970-01:18:15.237828],[parser],excessiveCollisionCounter.status = NOT VALID
+[26/02/1970-01:18:15.237848],[parser],lateCollisionCounter.status = NOT VALID
+[26/02/1970-01:18:15.237867],[parser],frameTooLongs.status = NOT VALID
+[26/02/1970-01:18:15.237887],[parser],bufferOverflowOnReceive.status = NOT VALID
+[26/02/1970-01:18:15.237907],[parser],bufferOverflowOnTransmit.status = NOT VALID
+[26/02/1970-01:18:15.237927],[parser],singleCollisionFrameCounter.status = NOT VALID
+[26/02/1970-01:18:15.237947],[parser],multiCollisionFrameCounter.status = NOT VALID
+[26/02/1970-01:18:15.237967],[parser],seqCounter.status = NOT VALID
+[26/02/1970-01:18:15.237987],[parser],deferredTransmissionCounter.status = NOT VALID
+[26/02/1970-01:18:15.238006],[parser],interMacTransmissionErrorCounter.status = NOT VALID
+[26/02/1970-01:18:15.238026],[parser],carrierSenseErrorCounter.status = NOT VALID
+[26/02/1970-01:18:15.238046],[parser],alignmentErrorCounter.status = NOT VALID
+[26/02/1970-01:18:15.238066],[parser],interMacReceiveErrorCounter.status = NOT VALID
+[26/02/1970-01:18:15.238355],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:15.238377],[parser],Msg_type    = CREATE RESPONSE
+[26/02/1970-01:18:15.238398],[parser],Trans_id    = 0b
+[26/02/1970-01:18:15.238418],[parser],Entity_id   = ETHER PM HIST DATA
+[26/02/1970-01:18:15.238438],[parser],Instance_id = 101
+[26/02/1970-01:18:15.238458],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:15.238477],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:15.238499],[parser],Duration : 00s:000ms
+[26/02/1970-01:18:15.238519],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:15.238538],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:15.238557],[parser],
+[26/02/1970-01:18:15.238580],[parser],bytes[06-13]: 28  0b  24  0a  00  18  01  01
+[26/02/1970-01:18:15.238605],[parser],bytes[14-45]: 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:15.238630],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:15.238654],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:15.303157],[parser],
+[26/02/1970-01:18:15.303184],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:15.303204],[parser],
+[26/02/1970-01:18:15.303228],[parser],bytes[06-13]: 28  0c  44  0a  01  42  01  02
+[26/02/1970-01:18:15.303254],[parser],bytes[14-45]: ff  ff  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:15.303279],[parser],         [26/02/1970-01:18:15.557561],[parser],
+[26/02/1970-01:18:15.557588],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:15.557609],[parser],
+[26/02/1970-01:18:15.557633],[parser],bytes[06-13]: 28  0f  48  0a  01  06  80  01
+[26/02/1970-01:18:15.557658],[parser],bytes[14-45]: 80  00  01  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:15.557684],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:15.557709],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:15.557729],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:15.557817],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:15.557838],[parser],Msg_type    = SET
+[26/02/1970-01:18:15.557858],[parser],Trans_id    = 0f
+[26/02/1970-01:18:15.557879],[parser],Entity_id   = T-CONT
+[26/02/1970-01:18:15.557899],[parser],Instance_id = 8001
+[26/02/1970-01:18:15.557940],[parser],alloc_id.status = VALID
+[26/02/1970-01:18:15.557961],[parser],alloc_id.value = 0100
+[26/02/1970-01:18:15.557981],[parser],mode_indicator.status = NOT VALID
+[26/02/1970-01:18:15.558001],[parser],policy.status = NOT VALID
+[26/02/1970-01:18:15.558389],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:15.558418],[parser],Msg_type    = SET RESPONSE
+[26/02/1970-01:18:15.558440],[parser],Trans_id    = 0f
+[26/02/1970-01:18:15.558461],[parser],Entity_id   = T-CONT
+[26/02/1970-01:18:15.558481],[parser],Instance_id = 8001
+[26/02/1970-01:18:15.558501],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:15.558520],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:15.558543],[parser],Duration : 00s:000ms
+[26/02/1970-01:18:15.558563],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:15.558583],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:15.558601],[parser],
+[26/02/1970-01:18:15.558625],[parser],bytes[06-13]: 28  0f  28  0a  01  06  80  01
+[26/02/1970-01:18:15.558650],[parser],bytes[14-45]: 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:15.558675],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:15.558700],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:15.621250],[parser],
+[26/02/1970-01:18:15.621277],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:15.621297],[parser],
+[26/02/1970-01:18:15.621321],[parser],bytes[06-13]: 28  10  48  0a  01  15  80  01
+[26/02/1970-01:18:15.621347],[parser],bytes[14-45]: 02  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:15.621372],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:15.621397],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:15.621424],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:15.621515],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:15.621536],[parser],Msg_type    = SET
+[26/02/1970-01:18:15.621556],[parser],Trans_id    = 10
+[26/02/1970-01:18:15.621576],[parser],Entity_id   = PRIORITY_QUEUE_G
+[26/02/1970-01:18:15.621596],[parser],Instance_id = 8001
+[26/02/1970-01:18:15.621639],[parser],q_config_option.status = NOT VALID
+[26/02/1970-01:18:15.621659],[parser],max_q_size.status = NOT VALID
+[26/02/1970-01:18:15.621679],[parser],alloc_q_size.status = NOT VALID
+[26/02/1970-01:18:15.621699],[parser],reset_interval.status = NOT VALID
+[26/02/1970-01:18:15.621719],[parser],threshold_value.status = NOT VALID
+[26/02/1970-01:18:15.621738],[parser],related_port.status = NOT VALID
+[26/02/1970-01:18:15.621758],[parser],ts_sched_ptr.status = VALID
+[26/02/1970-01:18:15.621779],[parser],ts_sched_ptr.value = 0000
+[26/02/1970-01:18:15.621799],[parser][26/02/1970-01:18:15.891668],[parser],
+[26/02/1970-01:18:15.891694],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:15.891715],[parser],
+[26/02/1970-01:18:15.891739],[parser],bytes[06-13]: 28  14  44  0a  00  82  00  01
+[26/02/1970-01:18:15.891763],[parser],bytes[14-45]: ff  ff  ff  ff  ff  ff  ff  ff  ff  ff  ff
+[26/02/1970-01:18:15.891788],[parser],            : ff  ff  ff  ff  ff  ff  ff  00  00  00  00
+[26/02/1970-01:18:15.891813],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:15.891833],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:15.891924],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:15.891945],[parser],Msg_type    = CREATE
+[26/02/1970-01:18:15.891965],[parser],Trans_id    = 14
+[26/02/1970-01:18:15.891986],[parser],Entity_id   = PRIORITY QUEUE MAPPER
+[26/02/1970-01:18:15.892006],[parser],Instance_id = 01
+[26/02/1970-01:18:15.892047],[parser],pptp_ptr.status = VALID
+[26/02/1970-01:18:15.892069],[parser],pptp_ptr.value = ffff
+[26/02/1970-01:18:15.892096],[parser],bit0_tp_ptr.status = VALID
+[26/02/1970-01:18:15.892117],[parser],bit0_tp_ptr.value = ffff
+[26/02/1970-01:18:15.892137],[parser],bit1_tp_ptr.status = VALID
+[26/02/1970-01:18:15.892157],[parser],bit1_tp_ptr.value = ffff
+[26/02/1970-01:18:15.892177],[parser],bit2_tp_ptr.status = VALID
+[26/02/1970-01:18:15.892197],[parser],bit2_tp_ptr.value = ffff
+[26/02/1970-01:18:15.892217],[parser],bit3_tp_ptr.status = VALID
+[26/02/1970-01:18:15.892237],[parser],bit3_tp_ptr.value = ffff
+[26/02/1970-01:18:15.892257],[parser],bit4_tp_ptr.status = VALID
+[26/02/1970-01:18:15.892277],[parser],bit4_tp_ptr.value = ffff
+[26/02/1970-01:18:15.892297],[parser],bit5_tp_ptr.status = VALID
+[26/02/1970-01:18:15.892317],[parser],bit5_tp_ptr.value = ffff
+[26/02/1970-01:18:15.892337],[parser],bit6_tp_ptr.status = VALID
+[26/02/1970-01:18:15.892357],[parser],bit6_tp_ptr.value = ffff
+[26/02/1970-01:18:15.892377],[parser],bit7_tp_ptr.status = VALID
+[26/02/1970-01:18:15.892398],[parser],bit7_tp_ptr.value = ffff
+[26/02/1970-01:18:15.892418],[parser],unmarked_fr_option.status = VALID
+[26/02/1970-01:18:15.892439],[parser],unmarked_fr_option.value = 00
+[26/02/1970-01:18:15.892458],[parser],dscp_map.status = NOT VALID
+[26/02/1970-01:18:15.892478],[parser],default_pbit_marking.status = VALID
+[26/02/1970-01:18:15.892499],[parser],default_pbit_marking.value = 00
+[26/02/1970-01:18:15.892519],[parser],uni_ptr_type.status = VALID
+[26/02/1970-01:18:15.892539],[parser],uni_ptr_type.value = 00
+[26/02/1970-01:18:15.892716],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:15.892739],[parser],Msg_type    = CREATE RESPONSE
+[26/02/1970-01:18:15.892760],[parser],Trans_id    = 14
+[26/02/1970-01:18:15.892780],[parser],Entity_id   = PRIORITY QUEUE MAPPER
+[26/02/1970-01:18:15.892800],[parser],Instance_id = 01
+[26/02/1970-01:18:15.892820],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:15.892840],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:15.892862],[parser],Duration : 00s:000ms
+[26/02/1970-01:18:15.892882],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:15.892901],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:15.892920],[parser],
+[26/02/1970-01:18:15.892944],[parser],bytes[06-13]: 28  14  24  0a  00  82  00  01
+[26/02/1970-01:18:15.892969],[parser],bytes[14-45]: 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:15.892994],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:15.893018],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:15.957310],[parser],
+[26/02/1970-[26/02/1970-01:18:16.221079],[parser],
+[26/02/1970-01:18:16.221106],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:16.221126],[parser],
+[26/02/1970-01:18:16.221150],[parser],bytes[06-13]: 28  19  44  0a  00  54  00  02
+[26/02/1970-01:18:16.221175],[parser],bytes[14-45]: 01  2c  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:16.221201],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:16.221226],[parser],            : 00  00  10  01  00  00  00  00  00  00 -
+[26/02/1970-01:18:16.221246],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:16.221339],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:16.221359],[parser],Msg_type    = CREATE
+[26/02/1970-01:18:16.221380],[parser],Trans_id    = 19
+[26/02/1970-01:18:16.221401],[parser],Entity_id   =  VLAN TAGGING FILTER DATA
+[26/02/1970-01:18:16.221429],[parser],Instance_id = 02
+[26/02/1970-01:18:16.221473],[parser],vlan_filter_list.status = VALID
+[26/02/1970-01:18:16.221494],[parser],vlan_filter_list.value =
+[26/02/1970-01:18:16.221515],[parser],2c
+[26/02/1970-01:18:16.221535],[parser],01
+[26/02/1970-01:18:16.221554],[parser],00
+[26/02/1970-01:18:16.221574],[parser],00
+[26/02/1970-01:18:16.221593],[parser],00
+[26/02/1970-01:18:16.221612],[parser],00
+[26/02/1970-01:18:16.221632],[parser],00
+[26/02/1970-01:18:16.221651],[parser],00
+[26/02/1970-01:18:16.221671],[parser],00
+[26/02/1970-01:18:16.221690],[parser],00
+[26/02/1970-01:18:16.221709],[parser],00
+[26/02/1970-01:18:16.221729],[parser],00
+[26/02/1970-01:18:16.221748],[parser],00
+[26/02/1970-01:18:16.221767],[parser],00
+[26/02/1970-01:18:16.221787],[parser],00
+[26/02/1970-01:18:16.221806],[parser],00
+[26/02/1970-01:18:16.221826],[parser],00
+[26/02/1970-01:18:16.221845],[parser],00
+[26/02/1970-01:18:16.221864],[parser],00
+[26/02/1970-01:18:16.221884],[parser],00
+[26/02/1970-01:18:16.221903],[parser],00
+[26/02/1970-01:18:16.221922],[parser],00
+[26/02/1970-01:18:16.221942],[parser],00
+[26/02/1970-01:18:16.221961],[parser],00
+[26/02/1970-01:18:16.221980],[parser],
+[26/02/1970-01:18:16.221999],[parser],forward_operation.status = VALID
+[26/02/1970-01:18:16.222020],[parser],forward_operation.value = 10
+[26/02/1970-01:18:16.222039],[parser],number_of_entries.status = VALID
+[26/02/1970-01:18:16.222060],[parser],number_of_entries.value = 01
+[26/02/1970-01:18:16.222302],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:16.222324],[parser],Msg_type    = CREATE RESPONSE
+[26/02/1970-01:18:16.222345],[parser],Trans_id    = 19
+[26/02/1970-01:18:16.222366],[parser],Entity_id   =  VLAN TAGGING FILTER DATA
+[26/02/1970-01:18:16.222386],[parser],Instance_id = 02
+[26/02/1970-01:18:16.222406],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:16.222425],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:16.222447],[parser],Duration : 00s:000ms
+[26/02/1970-01:18:16.222467],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:16.222486],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:16.222505],[parser],
+[26/02/1970-01:18:16.222528],[parser],bytes[06-13]: 28  19  24  0a  00  54  00  02
+[26/02/1970-01:18:16.222560],[parser],bytes[14-45]: 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:16.222585],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:16.222610],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:16.287307],[parser],
+[26/02/1970-01:18:16.287333],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:16.287354],[parser],
+[26/02/1970-01:18:16.287378],[parser],bytes[06-13]: 28  1a  44  0a  00  82  00  03
+[26/02/1970-01:18:16.287[26/02/1970-01:18:16.548057],[parser],
+[26/02/1970-01:18:16.548083],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:16.548103],[parser],
+[26/02/1970-01:18:16.548128],[parser],bytes[06-13]: 28  1e  44  0a  00  2f  00  04
+[26/02/1970-01:18:16.548153],[parser],bytes[14-45]: 01  02  84  03  00  04  00  00  00  01  00
+[26/02/1970-01:18:16.548178],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:16.548202],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:16.548223],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:16.548319],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:16.548340],[parser],Msg_type    = CREATE
+[26/02/1970-01:18:16.548360],[parser],Trans_id    = 1e
+[26/02/1970-01:18:16.548380],[parser],Entity_id   = MAC BRIDGE PORT CONFIGURATION DATA
+[26/02/1970-01:18:16.548400],[parser],Instance_id = 04
+[26/02/1970-01:18:16.548443],[parser],bridge_id_pointer.status = VALID
+[26/02/1970-01:18:16.548465],[parser],bridge_id_pointer.value = 0102
+[26/02/1970-01:18:16.548485],[parser],bridge_port_number.status = VALID
+[26/02/1970-01:18:16.548505],[parser],bridge_port_number.value = 84
+[26/02/1970-01:18:16.548525],[parser],termination_point_type.status = VALID
+[26/02/1970-01:18:16.548546],[parser],termination_point_type.value = 03
+[26/02/1970-01:18:16.548566],[parser],termination_point_pointer.status = VALID
+[26/02/1970-01:18:16.548587],[parser],termination_point_pointer.value = 0004
+[26/02/1970-01:18:16.548607],[parser],port_priority.status = VALID
+[26/02/1970-01:18:16.548628],[parser],port_priority.value = 0000
+[26/02/1970-01:18:16.548648],[parser],port_path_cost.status = VALID
+[26/02/1970-01:18:16.548668],[parser],port_path_cost.value = 0001
+[26/02/1970-01:18:16.548688],[parser],port_spanning_tree_indicator.status = VALID
+[26/02/1970-01:18:16.548709],[parser],port_spanning_tree_indicator.value = 00
+[26/02/1970-01:18:16.548729],[parser],encapsulation_method.status = VALID
+[26/02/1970-01:18:16.548749],[parser],encapsulation_method.value = 00
+[26/02/1970-01:18:16.548769],[parser],lan_fcs_indicator.status = VALID
+[26/02/1970-01:18:16.548790],[parser],lan_fcs_indicator.value = 00
+[26/02/1970-01:18:16.548810],[parser],port_mac_address.status = NOT VALID
+[26/02/1970-01:18:16.548829],[parser],outbound_td_pointer.status = NOT VALID
+[26/02/1970-01:18:16.548849],[parser],inbound_td_pointer.status = NOT VALID
+[26/02/1970-01:18:16.548869],[parser],max_learning_depth.status = VALID
+[26/02/1970-01:18:16.548889],[parser],max_learning_depth.value = 00
+[26/02/1970-01:18:16.549061],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:16.549083],[parser],Msg_type    = CREATE RESPONSE
+[26/02/1970-01:18:16.549104],[parser],Trans_id    = 1e
+[26/02/1970-01:18:16.549130],[parser],Entity_id   = MAC BRIDGE PORT CONFIGURATION DATA
+[26/02/1970-01:18:16.549151],[parser],Instance_id = 04
+[26/02/1970-01:18:16.549170],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:16.549190],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:16.549212],[parser],Duration : 00s:001ms
+[26/02/1970-01:18:16.549231],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:16.549250],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:16.549269],[parser],
+[26/02/1970-01:18:16.549292],[parser],bytes[06-13]: 28  1e  24  0a  00  2f  00  04
+[26/02/1970-01:18:16.549317],[parser],bytes[14-45]: 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:16.549342],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:16.549366],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:16.611059],[parser],
+[26/02/1970-01:18:16.611085],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:16.611105],[parser],
+[26/02/1970-01:18:16.611128],[parser],bytes[06-13]: 28  1f  44  0a  00  54  00  04
+[26/02/1970-01:18:16.611154],[parser],bytes[14-45]: 00  c8  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:16.611179],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:16.611204],[parser],            : 00  00  10  01  00  00  00  00  00  00 -
+[26/02/1[26/02/1970-01:18:16.902290],[parser],
+[26/02/1970-01:18:16.902319],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:16.902340],[parser],
+[26/02/1970-01:18:16.902365],[parser],bytes[06-13]: 28  23  44  0a  01  0a  01  09
+[26/02/1970-01:18:16.902391],[parser],bytes[14-45]: 01  09  05  00  02  00  00  00  00  00  00
+[26/02/1970-01:18:16.902417],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:16.902442],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:16.902462],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:16.902571],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:16.902593],[parser],Msg_type    = CREATE
+[26/02/1970-01:18:16.902614],[parser],Trans_id    = 05
+[26/02/1970-01:18:16.902636],[parser],Entity_id   = GEM PORT IW TP
+[26/02/1970-01:18:16.902656],[parser],Instance_id = 109
+[26/02/1970-01:18:16.902699],[parser],gem_ctp.status = VALID
+[26/02/1970-01:18:16.902721],[parser],gem_ctp.value = 0109
+[26/02/1970-01:18:16.902742],[parser],iw_option.status = VALID
+[26/02/1970-01:18:16.902762],[parser],iw_option.value = 05
+[26/02/1970-01:18:16.902782],[parser],service_profile.status = VALID
+[26/02/1970-01:18:16.902804],[parser],service_profile.value = 0002
+[26/02/1970-01:18:16.902823],[parser],iw_tp_ptr.status = VALID
+[26/02/1970-01:18:16.902844],[parser],iw_tp_ptr.value = 0000
+[26/02/1970-01:18:16.902863],[parser],pptp_counter.status = NOT VALID
+[26/02/1970-01:18:16.902883],[parser],oper_state.status = NOT VALID
+[26/02/1970-01:18:16.902903],[parser],gal_ptr.status = VALID
+[26/02/1970-01:18:16.902923],[parser],gal_ptr.value = 0000
+[26/02/1970-01:18:16.902943],[parser],gal_lp_config.status = NOT VALID
+[26/02/1970-01:18:16.903164],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:16.903186],[parser],Msg_type    = CREATE RESPONSE
+[26/02/1970-01:18:16.903207],[parser],Trans_id    = 05
+[26/02/1970-01:18:16.903227],[parser],Entity_id   = GEM PORT IW TP
+[26/02/1970-01:18:16.903247],[parser],Instance_id = 109
+[26/02/1970-01:18:16.903267],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:16.903287],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:16.903310],[parser],Duration : 00s:001ms
+[26/02/1970-01:18:16.903330],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:16.903349],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:16.903369],[parser],
+[26/02/1970-01:18:16.903392],[parser],bytes[06-13]: 28  23  24  0a  01  0a  01  09
+[26/02/1970-01:18:16.903424],[parser],bytes[14-45]: 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:16.903450],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:16.903474],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:16.965555],[parser],
+[26/02/1970-01:18:16.965583],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:16.965603],[parser],
+[26/02/1970-01:18:16.965627],[parser],bytes[06-13]: 28  24  44  0a  01  0c  01  0a
+[26/02/1970-01:18:16.965653],[parser],bytes[14-45]: 01  0a  80  01  03  80  03  00  00  00  00
+[26/02/1970-01:18:16.965678],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:16.965703],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:16.965723],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:16.965832],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:16.965853],[parser],Msg_type    = CREATE
+[26/02/1970-01:18:16.965874],[parser],Trans_id    = 06
+[26/02/1970-01:18:16.965894],[parser],Entity_id   = GEM PORT CTP
+[26/02/1970-01:18:16.965914],[parser],Instance_id = 10a
+[2[26/02/1970-01:18:17.223200],[parser],
+[26/02/1970-01:18:17.223227],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:17.223247],[parser],
+[26/02/1970-01:18:17.223271],[parser],bytes[06-13]: 28  28  44  0a  01  0c  01  0c
+[26/02/1970-01:18:17.223296],[parser],bytes[14-45]: 01  0c  80  01  03  80  01  00  00  00  00
+[26/02/1970-01:18:17.223322],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:17.223347],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:17.223367],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:17.223465],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:17.223486],[parser],Msg_type    = CREATE
+[26/02/1970-01:18:17.223506],[parser],Trans_id    = 0a
+[26/02/1970-01:18:17.223526],[parser],Entity_id   = GEM PORT CTP
+[26/02/1970-01:18:17.223547],[parser],Instance_id = 10c
+[26/02/1970-01:18:17.223588],[parser],port_id.status = VALID
+[26/02/1970-01:18:17.223610],[parser],port_id.value = 010c
+[26/02/1970-01:18:17.223630],[parser],tcont_ptr.status = VALID
+[26/02/1970-01:18:17.223650],[parser],tcont_ptr.value = 8001
+[26/02/1970-01:18:17.223670],[parser],direction.status = VALID
+[26/02/1970-01:18:17.223691],[parser],direction.value = 03
+[26/02/1970-01:18:17.223711],[parser],us_priority_queue_ptr.status = VALID
+[26/02/1970-01:18:17.223731],[parser],us_priority_queue_ptr.value = 8001
+[26/02/1970-01:18:17.223752],[parser],us_td_profile_ptr.status = VALID
+[26/02/1970-01:18:17.223772],[parser],us_td_profile_ptr.value = 0000
+[26/02/1970-01:18:17.223792],[parser],uni_counter.status = NOT VALID
+[26/02/1970-01:18:17.223812],[parser],ds_priority_queue_ptr.status = VALID
+[26/02/1970-01:18:17.223833],[parser],ds_priority_queue_ptr.value = 0000
+[26/02/1970-01:18:17.223853],[parser],encryption_state.status = NOT VALID
+[26/02/1970-01:18:17.223916],[parser],ds_td_profile_ptr.status = VALID
+[26/02/1970-01:18:17.223991],[parser],ds_td_profile_ptr.value = 0000
+[26/02/1970-01:18:17.224046],[parser],encryption_key_ring.status = VALID
+[26/02/1970-01:18:17.224070],[parser],encryption_key_ring.value = 00
+[26/02/1970-01:18:17.224568],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:17.224590],[parser],Msg_type    = CREATE RESPONSE
+[26/02/1970-01:18:17.224619],[parser],Trans_id    = 0a
+[26/02/1970-01:18:17.224640],[parser],Entity_id   = GEM PORT CTP
+[26/02/1970-01:18:17.224661],[parser],Instance_id = 10c
+[26/02/1970-01:18:17.224680],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:17.224700],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:17.224722],[parser],Duration : 00s:000ms
+[26/02/1970-01:18:17.224742],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:17.224762],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:17.224781],[parser],
+[26/02/1970-01:18:17.224804],[parser],bytes[06-13]: 28  28  24  0a  01  0c  01  0c
+[26/02/1970-01:18:17.224829],[parser],bytes[14-45]: 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:17.224854],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:17.224878],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:17.289214],[parser],
+[26/02/1970-01:18:17.289242],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:17.289262],[parser],
+[26/02/1970-01:18:17.289286],[parser],bytes[06-13]: 28  29  44  0a  01  0a  01  0c
+[26/02/1970-01:18:17.289312],[parser],bytes[14-45]: 01  0c  05  00  03  00  00  00  00  00  00
+[26/02/1970-01:18:17.289337],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:17.289362],[parser],            : 00  00  00 [26/02/1970-01:18:17.547054],[parser],
+[26/02/1970-01:18:17.547081],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:17.547101],[parser],
+[26/02/1970-01:18:17.547124],[parser],bytes[06-13]: 28  2d  44  0a  01  0a  01  0e
+[26/02/1970-01:18:17.547150],[parser],bytes[14-45]: 01  0e  05  00  03  00  00  00  00  00  00
+[26/02/1970-01:18:17.547175],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:17.547200],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:17.547227],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:17.547322],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:17.547343],[parser],Msg_type    = CREATE
+[26/02/1970-01:18:17.547363],[parser],Trans_id    = 0f
+[26/02/1970-01:18:17.547383],[parser],Entity_id   = GEM PORT IW TP
+[26/02/1970-01:18:17.547404],[parser],Instance_id = 10e
+[26/02/1970-01:18:17.547453],[parser],gem_ctp.status = VALID
+[26/02/1970-01:18:17.547475],[parser],gem_ctp.value = 010e
+[26/02/1970-01:18:17.547495],[parser],iw_option.status = VALID
+[26/02/1970-01:18:17.547516],[parser],iw_option.value = 05
+[26/02/1970-01:18:17.547536],[parser],service_profile.status = VALID
+[26/02/1970-01:18:17.547557],[parser],service_profile.value = 0003
+[26/02/1970-01:18:17.547577],[parser],iw_tp_ptr.status = VALID
+[26/02/1970-01:18:17.547598],[parser],iw_tp_ptr.value = 0000
+[26/02/1970-01:18:17.547618],[parser],pptp_counter.status = NOT VALID
+[26/02/1970-01:18:17.547637],[parser],oper_state.status = NOT VALID
+[26/02/1970-01:18:17.547657],[parser],gal_ptr.status = VALID
+[26/02/1970-01:18:17.547677],[parser],gal_ptr.value = 0000
+[26/02/1970-01:18:17.547697],[parser],gal_lp_config.status = NOT VALID
+[26/02/1970-01:18:17.547854],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:17.547876],[parser],Msg_type    = CREATE RESPONSE
+[26/02/1970-01:18:17.547897],[parser],Trans_id    = 0f
+[26/02/1970-01:18:17.547917],[parser],Entity_id   = GEM PORT IW TP
+[26/02/1970-01:18:17.547937],[parser],Instance_id = 10e
+[26/02/1970-01:18:17.547957],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:17.547976],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:17.547998],[parser],Duration : 00s:000ms
+[26/02/1970-01:18:17.548018],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:17.548037],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:17.548056],[parser],
+[26/02/1970-01:18:17.548079],[parser],bytes[06-13]: 28  2d  24  0a  01  0a  01  0e
+[26/02/1970-01:18:17.548104],[parser],bytes[14-45]: 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:17.548129],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:17.548153],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:17.610047],[parser],
+[26/02/1970-01:18:17.610088],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:17.610109],[parser],
+[26/02/1970-01:18:17.610134],[parser],bytes[06-13]: 28  2e  44  0a  01  0c  01  0f
+[26/02/1970-01:18:17.610159],[parser],bytes[14-45]: 01  0f  80  01  03  80  04  00  00  00  00
+[26/02/1970-01:18:17.610184],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:17.610209],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:17.610229],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:17.610317],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:17.610338],[parser],Msg_type    = CREATE
+[26/02/1970-01:18:17.610358],[parser],Trans_id    = 10
+[26/02/1970-01:18:17.610378],[parser],Entity_id   = GEM PORT CTP
+[26/02/1970-01:18:17.610398],[parser],Instance_id = 10f
+[26/02/1970-01:18:17.610440],[parser],port_id.status = VALID
+[26/02/1970-01:18:17.610461],[parser],port_id.value = 010f
+[26/02/1970-01:18:17.610487],[parser],tcont_ptr.status = VALID
+[26/02/1970-01:18:17.610509],[parser],tcont_ptr.value = 8001
+[26/02/1970-01:18:17.610529],[parser],direction.status = VALID
+[26/02/1970-01:18:17.610550],[parser],direction.value = 03
+[26/02/1970-01:18:17.610570],[parser],us_priority_queue_ptr.status = VALID
+[26/02/1970-01:18:17.610590],[parser],us_priority_queue_ptr.value = 8004
+[26/02/1970-01:18:17.610610],[parser],us_td_profile_ptr.status = VALID
+[26/02/1970-01:18:17.610631],[parser],us_td_profile_ptr.value = 0000
+[26/02/1970-01:18:17.610651],[parser],uni_counter.status = NOT VALID
+[26/02/1970-01:18:17.610678],[parser],ds_priority_queue_ptr.status = VALID
+[26/02/1970-01:18:17.610699],[parser],ds_priority_queue_ptr.value = 0000
+[26/02/1970-01:18:17.610719],[parser],encryption_state.status = NOT VALID
+[26/02/1970-01:18:17.610739],[parser],ds_td_profile_ptr.status = VALID
+[26/02/1970-01:18:17.610760],[parser],ds_td_profile_ptr.value = 0000
+[26/02/1970-01:18:17.610779],[parser],encryption_key_ring.status = VALID
+[26/02/1970-01:18:17.610800],[parser],encryption_key_ring.value = 00
+[26/02/1970-01:18:17.611181],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:17.611203],[parser],Msg_type    = CREATE RESPONSE
+[26/02/1970-01:18:17.611224],[parser],Trans_id    = 10
+[26/02/1970-01:18:17.611245],[parser],Entity_id   = GEM PORT CTP
+[26/02/1970-01:18:17.611265],[parser],Instance_id = 10f
+[26/02/1970-01:18:17.611285],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:17.611305],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:17.611327],[parser],Duration : 00s:001ms
+[26/02/1970-01:18:17.611347],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:17.611366],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:17.611385],[parser],
+[26/02/1970-01:18:17.611409],[parser],bytes[06-13]: 28  2e  24  0a  01  0c  01  0f
+[26/02/1970-01:18:17.611442],[parser],bytes[14-45]: 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:17.611467],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:17.611492],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:17.673056],[parser],
+[26/02/1970-01:18:17.673082],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:17.673102],[parser],
+[26/02/1970-01:18:17.673126],[parser],bytes[06-13]: 28  2f  44  0a  01  0a  01  0f
+[26/02/1970-01:18:17.673152],[parser],bytes[14-45]: 01  0f  05  00  03  00  00  00  00  00  00
+[26/02/1970-01:18:17.673177],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:17.673202],[parser],            : 00  00  00 [26/02/1970-01:18:17.868384],[parser],
+[26/02/1970-01:18:17.868412],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:17.868433],[parser],
+[26/02/1970-01:18:17.868458],[parser],bytes[06-13]: 28  32  44  0a  01  0c  01  02
+[26/02/1970-01:18:17.868484],[parser],bytes[14-45]: 01  02  80  01  03  80  03  00  00  00  00
+[26/02/1970-01:18:17.868510],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:17.868535],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:17.868555],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:17.868661],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:17.868683],[parser],Msg_type    = CREATE
+[26/02/1970-01:18:17.868704],[parser],Trans_id    = 14
+[26/02/1970-01:18:17.868725],[parser],Entity_id   = GEM PORT CTP
+[26/02/1970-01:18:17.868746],[parser],Instance_id = 102
+[26/02/1970-01:18:17.868788],[parser],port_id.status = VALID
+[26/02/1970-01:18:17.868810],[parser],port_id.value = 0102
+[26/02/1970-01:18:17.868830],[parser],tcont_ptr.status = VALID
+[26/02/1970-01:18:17.868851],[parser],tcont_ptr.value = 8001
+[26/02/1970-01:18:17.868870],[parser],direction.status = VALID
+[26/02/1970-01:18:17.868891],[parser],direction.value = 03
+[26/02/1970-01:18:17.868911],[parser],us_priority_queue_ptr.status = VALID
+[26/02/1970-01:18:17.868931],[parser],us_priority_queue_ptr.value = 8003
+[26/02/1970-01:18:17.868951],[parser],us_td_profile_ptr.status = VALID
+[26/02/1970-01:18:17.868971],[parser],us_td_profile_ptr.value = 0000
+[26/02/1970-01:18:17.868991],[parser],uni_counter.status = NOT VALID
+[26/02/1970-01:18:17.869011],[parser],ds_priority_queue_ptr.status = VALID
+[26/02/1970-01:18:17.869032],[parser],ds_priority_queue_ptr.value = 0000
+[26/02/1970-01:18:17.869051],[parser],encryption_state.status = NOT VALID
+[26/02/1970-01:18:17.869071],[parser],ds_td_profile_ptr.status = VALID
+[26/02/1970-01:18:17.869092],[parser],ds_td_profile_ptr.value = 0000
+[26/02/1970-01:18:17.869111],[parser],encryption_key_ring.status = VALID
+[26/02/1970-01:18:17.869132],[parser],encryption_key_ring.value = 00
+[26/02/1970-01:18:17.869694],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:17.869717],[parser],Msg_type    = CREATE RESPONSE
+[26/02/1970-01:18:17.869738],[parser],Trans_id    = 14
+[26/02/1970-01:18:17.869759],[parser],Entity_id   = GEM PORT CTP
+[26/02/1970-01:18:17.869779],[parser],Instance_id = 102
+[26/02/1970-01:18:17.869799],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:17.869819],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:17.869842],[parser],Duration : 00s:000ms
+[26/02/1970-01:18:17.869862],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:17.869881],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:17.869900],[parser],
+[26/02/1970-01:18:17.869924],[parser],bytes[06-13]: 28  32  24  0a  01  0c  01  02
+[26/02/1970-01:18:17.869961],[parser],bytes[14-45]: 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:17.869987],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:17.870011],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:17.934335],[parser],
+[26/02/1970-01:18:17.934362],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:17.934382],[parser],
+[26/02/1970-01:18:17.934406],[parser],bytes[06-13]: 28  33  44  0a  01  0a  01  02
+[26/02/1970-01:18:17.934432],[parser],bytes[14-45]: 01  02  05  00  01  00  00  00  00  00  00
+[26/02/1970-01:18:17.934457],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:17.934482],[parser],            : 00  00  00 [26/02/1970-01:18:18.513207],[parser],
+[26/02/1970-01:18:18.513233],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:18.513253],[parser],
+[26/02/1970-01:18:18.513277],[parser],bytes[06-13]: 28  3c  44  0a  01  0c  01  07
+[26/02/1970-01:18:18.513302],[parser],bytes[14-45]: 01  07  80  01  03  80  04  00  00  00  00
+[26/02/1970-01:18:18.513328],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:18.513352],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:18.513373],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:18.513469],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:18.513491],[parser],Msg_type    = CREATE
+[26/02/1970-01:18:18.513511],[parser],Trans_id    = 1e
+[26/02/1970-01:18:18.513531],[parser],Entity_id   = GEM PORT CTP
+[26/02/1970-01:18:18.513551],[parser],Instance_id = 107
+[26/02/1970-01:18:18.513592],[parser],port_id.status = VALID
+[26/02/1970-01:18:18.513614],[parser],port_id.value = 0107
+[26/02/1970-01:18:18.513634],[parser],tcont_ptr.status = VALID
+[26/02/1970-01:18:18.513654],[parser],tcont_ptr.value = 8001
+[26/02/1970-01:18:18.513674],[parser],direction.status = VALID
+[26/02/1970-01:18:18.513695],[parser],direction.value = 03
+[26/02/1970-01:18:18.513715],[parser],us_priority_queue_ptr.status = VALID
+[26/02/1970-01:18:18.513735],[parser],us_priority_queue_ptr.value = 8004
+[26/02/1970-01:18:18.513755],[parser],us_td_profile_ptr.status = VALID
+[26/02/1970-01:18:18.513776],[parser],us_td_profile_ptr.value = 0000
+[26/02/1970-01:18:18.513796],[parser],uni_counter.status = NOT VALID
+[26/02/1970-01:18:18.513816],[parser],ds_priority_queue_ptr.status = VALID
+[26/02/1970-01:18:18.513837],[parser],ds_priority_queue_ptr.value = 0000
+[26/02/1970-01:18:18.513857],[parser],encryption_state.status = NOT VALID
+[26/02/1970-01:18:18.513877],[parser],ds_td_profile_ptr.status = VALID
+[26/02/1970-01:18:18.513898],[parser],ds_td_profile_ptr.value = 0000
+[26/02/1970-01:18:18.513917],[parser],encryption_key_ring.status = VALID
+[26/02/1970-01:18:18.513938],[parser],encryption_key_ring.value = 00
+[26/02/1970-01:18:18.514294],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:18.514316],[parser],Msg_type    = CREATE RESPONSE
+[26/02/1970-01:18:18.514337],[parser],Trans_id    = 1e
+[26/02/1970-01:18:18.514357],[parser],Entity_id   = GEM PORT CTP
+[26/02/1970-01:18:18.514377],[parser],Instance_id = 107
+[26/02/1970-01:18:18.514397],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:18.514417],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:18.514439],[parser],Duration : 00s:001ms
+[26/02/1970-01:18:18.514459],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:18.514478],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:18.514497],[parser],
+[26/02/1970-01:18:18.514520],[parser],bytes[06-13]: 28  3c  24  0a  01  0c  01  07
+[26/02/1970-01:18:18.514545],[parser],bytes[14-45]: 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:18.514570],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:18.514593],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:18.579152],[parser],
+[26/02/1970-01:18:18.579178],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:18.579198],[parser],
+[26/02/1970-01:18:18.579222],[parser],bytes[06-13]: 28  3d  44  0a  01  0a  01  07
+[26/02/1970-01:18:18.579247],[parser],bytes[14-45]: 01  07  05  00  04  00  00  00  00  00  00
+[26/02/1970-01:18:18.579272],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:18.579297],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:18.579317],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:18.579408],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:18.579436],[parser],Msg_type    = CREATE
+[26/02/1970-01:18:18.579457],[parser],Trans_id    = 01
+[26/02/1970-01:18:18.579477],[parser],Entity_id   = GEM PORT IW TP
+[26/02/1970-01:18:18.579497],[parser],Instance_id = 107
+[26/02/1970-01:18:18.579539],[parser],gem_ctp.status = VALID
+[26/02/1970-01:18:18.579560],[parser],gem_ctp.value = 0107
+[26/02/1970-01:18:18.579580],[parser],iw_option.status = VALID
+[26/02/1970-01:18:18.579600],[parser],iw_option.value = 05
+[26/02/1970-01:18:18.579620],[parser],service_profile.status = VALID
+[26/02/1970-01:18:18.579641],[parser],service_profile.value = 0004
+[26/02/1970-01:18:18.579661],[parser],iw_tp_ptr.status = VALID
+[26/02/1970-01:18:18.579681],[parser],iw_tp_ptr.value = 0000
+[26/02/1970-01:18:18.579701],[parser],pptp_counter.status = NOT VALID
+[26/02/1970-01:18:18.579721],[parser],oper_state.status = NOT VALID
+[26/02/1970-01:18:18.579741],[parser],gal_ptr.status = VALID
+[26/02/1970-01:18:18.579761],[parser],gal_ptr.value = 0000
+[26/02/1970-01:18:18.579781],[parser],gal_lp_config.status = NOT VALID
+[26/02/1970-01:18:18.579937],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:18.579959],[parser],Msg_type    = CREATE RESPONSE
+[26/02/1970-01:18:18.579980],[parser],Trans_id    = 01
+[26/02/1970-01:18:18.580000],[parser],Entity_id   = GEM PORT IW TP
+[26/02/1970-01:18:18.580020],[parser],Instance_id = 107
+[26/02/1970-01:18:18.580040],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:18.580059],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:18.580098],[parser],Duration : 00s:001ms
+[26/02/1970-01:18:18.580118],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:18.580137],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:18.580156],[parser],
+[26/02/1970-01:18:18.580179],[parser],bytes[06-13]: 28  3d  24  0a  01  0a  01  07
+[26/02/1970-01:18:18.580204],[parser],bytes[14-45]: 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:18.580229],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:18.580253],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:18.642394],[parser],
+[26/02/1970-01:18:18.642423],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:18.642444],[parser],
+[26/02/1970-01:18:18.642469],[parser],bytes[06-13]: 28  3e  44  0a  01  0c  01  08
+[26/02/1970-01:18:18.642495],[parser],bytes[14-45]: 01  08  80  01  03  80  01  00  00  00  00
+[26/02/1970-01:18:18.642521],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:18.642546],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:18.642580],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:18.642686],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:18.642708],[parser],Msg_type    = CREATE
+[26/02/1970-01:18:18.642730],[parser],Trans_id    = 02
+[26/02/1970-01:18:18.642752],[parser],Entity_id   = GEM PORT CTP
+[26/02/1970-01:18:18.642772],[parser],Instance_id = 108
+[2[26/02/1970-01:18:18.861460],[parser],
+[26/02/1970-01:18:18.861489],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:18.861510],[parser],
+[26/02/1970-01:18:18.861534],[parser],bytes[06-13]: 28  41  48  0a  ff  19  01  02
+[26/02/1970-01:18:18.861565],[parser],bytes[14-45]: c0  00  02  00  82  00  0a  00  00  00  00
+[26/02/1970-01:18:18.861592],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:18.861617],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:18.861637],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:18.861744],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:18.861765],[parser],Msg_type    = SET
+[26/02/1970-01:18:18.861786],[parser],Trans_id    = 05
+[26/02/1970-01:18:18.861808],[parser],Entity_id   = DS VLAN EGRESS
+[26/02/1970-01:18:18.861828],[parser],Instance_id = 102
+[26/02/1970-01:18:18.861873],[parser],uni_def_tx_mode.status = VALID
+[26/02/1970-01:18:18.861896],[parser],uni_def_tx_mode.value = 02
+[26/02/1970-01:18:18.861916],[parser],vlan_txmode_tag_table.status = VALID
+[26/02/1970-01:18:18.861936],[parser],vlan_txmode_tag_table.value =
+[26/02/1970-01:18:18.861956],[parser],00
+[26/02/1970-01:18:18.861976],[parser],82
+[26/02/1970-01:18:18.861996],[parser],00
+[26/02/1970-01:18:18.862015],[parser],0a
+[26/02/1970-01:18:18.862035],[parser],00
+[26/02/1970-01:18:18.862054],[parser],00
+[26/02/1970-01:18:18.862073],[parser],
+[26/02/1970-01:18:18.862345],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:18.862368],[parser],Msg_type    = SET RESPONSE
+[26/02/1970-01:18:18.862389],[parser],Trans_id    = 05
+[26/02/1970-01:18:18.862410],[parser],Entity_id   = DS VLAN EGRESS
+[26/02/1970-01:18:18.862430],[parser],Instance_id = 102
+[26/02/1970-01:18:18.862450],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:18.862469],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:18.862491],[parser],Duration : 00s:000ms
+[26/02/1970-01:18:18.862511],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:18.862531],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:18.862550],[parser],
+[26/02/1970-01:18:18.862573],[parser],bytes[06-13]: 28  41  28  0a  ff  19  01  02
+[26/02/1970-01:18:18.862607],[parser],bytes[14-45]: 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:18.862633],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:18.862658],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:18.927491],[parser],
+[26/02/1970-01:18:18.927519],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:18.927540],[parser],
+[26/02/1970-01:18:18.927564],[parser],bytes[06-13]: 28  42  48  0a  ff  19  01  03
+[26/02/1970-01:18:18.927589],[parser],bytes[14-45]: c0  00  02  00  82  00  0a  00  00  00  00
+[26/02/1970-01:18:18.927615],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:18.927640],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:18.927660],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:18.927769],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:18.927790],[parser],Msg_type    = SET
+[26/02/1970-01:18:18.927811],[parser],Trans_id    = 06
+[26/02/1970-01:18:18.927832],[parser],Entity_id   = DS VLAN EGRESS
+[26/02/1970-01:18:18.927852],[parser],Instance_id = 103
+[26/02/1970-01:18:18.927897],[parser],uni_def_tx_mode.status = VALID
+[26/02/1970-01:18:18.927920],[parser],uni_def_tx_mode.value = 02
+[26/02/1970-01:18:18.927940],[parser],vlan_txmode_tag_table.status = VALID
+[26/02/1970-01:18:18.927960],[parser],vlan_txmode_tag_table.value =
+[[26/02/1970-01:18:19.182930],[parser],
+[26/02/1970-01:18:19.182958],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:19.182979],[parser],
+[26/02/1970-01:18:19.183003],[parser],bytes[06-13]: 28  44  48  0a  00  82  00  01
+[26/02/1970-01:18:19.183028],[parser],bytes[14-45]: 02  00  01  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:19.183054],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:19.183079],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:19.183099],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:19.183193],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:19.183214],[parser],Msg_type    = SET
+[26/02/1970-01:18:19.183235],[parser],Trans_id    = 08
+[26/02/1970-01:18:19.183255],[parser],Entity_id   = PRIORITY QUEUE MAPPER
+[26/02/1970-01:18:19.183276],[parser],Instance_id = 01
+[26/02/1970-01:18:19.183318],[parser],pptp_ptr.status = NOT VALID
+[26/02/1970-01:18:19.183348],[parser],bit0_tp_ptr.status = NOT VALID
+[26/02/1970-01:18:19.183368],[parser],bit1_tp_ptr.status = NOT VALID
+[26/02/1970-01:18:19.183388],[parser],bit2_tp_ptr.status = NOT VALID
+[26/02/1970-01:18:19.183408],[parser],bit3_tp_ptr.status = NOT VALID
+[26/02/1970-01:18:19.183436],[parser],bit4_tp_ptr.status = NOT VALID
+[26/02/1970-01:18:19.183456],[parser],bit5_tp_ptr.status = VALID
+[26/02/1970-01:18:19.183477],[parser],bit5_tp_ptr.value = 0100
+[26/02/1970-01:18:19.183497],[parser],bit6_tp_ptr.status = NOT VALID
+[26/02/1970-01:18:19.183517],[parser],bit7_tp_ptr.status = NOT VALID
+[26/02/1970-01:18:19.183537],[parser],unmarked_fr_option.status = NOT VALID
+[26/02/1970-01:18:19.183557],[parser],dscp_map.status = NOT VALID
+[26/02/1970-01:18:19.183576],[parser],default_pbit_marking.status = NOT VALID
+[26/02/1970-01:18:19.183596],[parser],uni_ptr_type.status = NOT VALID
+[26/02/1970-01:18:19.184190],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:19.184213],[parser],Msg_type    = SET RESPONSE
+[26/02/1970-01:18:19.184234],[parser],Trans_id    = 08
+[26/02/1970-01:18:19.184254],[parser],Entity_id   = PRIORITY QUEUE MAPPER
+[26/02/1970-01:18:19.184274],[parser],Instance_id = 01
+[26/02/1970-01:18:19.184294],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:19.184314],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:19.184337],[parser],Duration : 00s:001ms
+[26/02/1970-01:18:19.184357],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:19.184377],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:19.184396],[parser],
+[26/02/1970-01:18:19.184419],[parser],bytes[06-13]: 28  44  28  0a  00  82  00  01
+[26/02/1970-01:18:19.184444],[parser],bytes[14-45]: 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:19.184469],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:19.184494],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:19.248376],[parser],
+[26/02/1970-01:18:19.248403],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:19.248423],[parser],
+[26/02/1970-01:18:19.248446],[parser],bytes[06-13]: 28  45  48  0a  00  82  00  02
+[26/02/1970-01:18:19.248472],[parser],bytes[14-45]: 04  00  01  09  00  00  00  00  00  00  00
+[26/02/1970-01:18:19.248497],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:19.248522],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:19.248542],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:19.248630],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:19.248651],[parser],Msg_type    = SET
+[26/02/1970-01:18:19.248671],[parser],T[26/02/1970-01:18:19.512394],[parser],
+[26/02/1970-01:18:19.512422],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:19.512443],[parser],
+[26/02/1970-01:18:19.512467],[parser],bytes[06-13]: 28  49  48  0a  00  82  00  03
+[26/02/1970-01:18:19.512492],[parser],bytes[14-45]: 04  00  01  0d  00  00  00  00  00  00  00
+[26/02/1970-01:18:19.512518],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:19.512543],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:19.512563],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:19.512654],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:19.512675],[parser],Msg_type    = SET
+[26/02/1970-01:18:19.512695],[parser],Trans_id    = 0d
+[26/02/1970-01:18:19.512716],[parser],Entity_id   = PRIORITY QUEUE MAPPER
+[26/02/1970-01:18:19.512736],[parser],Instance_id = 03
+[26/02/1970-01:18:19.512778],[parser],pptp_ptr.status = NOT VALID
+[26/02/1970-01:18:19.512798],[parser],bit0_tp_ptr.status = NOT VALID
+[26/02/1970-01:18:19.512817],[parser],bit1_tp_ptr.status = NOT VALID
+[26/02/1970-01:18:19.512837],[parser],bit2_tp_ptr.status = NOT VALID
+[26/02/1970-01:18:19.512856],[parser],bit3_tp_ptr.status = NOT VALID
+[26/02/1970-01:18:19.512876],[parser],bit4_tp_ptr.status = VALID
+[26/02/1970-01:18:19.512897],[parser],bit4_tp_ptr.value = 010d
+[26/02/1970-01:18:19.512917],[parser],bit5_tp_ptr.status = NOT VALID
+[26/02/1970-01:18:19.512937],[parser],bit6_tp_ptr.status = NOT VALID
+[26/02/1970-01:18:19.512956],[parser],bit7_tp_ptr.status = NOT VALID
+[26/02/1970-01:18:19.512976],[parser],unmarked_fr_option.status = NOT VALID
+[26/02/1970-01:18:19.512996],[parser],dscp_map.status = NOT VALID
+[26/02/1970-01:18:19.513016],[parser],default_pbit_marking.status = NOT VALID
+[26/02/1970-01:18:19.513036],[parser],uni_ptr_type.status = NOT VALID
+[26/02/1970-01:18:19.513902],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:19.513925],[parser],Msg_type    = SET RESPONSE
+[26/02/1970-01:18:19.513946],[parser],Trans_id    = 0d
+[26/02/1970-01:18:19.513967],[parser],Entity_id   = PRIORITY QUEUE MAPPER
+[26/02/1970-01:18:19.513987],[parser],Instance_id = 03
+[26/02/1970-01:18:19.514007],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:19.514026],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:19.514048],[parser],Duration : 00s:001ms
+[26/02/1970-01:18:19.514068],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:19.514088],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:19.514107],[parser],
+[26/02/1970-01:18:19.514130],[parser],bytes[06-13]: 28  49  28  0a  00  82  00  03
+[26/02/1970-01:18:19.514155],[parser],bytes[14-45]: 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:19.514180],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:19.514205],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:19.578366],[parser],
+[26/02/1970-01:18:19.578393],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:19.578413],[parser],
+[26/02/1970-01:18:19.578437],[parser],bytes[06-13]: 28  4a  48  0a  00  82  00  03
+[26/02/1970-01:18:19.578463],[parser],bytes[14-45]: 18  00  01  0e  01  0e  00  00  00  00  00
+[26/02/1970-01:18:19.578488],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:19.578513],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:19.578533],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:19.578622],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:19.578642],[parser],Msg_type    = SET
+[26/02/1970-01:18:19.578663],[parser],T[26/02/1970-01:18:19.842605],[parser],
+[26/02/1970-01:18:19.842633],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:19.842655],[parser],
+[26/02/1970-01:18:19.842679],[parser],bytes[06-13]: 28  4e  48  0a  00  82  00  01
+[26/02/1970-01:18:19.842704],[parser],bytes[14-45]: 61  80  01  03  01  03  01  03  01  03  00
+[26/02/1970-01:18:19.842730],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:19.842754],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:19.842775],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:19.842877],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:19.842899],[parser],Msg_type    = SET
+[26/02/1970-01:18:19.842920],[parser],Trans_id    = 12
+[26/02/1970-01:18:19.842942],[parser],Entity_id   = PRIORITY QUEUE MAPPER
+[26/02/1970-01:18:19.842962],[parser],Instance_id = 01
+[26/02/1970-01:18:19.843004],[parser],pptp_ptr.status = NOT VALID
+[26/02/1970-01:18:19.843024],[parser],bit0_tp_ptr.status = VALID
+[26/02/1970-01:18:19.843047],[parser],bit0_tp_ptr.value = 0103
+[26/02/1970-01:18:19.843067],[parser],bit1_tp_ptr.status = VALID
+[26/02/1970-01:18:19.843088],[parser],bit1_tp_ptr.value = 0103
+[26/02/1970-01:18:19.843108],[parser],bit2_tp_ptr.status = NOT VALID
+[26/02/1970-01:18:19.843128],[parser],bit3_tp_ptr.status = NOT VALID
+[26/02/1970-01:18:19.843148],[parser],bit4_tp_ptr.status = NOT VALID
+[26/02/1970-01:18:19.843167],[parser],bit5_tp_ptr.status = NOT VALID
+[26/02/1970-01:18:19.843187],[parser],bit6_tp_ptr.status = VALID
+[26/02/1970-01:18:19.843217],[parser],bit6_tp_ptr.value = 0103
+[26/02/1970-01:18:19.843238],[parser],bit7_tp_ptr.status = VALID
+[26/02/1970-01:18:19.843259],[parser],bit7_tp_ptr.value = 0103
+[26/02/1970-01:18:19.843279],[parser],unmarked_fr_option.status = NOT VALID
+[26/02/1970-01:18:19.843299],[parser],dscp_map.status = NOT VALID
+[26/02/1970-01:18:19.843318],[parser],default_pbit_marking.status = NOT VALID
+[26/02/1970-01:18:19.843338],[parser],uni_ptr_type.status = NOT VALID
+[26/02/1970-01:18:19.844255],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:19.844278],[parser],Msg_type    = SET RESPONSE
+[26/02/1970-01:18:19.844299],[parser],Trans_id    = 12
+[26/02/1970-01:18:19.844320],[parser],Entity_id   = PRIORITY QUEUE MAPPER
+[26/02/1970-01:18:19.844341],[parser],Instance_id = 01
+[26/02/1970-01:18:19.844361],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:19.844380],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:19.844402],[parser],Duration : 00s:001ms
+[26/02/1970-01:18:19.844422],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:19.844442],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:19.844461],[parser],
+[26/02/1970-01:18:19.844485],[parser],bytes[06-13]: 28  4e  28  0a  00  82  00  01
+[26/02/1970-01:18:19.844510],[parser],bytes[14-45]: 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:19.844535],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:19.844560],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:19.908218],[parser],
+[26/02/1970-01:18:19.908246],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:19.908266],[parser],
+[26/02/1970-01:18:19.908290],[parser],bytes[06-13]: 28  4f  48  0a  00  82  00  04
+[26/02/1970-01:18:19.908316],[parser],bytes[14-45]: 02  00  01  04  00  00  00  00  00  00  00
+[26/02/1970-01:18:19.908342],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:19.908367],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:19.908387],[parser],SYNTA[26/02/1970-01:18:20.172106],[parser],
+[26/02/1970-01:18:20.172132],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:20.172152],[parser],
+[26/02/1970-01:18:20.172176],[parser],bytes[06-13]: 28  53  48  0a  00  82  00  02
+[26/02/1970-01:18:20.172201],[parser],bytes[14-45]: 02  00  01  08  00  00  00  00  00  00  00
+[26/02/1970-01:18:20.172227],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:20.172251],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:20.172271],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:20.172358],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:20.172378],[parser],Msg_type    = SET
+[26/02/1970-01:18:20.172399],[parser],Trans_id    = 17
+[26/02/1970-01:18:20.172419],[par[  463.917561] br_sfu: port 5(wan0) entered forwarding state
+ser],Entity_id   = PRIORITY QUEUE MAPPER
+[26/02/1970-01:18:20.172446],[parser],Instance_id = 02
+[26/02/1970-01:18:20.172488],[parser],pptp_ptr.status = NOT VALID
+[26/02/1970-01:18:20.172509],[parser],bit0_tp_ptr.status = NOT VALID
+[26/02/1970-01:18:20.172529],[parser],bit1_tp_ptr.status = NOT VALID
+[26/02/1970-01:18:20.172549],[parser],bit2_tp_ptr.status = NOT VALID
+[26/02/1970-01:18:20.172568],[parser],bit3_tp_ptr.status = NOT VALID
+[26/02/1970-01:18:20.172588],[parser],bit4_tp_ptr.status = NOT VALID
+[26/02/1970-01:18:20.172607],[parser],bit5_tp_ptr.status = VALID
+[26/02/1970-01:18:20.172628],[parser],bit5_tp_ptr.value = 0108
+[26/02/1970-01:18:20.172648],[parser],bit6_tp_ptr.status = NOT VALID
+[26/02/1970-01:18:20.172668],[parser],bit7_tp_ptr.status = NOT VALID
+[26/02/1970-01:18:20.172687],[parser],unmarked_fr_option.status = NOT VALID
+[26/02/1970-01:18:20.172707],[parser],dscp_map.status = NOT VALID
+[26/02/1970-01:18:20.172727],[parser],default_pbit_marking.status = NOT VALID
+[26/02/1970-01:18:20.172746],[parser],uni_ptr_type.status = NOT VALID
+[26/02/1970-01:18:20.173581],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:20.173603],[parser],Msg_type    = SET RESPONSE
+[26/02/1970-01:18:20.173641],[parser],Trans_id    = 17
+[26/02/1970-01:18:20.173710],[parser],Entity_id   = PRIORITY QUEUE MAPPER
+[26/02/1970-01:18:20.173762],[parser],Instance_id = 02
+[26/02/1970-01:18:20.173820],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:20.173880],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:20.173940],[parser],Duration : 00s:001ms
+[26/02/1970-01:18:20.173998],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:20.174056],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:20.174106],[parser],
+[26/02/1970-01:18:20.174176],[parser],bytes[06-13]: 28  53  28  0a  00  82  00  02
+[26/02/1970-01:18:20.174240],[parser],bytes[14-45]: 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:20.174310],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:20.174351],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:20.418052],[parser],
+[26/02/1970-01:18:20.418080],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:20.418101],[parser],
+[26/02/1970-01:18:20.418125],[parser],bytes[06-13]: 28  54  48  0a  00  ab  01  01
+[26/02/1970-01:18:20.418150],[parser],bytes[14-45]: 04  00  f8  00  00  00  80  05  00  00  48
+[26/02/1970-01:18:20.418176],[parser],            : 1f  00  00  00  08  03  22  00  00  00  00
+[26/02/1970-01:18:20.418210],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:20.418231],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:20.418347],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:20.418368],[parser],Msg_type    = SET
+[26/02/1970-01:18:20.418389],[parser],T[26/02/1970-01:18:20.496722],[parser],
+[26/02/1970-01:18:20.496752],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:20.496773],[parser],
+[26/02/1970-01:18:20.496797],[parser],bytes[06-13]: 28  55  48  0a  00  ab  01  01
+[26/02/1970-01:18:20.496823],[parser],bytes[14-45]: 04  00  80  05  00  00  88  00  00  00  48
+[26/02/1970-01:18:20.496848],[parser],            : 1f  00  00  00  09  03  23  00  00  00  00
+[26/02/1970-01:18:20.496873],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:20.496903],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:20.497025],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:20.497047],[parser],Msg_type    = SET
+[26/02/1970-01:18:20.497068],[parser],Trans_id    = 19
+[26/02/1970-01:18:20.497091],[parser],Entity_id   = EXTENDED VLAN CONFIG DATA
+[26/02/1970-01:18:20.497111],[parser],Instance_id = 101
+[26/02/1970-01:18:20.497156],[parser],association_type.status = NOT VALID
+[26/02/1970-01:18:20.497176],[parser],rcvd_vlan_max_size.status = NOT VALID
+[26/02/1970-01:18:20.497197],[parser],input_tpid.status = NOT VALID
+[26/02/1970-01:18:20.497216],[parser],output_tpid.status = NOT VALID
+[26/02/1970-01:18:20.497237],[parser],down_stream_mode.status = NOT VALID
+[26/02/1970-01:18:20.497257],[parser],rcvd_vlan_opr_table.status = VALID
+[26/02/1970-01:18:20.497277],[parser],rcvd_vlan_opr_table.value =
+[26/02/1970-01:18:20.497298],[parser],00
+[26/02/1970-01:18:20.497317],[parser],00
+[26/02/1970-01:18:20.497337],[parser],05
+[26/02/1970-01:18:20.497356],[parser],80
+[26/02/1970-01:18:20.497376],[parser],00
+[26/02/1970-01:18:20.497395],[parser],00
+[26/02/1970-01:18:20.497415],[parser],00
+[26/02/1970-01:18:20.497442],[parser],88
+[26/02/1970-01:18:20.497462],[parser],00
+[26/02/1970-01:18:20.497481],[parser],00
+[26/02/1970-01:18:20.497501],[parser],1f
+[26/02/1970-01:18:20.497520],[parser],48
+[26/02/1970-01:18:20.497540],[parser],23
+[26/02/1970-01:18:20.497559],[parser],03
+[26/02/1970-01:18:20.497578],[parser],09
+[26/02/1970-01:18:20.497598],[parser],00
+[26/02/1970-01:18:20.497616],[parser],
+[26/02/1970-01:18:20.497636],[parser],associated_me_ptr.status = NOT VALID
+[26/02/1970-01:18:20.497656],[parser],dscp_map.status = NOT VALID
+[26/02/1970-01:18:20.498333],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:20.498357],[parser],Msg_type    = SET RESPONSE
+[26/02/1970-01:18:20.498378],[parser],Trans_id    = 19
+[26/02/1970-01:18:20.498399],[parser],Entity_id   = EXTENDED VLAN CONFIG DATA
+[26/02/1970-01:18:20.498420],[parser],Instance_id = 101
+[26/02/1970-01:18:20.498440],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:20.498459],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:20.498482],[parser],Duration : 00s:001ms
+[26/02/1970-01:18:20.498502],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:20.498522],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:20.498540],[parser],
+[26/02/1970-01:18:20.498564],[parser],bytes[06-13]: 28  55  28  0a  00  ab  01  01
+[26/02/1970-01:18:20.498589],[parser],bytes[14-45]: 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:20.498614],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:20.498638],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:20.562264],[parser],
+[26/02/1970-01:18:20.562291],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:20.562312],[parser],
+[26/02/1970-01:18:20.562335],[parser],bytes[06-13]: 28  56  48  0a  00  ab  01  02
+[26/02/1970-01:18:20.562361],[parser],bytes[14-45]: 04  00  f8  00  00  00  80  05  00  00  48
+[26/02/1970-01:18:20.562386],[26/02/1970-01:18:20.853189],[parser],
+[26/02/1970-01:18:20.853219],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:20.853239],[parser],
+[26/02/1970-01:18:20.853264],[parser],bytes[06-13]: 28  5a  48  0a  00  ab  01  04
+[26/02/1970-01:18:20.853290],[parser],bytes[14-45]: 04  00  f8  00  00  00  80  05  00  00  08
+[26/02/1970-01:18:20.853316],[parser],            : 3f  00  00  00  08  0c  82  00  00  00  00
+[26/02/1970-01:18:20.853340],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:20.853360],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:20.853491],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:20.853512],[parser],Msg_type    = SET
+[26/02/1970-01:18:20.853533],[parser],Trans_id    = 1e
+[26/02/1970-01:18:20.853556],[parser],Entity_id   = EXTENDED VLAN CONFIG DATA
+[26/02/1970-01:18:20.853577],[parser],Instance_id = 104
+[26/02/1970-01:18:20.853621],[parser],association_type.status = NOT VALID
+[26/02/1970-01:18:20.853642],[parser],rcvd_vlan_max_size.status = NOT VALID
+[26/02/1970-01:18:20.853673],[parser],input_tpid.status = NOT VALID
+[26/02/1970-01:18:20.853694],[parser],output_tpid.status = NOT VALID
+[26/02/1970-01:18:20.853714],[parser],down_stream_mode.status = NOT VALID
+[26/02/1970-01:18:20.853734],[parser],rcvd_vlan_opr_table.status = VALID
+[26/02/1970-01:18:20.853755],[parser],rcvd_vlan_opr_table.value =
+[26/02/1970-01:18:20.853775],[parser],00
+[26/02/1970-01:18:20.853795],[parser],00
+[26/02/1970-01:18:20.853815],[parser],00
+[26/02/1970-01:18:20.853834],[parser],f8
+[26/02/1970-01:18:20.853853],[parser],00
+[26/02/1970-01:18:20.853873],[parser],00
+[26/02/1970-01:18:20.853892],[parser],05
+[26/02/1970-01:18:20.853912],[parser],80
+[26/02/1970-01:18:20.853931],[parser],00
+[26/02/1970-01:18:20.853950],[parser],00
+[26/02/1970-01:18:20.853970],[parser],3f
+[26/02/1970-01:18:20.853989],[parser],08
+[26/02/1970-01:18:20.854008],[parser],82
+[26/02/1970-01:18:20.854028],[parser],0c
+[26/02/1970-01:18:20.854047],[parser],08
+[26/02/1970-01:18:20.854067],[parser],00
+[26/02/1970-01:18:20.854085],[parser],
+[26/02/1970-01:18:20.854105],[parser],associated_me_ptr.status = NOT VALID
+[26/02/1970-01:18:20.854125],[parser],dscp_map.status = NOT VALID
+[26/02/1970-01:18:20.855500],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:20.855523],[parser],Msg_type    = SET RESPONSE
+[26/02/1970-01:18:20.855545],[parser],Trans_id    = 1e
+[26/02/1970-01:18:20.855566],[parser],Entity_id   = EXTENDED VLAN CONFIG DATA
+[26/02/1970-01:18:20.855586],[parser],Instance_id = 104
+[26/02/1970-01:18:20.855607],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:20.855627],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:20.855649],[parser],Duration : 00s:001ms
+[26/02/1970-01:18:20.855669],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:20.855689],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:20.855708],[parser],
+[26/02/1970-01:18:20.855731],[parser],bytes[06-13]: 28  5a  28  0a  00  ab  01  04
+[26/02/1970-01:18:20.855757],[parser],bytes[14-45]: 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:20.855782],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:20.855806],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:20.922412],[parser],
+[26/02/1970-01:18:20.922441],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:20.922461],[parser],
+[26/02/1970-01:18:20.922486],[parser],bytes[06-13]: 28  5b  48  0a  00  ab  01  04
+[26/02/1970-01:18:20.922512],[parser],bytes[14-45]: 04  00  80  05  00  00  88  00  00  00  08
+[26/02/1970-01:18:20.922537],[26/02/1970-01:18:21.210208],[parser],
+[26/02/1970-01:18:21.210236],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:21.210256],[parser],
+[26/02/1970-01:18:21.210280],[parser],bytes[06-13]: 28  5f  48  0a  01  2c  00  01
+[26/02/1970-01:18:21.210306],[parser],bytes[14-45]: 10  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:21.210332],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:21.210356],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:21.210377],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:21.210476],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:21.210497],[parser],Msg_type    = SET
+[26/02/1970-01:18:21.210518],[parser],Trans_id    = 05
+[26/02/1970-01:18:21.210539],[parser],Entity_id   = DOT1AG_MAINTENANCE_ASSOCIATION
+[26/02/1970-01:18:21.210560],[parser],Instance_id = 01
+[26/02/1970-01:18:21.210612],[parser],md_pointer.status = NOT VALID
+[26/02/1970-01:18:21.210633],[parser],short_ma_name_format.status = NOT VALID
+[26/02/1970-01:18:21.210653],[parser],short_ma_name_1.status = NOT VALID
+[26/02/1970-01:18:21.210672],[parser],short_ma_name_2.status = VALID
+[26/02/1970-01:18:21.210693],[parser],short_ma_name_2.value =
+[26/02/1970-01:18:21.210713],[parser],00
+[26/02/1970-01:18:21.210733],[parser],00
+[26/02/1970-01:18:21.210753],[parser],00
+[26/02/1970-01:18:21.210772],[parser],00
+[26/02/1970-01:18:21.210791],[parser],00
+[26/02/1970-01:18:21.210811],[parser],00
+[26/02/1970-01:18:21.210830],[parser],00
+[26/02/1970-01:18:21.210849],[parser],00
+[26/02/1970-01:18:21.210869],[parser],00
+[26/02/1970-01:18:21.210888],[parser],00
+[26/02/1970-01:18:21.210907],[parser],00
+[26/02/1970-01:18:21.210927],[parser],00
+[26/02/1970-01:18:21.210946],[parser],00
+[26/02/1970-01:18:21.210965],[parser],00
+[26/02/1970-01:18:21.210985],[parser],00
+[26/02/1970-01:18:21.211004],[parser],00
+[26/02/1970-01:18:21.211023],[parser],00
+[26/02/1970-01:18:21.211043],[parser],00
+[26/02/1970-01:18:21.211062],[parser],00
+[26/02/1970-01:18:21.211081],[parser],00
+[26/02/1970-01:18:21.211101],[parser],00
+[26/02/1970-01:18:21.211120],[parser],00
+[26/02/1970-01:18:21.211139],[parser],00
+[26/02/1970-01:18:21.211159],[parser],00
+[26/02/1970-01:18:21.211177],[parser],00
+[26/02/1970-01:18:21.211196],[parser],
+[26/02/1970-01:18:21.211216],[parser],ccm_interval.status = NOT VALID
+[26/02/1970-01:18:21.211235],[parser],associated_vlans.status = NOT VALID
+[26/02/1970-01:18:21.211255],[parser],mhf_creation.status = NOT VALID
+[26/02/1970-01:18:21.211282],[parser],sender_id_permission.status = NOT VALID
+[26/02/1970-01:18:21.211483],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:21.211505],[parser],Msg_type    = SET RESPONSE
+[26/02/1970-01:18:21.211527],[parser],Trans_id    = 05
+[26/02/1970-01:18:21.211547],[parser],Entity_id   = DOT1AG_MAINTENANCE_ASSOCIATION
+[26/02/1970-01:18:21.211568],[parser],Instance_id = 01
+[26/02/1970-01:18:21.211588],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:21.211607],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:21.211629],[parser],Duration : 00s:000ms
+[26/02/1970-01:18:21.211648],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:21.211668],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:21.211687],[parser],
+[26/02/1970-01:18:21.211710],[parser],bytes[06-13]: 28  5f  28  0a  01  2c  00  01
+[26/02/1970-01:18:21.211735],[parser],bytes[14-45]: 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:21.211760],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:21.211784],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:21.276270],[parser],
+[26/02/1970-01:18:21.276298],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:21.276318],[parser],
+[26/02/1970-01:18:21.276343],[parser],bytes[06-13]: 28  60  44  0a  01  2c  00  02
+[26/02/1970-01:18:21.276368],[parser],bytes[14-45]: 00  01  20  06  01  01  00  00  00  00  00
+[26/02/1970-01:18:21.276394],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:21.276419],[parser],            : 00  00  00  00  [26/02/1970-01:18:21.537104],[parser],
+[26/02/1970-01:18:21.537131],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:21.537152],[parser],
+[26/02/1970-01:18:21.537176],[parser],bytes[06-13]: 28  64  48  0a  01  2c  00  03
+[26/02/1970-01:18:21.537201],[parser],bytes[14-45]: 20  00  6d  61  31  32  33  34  35  36  37
+[26/02/1970-01:18:21.537226],[parser],            : 38  38  30  32  00  00  00  00  00  00  00
+[26/02/1970-01:18:21.537251],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:21.537271],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:21.537366],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:21.537387],[parser],Msg_type    = SET
+[26/02/1970-01:18:21.537407],[parser],Trans_id    = 0a
+[26/02/1970-01:18:21.537436],[parser],Entity_id   = DOT1AG_MAINTENANCE_ASSOCIATION
+[26/02/1970-01:18:21.537457],[parser],Instance_id = 03
+[26/02/1970-01:18:21.537501],[parser],md_pointer.status = NOT VALID
+[26/02/1970-01:18:21.537522],[parser],short_ma_name_format.status = NOT VALID
+[26/02/1970-01:18:21.537542],[parser],short_ma_name_1.status = VALID
+[26/02/1970-01:18:21.537562],[parser],short_ma_name_1.value =
+[26/02/1970-01:18:21.537582],[parser],6d
+[26/02/1970-01:18:21.537601],[parser],61
+[26/02/1970-01:18:21.537620],[parser],31
+[26/02/1970-01:18:21.537640],[parser],32
+[26/02/1970-01:18:21.537659],[parser],33
+[26/02/1970-01:18:21.537678],[parser],34
+[26/02/1970-01:18:21.537698],[parser],35
+[26/02/1970-01:18:21.537717],[parser],36
+[26/02/1970-01:18:21.537736],[parser],37
+[26/02/1970-01:18:21.537756],[parser],38
+[26/02/1970-01:18:21.537775],[parser],38
+[26/02/1970-01:18:21.537795],[parser],30
+[26/02/1970-01:18:21.537814],[parser],32
+[26/02/1970-01:18:21.537833],[parser],00
+[26/02/1970-01:18:21.537853],[parser],00
+[26/02/1970-01:18:21.537872],[parser],00
+[26/02/1970-01:18:21.537892],[parser],00
+[26/02/1970-01:18:21.537911],[parser],00
+[26/02/1970-01:18:21.537930],[parser],00
+[26/02/1970-01:18:21.537950],[parser],00
+[26/02/1970-01:18:21.537969],[parser],00
+[26/02/1970-01:18:21.537989],[parser],00
+[26/02/1970-01:18:21.538008],[parser],00
+[26/02/1970-01:18:21.538027],[parser],00
+[26/02/1970-01:18:21.538047],[parser],00
+[26/02/1970-01:18:21.538065],[parser],
+[26/02/1970-01:18:21.538084],[parser],short_ma_name_2.status = NOT VALID
+[26/02/1970-01:18:21.538104],[parser],ccm_interval.status = NOT VALID
+[26/02/1970-01:18:21.538123],[parser],associated_vlans.status = NOT VALID
+[26/02/1970-01:18:21.538143],[parser],mhf_creation.status = NOT VALID
+[26/02/1970-01:18:21.538162],[parser],sender_id_permission.status = NOT VALID
+[26/02/1970-01:18:21.538321],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:21.538343],[parser],Msg_type    = SET RESPONSE
+[26/02/1970-01:18:21.538364],[parser],Trans_id    = 0a
+[26/02/1970-01:18:21.538385],[parser],Entity_id   = DOT1AG_MAINTENANCE_ASSOCIATION
+[26/02/1970-01:18:21.538405],[parser],Instance_id = 03
+[26/02/1970-01:18:21.538432],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:21.538452],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:21.538474],[parser],Duration : 00s:000ms
+[26/02/1970-01:18:21.538493],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:21.538512],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:21.538531],[parser],
+[26/02/1970-01:18:21.538555],[parser],bytes[06-13]: 28  64  28  0a  01  2c  00  03
+[26/02/1970-01:18:21.538579],[parser],bytes[14-45]: 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:21.538605],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:21.538629],[parser],            [26/02/1970-01:18:21.872742],[parser],
+[26/02/1970-01:18:21.872770],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:21.872790],[parser],
+[26/02/1970-01:18:21.872814],[parser],bytes[06-13]: 28  69  44  0a  01  2e  00  01
+[26/02/1970-01:18:21.872840],[parser],bytes[14-45]: 01  04  00  00  01  02  5b  10  01  90  00
+[26/02/1970-01:18:21.872866],[parser],            : 05  00  00  00  00  00  00  00  00  0e  02
+[26/02/1970-01:18:21.872890],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:21.872910],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:21.873010],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:21.873031],[parser],Msg_type    = CREATE
+[26/02/1970-01:18:21.873051],[parser],Trans_id    = 0f
+[26/02/1970-01:18:21.873072],[parser],Entity_id   = DOT1AG_MEP
+[26/02/1970-01:18:21.873092],[parser],Instance_id = 01
+[26/02/1970-01:18:21.873136],[parser],layer2_entity_pointer.status = VALID
+[26/02/1970-01:18:21.873159],[parser],layer2_entity_pointer.value = 0104
+[26/02/1970-01:18:21.873179],[parser],layer2_type.status = VALID
+[26/02/1970-01:18:21.873201],[parser],layer2_type.value = 00
+[26/02/1970-01:18:21.873220],[parser],ma_pointer.status = VALID
+[26/02/1970-01:18:21.873241],[parser],ma_pointer.value = 0001
+[26/02/1970-01:18:21.873261],[parser],mep_id.status = VALID
+[26/02/1970-01:18:21.873281],[parser],mep_id.value = 025b
+[26/02/1970-01:18:21.873301],[parser],mep_control.status = VALID
+[26/02/1970-01:18:21.873322],[parser],mep_control.value = 10
+[26/02/1970-01:18:21.873341],[parser],primary_vlan.status = VALID
+[26/02/1970-01:18:21.873362],[parser],primary_vlan.value = 0190
+[26/02/1970-01:18:21.873382],[parser],administrative_state.status = VALID
+[26/02/1970-01:18:21.873403],[parser],administrative_state.value = 00
+[26/02/1970-01:18:21.873431],[parser],ccm_and_ltm_priority.status = VALID
+[26/02/1970-01:18:21.873453],[parser],ccm_and_ltm_priority.value = 05
+[26/02/1970-01:18:21.873473],[parser],egress_identifier.status = VALID
+[26/02/1970-01:18:21.873492],[parser],egress_identifier.value =
+[26/02/1970-01:18:21.873512],[parser],00
+[26/02/1970-01:18:21.873532],[parser],00
+[26/02/1970-01:18:21.873551],[parser],00
+[26/02/1970-01:18:21.873571],[parser],00
+[26/02/1970-01:18:21.873591],[parser],00
+[26/02/1970-01:18:21.873610],[parser],00
+[26/02/1970-01:18:21.873630],[parser],00
+[26/02/1970-01:18:21.873649],[parser],00
+[26/02/1970-01:18:21.873668],[parser],
+[26/02/1970-01:18:21.873687],[parser],peer_mep_id.status = NOT VALID
+[26/02/1970-01:18:21.873707],[parser],eth_ais_control.status = VALID
+[26/02/1970-01:18:21.873728],[parser],eth_ais_control.value = 0e
+[26/02/1970-01:18:21.873755],[parser],fault_alarm_threshold.status = VALID
+[26/02/1970-01:18:21.873776],[parser],fault_alarm_threshold.value = 02
+[26/02/1970-01:18:21.873797],[parser],alarm_declaration_soak_time.status = NOT VALID
+[26/02/1970-01:18:21.873817],[parser],alarm_clear_soak_time.status = NOT VALID
+[26/02/1970-01:18:21.875024],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:21.875297],[parser],Msg_type    = CREATE RESPONSE
+[26/02/1970-01:18:21.875327],[parser],Trans_id    = 0f
+[26/02/1970-01:18:21.875349],[parser],Entity_id   = DOT1AG_MEP
+[26/02/1970-01:18:21.875370],[parser],Instance_id = 01
+[26/02/1970-01:18:21.875391],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:21.875411],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:21.875441],[parser],Duration : 00s:002ms
+[26/02/1970-01:18:21.875462],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:21.875482],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:21.8755[26/02/1970-01:18:22.200161],[parser],
+[26/02/1970-01:18:22.200188],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:22.200208],[parser],
+[26/02/1970-01:18:22.200232],[parser],bytes[06-13]: 28  6e  48  0a  01  2e  00  03
+[26/02/1970-01:18:22.200258],[parser],bytes[14-45]: 00  0c  00  fa  03  e8  00  00  00  00  00
+[26/02/1970-01:18:22.200283],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:22.200308],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:22.200328],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:22.200424],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:22.200445],[parser],Msg_type    = SET
+[26/02/1970-01:18:22.200465],[parser],Trans_id    = 14
+[26/02/1970-01:18:22.200487],[parser],Entity_id   = DOT1AG_MEP
+[26/02/1970-01:18:22.200507],[parser],Instance_id = 03
+[26/02/1970-01:18:22.200551],[parser],layer2_entity_pointer.status = NOT VALID
+[26/02/1970-01:18:22.200571],[parser],layer2_type.status = NOT VALID
+[26/02/1970-01:18:22.200591],[parser],ma_pointer.status = NOT VALID
+[26/02/1970-01:18:22.200610],[parser],mep_id.status = NOT VALID
+[26/02/1970-01:18:22.200630],[parser],mep_control.status = NOT VALID
+[26/02/1970-01:18:22.200649],[parser],primary_vlan.status = NOT VALID
+[26/02/1970-01:18:22.200669],[parser],administrative_state.status = NOT VALID
+[26/02/1970-01:18:22.200689],[parser],ccm_and_ltm_priority.status = NOT VALID
+[26/02/1970-01:18:22.200709],[parser],egress_identifier.status = NOT VALID
+[26/02/1970-01:18:22.200729],[parser],peer_mep_id.status = NOT VALID
+[26/02/1970-01:18:22.200757],[parser],eth_ais_control.status = NOT VALID
+[26/02/1970-01:18:22.200778],[parser],fault_alarm_threshold.status = NOT VALID
+[26/02/1970-01:18:22.200798],[parser],alarm_declaration_soak_time.status = VALID
+[26/02/1970-01:18:22.200819],[parser],alarm_declaration_soak_time.value = 00fa
+[26/02/1970-01:18:22.200839],[parser],alarm_clear_soak_time.status = VALID
+[26/02/1970-01:18:22.200860],[parser],alarm_clear_soak_time.value = 03e8
+[26/02/1970-01:18:22.201341],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:22.201364],[parser],Msg_type    = SET RESPONSE
+[26/02/1970-01:18:22.201384],[parser],Trans_id    = 14
+[26/02/1970-01:18:22.201405],[parser],Entity_id   = DOT1AG_MEP
+[26/02/1970-01:18:22.201434],[parser],Instance_id = 03
+[26/02/1970-01:18:22.201454],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:22.201474],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:22.201496],[parser],Duration : 00s:001ms
+[26/02/1970-01:18:22.201516],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:22.201536],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:22.201555],[parser],
+[26/02/1970-01:18:22.201578],[parser],bytes[06-13]: 28  6e  28  0a  01  2e  00  03
+[26/02/1970-01:18:22.201603],[parser],bytes[14-45]: 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:22.201629],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:22.201653],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:22.266348],[parser],
+[26/02/1970-01:18:22.266375],[parser],RX_OMCI_MSG
+[26/02/1970-01:18:22.266395],[parser],
+[26/02/1970-01:18:22.266419],[parser],bytes[06-13]: 28  6f  44  0a  01  2e  00  04
+[26/02/1970-01:18:22.266444],[parser],bytes[14-45]: 01  03  00  00  04  03  87  10  01  2c  00
+[26/02/1970-01:18:22.266470],[parser],            : 05  00  00  00  00  00  00  00  00  0e  02
+[26/02/1970-01:18:22.266495],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:18:22.266515],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:18:22.266612],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:18:22.266633],[parser],Msg_type    = CREATE
+[26/02/1970-01:18:22.266653],[parser],Trans_id    = 15
+[26/02/1970-01:18:22.266674],[parser],Entity_id   = DOT1AG_MEP
+[26/02/1970-01:18:22.266695],[parser],Instance_id = 04
+[26/02/1970-01:18:22.266739],[parser],layer2_entity_pointer.status = VALID
+[26/02/1970-01:18:22.266760],[parser],layer2_entity_pointer.value = 0103
+[26/02/1970-01:18:22.266781],[parser],layer2_type.status = VALID
+[26/02/1970-01:18:22.266802],[parser],layer2_type.value = 00
+[26/02/1970-01:18:22.266821],[parser],ma_pointer.status = VALID
+[26/02/1970-01:18:22.266842],[parser],ma_pointer.value = 0004
+[26/02/1970-01:18:22.266862],[parser],mep_id.status = VALID
+[26/02/1970-01:18:22.266882],[parser],mep_id.value = 0387
+[26/02/1970-01:18:22.266902],[parser],mep_control.status = VALID
+[26/02/1970-01:18:22.266923],[parser],mep_control.value = 10
+[26/02/1970-01:18:22.266942],[parser],primary_vlan.status = VALID
+[26/02/1970-01:18:22.266963],[parser],primary_vlan.value = 012c
+[26/02/1970-01:18:22.266983],[parser],administrative_state.status = VALID
+[26/02/1970-01:18:22.267003],[parser],administrative_state.value = 00
+[26/02/1970-01:18:22.267023],[parser],ccm_and_ltm_priority.status = VALID
+[26/02/1970-01:18:22.267044],[parser],ccm_and_ltm_priority.value = 05
+[26/02/1970-01:18:22.267071],[parser],egress_identifier.status = VALID
+[26/02/1970-01:18:22.267092],[parser],egress_identifier.value =
+[26/02/1970-01:18:22.267111],[parser],00
+[26/02/1970-01:18:22.267131],[parser],00
+[26/02/1970-01:18:22.267151],[parser],00
+[26/02/1970-01:18:22.267170],[parser],00
+[26/02/1970-01:18:22.267189],[parser],00
+[26/02/1970-01:18:22.267209],[parser],00
+[26/02/1970-01:18:22.267228],[parser],00
+[26/02/1970-01:18:22.267248],[parser],00
+[26/02/1970-01:18:22.267296],[parser],
+[26/02/1970-01:18:22.267320],[parser],peer_mep_id.status = NOT VALID
+[26/02/1970-01:18:22.267340],[parser],eth_ais_control.status = VALID
+[26/02/1970-01:18:22.267361],[parser],eth_ais_control.value = 0e
+[26/02/1970-01:18:22.267381],[parser],fault_alarm_threshold.status = VALID
+[26/02/1970-01:18:22.267402],[parser],fault_alarm_threshold.value = 02
+[26/02/1970-01:18:22.267430],[parser],alarm_declaration_soak_time.status = NOT VALID
+[26/02/1970-01:18:22.267450],[parser],alarm_clear_soak_time.status = NOT VALID
+[26/02/1970-01:18:22.268442],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:22.268465],[parser],Msg_type    = CREATE RESPONSE
+[26/02/1970-01:18:22.268486],[parser],Trans_id    = 15
+[26/02/1970-01:18:22.268507],[parser],Entity_id   = DOT1AG_MEP
+[26/02/1970-01:18:22.268527],[parser],Instance_id = 04
+[26/02/1970-01:18:22.268547],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:18:22.268567],[parser],Sub entity Id :NO SUB ENTITY ID
+[26/02/1970-01:18:22.268589],[parser],Duration : 00s:001ms
+[26/02/1970-01:18:22.268609],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:22.268629],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:22.2686[26/02/1970-01:18:27.373344],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:27.373377],[parser],Msg_type    = ALARM
+[26/02/1970-01:18:27.373400],[parser],Trans_id    = 00
+[26/02/1970-01:18:27.373432],[parser],Alarm seq nbr = 05
+[26/02/1970-01:18:27.373454],[parser],Entity_id   = PPTP LAN UNI
+[26/02/1970-01:18:27.373475],[parser],Instance_id = 101
+[26/02/1970-01:18:27.373606],[parser],Alarm mask =
+[26/02/1970-01:18:27.373631],[parser],00
+[26/02/1970-01:18:27.373652],[parser],00
+[26/02/1970-01:18:27.373673],[parser],00
+[26/02/1970-01:18:27.373692],[parser],00
+[26/02/1970-01:18:27.373712],[parser],00
+[26/02/1970-01:18:27.373732],[parser],00
+[26/02/1970-01:18:27.373752],[parser],00
+[26/02/1970-01:18:27.373771],[parser],00
+[26/02/1970-01:18:27.373791],[parser],00
+[26/02/1970-01:18:27.373810],[parser],00
+[26/02/1970-01:18:27.373830],[parser],00
+[26/02/1970-01:18:27.373849],[parser],00
+[26/02/1970-01:18:27.373869],[parser],00
+[26/02/1970-01:18:27.373889],[parser],00
+[26/02/1970-01:18:27.373908],[parser],00
+[26/02/1970-01:18:27.373928],[parser],00
+[26/02/1970-01:18:27.373947],[parser],00
+[26/02/1970-01:18:27.373967],[parser],00
+[26/02/1970-01:18:27.373995],[parser],00
+[26/02/1970-01:18:27.374091],[parser],00
+[26/02/1970-01:18:27.374112],[parser],00
+[26/02/1970-01:18:27.374132],[parser],00
+[26/02/1970-01:18:27.374152],[parser],00
+[26/02/1970-01:18:27.374172],[parser],00
+[26/02/1970-01:18:27.374191],[parser],00
+[26/02/1970-01:18:27.374211],[parser],00
+[26/02/1970-01:18:27.374230],[parser],00
+[26/02/1970-01:18:27.374250],[parser],00
+[26/02/1970-01:18:27.374269],[parser],
+[26/02/1970-01:18:27.374289],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:27.374309],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:27.374328],[parser],
+[26/02/1970-01:18:27.374352],[parser],bytes[06-13]: 00  00  10  0a  00  0b  01  01
+[26/02/1970-01:18:27.374377],[parser],bytes[14-45]: 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:27.374402],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:27.374438],[parser],            : 00  00  00  00  00  00  00  00  00  05 -
+[26/02/1970-01:18:27.559230],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:27.559263],[parser],Msg_type    = ALARM
+[26/02/1970-01:18:27.559286],[parser],Trans_id    = 00
+[26/02/1970-01:18:27.559307],[parser],Alarm seq nbr = 06
+[26/02/1970-01:18:27.559328],[parser],Entity_id   = PPTP LAN UNI
+[26/02/1970-01:18:27.559348],[parser],Instance_id = 103
+[26/02/1970-01:18:27.559557],[parser],Alarm mask =
+[26/02/1970-01:18:27.559587],[parser],00
+[26/02/1970-01:18:27.559608],[parser],00
+[26/02/1970-01:18:27.559629],[parser],00
+[26/02/1970-01:18:27.559649],[parser],00
+[26/02/1970-01:18:27.559668],[parser],00
+[26/02/1970-01:18:27.559688],[parser],00
+[26/02/1970-01:18:27.559708],[parser],00
+[26/02/1970-01:18:27.559727],[parser],00
+[26/02/1970-01:18:27.559747],[parser],00
+[26/02/1970-01:18:27.559767],[parser],00
+[26/02/1970-01:18:27.559786],[parser],00
+[26/02/1970-01:18:27.559806],[parser],00
+[26/02/1970-01:18:27.559825],[parser],00
+[26/02/1970-01:18:27.559845],[parser],00
+[26/02/1970-01:18:27.560100],[parser],00
+[26/02/1970-01:18:27.560148],[parser],00
+[26/02/1970-01:18:27.560171],[parser],00
+[26/02/1970-01:18:27.560192],[parser],00
+[26/02/1970-01:18:27.560211],[parser],00
+[26/02/1970-01:18:27.560231],[parser],00
+[26/02/1970-01:18:27.560251],[parser],00
+[26/02/1970-01:18:27.560270],[parser],00
+[26/02/1970-01:18:27.560290],[parser],00
+[26/02/1970-01:18:27.560309],[parser],00
+[26/02/1970-01:18:27.560329],[parser],00
+[26/02/1970-01:18:27.560348],[parser],00
+[26/02/1970-01:18:27.560588],[parser],00
+[26/02/1970-01:18:27.560612],[parser],00
+[26/02/1970-01:18:27.560633],[parser],
+[26/02/1970-01:18:27.560654],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:27.560674],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:27.560693],[parser],
+[26/02/1970-01:18:27.560717],[parser],bytes[06-13]: 00  00  10  0a  00  0b  01  03
+[26/02/1970-01:18:27.560751],[parser],bytes[14-45]: 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:27.560777],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:27.560802],[parser],            : 00  00  00  00  00  00  00  00  00  06 -
+[26/02/1970-01:18:28.006688],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:28.006730],[parser],Msg_type    = ALARM
+[26/02/1970-01:18:28.006874],[parser],Trans_id    = 00
+[26/02/1970-01:18:28.006900],[parser],Alarm seq nbr = 07
+[26/02/1970-01:18:28.006922],[parser],Entity_id   = PPTP LAN UNI
+[26/02/1970-01:18:28.006943],[parser],Instance_id = 104
+[26/02/1970-01:18:28.006963],[parser],Alarm mask =
+[26/02/1970-01:18:28.006984],[parser],00
+[26/02/1970-01:18:28.007004],[parser],00
+[26/02/1970-01:18:28.007024],[parser],00
+[26/02/1970-01:18:28.007043],[parser],00
+[26/02/1970-01:18:28.007063],[parser],00
+[26/02/1970-01:18:28.007083],[parser],00
+[26/02/1970-01:18:28.007103],[parser],00
+[26/02/1970-01:18:28.007122],[parser],00
+[26/02/1970-01:18:28.007142],[parser],00
+[26/02/1970-01:18:28.007162],[parser],00
+[26/02/1970-01:18:28.007181],[parser],00
+[26/02/1970-01:18:28.007201],[parser],00
+[26/02/1970-01:18:28.007221],[parser],00
+[26/02/1970-01:18:28.007240],[parser],00
+[26/02/1970-01:18:28.007570],[parser],00
+[26/02/1970-01:18:28.007593],[parser],00
+[26/02/1970-01:18:28.007614],[parser],00
+[26/02/1970-01:18:28.007634],[parser],00
+[26/02/1970-01:18:28.007654],[parser],00
+[26/02/1970-01:18:28.007674],[parser],00
+[26/02/1970-01:18:28.007694],[parser],00
+[26/02/1970-01:18:28.007713],[parser],00
+[26/02/1970-01:18:28.007733],[parser],00
+[26/02/1970-01:18:28.008054],[parser],00
+[26/02/1970-01:18:28.008078],[parser],00
+[26/02/1970-01:18:28.008110],[parser],00
+[26/02/1970-01:18:28.008131],[parser],00
+[26/02/1970-01:18:28.008151],[parser],00
+[26/02/1970-01:18:28.008170],[parser],
+[26/02/1970-01:18:28.008191],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:28.008211],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:28.008231],[parser],
+[26/02/1970-01:18:28.008265],[parser],bytes[06-13]: 00  00  10  0a  00  0b  01  04
+[26/02/1970-01:18:28.008529],[parser],bytes[14-45]: 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:28.008558],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:28.008585],[parser],            : 00  00  00  00  00  00  00  00  00  07 -
+[26/02/1970-01:18:28.016202],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:18:28.016234],[parser],Msg_type    = ALARM
+[26/02/1970-01:18:28.016257],[parser],Trans_id    = 00
+[26/02/1970-01:18:28.016278],[parser],Alarm seq nbr = 08
+[26/02/1970-01:18:28.016299],[parser],Entity_id   = PPTP LAN UNI
+[26/02/1970-01:18:28.016319],[parser],Instance_id = 102
+[26/02/1970-01:18:28.016339],[parser],Alarm mask =
+[26/02/1970-01:18:28.016359],[parser],00
+[26/02/1970-01:18:28.016379],[parser],00
+[26/02/1970-01:18:28.016399],[parser],00
+[26/02/1970-01:18:28.016419],[parser],00
+[26/02/1970-01:18:28.016438],[parser],00
+[26/02/1970-01:18:28.016458],[parser],00
+[26/02/1970-01:18:28.016478],[parser],00
+[26/02/1970-01:18:28.016497],[parser],00
+[26/02/1970-01:18:28.016517],[parser],00
+[26/02/1970-01:18:28.016536],[parser],00
+[26/02/1970-01:18:28.016556],[parser],00
+[26/02/1970-01:18:28.016575],[parser],00
+[26/02/1970-01:18:28.016595],[parser],00
+[26/02/1970-01:18:28.016614],[parser],00
+[26/02/1970-01:18:28.016634],[parser],00
+[26/02/1970-01:18:28.016653],[parser],00
+[26/02/1970-01:18:28.016672],[parser],00
+[26/02/1970-01:18:28.016692],[parser],00
+[26/02/1970-01:18:28.016711],[parser],00
+[26/02/1970-01:18:28.016731],[parser],00
+[26/02/1970-01:18:28.016750],[parser],00
+[26/02/1970-01:18:28.016769],[parser],00
+[26/02/1970-01:18:28.016789],[parser],00
+[26/02/1970-01:18:28.016808],[parser],00
+[26/02/1970-01:18:28.016828],[parser],00
+[26/02/1970-01:18:28.016847],[parser],00
+[26/02/1970-01:18:28.016866],[parser],00
+[26/02/1970-01:18:28.016886],[parser],00
+[26/02/1970-01:18:28.016905],[parser],
+[26/02/1970-01:18:28.016925],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:18:28.016945],[parser],TX_OMCI_MSG
+[26/02/1970-01:18:28.016964],[parser],
+[26/02/1970-01:18:28.016987],[parser],bytes[06-13]: 00  00  10  0a  00  0b  01  02
+[26/02/1970-01:18:28.017012],[parser],bytes[14-45]: 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:28.017038],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:18:28.017121],[parser],            : 00  00  00  00  00  00  00  00  00  08 -
+
+>> 
+>> 
+>> 
+>> [26/02/1970-01:19:00.357883],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:19:00.357918],[parser],Msg_type    = ALARM
+[26/02/1970-01:19:00.357941],[parser],Trans_id    = 00
+[26/02/1970-01:19:00.357962],[parser],Alarm seq nbr = 09
+[26/02/1970-01:19:00.357984],[parser],Entity_id   = PPTP LAN UNI
+[26/02/1970-01:19:00.358004],[parser],Instance_id = 101
+[26/02/1970-01:19:00.358023],[parser],Alarm mask =
+[26/02/1970-01:19:00.358043],[parser],80
+[26/02/1970-01:19:00.358063],[parser],00
+[26/02/1970-01:19:00.358083],[parser],00
+[26/02/1970-01:19:00.358103],[parser],00
+[26/02/1970-01:19:00.358122],[parser],00
+[26/02/1970-01:19:00.358142],[parser],00
+[26/02/1970-01:19:00.358162],[parser],00
+[26/02/1970-01:19:00.358181],[parser],00
+[26/02/1970-01:19:00.358201],[parser],00
+[26/02/1970-01:19:00.358231],[parser],00
+[26/02/1970-01:19:00.358252],[parser],00
+[26/02/1970-01:19:00.358272],[parser],00
+[26/02/1970-01:19:00.358292],[parser],00
+[26/02/1970-01:19:00.358311],[parser],00
+[26/02/1970-01:19:00.358331],[parser],00
+[26/02/1970-01:19:00.358350],[parser],00
+[26/02/1970-01:19:00.358370],[parser],00
+[26/02/1970-01:19:00.358390],[parser],00
+[26/02/1970-01:19:00.358409],[parser],00
+[26/02/1970-01:19:00.358429],[parser],00
+[26/02/1970-01:19:00.358449],[parser],00
+[26/02/1970-01:19:00.358468],[parser],00
+[26/02/1970-01:19:00.358488],[parser],00
+[26/02/1970-01:19:00.358507],[parser],00
+[26/02/1970-01:19:00.358527],[parser],00
+[26/02/1970-01:19:00.358546],[parser],00
+[26/02/1970-01:19:00.358565],[parser],00
+[26/02/1970-01:19:00.358585],[parser],00
+[26/02/1970-01:19:00.358604],[parser],
+[26/02/1970-01:19:00.358624],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:19:00.358644],[parser],TX_OMCI_MSG
+[26/02/1970-01:19:00.358663],[parser],
+[26/02/1970-01:19:00.358687],[parser],bytes[06-13]: 00  00  10  0a  00  0b  01  01
+[26/02/1970-01:19:00.358712],[parser],bytes[14-45]: 80  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:19:00.358737],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:19:00.358761],[parser],            : 00  00  00  00  00  00  00  00  00  09 -
+[26/02/1970-01:19:08.898271],[parser],
+[26/02/1970-01:19:08.898301],[parser],RX_OMCI_MSG
+[26/02/1970-01:19:08.898322],[parser],
+[26/02/1970-01:19:08.898346],[parser],bytes[06-13]: 28  71  58  0a  01  00  00  00
+[26/02/1970-01:19:08.898372],[parser],bytes[14-45]: 07  b2  05  19  14  3b  1b  00  00  00  00
+[26/02/1970-01:19:08.898397],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:19:08.898422],[parser],            : 00  00  00  00  00  00  00  00  00  00 -
+[26/02/1970-01:19:08.898450],[parser],SYNTAX CHECK RESULT = SUCCESSFUL.
+[26/02/1970-01:19:08.898554],[parser],
+TX_ONT_MSG --
+[26/02/1970-01:19:08.898576],[parser],Msg_type    = SYNCHRONIZE TIME
+[26/02/1970-01:19:08.898597],[parser],Trans_id    = 17
+[26/02/1970-01:19:08.898618],[parser],Entity_id   = ONT G
+[26/02/1970-01:19:08.898639],[parser],Instance_id = 00
+[26/02/1970-01:19:08.898938],[parser],
+RX_ONT_MSG --
+[26/02/1970-01:19:08.898960],[parser],Msg_type    = SYNCHRONIZE TIME RSP
+[26/02/1970-01:19:08.898982],[parser],Trans_id    = 17
+[26/02/1970-01:19:08.899002],[parser],Entity_id   = ONT G
+[26/02/1970-01:19:08.899023],[parser],Instance_id = 00
+[26/02/1970-01:19:08.899043],[parser],Result_reason = COMMAND_PROCESSED_SUCCESSFULLY
+[26/02/1970-01:19:08.899065],[parser],Duration : 00s:001ms
+[26/02/1970-01:19:08.899085],[parser],OMCI msg construction = SUCCESSFUL
+[26/02/1970-01:19:08.899113],[parser],TX_OMCI_MSG
+[26/02/1970-01:19:08.899132],[parser],
+[26/02/1970-01:19:08.899156],[parser],bytes[06-13]: 28  71  38  0a  01  00  00  00
+[26/02/1970-01:19:08.899181],[parser],bytes[14-45]: 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:19:08.899206],[parser],            : 00  00  00  00  00  00  00  00  00  00  00
+[26/02/1970-01:19:08.899231],[parser],            : 00  00  00  00  00  00  00  00  00  00 -

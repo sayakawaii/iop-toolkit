@@ -1,0 +1,24 @@
+server:
+  runMode: ${SERVER_RUN_MODE}
+  httpPort: ${SERVER_HTTP_PORT}
+  addr: ${SERVER_ADDR}
+  readTimeout: 60s
+  writeTimeout: 60s
+minio:
+  endpoint: ${MINIO_ENDPOINT}
+  accessKeyID: "${MINIO_ACCESS_KEY}"
+  secretAccessKey: "${MINIO_SECRET_KEY}"
+  secure: ${MINIO_SECURE}
+  bucket: ${MINIO_BUCKET}
+mysql:
+  user: ${MYSQL_USER}
+  addr: ${MYSQL_ADDR}
+  password: ${MYSQL_PASSWORD}
+  defaultDB: ${MYSQL_DATABASE}
+  dialTimeout: 5s
+kafka:
+  addr: ${KAFKA_ADDR}
+  topicCollectorRequest: ${KAFKA_TOPIC_REQUEST}
+  groupCollectorRequest: ${KAFKA_GROUP_REQUEST}
+  topicCollectorResponse: ${KAFKA_TOPIC_RESPONSE}
+  groupCollectorResponse: ${KAFKA_GROUP_RESPONSE}

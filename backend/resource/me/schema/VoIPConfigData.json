@@ -1,0 +1,193 @@
+{
+	"Me": {
+		"id": 138,
+		"name": "VOIPConfigData",
+		"access": "CreatedByONU",
+		"type": "Config",
+		"action": [
+			"Set",
+			"Get",
+			"Dummy"
+		],
+		"instance": {
+			"type": "Fixed",
+			"value": 0
+		},
+		"attributes": {
+			"attribute": [
+				{
+					"name": "Available signalling protocols",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Signalling protocol used",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Available VoIP configuration methods",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "VoIP configuration method used",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "VoIP configuration address pointer",
+					"size": 2,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "VoIP configuration state",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Retrieve profile",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"W",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Profile version",
+					"size": 25,
+					"format": "String",
+					"access": [
+						"R",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				}
+			]
+		},
+		"alarms":{
+			"alarm":[
+				{
+					"number":0,
+					"name":"VCD config server name",
+					"description":"N/A"
+				},
+				{
+					"number":1,
+					"name":"VCD config server reach",
+					"description":"N/A"
+				},
+				{
+					"number":2,
+					"name":"VCD config server connect",
+					"description":"N/A"
+				},
+				{
+					"number":3,
+					"name":"VCD config server validate",
+					"description":"N/A"
+				},
+				{
+					"number":4,
+					"name":"VCD config server auth",
+					"description":"N/A"
+				},
+				{
+					"number":5,
+					"name":"VCD config server timeout",
+					"description":"N/A"
+				},
+				{
+					"number":6,
+					"name":"VCD config server fail",
+					"description":"N/A"
+				},
+				{
+					"number":7,
+					"name":"VCD config file error",
+					"description":"N/A"
+				},
+				{
+					"number":8,
+					"name":"VCD subscription name",
+					"description":"N/A"
+				},
+				{
+					"number":9,
+					"name":"VCD subscription reach",
+					"description":"N/A"
+				},
+				{
+					"number":10,
+					"name":"VCD subscription connect",
+					"description":"N/A"
+				},
+				{
+					"number":11,
+					"name":"VCD subscription validate",
+					"description":"N/A"
+				},
+				{
+					"number":12,
+					"name":"VCD subscription auth",
+					"description":"N/A"
+				},
+				{
+					"number":13,
+					"name":"VCD subscription timeout",
+					"description":"N/A"
+				},
+				{
+					"number":14,
+					"name":"VCD subscription fail",
+					"description":"N/A"
+				},
+				{
+					"number":15,
+					"name":"VCD reboot request",
+					"description":"N/A"
+				},
+				{
+					"number":208,
+					"name":"IPHost IP Allocation failure",
+					"description":"IP address failed to get assigned to IP Host"
+				}
+			]
+		}
+	}
+}

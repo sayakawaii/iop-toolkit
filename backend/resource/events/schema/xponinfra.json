@@ -1,0 +1,137 @@
+[
+    {
+        "from": "typebagent", 
+        "to": "xponinfra", 
+        "event": [
+            "\"getCtPortInfo\": {"
+        ], 
+        "notes": "",
+        "alias": "Recieve getCtPortInfo"
+    },
+    {
+        "from": "xponinfra", 
+        "to": "typebagent", 
+        "event": [
+            "\"getCtPortInfoAck\": {"
+        ], 
+        "notes": "",
+        "alias": "Send getCtPortInfoAck"
+    },
+    {
+        "from": "typebagent", 
+        "to": "xponinfra", 
+        "event": [
+            "\"becomeActive\": {"
+        ], 
+        "notes": "",
+        "alias": "Recieve becomeActive"
+    },
+    {
+        "from": "xponinfra", 
+        "to": "typebagent", 
+        "event": [
+            "\"becomeActiveAck\": {"
+        ], 
+        "notes": "",
+        "alias": "Send becomeActiveAck"
+    },
+    {
+        "from": "typebagent", 
+        "to": "xponinfra", 
+        "event": [
+            "\"becomeStandby\": {"
+        ], 
+        "notes": "",
+        "alias": "Recieve becomeStandby"
+    },
+    {
+        "from": "xponinfra", 
+        "to": "typebagent", 
+        "event": [
+            "\"becomeStandbyAck\": {"
+        ], 
+        "notes": "",
+        "alias": "Send becomeStandbyAck"
+    },
+    {
+        "from": "typebagent", 
+        "to": "xponinfra", 
+        "event": [
+            "\"ctStatusRegister\": {"
+        ], 
+        "notes": "",
+        "alias": "Recieve ctStatusRegister"
+    },
+    {
+        "from": "xponinfra", 
+        "to": "typebagent", 
+        "event": [
+            "\"ctStatusRegisterAck\": {"
+        ], 
+        "notes": "",
+        "alias": "Send ctStatusRegisterAck"
+    },
+    {
+        "from": "typebagent", 
+        "to": "xponinfra", 
+        "event": [
+            "\"ctStatusUnregister\": {"
+        ], 
+        "notes": "",
+        "alias": "Recieve ctStatusUnregister"
+    },
+    {
+        "from": "xponinfra", 
+        "to": "typebagent", 
+        "event": [
+            "\"ctStatusUnregisterAck\": {"
+        ], 
+        "notes": "",
+        "alias": "Send ctStatusUnregisterAck"
+    },
+    {
+        "from": "xponinfra", 
+        "to": "typebagent", 
+        "event": [
+            "\"ctStatusNotifList\": {"
+        ], 
+        "notes": "",
+        "alias": "Send ctStatusNotifList"
+    },
+    {
+        "from": "xponinfra", 
+        "to": "xponhwa", 
+        "event": [
+            "\"getCtCurrentStatusRequest\": {"
+        ], 
+        "notes": "",
+        "alias": "Send getCtCurrentStatusRequest"
+    },
+    {
+        "from": "xponhwa", 
+        "to": "xponinfra", 
+        "event": [
+            "\"getCtCurrentStatusResponse\": {"
+        ], 
+        "notes": "",
+        "alias": "Recieve getCtCurrentStatusResponse"
+    },
+    {
+        "from": "xponinfra", 
+        "to": "xponhwa", 
+        "event": [
+            "\"switchPonTypebStatusRequest\": {"
+        ], 
+        "notes": "",
+        "alias": "Send switchPonTypebStatusRequest"
+    },
+    {
+        "from": "xponhwa", 
+        "to": "xponinfra", 
+        "event": [
+            "\"switchPonTypebStatusResponse\": {"
+        ], 
+        "notes": "",
+        "alias": "Recieve switchPonTypebStatusResponse"
+    }
+]

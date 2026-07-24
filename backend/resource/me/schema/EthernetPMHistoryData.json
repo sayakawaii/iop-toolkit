@@ -1,0 +1,243 @@
+{
+	"Me": {
+		"id": 24,
+		"name": "EthernetPMHistoryData",
+		"access": "CreatedByOLT",
+		"type": "Config",
+		"action": [
+			"Create",
+			"Delete",
+			"Get",
+			"Set",
+			"Get current data"
+		],
+		"instance": {
+			"type": "Dynamic",
+			"value": 0
+		},
+		"attributes": {
+			"attribute": [
+				{
+					"name": "Interval end time",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Threshold data 1/2 ID",
+					"size": 2,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"SBC"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "FCS errors",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Excessive collision counter",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Late collision counter",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Frames too long",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Buffer overflows on receive",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Buffer overflows on transmit",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Single collision frame counter",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Multiple collisions frame counter",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "SQE counter",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Deferred transmission counter",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Internal MAC transmit error counter",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Carrier sense error counter",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Alignment error counter",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Internal MAC receive error counter",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				}
+			]
+		},
+		"alarms": {
+			"alarm": [
+				{
+					"number": 0,
+					"name": "FCS errors",
+					"description": ""
+				},
+				{
+					"number": 1,
+					"name": "Excessive collision counter",
+					"description": ""
+				},
+				{
+					"number": 2,
+					"name": "Late collision counter",
+					"description": ""
+				},
+				{
+					"number": 3,
+					"name": "Frames too long",
+					"description": ""
+				},
+				{
+					"number": 4,
+					"name": "Buffer overflows on receive",
+					"description": ""
+				},
+				{
+					"number": 5,
+					"name": "Buffer overflows on transmit",
+					"description": ""
+				},
+				{
+					"number": 6,
+					"name": "Single collision frame counter",
+					"description": ""
+				},
+				{
+					"number": 7,
+					"name": "Multiple collisions frame counter",
+					"description": ""
+				},
+				{
+					"number": 8,
+					"name": "SQE counter",
+					"description": ""
+				},
+				{
+					"number": 9,
+					"name": "Deferred transmission counter",
+					"description": ""
+				},
+				{
+					"number": 10,
+					"name": "Internal MAC transmit error counter",
+					"description": ""
+				},
+				{
+					"number": 11,
+					"name": "Carrier sense error counter",
+					"description": ""
+				},
+				{
+					"number": 12,
+					"name": "Alignment error counter",
+					"description": ""
+				},
+				{
+					"number": 13,
+					"name": "Internal MAC receive error counter",
+					"description": ""
+				}
+			]
+		}
+	}
+}

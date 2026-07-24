@@ -1,0 +1,44 @@
+ {
+    "Me": {
+        "id": 137,
+        "name": "NetworkAddress",
+        "access": "CreatedByOLT",
+        "type": "Config",
+        "action": [
+        	"Create",
+        	"Delete",
+            "Get",
+            "Set"
+        ],
+        "instance": {
+            "type": "Dynamic",
+            "value": 0
+        },
+        "attributes": {
+            "attribute": [
+                {
+                    "name": "Security pointer",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Address pointer",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC"
+                    ],
+                    "category": "Mandatory"
+                }
+            ]
+        }
+    }
+  }

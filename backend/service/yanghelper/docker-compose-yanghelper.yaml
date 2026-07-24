@@ -1,0 +1,13 @@
+version: "3"
+services:
+  yanghelper:
+    image: 'yanghelper'
+    container_name: yanghelper
+    restart: always
+    privileged: true
+    user: root
+    # ports:
+    #   - "8080:8080"
+    # environment:
+    volumes:
+      - ./yanghelper/data:/usr/src/app/yanghelper

@@ -1,0 +1,152 @@
+{
+    "Me": {
+        "id": 311,
+        "name": "MulticastSubscriberMonitor",
+        "access": "CreatedByOLT",
+        "type": "Config",
+        "action": [
+            "Create",
+            "Delete",
+            "Get",
+            "Get next",
+            "Set"
+        ],
+        "instance": {
+            "type": "Dynamic",
+            "value": 0
+        },
+        "attributes": {
+            "attribute": [
+                {
+                    "name": "ME type",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Current multicast bandwidth",
+                    "size": 4,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Join messages counter",
+                    "size": 4,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Bandwidth exceeded counter",
+                    "size": 4,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "IPv4 active group list table",
+        			"size": 24,
+        			"format": "Array Structure",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory",
+                    "structure": {
+                    	"fields": [
+							{
+								"name": "VLAN ID, 0 if not used",
+								"size": 16,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "Source IP address, 0.0.0.0 if not used",
+								"size": 32,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "Multicast destination IP address",
+								"size": 32,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "Best efforts actual bandwidth estimate, bytes per second",
+								"size": 32,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "Client (set-top box) IP address, i.e., the IP address of the device currently joined",
+								"size": 32,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "Time since the most recent join of this client to the IP channel, in seconds",
+								"size": 32,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "Reserved",
+								"size": 16,
+								"format": "UnsignedInteger"
+							}
+                    	]
+                    }
+                },
+                {
+                    "name": "IPv6 active group list table",
+        			"size": 58,
+        			"format": "Array Structure",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory",
+                    "structure": {
+                    	"fields": [
+							{
+								"name": "VLAN ID, 0 if not used",
+								"size": 16,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "Source IP address, 0.0.0.0 if not used",
+								"size": 128,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "Multicast destination IP address",
+								"size": 128,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "Best efforts actual bandwidth estimate, bytes per second",
+								"size": 32,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "Client (set-top box) IP address, i.e., the IP address of the device currently joined",
+								"size": 128,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "Time since the most recent join of this client to the IP channel, in seconds",
+								"size": 32,
+								"format": "UnsignedInteger"
+							}
+                    	]
+                    }
+                }
+            ]
+        }
+    }
+}

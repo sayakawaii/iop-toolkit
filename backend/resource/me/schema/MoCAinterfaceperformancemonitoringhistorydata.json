@@ -1,0 +1,137 @@
+{
+	"Me": {
+		"id": 164,
+		"name": "MoCAinterfaceperformancemonitoringhistorydata",
+		"access": "CreatedByOLT",
+		"type": "Config",
+		"action": [
+			"Create",
+			"Delete",
+			"Get",
+			"Set",
+			"Get next"
+		],
+		"instance": {
+			"type": "Dynamic",
+			"value": 0
+		},
+		"attributes": {
+			"attribute": [
+				{
+					"name": "Interval end time",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Threshold data 1/2 ID",
+					"size": 2,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"SBC"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "PHY tx broadcast rate",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Optional"
+				},
+				{
+					"name": "Node table",
+					"size": 37,
+					"format": "Array Structure",
+					"table": true,
+					"tableGetNextIncompleteRows": true,
+					"access": [
+						"R"
+					],
+					"category": "Mandatory",
+					"structure": {
+						"fields":
+						[
+                            {
+                                "name": "MAC address",
+                                "size": 48,
+                                "format": "Bytes"
+                            },
+							{
+								"name": "PHY tx rate",
+								"size": 32,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "Tx power control reduction",
+								"size": 8,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "PHY rx rate",
+								"size": 32,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "Rx power level",
+								"size": 8,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "PHY rx broadcast rate",
+								"size": 32,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "Rx broadcast power level",
+								"size": 8,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "Tx packet",
+								"size": 32,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "Rx packet",
+								"size": 32,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "Rx errored and missed",
+								"size": 32,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "Rx errored",
+								"size": 32,
+								"format": "UnsignedInteger"
+							}
+						]
+					}
+				}
+			]
+		},
+                "alarms": {
+                        "alarm": [
+                                {
+                                        "number": 0,
+                                        "name": "Total rx errored and missed",
+                                        "description": "The number of recieved errored and missed packets that has crossed the set threshold value"
+                                },
+                                {
+                                        "number": 1,
+                                        "name": "Total rx errored",
+                                        "description": "The number of received errored packets that has crossed the set threshold value"
+                                }
+                        ]
+                }
+	}
+}

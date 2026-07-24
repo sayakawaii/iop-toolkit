@@ -1,0 +1,130 @@
+{
+    "Me": {
+        "id": 65297,
+        "name": "UniSupplemental1V2",
+        "access": "CreatedByONU",
+        "type": "Config",
+        "action": [
+            "Get",
+            "Set"
+        ],
+        "instance": {
+            "type": "Dynamic",
+            "value": 0
+        },
+        "attributes": {
+            "attribute": [
+                {
+                    "name": "Downstream Tag Handling Mode",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "optional"
+                },
+                {
+                    "name": "IGMP Access Control Method",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "optional"
+                },
+                {
+                    "name": "Multicast VID Value",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "mandatory"
+                },
+                {
+                    "name": "Multicast P-Bit Value",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "mandatory"
+                },
+                {
+                    "name": "IGMP Channel Bridge Port Number",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "mandatory"
+                },
+                {
+                    "name": "Upstream Default Priority",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "mandatory"
+                },
+                {
+                    "name": "Maximum Number of Hosts per UNI",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "mandatory"
+                },
+                {
+                    "name": "Upstream DHCP packet rate",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "mandatory"
+                },
+                {
+                    "name": "Upstream ARP packet rate",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "mandatory"
+                },
+                {
+                    "name": "Downstream CFM packet rate",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "mandatory"
+                },
+                {
+                    "name": "Ethernet Port Shutdown Enable",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "mandatory"
+                }
+            ]
+        }
+    }
+}

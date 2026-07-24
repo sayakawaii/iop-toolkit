@@ -1,0 +1,109 @@
+{
+	"Me": {
+		"id": 300,
+		"name": "CfmOamMa",
+		"access": "CreatedByOLT",
+		"type": "Config",
+		"action": [
+			"Create",
+			"Delete",
+			"Get",
+			"Set"
+		],
+		"instance": {
+			"type": "Dynamic",
+			"value": 0
+		},
+		"attributes": {
+			"attribute": [
+				{
+					"name": "MD pointer",
+					"size": 2,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"SBC"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Short MA name format",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"SBC"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Short MA name 1",
+					"size": 25,
+					"format": "Bytes",
+					"access": [
+						"R",
+						"W"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Short MA name 2",
+					"size": 25,
+					"format": "Bytes",
+					"access": [
+						"R",
+						"W"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "CCM Interval",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"SBC"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Associated VLANs",
+					"size": 24,
+					"format": "Array UnsignedInteger 16",
+					"access": [
+						"R",
+						"W"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "MHF creation",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"SBC"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Sender ID permission",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"SBC"
+					],
+					"category": "Mandatory"
+				}
+			]
+		}
+	}
+}
+
+

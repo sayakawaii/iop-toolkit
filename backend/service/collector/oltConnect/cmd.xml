@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<connection>
+    <type>LightSpan</type>
+    <board>FX</board>
+    <nt>
+        <name>fant_f</name>
+        <protocol>ssh</protocol>
+        <ip>135.251.192.132</ip>
+        <port>923</port>
+        <user>root</user>
+        <password>2x2=4</password>
+        <lt>
+            <name>fglt_b</name>
+            <protocol>ssh</protocol>
+            <ip>169.254.1.3</ip>
+            <port>2222</port>
+            <user>root</user>
+            <password>2x2=4</password>
+            <app>
+                <name>hypervisor</name>
+                <path>/isam/slot_default/onumgnt_hypervisor_app/run/</path>
+                <ternimal>/isam/user/calamares -cnt tty1_ext</ternimal>
+            </app>
+            <app>
+                <name>xponHwa</name>
+                <path>/isam/slot_default/onumgnt_hypervisor_app/run/</path>
+                <ternimal>/isam/user/calamares -cnt tty1_ext</ternimal>
+            </app>
+        </lt>
+        <lt>
+            <name>fwlt_c</name>
+            <protocol>ssh</protocol>
+            <ip>169.254.1.4</ip>
+            <port>2222</port>
+            <user>root</user>
+            <password>2x2=4</password>
+        </lt>
+    </nt>
+</connection>

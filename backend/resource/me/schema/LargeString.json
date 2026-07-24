@@ -1,0 +1,182 @@
+ {
+    "Me": {
+        "id": 157,
+        "name": "LargeString",
+        "access": "CreatedByOLT",
+        "type": "Config",
+        "action": [
+        	"Create",
+        	"Delete",
+            "Get",
+            "Set"
+        ],
+        "instance": {
+            "type": "Dynamic",
+            "value": 0
+        },
+        "attributes": {
+            "attribute": [
+                {
+                    "name": "Number of parts",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Part 1",
+                    "size": 25,
+                    "format": "String",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Part 2",
+                    "size": 25,
+                    "format": "String",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Part 3",
+                    "size": 25,
+                    "format": "String",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Part 4",
+                    "size": 25,
+                    "format": "String",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Part 5",
+                    "size": 25,
+                    "format": "String",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Part 6",
+                    "size": 25,
+                    "format": "String",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Part 7",
+                    "size": 25,
+                    "format": "String",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Part 8",
+                    "size": 25,
+                    "format": "String",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Part 9",
+                    "size": 25,
+                    "format": "String",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Part 10",
+                    "size": 25,
+                    "format": "String",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Part 11",
+                    "size": 25,
+                    "format": "String",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Part 12",
+                    "size": 25,
+                    "format": "String",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Part 13",
+                    "size": 25,
+                    "format": "String",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Part 14",
+                    "size": 25,
+                    "format": "String",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Part 15",
+                    "size": 25,
+                    "format": "String",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "Mandatory"
+                }
+            ]
+        }
+    }
+  }

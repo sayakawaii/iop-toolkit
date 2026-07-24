@@ -1,0 +1,183 @@
+{
+	"Me":{
+		"id":153,
+		"name":"SIPUserData",
+		"access":"CreatedByOLT",
+		"type":"Config",
+		"action":[
+			"Get",
+			"Create",
+			"Delete",
+			"Set",
+			"Dummy"
+		],
+		"instance":{
+			"type":"Dynamic",
+			"value":0
+		},
+		"attributes":{
+			"attribute":[
+				{
+					"name":"SIP agent pointer",
+					"size":2,
+					"format":"UnsignedInteger",
+					"access":[
+						"R",
+						"W",
+						"SBC",
+						"Dummy"
+					],
+					"category":"Mandatory"
+				},
+				{
+					"name":"User part AOR",
+					"size":2,
+					"format":"UnsignedInteger",
+					"access":[
+						"R",
+						"W",
+						"SBC",
+						"Dummy"
+					],
+					"category":"Mandatory"
+				},
+				{
+					"name":"SIP display name",
+					"size":25,
+					"format":"String",
+					"access":[
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category":"Mandatory"
+				},
+				{
+					"name":"Username and password",
+					"size":2,
+					"format":"UnsignedInteger",
+					"access":[
+						"R",
+						"W",
+						"SBC",
+						"Dummy"
+					],
+					"category":"Mandatory"
+				},
+				{
+					"name":"Voicemail server SIP URI",
+					"size":2,
+					"format":"UnsignedInteger",
+					"access":[
+						"R",
+						"W",
+						"SBC",
+						"Dummy"
+					],
+					"category":"Mandatory"
+				},
+				{
+					"name":"Voicemail subscription expiration time",
+					"size":4,
+					"format":"UnsignedInteger",
+					"access":[
+						"R",
+						"W",
+						"SBC",
+						"Dummy"
+					],
+					"category":"Mandatory"
+				},
+				{
+					"name":"Network dial plan pointer",
+					"size":2,
+					"format":"UnsignedInteger",
+					"access":[
+						"R",
+						"W",
+						"SBC",
+						"Dummy"
+					],
+					"category":"Mandatory"
+				},
+				{
+					"name":"Application services profile pointer",
+					"size":2,
+					"format":"UnsignedInteger",
+					"access":[
+						"R",
+						"W",
+						"SBC",
+						"Dummy"
+					],
+					"category":"Mandatory"
+				},
+				{
+					"name":"Feature code pointer",
+					"size":2,
+					"format":"UnsignedInteger",
+					"access":[
+						"R",
+						"W",
+						"SBC",
+						"Dummy"
+					],
+					"category":"Mandatory"
+				},
+				{
+					"name":"PPTP pointer",
+					"size":2,
+					"format":"UnsignedInteger",
+					"access":[
+						"R",
+						"W",
+						"SBC",
+						"Dummy"
+					],
+					"category":"Mandatory"
+				},
+				{
+					"name":"Release timer",
+					"size":1,
+					"format":"UnsignedInteger",
+					"access":[
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category":"Optional"
+				},
+				{
+					"name":"Receiver off hook (ROH) timer",
+					"size":1,
+					"format":"UnsignedInteger",
+					"access":[
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category":"Optional"
+				}
+			]
+		},
+		"alarms":{
+			"alarm":[
+				{
+					"number":0,
+					"name":"SIP UA register auth",
+					"description":"Cannot authenticate a registration session (e.g., missing credentials)"
+				},
+				{
+					"number":1,
+					"name":"SIP UA register timeout",
+					"description": "Timeout waiting for response from a registration server"
+				},
+				{
+					"number":2,
+					"name":"SIP UA register fail",
+					"description": "Failure response received from a registration server"
+				}
+			]
+		}
+	}
+}

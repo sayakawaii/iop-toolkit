@@ -1,0 +1,128 @@
+[
+    {
+        "from": "hypervisor", 
+        "to": "vonumgmt", 
+        "event": [
+            "ProcessOnuEvent", 
+            "Event:REQUEST", 
+            "\"operation\":\"get\""
+        ], 
+        "notes": "receive get from hypervisor",
+        "alias": "Process get"
+    },
+    {
+        "from": "hypervisor", 
+        "to": "vonumgmt", 
+        "event": [
+            "ProcessOnuEvent", 
+            "Event:REQUEST", 
+            "\"operation\":\"detect\""
+        ], 
+        "notes": "receive detect from hypervisor",
+        "alias": "Process detect"
+    },
+    {
+        "from": "hypervisor", 
+        "to": "vonumgmt", 
+        "event": [
+            "ProcessOnuEvent", 
+            "Event:REQUEST", 
+            "\"operation\":\"copy\""
+        ], 
+        "notes": "receive copy from hypervisor",
+        "alias": "Process copy"
+    },
+    {
+        "from": "hypervisor", 
+        "to": "vonumgmt", 
+        "event": [
+            "ProcessOnuEvent", 
+            "Event:REQUEST", 
+            "\"operation\":\"create-subscription\""
+        ], 
+        "notes": "receive create-subscription from hypervisor",
+        "alias": "Process create-subscription"
+    },
+    {
+        "from": "hypervisor", 
+        "to": "vonumgmt", 
+        "event": ["UPDATE"], 
+        "notes": "receive UPDATE from hypervisor",
+        "alias": "Process UPDATE"
+    },
+    {
+        "from": "vonumgmt", 
+        "to": "hypervisor", 
+        "event": [
+            "sending response", 
+            "\"event\":\"RESPONSE\"", 
+            "\"operation\":\"DETECT\""
+        ], 
+        "notes": "send DETECT response to hypervisor",
+        "alias": "Process DETECT response"
+    },
+    {
+        "from": "vonumgmt", 
+        "to": "hypervisor", 
+        "event": [
+            "sending response", 
+            "\"event\":\"RESPONSE\"", 
+            "\"operation\":\"GET\""
+        ], 
+        "notes": "send GET response to hypervisor",
+        "alias": "Process GET response"
+    },
+    {
+        "from": "vonumgmt", 
+        "to": "hypervisor", 
+        "event": [
+            "sending response", 
+            "\"event\":\"RESPONSE\"", 
+            "\"operation\":\"COPY\""
+        ], 
+        "notes": "send COPY response to hypervisor",
+        "alias": "Process COPY response"
+    },
+    {
+        "from": "vonumgmt", 
+        "to": "hypervisor", 
+        "event": [
+            "sending response", 
+            "\"event\":\"RESPONSE\"", 
+            "\"operation\":\"CREATE-SUBSCRIPTION\""
+        ], 
+        "notes": "send CREATE-SUBSCRIPTION response to hypervisor",
+        "alias": "Process CREATE-SUBSCRIPTION response"
+    },
+    {
+        "from": "vonumgmt", 
+        "to": "hypervisor", 
+        "event": [
+            "sending odb-sync notification", 
+            "\"operation\":\"OPER_STATUS_SYNC\""
+        ], 
+        "notes": "send OPER_STATUS_SYNC to hypervisor",
+        "alias": "Process OPER_STATUS_SYNC"
+    },
+    {
+        "from": "vonumgmt", 
+        "to": "hypervisor", 
+        "event": ["STORE"], 
+        "notes": "send STORE to hypervisor",
+        "alias": "Process STORE"
+    },
+    {
+        "from": "vonumgmt", 
+        "to": "onu", 
+        "event": ["BEGIN OnOnuRequest"], 
+        "notes": "",
+        "alias": "send OnOnuRequest to onu"
+    },
+    {
+        "from": "onu", 
+        "to": "onu", 
+        "event": ["BEGIN OnOnuRequest"], 
+        "notes": "",
+        "alias": "Process OnOnuRequest"
+    }
+]

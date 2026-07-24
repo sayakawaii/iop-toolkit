@@ -1,0 +1,258 @@
+[04/02/2025-13:07:58.294883],[xponhwa:main],-------------mbxSendHdl[0] is not null!--------------
+[04/02/2025-13:07:58.300090],[xponhwa:main],Command response message received
+[04/02/2025-13:07:58.300127],[xponhwa:main],main thread handle_CmdRespMsg: cpu 0 oneBasedGlobPonId 7 command_code is: SET_PON_ID_CMD_CODE 0x63
+[04/02/2025-13:07:58.300147],[xponhwa:main],main thread handle_CmdRespMsg: PonIndex is: 36 response: 0(0-Accepted)
+[04/02/2025-13:07:58.300185],[xponhwa:main],main thread handle_CmdRespMsg: cmd 0x63 succeeded response. opInd=0
+[04/02/2025-13:07:59.604246],[yproto:main],on_request proto msg
+[04/02/2025-13:07:59.604294],[yproto:main],{
+ "dmsCommitInform": {
+  "dmsCommitState": "DMS_COMMIT_STATE_BEGIN"
+ }
+}
+
+[04/02/2025-13:07:59.604317],[xponhwa:main],xponInfraCfgWrapperServer::on_request - The Msg(281 kDmsCommitInform) is received
+[04/02/2025-13:07:59.604337],[xponhwa:main],processPhysicalPonConfigRequest::on_request - The Msg(281) is received
+[04/02/2025-13:07:59.611778],[yproto:main],on_request proto msg
+[04/02/2025-13:07:59.611810],[yproto:main],{
+ "dmsCommitInform": {
+  "dmsCommitState": "DMS_COMMIT_STATE_END"
+ }
+}
+
+[04/02/2025-13:07:59.611834],[xponhwa:main],xponInfraCfgWrapperServer::on_request - The Msg(281 kDmsCommitInform) is received
+[04/02/2025-13:07:59.611853],[xponhwa:main],processPhysicalPonConfigRequest::on_request - The Msg(281) is received
+[04/02/2025-13:07:59.611873],[xponhwa:main],getPonCacResultMapSize: 0
+[04/02/2025-13:07:59.613490],[yproto:main],on_request proto msg
+[04/02/2025-13:07:59.613513],[yproto:main],{
+ "onuEnableRequest": {
+  "channelObjectIndex": {
+   "index": 520
+  },
+  "serialNumber": "ALCLFA6189D4",
+  "onuEnableType": "DISABLE_ONU"
+ }
+}
+
+[04/02/2025-13:07:59.613535],[xponhwa:main],onuMgntOltCfgWrapperServer::on_request - The Msg(15 kOnuEnableRequest) is received from client OnuMgntOlt
+[04/02/2025-13:07:59.613554],[xponhwa:main],OnuMsgHandler::processConfigureOnuRequest() - The Msg(15) is received from client
+[04/02/2025-13:07:59.613578],[xponhwa:main],processOnuEnableDisableOnCpRequest:The physicalPonIndex is 36
+!
+[04/02/2025-13:07:59.613596],[xponhwa:main],enter >getOnuEnableDisableCfgInfoFromPbMsg()
+[04/02/2025-13:07:59.613613],[xponhwa:main],Sending enable/disable response
+[04/02/2025-13:07:59.614040],[yproto:main],send_response proto msg
+[04/02/2025-13:07:59.614066],[yproto:main],{
+ "onuEnableResponse": {
+  "channelObjectIndex": {
+   "index": 520
+  },
+  "serialNumber": "ALCLFA6189D4",
+  "returnCode": "NO_ERROR"
+ }
+}
+
+[04/02/2025-13:07:59.614112],[xponhwa:main],audit:1
+[04/02/2025-13:07:59.614135],[xponhwa:main],Get onuEnableDisableCfgInfo for SN ALCLFA6189D4
+[04/02/2025-13:07:59.614155],[xponhwa:main],Update existing entry for OnuSn ALCLFA6189D4 in onuEnbaleDisableCfgInfoMap!
+[04/02/2025-13:07:59.614175],[FastRecover:main],DataId [6] is changed in state [0]!
+[04/02/2025-13:07:59.615292],[xponhwa:main],onuEnableDisableInfo serial_number = ALCLFA6189D4
+[04/02/2025-13:07:59.615344],[xponhwa:main],[PON 36] Enable or Disable Onu On CP Cmd command processed, sernum: ALCLFA6189D4 Status: 0xff
+[04/02/2025-13:07:59.615365],[xponhwa:main],getOnuIndexBySn; portId 36, SN = ALCLFA6189D4
+[04/02/2025-13:07:59.615386],[xponhwa:main],getOnuIndexBySn; portId 36, SN = ALCLFA6189D4: find onuIndex 1
+[04/02/2025-13:07:59.615411],[xponhwa:main],-------------mbxSendHdl[0] is not null!--------------
+[04/02/2025-13:07:59.620469],[xponhwa:main],Command response message received
+[04/02/2025-13:07:59.620553],[xponhwa:main],main thread handle_CmdRespMsg: cpu 0 oneBasedGlobPonId 7 command_code is: SET_SER_NUM_STAT_CMD_CODE 0x0A
+[04/02/2025-13:07:59.620574],[xponhwa:main],main thread handle_CmdRespMsg: PonIndex is: 36 response: 0(0-Accepted)
+[04/02/2025-13:07:59.620600],[xponhwa:main],main thread handle_CmdRespMsg: cmd 0xa succeeded response. opInd=0
+[04/02/2025-13:07:59.638589],[Notification:MbxRecv0],lt_gltda_process_rcvd: Received ONU_ALM_CHG_NTF_CODE from GLOB 0 channel 2
+[04/02/2025-13:07:59.638693],[Notification:MbxRecv0],lt_gltda_process_rcvd: Received ONU_ALM_CHG_NTF_CODE from GLOB 0 channel 2
+[04/02/2025-13:07:59.773192],[Notification:main],[get_ONU_Alarm_Status_Change_Notification] physicalPonIndex 36 onuId 0 onu_id 0 opStatus 0 alarms 0x4000 hw_id 0 sernum
+[04/02/2025-13:07:59.773269],[Notification:main],updateOnuAlmOpState physicalPonIndex 36 SN ALCLFA6189D4 onuStatus 3 getOnuAlmOpState 0
+[04/02/2025-13:07:59.773302],[Notification:main],[get_ONU_Alarm_Status_Change_Notification] physicalPonIndex 36 onuId 0 opStatus 0 prev_onu_alarm 0x00000000 alarms 0x00004040 bstateChanged 1, distance -1.000000
+[04/02/2025-13:07:59.773327],[xponhwa:main],[handleOnuStatusChange] onu status changed-reporting:[onuStatus:4, onu_alarms:0x4040] under pon[36]!
+[04/02/2025-13:07:59.870176],[Notification:MbxRecv0],lt_gltda_process_rcvd: Received ONU_DETECT_NTF_CODE from GLOB 0 channel 2
+[04/02/2025-13:07:59.870269],[Notification:MbxRecv0],lt_gltda_process_rcvd: Received ONU_ALM_CHG_NTF_CODE from GLOB 0 channel 2
+[04/02/2025-13:08:00.055030],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x1001) ontPloamInfo defect(0x1)
+[04/02/2025-13:08:00.055130],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x1001) ontPloamInfo defect(0x1)
+[04/02/2025-13:08:00.055153],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x1001) ontPloamInfo defect(0x1)
+[04/02/2025-13:08:00.055199],[Faults:main],primary primary_ctId: 0 - primary_ctObjIndex 0 in EncapOnuNotificationMsg GPB
+[04/02/2025-13:08:00.055235],[Faults:main],call sendOnuBulkAlarmToClients: physicalPonIndex(36),ontId(1),isNotifyOn(1),notifyType(26) defectStatus(0x1000),defectChangedReport(0x1001),isOnuOnlinePrev(1),isOnuOnlineCurr(0), isOntPlomDebug (0) distance(0.16) oatdDefects(0x4040) update_mode(0)
+[04/02/2025-13:08:00.055466],[Faults:main],[no PON los case]Send 'E_ONU_UPDATE_NORMAL' Msg with defectStatus(0x1000),defectChangedReport(0x1001),isOnuOnlinePrev(1),isOnuOnlineCurr(0).
+[04/02/2025-13:08:00.055565],[xponhwa:main],[sendOnuBulkAlarmNotify] omit to persist alarm(4096)!
+[04/02/2025-13:08:00.055627],[xponhwa:main],[sendOnuBulkAlarmNotify] finished with result(OK)!
+[04/02/2025-13:08:00.056252],[yproto:main],send_oneway proto msg
+[04/02/2025-13:08:00.056291],[yproto:main],{
+ "onuBulkAlarmMsg": {
+  "state": "E_BulkAlarm_Normal",
+  "msgOnuPloamDefectAlarm": [
+   {
+    "vaniObjectIndex": {
+     "index": 518
+    },
+    "ctObjectIndex": {
+     "index": 520
+    },
+    "defectStatus": 4096,
+    "defectChanged": 4097,
+    "notifIsOn": true,
+    "operState": false,
+    "serialNumber": "ALCLFA6189D4",
+    "onuDetectedAfterSwo": false,
+    "isOnuOnline": false,
+    "isOnuOnlinePrev": true,
+    "fiberDistance": 0.158031046,
+    "primaryCtObjectIndex": {
+     "index": 0
+    },
+    "defectTimestamp": 1738674480,
+    "onuUpdateMode": "E_ONU_UPDATE_NORMAL"
+   }
+  ]
+ }
+}
+
+[04/02/2025-13:08:00.066955],[yproto:main],on_request proto msg
+[04/02/2025-13:08:00.067005],[yproto:main],{
+ "onuAuthResultInform": {}
+}
+
+[04/02/2025-13:08:00.067035],[xponhwa:main],onuMgntOltCfgWrapperServer::on_request - The Msg(21 kOnuAuthResultInform) is received from client OnuMgntOlt
+[04/02/2025-13:08:00.067062],[xponhwa:main],OnuMsgHandler::processConfigureOnuRequest() - The Msg(21) is received from client
+[04/02/2025-13:08:00.273227],[Notification:main],[ng2_get_ONU_Detect_Notification] physicalPonIndex 36 channel 2 sn ALCLFA6189D4 SLID HIGHFIVES! onuId 0 onuAid 1025 hwId 65535 isNewOnu 1 oldStatus 3 onuStatus 4 actualUsRate 0 alarms 0x40 distance 0.000
+[04/02/2025-13:08:00.273301],[Notification:main],Do not erase ONU_DETECT_INFO_MAP when ONU is disabled!
+[04/02/2025-13:08:00.273337],[xponhwa:main],Update onuObjIdxCfg
+[04/02/2025-13:08:00.273360],[xponhwa:main],ponId(36), hw_id(0), ontId(1), onuId(0), serial_number(ALCLFA6189D4), isRanged(0), ohmObjIndex(518), ctIndex(1353)
+[04/02/2025-13:08:00.273386],[onuProtect:main],[onOnuDetNotif_SetIsProtectedCp] physicalPonIndex 36 onuId 0 is undetected, set protected state to false
+[04/02/2025-13:08:00.273414],[xponhwa:main],alarm additional info: Channelpair ont detect alarm OFF, PON: 36, SN: ALCLFA6189D4, onu_alarms: 0x4000, onu_id is 0, reg_id: HIGHFIVES!, detected_us_rate: 0, onStandby: 0, pon_rec[pon].pon_state: 1
+[04/02/2025-13:08:00.273521],[xponhwa:main], sendOntDetectNotify:  SN is ALCLFA6189D4,onuIdList size is 1 onuid is 1
+[04/02/2025-13:08:00.273545],[xponhwa:main],Can't find OnuIndex in OnuCfgInfoMap!
+[04/02/2025-13:08:00.273564],[xponhwa:main],Obtain OnuCfgMgnt::onuId[0],physicalPonIndex[36] from OnuCfgInfoMap
+[04/02/2025-13:08:00.273583],[xponhwa:main],Found with onuId[0],physicalPonIndex[36] in OnuCfgInfoMap!
+[04/02/2025-13:08:00.273604],[xponhwa:main], sendOntDetectNotify:  pon is 36, ontId is 1025,  ponOhmObjIndex is 520, onuOhmObjIndex is 518
+[04/02/2025-13:08:00.273656],[xponhwa:main],isMultiVani[0]
+[04/02/2025-13:08:00.273693],[Notification:main],Send onu alarm To Clients: Interface Index: physicalPonIndex: 36, onuId: 0
+[04/02/2025-13:08:00.274069],[yproto:main],send_oneway proto msg
+[04/02/2025-13:08:00.274091],[yproto:main],{
+ "onuDetectNotificationMsg": {
+  "ctObjectIndex": {
+   "index": 520
+  },
+  "vaniObjectIndex": {
+   "index": 518
+  },
+  "notifIsOn": false,
+  "serialNumber": "Channelpair ont detect alarm OFF, PON: 36, SN: ALCLFA6189D4",
+  "onuId": 0,
+  "rangingState": 1,
+  "detectedRegistrationId": "HIGHFIVES!",
+  "detectedUpstreamRate": 0,
+  "fiberDistance": 0,
+  "multiVani": false,
+  "onuStatus": 4,
+  "onuAid": 1025
+ }
+}
+
+[04/02/2025-13:08:00.274155],[xponhwa:main],[gpon_get_ONU_Detect_Notification] CtLosAlmReportCtrl handle OnuDetect onuid = 1025 onu_alarm = 64, onu status = 4
+[04/02/2025-13:08:00.274180],[xponhwa:main],[handleOnuStatusChange] onu status changed-reporting:[onuStatus:4, onu_alarms:0x4000] under pon[36]!
+[04/02/2025-13:08:00.274223],[xponhwa:main],getLedIdFromPhysicalPonIndex: physicalPonIndex 36 cageMode 3, ponType 0, portPos 1
+[04/02/2025-13:08:00.274245],[xponhwa:main],Enter OnOntStatusChange ponId:36,ledId:36,current ledsSatus:1, online: 0
+[04/02/2025-13:08:00.274525],[Notification:main],[get_ONU_Alarm_Status_Change_Notification] physicalPonIndex 36 onuId 0 onu_id 0 opStatus 0 alarms 0x4000 hw_id 65535 sernum
+[04/02/2025-13:08:00.554038],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:00.554128],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:00.554151],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:01.053991],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:01.054061],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:01.054082],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:01.554904],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:01.554974],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:01.554995],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:02.054798],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:02.054884],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:02.054905],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:02.554475],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:02.554551],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:02.554572],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:03.054497],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:03.054569],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:03.054589],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:03.554373],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:03.554447],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:03.554468],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:04.054230],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:04.054304],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:04.054339],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:04.554092],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:04.554161],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:04.554182],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:05.053966],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:05.054048],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:05.054070],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:05.554834],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:05.554903],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:05.554924],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:06.054821],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:06.054888],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:06.054910],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:06.554688],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:06.554761],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:06.554782],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:07.054542],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:07.054614],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:07.054636],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:07.554483],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:07.554557],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:07.554578],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:08.054360],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:08.054442],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:08.054464],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:08.554240],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:08.554315],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:08.554336],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:09.054252],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:09.054322],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:09.054343],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:09.554127],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:09.554197],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:09.554218],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:10.054026],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:10.054104],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:10.054125],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:10.554945],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:10.555015],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:10.555036],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:11.054938],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:11.055028],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:11.055049],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:11.554871],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:11.554945],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:11.554978],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:12.054947],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:12.055018],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:12.055039],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:12.554922],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:12.554995],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:12.555015],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:13.054776],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:13.054848],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:13.054869],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:13.554642],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:13.554713],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:13.554734],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:14.054523],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:14.054603],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:14.054624],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:14.554381],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:14.554454],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:14.554475],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:15.054360],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:15.054433],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:15.054454],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:15.554253],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:15.554330],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:15.554352],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:16.054128],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:16.054198],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:16.054220],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:16.553980],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:16.554051],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)
+[04/02/2025-13:08:16.554072],[Faults:main],[handleOntAlarmAndStatus]no ponlos physicalPonIndex(36)  onuId(1) defectStatus(0x1000) defectChangedReport(0x0) ontPloamInfo defect(0x1000)

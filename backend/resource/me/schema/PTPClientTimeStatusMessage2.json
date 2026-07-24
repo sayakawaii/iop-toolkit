@@ -1,0 +1,91 @@
+{
+    "Me": {
+        "id": 65332,
+        "name": "PTPClientTimeStatusMessage2",
+        "access": "CreatedByONU",
+        "type": "Config",
+        "action": [
+			"Get"
+        ],
+        "instance": {
+            "type": "Dynamic",
+            "value": 0
+        },
+        "attributes": {
+            "attribute": [
+                {
+                    "name": "Clock Identity",
+                    "size": 8,
+                    "format": "Bytes",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Port Number",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Interval of announce message",
+                    "size": 1,
+                    "format": "SignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Interval of sync message",
+                    "size": 1,
+                    "format": "SignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Interval of delay message",
+                    "size": 1,
+                    "format": "SignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "T4-T3 Value",
+                    "size": 4,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "IP Address",
+                    "size": 4,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "MAC Address",
+                    "size": 6,
+                    "format": "Bytes",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                }
+            ]
+        }
+    }
+}

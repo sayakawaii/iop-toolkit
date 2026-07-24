@@ -1,0 +1,136 @@
+# Managed Entity
+
+## Identity
+- ME ID: 24
+- ME Name: Ethernet performance monitoring history data
+- Source Section: 9.5.2
+- Source Page: 234
+
+## Classification
+- Access: needs_review
+- Type: needs_review
+- Actions: Create, Delete, Get, Set
+- Instance Type: per-instance
+- Instance Value: 2 bytes
+
+## Attributes
+
+### Attribute 1
+- Name: Threshold data 1/2 ID
+- Size: 2 bytes
+- Format: needs_review
+- Access: R, W, set-by-create
+- Category: mandatory
+
+### Attribute 2
+- Name: FCS errors
+- Size: 4 bytes
+- Format: needs_review
+- Access: R
+- Category: mandatory
+
+### Attribute 3
+- Name: Excessive collision counter
+- Size: 4 bytes
+- Format: needs_review
+- Access: R
+- Category: mandatory
+
+### Attribute 4
+- Name: Late collision counter
+- Size: 4 bytes
+- Format: needs_review
+- Access: R
+- Category: mandatory
+
+### Attribute 5
+- Name: Frames too long
+- Size: 4 bytes
+- Format: needs_review
+- Access: R
+- Category: mandatory
+
+### Attribute 6
+- Name: Buffer overflows on receive
+- Size: 4 bytes
+- Format: needs_review
+- Access: R
+- Category: mandatory
+
+### Attribute 7
+- Name: Buffer overflows on transmit
+- Size: 4 bytes
+- Format: needs_review
+- Access: R
+- Category: mandatory
+
+### Attribute 8
+- Name: Single collision frame counter
+- Size: 4 bytes
+- Format: needs_review
+- Access: R
+- Category: mandatory
+
+### Attribute 9
+- Name: Multiple collisions frame counter
+- Size: 4 bytes
+- Format: needs_review
+- Access: R
+- Category: mandatory
+
+### Attribute 10
+- Name: SQE counter
+- Size: 4 bytes
+- Format: needs_review
+- Access: R
+- Category: mandatory
+
+### Attribute 11
+- Name: Deferred transmission counter
+- Size: 4 bytes
+- Format: needs_review
+- Access: R
+- Category: mandatory
+
+### Attribute 12
+- Name: Internal MAC transmit error counter
+- Size: 4 bytes
+- Format: needs_review
+- Access: R
+- Category: mandatory
+
+### Attribute 13
+- Name: Carrier sense error counter
+- Size: 4 bytes
+- Format: needs_review
+- Access: R
+- Category: mandatory
+
+### Attribute 14
+- Name: Alignment error counter
+- Size: 4 bytes
+- Format: needs_review
+- Access: R
+- Category: mandatory
+
+### Attribute 15
+- Name: Internal MAC receive error counter
+- Size: 4 bytes
+- Format: needs_review
+- Access: R
+- Category: mandatory
+
+## Extraction Status
+- Status: auto_extracted
+- Attributes found: 15
+- Review needed: false
+
+## Raw Source
+
+```
+9.5.2 Ethernet performance monitoring history data  This ME collects some of the PM data for a physical Ethernet interface. Instances of this ME are  created and deleted by the OLT.  For a complete discussion of generic PM architecture, refer to clause I.4.  Relationships  An instance of this ME is associated with an instance of the PPTP Ethernet UNI.  Attributes  Managed entity ID: This attribute uniquely identifies each instance of this ME. Through an  identical ID, this ME is implicitly linked to an instance of the PPTP Ethernet  UNI. (R, set-by-create) (mandatory) (2 bytes) 
+
+---- page break ---- Interval end time : This attribute identifies the most recently finished 15  min interval. (R)  (mandatory) (1 byte)  Threshold data 1/2 ID: This attribute points to an instance of the threshold data 1 and 2 MEs  that contains PM threshold values. (R, W, set-by-create) (mandatory) (2 bytes)  FCS errors: This attribute counts frames received on a particular interface that were an  integral number of octets in length but failed the FCS check. The count is  incremented when the MAC service returns the frameCheckError status to the  link layer control (LLC) or  other MAC user. Received frames for which  multiple error conditions are obtained are counted according to the error status  presented to the LLC. (R) (mandatory) (4 bytes)  Excessive collision counter : This attribute counts frames whose transmission failed due to  excessive collisions. (R) (mandatory) (4 bytes)  Late collision counter: This attribute counts the number of times that a collision was detected  later than 512 bit times into the transmission of a packet. (R) (mandatory)  (4 bytes)  Frames too long: This attribute counts received frames that exceeded the maximum permitted  frame size. The count is incremented when the MAC service returns the  frameTooLong status to the LLC. (R) (mandatory) (4 bytes)  Buffer overflows on receive: This attribute counts the number of times that the receive buffer  overflowed. (R) (mandatory) (4 bytes)  Buffer overflows on transmit : This attribute counts the number of times that the transmit  buffer overflowed. (R) (mandatory) (4 bytes)  Single collision frame counter: This attribute counts successfully transmitted frames whose  transmission was delayed by exactly one collision. (R) (mandatory) (4 bytes)  Multiple collisions frame counter : This attribute counts successfully transmitted frames  whose transmission was delayed by more than one collision. (R) (mandatory)  (4 bytes)  SQE counter: This attribute counts the number of times that the SQE test error message was  generated by the PLS sublayer. (R) (mandatory) (4 bytes)  Deferred transmission counter : This attribute counts frames whose first transmission  attempt was delayed because the medium was busy. The count does not include  frames involved in collisions. (R) (mandatory) (4 bytes)  Internal MAC transmit error counter : This attribute counts frames whose transmission  failed due to an internal MAC sublayer transmit error. (R) (mandatory)  (4 bytes)  Carrier sense error counter: This attribute counts the number of times that carrier sense was  lost or never asserted when attempting to transmit a frame. (R) (mandatory)  (4 bytes)  Alignment error counter : This attribute counts received frames that were not an integral  number of octets in length and did not pass the FCS check. (R) (mandatory)  (4 bytes)  Internal MAC receive error counter : This attribute counts frames whose reception failed  due to an internal MAC sublayer receive error. (R) (mandatory) (4 bytes)  Actions  Create, delete, get, set 
+
+---- page break ---- Get current data (optional)  Notifications  Threshold crossing alert  Alarm  number Threshold crossing alert Threshold value attribute No. (Note)  0 FCS errors 1  1 Excessive collision counter 2  2 Late collision counter 3  3 Frames too long 4  4 Buffer overflows on receive 5  5 Buffer overflows on transmit 6  6 Single collision frame counter 7  7 Multiple collisions frame counter 8  8 SQE counter 9  9 Deferred transmission counter 10  10 Internal MAC transmit error counter 11  11 Carrier sense error counter 12  12 Alignment error counter 13  13 Internal MAC receive error counter 14  NOTE – This number associates the TCA with the specified threshold value attribute of the  threshold data 1/2 managed entities.  
+```

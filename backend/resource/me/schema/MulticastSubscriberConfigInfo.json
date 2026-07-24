@@ -1,0 +1,260 @@
+{
+	"Me": {
+		"id": 310,
+		"name": "MulticastSubscriberConfigInfo",
+		"access": "CreatedByOLT",
+        "type": "Config",
+        "action" : [
+        	"Create",
+        	"Delete",
+        	"Get",
+        	"Set"
+        ],
+        "instance": {
+        	"type": "Dynamic",
+        	"value": 0
+        },
+        "attributes": {
+        	"attribute": [
+        		{
+        			"name": "ME type",
+        			"size": 1,
+        			"format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC"
+                    ],
+                    "category": "Mandatory"
+        		},
+        		{
+        			"name": "Multicast operations profile pointer",
+        			"size": 2,
+        			"format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC"
+                    ],
+                    "category": "Mandatory"
+        		},
+        		{
+        			"name": "Max simultaneous groups",
+        			"size": 2,
+        			"format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC"
+                    ],
+                    "category": "Optional"
+        		},
+        		{
+        			"name": "Max multicast bandwidth",
+        			"size": 4,
+        			"format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC"
+                    ],
+                    "category": "Optional"
+        		},
+        		{
+        			"name": "Bandwidth enforcement",
+        			"size": 1,
+        			"format": "Boolean",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC"
+                    ],
+                    "category": "Optional"
+        		},
+        		{
+        			"name": "Multicast service package table",
+        			"size": 20,
+        			"format": "Array Structure",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "Optional",
+                    "structure": {
+                    	"fields": [
+                    		{
+								"name": "Table control",
+								"size": 16,
+								"format": "Array Structure",
+								"structure": {
+									"fields": [
+										{
+											"name": "Set ctrl",
+											"size": 2,
+											"format": "UnsignedInteger"
+										},
+										{
+											"name": "Reserved",
+											"size": 4,
+											"format": "UnsignedInteger"
+										},
+										{
+											"name": "Row key",
+											"size": 10,
+											"format": "UnsignedInteger"
+										}
+									]
+								}
+							},
+							{
+								"name": "VID UNI",
+								"size": 16,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "Max simultaneous groups",
+								"size": 16,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "Max multicast bandwidth",
+								"size": 32,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "Multicast operations profile pointer",
+								"size": 16,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "Reserved",
+								"size": 64,
+								"format": "UnsignedInteger"
+							}
+                    	]
+                    }
+        		},
+        		{
+        			"name": "Allowed preview groups table",
+        			"size": 22,
+        			"format": "Array Structure",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "Optional",
+                    "structure": {
+                    	"fields": [
+                    		{
+        						"name": "Row part 0",
+        						"size": 176,
+        						"format": "Array Structure",
+        						"structure": {
+        							"fields": [
+        								{
+        									"name": "Table control",
+        									"size": 16,
+        									"format": "Array Structure",
+        									"structure": {
+        										"fields": [
+        											{
+        												"name": "Set ctrl",
+        												"size": 2,
+        												"format": "UnsignedInteger"
+        											},
+        											{
+        												"name": "Row part ID",
+        												"size": 3,
+        												"format": "UnsignedInteger"
+        											},
+        											{
+        												"name": "Test",
+        												"size": 1,
+        												"format": "UnsignedInteger"
+        											},
+        											{
+        												"name": "Row key",
+        												"size": 10,
+        												"format": "UnsignedInteger"
+        											}
+        										]
+        									}
+        								},
+        								{
+    										"name": "Source IP address",
+    										"size": 128,
+    										"format": "UnsignedInteger"
+    									},
+    									{
+    										"name": "VLAN ID ANI",
+    										"size": 16,
+    										"format": "UnsignedInteger"
+    									},
+    									{
+    										"name": "VLAN ID UNI",
+    										"size": 16,
+    										"format": "UnsignedInteger"
+    									}
+        							]
+        						}
+        					},
+        					{
+        						"name": "Row part 1",
+        						"size": 176,
+        						"format": "Array Structure",
+        						"structure": {
+        							"fields": [
+        								{
+        									"name": "Table control",
+        									"size": 16,
+        									"format": "Array Structure",
+        									"structure": {
+        										"fields": [
+        											{
+        												"name": "Set ctrl",
+        												"size": 2,
+        												"format": "UnsignedInteger"
+        											},
+        											{
+        												"name": "Row part ID",
+        												"size": 3,
+        												"format": "UnsignedInteger"
+        											},
+        											{
+        												"name": "Test",
+        												"size": 1,
+        												"format": "UnsignedInteger"
+        											},
+        											{
+        												"name": "Row key",
+        												"size": 10,
+        												"format": "UnsignedInteger"
+        											}
+        										]
+        									}
+        								},
+        								{
+    										"name": "Destination IP address",
+    										"size": 128,
+    										"format": "UnsignedInteger"
+    									},
+    									{
+    										"name": "Duration",
+    										"size": 16,
+    										"format": "UnsignedInteger"
+    									},
+    									{
+    										"name": "Time left",
+    										"size": 16,
+    										"format": "UnsignedInteger"
+    									}
+        							]
+        						}
+        					}
+                    	]
+                    }
+        		}
+        	]
+        }
+	}
+}

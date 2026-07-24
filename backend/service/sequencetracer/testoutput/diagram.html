@@ -1,0 +1,28 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Mermaid Diagram</title>
+        <script type="module">
+            import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+            mermaid.initialize({ startOnLoad: true });
+        </script>
+    </head>
+    <body>
+        <div class="mermaid">
+            sequenceDiagram
+
+            participant dmsp as DMSP
+            participant alarmmgr as AlarmMgr
+            participant vonumgmt as VonuMgmt
+            participant hypervisor as Hypervisor
+            participant onumgntolt as OnuMgntOlt
+            participant xponhwa as XponHwa
+            participant glob as GLOB
+            participant onu as ONU Device
+
+        </div>
+    </body>
+    </html>

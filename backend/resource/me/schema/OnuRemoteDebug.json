@@ -1,0 +1,53 @@
+{
+	"Me": {
+		"id": 158,
+			"name": "OnuRemoteDebug",
+			"access": "CreatedByONU",
+			"type": "Config",
+			"action": [
+				"Get",
+			"Get next",
+			"Set"
+			],
+			"instance": {
+				"type": "Fixed",
+				"value": 0
+			},
+			"attributes": {
+				"attribute": [
+				{
+					"name": "Command format",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+					"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Command",
+					"size": 25,
+					"format": "String",
+					"access": [
+						"W",
+					"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Reply table",
+					"size": 1,
+					"format": "Array UnsignedInteger 8",
+					"table": true,
+					"access": [
+						"R",
+					"Dummy"
+					],
+					"category": "Mandatory"
+				}
+				]
+			}
+	}
+}
+

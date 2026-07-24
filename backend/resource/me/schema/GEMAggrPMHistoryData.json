@@ -1,0 +1,157 @@
+{
+    "Me": {
+        "id": 65281,
+        "name": "GEMAggrPMHistoryData",
+        "access": "CreatedByOLT",
+        "type": "Config",
+        "action": [
+            "Create",
+            "Delete",
+            "Get",
+            "Set",
+            "Get current data"
+        ],
+        "instance": {
+            "type": "Dynamic",
+            "value": 0
+        },
+        "attributes": {
+            "attribute": [
+                {
+                    "name": "Interval end time",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Threshold data 1/2 ID",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "SBC"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Lost GEM Fragment Counter (Downstream)",
+                    "size": 4,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Lost GEM Fragment Counter (Upstream)",
+                    "size": 4,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Received GEM Fragment Counter",
+                    "size": 5,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Received GEM Blocks",
+                    "size": 5,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Transmitted GEM Blocks",
+                    "size": 5,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Impaired Blocks",
+                    "size": 4,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Transmitted GEM Fragment Counter",
+                    "size": 5,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Bad GEM Headers Received Counter",
+                    "size": 4,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Received GEM Blocks – Counter 64",
+                    "size": 8,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Transmitted GEM Blocks – Counter 64",
+                    "size": 8,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                }
+            ]
+        },
+        "alarms": {
+            "alarm": [
+                {
+                    "number": 0,
+                    "name": "Lost GEM Fragments Counter (Downstream) TCA",
+                    "description": "The number of GEM fragments lost in the downstream direction has crossed the set threshold value."
+                },
+                {
+                    "number": 1,
+                    "name": "Lost GEM Fragments Counter (Upstream) TCA",
+                    "description": "The number of GEM fragments lost in the upstream direction has crossed the set threshold value."
+                },
+                {
+                    "number": 2,
+                    "name": "Impaired Blocks Counter TCA",
+                    "description": "The number of impaired blocks associated with a GEM port has crossed the set threshold value."
+                },
+                {
+                    "number": 3,
+                    "name": "Bad GEM Headers Received Counter TCA",
+                    "description": "The number of GEM frames received with bad header has crossed the set threshold value."
+                }
+            ]
+        }
+    }
+}

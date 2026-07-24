@@ -1,0 +1,226 @@
+{
+	"Me": {
+		"id": 347,
+		"name": "IPv6HostConfigData",
+		"access": "CreatedByONU",
+		"type": "Config",
+		"action": [
+			"Set",
+			"Get"
+		],
+		"instance": {
+			"type": "Dynamic",
+			"value": 0
+		},
+		"attributes": {
+			"attribute": [
+				{
+					"name": "IPv6 options",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "MAC address",
+					"size": 6,
+					"format": "Bytes",
+					"access": [
+						"R",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Onu identifier",
+					"size": 25,
+					"format": "String",
+					"access": [
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "IPv6 link local address",
+					"size": 16,
+					"format": "Bytes",
+					"access": [
+						"R",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "IPv6 address",
+					"size": 16,
+					"format": "Bytes",
+					"access": [
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Default router",
+					"size": 16,
+					"format": "Bytes",
+					"access": [
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Primary DNS",
+					"size": 16,
+					"format": "Bytes",
+					"access": [
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Secondary DNS",
+					"size": 16,
+					"format": "Bytes",
+					"access": [
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Current address table",
+					"size": 24,
+					"format": "Array Structure",
+					"access": [
+						"R",
+						"Dummy"
+					],
+					"category": "Mandatory",
+					"structure": {
+						"fields": [
+							{
+								"name": "IP address",
+								"size": 128,
+								"format": "Bytes"
+							},
+							{
+								"name": "Preferred lifetime remaining, seconds",
+								"size": 32,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "Valid lifetime remaining, seconds",
+								"size": 32,
+								"format": "UnsignedInteger"
+							}
+						]
+					}
+				},
+				{
+					"name": "Current default router table",
+					"size": 16,
+					"format": "Array UnsignedInteger 16",
+					"access": [
+						"R",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Current DNS table",
+					"size": 16,
+					"format": "Array UnsignedInteger 16",
+					"access": [
+						"R",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Dynamic host configuration protocol unique identifier (DUID)",
+					"size": 25,
+					"format": "Bytes",
+					"access": [
+						"R",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "On-link prefix",
+					"size": 17,
+					"format": "Bytes",
+					"access": [
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category": "Optional"
+				},
+				{
+					"name": "Current on-link prefix table",
+					"size": 26,
+					"format": "Array Structure",
+					"access": [
+						"R",
+						"Dummy"
+					],
+					"category": "Optional",
+					"structure": {
+						"fields": [
+							{
+								"name": "Prefix length",
+								"size": 8,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "Autonomous address-configuration flag byte",
+								"size": 8,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "Prefix",
+								"size": 128,
+								"format": "Bytes"
+							},
+							{
+								"name": "Preferred lifetime, seconds",
+								"size": 32,
+								"format": "UnsignedInteger"
+							},
+							{
+								"name": "Valid lifetime, seconds",
+								"size": 32,
+								"format": "UnsignedInteger"
+							}
+						]
+					}
+				},
+				{
+					"name": "Relay agent options",
+					"size": 2,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category": "Optional"
+				}
+			]
+		}
+	}
+}

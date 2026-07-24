@@ -1,0 +1,131 @@
+{
+	"Me": {
+		"id": 65304,
+		"name": "NtpConfigurationV2",
+		"access": "CreatedByONU",
+		"type": "Config",
+		"action": [
+			"Get",
+			"Set",
+			"SetNoSync"
+		],
+		"instance": {
+			"type": "Fixed",
+			"value": 0
+		},
+		"attributes": {
+			"attribute": [
+				{
+					"name": "NTP Client State",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "NTP Configuration Mode",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "NTP Server 1 IP Address",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "NTP Server 2 IP Address",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "NTP Server 3 IP Address",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "NTP Mode of Operation",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "NTP Key Identifier",
+					"size": 2,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "NTP Key",
+					"size": 16,
+					"format": "Bytes",
+					"access": [
+						"R",
+						"W"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Current UTC Time (not local)",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W"
+					],
+					"category": "Mandatory",
+					"nosync": true
+				},
+				{
+					"name": "Timezone Offset",
+					"size": 2,
+					"format": "SignedInteger",
+					"access": [
+						"R",
+						"W"
+					],
+					"category": "Mandatory"
+				}
+			]
+		},
+		"alarms": {
+			"alarm": [
+				{
+					"number": 1,
+					"name": "Out of Sync with NTP",
+					"description": "Problem associated with establishing or maintaining time with NTP"
+				}
+			]
+		}
+	}
+}

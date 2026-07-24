@@ -1,0 +1,152 @@
+  {
+    "Me": {
+        "id": 332,
+        "name": "EnhancedSecurityControl",
+        "access": "CreatedByONU",
+        "type": "Config",
+        "action": [
+            "Get",
+            "Set",
+            "Get next"
+        ],
+        "instance": {
+            "type": "Dynamic",
+            "value": 0
+        },
+        "attributes": {
+            "attribute": [
+                {
+                    "name": "OLT crypto capabilities",
+                    "size": 16,
+                    "format": "Bytes",
+                    "access": [
+                        "W"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "OLT random challenge table",
+                    "size": 17,
+                    "format": "Bytes",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "OLT challenge status",
+                    "size": 1,
+                    "format": "Boolean",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "ONU selected crypto capabilities",
+                    "size": 1,
+                    "format": "Boolean",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "ONU random challenge table",
+                    "size": 16,
+                    "format": "Bytes",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "ONU authentication result table",
+                    "size": 16,
+                    "format": "Bytes",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "OLT authentication result table",
+                    "size": 17,
+                    "format": "Bytes",
+                    "access": [
+                        "W"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "OLT result status",
+                    "size": 1,
+                    "format": "Boolean",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "ONU authentication status",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Master session key name",
+                    "size": 16,
+                    "format": "Bytes",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Broadcast key table",
+                    "size": 18,
+                    "format": "Array Structure",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "Optional",
+                    "structure": {
+                        "fields": [
+                            {
+                                "name": "Row control",
+                                "size": 1,
+                                "format": "Bytes"
+                            },
+                            {
+                                "name": "Row identifier",
+                                "size": 1,
+                                "format": "Bytes"
+                            },
+                            {
+                                "name": "Key fragment",
+                                "size": 16,
+                                "format": "Bytes"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "Effective key length",
+                    "size": 2,
+                    "format": "Bytes",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                }
+            ]
+        }
+    }
+  }

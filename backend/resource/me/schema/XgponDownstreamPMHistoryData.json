@@ -1,0 +1,183 @@
+{
+	"Me": {
+		"id": 345,
+		"name": "XgponDownstreamPMHistoryData",
+		"access": "CreatedByOLT",
+		"type": "Config",
+		"action": [
+			"Create",
+			"Delete",
+			"Get",
+			"Set",
+			"Get current data"
+		],
+		"instance": {
+			"type": "Dynamic",
+			"value": 0
+		},
+		"attributes": {
+			"attribute": [
+				{
+					"name": "Interval end time",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Threshold data 1/2 ID",
+					"size": 2,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"SBC"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "PLOAM message integrity check (MIC) error count",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Optional"
+				},
+				{
+					"name": "Downstream PLOAM messages count",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Optional"
+				},
+				{
+					"name": "Profile messages received",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Optional"
+				},
+				{
+					"name": "Ranging_time messages received",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Optional"
+				},
+				{
+					"name": "Deactivate_ONU-ID messages received",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Optional"
+				},
+				{
+					"name": "Disable_serial_number messages received",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Optional"
+				},
+				{
+					"name": "Request_registration messages received",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Optional"
+				},
+				{
+					"name": "Assign_alloc-ID messages received",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Optional"
+				},
+				{
+					"name": "Key_control messages received",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Optional"
+				},
+				{
+					"name": "Sleep_allow messages received",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Optional"
+				},
+				{
+					"name": "Baseline OMCI messages received count",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Optional"
+				},
+				{
+					"name": "Extended OMCI messages received count",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Optional"
+				},
+				{
+					"name": "Assign_ONU-ID messages received",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Optional"
+				},
+				{
+					"name": "OMCI MIC error count",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Optional"
+				}
+			]
+		},
+		"alarms": {
+			"alarm": [
+				{
+					"number": 1,
+					"name": "PLOAM MIC error count",
+					"description": "PLOAM MIC error count threshold crossing alert"
+				},
+				{
+					"number": 2,
+					"name": "OMCI MIC error count ",
+					"description": "OMCI MIC error count threshold crossing alert"
+				}
+			]
+		}
+	}
+}

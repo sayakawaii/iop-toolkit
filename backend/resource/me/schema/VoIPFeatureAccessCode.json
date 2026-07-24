@@ -1,0 +1,155 @@
+{
+	"Me":{
+		"id":147,
+		"name":"VoIPFeatureAccessCodes",
+		"access":"CreatedByOLT",
+		"type":"Config",
+		"action":[
+			"Get",
+			"Create",
+			"Delete",
+			"Set",
+			"Dummy"
+		],
+		"instance":{
+			"type":"Dynamic",
+			"value":0
+		},
+		"attributes":{
+			"attribute":[
+				{
+					"name":"Cancel call waiting",
+					"size":5,
+					"format":"String",
+					"access":[
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category":"Optional"
+				},
+				{
+					"name":"Call hold",
+					"size":5,
+					"format":"String",
+					"access":[
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category":"Optional"
+				},
+				{
+					"name":"Call park",
+					"size":5,
+					"format":"String",
+					"access":[
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category":"Optional"
+				},
+				{
+					"name":"Caller ID activate",
+					"size":5,
+					"format":"String",
+					"access":[
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category":"Optional"
+				},
+				{
+					"name":"Caller ID deactivate",
+					"size":5,
+					"format":"String",
+					"access":[
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category":"Optional"
+				},
+				{
+					"name":"Do not disturb activation",
+					"size":5,
+					"format":"String",
+					"access":[
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category":"Optional"
+				},
+				{
+					"name":"Do not disturb deactivation",
+					"size":5,
+					"format":"String",
+					"access":[
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category":"Optional"
+				},
+				{
+					"name":"Do not disturb PIN change",
+					"size":5,
+					"format":"String",
+					"access":[
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category":"Optional"
+				},
+				{
+					"name":"Emergency service number",
+					"size":5,
+					"format":"String",
+					"access":[
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category":"Optional"
+				},
+				{
+					"name":"Intercom service",
+					"size":5,
+					"format":"String",
+					"access":[
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category":"Optional"
+				},
+				{
+					"name":"Unattended/blind call transfer",
+					"size":5,
+					"format":"String",
+					"access":[
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category":"Optional"
+				},
+				{
+					"name":"Attended call transfer",
+					"size":5,
+					"format":"String",
+					"access":[
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category":"Optional"
+				}
+			]
+		}
+	}
+}

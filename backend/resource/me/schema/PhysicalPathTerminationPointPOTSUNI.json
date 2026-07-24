@@ -1,0 +1,650 @@
+{
+	"Me":{
+		"id":53,
+		"name":"PhysicalPathTerminationPointPOTSUNI",
+		"access":"CreatedByONU",
+		"type":"Config",
+		"action":[
+			"Get",
+			"Set",
+                        "Test",
+			"Dummy"
+		],
+		"instance":{
+			"type":"Dynamic",
+			"value":0
+		},
+		"attributes":{
+			"attribute":[
+				{
+					"name":"Administrative state",
+					"size":1,
+					"format":"UnsignedInteger",
+					"access":[
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category":"Mandatory"
+				},
+				{
+					"name":"Deprecated",
+					"size":2,
+					"format":"N/A",
+					"access":[
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category":"Optional"
+				},
+				{
+					"name":"ARC",
+					"size":1,
+					"format":"UnsignedInteger",
+					"access":[
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category":"Optional"
+				},
+				{
+					"name":"ARC interval",
+					"size":1,
+					"format":"UnsignedInteger",
+					"access":[
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category":"Optional"
+				},
+				{
+					"name":"Impedance",
+					"size":1,
+					"format":"UnsignedInteger",
+					"access":[
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category":"Optional"
+				},
+				{
+					"name":"Transmission path",
+					"size":1,
+					"format":"UnsignedInteger",
+					"access":[
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category":"Optional"
+				},
+				{
+					"name":"Rx gain",
+					"size":1,
+					"format":"SignedInteger",
+					"access":[
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category":"Optional"
+				},
+				{
+					"name":"Tx gain",
+					"size":1,
+					"format":"SignedInteger",
+					"access":[
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category":"Optional"
+				},
+				{
+					"name":"Operational state",
+					"size":1,
+					"format":"UnsignedInteger",
+					"access":[
+						"R",
+						"Dummy"
+					],
+					"category":"Optional"
+				},
+				{
+					"name":"Hook state",
+					"size":1,
+					"format":"UnsignedInteger",
+					"access":[
+						"R",
+						"Dummy"
+					],
+					"category":"Optional"
+				},
+				{
+					"name":"POTS holdover time",
+					"size":2,
+					"format":"UnsignedInteger",
+					"access":[
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category":"Optional"
+				},
+				{
+					"name":"Nominal feed voltage",
+					"size":1,
+					"format":"UnsignedInteger",
+					"access":[
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category":"Optional"
+				},
+				{
+					"name":"Loss of softswitch",
+					"size":1,
+					"format":"Boolean",
+					"access":[
+						"R",
+						"W",
+						"Dummy"
+					],
+					"category":"Optional"
+				}
+			]
+		},
+		"testRequestAttrs": {
+            "attribute": [
+                {
+                    "name": "test type",
+                    "position": 0,
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "DBDT timer T1",
+                    "position": 1,
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "DBDT timer T2",
+                    "position": 2,
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "DBDT timer T3",
+                    "position": 3,
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "DBDT timer T4",
+                    "position": 4,
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "DBDT control byte",
+                    "position": 5,
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Digit to be dialled",
+                    "position": 6,
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Dial tone frequency 1",
+                    "position": 7,
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Dial tone frequency 2",
+                    "position": 9,
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Dial tone frequency 3",
+                    "position": 11,
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Dial tone power threshold",
+                    "position": 13,
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Idle channel power threshold",
+                    "position": 14,
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "DC hazardous voltage threshold",
+                    "position": 15,
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "AC hazardous voltage threshold",
+                    "position": 16,
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "DC foreign voltage threshold",
+                    "position": 17,
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "AC foreign voltage threshold",
+                    "position": 18,
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Tip-ground and ring-ground resistance threshold",
+                    "position": 19,
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Tip-ring resistance threshold",
+                    "position": 20,
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Ringer equivalence minimum threshold",
+                    "position": 21,
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Ringer equivalence maximum threshold",
+                    "position": 23,
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Pointer to a general purpose buffer ME",
+                    "position": 25,
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Pointer to an octet string",
+                    "position": 27,
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+				{
+					"name": "number to be dialled",
+                    "position": 1,
+					"size": 16,
+					"format": "String",
+					"access": [
+						"R"
+					],
+					"category": "Optional"
+				}
+            ]
+        },
+        "testResultAttrs": {
+            "attribute": [
+                {
+                    "name": "Summary result",
+                    "position": 0,
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Delay",
+                    "position": 1,
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Result text",
+                    "position": 3,
+                    "size": 29,
+                    "format": "String",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "MLT drop test result",
+                    "position": 0,
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "self test result",
+                    "position": 1,
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Dial tone make-break flags",
+                    "position": 2,
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Dial tone power flags",
+                    "position": 3,
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Loop test DC voltage flags",
+                    "position": 4,
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Loop test AC voltage flags",
+                    "position": 5,
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Loop test resistance flags 1",
+                    "position": 6,
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Loop test resistance flags 2",
+                    "position": 7,
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Time to draw dial tone",
+                    "position": 8,
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Time to break dial tone",
+                    "position": 9,
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Total dial tone power measurement",
+                    "position": 10,
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Quiet channel power measurement",
+                    "position": 11,
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Tip-ground DC voltage",
+                    "position": 12,
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Ring-ground DC voltage",
+                    "position": 14,
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Tip-ground AC voltage",
+                    "position": 16,
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Ring-ground AC voltage",
+                    "position": 17,
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Tip-ground DC resistance",
+                    "position": 18,
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Ring-ground DC resistance",
+                    "position": 20,
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Tip-ring DC resistance",
+                    "position": 22,
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Ringer equivalence",
+                    "position": 24,
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R"
+                    ],
+                    "category": "Optional"
+                }
+            ]
+		},
+        "alarms": {
+            "alarm": [
+                {
+                    "number": 212,
+                    "name":"POTS SIP Registration Failure",
+                    "description": "A condition meaning SIP registration failed for the POTS line."
+                },
+                {
+                    "number": 213,
+                    "name":"POTS SIP INVITE Failure",
+                    "description": "A condition meaning SIP invite failed for the POTS line."
+                },
+                {
+                    "number": 214,
+                    "name":"POTS SIP SUBSCRIBE Failure",
+                    "description": "A condition meaning SIP subscribe failed for the POTS line."
+                }
+            ]
+        }
+    }
+}

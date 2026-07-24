@@ -1,0 +1,177 @@
+{
+    "Me": {
+        "id": 65528,
+        "name": "OnuLoopDetection",
+        "access": "CreatedByONU",
+        "type": "Config",
+        "action": [
+            "Get",
+            "Set",
+            "Dummy"
+        ],
+        "instance": {
+            "type": "Fixed",
+            "value": 0
+        },
+        "attributes": {
+            "attribute": [
+                {
+                    "name": "Operator ID",
+                    "size": 4,
+                    "format": "String",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Loop detection management",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Looped port down",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                }
+            ]
+        },
+        "alarms": {
+            "alarm": [
+                {
+                    "number": 0,
+                    "name": "EthPort1 Loopback",
+                    "description": "LoopBack detected on EthPort1"
+                },
+                {
+                    "number": 1,
+                    "name": "EthPort2 Loopback",
+                    "description": "LoopBack detected on EthPort2"
+                },
+                {
+                    "number": 2,
+                    "name": "EthPort3 Loopback",
+                    "description": "LoopBack detected on EthPort3"
+                },
+                {
+                    "number": 3,
+                    "name": "EthPort4 Loopback",
+                    "description": "LoopBack detected on EthPort4"
+                },
+                {
+                    "number": 4,
+                    "name": "EthPort5 Loopback",
+                    "description": "LoopBack detected on EthPort5"
+                },
+                {
+                    "number": 5,
+                    "name": "EthPort6 Loopback",
+                    "description": "LoopBack detected on EthPort6"
+                },
+                {
+                    "number": 6,
+                    "name": "EthPort7 Loopback",
+                    "description": "LoopBack detected on EthPort7"
+                },
+                {
+                    "number": 7,
+                    "name": "EthPort8 Loopback",
+                    "description": "LoopBack detected on EthPort8"
+                },
+                {
+                    "number": 8,
+                    "name": "EthPort9 Loopback",
+                    "description": "LoopBack detected on EthPort9"
+                },
+                {
+                    "number": 9,
+                    "name": "EthPort10 Loopback",
+                    "description": "LoopBack detected on EthPort10"
+                },
+                {
+                    "number": 10,
+                    "name": "EthPort11 Loopback",
+                    "description": "LoopBack detected on EthPort11"
+                },
+                {
+                    "number": 11,
+                    "name": "EthPort12 Loopback",
+                    "description": "LoopBack detected on EthPort12"
+                },     
+               {
+                    "number": 12,
+                    "name": "EthPort13 Loopback",
+                    "description": "LoopBack detected on EthPort13"
+                },
+                {
+                    "number": 13,
+                    "name": "EthPort14 Loopback",
+                    "description": "LoopBack detected on EthPort14"
+                },
+                {
+                    "number": 14,
+                    "name": "EthPort15 Loopback",
+                    "description": "LoopBack detected on EthPort15"
+                },
+                {
+                    "number": 15,
+                    "name": "EthPort16 Loopback",
+                    "description": "LoopBack detected on EthPort16"
+                },
+                {
+                    "number": 16,
+                    "name": "EthPort17 Loopback",
+                    "description": "LoopBack detected on EthPort17"
+                },
+                {
+                    "number": 17,
+                    "name": "EthPort18 Loopback",
+                    "description": "LoopBack detected on EthPort18"
+                },
+                {
+                    "number": 18,
+                    "name": "EthPort19 Loopback",
+                    "description": "LoopBack detected on EthPort19"
+                },
+                {
+                    "number": 19,
+                    "name": "EthPort20 Loopback",
+                    "description": "LoopBack detected on EthPort20"
+                },
+                {
+                    "number": 20,
+                    "name": "EthPort21 Loopback",
+                    "description": "LoopBack detected on EthPort21"
+                },
+               {
+                    "number": 21,
+                    "name": "EthPort22 Loopback",
+                    "description": "LoopBack detected on EthPort22"
+                },
+                {
+                    "number": 22,
+                    "name": "EthPort23 Loopback",
+                    "description": "LoopBack detected on EthPort23"
+                },
+                {
+                    "number": 23,
+                    "name": "EthPort24 Loopback",
+                    "description": "LoopBack detected on EthPort24"
+                }                
+            ]
+        }
+    }
+}

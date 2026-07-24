@@ -1,0 +1,72 @@
+ {
+    "Me": {
+        "id": 148,
+        "name": "AuthSecurityMethod",
+        "access": "CreatedByOLT",
+        "type": "Config",
+        "action": [
+        	"Create",
+        	"Delete",
+            "Get",
+            "Set"
+        ],
+        "instance": {
+            "type": "Dynamic",
+            "value": 0
+        },
+        "attributes": {
+            "attribute": [
+                {
+                    "name": "Validation scheme",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Username 1",
+                    "size": 25,
+                    "format": "String",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Password",
+                    "size": 25,
+                    "format": "String",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Realm",
+                    "size": 25,
+                    "format": "String",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Username 2",
+                    "size": 25,
+                    "format": "String",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "Mandatory"
+                }
+            ]
+        }
+    }
+  }

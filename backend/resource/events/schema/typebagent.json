@@ -1,0 +1,92 @@
+[
+    {
+        "from": "typebagent", 
+        "to": "xponinfra", 
+        "event": [
+            "\"getCtPortInfo\": {"
+        ], 
+        "notes": "",
+        "alias": "Send getCtPortInfo"
+    },
+    {
+        "from": "xponinfra", 
+        "to": "typebagent", 
+        "event": [
+            "\"getCtPortInfoAck\": {"
+        ], 
+        "notes": "",
+        "alias": "Recieve getCtPortInfoAck"
+    },
+    {
+        "from": "typebagent", 
+        "to": "xponinfra", 
+        "event": [
+            "\"becomeActive\": {"
+        ], 
+        "notes": "",
+        "alias": "Send becomeActive"
+    },
+    {
+        "from": "xponinfra", 
+        "to": "typebagent", 
+        "event": [
+            "\"becomeActiveAck\": {"
+        ], 
+        "notes": "",
+        "alias": "Recieve becomeActiveAck"
+    },
+    {
+        "from": "typebagent", 
+        "to": "xponinfra", 
+        "event": [
+            "\"becomeStandby\": {"
+        ], 
+        "notes": "",
+        "alias": "Send becomeStandby"
+    },
+    {
+        "from": "xponinfra", 
+        "to": "typebagent", 
+        "event": [
+            "\"becomeStandbyAck\": {"
+        ], 
+        "notes": "",
+        "alias": "Recieve becomeStandbyAck"
+    },
+    {
+        "from": "typebagent", 
+        "to": "xponinfra", 
+        "event": [
+            "\"ctStatusRegister\": {"
+        ], 
+        "notes": "",
+        "alias": "Send ctStatusRegister"
+    },
+    {
+        "from": "xponinfra", 
+        "to": "typebagent", 
+        "event": [
+            "\"ctStatusRegisterAck\": {"
+        ], 
+        "notes": "",
+        "alias": "Recieve ctStatusRegisterAck"
+    },
+    {
+        "from": "typebagent", 
+        "to": "xponinfra", 
+        "event": [
+            "\"ctStatusUnregister\": {"
+        ], 
+        "notes": "",
+        "alias": "Send ctStatusUnregister"
+    },
+    {
+        "from": "xponinfra", 
+        "to": "typebagent", 
+        "event": [
+            "\"ctStatusUnregisterAck\": {"
+        ], 
+        "notes": "",
+        "alias": "Recieve ctStatusUnregisterAck"
+    }
+]

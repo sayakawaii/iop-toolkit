@@ -1,0 +1,86 @@
+{
+    "Me": {
+        "id": 131,
+        "name": "OLT-G",
+        "access": "CreatedByOLT",
+        "type": "Config",
+        "action": [
+            "Get",
+            "Set"
+        ],
+        "instance": {
+            "type": "Fixed",
+            "value": 0
+        },
+        "attributes": {
+            "attribute": [
+                {
+                    "name": "OLT vendor ID",
+                    "size": 4,
+                    "format": "String",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Equipment ID",
+                    "size": 20,
+                    "format": "String",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "Mandatory"
+                },
+              
+
+                {
+					"name": "Version",
+					"size": 14,
+					"format": "Array Structure",
+					"access": [
+						"R",
+						"W"
+					],
+					"category": "Mandatory",
+					"structure": {
+						"fields": [
+							{
+								"name": "OLT Release Number",
+								"size": 32,
+								"format": "Bytes"
+							},
+							{
+								"name": "OLT-base",
+								"size": 16,
+								"format": "UnsignedInteger"
+                            },
+                            {
+								"name": "OLT OMCI version number",
+								"size": 16,
+								"format": "UnsignedInteger"
+                            },
+                            {
+								"name": "pad",
+								"size": 48,
+								"format": "Bytes"
+							}					
+						]
+					}
+				},
+                {
+                    "name": "Time of day information",
+                    "size": 14,
+                    "format": "String",
+                    "access": [
+                        "R",
+                        "W"
+                    ],
+                    "category": "Optional"
+                }
+            ]
+        }
+    }
+  }

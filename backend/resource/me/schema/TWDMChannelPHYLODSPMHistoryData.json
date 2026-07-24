@@ -1,0 +1,145 @@
+{
+	"Me": {
+		"id": 444,
+		"name": "TWDMChannelPHYLODSPMHistoryData",
+		"access": "CreatedByOLT",
+		"type": "Config",
+		"action": [
+			"Create",
+			"Delete",
+			"Get",
+			"Set",
+			"Get current data"
+		],
+		"instance": {
+			"type": "Dynamic",
+			"value": 0
+		},
+		"attributes": {
+			"attribute": [
+				{
+					"name": "Interval end time",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Threshold data 1/2 ID",
+					"size": 2,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"SBC",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Total received words protected by BIP-32",
+					"size": 8,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "BIP-32 bit error count",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"Dummy"
+					],
+					"category": "Mandatory"
+				}
+			]
+		},
+		"alarms":{
+			"alarm":[
+			   {
+				  "number":0,
+				  "name":"N/A",
+				  "description":"N/A"
+			   },
+			   {
+				  "number":1,
+				  "name":"BIP-32 bit error count",
+							  "description": "N/A",
+							  "threshold": 2
+			   },
+			   {
+				  "number":2,
+				  "name":"PSBd HEC errors <96> corrected",
+							  "description": "N/A",
+							  "threshold": 3
+			   },
+			   {
+				  "number":3,
+				  "name":"PSBd HEC errors <96> uncorrectable",
+							  "description": "N/A",
+							  "threshold": 4
+			   },
+			   {
+				  "number":4,
+				  "name":"FS header errors <96> corrected",
+							  "description": "N/A",
+							  "threshold": 5
+			   },
+			   {
+				  "number":5,
+				  "name":"FS header errors <96> uncorrectable",
+							  "description": "N/A",
+							  "threshold": 6
+			   },
+			   {
+				  "number":6,
+				  "name":"Total LODS event count",
+							  "description": "N/A",
+							  "threshold": 7
+			   },
+			   {
+				  "number":7,
+				  "name":"LODS <96> restored in operating TWDM channel",
+							  "description": "N/A",
+							  "threshold": 8
+			   },
+			   {
+				  "number":8,
+				  "name":"LODS <96> restored in protection TWDM channel",
+							  "description": "N/A"
+			   },
+			   {
+				  "number":9,
+				  "name":"LODS <96> restored in discretionary TWDM channel",
+							  "description": "N/A",
+							  "threshold": 10
+			   },
+			   {
+				  "number":10,
+				  "name":"LODS <96> reactivations",
+							  "description": "N/A",
+							  "threshold": 11
+			   },
+			   {
+				  "number":11,
+				  "name":"LODS <96> handshake failure in protection channel",
+							  "description": "N/A",
+							  "threshold": 12
+			   },
+			   {
+				  "number":12,
+				  "name":"LODS <96> handshake failure in discretionary channel",
+							  "description": "N/A",
+							  "threshold": 13
+			   }
+			]
+		}
+	}
+}

@@ -1,0 +1,89 @@
+/isam/slot_default/xponInfraMgnt/log # cat traces.log 
+0
+[01/08/1972-21:03:09.944895],[DMSPLOG],DmspNotifService.cpp:156  Warning - Notification send rate set to FAST from NORMAL
+[01/08/1972-21:03:13.479692],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/DMSPCallBack.cpp],[60],[transactionCB],[xponInfraMgnt] receive transactionCB: Type [1] Flag [0]
+[01/08/1972-21:03:13.479740],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/DMSPCallBack.cpp],[114],[transactionCB],[xponInfraMgnt] received CONFIG_COMMIT transaction callback: DmsProxy::TRANS_BEGIN
+[01/08/1972-21:03:13.479764],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/cmdType/xponInfraCfgWrapperClient.cpp],[47],[sendIpcOneWayRequest],[xponInfraMgnt] xponInfraCfgWrapperClient:sendIpcOneWayRequest()
+[01/08/1972-21:03:13.479782],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/cmdType/xponInfraCfgWrapperClient.cpp],[54],[sendIpcOneWayRequest],[xponInfraMgnt] xponInfraCfgWrapperClient-->pClient != NULL
+[01/08/1972-21:03:13.488497],[yproto],send_oneway proto msg
+[01/08/1972-21:03:13.488534],[yproto],{
+ "dmsCommitInform": {
+  "dmsCommitState": "DMS_COMMIT_STATE_BEGIN"
+ }
+}
+
+[01/08/1972-21:03:13.514145],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/DMSPCallBack.cpp],[60],[transactionCB],[xponInfraMgnt] receive transactionCB: Type [1] Flag [4]
+[01/08/1972-21:03:13.514187],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/DMSPCallBack.cpp],[118],[transactionCB],[xponInfraMgnt] received CONFIG_COMMIT transaction callback: DmsProxy::TRANS_END
+[01/08/1972-21:03:13.514210],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/cmdType/xponInfraCfgWrapperClient.cpp],[47],[sendIpcOneWayRequest],[xponInfraMgnt] xponInfraCfgWrapperClient:sendIpcOneWayRequest()
+[01/08/1972-21:03:13.514228],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/cmdType/xponInfraCfgWrapperClient.cpp],[54],[sendIpcOneWayRequest],[xponInfraMgnt] xponInfraCfgWrapperClient-->pClient != NULL
+[01/08/1972-21:03:13.514725],[yproto],send_oneway proto msg
+[01/08/1972-21:03:13.514748],[yproto],{
+ "dmsCommitInform": {
+  "dmsCommitState": "DMS_COMMIT_STATE_END"
+ }
+}
+
+[01/08/1972-21:03:13.515436],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/OHMCallBack.cpp],[207],[higherObjChangeNotifyForCp_CallBack],[xponInfraMgnt] enter higherObjChangeNotifyForCp_CallBack
+[01/08/1972-21:03:13.515509],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/OHMCallBack.cpp],[226],[higherObjChangeNotifyForCp_CallBack],[xponInfraMgnt] lower layer interface name :cp_ont1_pon1
+[01/08/1972-21:03:13.515529],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/OHMCallBack.cpp],[227],[higherObjChangeNotifyForCp_CallBack],[xponInfraMgnt] number of higher layer notify:2
+[01/08/1972-21:03:13.515548],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/OHMCallBack.cpp],[244],[higherObjChangeNotifyForCp_CallBack],[xponInfraMgnt] layer notify name:scg_ont1_pon1, objType = 295
+[01/08/1972-21:03:13.515568],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/OHMCallBack.cpp],[244],[higherObjChangeNotifyForCp_CallBack],[xponInfraMgnt] layer notify name:ont1_pon1-fglt-b, objType = 297
+[01/08/1972-21:03:13.515792],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/OHMCallBack.cpp],[164],[lowerObjChangeNotifyForCp_CallBack],[xponInfraMgnt] enter lowerObjChangeNotifyForCp_CallBack
+[01/08/1972-21:03:13.515830],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/OHMCallBack.cpp],[182],[lowerObjChangeNotifyForCp_CallBack],[xponInfraMgnt] higher layer interface name :cp_ont1_pon1
+[01/08/1972-21:03:13.515850],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/OHMCallBack.cpp],[183],[lowerObjChangeNotifyForCp_CallBack],[xponInfraMgnt] number of lower layer notify:1
+[01/08/1972-21:03:13.515869],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/OHMCallBack.cpp],[192],[lowerObjChangeNotifyForCp_CallBack],[xponInfraMgnt] layer notify name:ct_cp_ont1_pon1, objType = 298
+[01/08/1972-21:03:13.516758],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/CommonDmspCallBack.cpp],[10],[onDmspCommonResp],[xponInfraMgnt] enter onDmspCommonResp
+[01/08/1972-21:03:13.516794],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/CommonDmspCallBack.cpp],[14],[onDmspCommonResp],[xponInfraMgnt] Get DataObject Resp - request Id [2804156]
+[01/08/1972-21:03:13.516813],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/CommonDmspCallBack.cpp],[15],[onDmspCommonResp],[xponInfraMgnt] Get DataObject Resp - result [0]
+[01/08/1972-21:03:13.516888],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/CommonDmspCallBack.cpp],[10],[onDmspCommonResp],[xponInfraMgnt] enter onDmspCommonResp
+[01/08/1972-21:03:13.516909],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/CommonDmspCallBack.cpp],[14],[onDmspCommonResp],[xponInfraMgnt] Get DataObject Resp - request Id [2804156]
+[01/08/1972-21:03:13.516927],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/CommonDmspCallBack.cpp],[15],[onDmspCommonResp],[xponInfraMgnt] Get DataObject Resp - result [0]
+[01/08/1972-21:03:13.523583],[yproto],on_request proto msg
+[01/08/1972-21:03:13.523614],[yproto],{
+ "ponCacResultNotificationMsg": {
+  "cacList": [
+   {
+    "ctObjectIndex": {
+     "index": 517
+    },
+    "availableUsBw": "9934172",
+    "usL2Capacity": "9718796",
+    "dsL2Capacity": "8637993"
+   }
+  ]
+ }
+}
+
+[01/08/1972-21:03:13.523641],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/cmdType/xponInfraNotifWrapperClient.cpp],[95],[on_request],[xponInfraMgnt] xponInfraNotifWrapperClient::on_request - The Msg(2) is received from server xpon_hwa_app
+[01/08/1972-21:03:13.523661],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/cmdType/CHandleNotification.cpp],[443],[processCacResultNotification],[xponInfraMgnt] processCacResultNotification: process MsgXponCacResultNotification msg
+[01/08/1972-21:03:13.523680],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/cmdType/CHandleNotification.cpp],[446],[processCacResultNotification],[xponInfraMgnt] cacListSize 1
+[01/08/1972-21:03:13.523703],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/cmdType/CHandleNotification.cpp],[472],[processCacResultNotification],[xponInfraMgnt] cac_data: ct= 517, availableUsBw=9934172, usL2Capacity=9718796, dsL2Capacity=8637993
+[01/08/1972-21:03:13.523730],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/cmdType/CModifyCpCacState.cpp],[286],[CModifyCpCacState],[xponInfraMgnt] ctObjIndex = 517, availableUsBw = 9934172, usL2Capacity = 9718796, dsL2Capacity = 8637993
+[01/08/1972-21:03:13.523751],[ponmgnt_app],CModifyCpCacState AsyncBeginProc
+[01/08/1972-21:03:13.524691],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/OHMCallBack.cpp],[34],[getOHMInfo_CallBack],[xponInfraMgnt] enter getOHMInfo_CallBack
+[01/08/1972-21:03:13.524734],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/cmdType/CModifyCpCacState.cpp],[49],[GponAsyncGetCpNameFromOHMResult],[xponInfraMgnt] get ChannelPair Name cp_ont1_pon1
+[01/08/1972-21:03:13.524755],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/cmdType/CModifyCpCacState.cpp],[61],[GponAsyncGetCacStateByCpName],[xponInfraMgnt] enter GponAsyncGetCacStateByCpName
+[01/08/1972-21:03:13.524843],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/cmdType/CModifyCpCacState.cpp],[76],[GponAsyncGetCacStateByCpName],[xponInfraMgnt] The channel pair key is cp_ont1_pon1
+[01/08/1972-21:03:13.525012],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/cmdType/CModifyCpCacState.cpp],[78],[GponAsyncGetCacStateByCpName],[xponInfraMgnt] cpInterfaceState.getWithKey ret = 0
+[01/08/1972-21:03:13.525856],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/CommonDmspCallBack.cpp],[10],[onDmspCommonResp],[xponInfraMgnt] enter onDmspCommonResp
+[01/08/1972-21:03:13.525891],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/CommonDmspCallBack.cpp],[14],[onDmspCommonResp],[xponInfraMgnt] Get DataObject Resp - request Id [2804156]
+[01/08/1972-21:03:13.525927],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/CommonDmspCallBack.cpp],[15],[onDmspCommonResp],[xponInfraMgnt] Get DataObject Resp - result [0]
+[01/08/1972-21:03:13.525949],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/cmdType/CModifyCpCacState.cpp],[87],[GponAsyncGetCacStateByCpNameResult],[xponInfraMgnt] enter GponAsyncGetCacStateByCpNameResult
+[01/08/1972-21:03:13.525970],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/cmdType/CModifyCpCacState.cpp],[113],[GponAsyncGetCacStateByCpNameResult],[xponInfraMgnt] Get dmspAvailableUsBw:0,  dmspUsL2Capacity:0, dmspDsL2Capacity:0
+[01/08/1972-21:03:13.525988],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/cmdType/CModifyCpCacState.cpp],[129],[GponAsyncGetCacStateByCpNameResult],[xponInfraMgnt] It should be written to DMSP and send notification
+[01/08/1972-21:03:13.526007],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/cmdType/CModifyCpCacState.cpp],[141],[GponAsyncSetCacStateByCpName],[xponInfraMgnt] enter GponAsyncSetCacStateByCpName
+[01/08/1972-21:03:13.526054],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/common/utility/DateConvert.cpp],[28],[convertLocalTime2DateAndTime],[xponInfraMgnt] 1972-8-1-21-3-13
+[01/08/1972-21:03:13.526386],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/cmdType/CModifyCpCacState.cpp],[184],[GponAsyncSetCacStateByCpName],[xponInfraMgnt] l_interface.setWithKey ret = 0
+[01/08/1972-21:03:13.526897],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/CommonDmspCallBack.cpp],[10],[onDmspCommonResp],[xponInfraMgnt] enter onDmspCommonResp
+[01/08/1972-21:03:13.526919],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/CommonDmspCallBack.cpp],[14],[onDmspCommonResp],[xponInfraMgnt] Get DataObject Resp - request Id [2804156]
+[01/08/1972-21:03:13.526938],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/commonCallBack/CommonDmspCallBack.cpp],[15],[onDmspCommonResp],[xponInfraMgnt] Get DataObject Resp - result [0]
+[01/08/1972-21:03:13.526957],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/cmdType/CModifyCpCacState.cpp],[192],[GponAsyncSetCacStateByCpNameResult],[xponInfraMgnt] enter GponAsyncSetCacStateByCpNameResult
+[01/08/1972-21:03:13.526975],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/cmdType/CModifyCpCacState.cpp],[210],[GponAsyncSetCacStateByCpNameResult],[xponInfraMgnt] set availableUsBw state for channelpair cp_ont1_pon1
+[01/08/1972-21:03:13.526993],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/cmdType/CModifyCpCacState.cpp],[219],[GponAsyncSendCacNotification],[xponInfraMgnt] enter GponAsyncSendCacNotification
+[01/08/1972-21:03:13.527348],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/cmdType/CModifyCpCacState.cpp],[240],[GponAsyncSendCacNotification],[xponInfraMgnt] Send CAC Notify CpName cp_ont1_pon1 and availUsUnicastBw 9934172
+[01/08/1972-21:03:13.527387],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/cmdType/CModifyCpCacState.cpp],[255],[GponAsyncSendCacNotification],[xponInfraMgnt] Send CAC Notify CpName cp_ont1_pon1 and usL2Capacity 9718796
+[01/08/1972-21:03:13.527408],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/cmdType/CModifyCpCacState.cpp],[264],[GponAsyncSendCacNotification],[xponInfraMgnt] Send CAC Notify CpName cp_ont1_pon1 and dsL2Capacity 8637993
+[01/08/1972-21:03:13.527505],[xponInfraMgnt],[vobs/dsl/sw/y/src/xponInfraMgnt/logic/src/cmdType/CModifyCpCacState.cpp],[324],[AsyncFinishProc],[xponInfraMgnt] AsyncFinishProc curState=4, curIndex=4
+[01/08/1972-21:03:15.944827],[DMSPLOG],DmspNotifService.cpp:156  Warning - Notification send rate set to NORMAL from FAST
+[01/08/1972-21:03:24.944600],[DMSPLOG],DmspNotifService.cpp:156  Warning - Notification send rate set to FAST from NORMAL
+[01/08/1972-21:03:26.944631],[DMSPLOG],DmspNotifService.cpp:156  Warning - Notification send rate set to NORMAL from FAST

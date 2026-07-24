@@ -1,0 +1,246 @@
+  {
+    "Me": {
+        "id": 256,
+        "name": "OnuG",
+        "access": "CreatedByONU",
+        "type": "Config",
+        "action": [
+            "Get",
+            "Set",
+            "Reboot",
+            "Test",
+            "SynchronizeTime",
+            "Dummy"
+        ],
+        "instance": {
+            "type": "Fixed",
+            "value": 0
+        },
+        "attributes": {
+            "attribute": [
+                {
+                    "name": "Vendor id",
+                    "size": 4,
+                    "format": "String",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Version",
+                    "size": 14,
+                    "format": "String",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Serial number",
+                    "size": 8,
+                    "format": "Bytes",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Traffic management option",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "VpVcCrossConnectionFunctionOption",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "DEP",
+                        "Dummy"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Battery backup",
+                    "size": 1,
+                    "format": "Boolean",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Administrative state",
+                    "size": 1,
+                    "format": "Boolean",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "Mandatory"
+                },
+                {
+                    "name": "Operational state",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Onu survival time",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Logical ONU ID",
+                    "size": 24,
+                    "format": "String",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Logical password",
+                    "size": 12,
+                    "format": "String",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Credentials status",
+                    "size": 1,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "W",
+                        "Dummy"
+                    ],
+                    "category": "Optional"
+                },
+                {
+                    "name": "Extended TC-layer options",
+                    "size": 2,
+                    "format": "UnsignedInteger",
+                    "access": [
+                        "R",
+                        "Dummy"
+                    ],
+                    "category": "Optional"
+                }
+            ]
+        },
+        "alarms": {
+                     "alarm": [
+                                {
+                                    "number": 0,
+                                    "name": "Equipment alarm",
+                                    "description": "Functional failure on an internal interface"
+                                },
+                                {
+                                    "number": 1,
+                                    "name": "Powering alarm",
+                                    "description": "Loss of external power to battery backup unit. This alarm is typically derived through an external interface to a battery backup unit, and indicates that AC is no longer available to maintain battery charge."
+                                },
+                                {
+                                    "number": 2,
+                                    "name": "Battery missing",
+                                    "description": "Battery is provisioned but missing"
+                                },
+                                {
+                                    "number": 3,
+                                    "name": "Battery failure",
+                                    "description": "Battery is provisioned and present but cannot recharge"
+                                },
+                                {
+                                    "number": 4,
+                                    "name": "Battery low",
+                                    "description": "Battery is provisioned and present but its voltage is too low"
+                                },
+                                {
+                                    "number": 5,
+                                    "name": "Physical intrusion",
+                                    "description": "Applies if the ONU supports detection such as door or box open"
+                                },
+                                {
+                                    "number": 6,
+                                    "name": "ONU self-test failure",
+                                    "description": "ONU has failed autonomous self-test"
+                                },
+                                {
+                                    "number": 7,
+                                    "name": "Dying gasp",
+                                    "description": "ONU is powering off imminently due to loss of power to the ONU itself. This alarm may be sent in conjunction with the powering alarm if the backup unit cannot supply power and the ONU is shutting down."
+                                },
+                                {
+                                    "number": 8,
+                                    "name": "Temperature yellow",
+                                    "description": "No service shutdown at present, but the circuit pack is operating beyond its recommended range."
+                                },
+                                {
+                                    "number": 9,
+                                    "name": "Temperature red",
+                                    "description": "Some services have been shut down to avoid equipment damage. The operational state of the affected PPTPs indicates the affected services."
+                                },
+                                {
+                                    "number": 10,
+                                    "name": "Voltage yellow",
+                                    "description": "No service shutdown at present, but the line power voltage is below its recommended minimum. Service restrictions may be in effect, such as permitting no more than N lines off-hook or ringing at one time."
+                                },
+                                {
+                                    "number": 11,
+                                    "name": "Voltage red",
+                                    "description": "Some services have been shut down to avoid power collapse. The operational state of the affected PPTPs indicates the affected services."
+                                },
+                                {
+                                    "number": 12,
+                                    "name": "ONU manual power off",
+                                    "description": "The ONU is shutting down because the subscriber has turned off its power switch."
+                                },
+                                {
+                                    "number": 13,
+                                    "name": "Inv-Image",
+                                    "description": "Software image is invalid (Note)"
+                                },
+                                {
+                                    "number": 14,
+                                    "name": "PSE overload yellow",
+                                    "description": "Indicates that the ONU is nearing its maximum ability to supply the known PoE demand of the attached PDs. The thresholds for declaring and clearing this alarm are vendor-specific."
+                                },
+                                {
+                                    "number": 15,
+                                    "name": "PSE overload red",
+                                    "description": "Indicates that the ONU is unable to supply all of the PoE demand of the attached PDs and has removed or reduced power to at least one PD."
+                                },  
+                                {
+                                    "number": 212,
+                                    "name": "vendor specific E911 alarm",
+                                    "description": "The SIP termination is actually involved in an emergency call."
+                                }
+                     ]
+        }
+    }
+  }

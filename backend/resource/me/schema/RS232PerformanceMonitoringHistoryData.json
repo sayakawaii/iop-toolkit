@@ -1,0 +1,102 @@
+{
+	"Me": {
+		"id": 403,
+		"name": "RS232PerformanceMonitoringHistoryData",
+		"access": "CreatedByOLT",
+		"type": "Config",
+		"action": [
+			"Create",
+			"Delete",
+			"Get",
+			"Set"
+		],
+		"instance": {
+			"type": "Dynamic",
+			"value": 0
+		},
+		"attributes": {
+			"attribute": [
+				{
+					"name": "Interval end time",
+					"size": 1,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Threshold data 1/2 ID",
+					"size": 2,
+					"format": "UnsignedInteger",
+					"access": [
+						"R",
+						"W",
+						"SBC"
+					],
+					"category": "Mandatory"
+				},
+				{
+					"name": "Incoming bytes from PON port",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Optional"
+				},
+				{
+					"name": "Outgoing bytes from PON port",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Optional"
+				},
+				{
+					"name": "Incoming bytes from RS232/RS485 controller chipset",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Optional"
+				},
+				{
+					"name": "Outgoing bytes from RS232/RS485 controller chipset",
+					"size": 4,
+					"format": "UnsignedInteger",
+					"access": [
+						"R"
+					],
+					"category": "Optional"
+				}
+			]
+		},
+		"alarms": {
+			"alarm": [
+				{
+					"number": 0,
+					"name": "Incoming packets",
+					"description": "Threshold crossing alert"
+				},
+				{
+					"number": 1,
+					"name": "Incoming bits",
+					"description": "Threshold crossing alert"
+				},
+				{
+					"number": 2,
+					"name": "Outgoing packets",
+					"description": "Threshold crossing alert"
+				},
+				{
+					"number": 3,
+					"name": "Outgoing bits",
+					"description": "Threshold crossing alert"
+				}
+			]
+		}
+	}
+}
