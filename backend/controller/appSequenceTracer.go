@@ -10,7 +10,14 @@ import (
 )
 
 func (controller *AppController) SequenceTracerRequest(context *gin.Context) {
-	form, _ := context.MultipartForm()
+	form, err := context.MultipartForm()
+	if err != nil || form == nil {
+		utils.Log("SequenceTracerRequest: multipart parse failed:", err)
+		context.JSON(http.StatusBadRequest, gin.H{
+			"error": "invalid or incomplete multipart upload",
+		})
+		return
+	}
 	files := form.File["sequencetracerFile"]
 	logs := api.SaveUploadedFileInSameDir(false, files, context)
 	mermaid := sequencetracer.SequenceTracer(logs)

@@ -80,7 +80,13 @@ func (controller *AppController) LibrarySearch(context *gin.Context) {
 
 func (controller *AppController) LibraryAddRecord(context *gin.Context) {
 	inputLogID := ""
-	form, _ := context.MultipartForm()
+	form, err := context.MultipartForm()
+	if err != nil || form == nil {
+		context.JSON(http.StatusBadRequest, gin.H{
+			"error": "invalid or incomplete multipart upload",
+		})
+		return
+	}
 	files := form.File["file-input-log"]
 	for _, file := range files {
 		thisLog := new(dao.OmciAnalyzerRequestRecord)
@@ -98,7 +104,6 @@ func (controller *AppController) LibraryAddRecord(context *gin.Context) {
 	models.MapFormToStruct(form.Value, &f)
 
 	id, _ := context.GetPostForm("ID")
-	var err error
 	if id != "" {
 		var record dao.IOPLibraryRecord
 		dao.MysqlRecordDataReadFirst(&record, "id", id)

@@ -17,7 +17,14 @@ import (
 func (controller *AppController) OmciAnalyzerRequest(context *gin.Context) {
 	var ret []dao.OmciAnalyzerRequestRecord
 	//multiple files in one POST
-	form, _ := context.MultipartForm()
+	form, err := context.MultipartForm()
+	if err != nil || form == nil {
+		utils.Log("OmciAnalyzerRequest: multipart parse failed:", err)
+		context.JSON(http.StatusBadRequest, gin.H{
+			"error": "invalid or incomplete multipart upload",
+		})
+		return
+	}
 	files := form.File["omcianalyzerFile"]
 	for _, file := range files {
 		thisLog := new(dao.OmciAnalyzerRequestRecord)
@@ -93,7 +100,14 @@ func (controller *AppController) OmciAnalyzerMinio(context *gin.Context) {
 func (controller *AppController) GetOmciAnalyzerProgressData(context *gin.Context) {
 	var retLog []dao.OmciAnalyzerRequestRecord
 	//multiple logs in one POST
-	form, _ := context.MultipartForm()
+	form, err := context.MultipartForm()
+	if err != nil || form == nil {
+		utils.Log("GetOmciAnalyzerProgressData: multipart parse failed:", err)
+		context.JSON(http.StatusBadRequest, gin.H{
+			"error": "invalid or incomplete multipart upload",
+		})
+		return
+	}
 	logs := form.Value["requestKey"]
 	for _, key := range logs {
 		r := new(dao.OmciAnalyzerRequestRecord)

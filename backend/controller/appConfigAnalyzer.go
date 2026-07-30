@@ -17,7 +17,13 @@ func (controller *AppController) ConfigAnalyzerRequest(context *gin.Context) {
 	var ponLogID uint
 	var ponLogPath string
 	//multiple files in one POST
-	form, _ := context.MultipartForm()
+	form, err := context.MultipartForm()
+	if err != nil || form == nil {
+		context.JSON(http.StatusBadRequest, gin.H{
+			"error": "invalid or incomplete multipart upload",
+		})
+		return
+	}
 	pon := form.File["file-input-log-pon"]
 	for _, file := range pon {
 		extName := path.Ext(file.Filename)
@@ -73,7 +79,13 @@ func (controller *AppController) ConfigAnalyzerRequest(context *gin.Context) {
 func (controller *AppController) GetConfigAnalyzerProgressData(context *gin.Context) {
 	var retLog []dao.ConfigAnalyzerRequestRecord
 	//multiple logs in one POST
-	form, _ := context.MultipartForm()
+	form, err := context.MultipartForm()
+	if err != nil || form == nil {
+		context.JSON(http.StatusBadRequest, gin.H{
+			"error": "invalid or incomplete multipart upload",
+		})
+		return
+	}
 	logs := form.Value["requestKey"]
 	for _, key := range logs {
 		r := new(dao.ConfigAnalyzerRequestRecord)
