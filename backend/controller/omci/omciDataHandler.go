@@ -25,6 +25,7 @@ type RespOmciData struct {
 	Name      string   `json:"name"`
 	Class     uint64   `json:"class"`
 	Type      string   `json:"type"`
+	MsgFormat string   `json:"msgFormat"`
 	Direction string   `json:"direction"`
 	Status    string   `json:"status"`
 	Content   Contents `json:"content"`
@@ -37,7 +38,25 @@ func OmciContentTable(msg *omciSchema.OmciContext) (r *orderedmap.OrderedMap) {
 	} else {
 		r = nil
 	}
-	return r
+	return prependMsgFormat(r, msg.Header.DevId)
+}
+
+func prependMsgFormat(payload *orderedmap.OrderedMap, devId byte) *orderedmap.OrderedMap {
+	enriched := orderedmap.New()
+	enriched.Set("MsgFormat", omciSchema.FormatDevId(devId))
+	if payload == nil {
+		return enriched
+	}
+	for _, key := range payload.Keys() {
+		val, _ := payload.Get(key)
+		enriched.Set(key, val)
+	}
+	return enriched
+}
+
+func enrichOmciHeader(header omciSchema.OmciHeader) omciSchema.OmciHeader {
+	header.MsgFormat = omciSchema.FormatDevId(header.DevId)
+	return header
 }
 
 func OmciContentResult(msg *omciSchema.OmciContext) uint8 {
@@ -124,6 +143,7 @@ func AssembleOmciData(filePath string) []RespOmciData {
 			latency = 0
 		}
 		result := OmciContentResult(&msg)
+		msgFormat := omciSchema.FormatDevId(msg.Header.DevId)
 		omciData = append(omciData, RespOmciData{
 			Id:        index,
 			Latency:   latency,
@@ -131,10 +151,11 @@ func AssembleOmciData(filePath string) []RespOmciData {
 			Name:      msg.Header.MeClassName,
 			Class:     msg.Header.MeClass,
 			Type:      msg.Header.MsgTypeName,
+			MsgFormat: msgFormat,
 			Direction: dir,
 			Status:    status[result],
 			Content: Contents{
-				Header:  msg.Header,
+				Header:  enrichOmciHeader(msg.Header),
 				Payload: OmciContentTable(&msg),
 			},
 		})

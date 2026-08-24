@@ -47,6 +47,39 @@ function tryParseJSON(s: any): AnyData | null {
   }
 }
 
+function formatDevId(devId: unknown): string {
+  const n = Number(devId);
+  if (n === 10) return "Baseline OMCI";
+  if (n === 11) return "Extended OMCI";
+  if (Number.isFinite(n)) {
+    return `Unknown (0x${n.toString(16).toUpperCase().padStart(2, "0")})`;
+  }
+  return "Unknown";
+}
+
+/** Ensure Details shows MsgFormat even when backend has not been redeployed yet. */
+function enrichDetailContent(content: AnyData): AnyData {
+  if (!content || typeof content !== "object" || Array.isArray(content)) return content;
+
+  const root = content as Record<string, AnyData>;
+  const header = root.header;
+  if (!header || typeof header !== "object" || Array.isArray(header)) return content;
+
+  const h = header as Record<string, AnyData>;
+  const msgFormat = String(h.MsgFormat ?? h.msgFormat ?? formatDevId(h.DevId ?? h.devId));
+  const enrichedHeader: Record<string, AnyData> = { ...h, MsgFormat: msgFormat };
+
+  let enrichedPayload = root.payload;
+  if (enrichedPayload && typeof enrichedPayload === "object" && !Array.isArray(enrichedPayload)) {
+    const p = enrichedPayload as Record<string, AnyData>;
+    if (p.MsgFormat === undefined && p.msgFormat === undefined) {
+      enrichedPayload = { MsgFormat: msgFormat, ...p };
+    }
+  }
+
+  return { ...root, header: enrichedHeader, payload: enrichedPayload };
+}
+
 const RecursiveTable: React.FC<{ data: AnyData }> = ({ data }) => {
   if (isPrimitive(data)) {
     return <span>{String(data ?? "")}</span>;
@@ -151,6 +184,7 @@ export default function OmciAnalyzerPageOmciPage() {
     { key: "name", label: "Name" },
     { key: "class", label: "Class" },
     { key: "type", label: "Type" },
+    { key: "msgFormat", label: "Msg Format" },
     { key: "direction", label: "Direction" },
     { key: "status", label: "Status" },
     { key: "action", label: "Action" },
@@ -268,10 +302,10 @@ export default function OmciAnalyzerPageOmciPage() {
     // if content present, show immediately; handle object/string properly
     if (item.content !== undefined && item.content !== null) {
       if (typeof item.content === "object") {
-        setModalContent(item.content as AnyData);
+        setModalContent(enrichDetailContent(item.content as AnyData));
       } else {
         const parsed = tryParseJSON(item.content);
-        setModalContent(parsed ?? String(item.content));
+        setModalContent(parsed ? enrichDetailContent(parsed) : String(item.content));
       }
       return;
     }
@@ -285,10 +319,10 @@ export default function OmciAnalyzerPageOmciPage() {
       // resp.data may contain .content as object or string; preserve object when available
       const raw = resp.data?.content ?? resp.data ?? null;
       if (raw !== null && typeof raw === "object") {
-        setModalContent(raw as AnyData);
+        setModalContent(enrichDetailContent(raw as AnyData));
       } else if (typeof raw === "string") {
         const parsed = tryParseJSON(raw);
-        setModalContent(parsed ?? raw);
+        setModalContent(parsed ? enrichDetailContent(parsed) : raw);
       } else {
         setModalContent(null);
       }

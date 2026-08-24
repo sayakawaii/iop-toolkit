@@ -11,6 +11,7 @@ package omciSchema
 
 import (
 	"encoding/binary"
+	"fmt"
 	"reflect"
 	"strconv"
 )
@@ -205,4 +206,21 @@ func stringToInt64(input string) (output int64, e error) {
 		output = int64(v)
 	}
 	return
+}
+
+const (
+	DevIdBaseline byte = 0x0A
+	DevIdExtended byte = 0x0B
+)
+
+// FormatDevId returns a human-readable OMCI message format label.
+func FormatDevId(devId byte) string {
+	switch devId {
+	case DevIdBaseline:
+		return "Baseline OMCI"
+	case DevIdExtended:
+		return "Extended OMCI"
+	default:
+		return fmt.Sprintf("Unknown (0x%02X)", devId)
+	}
 }

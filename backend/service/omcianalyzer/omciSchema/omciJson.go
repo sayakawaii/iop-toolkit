@@ -20,6 +20,7 @@ type OmciHeader struct {
 	MsgType     byte   `json:"MsgType"`
 	MsgTypeName string `json:"MsgTypeName"`
 	DevId       byte   `json:"DevId"`
+	MsgFormat   string `json:"MsgFormat"`
 	MeClass     uint64 `json:"MeClass"`
 	MeClassName string `json:"MeClassName"`
 	MeInst      uint64 `json:"MeInst"`
