@@ -151,6 +151,14 @@ func TestNokiaOnuShapeExtended(t *testing.T) {
 	})
 }
 
+func TestNokiaOnuShapeDiagPrefix(t *testing.T) {
+	runShaperTest(t, shaperTestCase{
+		logType:      NokiaOnu,
+		logFile:      "./testdata/nokia_onu_isam_diag_prefix.txt",
+		expectedOnus: []string{"NOKIA-ONU"},
+	})
+}
+
 // ---- CsvRaw ----
 
 func TestCsvRawShape(t *testing.T) {

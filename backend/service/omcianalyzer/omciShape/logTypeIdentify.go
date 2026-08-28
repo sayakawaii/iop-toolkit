@@ -93,7 +93,8 @@ var contentIdentifiers = []logIdentifier{
 	{name: "mt2 Html", logType: Mt2Html, check: func(f, l string) bool {
 		return path.Ext(f) == ".html" && strings.Contains(l, "<tr onclick=\"drawInfo(")
 	}},
-	{name: "ISAM", logType: Isam, check: func(_, l string) bool { return strings.Contains(l, "OMCI MSG") }},
+	// Match real ISAM hex-dump lines (<OMCI MSG> ... OntId), not diagnostic "OMCI MSG:" events.
+	{name: "ISAM", logType: Isam, check: func(_, l string) bool { return strings.Contains(l, "<OMCI MSG>") }},
 	{name: "LightSpan", logType: LightSpan, check: func(_, l string) bool { return strings.Contains(l, "Dir: Tx --> Onu:") }},
 	{name: "XponHwa", logType: XponHwa, check: func(_, l string) bool {
 		return strings.Contains(l, "[OMCI:OmciTxRx]") && strings.Contains(l, "omci_packet") &&
