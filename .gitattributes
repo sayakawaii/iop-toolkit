@@ -1,0 +1,57 @@
+# Line endings
+#
+# Every text file is stored with LF in the repository and checked out with LF
+# on every platform, including Windows. Without this, an editor that saves
+# CRLF turns a few-line edit into a whole-file diff.
+
+* text=auto eol=lf
+
+# Source and configuration
+*.go            text eol=lf
+*.py            text eol=lf
+*.ts            text eol=lf
+*.tsx           text eol=lf
+*.js            text eol=lf
+*.mjs           text eol=lf
+*.json          text eol=lf
+*.css           text eol=lf
+*.html          text eol=lf
+*.svg           text eol=lf
+*.md            text eol=lf
+*.xml           text eol=lf
+*.yml           text eol=lf
+*.yaml          text eol=lf
+*.conf          text eol=lf
+*.template      text eol=lf
+*.mod           text eol=lf
+*.sum           text eol=lf
+Dockerfile      text eol=lf
+.dockerignore   text eol=lf
+.npmrc          text eol=lf
+
+# Shell scripts break if they are checked out with CRLF
+*.sh            text eol=lf
+
+# Binary
+*.jar           binary
+*.pdf           binary
+*.ico           binary
+*.pcap          binary
+*.png           binary
+*.jpg           binary
+*.jpeg          binary
+*.gif           binary
+*.webp          binary
+*.woff          binary
+*.woff2         binary
+*.ttf           binary
+*.eot           binary
+*.zip           binary
+*.gz            binary
+*.tar           binary
+
+# Captured OLT/ONU logs and golden parser output.
+# These are byte-exact captures, and several parsers and golden comparisons
+# depend on the original line endings, so they are never converted.
+**/testdata/**      -text
+**/testoutput/**    -text
