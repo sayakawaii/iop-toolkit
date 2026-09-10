@@ -1,0 +1,54 @@
+module nokia-ieee802-dot1ax-mounted-eonu-dev {
+   namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+      + "nokia-ieee802-dot1ax-mounted-eonu-dev";
+   prefix nokia-ieee802-dot1ax-mounted-eonu-dev;
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+   import ietf-interfaces-mounted {
+     prefix if-mounted;
+   }
+
+   import ieee802-dot1ax-mounted {
+      prefix dot1ax-mounted; 
+   }
+
+   organization
+       "Nokia";
+   contact
+       "isam.yang@nokia.com";
+   description
+       "The NOKIA IEEE 802.1AX-2008 YANG module supporting
+       deviations on top of standard.";
+
+   revision 2026-03-08 {
+     description
+       "Initial version of deviation file for ieee802-dot1ax.yang";
+     reference
+       "Nokia specific";    
+   }
+
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/dot1ax-mounted:aggregator/dot1ax-mounted:aggregator-lacp/dot1ax-mounted:actor-admin-key" {
+    deviate add {
+
+      must "(count(current()/../../../../if-mounted:interface[dot1ax-mounted:aggregator/dot1ax-mounted:aggregator-lacp/dot1ax-mounted:actor-admin-key = current()]) <= 1)" {
+
+          error-message "The LAG actor-admin-key must be unique per ONU.";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/dot1ax-mounted:aggregation-port/dot1ax-mounted:aggregation-port-lacp/dot1ax-mounted:actor-admin-key" {
+    deviate add {
+
+      must "(count(current()/../../../../if-mounted:interface[dot1ax-mounted:aggregator/dot1ax-mounted:aggregator-lacp/dot1ax-mounted:actor-admin-key = current()]) = 1)" {
+          error-message "The actor-admin-key configured on an ENET UNI interface must match the actor-admin-key of a corresponding LAG interface.";
+      }
+    }
+  }
+
+
+}

@@ -1,0 +1,271 @@
+module bbf-oam-cfm-mp-to-interface {
+  yang-version 1.1;
+  namespace "urn:bbf:yang:bbf-oam-cfm-mp-to-interface";
+
+  prefix bbf-cfm-mp2i;
+
+  import iana-if-type {
+    prefix ianaift;
+  }
+
+  import ietf-interfaces {
+    prefix if;
+  }
+  import bbf-if-type {
+    prefix bbfift;
+  }
+  import ieee802-dot1q-cfm {
+    prefix dot1q-cfm;
+  }
+  import ieee802-dot1q-cfm-types {
+    prefix cfm-types;
+  }
+
+  organization
+    "Broadband Forum <https://www.broadband-forum.org>
+     Common YANG Work Area";
+  contact
+    "Comments or questions about this Broadband Forum YANG module
+     should be directed to <mailto:help@broadband-forum.org>.
+
+     Editor:      Nick Hancock, ADTRAN
+
+     Editor:      Ludwig Pauwels, Nokia
+
+     PS Leader:   Joey Boyd, ADTRAN
+
+     PS Leader:   Sowrirajan Padmanabhan, Nokia
+
+     WA Director: Joey Boyd, ADTRAN
+
+     WA Director: Sven Ooghe, Nokia";
+  description
+    "This module is part of a collection of YANG definitions for
+     supporting the Broadband Forum requirements on CFM OAM as
+     applicable to access network equipment. As such, this module is
+     specific to access network equipment (e.g., BBF-specified Access
+     Nodes and FTTdp DPUs).
+
+     Specifically, this module augments the CFM model to link a MEP
+     (Maintenance End Point) to an interface, it extends IEEE's model
+     to support explicit configuration of MIPs, and it provides data
+     nodes to display Maintenance Points per interface, i.e. the CFM 
+     stack.
+
+     Copyright (c) 2017-2021, Broadband Forum
+
+     Redistribution and use in source and binary forms, with or
+     without modification, are permitted provided that the following
+     conditions are met:
+
+     1. Redistributions of source code must retain the above copyright
+        notice, this list of conditions and the following disclaimer.
+
+     2. Redistributions in binary form must reproduce the above
+        copyright notice, this list of conditions and the following
+        disclaimer in the documentation and/or other materials
+        provided with the distribution.
+
+     3. Neither the name of the copyright holder nor the names of its
+        contributors may be used to endorse or promote products
+        derived from this software without specific prior written
+        permission.
+
+     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
+     CONTRIBUTORS \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+     INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+     DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+     CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+     SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+     NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+     CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+     STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+     ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+     ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+     The above license is used as a license under copyright only.
+     Please reference the Forum IPR Policy for patent licensing terms
+     <https://www.broadband-forum.org/ipr-policy>.
+
+     Any moral rights which are necessary to exercise under the above
+     license grant are also deemed granted under this license.
+
+     This version of this YANG module is part of TR-383; see
+     the TR itself for full legal notices.";
+
+  revision 2021-03-12 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: yyyy-mm-dd.";
+    reference
+      "TR-383: Common YANG Modules
+               <https://www.broadband-forum.org/technical/download/
+                        TR-383_Amendment-x.pdf>";
+  }
+
+  feature explicit-mips {
+    description
+      "MIP creation by the NETCONF Client is supported (whereas the
+       base IEEE model only supports autonomous creation of MIPs in
+       the device as controlled per Maintenance Domain and or
+       Maintenance Association).";
+  }
+
+  augment '/dot1q-cfm:cfm/dot1q-cfm:maintenance-group/dot1q-cfm:mep' {
+    when "current()/dot1q-cfm:direction" {
+      description
+        "Augments a MEP with specific data nodes. To allow adding
+         mandatory data nodes a when condition is added that is always
+         fulfilled.";
+    }
+    description
+      "Augment a MEP with BBF specific data nodes.";
+    leaf interface {
+      type if:interface-ref;
+      must
+        "derived-from-or-self(/if:interfaces/if:interface"
+      + "[if:name = current()]/if:type,'bbfift:vlan-sub-interface') "
+      + "or ((derived-from(/if:interfaces/if:interface"
+      + "[if:name = current()]/if:type,'bbfift:ethernet-like') or "
+      + "derived-from-or-self(/if:interfaces/if:interface"
+      + "[if:name = current()]/if:type,'ianaift:ptm') or "
+      + "derived-from-or-self(/if:interfaces/if:interface"
+      + "[if:name = current()]/if:type,'ianaift:ethernetCsmacd')) "
+      + "and current()/../dot1q-cfm:direction = 'down')" {
+        error-message
+          "On an Ethernet like interface only down-MEPs can be "
+         +"created.";
+        description
+          "'Ethernet like' interfaces are interfaces that have a type
+           that specializes the abstract type 'ethernet-like', or use
+           or specialise the concrete types 'ptm' or 'ethernetCsmacd'.
+           On such interfaces only down-MEPs can be created.
+
+           On top of any of these interfaces VLAN sub-interfaces can
+           be created. On VLAN sub-interfaces both up- and down-MEPs
+           can be created.";
+      }
+      must
+        "count(current()/../../dot1q-cfm:mep[bbf-cfm-mp2i:interface"
+       +" = current()]) <= 1" {
+        error-message
+          "Two MEPs can not coexist on the same interface.";
+        description
+          "Within a single Maintenance Group it is not possible to
+           configure two MEPs on the same interface.";
+      }
+
+      /* The following is a relevant constraint not written in YANG:
+         All up-MEPs within a single MA shall reference VLAN
+         sub-interfaces that participate in the same forwarder.
+      */
+      mandatory true;
+
+      description
+        "References the interface on which the MEP shall be created.
+         Note that MEPs can be VLAN-unaware and refer to a -link
+         level- interface, and can be VLAN-aware and refer to a VLAN
+         sub-interface. Note that the Link Aggregation Group (LAG) is
+         not part of the -link level- interfaces. This is because IEEE
+         802.1ag defines that if a LAG is used in combination with
+         VLAN-unaware MEPs, then the MEPs are configured below the
+         LAG, i.e. per Ethernet inteface.";
+    }
+  }
+
+  augment '/dot1q-cfm:cfm/dot1q-cfm:maintenance-group' {
+    if-feature "explicit-mips";
+    description
+      "Data nodes to configure MIPs and to link this configuration to
+       the interfaces relevant in BBF context.";
+
+    list mip {
+      key "interface";
+      description
+        "A list of MIPs associated with a device interface.";
+      leaf interface {
+        type if:interface-ref;
+
+        must
+          "derived-from-or-self(
+           /if:interfaces/if:interface[if:name = current()]
+           /if:type,'bbfift:vlan-sub-interface')" {
+          error-message
+            "A MIP can be created only on an interface of the type "
+           +"vlan-sub-interface.";
+        }
+        must
+          "(/dot1q-cfm:cfm/dot1q-cfm:maintenance-domain"
+        + "[dot1q-cfm:md-id = current()/../../dot1q-cfm:md-id]/"
+        + "dot1q-cfm:maintenance-association"
+        + "[dot1q-cfm:ma-id = current()/../../dot1q-cfm:ma-id]/"
+        + "dot1q-cfm:mhf-creation = 'mhf-none') or "
+        + "(/dot1q-cfm:cfm/dot1q-cfm:maintenance-domain"
+        + "[dot1q-cfm:md-id = current()/../../dot1q-cfm:md-id]/"
+        + "dot1q-cfm:mhf-creation = 'mhf-none' and "
+        + "/dot1q-cfm:cfm/dot1q-cfm:maintenance-domain"
+        + "[dot1q-cfm:md-id = current()/../../dot1q-cfm:md-id]/"
+        + "dot1q-cfm:maintenance-association"
+        + "[dot1q-cfm:ma-id = current()/../../dot1q-cfm:ma-id]/"
+        + "dot1q-cfm:mhf-creation = 'mhf-defer')" {
+          error-message
+            "Explicitly created MIPs can not co-exist with auto-"
+           +"created MIPs";
+          description
+            "Explicitly created MIPs can not co-exist with auto-
+             created MIPs.";
+        }
+        must
+          "not(current()/../../dot1q-cfm:mep[bbf-cfm-mp2i:interface "
+         +"= current()])" {
+          error-message
+            "A MIP and a MEP can not coexist on the same interface.";
+          description
+            "Within a single Maintenance Group it is not possible to
+             configure a MIP and a MEP on the same interface as this
+             would imply that they have the same level (inherited
+             from the Maintenance Domain).";
+        }
+        must
+          "not(current()/../../dot1q-cfm:mep[dot1q-cfm:direction = "
+         +"'down'])" {
+          error-message
+            "A MIP can not coexist with a down-MEP in the same
+             Maintenance Group.";
+        }
+        must
+          "(count(/dot1q-cfm:cfm/dot1q-cfm:maintenance-group
+           /bbf-cfm-mp2i:mip[bbf-cfm-mp2i:interface =
+           current()]) <= 1)" {
+          error-message
+            "There can be only one MIP on a VLAN sub-interface over "
+           +"all Maintenance Groups.";
+        }
+      /* The following is a relevant constraint not written in YANG:
+         All MIPs within a single MA shall reference VLAN
+         sub-interfaces that participate in the same forwarder.
+      */
+        description
+          "References the interface on which the MIP shall be created.
+           Note that MIPs are always VLAN-aware and hence always refer
+           to a VLAN sub-interface.";
+      }
+
+      leaf id-permission {
+        type cfm-types:sender-id-permission-type;
+        default "send-id-none";
+        description
+          "Enumerated value indicating what, if anything, is to be
+           included in the Sender ID TLV transmitted by MHFs
+           created by the Default Maintenance Domain. If this object
+           has the value send-if-defer, Sender ID TLV transmission
+           for this VLAN is controlled by md-id-permission-type.";
+        reference
+          "IEEE Std 802.1Q-2018, section 12.14.3.1.3e, 12.14.3.2.2a";
+      }
+    }
+  }
+}

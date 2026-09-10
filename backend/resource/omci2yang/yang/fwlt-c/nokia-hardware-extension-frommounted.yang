@@ -1,0 +1,331 @@
+module nokia-hardware-extension-frommounted {
+  yang-version 1.1;
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+  + "nokia-hardware-extension-frommounted";
+
+  prefix nokia-hw-ext-frommounted;
+
+  import ietf-hardware-frommounted {
+    prefix hw-frommounted;
+  }
+
+  import nokia-sdan-hardware-module-types-frommounted {
+    prefix nokia-sdan-hwmdlt-frommounted;
+  }
+
+  import bbf-fiber-onu-emulated-mount {
+     prefix onu;
+  }
+  organization
+    "Nokia";
+
+  contact
+     "Comments or questions about this Nokia YANG module should be 
+     directed to <mailto:isam.yang@nokia.com>.";
+
+
+  description
+     "This module contains a collection of YANG definitions for 
+     supporting Nokia specific requirements as applicable to its 
+     access network equipment.
+     
+     Specifically, this module augments the hardware model with 
+	 additional identifying operational data of a component.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia 
+     reserves the right to revise this document for any reason, 
+     including but not limited to conformity with standards 
+     promulgated by various agencies, utilisation of advances in the 
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or 
+     referred to herein.
+
+     The product specifications and other technical or performance 
+     information contained herein are subject to change without 
+     notice. Updates of this document will be issued under the above 
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any 
+     information or opinion contained herein. Nokia expressly advises 
+     that any use of for any purpose or reliance upon this technical 
+     reference is at the risk of the user and that Nokia shall not be 
+     liable for any damage or injury incurred by any person arising 
+     out of the sufficiency, accuracy, or utility of any information 
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any 
+     manufacturer to modify or change any of its products, nor does 
+     this document represent any commitment by Nokia to sell or 
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license 
+     or right under any patent, whether or not the use of any 
+     information herein necessarily employs an invention of any 
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2020, Nokia. All Rights Reserved.";
+
+  revision 2024-09-11 {
+    description
+      "remove operational data related when statement";
+    reference
+      "BBN-107706";
+  }
+
+  revision 2024-06-01 {
+    description
+      "add a new leaf planned-module-type on hardware component and a new leaf actual-module-type on hardware-state component";
+    reference
+      " Epic BBN-107806";
+  }
+
+  revision 2024-01-30 {
+    description
+      "add new container omci-hw-layout and leaf equipment-id on hardware-state component
+      port for onumgmt";
+    reference
+      " Epic BBN-146760";
+  }
+
+  revision 2023-07-30 {
+    description
+      "add new leaves equipment-id and mac-address
+       on hardware-state component chassis for onumgmt";
+    reference
+      " Epic BBN-114929";
+  }
+  
+   revision 2023-05-25 {
+    description
+      "add a new leaf port-id in omci-identifier-helper";
+    reference
+      " Epic BBN-98030";
+  }
+
+  revision 2022-08-26 {
+    description
+      "add new leaf configuration-errors";
+    reference
+      " Epic BBN-69626";
+  }
+
+  revision 2022-04-11 {
+    description
+      "add new leaf virtual-board-number on hardware port for onumgmt";
+    reference
+      " Epic BBN-38309";
+  }
+
+  revision 2021-06-25 {
+       description
+         "als-enabled descripion change";
+       reference
+         "Nokia specific. EPIC BBN-766";
+  }
+
+  revision 2021-03-25 {
+       description
+         "TCA parameter rxpower migration from rssi";
+       reference
+         "Nokia specific. EPIC BBN-682";
+  }
+
+  revision 2021-03-17 {
+       description
+         "Moving tx-power-dbm , rx-power-dbm to nokia-hardware-transceivers-dbm.yang";
+       reference
+         "Nokia specific. EPIC BBN-1693";
+  }
+
+  revision 2021-03-08 {
+       description
+         "Support transceiver rx-power and tx-power in 0.1dBm Units";
+       reference
+         "Nokia specific. RCR ALU02739128";
+  }
+
+  revision 2021-02-17 {
+     description
+       "TCA parameters units for Temperature, Voltage and TxBias is changed.";
+     reference
+       "Nokia specific. EPIC BBN-682";
+  }
+
+  revision 2020-11-26 {
+       description
+         "Configurable TCA parameters";
+       reference
+         "Nokia specific. RCR ALU02503366";
+  }
+
+  revision 2020-11-12 {
+       description
+         "Introducing als if-feature";
+       reference
+         "Nokia specific. RCR ALU02722973";
+  }
+
+  revision 2020-09-10 {
+       description
+         "Introducing self-test if-feature";
+       reference
+         "Nokia specific. RCR ALU02678607";
+  }
+
+  revision 2020-09-03 {
+       description
+         "Introducing last-self-test-error field to display reset-with-self-test result";
+       reference
+         "Nokia specific. RCR ALU02678607";
+  }
+
+  revision 2020-06-04 {
+       description
+         "if-feature update on uptime monitoring leaf nodes.";
+       reference
+         "Nokia specific. RCR ALU02615153";
+  }
+
+  revision 2020-06-03 {
+       description
+         "Enclosing uptime monitoring leaf nodes in container.";
+       reference
+         "Nokia specific. RCR ALU02615153";
+  }
+
+  revision 2020-04-28 {
+       description
+         "Change in names of uptime monitoring leaf nodes.";
+       reference
+         "Nokia specific. RCR ALU02615153";
+  }
+
+  revision 2020-03-27 {
+       description
+         "Activation time and uptime  addition to hardware-state.";
+       reference
+         "Nokia specific. RCR ALU02615153";
+  }
+
+  revision 2020-02-26 {
+        description
+          "rssi threshold units changed to int16.";
+        reference
+          "Nokia specific. RCR ALU02503367";
+  }
+
+  revision 2020-02-06 {
+       description
+         "RSSI profile addition, trancsevier-link types.";
+       reference
+         "Nokia specific. RCR ALU02503367";
+  }
+
+  revision 2018-09-13 {
+    description
+      "Make updates based upon comment resolution about raise or clear alarm when board temperature is over threshold.";
+    reference
+      "Nokia specific. RCR ALU02451272";
+  }
+
+  revision 2017-12-08 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific";
+  }
+
+  augment "/onu:onus/onu:onu/onu:fromroot/hw-frommounted:hardware/hw-frommounted:component" {
+    description
+      "Augment the trasceiver hardware with NOKIA specific configuration parameters.";
+
+    leaf tca-transceiver-profile {
+       type string;
+       description
+         "Reference to a tca transceiver configuration profile.";
+    }
+
+     leaf als-enabled {
+        type boolean;
+        description
+          "Indicates whether automatic laser shutdown is enabled or disabled per transceiver.
+           Takes effect when configured on optical ethernet transceiver, ignored if transceiver 
+           is of type electrical or GPON or NGPON.";
+     }
+
+     leaf tca-monitoring-enabled {
+       type boolean;
+       description
+         "Indicates whether transceiver's voltage, temperature, transceiver-link tca parameters rx-power,tx-power, bias-current monitoring is enabled or disabled per transceiver. When enabled, current values are compared with the defined thresholds to raise alarm incase crossing defined thresholds. ";
+     }
+
+     leaf planned-module-type {
+       type identityref {
+          base nokia-sdan-hwmdlt-frommounted:expected-eth-module-type-base;
+       }
+       description
+         "Indicates the planned type of physical hardware module,per ITU-T G.988 Table 9.1.5-1(and extensions).";
+       reference
+         "ITU-T G.988 Clause 9.1.5 - Expected plug-in unit type attribute";
+     }
+  }
+
+  augment "/onu:onus/onu:onu/onu:fromroot/hw-frommounted:hardware/hw-frommounted:component" {
+    description
+      "tca configuration parameters.";
+
+     leaf tca-transceiver-link-profile {
+        type string;
+        description
+          "Reference to a tca transceiver-link configuration profile.";
+     }
+  }
+
+  augment '/onu:onus/onu:onu/onu:fromroot/hw-frommounted:hardware/hw-frommounted:component' {
+    description
+      "Data nodes for ONU ports to help forming corresponding 
+       OMCI ME identifier.";
+    container omci-identifier-helper {
+      presence
+        "This container is only relevant for ports that belong
+         to an ONU device. It contains data nodes to help forming 
+         the corresponding port OMCI ME identifier in case the 
+         ONU ports is on top of a virtual OMCI board, i.e. not 
+         Visible in the ONU HW model.";
+    description
+        "This container is only relevant for ports that belong
+         to an ONU device. It contains data nodes to help forming 
+         the corresponding port OMCI ME identifier in case the 
+         ONU ports is on top of a virtual OMCI board, i.e. not 
+         Visible in the ONU HW model.";
+      leaf virtual-board-number {
+        type uint16;
+        description
+          "In OMCI, some ONUs have ports on top of virtual 
+           Boards unknown to the ONU YANG HW model. 
+           This data node provides the (virtual) board identifier 
+           used by OMCI for this port in the ONU. This board number
+           is ONU vendor specific and depends on the port type.";
+        reference
+          "G.988: 9.1.5 Cardholder";
+      }
+      leaf port-id {
+        type uint16;
+        description
+          "In OMCI, some ONUs have multiple UNI ports on top of one virtual
+           boards unknown to the ONU YANG HW model.
+           This data node provides port identifer used by OMCI for this port in the ONU.
+           This port number is ONU vendor specific.";
+        reference
+          "G.988: 9.5.1 and 9.5.5";
+      }
+    }
+  }
+
+}

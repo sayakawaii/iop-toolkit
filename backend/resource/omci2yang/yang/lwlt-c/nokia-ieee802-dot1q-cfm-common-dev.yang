@@ -1,0 +1,435 @@
+module nokia-ieee802-dot1q-cfm-common-dev {
+
+  yang-version 1.1;
+
+  namespace
+    "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-ieee802-dot1q-cfm-common-dev";
+
+  prefix nokia-ieee802-dot1q-cfm-common-dev;
+
+  import ieee802-dot1q-cfm {
+    prefix dot1q-cfm;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG definitions for
+     supporting Nokia specific requirements as applicable to its
+     access network equipment.
+
+     Specifically, this module identifies data that potentially
+     contains private data. Note that this classification is product
+     independent while the support of this data is product dependent.
+     I.e. it might be that data that is identified as private is not
+     supported in a particular product variant.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2020, Nokia. All Rights Reserved.";
+
+  revision 2025-08-18 {
+    description
+      "Updated error message for ma-name length deviation";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2023-12-07 {
+    description
+      "LTM related deviations from common to ltm category";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2023-08-01 {
+    description
+      "CCM related deviations from common to no-ccm category";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2022-12-29 {
+    description
+      "Added deviation for LTM target MEP ID";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2021-08-24 {
+    description
+      "Initial version";
+    reference
+      "Nokia specific";
+  }
+
+  deviation "/dot1q-cfm:cfm/dot1q-cfm:maintenance-domain/"
+           +"dot1q-cfm:mhf-creation" {
+    description
+      "MHF creation at maintenance-domain is not supported in current
+       feature scope.";
+    deviate not-supported;
+  }
+
+  deviation "/dot1q-cfm:cfm/dot1q-cfm:maintenance-domain" {
+    description "Limits the maximum number of Maintenance Domains.";
+    deviate add
+    {
+      max-elements 130;
+    }
+  }
+
+  deviation "/dot1q-cfm:cfm/dot1q-cfm:maintenance-domain/"
+           +"dot1q-cfm:id-permission" {
+    description
+      "Id Permission is not supported in current feature scope.";
+    deviate not-supported;
+  }
+
+  deviation "/dot1q-cfm:cfm/dot1q-cfm:maintenance-domain/"
+           +"dot1q-cfm:maintenance-association/"
+           +"dot1q-cfm:id-permission" {
+    description
+      "Id Permission is not supported in current feature scope.";
+    deviate not-supported;
+  }
+
+  deviation "/dot1q-cfm:cfm/dot1q-cfm:maintenance-group/dot1q-cfm:"
+           + "mep/dot1q-cfm:mac-address" {
+    description
+      "MEP MAC Address is displayed as part of the cfm stack. To
+       avoid redundancy, MEP MAC address under Maintenance Group
+       is restricted.";
+    deviate not-supported;
+  }
+
+  deviation "/dot1q-cfm:cfm/dot1q-cfm:maintenance-group/dot1q-cfm:"
+           + "mep/dot1q-cfm:transmit-loopback" {
+    description
+      "Transmit Loopback is supported in proprietary yang model
+       defined based on ITU.T Y1731 UML model. Hence IEEE defined
+       yang is not considered.";
+    deviate not-supported;
+  }
+
+  deviation "/dot1q-cfm:cfm/dot1q-cfm:maintenance-group" {
+    description
+      "A unique pair of Maintenance Domain and Maintenance
+       Association must form a Maintenance Group.";
+    deviate add {
+      unique "dot1q-cfm:md-id dot1q-cfm:ma-id";
+    }
+  }
+
+  deviation "/dot1q-cfm:cfm/dot1q-cfm:maintenance-group" {
+    description "Limits the maximum number of Maintenance Groups.";
+    deviate add
+    {
+      max-elements 20000;
+    }
+  }
+
+  /** When the Maintenance Domain name type is none, the
+    * Maintenance Association Name length must be less than or equal
+    * to 45 octets. Otherwise the total length of the Maintenance
+    * Domain name added together with 2 octets which is the fixed
+    * length of the Maintenance Association Format Primary VID must
+    * be less than or equal to 44 octets.
+    */
+
+  deviation "/dot1q-cfm:cfm/dot1q-cfm:maintenance-domain"
+          + "/dot1q-cfm:maintenance-association/dot1q-cfm:ma-name"
+          + "/dot1q-cfm:primary-vid/dot1q-cfm:primary-vid" {
+    deviate add {
+      must "/dot1q-cfm:cfm/dot1q-cfm:maintenance-domain[current()/.."
+        + "/../dot1q-cfm:md-id]/dot1q-cfm:none or"
+        + "((current()/../../dot1q-cfm:dns-like-name) and"
+        + "(string-length(current()/../../dot1q-cfm:dns-like-name)"
+        + "+ 2 <= 44)) or "
+        + "(current()/../../mac-address-and-uint-type) or"
+        + "((current()/../../dot1q-cfm:char-string) and"
+        + "((string-length(current()/../../dot1q-cfm:char-string)"
+        + "+ 2) <= 44))" {
+       error-message
+           "When Maintenance Domain name format is none, then the "
+         + "Maintenance Association name length must be 45 octets "
+         + "or less. Otherwise, the total length of the Maintenance "
+         + "Domain name and Maintenance Association name must be 44 "
+         + "octets or less.";
+       description
+         "When Maintenance Domain name format is none, then the
+          Maintenance Association name length must be 45 octets
+          or less. Otherwise, the total length of the Maintenance
+          Domain name and Maintenance Association name must be 44
+          octets or less.";
+       reference
+            "802.1Q clause 21.6.5, Table 21-16 and Table 21-17 "
+          + "of IEEE Std 802.1Q-2018";
+      }
+
+      must "not(current()/../../dot1q-cfm:none) or "
+         + "((current()/../../dot1q-cfm:none) and "
+         + "(count(/dot1q-cfm:cfm/dot1q-cfm:maintenance-domain"
+         + "[dot1q-cfm:none]/dot1q-cfm:maintenance-association["
+         + "dot1q-cfm:primary-vid = current()]) <= 1))" {
+        error-message
+            "A Maintenance Association Name must be unique across "
+          + "all Maintenance Domains that are without a "
+          + "Maintenance Domain name.";
+        description
+          "A Maintenance Association Name must be unique across
+           all Maintenance Domains that are without a
+           Maintenance Domain name.";
+      }
+    }
+  }
+
+  /** The Maintenance Association Name length in format Character
+    * string must be than or equal to 45 octets when the Maintenance
+    * Domain name format is none, otherwise the total length of the
+    * Maintenance Domain name added together with Maintenance
+    * Association Name in Character string format must be less than
+    * or equal to 44 octets.
+    */
+
+  deviation "/dot1q-cfm:cfm/dot1q-cfm:maintenance-domain"
+          + "/dot1q-cfm:maintenance-association/dot1q-cfm:ma-name"
+          + "/dot1q-cfm:char-string/dot1q-cfm:char-string" {
+    deviate add {
+      must "(current()/../../dot1q-cfm:none) or"
+         + "((current()/../../dot1q-cfm:dns-like-name) and"
+         + "((string-length(current()/../../dot1q-cfm:"
+         + "dns-like-name) + string-length(current())) <= 44)) or"
+         + "(current()/../../dot1q-cfm:mac-address-and-uint-type "
+         + "and ((string-length(current()) + 8) <= 44)) or "
+         + "(current()/../../dot1q-cfm:char-string and "
+         + "(((string-length(current()/../../dot1q-cfm:char-string))"
+         + " + (string-length(current()))) <= 44))" {
+       error-message
+           "When Maintenance Domain name format is none, then the "
+         + "Maintenance Association name length must be 45 octets "
+         + "or less. Otherwise, the total length of the Maintenance "
+         + "Domain name and Maintenance Association name must be 44 "
+         + "octets or less.";
+       description
+         "When Maintenance Domain name format is none, then the
+          Maintenance Association name length must be 45 octets
+          or less. Otherwise, the total length of the Maintenance
+          Domain name and Maintenance Association name must be 44
+          octets or less.";
+       reference
+           "802.1Q clause 21.6.5, Table 21-16 and Table 21-17 "
+         + "of IEEE Std 802.1Q-2018";
+      }
+
+      must "not(current()/../../dot1q-cfm:none) or "
+         + "((current()/../../dot1q-cfm:none) and "
+         + "(count(/dot1q-cfm:cfm/dot1q-cfm:maintenance-domain"
+         + "[dot1q-cfm:none]/dot1q-cfm:maintenance-association"
+         + "[dot1q-cfm:char-string = current()]) <= 1))" {
+        error-message
+            "A Maintenance Association Name must be unique across "
+          + "all Maintenance Domains that are without a "
+          + "Maintenance Domain name.";
+        description
+          "A Maintenance Association Name must be unique across
+           all Maintenance Domains that are without a
+           Maintenance Domain name.";
+      }
+    }
+  }
+
+
+  /** When the Maintenance Domain name type is none, the Maintenance
+    * Association Name length must be less than or equal to 45 octets.
+    * Otherwise the total length of the Maintenance Domain name added
+    * together with 2 octet which is the fixed length of Maintenance
+    * Association Format integer must be less than or equal to 44
+    * octets.
+    */
+
+  deviation "/dot1q-cfm:cfm/dot1q-cfm:maintenance-domain"
+          + "/dot1q-cfm:maintenance-association/dot1q-cfm:ma-name"
+          + "/dot1q-cfm:unsigned-int16/dot1q-cfm:unsigned-int16" {
+    deviate add {
+      must "(current()/../../dot1q-cfm:none) or"
+         + "((current()/../../dot1q-cfm:dns-like-name) and "
+         + "((string-length(current()/../../dot1q-cfm:dns-like-name)"
+         + " + 2) <= 44)) or"
+         + "(current()/../../mac-address-and-uint-type) or"
+         + "((current()/../../dot1q-cfm:char-string) and"
+         + "(((string-length(current()/../../dot1q-cfm:char-string))"
+         + " + 2) <= 44))" {
+        error-message
+           "When Maintenance Domain name format is none, then the "
+         + "Maintenance Association name length must be 45 octets "
+         + "or less. Otherwise, the total length of the Maintenance "
+         + "Domain name and Maintenance Association name must be 44 "
+         + "octets or less.";
+        description
+         "When Maintenance Domain name format is none, then the
+          Maintenance Association name length must be 45 octets
+          or less. Otherwise, the total length of the Maintenance
+          Domain name and Maintenance Association name must be 44
+          octets or less.";
+        reference
+            "802.1Q clause 21.6.5, Table 21-16 and Table 21-17 "
+          + "of IEEE Std 802.1Q-2018";
+      }
+
+      must "not(current()/../../dot1q-cfm:none) or "
+         + "((current()/../../dot1q-cfm:none) and "
+         + "(count(/dot1q-cfm:cfm/dot1q-cfm:maintenance-domain"
+         + "[dot1q-cfm:none]/dot1q-cfm:maintenance-association"
+         + "[dot1q-cfm:unsigned-int16 = current()]) <= 1))" {
+        error-message
+            "A Maintenance Association Name must be unique across "
+          + "all Maintenance Domains that are without a "
+          + "Maintenance Domain name.";
+        description
+          "A Maintenance Association Name must be unique across
+           all Maintenance Domains that are without a
+           Maintenance Domain name.";
+      }
+    }
+  }
+
+
+  /** When the Maintenance Domain name type is none, the Maintenance
+    * Association Name length must be less than or equal to 45 octets.
+    * Otherwise the total length of the Maintenance Domain name added
+    * together with 7 octet which is the fixed length of Maintenance
+    * Association Format RFC 2685 VPN ID must be less than or equal
+    * to 44 octets.
+    */
+
+  deviation "/dot1q-cfm:cfm/dot1q-cfm:maintenance-domain"
+          + "/dot1q-cfm:maintenance-association/dot1q-cfm:ma-name"
+          + "/dot1q-cfm:rfc2865-vpn-id/dot1q-cfm:vpn-id" {
+    deviate add {
+      must "(current()/../../dot1q-cfm:none) or"
+         + "((current()/../../dot1q-cfm:dns-like-name) and"
+         + "(string-length(current()/../../dot1q-cfm:dns-like-name)"
+         + " + 7 <= 44)) or"
+         + "(current()/../../mac-address-and-uint-type) or"
+         + "((current()/../../dot1q-cfm:char-string) and"
+         + "(string-length(current()/../../dot1q-cfm:char-string)"
+         + " + 7 <= 44))" {
+        error-message
+           "When Maintenance Domain name format is none, then the "
+         + "Maintenance Association name length must be 45 octets "
+         + "or less. Otherwise, the total length of the Maintenance "
+         + "Domain name and Maintenance Association name must be 44 "
+         + "octets or less.";
+        description
+         "When Maintenance Domain name format is none, then the
+          Maintenance Association name length must be 45 octets
+          or less. Otherwise, the total length of the Maintenance
+          Domain name and Maintenance Association name must be 44
+          octets or less.";
+        reference
+            "802.1Q clause 21.6.5, Table 21-16 and Table 21-17 of"
+          + "of IEEE Std 802.1Q-2018";
+      }
+
+      must "not(current()/../../dot1q-cfm:none) or "
+         + "((current()/../../dot1q-cfm:none) and "
+         + "(count(/dot1q-cfm:cfm/dot1q-cfm:maintenance-domain"
+         + "[dot1q-cfm:none]/dot1q-cfm:maintenance-association/"
+         + "dot1q-cfm:vpn-id[dot1q-cfm:vpn-oui = current()/dot1q-cfm"
+         + ":vpn-oui and dot1q-cfm:vpn-index = current()/dot1q-cfm:"
+         + "vpn-index]) <= 1))" {
+        error-message
+            "A Maintenance Association Name must be unique across "
+          + "all Maintenance Domains that are without a "
+          + "Maintenance Domain name.";
+        description
+          "A Maintenance Association Name must be unique across
+           all Maintenance Domains that are without a
+           Maintenance Domain name.";
+      }
+    }
+  }
+
+   deviation "/dot1q-cfm:cfm/dot1q-cfm:maintenance-domain" {
+    description
+      "A Pair of Maintenance Domain Name format and Maintenance
+       Domain Name must be unique across all Maintenance Domain,
+       except when there is no Maintenance Domain Name.";
+    reference
+      "802.1Q clause 18.1 and 18.2 of IEEE Std 802.1Q-2018";
+
+    deviate add {
+      unique "dot1q-cfm:md-name/dot1q-cfm:dns-like-name/"
+           + "dot1q-cfm:dns-like-name";
+      unique "dot1q-cfm:md-name/dot1q-cfm:mac-address-and-uint/"
+           + "dot1q-cfm:mac-address-and-uint-type/dot1q-cfm:address "
+           + "dot1q-cfm:md-name/dot1q-cfm:mac-address-and-uint/"
+           + "dot1q-cfm:mac-address-and-uint-type/dot1q-cfm:int";
+      unique "dot1q-cfm:md-name/dot1q-cfm:char-string/"
+           + "dot1q-cfm:char-string";
+    }
+  }
+
+  deviation "/dot1q-cfm:cfm/dot1q-cfm:maintenance-domain"
+          + "/dot1q-cfm:maintenance-association" {
+    description
+      "A Pair of Maintenance Association Name format and Maintenance
+       Association Name must be unique within a Maintenance Domain.";
+    reference
+      "802.1Q clause 18.1 and 18.2 of IEEE Std 802.1Q-2018";
+
+    deviate add {
+      unique "dot1q-cfm:ma-name/dot1q-cfm:primary-vid/dot1q-cfm:"
+           + "primary-vid";
+      unique "dot1q-cfm:ma-name/dot1q-cfm:char-string/dot1q-cfm:"
+           + "char-string";
+      unique "dot1q-cfm:ma-name/dot1q-cfm:unsigned-int16/dot1q-cfm:"
+           + "unsigned-int16";
+      unique "dot1q-cfm:ma-name/dot1q-cfm:rfc2865-vpn-id/dot1q-cfm:"
+           + "vpn-id/dot1q-cfm:vpn-index dot1q-cfm:ma-name/"
+           + "dot1q-cfm:rfc2865-vpn-id/dot1q-cfm:vpn-id/dot1q-cfm:"
+           + "vpn-oui";
+    }
+  }
+}

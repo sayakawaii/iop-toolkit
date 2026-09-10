@@ -1,0 +1,233 @@
+module nokia-bbf-xpongemtcont-common-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-bbf-xpongemtcont-common-dev";
+
+  prefix nokia-bbf-xpongemtcont-common-dev;
+
+  import  bbf-xpongemtcont {
+    prefix  bbf-xpongemtcont;
+  }
+  
+  import nokia-yang-types {
+    prefix nok-typ;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA IETF/System YANG module supporting
+     deviations on top of standard.";
+	 
+  revision 2025-12-04 {
+    description
+      "Expand maximum-bandwidth range to 0..50G for all PON tech and move to common";
+    reference
+      "Nokia Specific.";
+  }
+  
+  revision 2024-04-30 {
+    description
+      "Enlarge 64 to 100 bytes, RmtDbg gemport range change";
+    reference
+      "Nokia Specific.";
+  }
+
+  revision 2023-02-24 {
+    description
+      "bbf-xpongemtcont:tcont-ref is not supported.";
+    reference
+      "Nokia Specific.";
+  }
+
+  revision 2022-11-25 {
+    description
+      "Add not supported parameters.";
+    reference
+      "Nokia Specific.";
+  }
+
+  revision 2019-11-14 {
+    description
+      "Move upstream-aes-indicator to xpon category.";
+    reference
+      "Nokia Specific.";
+  }
+
+  revision 2019-07-02 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia Specific.";
+  }
+
+/**********************************************/
+/* definitions which should always be present */
+/**********************************************/
+
+  deviation "/bbf-xpongemtcont:xpongemtcont/bbf-xpongemtcont:gemports/bbf-xpongemtcont:gemport/bbf-xpongemtcont:interface" {
+    deviate add {
+      mandatory true;
+    }
+  }
+
+  deviation "/bbf-xpongemtcont:xpongemtcont/bbf-xpongemtcont:gemports/bbf-xpongemtcont:gemport/bbf-xpongemtcont:traffic-class" {
+    deviate add {
+      mandatory true;
+    }
+  }
+
+  deviation "/bbf-xpongemtcont:xpongemtcont/bbf-xpongemtcont:tconts/bbf-xpongemtcont:tcont/bbf-xpongemtcont:interface-reference" {
+    deviate add {
+      mandatory true;
+    }
+  }
+
+  deviation "/bbf-xpongemtcont:xpongemtcont/bbf-xpongemtcont:tconts/bbf-xpongemtcont:tcont/bbf-xpongemtcont:traffic-descriptor-profile-ref" {
+    deviate add {
+      mandatory true;
+    }
+  }
+
+
+  deviation "/bbf-xpongemtcont:xpongemtcont/bbf-xpongemtcont:traffic-descriptor-profiles/bbf-xpongemtcont:traffic-descriptor-profile/bbf-xpongemtcont:additional-bw-eligibility-indicator"{
+    description "This parameter is not supported.";
+    deviate not-supported;
+  } 
+
+  deviation "/bbf-xpongemtcont:xpongemtcont/bbf-xpongemtcont:traffic-descriptor-profiles/bbf-xpongemtcont:traffic-descriptor-profile/bbf-xpongemtcont:weight"{
+    description "This parameter is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/bbf-xpongemtcont:xpongemtcont/bbf-xpongemtcont:traffic-descriptor-profiles/bbf-xpongemtcont:traffic-descriptor-profile/bbf-xpongemtcont:priority"{
+    description "This parameter is not supported.";
+    deviate not-supported;
+  } 
+
+  deviation "/bbf-xpongemtcont:xpongemtcont/bbf-xpongemtcont:gemports/bbf-xpongemtcont:gemport/bbf-xpongemtcont:tcont-ref" {
+    description "This parameter is not supported.";
+    deviate not-supported;
+  }
+
+
+/* Deviation below is just for reference */
+/*
+deviation "/bbf-xpongemtcont:xpongemtcont/bbf-xpongemtcont:gemports/bbf-xpongemtcont:gemport/bbf-xpongemtcont:gemport-id" {
+    deviate add {
+        must "(not(boolean(/if:interfaces/if:interface[if:name = current()/../bbf-xpongemtcont:interface])))
+        or
+            (/if:interfaces/if:interface[if:name = current()/../bbf-xpongemtcont:interface]/if:type = 'bbf-xponift:olt-v-enet'
+              and
+                ((
+                  /if:interfaces/if:interface[if:name = 
+                  /if:interfaces/if:interface[if:name =
+                  /if:interfaces/if:interface[if:name = current()/../bbf-xpongemtcont:interface]/bbf-xponvani:olt-v-enet/bbf-xponvani:lower-layer-interface]
+                  /bbf-xponvani:v-ani/bbf-xponvani:preferred-channel-pair]/bbf-xpon:channel-pair/bbf-xpon:channel-pair-type = 'bbf-xpon-types:gpon'
+                and
+                 current() >= 256 and current() <= 1915)
+                or
+                (
+                 /if:interfaces/if:interface[if:name = 
+                 /if:interfaces/if:interface[if:name =
+                 /if:interfaces/if:interface[if:name = current()/../bbf-xpongemtcont:interface]/bbf-xponvani:olt-v-enet/bbf-xponvani:lower-layer-interface]
+                 /bbf-xponvani:v-ani/bbf-xponvani:preferred-channel-pair]/bbf-xpon:channel-pair/bbf-xpon:channel-pair-type != 'bbf-xpon-types:gpon'
+                 and
+                current() >= 1024 and current() <= 6648)))
+              or
+              (/if:interfaces/if:interface[if:name = current()/../bbf-xpongemtcont:interface]/if:type = 'bbfift:vlan-sub-interface'
+              and 
+                   ((/if:interfaces/if:interface[if:name =
+                    /if:interfaces/if:interface[if:name =
+                    /if:interfaces/if:interface[if:name =
+                    /if:interfaces/if:interface[if:name = current()/../bbf-xpongemtcont:interface]/bbf-subif:subif-lower-layer/bbf-subif:interface]
+                    /bbf-xponvani:olt-v-enet/bbf-xponvani:lower-layer-interface]
+                    /bbf-xponvani:v-ani/bbf-xponvani:preferred-channel-pair]/bbf-xpon:channel-pair/bbf-xpon:channel-pair-type ='bbf-xpon-types:gpon'
+               and
+                   ((current() >= 256 and current() <= 1915) 
+                 or 
+                     (current() >= 1916 and current() <= 2044 
+                 and 
+                     current()/../bbf-xpongemtcont:traffic-class = 0))) 
+               or
+                    (/if:interfaces/if:interface[if:name =
+                    /if:interfaces/if:interface[if:name =
+                    /if:interfaces/if:interface[if:name =
+                    /if:interfaces/if:interface[if:name = current()/../bbf-xpongemtcont:interface]/bbf-subif:subif-lower-layer/bbf-subif:interface]
+                    /bbf-xponvani:olt-v-enet/bbf-xponvani:lower-layer-interface]
+                    /bbf-xponvani:v-ani/bbf-xponvani:preferred-channel-pair]/bbf-xpon:channel-pair/bbf-xpon:channel-pair-type !='bbf-xpon-types:gpon'
+                and
+                ((current() >= 1024 and current() <= 6648) 
+                   or
+                    (current() >= 64506 and current() <= 65526 
+                   and 
+                     current()/../bbf-xpongemtcont:traffic-class = 0)))))"
+           {
+               error-message "The gemport id is out of range, for XGSPON/NGPON2:The gemport-id range is 1024~6648
+                                for GPON: The gemport-id range is 256~1915.
+                                RMTDBG GEM port range is 64506~65526 for XGSPON/NGPON2 and 1916~2044 for GPON";
+           }
+    }
+}
+
+deviation "/bbf-xpongemtcont:xpongemtcont/bbf-xpongemtcont:tconts/bbf-xpongemtcont:tcont/bbf-xpongemtcont:alloc-id" {
+  deviate add {
+      must "(/if:interfaces/if:interface[if:name = 
+           /if:interfaces/if:interface[if:name = current()/../bbf-xpongemtcont:interface-reference]
+                    /bbf-xponvani:v-ani/bbf-xponvani:preferred-channel-pair]/bbf-xpon:channel-pair/bbf-xpon:channel-pair-type ='bbf-xpon-types:gpon'
+               and
+                  current() >= 256 and current() <= 1023)
+               or
+                  (/if:interfaces/if:interface[if:name = 
+          /if:interfaces/if:interface[if:name = current()/../bbf-xpongemtcont:interface-reference]
+                  /bbf-xponvani:v-ani/bbf-xponvani:preferred-channel-pair]/bbf-xpon:channel-pair/bbf-xpon:channel-pair-type != 'bbf-xpon-types:gpon'
+               and
+                  current() >= 1024 and current() <= 16383)" 
+      {
+          error-message "The alloc-id is out of range, for XGSPON/NGPON2: The alloc-id range is 1024~16383
+              for GPON: The alloc-id range is 256~1023";
+      }
+  }
+}
+*/
+
+  deviation "/bbf-xpongemtcont:xpongemtcont/bbf-xpongemtcont:gemports/bbf-xpongemtcont:gemport/bbf-xpongemtcont:name" {
+   deviate replace {
+      type nok-typ:nokia-string-ascii100;
+    }
+  }
+
+  deviation "/bbf-xpongemtcont:xpongemtcont-state/bbf-xpongemtcont:gemports/bbf-xpongemtcont:gemport/bbf-xpongemtcont:name" {
+   deviate replace {
+      type nok-typ:nokia-string-ascii100;
+    }
+  }
+
+ deviation "/bbf-xpongemtcont:xpongemtcont/bbf-xpongemtcont:tconts/bbf-xpongemtcont:tcont/bbf-xpongemtcont:name" {
+    deviate replace {
+      type nok-typ:nokia-string-ascii100;
+    }
+  }
+
+ deviation "/bbf-xpongemtcont:xpongemtcont-state/bbf-xpongemtcont:tconts/bbf-xpongemtcont:tcont/bbf-xpongemtcont:name" {
+   deviate replace {
+      type nok-typ:nokia-string-ascii100;
+    }
+  }
+  
+ deviation "/bbf-xpongemtcont:xpongemtcont/bbf-xpongemtcont:traffic-descriptor-profiles/bbf-xpongemtcont:traffic-descriptor-profile/bbf-xpongemtcont:maximum-bandwidth" {
+    deviate replace {
+      type uint64 {
+        range "0..50000000000"{
+          error-message
+            "Must maximum-bandwidth <= 50G.";
+        }
+      }
+    }
+  }
+  
+}

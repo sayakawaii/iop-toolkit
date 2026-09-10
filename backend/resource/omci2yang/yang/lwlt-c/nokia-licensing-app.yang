@@ -1,0 +1,271 @@
+module nokia-licensing-app {
+
+    yang-version 1.1;
+    namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/nokia-licensing-app";
+
+    prefix lic-app;
+
+    import ietf-yang-types { prefix yang; }
+    import ietf-inet-types { prefix inet; }
+    import ietf-tls-client { prefix tlsc; }
+    import nokia-sdan-keystore-types { prefix nokia-ks; }
+    import nokia-sdan-est-client { prefix estc; }
+
+    organization
+        "Nokia";
+
+    contact
+        "Comments or questions about this Nokia YANG module should be 
+        directed to <mailto:isam.yang@nokia.com>.";
+
+    description
+        "This module contains a collection of YANG definitions for 
+        supporting Nokia specific requirements as applicable to its 
+        access network equipment.
+
+        Specifically, this module identifies data that potentially 
+        contains private data. Note that this classification is product
+        independent while the support of this data is product dependent.
+        I.e. it might be that data that is identified as private is not
+        supported in a particular product variant.
+
+        This specification is published by Nokia under Non-Disclosure
+        Agreement(s) (NDA) with specific parties and has to be considered
+        as Confidential Information as defined in such NDA. Nokia 
+        reserves the right to revise this document for any reason, 
+        including but not limited to conformity with standards 
+        promulgated by various agencies, utilisation of advances in the 
+        state of the technical areas, or the reflection of changes in the
+        design of any equipment, techniques, or procedures described or 
+        referred to herein.
+
+        The product specifications and other technical or performance 
+        information contained herein are subject to change without 
+        notice. Updates of this document will be issued under the above 
+        NDA's.
+
+        Nokia makes no representation or warranty, expressed or implied,
+        with respect to the sufficiency, accuracy, or utility of any 
+        information or opinion contained herein. Nokia expressly advises 
+        that any use of for any purpose or reliance upon this technical 
+        reference is at the risk of the user and that Nokia shall not be 
+        liable for any damage or injury incurred by any person arising 
+        out of the sufficiency, accuracy, or utility of any information 
+        or opinion contained herein.
+
+        This document is not to be construed as a suggestion to any 
+        manufacturer to modify or change any of its products, nor does 
+        this document represent any commitment by Nokia to sell or 
+        purchase any product. Nothing contained herein shall be construed
+        as conferring by implication, estoppel, or otherwise any license 
+        or right under any patent, whether or not the use of any 
+        information herein necessarily employs an invention of any 
+        existing or later issued patent.
+
+        Nokia reserves the right not to offer any or all of these
+        products and to withdraw any or all of them at any future time.
+
+        Copyright (C) 2019, Nokia. All Rights Reserved.";
+
+    revision 2025-02-06  {
+       description "EST keystore.";
+       reference "Nokia specific.";
+
+    }
+
+    revision 2024-09-04  {
+       description "Install CDE License Key for licensing.";
+       reference "Nokia specific.";
+
+    }
+
+    revision 2024-06-03  {
+       description "Keystore support for licensing.";
+       reference "Nokia specific.";
+
+    }
+
+    revision 2023-04-24  {
+       description "Remove licensing-state/features/on-off-status.";
+       reference "Nokia specific.";
+
+    }
+
+    revision 2023-03-29  {
+       description "Fix errors by adding reference and description sibstatements";
+       reference  "Nokia reference.";
+
+    }
+
+    revision 2023-03-04 {
+        description "Add verified field.";
+        reference  "Nokia reference.";
+    }
+
+    revision 2023-02-04 {
+        description "Add descriptions to server and licensing containers.";
+        reference "Nokia reference.";
+    }
+
+
+
+    revision 2019-12-03 {
+        description "Module initial version.";
+        reference "Nokia reference.";
+    }
+
+    typedef feature-type  {
+        type enumeration {
+            enum "on/off" {
+                value 0;
+                description "Feature is of type on/off.";
+            }
+            enum "capacity" {
+                value 1;
+                description "Feature is of type capacity.";
+            }
+            enum "cde" {
+                value 2;
+                description "Feature is of type cde.";
+            }
+        }
+        description "The type of the feature (on/off, capacity or cde).";
+    }
+
+    container licensing 
+    {
+        container server {
+        
+            leaf address {
+              type inet:host;
+              description "The IPv4/IPv6 address or FQDN of Central License Server (CSWL).";
+            }
+            
+            leaf port {
+              type inet:port-number;
+              default 8443;
+              description "This leaf specifies the port of Central License Server. 
+                           The default value (8443) is the default port for TLS 
+                           over HTTPs connection.";
+            }
+            description "License Server configuration parameters.";
+        }
+
+        container certificate {
+            presence "Provisioning of certificates.";
+            description
+                "A reusable grouping for configuring a TLS client without
+                any consideration for how an underlying TCP session is
+                established.";
+			uses tlsc:tls-client-grouping; 
+        }
+        container cde-features {
+            list license-key {
+                key name;
+                max-elements 20;
+                leaf name {
+                  type string;
+                  description "The name of the CDE License Key. This is the name of the License Key file or any unique name.";
+                }
+                leaf content {
+                  type string;
+                  mandatory true;
+                  description "The content of the CDE License Key file, which is a signed XML document. This content is provided as a raw string.";
+                }
+                description
+                  "The list of CDE License Keys to be installed.";
+            }
+            action replace-root-certificate {
+                description
+                    "Replace Root certificate that verifies the CDE License Keys.";
+                input {
+                    leaf content {
+                        type string;
+                        description
+                            "Contains the content of the Root certificate";
+                    }
+                }
+            }
+            description
+                 "Configuration parameters for CDE features";
+        }
+        description "Configuration parameters for licensing.";
+    }
+    
+    container licensing-state {
+        config false;
+        description "The operational state of features under license on the device.";
+
+        list features {
+            key "feature-code";
+            description "The list of features under license on the device.";
+
+            leaf feature-code {
+                type uint64;
+                mandatory true;
+                description "The code for this feature, as defined in the license key installed in CSWL.";
+            }      
+
+            leaf feature-name {
+                type string;
+                description "The name of this feature, as defined in the license key installed in CSWL.";
+            }
+
+            leaf grace-period-end {
+                type yang:date-and-time;
+                description "Displays the date-and-time the feature code's grace period expires,
+                             if the the grace period is running for this feature. If no grace period is running,
+                             then this field will be left empty.";
+            }
+
+            leaf type {
+                type feature-type;
+                mandatory true;
+                description "The type of the floating feature (either on/off or capacity).";
+            }
+
+            leaf total-requested{
+                type uint32;
+                description "The requested number of items for this feature (type: capacity). Empty if (type: on/off).";
+            }
+            leaf verified {
+                type boolean;
+                mandatory true;
+                description "If true, a license must be granted for The feature in order to be operational";
+
+            }
+
+            leaf total-granted {
+                 type uint32;
+                 description "Number of granted license keys.";
+            }
+
+           
+        }
+    }
+    augment "/lic-app:licensing/lic-app:certificate/lic-app:server-auth" {
+        description "Augments CA certificate configuration with a reference to an EST CA certificate profile";
+        uses estc:est-ca-certificate-profile-ref-grouping;
+    }
+    augment "/lic-app:licensing/lic-app:certificate/lic-app:client-identity/lic-app:auth-type/lic-app:certificate/lic-app:certificate/lic-app:local-or-keystore/lic-app:keystore" {
+    description "Augments certificate configuration with a choice between central keystore reference and EST certificate profile";
+
+    choice certificate-reference-choice {
+        description "Choice between a central keystore reference and an EST certificate profile";
+
+        case central-keystore-reference {
+            container central-keystore-reference {
+                uses nokia-ks:asymmetric-key-certificate-ref-grouping;
+                description "A reference to a specific certificate associated with an asymmetric key stored in the central keystore.";
+            }
+        }
+
+        case est-certificate-profile-reference {
+            container est-certificate-profile-reference {
+                uses estc:est-certificate-profile-ref-grouping;
+                description "Reference to an EST certificate profile for TLS identity configuration.";
+            }
+        }
+    }
+    }
+}

@@ -1,0 +1,570 @@
+module ethernet-mounted {
+  namespace "urn:ieee:params:xml:ns:yang:ethernet-mounted";
+  prefix eth-mounted;
+
+  import ietf-interfaces-mounted {
+    prefix if-mounted;
+  }
+
+  import iana-if-type-mounted {
+    prefix ianaift-mounted;
+  }
+
+  import bbf-fiber-onu-emulated-mount {
+     prefix onu;
+  }
+  
+
+  organization
+    "Cisco Systems, Inc.
+     Customer Service
+     
+     Postal: 170 W Tasman Drive
+     San Jose, CA 95134
+     
+     Tel: +1 1800 553-NETS
+     
+     E-mail: cs-yang@cisco.com";
+
+  contact
+    "Robert Wilton - rwilton@cisco.com";
+  
+  description
+    "This module contains YANG definitions for configuring 802.3
+     Ethernet Interfaces, with the hope that it forms the basis of a
+     standardized 802.3 Ethernet interface configuration YANG
+     model.";
+  revision 2024-09-11 {
+    description
+      "remove operational data related when statement";
+    reference
+      "BBN-107706";
+  }
+  
+  revision 2015-11-23 {
+    description
+      "Initial revision of YANG model for IEEE Std 802.3 Ethernet interfaces";
+    reference 
+        "IEEE Std 802.3-2015, unless explicitly dated in the text.";  
+  }
+  
+  identity eth-if-speed {
+    description 
+      "Representing the configured or negotiated speed of
+       an Ethernet interface.  Definitions are only
+       required for PHYs that can run at different speeds
+       (e.g. BASE-T).";
+  }
+  identity eth-if-speed-10mb {
+    base eth-if-speed;
+    description "10 Mb/s";
+  }
+  identity eth-if-speed-100mb {
+    base eth-if-speed;
+    description "100 Mb/s";
+  }
+  identity eth-if-speed-1gb {
+    base eth-if-speed;
+    description "1 Gb/s";
+  }
+  identity eth-if-speed-2.5gb {
+    base eth-if-speed;
+    description "2.5 Gb/s";
+        reference "IEEE P802.3bz (http://www.ieee802.org/3/bz/)";
+
+  }  
+  identity eth-if-speed-5gb {
+    base eth-if-speed;
+    description "5 Gb/s";
+        reference "IEEE P802.3bz (http://www.ieee802.org/3/bz/)";
+
+  }  
+  identity eth-if-speed-10gb {
+    base eth-if-speed;
+    description "10 Gb/s";
+  }
+  identity eth-if-speed-40gb {
+    base eth-if-speed;
+    description "40 Gb/s";
+  }
+  identity eth-if-speed-100gb {
+    base eth-if-speed;
+    description "100 Gb/s";
+  }
+
+  typedef flow-control-settings {
+    type enumeration {
+    
+      enum true {
+        description 
+          "The value of 'true' for IEEE Std 802.3 Ethernet interfaces operating at speeds above 1000 Mb/s that support Rate Control through lowering the average data rate of the MAC sublayer, with frame granularity.
+           ";
+      }
+      
+      enum false {
+        description
+         "The value of 'false' for IEEE Std 802.3 Ethernet interfaces operating at speeds above 1000 Mb/s that do not support Rate Control through lowering the average data rate of the MAC sublayer, with frame granularity.";
+      }
+    }
+    description
+      "Enumerates the possible values for the 'rate-control-ability' object";
+        reference "IEEE Std 802.3, 30.3.1.1.33, aRateControlAbility";
+
+  }
+
+  typedef rate-control {
+       
+    type enumeration {
+    
+      enum disabled {
+                value 1;
+
+        description 
+          "The Rate Control is disabled";
+      }
+    
+      enum enabled {
+                value 2;
+
+        description 
+          "The Rate Control is enabled";
+      }
+    
+      enum unknown {
+                value 3;
+
+        description 
+          "The Rate Control status is undefined";
+      }
+    }
+    description
+      "Enumerates the possible values for the 'rate-control-status' object";
+        reference "IEEE Std 802.3, 30.3.1.1.34, aRateControlStatus";
+
+  }
+
+  typedef pause-control {
+       
+    type enumeration {
+    
+      enum disabled {
+                value 1;
+
+        description 
+          "The PAUSE Control is disabled";
+      }
+    
+      enum enabled-Tx {
+                value 2;
+
+        description 
+          "The PAUSE operation is enabled in transmit direction only";
+      }
+    
+      enum enabled-Rx {
+                value 3;
+
+        description 
+          "The PAUSE operation is enabled in receive direction only";
+      }
+    
+      enum enabled-bidirectional {
+                value 4;
+
+        description 
+          "The PAUSE operation is enabled in receive and transmit directions";
+      }
+    }
+    description
+      "Enumerates the possible values for the 'macc-pause-control' object";
+        reference "IEEE Std 802.3.1, dot3PauseAdminMode and dot3PauseOperMode";
+
+  }
+
+  typedef macc-control {
+       
+    type enumeration {
+    
+      enum PAUSE {
+                value 0;
+
+        description 
+          "IEEE Std 802.3 Ethernet PAUSE flow control";
+      }
+    
+      enum MPCP {
+                value 1;
+
+        description 
+          "IEEE Std 802.3 Ethernet Multi-Point Control Protocol";
+      }
+    
+      enum PFC {
+                value 2;
+
+        description 
+          "IEEE Std 802.3 Ethernet Priority-based Flow Control";
+      }
+    }
+    description
+      "Enumerates the possible values for the 'macc-control' object";
+        reference "IEEE Std 802.3.1, dot3ControlFunctionsSupported";
+
+  }
+
+  grouping ethernet {
+    description
+      "Contains all Ethernet interface related configuration";
+    
+    choice transmission-mode {
+      description
+        "Indicates whether the transmission parameters are manually
+         configured or automatically negotiated with the peer
+         device";
+           
+        case auto-negotiation {
+          description 
+            "Transmission parameters are automatically
+             negotiated";
+                       
+          container auto-negotiation {
+          
+            description
+              "Contains auto-negotiation transmission parameters";
+              reference "IEEE Std 802.3 section 28 and annexes 28A-D";
+            
+            leaf status {
+            
+              type enumeration {
+              
+                enum enabled {
+                  description
+                    "Auto-negotiation function is enabled";
+                }
+                
+                enum disabled {
+                  description
+                    "Auto-negotiation function is disabled";
+                }
+                
+              }
+              
+              description
+                "Allows auto-negotiation to be explicitly
+                 enabled/disabled.  If the leaf is not present then
+                 the default behaviour is vendor/interface
+                 specific.";
+            }
+            
+            leaf duplex {
+            
+              type enumeration {
+              
+                enum full {
+                  description
+                    "Restricts auto-negotiation to advertising full
+                     duplex only.  Negotiation will fail, and the
+                     link will not come up, if the peer device only
+                     allows for half duplex during negotiation.";
+                }
+                
+                enum half {
+                  description
+                    "Restricts auto-negotiation to advertising half
+                     duplex only.  Negotiation will fail, and the
+                     link will not come up, if the peer device only
+                     allows for full duplex during negotiation.";
+                }
+                
+              }
+              
+              description
+                "Allows the advertised duplex value in the
+                 negotiation to be restricted.  Half duplex can
+                 only be negotiated for some interface types - as
+                 specified in 802.3, annex section 28B.3.  If not
+                 specified then the default behaviour is to
+                 negotiate all available values for the particular
+                 type of Ethernet PHY associated with the
+                 interface.";
+            }
+            
+            leaf speed {
+            
+              type identityref {
+                base eth-if-speed;
+              }
+              
+              description
+                "Allows the advertised speed value in the negotiation
+                 to be restricted. Speed is only negotiated for some
+                 PHYs, many higher speed PHYs operate at a fixed
+                 speed.  If this leaf is not set then the default
+                 behaviour is to negotiate all available speeds,
+                 generally choosing the fastest speed as per 802.3
+                 Annex 28B.3.";
+                 
+              reference "IEEE Std 802.3 Annex section 28B.3";
+            }
+            
+            leaf advertised-flow-control {
+              type enumeration {
+                enum disabled {
+                  description
+                    "Explicitly prevents ingress or egress
+                     flow-control from being negotiated with the peer
+                     device.";
+                  reference 
+                    "IEEE Std 802.3 Table 28B-2,
+                     Capability: No PAUSE";
+                  
+                }
+                enum ingress-only {
+                  description
+                    "Allows only ingress flow-control to be
+                     negotiated with the peer device";
+                  reference
+                    "IEEE Std 802.3 Table 28B-2, Capability:
+                     Asymmetric PAUSE towards link partner";
+                  
+                }
+                enum bi-directional-only {
+                  description
+                    "Allows only bi-directional flow-control to be
+                     negotiated with the peer device.";
+                  reference
+                    "IEEE Std 802.3 Table 28B-2, Capability:
+                     Symmetric PAUSE";
+                }
+              }
+              description
+                "By default, the flow control capabilities that are
+                 negotiated allows for bi-directional or egress-only
+                 flow control to be negotiated (depending on the peer
+                 device capabilities/configuration).";
+              reference
+                "IEEE Std 802.3 Table 28B-2, Capability:
+                 Both Symmetric PAUSE and Asymmetric PAUSE toward
+                 local device";
+            }
+            
+            leaf forced-flow-control {
+              type macc-control;
+              description
+                "Explicitly force the local flow control settings
+                 regardless of what has been negotiated.  Since the
+                 auto-negotiation of flow-control settings doesn't
+                 allow all sane combinations to be negotiated (e.g.
+                 consider a device that is only capable of sending
+                 PAUSE frames connected to a peer device that is only
+                 capable of receiving and acting on PAUSE frames) and
+                 failing to agree on the flow-control settings
+                 doesn't cause the auto-negotation to fail
+                 completely, then it is sometimes useful to be able
+                 to explicitly enable particular flow control
+                 settings on the local device regardless of what is
+                 being advertised or negotiated";
+              reference
+                "IEEE Std 802.3 Table 28B-3-Pause resolution";
+            }
+          }
+        }
+        
+        case manual {
+          description
+            "Transmission parameters are manually configured (as
+             required)";
+          container manual {
+            description
+              "Manually configured transmission parameters";
+            leaf duplex {
+              type enumeration {
+                enum full {
+                  description
+                    "Forces the interface to run in full duplex
+                     mode.";
+                  
+                }
+                enum half {
+                  description
+                    "Forces the interface to run in half duplex mode.
+                     Not applicable to many PHY types.";
+                }
+              }
+              default full;
+              description 
+                "Configures the interface to run in either
+                 full or half duplex mode.";
+            }
+            
+            leaf speed {
+              type identityref {
+                base eth-if-speed;
+              }
+              description
+                "For PHY types that may operate at various speeds,
+                 this leaf allows the interface to be forced to
+                 operate at a particular speed.  Without any explicit
+                 configuration, Ethernet interfaces run at the
+                 maximum speed that they are capable of operating
+                 at";
+            }
+            
+          leaf flow-control {
+            type macc-control;
+            description
+              "The default flow-control capabilities are
+               vendor/interface specific";
+          }
+        }
+      }
+    }
+  }
+
+
+  augment "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface" {
+    when "if-mounted:type = 'ianaift-mounted:ethernetCsmacd'" {
+      description "Applies to all P2P Ethernet interfaces";
+    }
+
+    container ethernet {
+      description
+        "Contains all Ethernet interface related configuration";
+      uses ethernet;
+    }
+
+  }
+
+/*
+ * Operational State.
+ */
+  augment "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface" {
+     description
+       "Augments interfaces-state model with 803.2 Ethernet
+       specific operational state nodes";
+  
+     container Ethernet {
+       description
+         "Contains operational state for Ethernet interfaces";
+
+       container auto-negotiation {
+         presence "Indicates that auto-negotiation is enabled";
+         description "Contains auto-negotiation status";
+
+         leaf status {
+           type enumeration {
+             enum successful {
+               description
+                 "Auto-negotation has completed successfully";
+             }
+             enum failed {
+               description "Auto-negotiation has failed";
+             }
+             enum unknown {
+               description
+                 "The auto-negotiation status is not currently known,
+                  this may be because it is still negotiating or the
+                  protocol cannot run (e.g. if no medium is present)";
+             }
+           }
+           description
+             "The status of the auto-negotiation protocol";
+         }
+       }
+
+       leaf duplex {
+         type enumeration {
+           enum unknown {
+             value 1;
+
+             description
+               "current  duplex mode could not be determined
+               ";
+             reference 
+               "IEEE Std 802.3, 30.3.1.1.32, aDuplexStatus
+               ";
+           }
+           enum half {
+             value 2;
+
+             description "Half duplex";
+             reference "IEEE Std 802.3, 30.3.1.1.32, aDuplexStatus";
+           }
+           enum full {
+             value 3;
+
+             description "Full duplex";
+             reference "IEEE Std 802.3, 30.3.1.1.32, aDuplexStatus";
+           }
+         }
+         description
+           "The current mode of operation of the IEEE Std 802.3 Ethernet interface. 
+           The value of 'unknown' indicates that the current duplex mode could not be determined. 
+           The value of 'full' indicates that the IEEE Std 802.3 Ethernet interface operates in full duplex mode. 
+           The value of 'half' indicates that the IEEE Std 802.3 Ethernet interface operates in half duplex mode. ";
+         reference "IEEE Std 802.3, 30.3.1.1.32, aDuplexStatus";
+
+       }
+
+       leaf speed {
+         type uint64;
+         units Mb/s;
+         description "Operational speed setting of the interface";
+       }
+
+       leaf flow-control {
+         type flow-control-settings;
+         description
+           "Operation flow-control setting on the interface";
+       }
+       leaf rate-control {
+         type rate-control;
+         description "The current Rate Control mode of operation of the MAC sublayer of this IEEE Std 802.3 Ethernet interface";
+         reference "IEEE Std 802.3, 30.3.1.1.34, aRateControlStatus";
+       }
+       leaf macc-extension-control {
+         type boolean;
+         description "A value that identifies the current (when read) or target (when set) operational state of the EXTENSION MAC Control function (when read), as specified in IEEE Std 802.3, Annex 31C.";
+         reference
+           "IEEE Std 802.3, 30.3.8.3 aEXTENSIONMACCtrlStatus
+           IEEE Std 802.3.1, dot3ExtensionMacCtrlStatus ";
+       }
+       leaf macc-pfc-control {
+         type boolean;
+         description
+           "A value that identifies the current (when read) or target (when set) operational state of the PFC MAC Control function (when read), as specified in IEEE Std 802.3, Annex 31C.
+           When set, the value of this object determines the operational PFC mode of the IEEE Std 802.3 Ethernet interface. A set to this object will force the IEEE Std 802.3 Ethernet interface into the specified mode. Note that the value of this object is ignored when the IEEE Std 802.3 Ethernet interface is not operating in full-duplex mode.
+           When read, the value of this object reflects the current operational PFC mode of the IEEE Std 802.3 Ethernet interface.";
+         reference
+           "IEEE Std 802.3, 30.3.3.6, aPFCenableStatus
+           IEEE Std 802.3.1, dot3PFCAdminMode and dot3PFCOperMode";
+       }
+       leaf macc-pause-control {
+         type pause-control;
+         description
+           "A value that identifies the current (when read) or target (when set) operational state of the PAUSE MAC Control function (when read).
+           This object is used to configure the default administrative PAUSE mode for this IEEE Std 802.3 Ethernet interface. 
+           When set, this value of this object represents the administratively-configured PAUSE mode for this IEEE Std 802.3 Ethernet interface. If Auto-Negotiation is not enabled or is not implemented for the active MAU attached to this IEEE Std 802.3 Ethernet interface, the value of this object determines the operational PAUSE mode of the IEEE Std 802.3 Ethernet interface whenever it is operating in full-duplex mode. In this case, a set to this object will force the IEEE Std 802.3 Ethernet interface into the specified mode. If Auto-Negotiation is implemented and enabled for the MAU attached to this IEEE Std 802.3 Ethernet interface, the PAUSE mode for this IEEE Std 802.3 Ethernet interface is determined by Auto-Negotiation, and the value of this object denotes the mode to which the IEEE Std 802.3 Ethernet interface will automatically revert if/when Auto-Negotiation is later disabled.
+           Note that the value of this object is ignored when the IEEE Std 802.3 Ethernet interface is not operating in full-duplex mode. An attempt to set this object to 'enabled-Tx' or 'enabled-Rx' will fail on IEEE Std 802.3 Ethernet interfaces that do not support operation at greater than 100 Mb/s.\" 
+           When read, the value of this object reflects the current operational PAUSE Control function of the IEEE Std 802.3 Ethernet interface.";
+         reference "IEEE Std 802.3.1, dot3PauseAdminMode and dot3PauseOperMode";
+       }
+       leaf macc-control {
+         type macc-control;
+         config false;
+         description "A list of the possible MAC Control functions implemented for this interface.";
+         reference "IEEE Std 802.3.1, dot3ControlFunctionsSupported";
+       }
+       leaf frame-limit-slow-protocol {
+         type uint64;
+         units fps;
+         default 10;
+         description "The maximum number of Slow Protocol frames of a given subtype that can be transmitted in a one second interval. The default value is 10. ";
+         reference 
+           "IEEE Std 802.3, 30.3.1.1.38, aSlowProtocolFrameLimit
+           IEEE Std 802.3.1, dot3SlowProtocolFrameLimit";
+       }
+     }
+   }
+}
+

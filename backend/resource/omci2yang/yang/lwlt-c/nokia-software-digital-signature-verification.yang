@@ -1,0 +1,237 @@
+module nokia-software-digital-signature-verification {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+          + "nokia-software-digital-signature-verification";
+  prefix nokia-sw-dgst-verify;
+
+  import bbf-software-image-management-one-dot-one {
+    prefix bbf-sim;
+  }
+ 
+  import ietf-hardware {
+    prefix hw;
+  }
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "This module contains YANG definitions for 
+     digital signature verification of the overall 
+	 software revision file present on physical 
+     entities as defined by ietf-hardware.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2020, Nokia. All Rights Reserved.";
+
+  
+ 
+  revision 2020-06-26 {
+    description
+      "Initial revision.";
+    reference
+      "TBD";
+  }
+typedef x509 {
+    type binary;
+    description
+      "A Certificate structure, as specified in RFC 5280,
+      encoded using ASN.1 distinguished encoding rules (DER),
+      as specified in ITU-T X.690.";
+}
+
+typedef revision-name-ref {
+	type leafref {
+		path "/hw:hardware-state/hw:component/bbf-sim:software/bbf-sim:software/bbf-sim:revisions/bbf-sim:revision/bbf-sim:name";
+	}
+	description
+		"This typedef refer the software revision name.";
+}
+
+typedef software-name-ref {
+        type leafref {
+                path "/hw:hardware-state/hw:component/bbf-sim:software/bbf-sim:software/bbf-sim:name";
+        }
+        description
+                "This typedef refer the list software name.";
+}
+
+grouping nokia-software-digital-signature-implicitly-verify {
+	description
+		"Group the software revision implicitly digital signature verification entities.";
+	leaf verify-enable {
+		type boolean;
+		default "true";
+		description
+			"True means implicitly digital verification is required else otherwise.";
+	}
+}
+grouping nokia-software-digital-signature-explicitly-verify {
+	description
+		"Group the software revision explicitly digital signature verification entities.";
+	list verify-revision {
+		key "name";
+        description "verify revision list";
+		leaf name {
+       		type revision-name-ref;
+        		description 
+          			"The name of the software revision present.";
+      		}
+		container verify-status {
+			description
+				"Software revision explicitly digital signature verification action state.";
+			leaf verify-timestamp {
+				type yang:date-and-time;
+				description
+					"Display the time and date of software revision was digitally verified.";
+			}
+			leaf verify-status {
+				type enumeration {
+					enum not-verified {
+						description
+              					"Software revision isn't digitally verified.";
+          				}
+	          			enum in-progress {
+       	     				description
+              					"Software revision digital verification is ongoing.";
+          				}
+          				enum verify-success {
+            					description
+              					"Software revision digital verification is successful.";
+	          			}
+           	   			enum verify-failed {
+            					description
+              					"Software revision digital verification is failed.";
+          				}
+	   	   			enum verify-aborted {
+            					description
+              					"Software revision digital verification is aborted by user.";
+          				}
+	        		}
+                    description 
+					  "Display the software revision digital verification status.";
+			}
+			leaf verify-failed-reason {
+                           when "../verify-status = 'verify-failed'"{
+                                description
+                                        "failure reason applicable only when the state is failure";
+                           }
+				type string;
+				description
+					"Software revision digital verification failed reason.";
+			}
+			leaf root-cert-content {
+				type x509;
+				description
+					"Display the software revision's  root certificate content in base64 encoded yangBinary format";
+			}
+		}
+		container verify {
+                        when "current()/../../../bbf-sim:software[bbf-sim:name=current()/../../../nokia-sw-dgst-verify:verify-software/nokia-sw-dgst-verify:name]/bbf-sim:revisions/bbf-sim:revision[bbf-sim:name=current()/../nokia-sw-dgst-verify:name]/bbf-sim:is-valid = 'true'" {
+                            description
+                                "Explicitly verification/abort can be performed only on valid software.";
+                        }
+			description
+				"Action for verify/abort of software revision explicitly digital verification.";
+			action verify {
+				description
+					"To start the explicily digital verification of software revision.
+					 It will invoke complete verify process on every initiation.";
+			}
+			notification verified {
+				description
+					"Indicates the software revision digital verification successful.";
+			}
+			notification verify-failed {
+				description
+					"Indicates the software revision digital verification failed.";
+				uses bbf-sim:failure;
+			}
+			action abort-verify {
+				description
+					"Stop the ongoing digital verification of software revision.";
+			}
+			notification verify-aborted {
+				description
+					"Indicates the software revision ongoing explicitly digital verification abort successful.";
+			}
+		}
+		list board-verify-status {
+			key "board-type";
+			description 
+				"A list out each applicable board-type of the sw revision's digital verification status.";
+                        leaf board-type {
+                                type string;
+                                description
+                                        "Software file is belonging to which hw entity.";
+                        }
+
+			list sw-files-verify-status {
+                                key "sw-file-name";
+                                description "sw files verify status list";
+                                
+                                leaf sw-file-name {
+         				          type bbf-sim:software-name;
+	          			          description 
+		       			          "Software file name which is belong to current software revision.";
+                                }
+                    
+                                leaf verify-status {
+                                
+                                type enumeration {
+                                                enum successful {
+                                                        description
+                                                                "Digital verification is successful.";
+                                                }
+                                                enum failed {
+                                                        description
+                                                                "Digital verification is failed.";
+                                                }
+                                        }        
+                                  description 
+                                       "Digital verification status of the file.";
+                                }
+                                leaf verify-failed-reason {
+                                     when "../verify-status = 'failed'"{
+                                       description
+                                           "failure reason applicable only when the state is failure";
+                                     }
+                                     type string;
+                                     description
+                                          "Software file digital verification failed reason.";
+                               }
+
+			}
+		}
+	}
+}
+augment "/hw:hardware-state/hw:component/bbf-sim:software/bbf-sim:software/bbf-sim:download/bbf-sim:download-software/bbf-sim:input" {
+	description
+		"An augmentation of implicitly digital signature verification during software revision download.";
+	uses nokia-software-digital-signature-implicitly-verify;
+}
+
+augment "/hw:hardware-state/hw:component/bbf-sim:software"{
+	description
+		"An augmentation of explicitly digital signature verification of physical available software revision.";
+        list verify-software {
+            key "name";
+            description "list of sw names ";
+            leaf name {
+              type software-name-ref;
+                 description
+                   "The name of the list software present.";
+            }
+      	    uses nokia-software-digital-signature-explicitly-verify;
+       }
+}
+
+}

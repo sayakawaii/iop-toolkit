@@ -1,0 +1,301 @@
+module nokia-bbf-mgmd-common-dev {
+
+  yang-version 1.1;
+
+  namespace "urn:broadband-forum-org:yang:" +
+            "nokia-bbf-mgmd-common-dev";  
+            
+  prefix "nokia-bbf-mgmd-common-dev";
+
+  /* import  */
+  
+  import bbf-mgmd {
+    prefix "bbf-mgmd";
+  }   
+
+  import nokia-yang-types{
+     prefix "nok-typ";
+  }  
+
+  organization 
+    "Nokia";
+    
+  contact 
+    "isam.yang@nokia.com";
+    
+  description 
+    "The NOKIA BBF/bbf-mgmd YANG module supporting
+     deviations on top of standard. ";
+  
+  revision 2024-06-20 {
+    description
+      "Restrict empty string values for key leafs";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2023-09-01 {
+    description
+      "Change length of some name strings from 64 to 100.";
+    reference
+      "Nokia specific";
+  }
+
+  
+  revision 2021-07-19 {
+    description 
+      "Initial revision.";
+    reference
+      "TBD";
+  }
+  
+/**********************************************/
+/* definitions which should always be present */
+/**********************************************/
+
+  deviation "/bbf-mgmd:multicast/bbf-mgmd:mgmd/bbf-mgmd:multicast-proxy-profile/bbf-mgmd:interface-to-router-data/bbf-mgmd:unsolicited-report-interval" {
+    description "multicast mgmd multicast-proxy-profile interface-to-router-data unsolicited-report-interval not supported";
+    deviate not-supported;
+  }
+
+
+  deviation "/bbf-mgmd:multicast/bbf-mgmd:mgmd/bbf-mgmd:multicast-proxy-profile/bbf-mgmd:interface-to-router-data/bbf-mgmd:robustness" {
+    description "multicast mgmd multicast-proxy-profile interface-to-router-data robustness not supported";
+    deviate not-supported;
+  }
+
+deviation "/bbf-mgmd:multicast/bbf-mgmd:mgmd/bbf-mgmd:multicast-vpn/bbf-mgmd:multicast-interface-to-host/bbf-mgmd:vlan-sub-interface"{
+    deviate add{
+      must "count(/bbf-mgmd:multicast/bbf-mgmd:mgmd/bbf-mgmd:multicast-vpn/bbf-mgmd:multicast-interface-to-host[bbf-mgmd:vlan-sub-interface = current()]) <=1"{
+          error-message "multicast-interface-to-host must be referenced to a unique user-side subinterface per system";
+      }
+    }
+  }
+ 
+deviation "/bbf-mgmd:multicast/bbf-mgmd:mgmd/bbf-mgmd:multicast-vpn/bbf-mgmd:multicast-network-interface/bbf-mgmd:multicast-transport/bbf-mgmd:single-uplink/bbf-mgmd:single-uplink-interface-data/bbf-mgmd:vlan-sub-interface"{
+    deviate add{
+      must "count(/bbf-mgmd:multicast/bbf-mgmd:mgmd/bbf-mgmd:multicast-vpn/bbf-mgmd:multicast-network-interface[bbf-mgmd:single-uplink-interface-data/bbf-mgmd:vlan-sub-interface = current()]) <=1"{
+          error-message "must be unique network-side subinterface";
+      }
+    }
+ }  
+
+
+
+deviation "/bbf-mgmd:multicast/bbf-mgmd:mgmd/bbf-mgmd:multicast-proxy-profile/bbf-mgmd:name" {
+     deviate replace {
+            type nok-typ:nokia-string-ascii64 {
+                    //description "xxxx";
+            }
+      }
+}
+
+deviation "/bbf-mgmd:multicast/bbf-mgmd:mgmd/bbf-mgmd:multicast-vpn/bbf-mgmd:name" {
+     deviate replace {
+            type nok-typ:nokia-string-ascii64 {
+                    //description "xxxx";
+            }
+      }
+}
+
+deviation "/bbf-mgmd:multicast/bbf-mgmd:mgmd/bbf-mgmd:multicast-vpn/bbf-mgmd:multicast-interface-to-host/bbf-mgmd:name" {
+     deviate replace {
+            type nok-typ:nokia-string-ascii100 {
+                    //description "xxxx";
+            }
+      }
+}
+
+deviation "/bbf-mgmd:multicast/bbf-mgmd:mgmd/bbf-mgmd:multicast-vpn/bbf-mgmd:multicast-network-interface/bbf-mgmd:name" {
+     deviate replace {
+            type nok-typ:nokia-string-ascii100 {
+                    //description "xxxx";
+            }
+      }
+}
+
+deviation "/bbf-mgmd:multicast/bbf-mgmd:mgmd/bbf-mgmd:multicast-vpn/bbf-mgmd:multicast-channel/bbf-mgmd:name" {
+     deviate replace {
+            type nok-typ:nokia-string-ascii64 {
+                    //description "xxxx";
+            }
+      }
+}
+
+deviation "/bbf-mgmd:multicast/bbf-mgmd:mgmd/bbf-mgmd:multicast-vpn/bbf-mgmd:multicast-package/bbf-mgmd:name" {
+     deviate replace {
+            type nok-typ:nokia-string-ascii64 {
+                    //description "xxxx";
+            }
+      }
+}
+
+
+deviation "/bbf-mgmd:multicast-state/bbf-mgmd:mgmd/bbf-mgmd:multicast-vpn/bbf-mgmd:name" {
+     deviate replace {
+            type nok-typ:nokia-string-ascii64 {
+                    //description "xxxx";
+            }
+      }
+}
+
+deviation "/bbf-mgmd:multicast-state/bbf-mgmd:mgmd/bbf-mgmd:multicast-vpn/bbf-mgmd:multicast-interface-to-host/bbf-mgmd:name" {
+     deviate replace {
+            type nok-typ:nokia-string-ascii100 {
+                    //description "xxxx";
+            }
+      }
+}
+
+deviation "/bbf-mgmd:multicast-state/bbf-mgmd:mgmd/bbf-mgmd:multicast-vpn/bbf-mgmd:multicast-network-interface/bbf-mgmd:name" {
+     deviate replace {
+            type nok-typ:nokia-string-ascii100 {
+                    //description "xxxx";
+            }
+      }
+}
+
+
+ deviation "/bbf-mgmd:multicast/bbf-mgmd:mgmd/bbf-mgmd:multicast-vpn/bbf-mgmd:multicast-channel/bbf-mgmd:ipv4/bbf-mgmd:group-ipv4-address"{
+    deviate add{
+      must "(number(substring-before(current(),'.'))*256*256*256 + number(substring-before(substring-after(current(),'.'),'.'))*256*256 + number(substring-before(substring-after(substring-after(current(),'.'),'.'),'.'))*256 + number(substring-after(substring-after(substring-after(current(),'.'),'.'),'.')) > 224*256*256*256 + 255) 
+      and (number(substring-before(current(),'.'))*256*256*256 + number(substring-before(substring-after(current(),'.'),'.'))*256*256 + number(substring-before(substring-after(substring-after(current(),'.'),'.'),'.'))*256 + number(substring-after(substring-after(substring-after(current(),'.'),'.'),'.')) < 240*256*256*256)"{
+         error-message "group-ipv4-address can not be special or incorrect IP address";
+      }     
+    }
+  }
+
+ deviation "/bbf-mgmd:multicast/bbf-mgmd:mgmd/bbf-mgmd:multicast-vpn/bbf-mgmd:multicast-channel/bbf-mgmd:ipv4/bbf-mgmd:group-ipv4-address-end"{
+   deviate add{
+      default "0.0.0.0";
+    }
+    deviate add{
+      must "current() = '0.0.0.0'
+	  or((number(substring-before(current(),'.'))*256*256*256 + number(substring-before(substring-after(current(),'.'),'.'))*256*256 + number(substring-before(substring-after(substring-after(current(),'.'),'.'),'.'))*256 + number(substring-after(substring-after(substring-after(current(),'.'),'.'),'.')) > 224*256*256*256 + 255)
+      and (number(substring-before(current(),'.'))*256*256*256 + number(substring-before(substring-after(current(),'.'),'.'))*256*256 + number(substring-before(substring-after(substring-after(current(),'.'),'.'),'.'))*256 + number(substring-after(substring-after(substring-after(current(),'.'),'.'),'.')) < 240*256*256*256))
+      "{
+          error-message "group-ipv4-address-end can not be special or incorrect IP address";
+      }     
+    }
+    deviate add{
+      must "current() = '0.0.0.0'
+      or (current()/../bbf-mgmd:group-ipv4-address and ((number(substring-before(current(),'.'))*256*256*256 + number(substring-before(substring-after(current(),'.'),'.'))*256*256 + number(substring-before(substring-after(substring-after(current(),'.'),'.'),'.'))*256 + number(substring-after(substring-after(substring-after(current(),'.'),'.'),'.'))) >= (number(substring-before(current()/../bbf-mgmd:group-ipv4-address,'.'))*256*256*256 + number(substring-before(substring-after(current()/../bbf-mgmd:group-ipv4-address,'.'),'.'))*256*256 + number(substring-before(substring-after(substring-after(current()/../bbf-mgmd:group-ipv4-address,'.'),'.'),'.'))*256 + number(substring-after(substring-after(substring-after(current()/../bbf-mgmd:group-ipv4-address,'.'),'.'),'.')))))
+      "{
+          error-message "group-ipv4-address-end must be greater than group-ipv4-address";
+      }     
+    }
+  }
+  
+  deviation "/bbf-mgmd:multicast/bbf-mgmd:mgmd/bbf-mgmd:multicast-vpn/bbf-mgmd:multicast-channel/bbf-mgmd:ipv4/bbf-mgmd:source-ipv4-address"{
+    /* multicast and broadcast address is not valid address  */
+    deviate add {
+        must "not((substring-before(.,'.') >= 224)
+             and (substring-before(.,'.') <= 255))"{
+               error-message "source-ipv4-address of multicast channel can't be 224.0.0.0~255.255.255.255";
+            }
+        }
+      
+    /* self address is not valid address  */
+    deviate add {
+        must "(substring-before(.,'.') != 127)"{
+              error-message "source-ipv4-address of multicast channel can't be 127.0.0.0~127.255.255.255";
+        }
+    }      
+  }
+ 
+ deviation "/bbf-mgmd:multicast/bbf-mgmd:mgmd/bbf-mgmd:multicast-vpn/bbf-mgmd:ip-to-host/bbf-mgmd:ip-address/bbf-mgmd:ipv4-address"{
+    /* multicast and broadcast address is not valid address  */
+    deviate add {
+        must "not((substring-before(.,'.') >= 224)
+             and (substring-before(.,'.') <= 255))"{
+               error-message "ipv4-address of multicast-vpn can't be 224.0.0.0~255.255.255.255";
+            }
+        }
+      
+    /* self address is not valid address  */
+    deviate add {
+        must "(substring-before(.,'.') != 127)"{
+              error-message "ipv4-address of multicast-vpn can't be 127.0.0.0~127.255.255.255";
+        }
+    }      
+  }
+  
+ deviation "/bbf-mgmd:multicast/bbf-mgmd:mgmd/bbf-mgmd:multicast-vpn/bbf-mgmd:multicast-network-interface/bbf-mgmd:ip-layer/bbf-mgmd:ip-address/bbf-mgmd:ipv4-address"{
+    /* multicast and broadcast address is not valid address  */
+    deviate add {
+        must "not((substring-before(.,'.') >= 224)
+             and (substring-before(.,'.') <= 255))"{
+               error-message "ipv4-address of multicast-network-interface can't be 224.0.0.0~255.255.255.255";
+            }
+        }
+      
+    /* self address is not valid address  */
+    deviate add {
+        must "(substring-before(.,'.') != 127)"{
+              error-message "ipv4-address of multicast-network-interface can't be 127.0.0.0~127.255.255.255";
+        }
+    }       
+  }
+
+ deviation "/bbf-mgmd:multicast/bbf-mgmd:mgmd/bbf-mgmd:multicast-vpn/bbf-mgmd:multicast-channel"{
+    description 
+      "The multicast group ip address and multicast source ip address in multicast channel must be unique 
+        within a multicast VPN. If the new configured multicast group ip address and multicast source ip address 
+        is overlapped with already configured multicast channels, a error message 'Group address can not be overlapped'
+        will be displayed.";
+    deviate add {
+    }
+ } 
+
+deviation "/bbf-mgmd:multicast/bbf-mgmd:mgmd/bbf-mgmd:multicast-vpn/bbf-mgmd:multicast-channel"{
+    deviate add{
+      must "count(/bbf-mgmd:multicast/bbf-mgmd:mgmd/bbf-mgmd:multicast-vpn/bbf-mgmd:multicast-channel) <=4096"{
+        error-message "max multicast-channels per system should not be more than 4096";
+      }
+    }
+  }
+
+
+ deviation "/bbf-mgmd:multicast/bbf-mgmd:mgmd/bbf-mgmd:multicast-vpn/bbf-mgmd:multicast-network-interface"{
+    deviate add{
+       must "count(/bbf-mgmd:multicast/bbf-mgmd:mgmd/bbf-mgmd:multicast-vpn/bbf-mgmd:multicast-network-interface) <=64"{
+          error-message "max multicast-network-interface per system should not be more than 64";
+       }
+    }  
+  }
+
+
+
+  deviation "/bbf-mgmd:multicast/bbf-mgmd:mgmd/bbf-mgmd:multicast-vpn/bbf-mgmd:mode"{
+    deviate add{
+        must "current() = 'bbf-mgmd:proxy'"{
+               error-message "Only proxy mode supported currently";
+            }
+        }   
+  }
+
+
+  deviation "/bbf-mgmd:multicast/bbf-mgmd:mgmd/bbf-mgmd:multicast-proxy-profile" {
+        deviate add {
+            max-elements 16;
+        }
+  }
+
+
+ deviation "/bbf-mgmd:multicast/bbf-mgmd:mgmd/bbf-mgmd:multicast-vpn/bbf-mgmd:multicast-proxy-profile-name"{
+    deviate add{
+         mandatory true;
+        }   
+ }
+
+ deviation "/bbf-mgmd:multicast/bbf-mgmd:mgmd/bbf-mgmd:multicast-proxy-profile/bbf-mgmd:interfaces-to-hosts-data/bbf-mgmd:query-interval"{
+    deviate add{
+      must "(current()*10) > current()/../bbf-mgmd:query-max-response-time "
+      {
+          error-message "query-interval should be bigger than query-max-response-time in seconds ";
+      }
+    }
+  }
+
+}
+

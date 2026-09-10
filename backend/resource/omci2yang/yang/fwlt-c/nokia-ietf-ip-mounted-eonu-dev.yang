@@ -1,0 +1,137 @@
+module nokia-ietf-ip-mounted-eonu-dev {
+
+  namespace "urn:ietf:params:xml:ns:yang:nokia-ietf-ip-mounted-eonu-dev";
+
+  prefix nokia-ietf-ip-mounted-eonu-dev;
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import ietf-interfaces-mounted {
+    prefix if-mounted;
+  }
+
+  import ietf-ip-mounted {
+    prefix ip-mounted;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA IP YANG module supporting deviations on top of standard.";
+
+ /* revision */
+  revision 2026-09-04 {
+    description
+      "removing deviations for not-supported ipv6";
+    reference
+      "Sub-task BBN-380203";
+  }
+ 
+ /* revision */
+  revision 2024-12-20 {
+    description
+      "Adding Deviations for not-supported ip config-data";
+    reference
+      "Sub-task BBN-258321";
+  }
+
+  revision 2024-05-28 {
+    description
+      "Add deviation YANG to remove unsupported voip oper-data yang node";
+    reference
+      "Sub-task BBN-216498";
+  }
+
+  revision 2022-02-07 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia-specific";
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/ip-mounted:ipv4/ip-mounted:mtu" {
+    description
+      "This deviation assures that ipv4 mtu is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/ip-mounted:ipv4/ip-mounted:address" {
+    description
+       "This deviation assures that max 1 address can be configured.";
+    deviate add{
+      max-elements 1;
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/ip-mounted:ipv4/ip-mounted:address/ip-mounted:ip" {
+    /* Is Loopback IPv4 address(127.0.0.0 - 127.255.255.255) */
+    deviate add {
+       must "(substring-before(.,'.') != 127)" {
+             error-message "Loopback IPv4 address is invalid for static IPv4 address";
+             description "Loopback IPv4 address is invalid to configure as static IPv4 address";
+      }
+    }
+    /* IS_CLASSD (224.0.0.0 to 239.255.255.255) ?  */
+    deviate add {
+       must "not((substring-before(.,'.') >= 224)
+             and (substring-before(.,'.') <= 239))" {
+             error-message "224.0.0.0 - 239.255.255.255 are not valid";
+             description "IPv4 address range from 224.0.0.0 to 239.255.255.255  are invalid to configure as static IPv4 address ";
+      }
+    }
+    /* Is broadcast address.IS_ALL 1s ? */
+    deviate add {
+       must "current() != '255.255.255.255'" {
+             error-message "255.255.255.255 is not valid";
+             description "IPv4 address 255.255.255.255 is invalid to configure as static IPv4 address ";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/ip-mounted:ipv4/ip-mounted:address/ip-mounted:subnet/ip-mounted:prefix-length" {
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/ip-mounted:ipv4/ip-mounted:neighbor" {
+    description
+      "This deviation assures that ipv4 neighbor is not supported.";
+    deviate not-supported;
+  }
+
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/ip-mounted:ipv4/ip-mounted:forwarding" {
+    description
+      "This deviation assures that ipv4 forwarding is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/ip-mounted:ipv4/ip-mounted:mtu" {
+    description
+      "This deviation assures that ipv4 mtu is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/ip-mounted:ipv4/ip-mounted:address/ip-mounted:subnet/ip-mounted:prefix-length" {
+    description
+      "This deviation assures that ipv4 prefix-length is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/ip-mounted:ipv4/ip-mounted:address/ip-mounted:origin" {
+    description
+      "This deviation assures that ipv4 origin is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/ip-mounted:ipv4/ip-mounted:neighbor" {
+    description
+      "This deviation assures that ipv4 neighbor is not supported.";
+    deviate not-supported;
+  }
+}

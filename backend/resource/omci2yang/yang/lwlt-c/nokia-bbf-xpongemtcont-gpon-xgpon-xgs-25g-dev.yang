@@ -1,0 +1,54 @@
+module nokia-bbf-xpongemtcont-gpon-xgpon-xgs-25g-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-bbf-xpongemtcont-gpon-xgpon-xgs-25g-dev";
+
+  prefix nokia-bbf-xpongemtcont-gpon-xgpon-xgs-25g-dev;
+
+
+  import  bbf-xpongemtcont {
+    prefix  bbf-xpongemtcont;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA IETF/System YANG module supporting
+     deviations on top of standard.";
+     
+  revision 2025-12-04 {
+    description
+      "Expand maximum-bandwidth range to 0..50G for all PON tech and move to common";
+    reference
+      "Nokia Specific.";
+  }
+  
+  revision 2024-08-26 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia Specific.";
+  }
+
+/**********************************************/
+/* definitions which should always be present */
+/**********************************************/
+
+
+  deviation "/bbf-xpongemtcont:xpongemtcont/bbf-xpongemtcont:tconts/bbf-xpongemtcont:tcont/bbf-xpongemtcont:alloc-id" {
+    deviate add {
+      mandatory true;
+    }
+  }
+
+  deviation "/bbf-xpongemtcont:xpongemtcont/bbf-xpongemtcont:gemports/bbf-xpongemtcont:gemport/bbf-xpongemtcont:gemport-id" {
+    deviate add {
+      mandatory true;
+    }
+  }
+
+}

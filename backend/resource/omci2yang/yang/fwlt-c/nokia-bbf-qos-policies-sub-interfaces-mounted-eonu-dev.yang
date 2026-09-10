@@ -1,0 +1,133 @@
+module nokia-bbf-qos-policies-sub-interfaces-mounted-eonu-dev {
+
+  namespace
+    "http://www.nokia.com/Fixed-Networks/BBA/yang/nokia-bbf-qos-policies-sub-interfaces-mounted-eonu-dev";
+
+  prefix nokia-bbf-qos-policies-sub-interfaces-mounted-eonu-dev;
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import bbf-qos-policies-sub-interfaces-mounted {
+    prefix bbf-qos-pol-subif-mounted;
+  }
+
+  import ietf-interfaces-mounted {
+    prefix if-mounted;
+  }
+
+  import bbf-qos-classifiers-mounted {
+    prefix bbf-qos-cls-mounted;
+  }
+
+  import bbf-sub-interfaces-mounted {
+    prefix bbf-subif-mounted;
+  }
+
+  import bbf-sub-interface-tagging-mounted {
+    prefix bbf-subif-tag-mounted;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+  
+  description
+    "This module contains a collection of YANG deviations on top
+     of standard for supporting BBF/bbf-qos-policies YANG module.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2019-2020, Nokia. All Rights Reserved.";
+
+
+     /* revision */
+
+    revision 2021-04-15 {
+      description
+        "Initial revision";
+      reference
+        "Nokia specific";
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing/"
+        + "bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:ingress-rule/bbf-subif-mounted:rule/"
+        + "bbf-subif-mounted:ingress-rewrite/bbf-subif-tag-mounted:push-tag/bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:pbit/"
+        + "bbf-qos-pol-subif-mounted:generate-pbit-via-profile-or-0/"
+        + "bbf-qos-pol-subif-mounted:pbit-marking-index" {
+        deviate replace {
+            type bbf-qos-cls-mounted:qos-pbit-marking-index {
+                range "0";
+            }
+        }
+    }
+
+   deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing/"
+        + "bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:ingress-rule/bbf-subif-mounted:rule/"
+        + "bbf-subif-mounted:ingress-rewrite/bbf-subif-tag-mounted:push-tag/bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:dei/"
+        + "bbf-qos-pol-subif-mounted:generate-dei-via-profile-or-0/"
+        + "bbf-qos-pol-subif-mounted:dei-marking-index" {
+     description
+       "This deviaton assures ingress-rewrite not support dei-marking-index.";
+     deviate not-supported;
+
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:egress-rewrite"
+           +"/bbf-subif-tag-mounted:push-tag/bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:pbit"
+           +"/bbf-qos-pol-subif-mounted:generate-pbit-via-profile-or-0"
+           +"/bbf-qos-pol-subif-mounted:pbit-marking-index" {
+     description
+       "This deviaton assures egress-rewrite not support pbit-marking-index.";
+     deviate not-supported;
+   }
+
+   deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:egress-rewrite"
+           +"/bbf-subif-tag-mounted:push-tag/bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:dei"
+           +"/bbf-qos-pol-subif-mounted:generate-dei-via-profile-or-0"
+           +"/bbf-qos-pol-subif-mounted:dei-marking-index" {
+     description
+       "This deviaton assures egress-rewrite not support dei-marking-index.";
+     deviate not-supported;
+   }
+}
+

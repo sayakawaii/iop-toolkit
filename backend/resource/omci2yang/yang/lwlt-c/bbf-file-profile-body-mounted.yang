@@ -1,0 +1,184 @@
+submodule bbf-file-profile-body-mounted {
+  yang-version 1.1;
+  belongs-to bbf-sip-voip-mounted  {
+    prefix bbf-sip-voip-mounted;
+  }
+
+  import bbf-yang-types {
+    prefix bbf-yang;
+  }
+
+  import ietf-inet-types {
+    prefix inet;
+  }
+  
+  include bbf-sip-voip-base-mounted;
+  include bbf-file-authentication-settings-mounted;
+  
+  organization
+    "Broadband Forum <https://www.broadband-forum.org>
+     Common YANG Work Area";
+
+  contact
+    "Comments or questions about this Broadband Forum YANG module
+     should be directed to <mailto:help@broadband-forum.org>.
+     Editor:      Frank Desseyn, Nokia
+     Editor:      Nadine Staelens, Nokia
+     PS Leader:   Joey Boyd, ADTRAN
+     PS Leader:   Ken Kerpez, ASSIA
+     WA Director: Joey Boyd, ADTRAN
+     WA Director: Sven Ooghe, Nokia";
+
+  description
+    "This submodule contains the file profiles for downloading
+	 files. These files can contain tone and ring patterns, HW
+	 settings, Z-interface settings, sip call flow settings.
+     Copyright (c) 2017-2018, Broadband Forum
+     Redistribution and use in source and binary forms, with or
+     without modification, are permitted provided that the following
+     conditions are met:
+     1. Redistributions of source code must retain the above copyright
+        notice, this list of conditions and the following disclaimer.
+     2. Redistributions in binary form must reproduce the above
+        copyright notice, this list of conditions and the following
+        disclaimer in the documentation and/or other materials
+        provided with the distribution.
+     3. Neither the name of the copyright holder nor the names of its
+        contributors may be used to endorse or promote products
+        derived from this software without specific prior written
+        permission.
+     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
+     CONTRIBUTORS \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+     INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+     DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+     CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+     SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+     NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+     CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+     STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+     ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+     ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     The above license is used as a license under copyright only.
+     Please reference the Forum IPR Policy for patent licensing terms
+     <https://www.broadband-forum.org/ipr-policy>.
+     Any moral rights which are necessary to exercise under the above
+     license grant are also deemed granted under this license.
+     This version of this YANG module is part of TR-383; see
+     the TR itself for full legal notices.";
+
+  revision 2020-03-06 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: 2020-03-06.";
+    reference
+      " ";
+  }
+  	 
+  grouping file-failure {
+    leaf failure-reason {
+	  type enumeration {
+        enum no-failure {
+          value 1;
+          description
+            "Download succeeded.";
+        }
+		enum authentication-failure {
+          value 2;
+          description
+            "Authentication failure.";
+        }
+		enum file-notfound {
+          value 3;
+          description
+            "The file was not found. The file name is wrong or
+			 the path is wrong.";
+        }
+		enum file-corrupt {
+          value 4;
+          description
+            "The file is corrupt.";
+        }
+	  }
+    }
+    leaf failure-text {
+	when "../failure-reason != 'bbf-sip-voip-mounted:no-failure'" {
+        description
+          "Only valid when there is a failure.";
+    }
+    type string;
+    description
+      "A text string indicating the reason for the failure when
+       either no defined reason exists or additional information
+       is available beyond the definition of the reason.";
+    }
+  }
+  
+  grouping file-profile-body {   
+	description 
+	  "The file profile of a configuration file.";	
+    leaf file-download-method {
+      type enumeration {
+	    enum no-download {
+		  value 1;
+		  description
+             "No extra configuration file to be downloaded from 
+			 a server. The extra voip configuration file could be 
+			 part of the SW package or can be found on the 
+			 network element in a well-known directory.";		  
+	    }
+	    enum ftp-download {
+          value 2;
+          description
+            "The configuration file is downloaded from
+			 an external ftp-server.";		  
+	    }
+	    enum not-applicable {
+ 		  value 3;
+		  description
+            "The default file or no extra configuration file is 
+			 used.";  	  
+	    }
+      }
+      description
+	     "Method to fetch a configuration file. Such a file can
+		 contain HW interface settings, rings and tones 
+		 definitions.";
+    }
+    leaf file-name {
+	when "../file-download-method != 'not-applicable'"; 
+	  type name-string128;
+	  mandatory true;
+	  description
+	    "Path and file name of the extra configuration file.";
+    }
+
+    container download-characteristics {
+    when "../file-download-method = 'ftp-download'";   
+	  leaf ftp-server {
+	    type inet:ip-address; 
+	    description
+	        "IP-address of the ftp-server.";
+	  } 		  	
+	  uses file-authentication-settings;	
+    }
+	
+    action download-file {
+      description
+        "Download specified file to this physical entity.";     
+      input {
+        leaf file-profile-name {
+          type bbf-yang:name-string;
+  	      description
+            "References the file profile. This profile contains
+  		     the method to use and the file name.";
+        }
+      }   
+      output {
+        uses file-failure;
+      }
+    }  	
+  }
+}

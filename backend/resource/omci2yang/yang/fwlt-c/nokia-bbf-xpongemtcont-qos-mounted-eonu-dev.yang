@@ -1,0 +1,145 @@
+module nokia-bbf-xpongemtcont-qos-mounted-eonu-dev {
+yang-version 1.1;
+ namespace
+    "http://www.nokia.com/Fixed-Networks/BBA/yang/nokia-bbf-xpongemtcont-qos-mounted-eonu-dev";
+
+
+  prefix nokia-bbf-xpongemtcont-qos-mounted-eonu-dev;
+
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import bbf-xpongemtcont-mounted {
+    prefix bbf-xpongemtcont-mounted;
+  }
+
+  import bbf-xpongemtcont-qos-mounted{
+    prefix bbf-xpongemtcont-qos-mounted;
+  }
+
+  import bbf-qos-traffic-mngt-mounted {
+      prefix bbf-qos-tm-mounted;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+     "This module contains a collection of YANG deviations on top
+     of standard for supporting BBF/nokia-bbf-xpongemtcont-qos-mounted-eonu-dev YANG module.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.lic-appsufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2017-2018, Nokia. All Rights Reserved.";
+
+  revision 2022-08-21 {
+    description
+      "Adding Deviations for tcont";
+    reference
+      "Nokia specific";
+  }
+
+  /* revision */
+  revision 2022-06-27 {
+    description
+      "Adding Deviations for WRR weight and SP+WRR validation";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2021-04-08 {
+    description
+      "Adding Deviations for not supported Yang leaves";
+    reference
+      "Nokia specific";
+  }
+ 
+     deviation  "/onu:onus/onu:onu/onu:root/bbf-xpongemtcont-mounted:xpongemtcont/bbf-xpongemtcont-mounted:tconts/bbf-xpongemtcont-mounted:tcont/bbf-xpongemtcont-qos-mounted:tm-root" {
+     description
+        "tc-id-2-queue-id-mapping-profile must always exist when a T-CONT is configured";
+      deviate add {
+        must "boolean(./bbf-xpongemtcont-qos-mounted:tc-id-2-queue-id-mapping-profile-name)" {
+        error-message "tc-id-2-queue-id-mapping-profile must always exist when a T-CONT is configured";
+      }
+    }
+   }
+
+   deviation "/onu:onus/onu:onu/onu:root/bbf-xpongemtcont-mounted:xpongemtcont/bbf-xpongemtcont-mounted:tconts/bbf-xpongemtcont-mounted:tcont/bbf-xpongemtcont-qos-mounted:tm-root/bbf-xpongemtcont-qos-mounted:children-type/bbf-xpongemtcont-qos-mounted:queues/bbf-xpongemtcont-qos-mounted:queue/bbf-xpongemtcont-qos-mounted:bac-name" {
+      deviate not-supported;
+   }
+   
+
+    deviation  "/onu:onus/onu:onu/onu:root/bbf-xpongemtcont-mounted:xpongemtcont/bbf-xpongemtcont-mounted:tconts/bbf-xpongemtcont-mounted:tcont/bbf-xpongemtcont-qos-mounted:tm-root" {
+    	deviate add {
+ 			must "boolean(current()/bbf-xpongemtcont-qos-mounted:queue)" {
+ 				error-message "tm-root queue must be configured";
+ 			}
+    	}
+   }
+    deviation "/onu:onus/onu:onu/onu:root/bbf-xpongemtcont-mounted:xpongemtcont/bbf-xpongemtcont-mounted:tconts/bbf-xpongemtcont-mounted:tcont/bbf-xpongemtcont-qos-mounted:tm-root/bbf-xpongemtcont-qos-mounted:children-type/bbf-xpongemtcont-qos-mounted:queues/bbf-xpongemtcont-qos-mounted:queue/bbf-xpongemtcont-qos-mounted:queue-scheduling-cfg-type/bbf-xpongemtcont-qos-mounted:inline/bbf-xpongemtcont-qos-mounted:priority" {
+
+      // if it is SP+WRR to TCONT configuration, the priority of WRR queues should be lower than SP queues.
+     // it doesn't support two set of WRR queues on a TCONT.
+      deviate add {
+        must "(not((count(current()/../../bbf-xpongemtcont-qos-mounted:queue[bbf-xpongemtcont-qos-mounted:priority = current()]) > 1) "
+            +"and (count(current()/../../bbf-xpongemtcont-qos-mounted:queue[bbf-xpongemtcont-qos-mounted:priority != current()]) > 1)) "
+            +"or (count(current()/../../bbf-xpongemtcont-qos-mounted:queue[bbf-xpongemtcont-qos-mounted:priority < current()]) = 0))" {
+                error-message "the priority of SP queues are lower than that of WRR queues or more than one set of WRR queues is not supported for hybrid SP and WRR tcont.";
+             }
+      }
+
+     // the weight of WRR queues should be more than 1.
+      deviate add {
+        must "(not(count(current()/../../bbf-xpongemtcont-qos-mounted:queue[bbf-xpongemtcont-qos-mounted:priority = current()]) > 1) "
+            +"or (current()/../bbf-xpongemtcont-qos-mounted:weight > 1))" {
+                error-message "weight 0 or 1 is not supported for WRR tcont";
+             }
+      }
+
+    }
+
+   deviation "/onu:onus/onu:onu/onu:root/bbf-xpongemtcont-mounted:xpongemtcont/bbf-xpongemtcont-mounted:tconts/bbf-xpongemtcont-mounted:tcont/bbf-xpongemtcont-qos-mounted:tm-root/bbf-xpongemtcont-qos-mounted:children-type/bbf-xpongemtcont-qos-mounted:queues/bbf-xpongemtcont-qos-mounted:queue/bbf-xpongemtcont-qos-mounted:local-queue-id" {
+      deviate add {
+        must "(current()/../../../../../../bbf-qos-tm-mounted:tm-profiles/bbf-qos-tm-mounted:tc-id-2-queue-id-mapping-profile[bbf-qos-tm-mounted:name = current()/../../bbf-xpongemtcont-qos-mounted:tc-id-2-queue-id-mapping-profile-name]/bbf-qos-tm-mounted:mapping-entry/bbf-qos-tm-mounted:local-queue-id) = current()" {
+                error-message "tcont queue id should be included in tc2queue profile local queue id";
+             }
+      }
+    }
+}
+

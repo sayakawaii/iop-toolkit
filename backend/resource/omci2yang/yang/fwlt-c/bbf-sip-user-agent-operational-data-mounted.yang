@@ -1,0 +1,153 @@
+submodule bbf-sip-user-agent-operational-data-mounted {
+  yang-version 1.1;
+  belongs-to bbf-sip-voip-mounted  {
+    prefix bbf-sip-voip-mounted;
+  }
+  
+  import bbf-yang-types {
+    prefix bbf-yang;
+  }
+   
+  include bbf-sip-protocol-pm-statistics-mounted;
+  include bbf-sip-ua-call-initiation-pm-statistics-mounted;
+  include bbf-sip-x-connect-operational-data-mounted;   
+  include bbf-sip-signaling-notifications-mounted;
+
+  organization
+    "Broadband Forum <https://www.broadband-forum.org>
+     Common YANG Work Area";
+
+  contact
+    "Comments or questions about this Broadband Forum YANG module
+     should be directed to <mailto:help@broadband-forum.org>.
+     Editor:      Frank Desseyn, Nokia
+     Editor:      Nadine Staelens, Nokia
+     PS Leader:   Joey Boyd, ADTRAN
+     PS Leader:   Ken Kerpez, ASSIA
+     WA Director: Joey Boyd, ADTRAN
+     WA Director: Sven Ooghe, Nokia";
+
+  description
+    "This submodule contains a collection of YANG definitions for
+     viewing the sip user agent operational data.
+     Copyright (c) 2017-2018, Broadband Forum
+     Redistribution and use in source and binary forms, with or
+     without modification, are permitted provided that the following
+     conditions are met:
+     1. Redistributions of source code must retain the above copyright
+        notice, this list of conditions and the following disclaimer.
+     2. Redistributions in binary form must reproduce the above
+        copyright notice, this list of conditions and the following
+        disclaimer in the documentation and/or other materials
+        provided with the distribution.
+     3. Neither the name of the copyright holder nor the names of its
+        contributors may be used to endorse or promote products
+        derived from this software without specific prior written
+        permission.
+     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
+     CONTRIBUTORS \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+     INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+     DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+     CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+     SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+     NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+     CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+     STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+     ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+     ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     The above license is used as a license under copyright only.
+     Please reference the Forum IPR Policy for patent licensing terms
+     <https://www.broadband-forum.org/ipr-policy>.
+     Any moral rights which are necessary to exercise under the above
+     license grant are also deemed granted under this license.
+     This version of this YANG module is part of TR-383; see
+     the TR itself for full legal notices.";
+
+  revision 2020-03-06 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: 2020-03-06.";
+    reference
+      " ";
+  }
+  
+  grouping sip-user-agent-operational-data {
+	leaf sip-status-info {	  
+	  type enumeration {
+	    enum initial-state {
+	      value 0;
+	      description
+	    	"The SIP user agent is in the initial state.";
+	    }
+	    enum connected {
+	      value 1;
+	      description
+	    	"The SIP user agent is connected.";
+	    }
+	    enum failed-icmp {
+	      value 2;
+	      description
+	    	"The SIP user agent is in failure state with ICMP error.";
+	    }
+	    enum failed-malformed {
+	      value 3;
+	      description
+	    	"The SIP user agent is in failure state due to malformed 
+	  	     response.";
+	    }
+        enum failed-inadequate {
+	      value 4;
+	      description
+	        "The SIP user agent is in failure state, inadequate 
+	  	     information response.";
+	    }
+        enum failed-timeout {
+	      value 5;
+	      description
+	    	"The SIP user agent is in failure state due to timeout.";
+	    }
+	    enum failed-unknown {
+	      value 6;
+	      description
+	    	"The SIP user agent is in failure state with unknown
+	  	    reason.";
+	    }
+	    enum no-support {
+		  value 255;
+	      description
+	    	"The SIP user agent is in failure state with unknown
+	  	    reason.";
+	    }
+      }
+	  config false;
+	  description
+	    "Additonal Sip user agent status information.";
+	}
+    container sip-protocol-pm-statistics {
+      config false;
+	  uses sip-protocol-pm-statistics;
+    }
+    container call-initiation-pm-statistics {
+      config false;
+	  uses sip-ua-call-initiation-pm-statistics;
+    }
+	list sip-x-connections {
+	  config false;
+	  description
+	    "List of established SIP cross-connections.";
+	  key "sip-ua-connected-sip-server";
+	  leaf sip-ua-connected-sip-server {
+	    config false;
+	    type bbf-yang:string-ascii64;
+        description
+ 		  "The name of the SIP server the SIP User Agent
+		   instance is actually connected to.";
+      }
+	  uses sip-x-connect-operational-data;
+	}
+    uses sip-ua-notifications;
+  }
+} 

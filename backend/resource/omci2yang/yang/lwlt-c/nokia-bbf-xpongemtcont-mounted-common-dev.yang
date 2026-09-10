@@ -1,0 +1,61 @@
+module nokia-bbf-xpongemtcont-mounted-common-dev  {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/nokia-bbf-xpongemtcont-mounted-common-dev";
+
+  prefix nokia-bbf-xpongemtcont-mounted-common-dev;
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+  
+  import bbf-xpongemtcont-mounted {
+    prefix bbf-xpongemtcont-mounted;
+  }
+  
+  import nokia-yang-types {
+    prefix nok-typ;
+  }
+
+  
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA IETF/System YANG module supporting
+     deviations on top of standard.";
+
+  revision 2024-03-06 {
+    description
+      "Devaition to elarge length";
+    reference
+      "Nokia Specific.";
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/bbf-xpongemtcont-mounted:xpongemtcont/bbf-xpongemtcont-mounted:gemports/bbf-xpongemtcont-mounted:gemport/bbf-xpongemtcont-mounted:name" {
+    deviate replace {
+      type nok-typ:nokia-string-ascii100;
+    }
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/bbf-xpongemtcont-mounted:xpongemtcont-state/bbf-xpongemtcont-mounted:gemports/bbf-xpongemtcont-mounted:gemport/bbf-xpongemtcont-mounted:name" {
+    deviate replace {
+       type nok-typ:nokia-string-ascii100;
+    }
+  }
+  
+   deviation "/onu:onus/onu:onu/onu:root/bbf-xpongemtcont-mounted:xpongemtcont/bbf-xpongemtcont-mounted:tconts/bbf-xpongemtcont-mounted:tcont/bbf-xpongemtcont-mounted:name" {
+    deviate replace {
+      type nok-typ:nokia-string-ascii100;
+    }
+  }
+  
+   deviation "/onu:onus/onu:onu/onu:root/bbf-xpongemtcont-mounted:xpongemtcont-state/bbf-xpongemtcont-mounted:tconts/bbf-xpongemtcont-mounted:tcont/bbf-xpongemtcont-mounted:name" {
+    deviate replace {
+      type nok-typ:nokia-string-ascii100;
+    }
+  }
+  
+}

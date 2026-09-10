@@ -1,0 +1,50 @@
+module nokia-bbf-hardware-reset-action-common-dev {
+
+  namespace
+     "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+   + "nokia-bbf-hardware-reset-action-common-dev";
+
+  prefix nokia-bbf-hardware-reset-action-common-dev;
+
+  import ietf-hardware {
+    prefix hw;
+  }
+
+  import bbf-hardware-reset-action {
+    prefix bbf-hw-rst-act;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "The NOKIA BBF/hardware YANG module supporting
+     deviations on top of standard.";
+
+/* revision */
+
+  revision 2022-02-21 {
+    description
+      "Added description for eqpt deviations";
+    reference
+      "BBN-65232";
+  }
+  revision 2019-04-25 {
+    description
+      "Move to common category";
+    reference
+      "Nokia specific";
+  }
+
+  deviation "/hw:hardware-state/hw:component/bbf-hw-rst-act:reset/bbf-hw-rst-act:input/bbf-hw-rst-act:reset-type" {
+    description "reset-type is mandatory with reset action input";
+    deviate add
+    {
+      mandatory true;
+    }
+  }
+}

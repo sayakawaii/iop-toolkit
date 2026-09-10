@@ -1,0 +1,211 @@
+module nokia-bbf-frame-processing-profile-common-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/" +
+            "nokia-bbf-frame-processing-profile-common-dev";
+
+  prefix nokia-bbf-frame-processing-profile-common-dev;
+
+  import bbf-frame-processing-profile {
+	  prefix bbf-frameproc;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "This module contains a collection of YANG deviations on top 
+     of standard for supporting BBF YANG module.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia 
+     reserves the right to revise this document for any reason, 
+     including but not limited to conformity with standards 
+     promulgated by various agencies, utilisation of advances in the 
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or 
+     referred to herein.
+
+     The product specifications and other technical or performance 
+     information contained herein are subject to change without 
+     notice. Updates of this document will be issued under the above 
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any 
+     information or opinion contained herein. Nokia expressly advises 
+     that any use of for any purpose or reliance upon this technical 
+     reference is at the risk of the user and that Nokia shall not be 
+     liable for any damage or injury incurred by any person arising 
+     out of the sufficiency, accuracy, or utility of any information 
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any 
+     manufacturer to modify or change any of its products, nor does 
+     this document represent any commitment by Nokia to sell or 
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license 
+     or right under any patent, whether or not the use of any 
+     information herein necessarily employs an invention of any 
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2017-2018, Nokia. All Rights Reserved.";
+
+  revision 2026-06-08 {
+    description
+      "Extend the 'match-criteria must be present' deviation to also
+       accept the 'any-frame' criterion, so that l2fwd-fiber-pon-tunnel
+       boards (LWLT-C, LGLT-D) can configure any-frame-only Frame
+       Processing Profiles for S-Tunnel.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2024-05-07 {
+    description
+      "Pbit/Dei marking index used by frame processing (FP) must be 0 or 1.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2023-02-03 {
+    description
+      "Added deviation to restrict Frame Processing Profile without a match criteria";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2022-11-24 {
+    description
+      "Remove unsupported yang node.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2020-06-04 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific"; 
+  }
+
+  /*Match pbit value other than "any" will be rejected*/
+  deviation "/bbf-frameproc:frame-processing-profiles/bbf-frameproc:frame-processing-profile/bbf-frameproc:match-criteria/bbf-frameproc:vlan-tag-match-type/bbf-frameproc:vlan-tagged/bbf-frameproc:tag/bbf-frameproc:pbit" {
+	  deviate add{
+	    must "current() = 'any'"{
+	      error-message "Match pbit of vlan-sub-interface tagged rule value other than 'any' will be rejected";
+	    }
+	  }
+  }
+
+  /*Match dei value other than "any" will be rejected*/
+  deviation "/bbf-frameproc:frame-processing-profiles/bbf-frameproc:frame-processing-profile/bbf-frameproc:match-criteria/bbf-frameproc:vlan-tag-match-type/bbf-frameproc:vlan-tagged/bbf-frameproc:tag/bbf-frameproc:dei" {
+	  deviate add{
+	    must "current() = 'any'"{
+		    error-message "Match dei of vlan-sub-interface tagged rule value other than 'any' will be rejected";
+	    }
+	  }
+  }
+
+  /* The ingress-rewrite pop-tag number must equal or less than matching criteria tag number.  */
+  deviation "/bbf-frameproc:frame-processing-profiles/bbf-frameproc:frame-processing-profile/bbf-frameproc:ingress-rewrite/bbf-frameproc:pop-tags" {
+    deviate add {
+      must "(current() <= count(current()/../../bbf-frameproc:match-criteria/bbf-frameproc:tag))" {
+        error-message "The ingress-rewrite pop-tag number must equal or less than matching criteria tag number.";
+      }
+    }   
+  } 
+
+  deviation "/bbf-frameproc:frame-processing-profiles/bbf-frameproc:frame-processing-profile/bbf-frameproc:match-criteria/bbf-frameproc:ethernet-frame-type" 
+  {
+    deviate not-supported;
+  }
+
+  deviation "/bbf-frameproc:frame-processing-profiles/bbf-frameproc:frame-processing-profile/bbf-frameproc:match-criteria/bbf-frameproc:protocols" 
+  {
+    deviate not-supported;
+  }
+
+  deviation "/bbf-frameproc:frame-processing-profiles/bbf-frameproc:frame-processing-profile/bbf-frameproc:egress-rewrite/bbf-frameproc:push-tag/bbf-frameproc:pbit/bbf-frameproc:write-pbit-0" 
+  {
+    deviate not-supported;
+  }
+
+  deviation "/bbf-frameproc:frame-processing-profiles/bbf-frameproc:frame-processing-profile/bbf-frameproc:egress-rewrite/bbf-frameproc:push-tag/bbf-frameproc:pbit/bbf-frameproc:copy-pbit-from-input-or-0" 
+  {
+    deviate not-supported;
+  }
+
+  deviation "/bbf-frameproc:frame-processing-profiles/bbf-frameproc:frame-processing-profile/bbf-frameproc:egress-rewrite/bbf-frameproc:push-tag/bbf-frameproc:pbit/bbf-frameproc:write-pbit-value" 
+  {
+    deviate not-supported;
+  }
+
+  deviation "/bbf-frameproc:frame-processing-profiles/bbf-frameproc:frame-processing-profile/bbf-frameproc:egress-rewrite/bbf-frameproc:push-tag/bbf-frameproc:dei/bbf-frameproc:copy-dei-from-input-or-0" 
+  {
+    deviate not-supported;
+  }
+
+  deviation "/bbf-frameproc:frame-processing-profiles/bbf-frameproc:frame-processing-profile/bbf-frameproc:egress-rewrite/bbf-frameproc:push-tag/bbf-frameproc:dei/bbf-frameproc:write-dei-1" 
+  {
+    deviate not-supported;
+  }      
+
+  deviation "/bbf-frameproc:frame-processing-profiles"
+          +"/bbf-frameproc:frame-processing-profile/bbf-frameproc:ingress-rewrite"
+          +"/bbf-frameproc:copy-from-tags-to-marking-list/bbf-frameproc:pbit-marking-index"
+  {
+    deviate add {
+      must "(current() <= 1) or (current() = 'not-preserved')"
+      {
+        error-message "pbit-marking index can't exceed 1";
+      }
+    }
+  }
+
+  deviation "/bbf-frameproc:frame-processing-profiles"
+          +"/bbf-frameproc:frame-processing-profile/bbf-frameproc:egress-rewrite/bbf-frameproc:push-tag"
+          +"/bbf-frameproc:pbit/bbf-frameproc:generate-pbit-from-marking-list-or-0"
+          +"/bbf-frameproc:pbit-marking-index"
+  {
+    deviate add {
+      must "current() <= 1"
+      {
+        error-message "pbit-marking index can't exceed 1";
+      }
+    }
+  }
+
+  deviation "/bbf-frameproc:frame-processing-profiles"
+          +"/bbf-frameproc:frame-processing-profile/bbf-frameproc:ingress-rewrite"
+          +"/bbf-frameproc:copy-from-tags-to-marking-list/bbf-frameproc:dei-marking-index"
+  {
+    deviate add {
+      must "(current() <= 1) or (current() = 'not-preserved')"
+      {
+        error-message "dei-marking index can't exceed 1";
+      }
+    }
+  }
+
+  deviation "/bbf-frameproc:frame-processing-profiles"
+          +"/bbf-frameproc:frame-processing-profile/bbf-frameproc:egress-rewrite/bbf-frameproc:push-tag"
+          +"/bbf-frameproc:dei/bbf-frameproc:generate-dei-from-marking-list-or-0"
+          +"/bbf-frameproc:dei-marking-index"
+  {
+    deviate add {
+      must "current() <= 1"
+      {
+        error-message "dei-marking index can't exceed 1";
+      }
+    }
+  }
+}
+
+

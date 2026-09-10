@@ -1,0 +1,112 @@
+module nokia-sdan-ethernet-interface-statistics {
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/nokia-sdan-ethernet-interface-statistics";
+  prefix nokia-sdan-eth-itf-stats;
+
+  import ietf-interfaces {
+    prefix if;
+  }
+  import bbf-yang-types {
+    prefix bbf-yang;
+  }
+  import bbf-ethernet-performance-management {
+    prefix bbf-eth-pm;
+  }
+
+  organization
+    "Nokia";
+  contact
+    "isam.yang@nokia.com";
+  description
+    "This module contains a collection of YANG definitions for
+     supporting Nokia specific requirements as applicable to its
+     access network equipment.
+
+     Specifically, this module augments the interface model with
+     data that supports to internaly show the ethernet interfaces
+     frame check sequence(FCS) error as part of statistics/rolling
+     counter.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be
+     considered as Confidential Information as defined in such NDA.
+     Nokia reserves the right to revise this document for any
+     reason,including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in
+     the state of the technical areas, or the reflection of changes
+     in the design of any equipment, techniques, or procedures
+     described or referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be
+     construed as conferring by implication, estoppel, or otherwise
+     any license or right under any patent, whether or not the use of
+     any information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2022, Nokia. All Rights Reserved.";
+
+  revision 2024-03-02 {
+    description
+      "Added new counter.";
+    reference
+      "TBD";
+  }
+  revision 2022-04-22 {
+    description
+      "Initial revision.";
+    reference
+      "TBD";
+  }
+
+  grouping eth-frame-counters {
+    description
+      "Counters associated with Ethernet frames";
+    leaf in-illegalsize-pkts {
+      type bbf-yang:performance-counter64;
+      description
+        "The number of packets received on the interface that had an illegal size.
+         An illegal size typically refers to packets that are smaller or larger than
+         the allowed minimum and maximum frame sizes for the interface. Discontinuities
+         in the value of this counter can occur at re-initialization of the management
+         system, and at other times as indicated by the value of the interface's
+         'statistics/discontinuity-time'.";
+      reference
+        "IEEE 802.3, 30.3.1.1.25, aFrameTooLongErrors
+         RFC 2819, etherStatsUndersizePkt";
+    }
+  }
+
+  augment "/if:interfaces-state/if:interface/if:statistics" {
+    description
+      "Augment the Ethernet frame specific attributes on
+           statistics counter.";
+    container ethernet {
+      presence "Enable when add the value of Ethernet frame
+                    specific attributes.";
+      description
+        "Supporting Ethernet frame specific attributes in
+                 statistics.";
+      uses bbf-eth-pm:eth-interface-performance-counters;
+      uses eth-frame-counters;
+    }
+  }
+}

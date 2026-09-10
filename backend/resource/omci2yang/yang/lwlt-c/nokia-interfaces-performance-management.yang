@@ -1,0 +1,365 @@
+module nokia-interfaces-performance-management {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-interfaces-performance-management";
+
+  prefix  nokia-interfaces-performance-management;
+
+  import bbf-yang-types {
+    prefix bbf-yang;
+  }
+
+  import ietf-interfaces {
+    prefix if; 
+  }
+
+  import bbf-interfaces-performance-management {
+    prefix bbf-if-pm;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG definitions for
+     supporting Nokia specific requirements as applicable to its
+     access network equipment.
+
+     Specifically, this module augments the bbf-xpon-performance-management
+     model with additional Nokia specific PM counters.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2018, Nokia. All Rights Reserved.";
+
+  revision 2024-03-06 {
+     description
+       "dropped-bytes leafs support for inbound and outbound packets
+        added for pm counters";
+     reference
+       "Nokia specific";
+  }
+
+  revision 2022-06-11 {
+    description
+      "Added feature performance-24hr for respective container";
+    reference
+      "Nokia specific";
+  }
+  revision 2020-07-14 {
+    description
+      "Initial revision";
+    reference
+      "Nokia specific";
+  }
+
+  grouping ethernet-frame-performance-counters{
+      description
+      "Ethernet frame inbound/outbound performance monitoring counters";
+      
+    leaf in-drop-events{
+      type bbf-yang:performance-counter64;
+      description
+        "The total number of events in which inbound packets were 
+        dropped due to a lack of resources";
+      reference
+        "G.988: ONU management and control interface (OMCI)
+         specification";
+    }
+    leaf in-total-pkts{
+      type bbf-yang:performance-counter64;
+      description
+        "The total number of inbound packets received, including bad 
+        packets, broadcast packets and multicast packets";
+      reference
+        "G.988: ONU management and control interface (OMCI)
+         specification";
+    }
+    leaf in-crc-errored-pkts{
+      type bbf-yang:performance-counter64;
+      description
+        "The total number of inbound packets received that had a length 
+        (excluding framing bits, but including FCS octets) of between 64 
+        octets and 1518 octets, inclusive, but had either a bad FCS with 
+        an integral number of octets (FCS error) or a bad FCS with a 
+        non-integral number of octets (alignment error)";
+      reference
+        "G.988: ONU management and control interface (OMCI)
+         specification";
+    }
+    leaf in-undersize-pkts{
+      type bbf-yang:performance-counter64;
+      description
+        "The total number of inbound packets received that were less than 
+        64 octets long, but were otherwise well formed (excluding framing 
+        bits, but including FCS)";
+      reference
+        "G.988: ONU management and control interface (OMCI)
+         specification";
+    }
+    leaf in-oversize-pkts{
+      type bbf-yang:performance-counter64;
+      description
+        "The total number of inbound packets received that were longer than 
+        1518 octets (excluding framing bits, but including FCS) and were 
+        otherwise well formed";
+      reference
+        "G.988: ONU management and control interface (OMCI)
+         specification";
+    }
+    leaf in-64-octets-pkts{
+      type bbf-yang:performance-counter64;
+      description
+        "The total number of inbound received packets (including bad packets) 
+        that were 64 octets long, excluding framing bits but including FCS.";
+      reference
+        "G.988: ONU management and control interface (OMCI)
+         specification";
+    }
+    leaf in-65-to-127-octets-pkts{
+      type bbf-yang:performance-counter64;
+      description
+        "The total number of inbound received packets (including bad packets) 
+        that were 65..127 octets long, excluding framing bits but including FCS";
+      reference
+        "G.988: ONU management and control interface (OMCI)
+         specification";
+    }
+    leaf in-128-to-255-octets-pkts{
+      type bbf-yang:performance-counter64;
+      description
+        "The total number of inbound received packets (including bad packets) 
+        that were 128..255 octets long, excluding framing bits but including FCS";
+      reference
+        "G.988: ONU management and control interface (OMCI)
+         specification";
+    }
+    leaf in-256-to-511-octets-pkts{
+      type bbf-yang:performance-counter64;
+      description
+        "The total number of inbound received packets (including bad packets) 
+        that were 256..511 octets long, excluding framing bits but including FCS";
+      reference
+        "G.988: ONU management and control interface (OMCI)
+         specification";
+    }
+    leaf in-512-to-1023-octets-pkts{
+      type bbf-yang:performance-counter64;
+      description
+        "The total number of inbound received packets (including bad packets) 
+        that were 512..1023 octets long, excluding framing bits but including FCS";
+      reference
+        "G.988: ONU management and control interface (OMCI)
+         specification";
+    }
+    leaf in-1024-to-1518-octets-pkts{
+      type bbf-yang:performance-counter64;
+      description
+        "The total number of inbound received packets (including bad packets) 
+        that were 1024..1518 octets long, excluding framing bits but including FCS";
+      reference
+        "G.988: ONU management and control interface (OMCI)
+         specification";
+    }
+    
+    leaf out-drop-events{
+      type bbf-yang:performance-counter64;
+      description
+        "The total number of events in which outbound packets were 
+        dropped due to a lack of resources";
+      reference
+        "G.988: ONU management and control interface (OMCI)
+         specification";
+    }
+    leaf out-total-pkts{
+      type bbf-yang:performance-counter64;
+      description
+        "The total number of outbound packets received, including bad 
+        packets, broadcast packets and multicast packets";
+      reference
+        "G.988: ONU management and control interface (OMCI)
+         specification";
+    }   
+    leaf out-crc-errored-pkts{
+      type bbf-yang:performance-counter64;
+      description
+        "The total number of outbound packets received that had a length 
+        (excluding framing bits, but including FCS octets) of between 64 
+        octets and 1518 octets, inclusive, but had either a bad FCS with 
+        an integral number of octets (FCS error) or a bad FCS with a 
+        non-integral number of octets (alignment error)";
+      reference
+        "G.988: ONU management and control interface (OMCI)
+         specification";
+    }
+    leaf out-undersize-pkts{
+      type bbf-yang:performance-counter64;
+      description
+        "The total number of outbound packets received that were less than 
+        64 octets long, but were otherwise well formed (excluding framing 
+        bits, but including FCS)";
+      reference
+        "G.988: ONU management and control interface (OMCI)
+         specification";
+    }
+    leaf out-oversize-pkts{
+      type bbf-yang:performance-counter64;
+      description
+        "The total number of outbound packets received that were longer than 
+        1518 octets (excluding framing bits, but including FCS) and were 
+        otherwise well formed";
+      reference
+        "G.988: ONU management and control interface (OMCI)
+         specification";
+    }
+    leaf out-64-octets-pkts{
+      type bbf-yang:performance-counter64;
+      description
+        "The total number of outbound received packets (including bad packets) 
+        that were 64 octets long, excluding framing bits but including FCS.";
+      reference
+        "G.988: ONU management and control interface (OMCI)
+         specification";
+    }
+    leaf out-65-to-127-octets-pkts{
+      type bbf-yang:performance-counter64;
+      description
+        "The total number of outbound received packets (including bad packets) 
+        that were 65..127 octets long, excluding framing bits but including FCS";
+      reference
+        "G.988: ONU management and control interface (OMCI)
+         specification";
+    }
+    leaf out-128-to-255-octets-pkts{
+      type bbf-yang:performance-counter64;
+      description
+        "The total number of outbound received packets (including bad packets) 
+        that were 128..255 octets long, excluding framing bits but including FCS";
+      reference
+        "G.988: ONU management and control interface (OMCI)
+         specification";
+    }
+    leaf out-256-to-511-octets-pkts{
+      type bbf-yang:performance-counter64;
+      description
+        "The total number of outbound received packets (including bad packets) 
+        that were 256..511 octets long, excluding framing bits but including FCS";
+      reference
+        "G.988: ONU management and control interface (OMCI)
+         specification";
+    }
+    leaf out-512-to-1023-octets-pkts{
+      type bbf-yang:performance-counter64;
+      description
+        "The total number of outbound received packets (including bad packets) 
+        that were 512..1023 octets long, excluding framing bits but including FCS";
+      reference
+        "G.988: ONU management and control interface (OMCI)
+         specification";
+    }
+    leaf out-1024-to-1518-octets-pkts{
+      type bbf-yang:performance-counter64;
+      description
+        "The total number of outbound received packets (including bad packets) 
+        that were 1024..1518 octets long, excluding framing bits but including FCS";
+      reference
+        "G.988: ONU management and control interface (OMCI)
+         specification";
+    }
+  }
+
+  grouping additional-interface-perf-counters {
+    description
+      "Total drop bytes pm counters for interfaces.";
+
+    leaf in-dropped-bytes{
+      type bbf-yang:performance-counter64;
+      description
+        "The number of inbound bytes that were dropped on the
+        interface, e.g. due to errors or lack of buffer space.";
+    }
+
+    leaf out-dropped-bytes{
+      type bbf-yang:performance-counter64;
+      description
+        "The number of outbound bytes that could not be
+        transmitted on the interface, e.g. due to errors or
+        lack of buffer space.";
+    }
+  }
+
+    augment '/if:interfaces-state/if:interface/bbf-if-pm:performance/bbf-if-pm:intervals-15min/bbf-if-pm:current' {
+    description
+      " Performance state data augmentation. Ethernet frame inbound/outbound performance counters";
+      
+      uses ethernet-frame-performance-counters;
+	  uses nokia-interfaces-performance-management:additional-interface-perf-counters;
+  }
+  
+    augment '/if:interfaces-state/if:interface/bbf-if-pm:performance/bbf-if-pm:intervals-15min/bbf-if-pm:history' {
+    
+    description
+      " Performance state data augmentation. Ethernet frame inbound/outbound performance counters";
+      
+      uses ethernet-frame-performance-counters;
+	  uses nokia-interfaces-performance-management:additional-interface-perf-counters;
+  }
+  
+    augment '/if:interfaces-state/if:interface/bbf-if-pm:performance/bbf-if-pm:intervals-24hr/bbf-if-pm:current' {
+    if-feature "bbf-if-pm:performance-24hr";
+    description
+      " Performance state data augmentation. Ethernet frame inbound/outbound performance counters";
+      
+      uses ethernet-frame-performance-counters;
+	  uses nokia-interfaces-performance-management:additional-interface-perf-counters;
+  }
+  
+    augment '/if:interfaces-state/if:interface/bbf-if-pm:performance/bbf-if-pm:intervals-24hr/bbf-if-pm:history' {
+    if-feature "bbf-if-pm:performance-24hr";
+    description
+      " Performance state data augmentation. Ethernet frame inbound/outbound performance counters";
+      
+      uses ethernet-frame-performance-counters;
+	  uses nokia-interfaces-performance-management:additional-interface-perf-counters;
+  }
+
+}
+

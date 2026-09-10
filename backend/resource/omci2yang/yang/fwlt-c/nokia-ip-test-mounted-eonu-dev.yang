@@ -1,0 +1,51 @@
+module nokia-ip-test-mounted-eonu-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-ip-test-mounted-eonu-dev";
+
+  prefix nokia-ip-test-mounted-eonu-dev;
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import nokia-ip-test-mounted {
+    prefix nokia-ip-test-mounted;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.mibsupport@nokia.com>.";
+
+  description
+    "The NOKIA IETF/System YANG module supporting
+     deviations on top of standard.";
+
+  revision 2021-10-20 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia Specific.";
+  }
+
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-ip-test-mounted:ip-test/nokia-ip-test-mounted:ipv4/nokia-ip-test-mounted:ping/nokia-ip-test-mounted:input/nokia-ip-test-mounted:count" {
+    description
+        "Number of times to ping.";
+    deviate replace {
+      type int8{
+          range "0..5";
+      }
+      default "0";
+    }
+  }
+
+deviation "/onu:onus/onu:onu/onu:root/nokia-ip-test-mounted:ip-test/nokia-ip-test-mounted:ipv4/nokia-ip-test-mounted:ping/nokia-ip-test-mounted:input/nokia-ip-test-mounted:source-interface" {
+    deviate add {
+      mandatory true;
+    }
+  }
+}

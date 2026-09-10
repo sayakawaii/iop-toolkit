@@ -1,0 +1,145 @@
+module nokia-nd-downstream-security {
+  yang-version 1.1;
+  namespace "uri:http://www.nokia.com/Fixed-Networks/BBA/yang/"
+          + "nokia-nd-downstream-security.yang";
+	    
+  prefix "nokia-ndsec";
+
+  import bbf-l2-forwarding {
+    prefix bbf-l2-fwd;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be 
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG definitions for 
+     supporting Nokia specific requirements as applicable to its 
+     access network equipment.
+     
+     Specifically, this module augments the forwarding model with data
+     specific for ND forwarding security.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia 
+     reserves the right to revise this document for any reason, 
+     including but not limited to conformity with standards 
+     promulgated by various agencies, utilisation of advances in the 
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or 
+     referred to herein.
+
+     The product specifications and other technical or performance 
+     information contained herein are subject to change without 
+     notice. Updates of this document will be issued under the above 
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any 
+     information or opinion contained herein. Nokia expressly advises 
+     that any use of for any purpose or reliance upon this technical 
+     reference is at the risk of the user and that Nokia shall not be 
+     liable for any damage or injury incurred by any person arising 
+     out of the sufficiency, accuracy, or utility of any information 
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any 
+     manufacturer to modify or change any of its products, nor does 
+     this document represent any commitment by Nokia to sell or 
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license 
+     or right under any patent, whether or not the use of any 
+     information herein necessarily employs an invention of any 
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2018, Nokia. All Rights Reserved.";
+
+  revision 2018-10-30 {
+    description
+      "Initial revision.";
+      
+    reference
+      "BBF TR-301, Architecture and Requirements for Fiber to the 
+       Distribution Point";
+  }
+
+  augment '/bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarders/bbf-l2-fwd:'
+        + 'forwarder' {
+    description
+      "Additions for controlling ND downstream forwarding.";
+    
+    container ND-security {
+      description 
+        "Configures ND security."; 
+      
+      leaf downstream-ns-multicast {      
+        type enumeration {
+          enum apply-layer2-forwarding {
+            description
+              "Downstream NS multicast packets are forwarded 
+               according forwarding rules configured for the 
+               forwarder. Especially applicable to the forwarding of
+               NS packets is the configuration of flooding rules for
+               multicast packets via a flooding profile. These rules 
+               can dictate to discard multicast packets or they can 
+               dictate to flood packets.";
+          }
+          enum secured-forwarding {
+            description
+              "A downstream NS multicast packet is forwarded to 
+               one or more ports of the forwarder. Identifying the port(s)
+               for which the packet is intended is based on the target
+               address available in the payload of the NS 
+               packet. The packet is discarded if the address is not
+               assigned to any interface.";
+          }
+          enum secured-with-fallback-to-layer2 {
+            description
+              "A system can simultaneously support user-ports to local
+               subscribers, and subtended-node-ports to subtended
+               Access Nodes. In that case the system might have IP
+               address knowledge of the local subscribers but not of
+               subscribers connected to the subtended Access Nodes. In
+               such a situation it might be desired to first apply the
+               secured-forwarding approach, i.e. forward to the single
+               user-port where the IP address is learned, but if none
+               such user-port is identified, then apply the normal
+               layer 2 forwarding rules which dictate to flood the
+               packet to the subtended nodes.
+
+               This example behavior can be generalized, e.g. the
+               system could have IP address knowledge of subscribers
+               behind some subtended nodes, and perform the check
+               on its behalf.
+
+               The generalized behvavior is therefore: a downstream
+               ND Solicit packet is forwarded to one of the ports
+               of the forwarder based on the target protocol address
+               available in the payload of the ND packet. If no such
+               port can be identified then the packet is forwarded
+               according forwarding rules configured for the
+               forwarder. Especially applicable are the flooding
+               rules.";
+          }
+        }
+        default "apply-layer2-forwarding";
+
+        description
+          "Affects the forwarding of downstream NS multicast packets.
+           If not configured then normal forwarding rules apply.";
+         reference
+          "TR-177i1";       
+      }
+    }
+  }
+
+}
+

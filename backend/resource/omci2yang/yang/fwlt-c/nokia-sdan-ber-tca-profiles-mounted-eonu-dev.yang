@@ -1,0 +1,36 @@
+module nokia-sdan-ber-tca-profiles-mounted-eonu-dev {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+  + "nokia-sdan-ber-tca-profiles-mounted-eonu-dev";
+  prefix nokia-sdan-ber-tca-profiles-mounted-eonu-dev;
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import nokia-sdan-ber-tca-profiles-mounted {
+    prefix nokia-sdan-ber-tca-prof-mounted;
+  }
+
+  organization
+    "Nokia";
+  contact
+    "Nokia";
+  description
+    "This module contains a collection of YANG deviations on top of NOKIA Specific BER TCA Profile YANG module";
+
+  revision 2022-08-08 {
+    description
+      "Adding deviations for restricting the BER TCA Profile config";
+    reference "Nokia specific";
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-sdan-ber-tca-prof-mounted:ber-tca-profiles/nokia-sdan-ber-tca-prof-mounted:ber-tca-profile" {
+     description
+       "This deviation assures that max 2 profiles can be configured.";
+    deviate add{
+      max-elements 2;
+    }
+  }
+}
+

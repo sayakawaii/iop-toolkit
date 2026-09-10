@@ -1,0 +1,217 @@
+module nokia-bbf-xpon-common-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/nokia-bbf-xpon-common-dev";
+
+  prefix nokia-bbf-xpon-common-dev;
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import bbf-xpon{
+    prefix bbf-xpon;
+  }
+
+  import nokia-yang-types {
+    prefix nok-typ;
+  }
+    
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA IETF/System YANG module supporting
+     deviations on top of standard.";
+
+  revision 2025-11-24 {
+    description
+      "multicast-gemport.";
+    reference
+      "Nokia Specific.";
+  }
+
+  revision 2025-10-16 {
+    description
+      "type-b-state leaf not use, not-supported.";
+    reference
+      "Nokia Specific.";
+  }
+  
+  revision 2024-08-27 {
+    description
+      "remove xgpon deviation and
+       correct the error message.";
+    reference
+      "Nokia Specific.";
+  }
+
+  revision 2024-06-03 {
+    description
+      "not supported standard twentyfivegs-pon related yang leaves.";
+    reference
+      "Nokia Specific.";
+  }
+
+  revision 2024-03-06 {
+    description
+      "Enlarge 64 to 100 bytes.";
+    reference
+      "Nokia Specific.";
+  }
+  
+  revision 2023-06-15 {
+    description
+      "Add loid authentication-method.";
+    reference
+      "Nokia Specific.";
+  }
+
+  revision 2023-02-06 {
+    description
+      "Move deviate not-supported rules to new position.";
+    reference
+      "Nokia Specific.";
+  }
+
+  revision 2022-09-15 {
+    description
+      "Add not supported parameters.";
+    reference
+      "Nokia Specific.";
+  }
+
+  revision 2019-05-09 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia Specific.";
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-xpon:channel-group/bbf-xpon:raman-mitigation" {
+    deviate replace {
+      type enumeration {
+        enum "raman-none" {
+          description "raman none";
+        }
+      }
+    }
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-xpon:channel-partition/bbf-xpon:authentication-method" {
+    deviate replace {
+      type enumeration {
+        enum "serial-number" { 
+         description "serial number"; 
+        }
+        enum "registration-id" {
+         description "registration identity"; 
+        }
+        enum "as-per-v-ani-expected" {
+         description "as per v-ani expected"; 
+        }
+        enum "loid" {
+         description "loid"; 
+        }
+      }
+    }
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-xpon:channel-partition/bbf-xpon:closest-onu-distance" {
+    deviate add {
+      must "current() + ../maximum-differential-xpon-distance <= 60" {
+        error-message "The closest-onu-distance plus maximum-differential-xpon-distance must not be more than 60km.";
+      }
+    }
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-xpon:channel-partition/bbf-xpon:multicast-aes-indicator" {
+    deviate add {
+      must "current() = 'false'" {
+        error-message "The multicast-aes-indicator must be false.";
+      }
+    }
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-xpon:channel-pair/bbf-xpon:channel-group-ref" {
+    deviate add {
+      mandatory true;
+    }
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-xpon:channel-pair/bbf-xpon:channel-partition-ref" {
+    deviate add {
+      mandatory true;
+    }
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-xpon:channel-termination/bbf-xpon:channel-pair-ref" {
+    deviate add {
+      mandatory true;
+    }
+  }
+
+  deviation "/bbf-xpon:xpon/bbf-xpon:multicast-distribution-set"{
+    description "This parameter is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-xpon:channel-termination/bbf-xpon:ngpon2-ptp-admin-label" {
+      description "This parameter is not supported.";
+      deviate not-supported;
+  }
+
+  deviation "/bbf-xpon:xpon/bbf-xpon:multicast-gemports/bbf-xpon:multicast-gemport/bbf-xpon:name" {
+    deviate replace {
+       type nok-typ:nokia-string-ascii100;
+    }
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-xpon:channel-pair/bbf-xpon:twentyfivegs-channel-pair-line-rate" {
+      description "This parameter is not supported.";
+      deviate not-supported;
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-xpon:channel-termination/bbf-xpon:twentyfivegs-pon-id" {
+      description "This parameter is not supported.";
+      deviate not-supported;
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-xpon:channel-partition/bbf-xpon:downstream-interleaving" {
+      description "This parameter is not supported.";
+      deviate not-supported;
+  }
+  
+  deviation "/if:interfaces-state/if:interface/bbf-xpon:channel-termination/bbf-xpon:type-b-state" {
+      description "This parameter is not supported.";
+      deviate not-supported;
+  }
+
+  deviation "/bbf-xpon:xpon/bbf-xpon:multicast-gemports/bbf-xpon:multicast-gemport/bbf-xpon:gemport-id" {
+    deviate replace {
+      type uint32 {
+          range "2047 | 4095 | 65534"
+          {
+            description
+              "The ID of multicast G-PON Encapsulation Method (GEM). 2047 and 4095 support for GPON technology, 65534 support for other PON technology.";
+          }
+      }
+    }
+  }
+
+  deviation "/bbf-xpon:xpon/bbf-xpon:multicast-gemports/bbf-xpon:multicast-gemport/bbf-xpon:traffic-class" {
+      description "This parameter is not supported.";
+      deviate not-supported;
+  }
+
+  deviation "/bbf-xpon:xpon/bbf-xpon:multicast-gemports/bbf-xpon:multicast-gemport/bbf-xpon:is-broadcast" {
+      deviate add {
+        must "current() = 'false'" {
+          error-message "The is-broadcast must be false.";
+        }
+      }
+  }
+  
+}

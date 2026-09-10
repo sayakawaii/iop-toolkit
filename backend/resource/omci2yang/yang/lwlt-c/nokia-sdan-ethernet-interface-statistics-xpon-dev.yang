@@ -1,0 +1,36 @@
+module nokia-sdan-ethernet-interface-statistics-xpon-dev {
+namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/nokia-sdan-ethernet-interface-statistics-xpon-dev";
+  prefix nokia-sdan-ethernet-interface-statistics-xpon-dev;
+
+  import ietf-interfaces {
+    prefix if;
+  }
+  import nokia-sdan-ethernet-interface-statistics {
+    prefix nokia-sdan-eth-itf-stats;
+  }
+
+  organization
+    "Nokia";
+  contact
+    "isam.yang@nokia.com";
+  
+  description
+    "This module contains deviations related interface statistic";
+
+  revision 2024-02-28 {
+    description
+      "Remove the unsupported Ethernet statistics counters";
+    reference
+      "TBD";
+  }
+
+  deviation "/if:interfaces-state/if:interface/if:statistics/nokia-sdan-eth-itf-stats:ethernet/nokia-sdan-eth-itf-stats:in-giant-pkts" {
+    deviate not-supported;
+  }
+  deviation "/if:interfaces-state/if:interface/if:statistics/nokia-sdan-eth-itf-stats:ethernet/nokia-sdan-eth-itf-stats:in-errors-mac-internal" {
+    deviate not-supported;
+  }
+  deviation "/if:interfaces-state/if:interface/if:statistics/nokia-sdan-eth-itf-stats:ethernet/nokia-sdan-eth-itf-stats:out-errors-mac-internal" {
+    deviate not-supported;
+  }
+}

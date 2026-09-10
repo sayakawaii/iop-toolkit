@@ -1,0 +1,273 @@
+module nokia-bbf-mgmd-mounted-eonu-dev {
+
+  yang-version 1.1;
+
+  namespace "urn:broadband-forum-org:yang:" +
+            "nokia-bbf-mgmd-mounted-eonu-dev";  
+            
+  prefix "nokia-bbf-mgmd-mounted-eonu-dev";
+
+  /* import */ 
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import bbf-mgmd-mounted {
+	prefix bbf-mgmd-mounted;
+  }
+
+  import nokia-mgmd-configuration-snooping-uncontrol-mounted {
+    prefix nokia-mc-uncontrol-mounted;
+  }
+
+  organization
+    "TBD";
+    
+  contact
+    "TBD";
+    
+  description
+    "An experimental YANG module for IGMP Protocol.";
+
+  revision 2026-05-05 {
+  description
+      "support MLD deviation";
+    reference
+      "TBD";
+  }
+
+  revision 2023-09-18 {
+  description 
+      "support yang leaf network-interface-for-unmatched";
+    reference
+      "TBD";
+  }
+
+  revision 2022-07-05 {
+  description 
+      "add multicast limitations for unmodifiable attributes.";
+    reference
+      "TBD";
+  }
+  
+  revision 2021-04-26 {
+    description 
+      "add multicast limitations for IOP phase 2.";
+    reference
+      "TBD";
+  }
+
+  revision 2020-04-15 {
+    description 
+      "add multicast limitations.";
+    reference
+      "TBD";
+  }
+
+  revision 2016-03-16 {
+    description
+      "Initial revision.";
+    reference
+      "TBD";
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-mgmd-mounted:multicast/bbf-mgmd-mounted:mgmd/bbf-mgmd-mounted:multicast-vpn/bbf-mgmd-mounted:multicast-channel/bbf-mgmd-mounted:ipv4/bbf-mgmd-mounted:group-ipv4-address"{
+    deviate add{
+      must "(number(substring-before(current(),'.'))*256*256*256 + number(substring-before(substring-after(current(),'.'),'.'))*256*256 + number(substring-before(substring-after(substring-after(current(),'.'),'.'),'.'))*256 + number(substring-after(substring-after(substring-after(current(),'.'),'.'),'.')) > 224*256*256*256 + 255) 
+      and (number(substring-before(current(),'.'))*256*256*256 + number(substring-before(substring-after(current(),'.'),'.'))*256*256 + number(substring-before(substring-after(substring-after(current(),'.'),'.'),'.'))*256 + number(substring-after(substring-after(substring-after(current(),'.'),'.'),'.')) < 240*256*256*256)
+      "{
+      error-message "group-ipv4-address can not be special or incorrect IP address";
+      }     
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-mgmd-mounted:multicast/bbf-mgmd-mounted:mgmd/bbf-mgmd-mounted:multicast-vpn/bbf-mgmd-mounted:multicast-channel/bbf-mgmd-mounted:ipv4/bbf-mgmd-mounted:group-ipv4-address-end"{
+   deviate add{
+      default "0.0.0.0";
+    }
+    deviate add{
+      must "current() = '0.0.0.0'
+	  or((number(substring-before(current(),'.'))*256*256*256 + number(substring-before(substring-after(current(),'.'),'.'))*256*256 + number(substring-before(substring-after(substring-after(current(),'.'),'.'),'.'))*256 + number(substring-after(substring-after(substring-after(current(),'.'),'.'),'.')) > 224*256*256*256 + 255)
+      and (number(substring-before(current(),'.'))*256*256*256 + number(substring-before(substring-after(current(),'.'),'.'))*256*256 + number(substring-before(substring-after(substring-after(current(),'.'),'.'),'.'))*256 + number(substring-after(substring-after(substring-after(current(),'.'),'.'),'.')) < 240*256*256*256))
+      "{
+      error-message "group-ipv4-address-end can not be special or incorrect IP address";
+      }     
+    }
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/bbf-mgmd-mounted:multicast/bbf-mgmd-mounted:mgmd/bbf-mgmd-mounted:multicast-vpn/bbf-mgmd-mounted:multicast-channel/bbf-mgmd-mounted:ipv4/bbf-mgmd-mounted:group-ipv4-address-end"{
+    deviate add{
+      must "current() = '0.0.0.0'
+      or (current()/../bbf-mgmd-mounted:group-ipv4-address and ((number(substring-before(current(),'.'))*256*256*256 + number(substring-before(substring-after(current(),'.'),'.'))*256*256 + number(substring-before(substring-after(substring-after(current(),'.'),'.'),'.'))*256 + number(substring-after(substring-after(substring-after(current(),'.'),'.'),'.'))) >= (number(substring-before(current()/../bbf-mgmd-mounted:group-ipv4-address,'.'))*256*256*256 + number(substring-before(substring-after(current()/../bbf-mgmd-mounted:group-ipv4-address,'.'),'.'))*256*256 + number(substring-before(substring-after(substring-after(current()/../bbf-mgmd-mounted:group-ipv4-address,'.'),'.'),'.'))*256 + number(substring-after(substring-after(substring-after(current()/../bbf-mgmd-mounted:group-ipv4-address,'.'),'.'),'.')))))
+      "{
+      error-message "group-ipv4-address-end must be greater than group-ipv4-address";
+      }     
+    }
+  }
+
+    
+  deviation "/onu:onus/onu:onu/onu:root/bbf-mgmd-mounted:multicast/bbf-mgmd-mounted:mgmd/bbf-mgmd-mounted:multicast-vpn/bbf-mgmd-mounted:multicast-channel/bbf-mgmd-mounted:ipv4/bbf-mgmd-mounted:source-ipv4-address"{
+    /* multicast and broadcast address is not valid address  */
+    deviate add {
+        must "not((substring-before(.,'.') >= 224)
+             and (substring-before(.,'.') <= 255))"{
+               error-message "224.0.0.0~255.255.255.255 are not valid";
+            }
+        }
+      
+    /* self address is not valid address  */
+    deviate add {
+        must "(substring-before(.,'.') != 127)"{
+              error-message "127.0.0.0~127.255.255.255 is not valid";
+        }
+    }      
+  }
+  
+  /* deviations for number of allowed protocol-versions supported by the vOnuMgmt implementation on the ONU */
+  /* -----------------------------*/
+  /* The current vOnuMgmt implementation only supports 1 protocol version at a time on the ONU */
+  deviation "/onu:onus/onu:onu/onu:root/bbf-mgmd-mounted:multicast/bbf-mgmd-mounted:mgmd/bbf-mgmd-mounted:multicast-snoop-transparent-profile/bbf-mgmd-mounted:protocol-version"{
+    deviate add{
+      max-elements 1;
+    }
+  }
+
+
+  /* deviations for VPN mode supported by the vOnuMgmt implementation on the ONU */
+  /* -----------------------------*/
+  /* The current vOnuMgmt implementation only supports snoop-transparent mode on the ONU */
+  deviation "/onu:onus/onu:onu/onu:root/bbf-mgmd-mounted:multicast/bbf-mgmd-mounted:mgmd/bbf-mgmd-mounted:multicast-vpn/bbf-mgmd-mounted:mode"{
+    deviate add{
+      must "current() = 'bbf-mgmd-mounted:snoop-transparent' or current() = 'nokia-mc-uncontrol-mounted:snoop-transparent-uncontrolled'"{
+        error-message "VPN mode only supports snoop-transparent mode or snoop-transparent-uncontrolled mode";
+      }
+    }
+  }
+  
+
+  /* deviations for multicast-interface-to-host of uncontrolled mode supported by the vOnuMgmt implementation on the ONU */
+  /* -----------------------------*/
+  /* a multicast vpn configured in snoop-transparent-uncontrolled mode cannot contain a multicast-interface-to-host. */
+  deviation "/onu:onus/onu:onu/onu:root/bbf-mgmd-mounted:multicast/bbf-mgmd-mounted:mgmd/bbf-mgmd-mounted:multicast-vpn/bbf-mgmd-mounted:multicast-interface-to-host"{
+    deviate add{
+      must "../bbf-mgmd-mounted:mode != 'nokia-mc-uncontrol-mounted:snoop-transparent-uncontrolled'"{
+        error-message "A multicast vpn configured in snoop-transparent-uncontrolled mode cannot contain a multicast-interface-to-host.";
+      }
+    }
+  }
+
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-mgmd-mounted:multicast/bbf-mgmd-mounted:mgmd/bbf-mgmd-mounted:multicast-snoop-transparent-profile/bbf-mgmd-mounted:interfaces-to-hosts-data/bbf-mgmd-mounted:group-membership-interval"{
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-mgmd-mounted:multicast/bbf-mgmd-mounted:mgmd/bbf-mgmd-mounted:multicast-snoop-transparent-profile/bbf-mgmd-mounted:interfaces-to-hosts-data/bbf-mgmd-mounted:last-member-query-interval"{
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-mgmd-mounted:multicast/bbf-mgmd-mounted:mgmd/bbf-mgmd-mounted:multicast-snoop-transparent-profile/bbf-mgmd-mounted:interfaces-to-hosts-data/bbf-mgmd-mounted:last-member-query-count"{
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-mgmd-mounted:multicast/bbf-mgmd-mounted:mgmd/bbf-mgmd-mounted:multicast-vpn/bbf-mgmd-mounted:multicast-interface-to-host/bbf-mgmd-mounted:data-path-vlan-sub-interface"{
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-mgmd-mounted:multicast/bbf-mgmd-mounted:mgmd/bbf-mgmd-mounted:multicast-vpn/bbf-mgmd-mounted:multicast-interface-to-host/bbf-mgmd-mounted:clear-host-interface-stats"{
+    deviate not-supported;
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/bbf-mgmd-mounted:multicast/bbf-mgmd-mounted:mgmd/bbf-mgmd-mounted:multicast-vpn/bbf-mgmd-mounted:multicast-network-interface/bbf-mgmd-mounted:clear-network-interface-stats"{
+    deviate not-supported;
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/bbf-mgmd-mounted:multicast/bbf-mgmd-mounted:mgmd/bbf-mgmd-mounted:multicast-vpn/bbf-mgmd-mounted:clear-vpn-stats"{
+    deviate not-supported;
+  }
+
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-mgmd-mounted:multicast/bbf-mgmd-mounted:mgmd/bbf-mgmd-mounted:multicast-vpn/bbf-mgmd-mounted:multicast-network-interface/bbf-mgmd-mounted:ip-layer"{
+    deviate not-supported;
+  }
+
+   
+  deviation "/onu:onus/onu:onu/onu:root/bbf-mgmd-mounted:multicast/bbf-mgmd-mounted:mgmd/bbf-mgmd-mounted:multicast-vpn"{
+    deviate add{
+      must "count(current()/bbf-mgmd-mounted:multicast-channel) < 1024"{
+        error-message "The number of multicast-channels per ONU must be lower than 1024";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-mgmd-mounted:multicast/bbf-mgmd-mounted:mgmd/bbf-mgmd-mounted:multicast-vpn/bbf-mgmd-mounted:ip-version"{
+    deviate add{
+      must "(current() = 'ipv4') or (current() = 'ipv6') "{
+        error-message "ip-version of multicast vpn only supports ipv4 or ipv6";
+      }
+    }
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/bbf-mgmd-mounted:multicast/bbf-mgmd-mounted:mgmd/bbf-mgmd-mounted:multicast-vpn/bbf-mgmd-mounted:ip-to-host"{
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-mgmd-mounted:multicast/bbf-mgmd-mounted:mgmd/bbf-mgmd-mounted:multicast-vpn/bbf-mgmd-mounted:multicast-channel/bbf-mgmd-mounted:ipv6/bbf-mgmd-mounted:group-ipv6-address"{
+    deviate add{
+      must "(translate(substring(current(), 1, 2), 'f', 'F') = 'FF')"
+      {
+          error-message "group-ipv6-address should be IPv6 multicast address";
+      }
+    }
+    deviate add{
+      /*must "(upper-case(substring-before(current(),':')) != 'FF02')"*/
+      must "(translate(substring-before(current(),':'), 'f', 'F') != 'FF02')"
+      {
+          error-message "group-ipv6-address can not be FF02:: to FF02:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF";
+      }
+    }
+  }
+
+ deviation "/onu:onus/onu:onu/onu:root/bbf-mgmd-mounted:multicast/bbf-mgmd-mounted:mgmd/bbf-mgmd-mounted:multicast-vpn/bbf-mgmd-mounted:multicast-channel/bbf-mgmd-mounted:ipv6/bbf-mgmd-mounted:group-ipv6-address-end"{
+   deviate add{
+      default "0000:0000:0000:0000:0000:0000:0000:0000";
+   }
+  deviate add{
+      must "current()='::' or (translate(substring(current(), 1, 2), 'f', 'F') = 'FF')"
+      {
+          error-message "group-ipv6-address-end should be IPv6 multicast address";
+      }
+   }
+   deviate add{
+      /*must "(upper-case(substring-before(current(),':')) != 'FF02')"*/
+      must "current()='::' or (translate(substring-before(current(),':'), 'f', 'F') != 'FF02')"
+      {
+          error-message "group-ipv6-address-end can not be FF02:: to FF02:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF";
+      }
+   }
+ }
+
+ deviation "/onu:onus/onu:onu/onu:root/bbf-mgmd-mounted:multicast/bbf-mgmd-mounted:mgmd/bbf-mgmd-mounted:multicast-vpn/bbf-mgmd-mounted:multicast-channel/bbf-mgmd-mounted:ipv6/bbf-mgmd-mounted:group-ipv6-address-end"{
+    description
+      "The group-ipv6-address-end should be greater than group-ipv6-address.
+       A error message 'group-ipv6-address-end must be greater than group-ipv6-address'
+       will be displayed when the constraint is voilated.";
+    deviate add {
+    }
+ }
+
+ deviation "/onu:onus/onu:onu/onu:root/bbf-mgmd-mounted:multicast/bbf-mgmd-mounted:mgmd/bbf-mgmd-mounted:multicast-vpn/bbf-mgmd-mounted:multicast-channel/bbf-mgmd-mounted:ipv6/bbf-mgmd-mounted:source-ipv6-address"{
+    deviate add{
+      /*must "(not (starts-with(translate(current(), 'f', 'F'), 'FF')))"*/
+      must "(translate(substring(current(), 1, 2), 'f', 'F') != 'FF')"
+      {
+          error-message "source-ipv6-address can not be  multicast address.";
+      }
+    }
+    deviate add{
+      must " (current()!='::1')"
+      {
+          error-message "source-ipv6-address can not be IPv6 loopback address.";
+      }
+    }
+ }
+}

@@ -1,0 +1,69 @@
+module nokia-bbf-xponani-mounted-eonu-si {
+
+  namespace "urn:broadband-forum-org:yang:" +
+            "nokia-bbf-xponani-mounted-eonu-si";  
+            
+  prefix "nokia-bbf-xponani-mounted-eonu-si";
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import bbf-xponani-mounted {
+    prefix bbf-xponani-mounted;
+  }
+  
+  import ietf-interfaces-mounted {
+    prefix if-mounted;
+  }
+
+  import nokia-sdan-service-impact {
+    prefix nokia-si;
+  }
+
+  organization
+    "NOKIA";
+    
+  contact
+    "TBD";
+    
+  description
+    "The NOKIA BBF Multicast YANG module supporting
+     deviations on top of standard.";
+
+  revision 2025-12-09 {
+    description
+      "add traffic-class si";
+    reference
+      "Nokia Specific.";
+  }
+
+  revision 2023-07-05 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia Specific.";
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-xponani-mounted:ani/bbf-xponani-mounted:multicast-gemport/bbf-xponani-mounted:mc-gemport-id" {
+      description
+       "When is-broadcast is true, modifying mc-gemport-id would cause clock service impact.";
+      deviate add {
+        nokia-si:service-impact;
+      }
+ }
+ deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-xponani-mounted:ani/bbf-xponani-mounted:multicast-gemport/bbf-xponani-mounted:is-broadcast" {
+      description
+       "Modifying is-broadcast would cause clock service impact.";
+      deviate add {
+        nokia-si:service-impact;
+      }
+ }
+ deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-xponani-mounted:ani/bbf-xponani-mounted:multicast-gemport/bbf-xponani-mounted:traffic-class" {
+      description
+       "Modifying multicast traffic-class would cause service impact.";
+      deviate add {
+        nokia-si:service-impact;
+      }
+ }
+}

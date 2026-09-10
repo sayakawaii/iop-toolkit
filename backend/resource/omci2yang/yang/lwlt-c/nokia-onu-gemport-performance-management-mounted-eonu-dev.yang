@@ -1,0 +1,52 @@
+module nokia-onu-gemport-performance-management-mounted-eonu-dev {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+          + "nokia-onu-gemport-performance-management-mounted-eonu-dev";
+  prefix nokia-xpongemtcont-gemport-pm-mounted-eonu-dev;
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import bbf-xpongemtcont-mounted {
+    prefix bbf-xpongemtcont-mounted;
+  }
+  import bbf-xpongemtcont-gemport-performance-management-mounted {
+    prefix bbf-xpongemtcont-gemport-pm-mounted;
+  }
+  import nokia-onu-gemport-performance-management-mounted {
+    prefix nokia-xpongemtcont-gemport-pm-mounted;
+  }
+
+  organization
+    "Nokia";
+  contact
+    "isam.yang@nokia.com";
+  description
+    "The NOKIA YANG module supporting
+     deviations on top of standard.";
+
+  revision 2023-07-25 {
+    description
+      "Initial revision.";
+    reference
+      "TBD";
+  }
+  deviation "/onu:onus/onu:onu/onu:root/bbf-xpongemtcont-mounted:xpongemtcont-state"
+      + "/bbf-xpongemtcont-mounted:gemports/bbf-xpongemtcont-mounted:gemport"
+      + "/bbf-xpongemtcont-gemport-pm-mounted:performance/bbf-xpongemtcont-gemport-pm-mounted:intervals-15min"
+      + "/bbf-xpongemtcont-gemport-pm-mounted:history/bbf-xpongemtcont-gemport-pm-mounted:ani-side/nokia-xpongemtcont-gemport-pm-mounted:rx-bad-headers" {
+      description
+         "This deviation assures that nokia-xpongemtcont-gemport-pm-mounted:rx-bad-headers leaf is not supported.";
+      deviate not-supported;
+  }
+
+   deviation "/onu:onus/onu:onu/onu:root/bbf-xpongemtcont-mounted:xpongemtcont-state"
+      + "/bbf-xpongemtcont-mounted:gemports/bbf-xpongemtcont-mounted:gemport"
+      + "/bbf-xpongemtcont-gemport-pm-mounted:performance/bbf-xpongemtcont-gemport-pm-mounted:intervals-15min"
+      + "/bbf-xpongemtcont-gemport-pm-mounted:current/bbf-xpongemtcont-gemport-pm-mounted:ani-side/nokia-xpongemtcont-gemport-pm-mounted:rx-bad-headers" {
+      description
+         "This deviation assures that nokia-xpongemtcont-gemport-pm-mounted:rx-bad-headers leaf is not supported.";
+      deviate not-supported;
+  }
+}

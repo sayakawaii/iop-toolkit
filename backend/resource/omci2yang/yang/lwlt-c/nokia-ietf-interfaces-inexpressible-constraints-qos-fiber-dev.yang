@@ -1,0 +1,203 @@
+module nokia-ietf-interfaces-inexpressible-constraints-qos-fiber-dev {
+
+  yang-version "1.1";
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+            + "nokia-ietf-interfaces-inexpressible-constraints-qos-fiber-dev";
+
+  prefix nokia-ietf-interfaces-inexpressible-constraints-qos-fiber-dev;
+
+  import ietf-interfaces {
+    prefix if;
+  }
+  
+  organization
+    "NOKIA";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "The NOKIA common/nokia-ietf-interfaces-inexpressible-constraints-qos-fiber-dev
+     YANG module supporting deviations on top of ietf-ssh-server standard.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2019, Nokia. All Rights Reserved.";
+
+  revision 2017-04-24 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific"; 
+  }
+
+  deviation "/if:interfaces/if:interface" {
+    description
+      "Lightspan supports policy and classifier parameter modification for qos-policy-profiles in use. 
+ The set of policy and classifier parameters that can be modified is dependent on the policy type that 
+ is internally determined when the qos-policy-profile is referenced first time by a VSI or VSI profile. 
+ The following policy types exist: marker, ccl, port-policer, scheduler, queue-color and count. 
+ Example of these policy types can be found in the Lightspan OAM guide.
+ 1)marker policies are modifiable for the following parameters:
+ /classifiers/classifier-entry/vlans/untagged 
+ /classifiers/classifier-entry/match-criteria/untagged 
+ /classifiers/classifier-entry/pbit-marking-list 
+ /classifiers/classifier-entry/vlans/tag/in-pbit-list 
+ /classifiers/classifier-entry/match-criteria/tag/in-pbit-list 
+ /classifiers/classifier-entry/match-criteria/pbit-marking-list 
+ /classifiers/classifier-entry/match-criteria/dscp-range 
+ /classifiers/classifier-entry/ip-common/dscp-range 
+ /classifiers/classifier-entry/ip-common/dscp 
+ /classifiers/classifier-entry/match-criteria/protocols/protocol 
+ /classifiers/classifier-entry/protocol 
+ /classifiers/classifier-entry/ip-common/protocol 
+ /classifiers/classifier-entry/classifier-action-entry-cfg/pbit-marking-cfg 
+ /classifiers/classifier-entry/classifier-action-entry-cfg/dei-marking-cfg 
+ /classifiers/classifier-entry/dei-marking-list 
+ /classifiers/classifier-entry/vlans/tag/in-dei 
+ /classifiers/classifier-entry/match-criteria/tag/in-dei 
+ /classifiers/classifier-entry/match-criteria/dei-marking-list 
+ 2)ccl policies are modifiable for the following parameters: 
+ /classifiers/classifier-entry/enhanced-filter-name 
+ /classifiers/classifier-entry/any-frame(not available in the first classifier) 
+ /classifiers/classifier-entry/classifier-action-entry-cfg/pbit-marking-cfg 
+ /classifiers/classifier-entry/classifier-action-entry-cfg/policing 
+ /classifiers/classifier-entry/classifier-action-entry-cfg/pass 
+ /classifiers/classifier-entry/classifier-action-entry-cfg/discard 
+ /classifiers/classifier-entry/classifier-action-entry-cfg/dei-marking-cfg
+ 3)port-policer policies are modifiable for the following parameters: 
+ /classifiers/classifier-entry/match-criteria/match-all 
+ /classifiers/classifier-entry/any-frame 
+ /classifiers/classifier-entry/metered-flow 
+ /classifiers/classifier-entry/classifier-action-entry-cfg/policing 
+ 4)scheduler policies are modifiable for the following parameters: 
+ /classifiers/classifier-entry/pbit-marking-list 
+ /classifiers/classifier-entry/vlans/tag/in-pbit-list 
+ /classifiers/classifier-entry/match-criteria/tag/in-pbit-list 
+ /classifiers/classifier-entry/match-criteria/pbit-marking-list 
+ /classifiers/classifier-entry/classifier-action-entry-cfg/scheduling-traffic-class 
+ /classifiers/classifier-entry/dei-marking-list 
+ /classifiers/classifier-entry/vlans/tag/in-dei 
+ /classifiers/classifier-entry/match-criteria/tag/in-dei 
+ /classifiers/classifier-entry/match-criteria/dei-marking-list 
+ 5)queue-color policies are modifiable for the following parameters: 
+ /classifiers/classifier-entry/metered-color 
+ /classifiers/classifier-entry/pbit-marking-list 
+ /classifiers/classifier-entry/dei-marking-list 
+ /classifiers/classifier-entry/vlans/tag/in-pbit-list 
+ /classifiers/classifier-entry/vlans/tag/in-dei 
+ /classifiers/classifier-entry/match-criteria/tag/in-pbit-list 
+ /classifiers/classifier-entry/match-criteria/tag/in-dei 
+ /classifiers/classifier-entry/match-criteria/pbit-marking-list 
+ /classifiers/classifier-entry/match-criteria/dei-marking-list 
+ /classifiers/classifier-entry/classifier-action-entry-cfg/bac-color 
+ 6)count policies are modifiable for the following parameters: 
+ /classifiers/classifier-entry/pbit-marking-list 
+ /classifiers/classifier-entry/vlans/tag/in-pbit-list 
+ /classifiers/classifier-entry/match-criteria/tag/in-pbit-list 
+ /classifiers/classifier-entry/match-criteria/pbit-marking-list 
+ /classifiers/classifier-entry/classifier-action-entry-cfg/count 
+ /classifiers/classifier-entry/dei-marking-list 
+ /classifiers/classifier-entry/vlans/tag/in-dei 
+ /classifiers/classifier-entry/match-criteria/tag/in-dei 
+ /classifiers/classifier-entry/match-criteria/dei-marking-list
+       Other dependent xpaths where this rule applies are:
+        '/bbf-qos-pol:qos-policy-profiles/bbf-qos-pol:policy-profile'
+        '/bbf-qos-pol:policies/bbf-qos-pol:policy'
+        '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry'
+        '/bbf-qos-plc:policing-profiles/bbf-qos-plc:policing-profile'
+        '/bbf-qos-filt:filters/bbf-qos-enhfilt:enhanced-filter'
+       The error message 'For policies which has been attached by VSI, modification that may change its policy type is not accepted.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/if:interfaces/if:interface" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-qos-pol:qos-policy-profiles/bbf-qos-pol:policy-profile'
+        '/bbf-qos-pol:policies/bbf-qos-pol:policy'
+        '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry'
+        '/bbf-qos-plc:policing-profiles/bbf-qos-plc:policing-profile'
+        '/bbf-qos-filt:filters/bbf-qos-enhfilt:enhanced-filter'
+       The error message 'For QoS policy profile, the order of policies should follow: Marker-type, CCL-type, PortPolicer-type, Scheduler-type, QueueColor-type, and Count-type. RateLimit-type policy should not exist in VSI's ingress/egress qos-policy-profile.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/if:interfaces/if:interface" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-qos-pol:qos-policy-profiles/bbf-qos-pol:policy-profile'
+        '/bbf-qos-pol:policies/bbf-qos-pol:policy'
+        '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry'
+        '/bbf-qos-plc:policing-profiles/bbf-qos-plc:policing-profile'
+        '/bbf-qos-filt:filters/bbf-qos-enhfilt:enhanced-filter'
+        '/bbf-frameproc:frame-processing-profiles/bbf-frameproc:frame-processing-profile'
+       The error message 'For this vsi, it refers to a QoS policy-profile containing a dei-marking action, then its ingress-rewrite can't copy the dei-marking-list again.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/if:interfaces/if:interface" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-qos-pol:qos-policy-profiles/bbf-qos-pol:policy-profile'
+        '/bbf-qos-pol:policies/bbf-qos-pol:policy'
+        '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry'
+        '/bbf-qos-plc:policing-profiles/bbf-qos-plc:policing-profile'
+        '/bbf-qos-filt:filters/bbf-qos-enhfilt:enhanced-filter'
+        '/bbf-frameproc:frame-processing-profiles/bbf-frameproc:frame-processing-profile'
+       The error message 'For this vsi, it refers to a QoS policy-profile containing a pbit-marking action, then its ingress-rewrite can't copy the pbit-marking-list again.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/if:interfaces/if:interface" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-qos-pol:qos-policy-profiles/bbf-qos-pol:policy-profile'
+        '/bbf-qos-pol:policies/bbf-qos-pol:policy'
+        '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry'
+       The error message 'For VSI's ingress QoS profile, scheduler policy and queue-color policy should use the same tag index when referring to 'pbit' or 'dei'.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/if:interfaces/if:interface" {
+    description
+      "The error message 'For COA, please confirm all the legacy rules associated with static configration of the vlan-sub-interface, QOS profile and forwarder are successful.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+}

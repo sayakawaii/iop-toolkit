@@ -1,0 +1,63 @@
+module nokia-ietf-hardware-mounted-eonu-si {
+
+  namespace
+     "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+   + "nokia-ietf-hardware-mounted-eonu-si";
+
+  prefix nokia-ietf-hardware-mounted-eonu-si;
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import ietf-hardware-mounted {
+    prefix hw-mounted;
+  }
+
+  import nokia-sdan-service-impact {
+    prefix nokia-si;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "indicate that modifying a data node of ietf-hardware module
+     would cause a service impact.";
+
+  
+  revision 2023-07-07 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia Specific.";
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware/hw-mounted:component/hw-mounted:class" {
+    description
+      "Modifying class of a component would cause eqpt service impact";
+    deviate add {
+      nokia-si:service-impact;
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware/hw-mounted:component/hw-mounted:parent" {
+    description
+      "Modifying parent of a component would cause eqpt service impact";
+    deviate add {
+      nokia-si:service-impact;
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware/hw-mounted:component/hw-mounted:parent-rel-pos" {
+    description
+      "Modifying parent-rel-pos of a component would cause eqpt service impact";
+    deviate add {
+      nokia-si:service-impact;
+    }
+  }   
+}

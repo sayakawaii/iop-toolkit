@@ -1,0 +1,426 @@
+module nokia-sdan-est-client {
+  yang-version 1.1;
+ 
+  namespace "urn:ietf:params:xml:ns:yang:nokia-sdan-est-client";
+  prefix estc;
+ 
+  import nokia-yang-types {
+    prefix nok-typ;
+  }
+ 
+  import ietf-inet-types {
+    prefix inet;
+  }
+ 
+  import ietf-tls-client {
+    prefix tlsc;
+  }
+ 
+  import ietf-keystore {
+    prefix ks;
+  }
+ 
+  import ietf-crypto-types {
+    prefix ct;
+  }
+ 
+  import tailf-common {
+    prefix tailf;
+  }
+
+  organization
+    "Nokia";
+ 
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+ 
+  description
+    "This YANG module defines a basic structure for an
+     EST (Enrollment over Secure Transport) client
+     as defined in RFC 7030.";
+
+  revision 2025-11-21  {
+    description "Restrict end-entity-certificate-renew-policy to non-zero.";
+    reference "Nokia specific.";
+  }
+
+  revision 2025-09-05  {
+    description "Add TLS Hello parameters.";
+    reference "Nokia specific.";
+  }
+
+  revision "2024-06-19" {
+    description
+      "Initial revision.";
+    reference
+      "RFC 7030: Enrollment over Secure Transport";
+  }
+ 
+// features
+  feature est-client-support {
+    description
+      "The device supports bootstrapping off bootstrap servers.";
+  }
+ 
+  feature enrollment-codes-supported {
+    description
+      "The device supports the usage of HTTPs EST Enrollment Codes";
+  }
+ 
+  typedef est-certificate-profile-ref {
+    type leafref {
+      path "/estc:est-client/estc:est-certificate-profile/estc:name";
+    }
+    description
+      "This typedef enables modules to easily define a reference
+       to a specific est certificate profile";
+  }
+ 
+  grouping est-ca-certificate-profile-ref-grouping {
+    leaf est-certificate-profile {
+      type est-certificate-profile-ref;
+      description
+        "A reference to an EST CA certificate profile to be used from other modules";
+    }
+    description
+      "A reusable grouping of EST CA certificate profile reference to be used from other modules";
+  }
+ 
+  grouping est-certificate-profile-ref-grouping {
+    leaf est-certificate-profile {
+      type est-certificate-profile-ref;
+      description
+        "A reference to an EST certificate profile to be used from other modules";
+    }
+    description
+      "A reusable grouping of EST certificate profile reference to be used from other modules";
+  }
+ 
+  container est-client {
+    if-feature "est-client-support";
+    description
+      "Container for EST client configuration.";
+ 
+    uses est-certificate-profile-grouping;
+  }
+ 
+  grouping est-server-grouping {
+    description
+      "A reusable grouping of EST server details";
+    container est-server {
+      must 'client-authentication/certificate-auth/private-key-reference
+            or client-authentication/https-auth/username
+            or client-authentication/https-auth/password' {
+              error-message
+                "client-authentication must be configured with at least one of 'certificate-auth' 'https-auth/username' or 'https-auth/password'.";
+              description
+                "client authentication must be configured with at least one valid method.";
+      }
+      description
+        "Container that specifies the EST server details";
+      leaf est-server-url {
+        type inet:uri {
+          length "1..255";
+        }
+        mandatory true;
+        description
+          "URL of the EST server.";
+      }
+      container server-authentication {
+        description
+          "EST server authentication settings.";
+        uses tlsc:server-auth-grouping;
+      }
+      container client-authentication {
+        description
+          "EST client authentication settings.";
+
+        container certificate-auth {
+           must 'not ((private-key-reference and not(certificate-reference)) or (not(private-key-reference) and certificate-reference))'
+           {
+             error-message
+               "private-key-reference and certificate-reference must be configured together.";
+             description
+               "private-key-reference and certificate-reference must be configured together.";
+           }
+           description "Certificate-based authentication settings.";
+
+           leaf private-key-reference {
+             type ks:asymmetric-key-ref;
+             description
+               "Reference to the private key for the client certificate.";
+           }
+
+           leaf certificate-reference {
+             type ks:asymmetric-key-certificate-ref;
+             description
+               "Reference to the client certificate for authentication.";
+           }
+        }
+
+        container https-auth {
+          description "HTTPs-based authentication settings.";
+
+          leaf username {
+            type string {
+                length "1..11";
+                pattern "[_+0-9a-zA-Z]*";
+            }
+            description
+              "Username for HTTPs authentication.";
+          }
+
+          leaf password {
+            type tailf:aes-cfb-128-encrypted-string {
+              pattern
+                  '[^$](.{0,253})'
+                + '|$0$(.{1,254})'
+                + '|$8$([\s\S]{17,509})';
+            }
+            description
+              "Password for HTTPs authentication.
+                A value of this type matches one of the forms:
+                  - <clear text password>[1..254 chars]
+                  - $0$<clear text password>[1..254 chars]
+                  - $8$<encrypted value>[17..509 chars]";
+          }
+        }
+      }
+      uses tlsc:hello-params-grouping;
+    }
+  }
+ 
+  grouping est-certificate-profile-grouping {
+    description
+      "A reusable grouping of EST certificate profile details";
+    list est-certificate-profile {
+      key "name";
+      max-elements 6;
+      description
+        "Enter the est-certificate-profile list instance";
+ 
+      leaf name {
+        type nok-typ:nokia-string-ascii64 {
+          length "1..32";
+        }
+        description
+          "Enrollment over Secured Transport certificate profile name";
+      }
+ 
+      uses est-server-grouping;
+      uses private-key-generation-grouping;
+      uses certificate-request-attributes-grouping;
+      uses end-entity-certificate-renew-policy-grouping;
+      uses ca-certificate-renew-policy-grouping;
+ 
+      action force-renew-ca-certificate {
+        description
+          "Force renewal of the EST CA certificate (/cacerts).";
+      }
+ 
+      action force-renew-ee-certificate {
+        description
+          "Force renewal of the EST EE certificate (/simplereenroll).";
+      }
+    }
+  }
+ 
+  grouping private-key-generation-grouping {
+    description
+      "A reusable grouping of private key generation details";
+    container private-key-generation {
+      description
+        "Container that contains the private key generation details";
+      leaf private-key-algorithm {
+        type ct:asymmetric-key-encryption-algorithm-ref;
+        must ". = 'ct:rsa2048' or . = 'ct:rsa3072' or . = 'ct:rsa4096'" {
+          error-message "Only rsa2048, rsa3072, and rsa4096 allowed";
+          description "Only rsa2048, rsa3072, and rsa4096 allowed";
+        }
+        default ct:rsa4096;
+        description
+          "Identifies the private key's algorithm type";
+      }
+    }
+  }
+ 
+  grouping certificate-request-attributes-grouping {
+    description
+      "A reusable grouping of certificate request attributes details";
+    container certificate-request-attributes {
+      description
+        "Settings for certificate signing request (CSR).";
+ 
+      container explicit-provision-policy {
+        must "count(./subject-distinguished-names) > 0 or count(./subject-alternative-names) > 0 or (./auto-fill-duid-attributes='true')" {
+          error-message
+            "At least one of subject-distinguished-names or subject-alternative-names must have at least one element, or auto-fill-duid-attributes must be true.";
+          description
+            "At least one of subject-distinguished-names or subject-alternative-names must have at least one element, or auto-fill-duid-attributes must be true.";
+        }
+        description
+          "Configure Certificate Request Attributes Explicitly";
+        leaf-list subject-distinguished-names {
+          type string {
+            length "3..64"; // e.g., "CN=x", min key=1 + '=' + 1 char
+            pattern '[a-zA-Z0-9_-]+=[^\n\r]+' {
+              error-message "Value must be in the format 'key=value'.";
+              description "Value must be in the format 'key=value'.
+                           - Key includes letter, digits, dashes or underscores.
+                           - Values must not contain carriage return newline.";
+            }
+          }
+          max-elements 10;
+          ordered-by user;
+          description
+            "List of Subject Distinguished Name (Subject DN) attributes in key=value format.
+            Each string must represent one RDN component, such as 'CN=example.com' or 'O=ExampleOrg'.";
+        }
+        leaf-list subject-alternative-names {
+          type string {
+            length "3..64";
+            pattern '[a-zA-Z0-9_-]+=[^\n\r]+' {
+              error-message "Value must be in the format 'key=value'.";
+              description "Value must be in the format 'key=value'.
+                           - Key includes letter, digits, dashes or underscores.
+                           - Values must not contain carriage return newline.";
+            }
+          }
+          max-elements 10;
+          ordered-by user;
+          description
+            "List of Subject Alternative Name (SAN) entries in key=value format.
+             Common keys include DNS, IP, URI, email, RID, or otherName.";
+        }
+        leaf auto-fill-duid-attributes {
+          type boolean;
+          default false;
+          description
+            "When this attribute is set as 'true', then CSR is automatically filled with Device Identifier attributes,
+             based on BBF-TR301 rules. Fields that will be affected & overruled are Subject/CN and Subject/SerialNumber,
+             which will derive info based on Device Unique Identifier (DUID).";
+        }
+      }
+    }
+  }
+
+  grouping ca-certificate-schedule-policy-grouping {
+    description
+      "A reusable grouping of CA certificate renew reschedule policy details";
+    leaf renew-interval {
+      type uint16 {
+        range "1..1825";
+      }
+      units "days";
+      default "30";
+      description
+        "Update CA certificates on the defined time intervals (1 to 1825 days)";
+    }
+  }
+
+  grouping end-entity-certificate-schedule-policy-grouping {
+    description
+      "A reusable grouping of certificate renew reschedule policy details";
+    choice schedule {
+      default "before-expiry";
+      description
+        "Update certificate on the scheduled intervals";
+      case before-expiry {
+        description
+          "Update certificate on the defined time before certificate expiry";
+        leaf before-expiry {
+          type uint8;
+          units "days";
+          default "10";
+          description
+            "Time scheduler updates before certificate expiry (0 to 255 days)";
+        }
+      }
+      case after-issue {
+        description
+          "Update certificate on the defined time after certificate issuance";
+        leaf after-issue {
+          type uint8 {
+            range "1..255";
+          }
+          units "days";
+          description
+            "Time for scheduler updates after certificate issuance (1 to 255 days)";
+        }
+      }
+    }
+  }
+
+  grouping private-key-renew-policy-grouping {
+    description
+      "A reusable grouping of private key renew policy details";
+    choice key-policy {
+      default "reuse-existing-key";
+      description
+        "Key Generation policy during certificate Renew and/or Rotation";
+      case reuse-existing-key {
+        leaf reuse-existing-key {
+          type enumeration {
+              enum "enabled" {
+                  description "Reuse the existing private key";
+              }
+          }
+          default "enabled";
+          description
+            "Reuse the existing private key on each certificate renew operation";
+        }
+      }
+ 
+      case generate-new-key {
+        leaf generate-new-key {
+          type enumeration {
+              enum "enabled" {
+                  description "Generate a new private key";
+              }
+          }
+          description
+            "Generate an new private key on each certificate renew operation";
+        }
+      }
+    }
+  }
+
+  grouping certificate-update-strategy-options-grouping {
+    description
+      "A reusable grouping of certificate renew strategy options";
+    container certificate-update-strategy-options {
+      description
+        "Certificate Renew strategy and option";
+      leaf restart-connection-after-certificate-update {
+        type boolean;
+        default false;
+        description
+          "When this attribute is set as 'true', then if a certificate is enrolled or re-enrolled, then the active connections
+          are immediately restarted using the latest renewed certificate.";
+      }
+    }
+  }
+
+  grouping end-entity-certificate-renew-policy-grouping {
+    description
+      "A reusable grouping of end-entity certificate renew reschedule policy details";
+    container end-entity-certificate-renew-policy {
+      description
+        "End Entity Certificate Renew/Rotation policy";
+      uses private-key-renew-policy-grouping;
+      uses end-entity-certificate-schedule-policy-grouping;
+      uses certificate-update-strategy-options-grouping;
+    }
+  }
+ 
+  grouping ca-certificate-renew-policy-grouping {
+    description
+      "A reusable grouping of CA certificate renew reschedule policy details";
+    container ca-certificate-renew-policy {
+      description
+        "CA Certificate Renew policy";
+      uses ca-certificate-schedule-policy-grouping;
+    }
+  }
+}

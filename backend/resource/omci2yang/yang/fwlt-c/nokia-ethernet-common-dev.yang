@@ -1,0 +1,163 @@
+module nokia-ethernet-common-dev {
+
+  namespace
+    "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+  + "nokia-ethernet-common-dev";
+
+  prefix  nokia-ethernet-common-dev;
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import ethernet {
+    prefix eth;
+  }
+
+  import bbf-interface-usage {
+    prefix bbf-if-usg;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA ethernet YANG module supporting
+     deviations on top of standard.";
+
+  revision 2019-08-05 {
+    description
+      "Initial revision.";
+    reference
+      "TBD";
+  }
+  
+  deviation "/if:interfaces/if:interface/eth:ethernet/eth:transmission-mode/eth:auto-negotiation/eth:auto-negotiation/eth:duplex"{
+    deviate add {
+      must ".='full'" {
+                     error-message "only support full duplex";
+      }
+    }
+  }
+      
+  deviation "/if:interfaces/if:interface/eth:ethernet/eth:transmission-mode/eth:manual/eth:manual/eth:duplex"{
+    deviate add {
+      must ".='full'" {
+                     error-message "only support full duplex";
+      }
+    }
+  }
+
+  deviation "/if:interfaces/if:interface/eth:ethernet/eth:transmission-mode/eth:auto-negotiation/eth:auto-negotiation/eth:status" {
+    deviate add {
+       must "(current()/../../../if:name!='LEMIITF') 
+                 or ((current()/../../../if:name = 'LEMIITF') 
+                     and (current() = 'enabled'))" {
+                 error-message "LEMI Interface cannot be modified";
+       }
+    }
+  }
+  
+  deviation "/if:interfaces/if:interface/eth:ethernet" {
+  deviate add {
+       must "(current()/../if:name!='LEMIITF')
+                  or ((current()/../if:name = 'LEMIITF') and ((boolean(auto-negotiation))))" {
+                 error-message "LEMI Interface cannot be modified";
+       }
+    }
+  }
+  
+  deviation "/if:interfaces/if:interface/eth:ethernet/eth:transmission-mode/eth:auto-negotiation/eth:auto-negotiation/eth:speed" {
+    deviate add {
+       must "(current()/../../../if:name!='LEMIITF') 
+                  or ((current()/../../../if:name = 'LEMIITF') and (not(boolean(current()/../eth:speed))))" {
+                 error-message "LEMI Interface cannot be modified";
+       }
+    }
+  }
+
+  deviation "/if:interfaces/if:interface/eth:ethernet/eth:transmission-mode/eth:auto-negotiation/eth:auto-negotiation/eth:duplex" {
+    deviate add {
+       must "(current()/../../../if:name!='LEMIITF') 
+                 or ((current()/../../../if:name = 'LEMIITF') and (not(boolean(current()/../eth:duplex))))" {
+                     error-message "LEMI Interface cannot be modified";
+       }
+    }
+  }
+  
+  deviation "/if:interfaces/if:interface/eth:ethernet/eth:transmission-mode/eth:manual/eth:manual/eth:speed" {
+    deviate add {
+       must "(current()/../../../if:name!='LEMIITF') 
+                 or ((current()/../../../if:name = 'LEMIITF') and (not(boolean(current()/../eth:speed))))" {
+                     error-message "LEMI Interface cannot be modified";
+       }
+    }
+  }
+ 
+  deviation "/if:interfaces/if:interface/eth:ethernet" {
+  description "LEMI Interface-usage cannot be modified";
+  deviate add {
+       must "(current()/../if:name != 'LEMIITF')
+                  or ((current()/../if:name = 'LEMIITF') and (not(boolean(current()/../bbf-if-usg:interface-usage/bbf-if-usg:interface-usage))))" {
+                 error-message "LEMI Interface cannot be modified";
+       }
+    }
+  }
+  
+  deviation "/if:interfaces/if:interface/eth:ethernet/eth:transmission-mode/eth:auto-negotiation/eth:auto-negotiation/eth:advertised-flow-control" {
+    description
+            "indicated that advertised-flow-control is not supported";
+    deviate not-supported;
+  }
+  
+  deviation "/if:interfaces/if:interface/eth:ethernet/eth:transmission-mode/eth:auto-negotiation/eth:auto-negotiation/eth:forced-flow-control" {
+    description
+            "indicated that forced-flow-control is not supported";
+    deviate not-supported;
+  }
+  
+  deviation "/if:interfaces/if:interface/eth:ethernet/eth:transmission-mode/eth:manual/eth:manual/eth:flow-control" {
+    description
+            "indicated that flow-control is not supported";
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces-state/if:interface/eth:Ethernet/eth:flow-control" {
+    description
+            "indicated that state flow-control is not supported";
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces-state/if:interface/eth:Ethernet/eth:rate-control" {
+    description
+            "indicated that state rate-control is not supported";
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces-state/if:interface/eth:Ethernet/eth:macc-extension-control" {
+    description
+            "indicated that state macc-extension-control is not supported";
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces-state/if:interface/eth:Ethernet/eth:macc-pfc-control" {
+    description
+            "indicated that state macc-pfc-control is not supported";
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces-state/if:interface/eth:Ethernet/eth:macc-control" {
+    description
+            "indicated that state macc-control is not supported";
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces-state/if:interface/eth:Ethernet/eth:frame-limit-slow-protocol" {
+    description
+            "indicated that state frame-limit-slow-protocol is not supported";
+    deviate not-supported;
+  }
+}

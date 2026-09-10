@@ -1,0 +1,84 @@
+module nokia-bbf-interface-port-reference-common-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-bbf-interface-port-reference-common-dev";
+
+  prefix nokia-bbf-interface-port-reference-common-dev;
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import bbf-interface-port-reference {
+     prefix bbf-if-port-ref;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA IETF/System YANG module supporting
+     deviations on top of standard.";
+
+  revision 2022-09-02 {
+    description
+      "Port-layer-if: adding dummy deviations.";
+    reference
+      "Nokia Specific.";
+  }
+
+  revision 2022-02-10 {
+    description
+      "Port-layer-if: adding dummy deviations.";
+    reference
+      "Nokia Specific.";
+  }
+
+  revision 2019-07-02 {
+    description
+      "Port-layer-if deviation check moved to common path - Initial Version.";
+    reference
+      "TBD";
+  }
+
+/**********************************************/
+/* definitions which should always be present */
+/**********************************************/
+
+/* --------------------------------------------*/
+/* deviations for user provided interface port-layer-if */
+/* --------------------------------------------*/
+/* The maximum number of Interfaces supported on a single port-layer-if is one.  */
+
+ deviation "/if:interfaces/if:interface/bbf-if-port-ref:port-layer-if"{
+   deviate add {
+     must "count(/if:interfaces/if:interface[bbf-if-port-ref:port-layer-if = current()]) <= 1"{
+           error-message "One or More Port-Layer-If already assigned to another interface.";
+     }
+   }
+ }
+
+  /* dummy deviations */
+
+  deviation "/if:interfaces/if:interface/bbf-if-port-ref:port-layer-if" {
+    description 
+      "It is not allowed to assign a port-layer-if to multiple interfaces. The error message 'Port reference already used.' will be displayed when the constraint is violated";
+    deviate add {}
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-if-port-ref:port-layer-if" {
+    description 
+      "It is not allowed to change the referenced port-layer-if of an interface. The error message 'Change of the port-layer-if is not allowed.' will be displayed when the constraint is violated";
+    deviate add {}
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-if-port-ref:port-layer-if" {
+    description
+      "It is not allowed to configure parameters for a fastdsl interface without a 'port-layer-if'. The error message 'Port-layer interface is not specified for the fastdsl interface and it is mandatory.' will be displayed when the constraint is violated";
+    deviate add {}
+   }
+
+}

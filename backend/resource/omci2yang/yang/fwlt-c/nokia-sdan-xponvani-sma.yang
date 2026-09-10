@@ -1,0 +1,119 @@
+module nokia-sdan-xponvani-sma {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+          + "nokia-sdan-xponvani-sma";
+
+  prefix nokia-sdan-xponvani-sma;
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import bbf-xponvani {
+    prefix bbf-xponvani;
+  }
+
+  import nokia-sdan-xponvani-sma-groupings {
+    prefix nokia-sdan-xponvani-sma-groupings;
+  }
+
+  import bbf-xpon {
+    prefix bbf-xpon;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This specification is published by Nokia under Non-Disclosure
+    Agreement(s) (NDA) with specific parties and has to be considered
+    as Confidential Information as defined in such NDA. Nokia reserves
+    the right to revise this document for any reason, including but
+    not limited to conformity with standards promulgated by various
+    agencies, utilization of advances in the state of the technical
+    areas, or the reflection of changes in the design of any
+    equipment, techniques, or procedures described or referred to
+    herein.
+
+    The product specifications and other technical or performance
+    information contained herein are subject to change without notice.
+    Updates of this document will be issued under the above NDA's.
+
+    Nokia makes no representation or warranty, expressed or implied,
+    with respect to the sufficiency, accuracy, or utility of any
+    information or opinion contained herein. Nokia expressly advises
+    that any use of for any purpose or reliance upon this technical
+    reference is at the risk of the user and that Nokia shall not be
+    liable for any damage or injury incurred by any person arising out
+    of the sufficiency, accuracy, or utility of any information or
+    opinion contained herein.
+
+    This document is not to be construed as a suggestion to any
+    manufacturer to modify or change any of its products, nor does
+    this document represent any commitment by Nokia to sell or
+    purchase any product. Nothing contained herein shall be construed
+    as conferring by implication, estoppel, or otherwise any license
+    or right under any patent, whether or not the use of any
+    information herein necessarily employs an invention of any
+    existing or later issued patent.
+
+    Nokia reserves the right not to offer any or all of these products
+    and to withdraw any or all of them at any future time.
+
+    Copyright (C) 2022, Nokia. All Rights Reserved.";
+
+  revision 2026-08-20 {
+    description
+      "Initial revision.";
+    reference
+      "TBD";
+  }
+
+  augment "/if:interfaces/if:interface/bbf-xponvani:v-ani" {
+    description
+      "Data nodes allowing the vANI to be controlled by OMCI Secure Mutual
+      Authentication (SMA).";
+      uses nokia-sdan-xponvani-sma-groupings:xpon-vani-omci-sma;
+  }
+
+  augment "/if:interfaces-state/if:interface/bbf-xponvani:v-ani"
+          +"/bbf-xponvani:onu-present-on-this-olt" {
+    description
+      "Augment interface state of vANI with OMCI Secure Mutual
+      Authentication (SMA) state data.";
+      uses nokia-sdan-xponvani-sma-groupings:xpon-vani-omci-sma-state;
+  }
+
+  augment "/bbf-xpon:xpon" {
+    description
+      "Augment system level action to refresh the PreShared Key
+      (PSK) used in OMCI Secure Mutual Authentication (SMA).";
+    action psk-refresh {
+        description
+          "Refresh the PreShared Key (PSK) for ONUs that OMCI Secure Mutual
+          Authentication (SMA) failed due to PSK is invalid or mismatch.";
+        output {
+            leaf result {
+              type enumeration {
+                enum success {
+                  value 1;
+                  description
+                    "Operation success.";
+                }
+                enum failed  {
+                  value 2;
+                  description
+                    "Operation failed.";
+                }
+              }
+              description
+                "The result of PreShared Key (PSK) refresh action.";
+            }
+        }
+    }
+  }
+}

@@ -1,0 +1,105 @@
+module nokia-sdan-qos-classifier-extension-dei {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+          + "nokia-sdan-qos-classifier-extension-dei";
+
+  prefix nokia-qos-cls-ext-dei;
+
+  import bbf-qos-classifiers {
+    prefix bbf-qos-cls;
+  }
+
+  import bbf-frame-classification {
+    prefix bbf-classif;
+  }
+
+  import nokia-sdan-qos-classifier-extension {
+    prefix nokia-qos-cls-ext;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG definitions for
+     supporting Nokia specific requirements as applicable to its
+     access network equipment.
+
+     Specifically, this module contains definition of policing traffic
+     class added to classifier action types.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2021, Nokia. All Rights Reserved.";
+
+  revision 2022-12-02 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific";
+  }
+
+  augment '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry/bbf-qos-cls:'
+        + 'classifier-action-entry-cfg/bbf-qos-cls:action-cfg-params/'
+        + 'bbf-qos-cls:dei-marking/bbf-qos-cls:dei-marking-cfg/'
+        + 'bbf-qos-cls:dei-marking-list' {
+       description "augment dei marking list";
+       leaf dei-from-frame-tag {
+        if-feature "nokia-qos-cls-ext:preserve-pbit-dei-from-frame-to-metadata";
+        type bbf-classif:tag-index;
+        must 'not(boolean(../bbf-qos-cls:dei-value))' {
+          error-message
+            "The leaf 'dei-from-frame-tag' can not be configured when"
+          + " the leaf 'dei-value' is configured.";
+          description
+            "The leaf 'dei-from-frame-tag' indicates that frames will
+             get a metadata DEI value by copying the DEI value from
+             the frame's VLAN tag as configured in this leaf. This is
+             exclusive with configuring the frames will get a fixed
+             value metadata DEI value as configured in the leaf
+             'dei-value'.";
+        }
+        description
+          "Specifies from which input VLAN tag the DEI field MUST be
+           copied to the frame's metadata marking list.";
+      }
+  }
+}

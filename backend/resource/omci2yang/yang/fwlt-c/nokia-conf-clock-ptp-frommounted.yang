@@ -1,0 +1,155 @@
+module nokia-conf-clock-ptp-frommounted {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"+
+             "nokia-conf-clock-ptp-frommounted";
+
+  prefix clock-ptp-frommounted;
+
+  import ietf-interfaces-frommounted {
+    prefix if-frommounted;
+  }
+
+
+  import bbf-fiber-onu-emulated-mount {
+     prefix onu;
+  }
+  
+  organization "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "This module contains extension of YANG definitions for
+    the overall structure of clock ptp on physical
+    entities.
+
+    Nokia reserves the right not to offer any or all of these
+    products and to withdraw any or all of them at any future time.
+
+    Copyright (C) 2018, Nokia. All Rights Reserved.";
+
+  revision 2025-11-01 {
+    description
+      "Update for BBN-132906";
+    reference
+      "Nokia specific";
+  }
+  
+  revision 2023-08-11 {
+    description
+      "modify the type ofutc-offset.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2020-04-08 {
+    description
+      "modify format.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2020-02-26 {
+    description
+      "add domain leaf node for G.8275 and CCSA profiles.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2020-02-16 {
+    description
+      "add default value for some leaf nodes.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2020-02-03 {
+    description
+      "update contact and descriptions.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2020-01-10 {
+    description
+      "add Announce interval leaf node,
+      remove remote and admin in acceptable-master list";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2019-11-20 {
+    description
+      "Initial revision.";
+    reference
+      "TBD";
+  }
+
+  grouping ptp-port{
+    description "grouping ptp-port";
+    container ptp-port{
+      presence "ptp-port";
+      description "ptp port can be attached to an interface.";
+      leaf enable{
+        type boolean;
+        description
+          "Enable or disable ptp port function at the interface.";
+      }
+    }
+  }
+
+  augment "/onu:onus/onu:onu/onu:fromroot/if-frommounted:interfaces/if-frommounted:interface"  {
+    description "augmnet ethernet interface for ptp port"; 
+
+    uses ptp-port;
+  }
+
+  augment "/onu:onus/onu:onu/onu:fromroot" {
+    description "augment onu root for ptp";
+    container ptp {
+      presence "Present if ptp is configured";
+      description "ptp configuration";
+      leaf admin-state {
+        type enumeration {
+          enum lock {
+            value 0;
+            description
+              "The PTP function is lock.";
+          }
+          enum unlock {
+            value 1;
+            description
+              "The PTP function is unlock.";
+          }
+        }
+        description
+          "The administrative state of the PTP function.";
+        reference
+          "ITU-T G.988 9.12.22 Precision Time Protocol";
+      }
+      container profile-ref {
+        presence "profile-ref";
+        description "ptp profile configuration";
+        choice port-type {
+          description "port-type";
+          case g.8275.1_port {
+            leaf profile-ref-8275dot1 {
+              type string;
+              description
+                "Reference to the G.8275.1 configuration profile.";
+            }
+          }
+          case ccsa_port {
+            leaf profile-ref-ccsa {
+              type string;
+              description
+              "Reference to the CCSA Port configuration profile.";
+            }
+          }
+        }
+      }
+    }
+  }
+
+}

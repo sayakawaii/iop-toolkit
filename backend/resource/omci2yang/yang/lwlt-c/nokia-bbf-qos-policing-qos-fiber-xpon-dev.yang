@@ -1,0 +1,124 @@
+module nokia-bbf-qos-policing-qos-fiber-xpon-dev {
+
+  namespace
+    "http://www.nokia.com/Fixed-Networks/BBA/yang/nokia-bbf-qos-policing-qos-fiber-xpon-dev";
+
+  prefix  nokia-bbf-qos-policing-qos-fiber-xpon-dev;
+
+  import bbf-qos-classifiers {
+    prefix bbf-qos-cls;
+  }
+
+  import bbf-qos-policing {
+    prefix bbf-qos-plc;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "This module contains a collection of YANG deviations on top
+     of standard for supporting BBF/bbf-qos-policies YANG module.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2017-2018, Nokia. All Rights Reserved.";
+
+  /* revision */
+  revision 2025-05-06 {
+    description
+      "[BBN-9324 LLLT-A]: clear obseleted classify types so remove the unsupported node";
+    reference
+      "Nokia specific";
+  }
+  
+  /* revision */
+  revision 2025-01-06 {
+    description
+      "Split the minimum cir rule into other categories.";
+    reference
+      "Nokia specific";
+  }  
+  
+  revision 2024-03-06 {
+    description
+      "Enhanced classifier and inline filter pbit/dei marking index check";
+    reference
+     "Nokia specific";
+ }
+
+  revision 2021-07-23 {
+    description
+      "Moved deviation from nokia-bbf-qos-policing-qos-fiber-dev to this file.";
+    reference
+      "Nokia specific";
+  }
+
+  deviation "/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry/bbf-qos-cls:filter-method/bbf-qos-cls:inline/bbf-qos-cls:match-criteria/bbf-qos-plc:pbit-marking-list/bbf-qos-plc:index"
+  {
+    deviate add {
+      must "current() <= 1"
+      {
+        error-message "pbit-marking index can't exceed 1";
+      }
+    }
+  }
+
+  deviation "/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry/bbf-qos-cls:filter-method/bbf-qos-cls:inline/bbf-qos-cls:match-criteria/bbf-qos-plc:dei-marking-list/bbf-qos-plc:index"
+  {
+    deviate add {
+      must "current() <= 1"
+      {
+        error-message "dei-marking index can't exceed 1";
+      }
+    }
+  }
+
+  /* CIR should be >= 64 kbps */
+  deviation "/bbf-qos-plc:policing-profiles/bbf-qos-plc:policing-profile/bbf-qos-plc:policing-type/bbf-qos-plc:single-rate-two-color-marker-type/bbf-qos-plc:single-rate-two-color-marker/bbf-qos-plc:cir"
+  {
+    deviate add {
+      must " . >= 65536" 
+      {
+          error-message "CIR should be at least 65536 bps";
+      }
+    } 
+  }
+}

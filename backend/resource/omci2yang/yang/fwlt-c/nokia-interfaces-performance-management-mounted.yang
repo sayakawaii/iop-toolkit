@@ -1,0 +1,1203 @@
+module nokia-interfaces-performance-management-mounted {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-interfaces-performance-management-mounted";
+
+  prefix  nokia-interfaces-performance-management-mounted;
+
+  import bbf-yang-types {
+    prefix bbf-yang;
+  }
+
+  import iana-if-type-mounted {
+    prefix ianaift-mounted;
+  }
+
+  import ietf-interfaces-mounted {
+    prefix if-mounted;
+  }
+
+  import bbf-xpon-if-type-mounted {
+    prefix bbf-xponift-mounted; 
+  }
+
+  import bbf-interfaces-performance-management-mounted {
+    prefix bbf-if-pm-mounted;
+  }
+
+  import nokia-hardware-profiles-mounted {
+    prefix nokia-hw-prof-mounted;
+  }
+
+  import nokia-sdan-hardware-pm-threshold-profiles-mounted {
+    prefix nokia-hw-pm-threshold-prof-mounted;
+  }
+
+  import nokia-sdan-ethernet-pm-threshold-profiles-mounted {
+    prefix nokia-eth-pm-tca-prof-mounted;
+  }
+
+  import nokia-sdan-xponani-pm-threshold-profiles-mounted {
+    prefix nokia-xponani-pm-tca-profile-mounted;
+  }
+  import bbf-ethernet-performance-management-mounted {
+      prefix bbf-eth-pm-mounted;
+  }
+  import bbf-xpon-performance-management-mounted {
+    prefix bbf-xpon-pm-mounted;
+  }
+
+  import nokia-onu-gemport-performance-management-mounted {
+    prefix nokia-xpongemtcont-gemport-pm-mounted;
+  }
+
+  import nokia-sdan-interfaces-mounted {
+    prefix nokia-sdan-if-mounted;
+  }
+
+  import nokia-template-common { 
+    prefix template-common;
+  }
+
+  import bbf-fiber-onu-emulated-mount {
+     prefix onu;
+  }
+
+  import nokia-interface-identities-mounted {
+    prefix nokia-if-id-mounted;
+  }
+  import nokia-sdan-moca-pm-threshold-profiles-mounted {
+    prefix nokia-moca-pm-tca-prof-mounted;
+
+  }
+  import nokia-sdan-moca-mounted {
+    prefix nokia-moca-mounted;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG definitions for
+     supporting Nokia specific requirements as applicable to its
+     access network equipment.
+
+     Specifically, this module augments the bbf-xponcommon-performance-management
+     model with additional Nokia specific PM counters.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2018, Nokia. All Rights Reserved.";
+
+  revision 2025-10-09 {
+    description
+      "Interface check updated for TCA profiles";
+    reference
+      "BBN-301538";
+  }
+
+  revision 2025-07-23 {
+    description
+      "PM counter group support for MoCA UNI PM";
+    reference
+      "BBN-297635";
+  }
+
+  revision 2025-06-10 {
+    description
+      "TCA augment added for Moca UNI PM";
+    reference
+      "BBN-202352";
+  }
+
+  revision 2025-06-04 {
+    description
+      "PM counter group support for ANI and UNI interface";
+    reference
+      "Nokia specific for EPIC BBN-107831";
+  }
+
+  revision 2025-04-21 {
+    description
+      "Description change for pm-counter-size";
+    reference
+
+      "BBN-207889";
+  }
+
+  revision 2025-02-14 {
+    description
+      "Added 64bit counter support for ANI performance monitoring counters,
+       Added conditions for checking ANI pm TCA threshold values.";
+    reference
+      "BBN-207889";
+  }
+
+  revision 2024-09-11 {
+    description
+      "remove operational data related when statement";
+    reference
+      "BBN-107706";
+  }
+
+  revision 2023-11-30 {
+    description
+      "Added conditions for checking Ethernet pm TCA threshold values";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2023-04-02 {
+    description
+      "Aggregated UNI counters support and 64bit counter support for
+       Ethernet performance monitoring counters";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2023-03-13 {
+    description
+      "Support for Ethernet physical layer performance monitoring TCA profiles configurtaion and TCA notification.";
+    reference
+      "Nokia specific";
+ 
+  }
+
+  revision 2023-01-30 {
+    description
+      "Ethernet PM counters x-path change";
+    reference
+      "Nokia specific";   
+ 
+  }
+
+  revision 2022-10-06 {
+    description
+      "Augments interface performance with ethernet error TCA profiles.";
+    reference
+      "Nokia specific. ";
+  }
+
+  revision 2022-08-09 {
+      description
+         "Added physical Ethernet performance counters"
+         + "Added pm-counter-group support for Ethernet performance counters";
+      reference
+         "Nokia specific";
+
+  }
+
+  revision 2022-06-11 {
+    description
+      "Added feature performance-24hr for respective container";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2022-06-02 {
+      description
+        "Config option for PM continuous accumulation and counter groups";
+      reference
+        "Nokia specific";
+  }
+
+  revision 2020-07-14 {
+    description
+      "Initial revision";
+    reference
+      "Nokia specific";
+  }
+
+  grouping ethernet-frame-performance-counters{
+      description
+      "Ethernet frame inbound/outbound performance monitoring counters";
+
+    leaf in-drop-events{
+      type bbf-yang:performance-counter64;
+      description
+        "The total number of events in which inbound packets were
+        dropped due to a lack of resources";
+      reference
+        "G.988: ONU management and control interface (OMCI)
+         specification in Section 9.3.31, 9.3.32 and 9.3.34";
+    }
+    leaf in-drop-octets {
+       type bbf-yang:performance-counter64;
+       description
+         "The total number of octets dropped on the interface,
+          including framing characters.";
+    }
+    leaf in-total-pkts{
+      type bbf-yang:performance-counter64;
+      description
+        "The total number of inbound packets received, including bad
+        packets, broadcast packets and multicast packets";
+      reference
+        "G.988: ONU management and control interface (OMCI)
+         specification in Section 9.3.31, 9.3.32 and 9.3.34";
+    }
+    leaf in-64-octets-pkts{
+      type bbf-yang:performance-counter64;
+      description
+        "The total number of inbound received packets (including bad packets)
+        that were 64 octets long, excluding framing bits but including FCS.";
+      reference
+        "G.988: ONU management and control interface (OMCI)
+         specification in Section 9.3.31, 9.3.32 and 9.3.34";
+    }
+    leaf in-65-to-127-octets-pkts{
+      type bbf-yang:performance-counter64;
+      description
+        "The total number of inbound received packets (including bad packets)
+        that were 65..127 octets long, excluding framing bits but including FCS";
+      reference
+        "G.988: ONU management and control interface (OMCI)
+         specification in Section 9.3.31, 9.3.32 and 9.3.34";
+    }
+    leaf in-128-to-255-octets-pkts{
+      type bbf-yang:performance-counter64;
+      description
+        "The total number of inbound received packets (including bad packets)
+        that were 128..255 octets long, excluding framing bits but including FCS";
+      reference
+        "G.988: ONU management and control interface (OMCI)
+         specification in Section 9.3.31, 9.3.32 and 9.3.34";
+    }
+    leaf in-256-to-511-octets-pkts{
+      type bbf-yang:performance-counter64;
+      description
+        "The total number of inbound received packets (including bad packets)
+        that were 256..511 octets long, excluding framing bits but including FCS";
+      reference
+        "G.988: ONU management and control interface (OMCI)
+         specification in Section 9.3.31, 9.3.32 and 9.3.34";
+    }
+    leaf in-512-to-1023-octets-pkts{
+      type bbf-yang:performance-counter64;
+      description
+        "The total number of inbound received packets (including bad packets)
+        that were 512..1023 octets long, excluding framing bits but including FCS";
+      reference
+        "G.988: ONU management and control interface (OMCI)
+         specification in Section 9.3.31, 9.3.32 and 9.3.34";
+    }
+    leaf in-1024-to-1518-octets-pkts{
+      type bbf-yang:performance-counter64;
+      description
+        "The total number of inbound received packets (including bad packets)
+        that were 1024..1518 octets long, excluding framing bits but including FCS";
+      reference
+        "G.988: ONU management and control interface (OMCI)
+         specification in Section 9.3.31, 9.3.32 and 9.3.34";
+    }
+
+    leaf out-drop-events{
+      type bbf-yang:performance-counter64;
+      description
+        "The total number of events in which outbound packets were
+        dropped due to a lack of resources";
+      reference
+        "G.988: ONU management and control interface (OMCI)
+         specification in Section 9.3.31, 9.3.32 and 9.3.34";
+    }
+    leaf out-total-pkts{
+      type bbf-yang:performance-counter64;
+      description
+        "The total number of outbound packets received, including bad
+        packets, broadcast packets and multicast packets";
+      reference
+        "G.988: ONU management and control interface (OMCI)
+         specification in Section 9.3.31, 9.3.32 and 9.3.34";
+    }
+    leaf out-64-octets-pkts{
+      type bbf-yang:performance-counter64;
+      description
+        "The total number of outbound received packets (including bad packets)
+        that were 64 octets long, excluding framing bits but including FCS.";
+      reference
+        "G.988: ONU management and control interface (OMCI)
+         specification in Section 9.3.31, 9.3.32 and 9.3.34";
+    }
+    leaf out-65-to-127-octets-pkts{
+      type bbf-yang:performance-counter64;
+      description
+        "The total number of outbound received packets (including bad packets)
+        that were 65..127 octets long, excluding framing bits but including FCS";
+      reference
+        "G.988: ONU management and control interface (OMCI)
+         specification in Section 9.3.31, 9.3.32 and 9.3.34";
+    }
+    leaf out-128-to-255-octets-pkts{
+      type bbf-yang:performance-counter64;
+      description
+        "The total number of outbound received packets (including bad packets)
+        that were 128..255 octets long, excluding framing bits but including FCS";
+      reference
+        "G.988: ONU management and control interface (OMCI)
+         specification in Section 9.3.31, 9.3.32 and 9.3.34";
+    }
+    leaf out-256-to-511-octets-pkts{
+      type bbf-yang:performance-counter64;
+      description
+        "The total number of outbound received packets (including bad packets)
+        that were 256..511 octets long, excluding framing bits but including FCS";
+      reference
+        "G.988: ONU management and control interface (OMCI)
+         specification in Section 9.3.31, 9.3.32 and 9.3.34";
+    }
+    leaf out-512-to-1023-octets-pkts{
+      type bbf-yang:performance-counter64;
+      description
+        "The total number of outbound received packets (including bad packets)
+        that were 512..1023 octets long, excluding framing bits but including FCS";
+      reference
+        "G.988: ONU management and control interface (OMCI)
+         specification in Section 9.3.31, 9.3.32 and 9.3.34";
+    }
+    leaf out-1024-to-1518-octets-pkts{
+      type bbf-yang:performance-counter64;
+      description
+        "The total number of outbound received packets (including bad packets)
+        that were 1024..1518 octets long, excluding framing bits but including FCS";
+      reference
+        "G.988: ONU management and control interface (OMCI)
+         specification in Section 9.3.31, 9.3.32 and 9.3.34";
+    }
+  }
+
+  grouping ethernet-physical-layer-performance-counters {
+      description
+          "Physical Ethernet frame performance monitoring counters";
+      leaf excessive-collision {
+          type bbf-yang:performance-counter64;
+          description
+              "The total number of Ethernet frames whose transmission
+              failed due to excessive collisions";
+          reference
+              "G.988 ONU management and control interface (OMCI) specification
+              Excessive collision counter in Section 9.5.2 ";
+      }
+      leaf late-collision {
+          type bbf-yang:performance-counter64;
+          description
+              "The  number of times that a collision was detected later than 512 bit
+              times into the transmissio of the packet";
+          reference
+              "G.988 ONU management and control interface (OMCI) specification
+              Late collision counter in Section 9.5.2";
+      }
+      leaf receive-buffer-overflow {
+          type bbf-yang:performance-counter64;
+          description
+              "The number of times the receive buffer
+              overflowed";
+          reference
+              "G.988 ONU management and control interface (OMCI) specification
+              Buffer overflows on receive in Section 9.5.2";
+      }
+      leaf transmit-buffer-overflow {
+          type bbf-yang:performance-counter64;
+          description
+              "The number of times the transmit buffer
+              overflowed";
+          reference
+              "G.988 ONU management and control interface (OMCI) specification
+              Buffer overflows on transmit in Section 9.5.2";
+      }
+      leaf single-collision-frame {
+          type bbf-yang:performance-counter64;
+          description
+              "The number of successfully transmitted frames whose
+              transmission was delayed by exactly one collision";
+          reference
+              "G.988 ONU management and control interface (OMCI) specification
+              Single collision frame counter in Section 9.5.2";
+      }
+      leaf multiple-collision-frame {
+          type bbf-yang:performance-counter64;
+          description
+              "The number of successfully transmitted frames whose
+              transmission was delayed by more than one collision";
+          reference
+              "G.988 ONU management and control interface (OMCI) specification
+              Multiple collision frame counter in Section 9.5.2";
+      }
+      leaf sqe-counter {
+          type bbf-yang:performance-counter64;
+          description
+              "The number of times that the SQE test error message was
+              generated by the PLS sublayer";
+          reference
+              "G.988 ONU management and control interface (OMCI) specification
+              SQE counter in Section 9.5.2";
+      }
+      leaf deferred-transmission {
+          type bbf-yang:performance-counter64;
+          description
+              "The number of frames whose first transmission attempt was delayed
+              because the medium was busy. The count does not include frames
+              involved in collisions";
+          reference
+              "G.988 ONU management and control interface (OMCI) specification
+              Deferred transmission counter in Section 9.5.2";
+      }
+      leaf carrier-sense-error {
+          type bbf-yang:performance-counter64;
+          description
+              "The number of times that carrier sense was lost or never asserted
+              when attempting to transmit a frame";
+          reference
+              "G.988 ONU management and control interface (OMCI) specification
+              Carrier sense error counter in Section 9.5.2";
+      }
+      leaf alignment-error {
+          type bbf-yang:performance-counter64;
+          description
+              "The number of received frames that were not an integral number of
+              octets in length and did not pass the FCS check";
+          reference
+              "G.988 ONU management and control interface (OMCI) specification
+              Alignment error counter in Section 9.5.2";
+      }
+  }
+
+  grouping all-ethernet-uni-aggregated-traffic-counters {
+    description
+      "Traffic performance counters for all Ethernet UNIs altogether.";
+   leaf in-frames {
+      type bbf-yang:performance-counter64;
+      units "frames";
+      description
+        "The total number of frames received by the ONU on all Ethernet UNI ports altogether.";
+   }
+   leaf out-frames {
+      type bbf-yang:performance-counter64;
+      units "frames";
+      description
+        "The total number of frames transmitted by the ONU on all Ethernet UNI ports altogether.";
+   }
+   leaf in-unicast-frames {
+      type bbf-yang:performance-counter64;
+      units "frames";
+      description
+        "The total number of unicast frames received by the ONU on all Ethernet UNI ports altogether.";
+   }
+   leaf out-unicast-frames {
+      type bbf-yang:performance-counter64;
+      units "frames";
+      description
+        "The total number of unicast frames transmitted by the ONU on all Ethernet UNI ports altogether.";
+   }
+   leaf in-multicast-frames {
+      type bbf-yang:performance-counter64;
+      units "frames";
+      description
+        "The total number of multicast frames received by the ONU on all Ethernet UNI ports altogether.";
+   }
+   leaf out-multicast-frames {
+      type bbf-yang:performance-counter64;
+      units "frames";
+      description
+        "The total number of multicast frames transmitted by the ONU on all Ethernet UNI ports altogether.";
+   }
+   leaf in-broadcast-frames {
+      type bbf-yang:performance-counter64;
+      units "frames";
+      description
+        "The total number of broadcast frames received by the ONU on all Ethernet UNI ports altogether.";
+   }
+   leaf out-broadcast-frames {
+      type bbf-yang:performance-counter64;
+      units "frames";
+      description
+        "The total number of broadcast frames transmitted by the ONU on all Ethernet UNI ports altogether.";
+   }
+   leaf in-octets {
+      type bbf-yang:performance-counter64;
+      units "bytes";
+      description
+        "The total number of octects received by the ONU on all Ethernet UNI ports altogether,
+         including framing characters.";
+   }
+   leaf out-octets {
+      type bbf-yang:performance-counter64;
+      units "bytes";
+      description
+        "The total number of octects transmitted by the ONU on all Ethernet UNI ports altogether,
+         including framing characters.";
+   }
+   leaf in-frame-errors {
+      type bbf-yang:performance-counter64;
+      description
+        "The total number of errors detetced on the incoming frames by the ONU on
+         all Ethernet UNI ports altogether due to CRC align errors, Jabber errors, fragmenetation
+         errors and collisions.";
+   }
+   leaf out-frame-errors {
+      type bbf-yang:performance-counter64;
+      description
+        "The total number of outgoing frames dropped by the ONU on all Ethernet UNI ports altogether
+         due to CRC align errors, Jabber errors, fragmenetation errors and collisions.";
+  }
+  leaf in-bit-rate {
+      type bbf-yang:performance-counter64;
+      units "bps";
+      description
+        "The total incoming bit rate measured by the ONU on all Ethernet UNI ports altogether.
+         The value is an average over the monitoring interval for history and
+         instant value for current interval.";
+  }
+  leaf out-bit-rate {
+      type bbf-yang:performance-counter64;
+      units "bps";
+      description
+        "The total outgoing bit rate measured by the ONU on all Ethernet UNI ports altogether.
+         The value is an average over the monitoring interval for history and
+        instant value for current interval.";
+    }
+  }
+
+
+  typedef ethernet-interface-pm-group-type {
+      type enumeration {
+	  enum "ethernet-us-pm" {
+              description
+                 "This enables the performance monitoring of Ethernet frame counters
+                  in upstream direction for an Ethernet interface - UNI. When this PM
+                  counter group is enabled, the current and history performance data
+                  in below xpaths are enabled.
+                      - interfaces-state/interface/performance/intervals-15min/current
+                      - interfaces-state/interface/performance/intervals-15min/history";
+          }
+          enum "ethernet-ds-pm" {
+              description
+                 "This enables the performance monitoring of Ethernet frame counters
+                 in downstream direction for an Ethernet interface - UNI. When this PM
+                 counter group is enabled, the current and history performance data
+                 in below xpaths are enabled.
+                      - interfaces-state/interface/performance/intervals-15min/current
+                      - interfaces-state/interface/performance/intervals-15min/history";
+          }
+          enum "ethernet-phy-pm" {
+              description
+                "This enables the performance monitoring for physical Ethernet interface - UNI. When this PM counter
+                 group is enabled, the current and history performance data in below xpaths are enabled.
+		      - interfaces-state/interface/performance/intervals-15min/current/ethernet
+                      - interfaces-state/interface/performance/intervals-15min/history/ethernet";
+          }
+	}
+      description
+	"ethernet pm group";
+    }
+    typedef ani-interface-pm-group-type {
+      type enumeration {
+          enum "fec-pm" {
+              description
+                "This enables the performance monitoring for xPON downstream forward error correction (FEC) counters in ANI.
+                When this PM counter group is enabled, the current and history performance data for FEC counters
+                in below xpaths are enabled.
+                    - interfaces-state/performance/intervals-15min/current/xpon/phy
+                    - interfaces-state/performance/intervals-15min/history/xpon/phy";
+          }
+          enum "bip-pm" {
+              description
+                "This enables the performance monitoring for xPON downstream bit interleaved parity (BIP) counters in ANI.
+                When this PM counter group is enabled, the current and history performance data for BIP counters 
+	        in below xpaths are enabled:
+                    - interfaces-state/performance/intervals-15min/current/xpon/phy
+                    - interfaces-state/performance/intervals-15min/history/xpon/phy";
+          }
+          enum "xgpon-tc-pm" {
+              description
+                "This enables the performance monitoring for XG-PON transmission convergency layer (TC) counters 
+                on the ANI in downstream direction.When this PM counter group is enabled, the current and history 
+                performance data for below xpaths are enabled
+                    - interfaces-state/performance/intervals-15min/current/xpon/lods,
+                    - interfaces-state/performance/intervals-15min/current/xpon/utilization,
+                    - interfaces-state/performance/intervals-15min/current/xpon/gemport,
+                    - interfaces-state/performance/intervals-15min/history/xpon/lods,
+                    - interfaces-state/performance/intervals-15min/history/xpon/utilization,
+                    - interfaces-state/performance/intervals-15min/history/xpon/gemport";
+          }
+          enum "xgpon-ds-pm" {
+              description
+                "This enables the performance monitoring for XG-PON downstream PLOAM and OMCI message counters in ANI.
+                When this PM counter group is enabled, the current and history performance data for below xpaths
+                are enabled
+                    - interfaces-state/performance/intervals-15min/current/xpon/ploam/downstream-messages
+                    - interfaces-state/performance/intervals-15min/current/xpon/omci
+                    - interfaces-state/performance/intervals-15min/history/xpon/ploam/downstream-messages
+                    - interfaces-state/performance/intervals-15min/history/xpon/omci";
+          }
+          enum "xgpon-us-pm" {
+              description
+                "This enables the performance monitoring for xPON upstream PLOAM counters in ANI.
+                When this PM counter group is enabled, the current and history performance data for below xpaths
+                    - interfaces-state/performance/intervals-15min/current/xpon/ploam/upstream-messages
+                    - interfaces-state/performance/intervals-15min/history/xpon/ploam/upstream-messages";
+          }
+	  enum "aggr-gem-pm" {
+              description
+                "This enables the performance monitoring for aggregate GEM frame counters in ANI.
+                When this PM counter group is enabled, the current and history performance data for below xpaths
+                    - interfaces-state/performance/intervals-15min/current/xpon/gemport
+                    - interfaces-state/performance/intervals-15min/history/xpon/gemport";
+          }
+      }
+      description
+	"ani pm group";
+    }
+
+    typedef moca-interface-pm-group-type {
+      type enumeration {
+          enum "moca-interface-pm" {
+              description
+                 "This enables the performance monitoring of MoCA interface PM counters
+                  When this PM counter group is enabled, the current
+                  performance data in below xpaths are enabled for MoCA UNI.
+                      - interfaces-state/interface/performance/intervals-15min/current/moca/phy";
+          }
+          enum "moca-ethernet-pm" {
+              description
+                 "This enables the performance monitoring for the ethernet performance
+                  of a MoCA interface that is of service type access.
+                  When this PM counter group is enabled, the current and history
+                  performance data in below xpaths are enabled for MoCA UNI.
+                      - interfaces-state/interface/performance/intervals-15min/current
+                      - interfaces-state/interface/performance/intervals-15min/history";
+          }
+        }
+      description
+        "moca access pm group";
+    }
+
+    augment '/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-if-pm-mounted:performance' {
+       description
+         "Configuration support to enable continouos accumulation of PM counters across and enable one or more
+          performance monitoring counter groups";
+       leaf continuous-accumulation-enable{
+          type boolean;
+          default "false";
+          description
+              "Enables the continuous accumulation of PM counters regardless of the 15 minute intervals.
+               When enabled there is no difference between the current and historical PM data. Both return the current value
+               of counters";
+       }
+    }
+
+    augment '/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:current' {
+    description
+      " Performance state data augmentation. Ethernet frame inbound/outbound performance counters";
+      
+      uses ethernet-frame-performance-counters;
+  }
+  
+    augment '/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:history' {
+    
+    description
+      " Performance state data augmentation. Ethernet frame inbound/outbound performance counters";
+      
+      uses ethernet-frame-performance-counters;
+  }
+  
+    augment '/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/bbf-if-pm-mounted:intervals-24hr/bbf-if-pm-mounted:current' {
+    if-feature "bbf-if-pm-mounted:performance-24hr";
+    description
+      " Performance state data augmentation. Ethernet frame inbound/outbound performance counters";
+      
+      uses ethernet-frame-performance-counters;
+  }
+  
+    augment '/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/bbf-if-pm-mounted:intervals-24hr/bbf-if-pm-mounted:history' {
+    if-feature "bbf-if-pm-mounted:performance-24hr";
+    description
+      " Performance state data augmentation. Ethernet frame inbound/outbound performance counters";
+      
+      uses ethernet-frame-performance-counters;
+ 
+  }
+
+    augment '/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:current/bbf-eth-pm-mounted:ethernet' {
+    description
+      " Performance state data augmentation. Ethernet frame inbound/outbound performance counters";
+
+      uses ethernet-physical-layer-performance-counters;
+  }
+
+    augment '/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:history/bbf-eth-pm-mounted:ethernet' {
+
+    description
+      " Performance state data augmentation. Ethernet frame inbound/outbound performance counters";
+
+      uses ethernet-physical-layer-performance-counters;
+  }
+
+    augment '/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/bbf-if-pm-mounted:intervals-24hr/bbf-if-pm-mounted:current/bbf-eth-pm-mounted:ethernet' {
+    if-feature "bbf-if-pm-mounted:performance-24hr";
+    description
+      " Performance state data augmentation. Ethernet frame inbound/outbound performance counters";
+
+      uses ethernet-physical-layer-performance-counters;
+  }
+
+    augment '/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/bbf-if-pm-mounted:intervals-24hr/bbf-if-pm-mounted:history/bbf-eth-pm-mounted:ethernet' {
+    if-feature "bbf-if-pm-mounted:performance-24hr";
+    description
+      " Performance state data augmentation. Ethernet frame inbound/outbound performance counters";
+
+      uses ethernet-physical-layer-performance-counters;
+  }
+
+  augment '/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-if-pm-mounted:performance' {
+  description "pm-group";
+  container ethernet {
+    presence "ethernet";
+    description
+      "The interfaces applicable for ethernet PM group related parameters.";
+    leaf-list ethernet-pm-group {
+      type ethernet-interface-pm-group-type;
+      must "../../../if-mounted:type = 'ianaift-mounted:ethernetCsmacd'"{
+	error-message
+	  "The associated PM group type is not supported on this ethernet interface";
+      }
+      description
+	"Performance monitoring group type to enable or disable
+	specific performance monitoring counters on an ethernet interface";
+    }
+  }
+  container ani {
+    presence "ani";
+    description
+      "The interfaces applicable for ani PM group related parameters.";
+    leaf-list ani-pm-group {
+      type ani-interface-pm-group-type;
+      must "../../../if-mounted:type = 'bbf-xponift-mounted:ani'"{
+	error-message
+	  "The associated PM group type is not supported on this ani interface";
+      }
+      description
+	"Performance monitoring group type to enable or disable
+	specific performance monitoring counters on ani interface";
+    }
+  }
+  container moca {
+    presence "moca";
+    description
+      "The interfaces applicable for MoCA PM group related parameters.";
+    leaf-list moca-pm-group {
+      type moca-interface-pm-group-type;
+      must "not(../../../nokia-moca-mounted:moca-home/nokia-moca-mounted:automatic-power-control)"{
+        error-message
+          "The associated PM group type is not supported on this MoCA service";
+      }
+      must "../../../if-mounted:type = 'nokia-if-id-mounted:moca-uni'"{
+        error-message
+          "The associated PM group type is not supported on this MoCA interface";
+      }
+      description
+	"Performance monitoring group type to enable or disable
+	specific performance monitoring counters on an MoCA access interface";
+    }
+  }
+}
+  augment '/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-if-pm-mounted:performance' {
+    description
+      "Data nodes for the threshold crossing alert configuration parameters.";
+
+    leaf tca-eth-frame-err-us-profile {
+      type leafref {
+        path "../../../../nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-eth-pm-tca-prof-mounted:ethernet-frame-error-profile/nokia-eth-pm-tca-prof-mounted:name";
+      }
+
+      must
+        "(not(derived-from-or-self(../../../../../onu:usage, 'template-common:node-actual-usage')))
+        or
+        (((current()/../pm-counter-size = '32bit-performance-monitoring') and 
+         (((current()/../../../../nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-eth-pm-tca-prof-mounted:ethernet-frame-error-profile[nokia-eth-pm-tca-prof-mounted:name = current()]/nokia-eth-pm-tca-prof-mounted:drop-events-threshold < 4294967295) or (not(current()/../../../../nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-eth-pm-tca-prof-mounted:ethernet-frame-error-profile[nokia-eth-pm-tca-prof-mounted:name = current()]/nokia-eth-pm-tca-prof-mounted:drop-events-threshold))) and
+         ((current()/../../../../nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-eth-pm-tca-prof-mounted:ethernet-frame-error-profile[nokia-eth-pm-tca-prof-mounted:name = current()]/nokia-eth-pm-tca-prof-mounted:crc-err-pkts-threshold < 4294967295)or (not(current()/../../../../nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-eth-pm-tca-prof-mounted:ethernet-frame-error-profile[nokia-eth-pm-tca-prof-mounted:name = current()]/nokia-eth-pm-tca-prof-mounted:crc-err-pkts-threshold))) and
+         ((current()/../../../../nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-eth-pm-tca-prof-mounted:ethernet-frame-error-profile[nokia-eth-pm-tca-prof-mounted:name = current()]/nokia-eth-pm-tca-prof-mounted:undersize-pkts-threshold < 4294967295) or (not(current()/../../../../nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-eth-pm-tca-prof-mounted:ethernet-frame-error-profile[nokia-eth-pm-tca-prof-mounted:name = current()]/nokia-eth-pm-tca-prof-mounted:undersize-pkts-threshold))) and
+        ((current()/../../../../nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-eth-pm-tca-prof-mounted:ethernet-frame-error-profile[nokia-eth-pm-tca-prof-mounted:name = current()]/nokia-eth-pm-tca-prof-mounted:oversize-pkts-threshold < 4294967295) or (not(current()/../../../../nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-eth-pm-tca-prof-mounted:ethernet-frame-error-profile[nokia-eth-pm-tca-prof-mounted:name = current()]/nokia-eth-pm-tca-prof-mounted:oversize-pkts-threshold)))))
+        or (current()/../pm-counter-size = '64bit-performance-monitoring'))" {
+     error-message
+      "The TCA threshold values should not be greater than 4294967294 when the pm-counter-size is 32bit-performance-monitoring";
+       }
+      must
+        "(../../if-mounted:type = 'ianaift-mounted:ethernetCsmacd')" {
+      error-message
+        "This TCA profile must be associated only to the ethernet UNI interfaces";
+      }
+      description
+        "Reference to a ethernet frame error TCA profile for upstream traffic. TCA is disabled when no profile is referenced";
+
+    }
+
+    leaf tca-eth-frame-err-ds-profile {
+       type leafref {
+        path "../../../../nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-eth-pm-tca-prof-mounted:ethernet-frame-error-profile/nokia-eth-pm-tca-prof-mounted:name";
+      }
+      must
+        "(not(derived-from-or-self(../../../../../onu:usage, 'template-common:node-actual-usage')))
+         or
+         (((current()/../pm-counter-size = '32bit-performance-monitoring') and 
+         (((current()/../../../../nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-eth-pm-tca-prof-mounted:ethernet-frame-error-profile[nokia-eth-pm-tca-prof-mounted:name = current()]/nokia-eth-pm-tca-prof-mounted:drop-events-threshold < 4294967295) or (not(current()/../../../../nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-eth-pm-tca-prof-mounted:ethernet-frame-error-profile[nokia-eth-pm-tca-prof-mounted:name = current()]/nokia-eth-pm-tca-prof-mounted:drop-events-threshold))) and
+         ((current()/../../../../nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-eth-pm-tca-prof-mounted:ethernet-frame-error-profile[nokia-eth-pm-tca-prof-mounted:name = current()]/nokia-eth-pm-tca-prof-mounted:crc-err-pkts-threshold < 4294967295)or (not(current()/../../../../nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-eth-pm-tca-prof-mounted:ethernet-frame-error-profile[nokia-eth-pm-tca-prof-mounted:name = current()]/nokia-eth-pm-tca-prof-mounted:crc-err-pkts-threshold))) and
+         ((current()/../../../../nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-eth-pm-tca-prof-mounted:ethernet-frame-error-profile[nokia-eth-pm-tca-prof-mounted:name = current()]/nokia-eth-pm-tca-prof-mounted:undersize-pkts-threshold < 4294967295) or (not(current()/../../../../nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-eth-pm-tca-prof-mounted:ethernet-frame-error-profile[nokia-eth-pm-tca-prof-mounted:name = current()]/nokia-eth-pm-tca-prof-mounted:undersize-pkts-threshold))) and
+        ((current()/../../../../nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-eth-pm-tca-prof-mounted:ethernet-frame-error-profile[nokia-eth-pm-tca-prof-mounted:name = current()]/nokia-eth-pm-tca-prof-mounted:oversize-pkts-threshold < 4294967295) or (not(current()/../../../../nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-eth-pm-tca-prof-mounted:ethernet-frame-error-profile[nokia-eth-pm-tca-prof-mounted:name = current()]/nokia-eth-pm-tca-prof-mounted:oversize-pkts-threshold)))))
+        or (current()/../pm-counter-size = '64bit-performance-monitoring'))" {
+     error-message
+      "The TCA threshold values should not be greater than 4294967294 when the pm-counter-size is 32bit-performance-monitoring";
+       }
+     must
+        "(../../if-mounted:type = 'ianaift-mounted:ethernetCsmacd')" {
+      error-message
+        "This TCA profile must be associated only to the ethernet UNI interfaces";
+     }
+     description
+        "Reference to a ethernet frame error TCA profile for downstream traffic. TCA is disabled when no profile is referenced";
+
+    }
+
+    leaf tca-eth-physical-err-profile {
+      type leafref {
+        path "../../../../nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-eth-pm-tca-prof-mounted:ethernet-physical-layer-error-profile/nokia-eth-pm-tca-prof-mounted:name";
+      }
+      must "../../if-mounted:type = 'ianaift-mounted:ethernetCsmacd'"{
+        error-message
+          "This TCA profile must be associated only to the ethernet UNI interfaces";
+      }
+      description
+        "Reference to a Ethernet physical layer error TCA profile. TCA is disabled when no profile is referenced";
+    }
+
+    leaf tca-eth-frame-err-extended-profile {
+      type leafref {
+        path
+        "../../../../nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-eth-pm-tca-prof-mounted:ethernet-frame-error-extended-profile/nokia-eth-pm-tca-prof-mounted:name";
+      }
+      must "../../if-mounted:type = 'ianaift-mounted:ethernetCsmacd'"{
+        error-message
+          "This TCA profile must be associated only to the ethernet UNI interfaces";
+      }
+      description
+        "Reference to a Ethernet upstream/downstream error TCA profile. TCA is disabled when no profile is referenced";
+    }
+  }
+
+  augment "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance"
+        + "/bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:current" {
+    description
+      "Data nodes for the Ethernet performance monitorting threshold crossing alerts";
+
+    notification eth-threshold-crossing-alert {
+      description
+        "A threshold has been crossed during the current 15-min interval";
+      leaf tca-identity {
+        type identityref {
+          base nokia-eth-pm-tca-prof-mounted:eth-pm-tca-alert;
+        }
+        mandatory true;
+        description
+          "Indicating which TCA element has reached the threshold value";
+      }
+      leaf notification-text {
+        type string;
+        description
+          "The description string used to inform the operators about the notification event";
+      }
+    }
+  }
+
+  augment '/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-if-pm-mounted:performance' {
+      description
+        "Data nodes for threshold crossing alert configuration parameters";
+
+      leaf tca-xpon-fec-err-profile {
+          type leafref {
+              path "../../../../nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-xponani-pm-tca-profile-mounted:xpon-fec-error-profile/nokia-xponani-pm-tca-profile-mounted:name";
+          }
+          must
+          "(not(derived-from-or-self(../../../../../onu:usage, 'template-common:node-actual-usage'))) or
+          (current()/../pm-counter-size = '64bit-performance-monitoring')or
+          (current()/../pm-counter-size = '32bit-performance-monitoring') and
+          (((current()/../../../../nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-xponani-pm-tca-profile-mounted:xpon-fec-error-profile[nokia-xponani-pm-tca-profile-mounted:name = current()]/nokia-xponani-pm-tca-profile-mounted:corrected-bytes-threshold < 4294967295) or (not(current()/../../../../nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-xponani-pm-tca-profile-mounted:xpon-fec-error-profile[nokia-xponani-pm-tca-profile-mounted:name = current()]/nokia-xponani-pm-tca-profile-mounted:corrected-bytes-threshold))) and
+          ((current()/../../../../nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-xponani-pm-tca-profile-mounted:xpon-fec-error-profile[nokia-xponani-pm-tca-profile-mounted:name = current()]/nokia-xponani-pm-tca-profile-mounted:corrected-code-words-threshold < 4294967295) or (not(current()/../../../../nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-xponani-pm-tca-profile-mounted:xpon-fec-error-profile[nokia-xponani-pm-tca-profile-mounted:name = current()]/nokia-xponani-pm-tca-profile-mounted:corrected-code-words-threshold))) and
+          ((current()/../../../../nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-xponani-pm-tca-profile-mounted:xpon-fec-error-profile[nokia-xponani-pm-tca-profile-mounted:name = current()]/nokia-xponani-pm-tca-profile-mounted:uncorrectable-code-words-threshold < 4294967295) or (not(current()/../../../../nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-xponani-pm-tca-profile-mounted:xpon-fec-error-profile[nokia-xponani-pm-tca-profile-mounted:name = current()]/nokia-xponani-pm-tca-profile-mounted:uncorrectable-code-words-threshold))) and
+          ((current()/../../../../nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-xponani-pm-tca-profile-mounted:xpon-fec-error-profile[nokia-xponani-pm-tca-profile-mounted:name = current()]/nokia-xponani-pm-tca-profile-mounted:fec-seconds-threshold < 4294967295) or (not(current()/../../../../nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-xponani-pm-tca-profile-mounted:xpon-fec-error-profile[nokia-xponani-pm-tca-profile-mounted:name = current()]/nokia-xponani-pm-tca-profile-mounted:fec-seconds-threshold))))" {
+          error-message
+              "The TCA threshold values should not be greater than 4294967294 when the pm-counter-size is 32bit-performance-monitoring";
+          }
+	  must
+          "(../../if-mounted:type = 'bbf-xponift-mounted:ani')" {
+          error-message
+            "This TCA profile must be associated only to the ANI interfaces";
+          }
+          description
+
+            "Reference to the XPON ANI FEC error TCA profile. TCA is disabled when no profile is referenced";
+      }
+      leaf tca-xgpon-xgs-tc-err-profile {
+         type leafref {
+              path "../../../../nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-xponani-pm-tca-profile-mounted:xgponani-tc-error-profile/nokia-xponani-pm-tca-profile-mounted:name";
+          }
+          must
+          "(not(derived-from-or-self(../../../../../onu:usage, 'template-common:node-actual-usage')))
+          or
+          ((current()/../pm-counter-size = '64bit-performance-monitoring') or
+          ((current()/../pm-counter-size = '32bit-performance-monitoring') and
+          (((current()/../../../../nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-xponani-pm-tca-profile-mounted:xgponani-tc-error-profile[nokia-xponani-pm-tca-profile-mounted:name = current()]/nokia-xponani-pm-tca-profile-mounted:xgem-hec-loss-threshold < 4294967295) or (not(current()/../../../../nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-xponani-pm-tca-profile-mounted:xgponani-tc-error-profile[nokia-xponani-pm-tca-profile-mounted:name = current()]/nokia-xponani-pm-tca-profile-mounted:xgem-hec-loss-threshold))) and
+	  ((current()/../../../../nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-xponani-pm-tca-profile-mounted:xgponani-tc-error-profile[nokia-xponani-pm-tca-profile-mounted:name = current()]/nokia-xponani-pm-tca-profile-mounted:xgem-key-errors-threshold < 4294967295) or (not(current()/../../../../nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-xponani-pm-tca-profile-mounted:xgponani-tc-error-profile[nokia-xponani-pm-tca-profile-mounted:name = current()]/nokia-xponani-pm-tca-profile-mounted:xgem-key-errors-threshold))) and
+	  ((current()/../../../../nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-xponani-pm-tca-profile-mounted:xgponani-tc-error-profile[nokia-xponani-pm-tca-profile-mounted:name = current()]/nokia-xponani-pm-tca-profile-mounted:xgem-hec-error-threshold < 4294967295) or (not(current()/../../../../nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-xponani-pm-tca-profile-mounted:xgponani-tc-error-profile[nokia-xponani-pm-tca-profile-mounted:name = current()]/nokia-xponani-pm-tca-profile-mounted:xgem-hec-error-threshold))))))" {
+          error-message
+              "The TCA threshold values should not be greater than 4294967294 when the pm-counter-size is 32bit-performance-monitoring";
+          }
+	  must
+	  "(../../if-mounted:type = 'bbf-xponift-mounted:ani')" {
+	  error-message
+            "This TCA profile must be associated only to the ANI interfaces";
+          }
+          description
+            "Reference to the XPON ANI TC error TCA profile. TCA is disabled when no profile is referenced";
+      }
+      leaf tca-xgpon-xgs-ds-err-profile {
+          type leafref {
+              path "../../../../nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-xponani-pm-tca-profile-mounted:xgponani-downstream-error-profile/nokia-xponani-pm-tca-profile-mounted:name";
+          }
+          must "../../if-mounted:type = 'bbf-xponift-mounted:ani'"{
+            error-message
+              "This TCA profile must be associated only to the ANI interfaces";
+          }
+          description
+            "Reference to the XGPON ANI downstream error counter TCA profile. TCA is disabled when no profile is referenced";
+      }
+      leaf tca-gem-frame-err-profile {
+          type leafref {
+              path
+              "../../../../nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-xponani-pm-tca-profile-mounted:gem-frame-error-profile/nokia-xponani-pm-tca-profile-mounted:name";
+          }
+          must "../../if-mounted:type = 'bbf-xponift-mounted:ani'"{
+            error-message
+              "This TCA profile must be associated only to the ANI interfaces";
+          }
+          description
+            "Reference to the GEM frame error counter TCA profile. TCA is disabled when no profile is referenced";
+
+      }
+
+    }
+
+  augment "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance"
+        + "/bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:current" {
+    description
+      "Data nodes for the ANI performance monitorting threshold crossing alerts";
+
+    notification ani-threshold-crossing-alert {
+      description
+        "A threshold has been crossed during the current 15-min interval";
+      leaf tca-identity {
+        type identityref {
+          base nokia-xponani-pm-tca-profile-mounted:xpon-ani-pm-tca-alert;
+        }
+        mandatory true;
+        description
+          "Indicating which TCA element has reached threshold value.";
+      }
+      leaf notification-text {
+        type string;
+        description
+          "The description string used to inform the operators about the notification event";
+      }
+    }
+  }
+
+  augment '/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-if-pm-mounted:performance'
+  {
+      description
+          "Physical moca frame performance monitoring counters threshold crossing alert configuration parameters";
+
+      leaf tca-moca-ethernet-frame-profile{
+          type leafref {
+              path "../../../../nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-moca-pm-tca-prof-mounted:moca-ethernet-frame-tca-profile/nokia-moca-pm-tca-prof-mounted:name";
+          }
+          must "../../if-mounted:type = 'nokia-if-id-mounted:moca-uni'"{
+              error-message
+                "This TCA must be associated to the MOCA UNI";
+          }
+          description
+              "Reference to the MOCA frame TCA profile. TCA is disabled when no profile is referenced";
+      }
+
+      leaf tca-moca-interface-profile{
+          type leafref {
+              path "../../../../nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-moca-pm-tca-prof-mounted:moca-interface-tca-profile/nokia-moca-pm-tca-prof-mounted:name";
+          }
+          must "../../if-mounted:type = 'nokia-if-id-mounted:moca-uni'"{
+              error-message
+                "This TCA must be associated to the MOCA UNI";
+          }
+          description
+              "Reference to the MOCA frame TCA profile. TCA is disabled when no profile is referenced";
+      }
+
+  }
+
+  augment "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance"
+        + "/bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:current" {
+    when
+      "derived-from-or-self(../../../if-mounted:type, 'nokia-if-id-mounted:moca-uni')" {
+      description
+        "The interfaces applicable for Moca Uni threshold crossing alert.";
+    }
+    description
+      "Data nodes for the Moca uni performance monitorting threshold crossing alerts";
+    notification moca-threshold-crossing-alert {
+      description
+        "A threshold has been crossed during the current 15-min interval";
+      leaf tca-identity {
+        type identityref {
+          base nokia-moca-pm-tca-prof-mounted:moca-pm-tca-alert;
+        }
+        mandatory true;
+        description
+          "Indicating which TCA element has reached the threshold value";
+      }
+      leaf notification-text {
+        type string;
+        description
+          "The description string used to inform the operators about the notification event";
+      }
+    }
+
+  }
+
+  augment "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:history/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:gemport" {
+    description
+      "Performance state data augmentation. Aggregate GEM frame inbound/outbound performance counters";
+
+    uses nokia-xpongemtcont-gemport-pm-mounted:gemport-packets-pm;
+  }
+  augment "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:current/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:gemport" {
+    description
+      "Performance state data augmentation. Aggregate GEM frame inbound/outbound performance counters";
+
+    uses nokia-xpongemtcont-gemport-pm-mounted:gemport-packets-pm;
+  }
+
+  augment "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/nokia-sdan-if-mounted:all-unis/nokia-sdan-if-mounted:ethernet" {
+    description "augment interface with performance parameters";
+    container performance {
+      
+      presence "If container is not present, performance monitoring is disabled.
+                If container is present performance monitoring is disabled or enabled
+                depending on the value of 'enable' leaf.";
+      description
+        "Performance parameters.";
+      leaf enable {
+        type boolean;
+        default "false";
+        description
+          "If true, enables aggrigated Ethernet performance counters.
+
+           The performance counters will be available under
+           '/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state
+           /nokia-sdan-if-mounted:all-unis/nokia-sdan-if-mounted:ethernet/nokia-interfaces-performance
+           -management-mounted:performance/' for 15 minute and,
+           if supported, 24 hour current and historic intervals.
+
+           If false, then there are no performance counters available
+           on this interface.";
+      }
+    }
+  }
+
+  augment "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/nokia-sdan-if-mounted:all-unis/nokia-sdan-if-mounted:ethernet" {
+    description
+      "Performance state data augmentation.";
+    container performance {
+      description
+        "Performance monitoring parameters.";
+      container intervals-15min {
+        description
+          "15 minute interval performance history.";
+        container current {
+          description
+            "Contains the performance data for the current interval.";
+          uses all-ethernet-uni-aggregated-traffic-counters;
+        }
+        uses bbf-if-pm-mounted:performance-15min-history-parameters;
+        list history {
+          key "interval-number";
+          max-elements 96;
+          description
+            "A history of 15 minute intervals.";
+          leaf interval-number {
+            type bbf-if-pm-mounted:performance-15min-history-interval;
+            description
+              "The number of the interval relative to the current interval.";
+          }
+          uses bbf-if-pm-mounted:performance-history-15min-interval-parameters;
+          uses all-ethernet-uni-aggregated-traffic-counters;
+        }
+      }
+    }
+  }
+  augment '/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-if-pm-mounted:performance' {
+ 
+      when "derived-from-or-self(../if-mounted:type, 'ianaift-mounted:ethernetCsmacd') or "
+           + "derived-from-or-self(../if-mounted:type, 'bbf-xponift-mounted:onu-v-vrefpoint') or "
+           + "derived-from-or-self(../if-mounted:type, 'bbf-xponift-mounted:ani')"{
+      }
+      description "augment interface performance";
+      leaf pm-counter-size {
+         type enumeration {
+            enum 32bit-performance-monitoring { 
+              description "32bit performance monitoring";
+              }
+            enum 64bit-performance-monitoring {
+              description "64bit performance monitoring";
+              }
+         }
+         default "32bit-performance-monitoring";
+         description
+           "The size of the performance monitoring counters for the ONU interface (Supported only for the ANI and Ethernet interface).By default 32-bit performance monitoring counters will be enabled in ONU interface. If pm-counter-size is set to 64bit-performance-monitoring, 64-bit performance counters are enabled and 32-bit performance monitoring counters are disabled.";
+      }        
+  }
+}
+

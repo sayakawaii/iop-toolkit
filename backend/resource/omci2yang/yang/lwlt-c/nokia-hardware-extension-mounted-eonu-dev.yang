@@ -1,0 +1,381 @@
+module nokia-hardware-extension-mounted-eonu-dev {
+
+  namespace
+     "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+   + "nokia-hardware-extension-mounted-eonu-dev";
+
+  prefix nokia-hw-ext-mounted-eonu-dev;
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import ietf-hardware-mounted {
+    prefix hw-mounted;
+  }
+    
+  import nokia-hardware-extension-mounted {
+    prefix nokia-hw-ext-mounted;
+  }
+
+  import bbf-hardware-types {
+    prefix bbf-hwt;
+  }
+
+ import iana-hardware {
+    prefix ianahw;
+  }
+
+ import nokia-hardware-identities {
+    prefix nokia-hwi;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "Create deviation for nokia-hardware-extension";
+
+  revision 2024-06-01 {
+    description
+      "Add planned-module-type deviation check for epic BBN-107806";
+   reference
+      "Nokia Specific.";
+  }
+
+  revision 2023-12-12 {
+    description
+    "Rewrite validator with yang deviation for Not allowed to bind different TCA profiles to the same ONU.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2023-07-02 {
+    description
+    "Adding deviation check for epic BBN-98030.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2022-12-05 {
+    description
+      "Adding Deviations for unsupported Yang leaves for epic BBN-88491.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2022-10-20 {
+    description
+      "BBN-110186: add more checking for virtual-board-number: for components which has same class, they should keep consistent that whether config virtual-board-number";
+   reference
+      "Nokia Specific.";
+  }
+
+
+  revision 2022-08-18 {
+    description
+      "Modify must constraint for the deviation: virtual board number should be same for all the ports with the same port type.";
+   reference
+      "Nokia Specific.";
+  }
+
+  revision 2022-07-11 {
+    description
+      "Yang leaf virtual-board-number check in BBN-38309.";
+   reference
+      "Nokia Specific.";
+  }
+
+  revision 2022-01-27 {
+    description
+      "Create deviation for nokia-hardware-extension";
+   reference
+      "Nokia Specific.";
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware/hw-mounted:component/nokia-hw-ext-mounted:tca-transceiver-profile" {
+    deviate add {
+         must "((count(current()/../../hw-mounted:component[(hw-mounted:class = current()/../hw-mounted:class) and
+                 (boolean(nokia-hw-ext-mounted:tca-transceiver-profile)) and (nokia-hw-ext-mounted:tca-transceiver-profile != current())]) = 0))"
+      {
+          error-message "Not allowed to bind different TCA transceiver profiles among the same transceiver class of components.";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware/hw-mounted:component/nokia-hw-ext-mounted:tca-transceiver-link-profile" {
+    deviate add {
+         must "((count(current()/../../hw-mounted:component[(hw-mounted:class = current()/../hw-mounted:class) and
+                 (boolean(nokia-hw-ext-mounted:tca-transceiver-link-profile)) and (nokia-hw-ext-mounted:tca-transceiver-link-profile != current())]) = 0))"
+      {
+          error-message "Not allowed to bind different TCA transceiver link profiles among the same transceiver-link class of components.";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware/hw-mounted:component/nokia-hw-ext-mounted:tca-transceiver-link-profile" {
+    deviate add {
+      must "(current()/../../hw-mounted:component[hw-mounted:name = current()/../hw-mounted:parent]/hw-mounted:class = 'bbf-hwt:transceiver')
+            and current()/../../hw-mounted:component[hw-mounted:name = current()/../../hw-mounted:component[hw-mounted:name = current()/../hw-mounted:parent]/hw-mounted:parent]/hw-mounted:class = 'bbf-hwt:cage'"
+      {
+        error-message "Transceiver-link that references tca-transceiver-link-profile must have parent of type transceiver on ANI port";
+      }
+    }
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware/hw-mounted:component/nokia-hw-ext-mounted:tca-transceiver-profile" {
+    deviate add {
+      must "(current()/../../hw-mounted:component[hw-mounted:name = current()/../hw-mounted:parent]/hw-mounted:class = 'bbf-hwt:cage')"
+      {
+        error-message "Transceiver that references tca-transceiver-profile must have parent of type cage on ANI port";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware/hw-mounted:component/nokia-hw-ext-mounted:tca-monitoring-enabled" {
+    deviate add {
+      must "(current()/../../hw-mounted:component[hw-mounted:name = current()/../hw-mounted:parent]/hw-mounted:class = 'bbf-hwt:cage' and current() = 'true') or
+    (current() = 'false')"
+      {
+        error-message "tca could only be enabled on transceiver on ANI port which have parent of type cage";
+      }
+    }
+  }
+
+
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware/hw-mounted:component/nokia-hw-ext-mounted:omci-identifier-helper/nokia-hw-ext-mounted:virtual-board-number" {
+    deviate add {
+      must "(current()/../../../hw-mounted:component[hw-mounted:name = current()/../../hw-mounted:parent]/hw-mounted:class = 'ianahw:chassis') or
+            (current()/../../../hw-mounted:component[hw-mounted:name = current()/../../hw-mounted:parent]/hw-mounted:class = 'bbf-hwt:transceiver')"
+      {
+          error-message "The virtual board number can't be configured if the port isn't based on chassis or transceiver.";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware/hw-mounted:component/nokia-hw-ext-mounted:omci-identifier-helper/nokia-hw-ext-mounted:virtual-board-number" {
+    deviate add {
+         must "((current()/../../hw-mounted:class = 'bbf-hwt:rj45') or (current()/../../hw-mounted:class = 'bbf-hwt:transceiver-link')) or
+          ((current()/../../hw-mounted:class != 'bbf-hwt:rj45') and (current()/../../hw-mounted:class != 'bbf-hwt:transceiver-link') and (count(current()/../../../hw-mounted:component[hw-mounted:class = current()/../../hw-mounted:class and not(boolean(nokia-hw-ext-mounted:omci-identifier-helper/nokia-hw-ext-mounted:virtual-board-number))]) = 0)
+            and count(current()/../../../hw-mounted:component[hw-mounted:class = current()/../../hw-mounted:class]/nokia-hw-ext-mounted:omci-identifier-helper[nokia-hw-ext-mounted:virtual-board-number != current()]) = 0)"
+      {
+          error-message "The virtual board number should be same for all the ports with the same port type.";
+      }
+    }
+  }
+  
+  
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware/hw-mounted:component/nokia-hw-ext-mounted:planned-module-type" {
+    deviate add {
+      must "current()/../../hw-mounted:component[hw-mounted:name = current()/../hw-mounted:parent]/hw-mounted:class = 'nokia-hwi:cage-uni'"
+      {
+        error-message "planned-module-type could only be configured on UNI side";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/nokia-hw-ext-mounted:sensor-temp-threshold-high" {
+    description
+       "This deviation assures that hardware-state component does not support sensor-temp-threshold-high.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/nokia-hw-ext-mounted:sensor-temp-threshold-high-clear" {
+    description
+       "This deviation assures that hardware-state component does not support sensor-temp-threshold-high-clear.";
+    deviate not-supported;
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/nokia-hw-ext-mounted:sensor-temp-threshold-low" {
+    description
+       "This deviation assures that hardware-state component does not support sensor-temp-threshold-low.";
+    deviate not-supported;
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/nokia-hw-ext-mounted:sensor-temp-threshold-low-clear" {
+    description
+       "This deviation assures that hardware-state component does not support sensor-temp-threshold-low-clear.";
+    deviate not-supported;
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/nokia-hw-ext-mounted:ont-serial-num-base" {
+    description
+       "This deviation assures that hardware-state component does not support ont-serial-num-base.";
+    deviate not-supported;
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/nokia-hw-ext-mounted:local-network-address" {
+    description
+       "This deviation assures that hardware-state component does not support local-network-address.";
+    deviate not-supported;
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/nokia-hw-ext-mounted:fim" {
+    description
+       "This deviation assures that hardware-state component does not support fim.";
+    deviate not-supported;
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/nokia-hw-ext-mounted:factory-id" {
+    description
+       "This deviation assures that hardware-state component does not support factory-id.";
+    deviate not-supported;
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/nokia-hw-ext-mounted:hardware-duration-in-operation" {
+    description
+       "This deviation assures that hardware-state component does not support hardware-duration-in-operation.";
+    deviate not-supported;
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/nokia-hw-ext-mounted:clei-code" {
+    description
+       "This deviation assures that hardware-state component does not support clei-code.";
+    deviate not-supported;
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/nokia-hw-ext-mounted:customer-serial-num" {
+    description
+       "This deviation assures that hardware-state component does not support customer-serial-num.";
+    deviate not-supported;
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/nokia-hw-ext-mounted:temperature-low-alarm" {
+    description
+       "This deviation assures that hardware-state component does not support temperature-low-alarm.";
+    deviate not-supported;
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/nokia-hw-ext-mounted:temperature-high-alarm" {
+    description
+       "This deviation assures that hardware-state component does not support temperature-high-alarm.";
+    deviate not-supported;
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/nokia-hw-ext-mounted:temperature-low-warning" {
+    description
+       "This deviation assures that hardware-state component does not support temperature-low-warning.";
+    deviate not-supported;
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/nokia-hw-ext-mounted:temperature-high-warning" {
+    description
+       "This deviation assures that hardware-state component does not support temperature-high-warning.";
+    deviate not-supported;
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/nokia-hw-ext-mounted:voltage-low-alarm" {
+    description
+       "This deviation assures that hardware-state component does not support voltage-low-alarm.";
+    deviate not-supported;
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/nokia-hw-ext-mounted:voltage-high-alarm" {
+    description
+       "This deviation assures that hardware-state component does not support voltage-high-alarm.";
+    deviate not-supported;
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/nokia-hw-ext-mounted:voltage-low-warning" {
+    description
+       "This deviation assures that hardware-state component does not support voltage-low-warning.";
+    deviate not-supported;
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/nokia-hw-ext-mounted:voltage-high-warning" {
+    description
+       "This deviation assures that hardware-state component does not support voltage-high-warning.";
+    deviate not-supported;
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/nokia-hw-ext-mounted:rx-power-low-alarm" {
+    description
+       "This deviation assures that hardware-state component does not support rx-power-low-alarm.";
+    deviate not-supported;
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/nokia-hw-ext-mounted:rx-power-high-alarm" {
+    description
+       "This deviation assures that hardware-state component does not support rx-power-high-alarm.";
+    deviate not-supported;
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/nokia-hw-ext-mounted:rx-power-low-warning" {
+    description
+       "This deviation assures that hardware-state component does not support rx-power-low-warning.";
+    deviate not-supported;
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/nokia-hw-ext-mounted:rx-power-high-warning" {
+    description
+       "This deviation assures that hardware-state component does not support rx-power-high-warning.";
+    deviate not-supported;
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/nokia-hw-ext-mounted:tx-power-low-alarm" {
+    description
+       "This deviation assures that hardware-state component does not support tx-power-low-alarm.";
+    deviate not-supported;
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/nokia-hw-ext-mounted:tx-power-high-alarm" {
+    description
+       "This deviation assures that hardware-state component does not support tx-power-high-alarm.";
+    deviate not-supported;
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/nokia-hw-ext-mounted:tx-power-low-warning" {
+    description
+       "This deviation assures that hardware-state component does not support tx-power-low-warning.";
+    deviate not-supported;
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/nokia-hw-ext-mounted:tx-power-high-warning" {
+    description
+       "This deviation assures that hardware-state component does not support tx-power-high-warning.";
+    deviate not-supported;
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/nokia-hw-ext-mounted:tx-bias-low-alarm" {
+    description
+       "This deviation assures that hardware-state component does not support tx-bias-low-alarm.";
+    deviate not-supported;
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/nokia-hw-ext-mounted:tx-bias-high-alarm" {
+    description
+       "This deviation assures that hardware-state component does not support tx-bias-high-alarm.";
+    deviate not-supported;
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/nokia-hw-ext-mounted:tx-bias-low-warning" {
+    description
+       "This deviation assures that hardware-state component does not support tx-bias-low-warning.";
+    deviate not-supported;
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/nokia-hw-ext-mounted:tx-bias-high-warning" {
+    description
+       "This deviation assures that hardware-state component does not support tx-bias-high-warning.";
+    deviate not-supported;
+  }
+ 
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware/hw-mounted:component/nokia-hw-ext-mounted:omci-identifier-helper/nokia-hw-ext-mounted:port-id" {
+    deviate add {
+     must "((current()/../../hw-mounted:class = 'bbf-hwt:rj45') or (current()/../../hw-mounted:class = 'bbf-hwt:transceiver-link')) or
+          ((current()/../../hw-mounted:class != 'bbf-hwt:rj45') and (current()/../../hw-mounted:class != 'bbf-hwt:transceiver-link') and (count(current()/../../../hw-mounted:component[hw-mounted:class = current()/../../hw-mounted:class and not(boolean(nokia-hw-ext-mounted:omci-identifier-helper/nokia-hw-ext-mounted:port-id))]) = 0)
+            and count(current()/../../../hw-mounted:component[hw-mounted:class = current()/../../hw-mounted:class]/nokia-hw-ext-mounted:omci-identifier-helper[nokia-hw-ext-mounted:port-id = current()]) <= 1)"
+      {
+          error-message "The port id should be different for all the ports with the same port type.";
+      }
+    }
+  }
+}
+
+
+
+

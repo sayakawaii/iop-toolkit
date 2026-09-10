@@ -1,0 +1,369 @@
+module nokia-sdan-if-xpon-aug {
+
+    yang-version 1.1;
+    
+    namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"+
+        "nokia-sdan-if-xpon-aug";
+
+    prefix nokia-sdan-if-xpon-aug;
+
+    import ietf-interfaces {
+        prefix if;
+    }
+
+    import bbf-xpon {
+        prefix bbf-xpon;
+    }
+
+    import bbf-xpon-types {
+        prefix bbf-xpon-types;
+    }
+
+    import bbf-yang-types {
+        prefix bbf-yang;
+    }
+
+    import nokia-ber-tca-profiles {
+        prefix nokia-ber-tca-prof;
+    }
+
+    organization "Nokia";
+    contact "isam.yang@nokia.com";
+
+    description
+    "This specification is published by Nokia under Non-Disclosure
+    Agreement(s) (NDA) with specific parties and has to be considered
+    as Confidential Information as defined in such NDA. Nokia reserves
+    the right to revise this document for any reason, including but
+    not limited to conformity with standards promulgated by various
+    agencies, utilization of advances in the state of the technical
+    areas, or the reflection of changes in the design of any
+    equipment, techniques, or procedures described or referred to
+    herein.
+
+    The product specifications and other technical or performance
+    information contained herein are subject to change without notice.
+    Updates of this document will be issued under the above NDA's.
+
+    Nokia makes no representation or warranty, expressed or implied,
+    with respect to the sufficiency, accuracy, or utility of any
+    information or opinion contained herein. Nokia expressly advises
+    that any use of for any purpose or reliance upon this technical
+    reference is at the risk of the user and that Nokia shall not be
+    liable for any damage or injury incurred by any person arising out
+    of the sufficiency, accuracy, or utility of any information or
+    opinion contained herein.
+
+    This document is not to be construed as a suggestion to any
+    manufacturer to modify or change any of its products, nor does
+    this document represent any commitment by Nokia to sell or
+    purchase any product. Nothing contained herein shall be construed
+    as conferring by implication, estoppel, or otherwise any license
+    or right under any patent, whether or not the use of any
+    information herein necessarily employs an invention of any
+    existing or later issued patent.
+
+    Nokia reserves the right not to offer any or all of these products
+    and to withdraw any or all of them at any future time.
+
+    Copyright (C) 2022, Nokia. All Rights Reserved";
+
+    revision 2023-02-24 {
+        description
+            "correct typo";
+        reference
+            "TBD";
+    } 
+
+    revision 2022-01-13 {
+        description
+            "Initial revision.";
+        reference
+            "TBD";
+    }
+
+    identity enable-disable-function-base {
+        description
+            "This identity is used to indicate which
+            function is intended.";
+    }
+
+    identity disable {
+        base enable-disable-function-base;
+        description
+            "The disable function is intended.";
+    }
+
+    identity enable {
+        base enable-disable-function-base;
+        description
+            "The enable function is intended.";
+    }
+
+    feature ber-tca-profiles {
+        description
+            "Indicates support for ber-tca profiles.";
+    }
+
+    typedef ber-tca-profile-ref {
+        type leafref {
+            path '/nokia-ber-tca-prof:ber-tca-profiles' +
+            '/nokia-ber-tca-prof:ber-tca-profile' +
+            '/nokia-ber-tca-prof:name';
+        }
+        description
+            "A reference to a ber-tca profile.";
+    }
+
+    augment '/if:interfaces/if:interface/bbf-xpon:channel-pair' {
+        description "Augment channel pair.";
+        leaf specific-polling-period {
+            //channel-polling-period-type
+            type union{
+                type uint32 {
+                    range "1..864000";
+                }
+                type enumeration {
+                    enum "polling-disabled" {
+                        description
+                            "channel pair will never offer any quiet windows.";
+                    }
+                }
+            }
+            // define a specific type which is the union of
+            //     - unint32 (range "1..864000") and
+            //     - an identity "polling-disabled" based on
+            //       "quiet-window-polling" identity
+
+            units "0.1 second"; // when unint32
+
+            description
+                "Used for quiet window control specifically to this
+                channel-pair.  When configured, this YANG leaf
+                unconditionally overrules the value determined - by
+                default or by explicit configuration - by the
+                'polling-period' YANG leaf defined in the channel
+                group containing the channel pair.
+
+                When a numeric value is provided, it determines the
+                period in tenths of seconds between two consecutive
+                broadcasted SN grants (and their associated quiet
+                windows). For instance, a value of 1 means 0.1 second
+                and a value of 864000 means 24 hours).
+
+                When configured with polling-disabled, it means that
+                the channel pair will never offer any quiet windows.
+
+                When 'specific-polling-period' is this not configured,
+                the 'polling-period' YANG leaf defined in the channel
+                group containing the channel pair applies to this
+                channel pair ";
+        }
+
+    container onu-enable-disable-ploam-condition {
+        description "onu-enable-disable-ploam-condition";
+        list onu-ploam {
+            key "serial-number";
+            max-elements 256;
+            description
+                    "This list contains the list of ONUs, which need
+                    to be brought in the indicated 'ploam-function' by
+                    means of a 'Disable_Serial_Number' downstream
+                    PLOAM message.  The list is applicable to any ONU,
+                    even if not associated with a locally configured
+                    virtual ANI. When an ONU is configured in the list
+                    with 'ploam-function' = enable, the OLT should
+                    keep sending the corresponding PLOAM message at
+                    low pace until the ONU is detected present again
+                    (resend period is implementation specific,
+                    suggested not shorter than 300 seconds).";
+
+            reference
+                    "ITU-T G.984.3 clause 9.2.1
+                    ITU-T G.987.3 table 11.2
+                    ITU-T G.9807.1 table C11.2
+                    ITU-T G.989.3 table 11-9";
+            
+            leaf serial-number {
+                type bbf-xpon-types:onu-serial-number;
+                description
+                    "The ONU serial number";
+            }
+            leaf ploam-function {
+                type identityref {
+                    base enable-disable-function-base;
+                }
+                mandatory true;
+                description
+                        "Whether the ONU should be disabled or
+                        enabled By means of 'Disable_Serial_Number'
+                        downstream PLOAM message.";
+            }
+        }
+    }
+
+    leaf ber-tca-profile {
+        if-feature "ber-tca-profiles";
+        type ber-tca-profile-ref;
+        description
+                "The ber-tca profile reference for Signal Degradation
+                (SD) and Signal Failure (SF) thresholds definition";
+    }
+    }
+
+    augment '/if:interfaces/if:interface/bbf-xpon:channel-termination' {
+        description " augment channel termination with type-b location datas.";
+        container channel-termination-type-b-pon-location-data {
+            presence
+                "Configured only when the channel termination is
+                involved in type-b protection";
+
+            description
+                "This section defines location data about the channel
+                termination of a type-b protected channel pair.
+                Typically this configuration data represents the
+                location data of the primary channel termination and
+                is configured only on the secondary channel
+                termination of the type-b protected channel pair. This
+                way, when this data is used for instance by protocol
+                relay functions for subscriber physical line
+                identification, the subscriber identification remains
+                the same independent from which channel termination is
+                active or standby. Alternatively, this data may also
+                be configured on both channel terminations with the
+                same (even arbitrary) values to accomplish the same.";
+
+            leaf slot-id {
+                type uint32;
+                description
+                    "This is typically the slot-id of the board
+                    hosting the primary channel-termination. In that
+                    case this value is identified by the
+                    parent-rel-pos value of the corresponding slot
+                    entry (with class = slot) in the list
+                    'hardware-state/component' in the
+                    ietf-hardware.yang module";
+            }
+
+            leaf port-id {
+                type uint32;
+                description
+                    "This is typically the number of the port that
+                    terminates the primary channel termination. In
+                    that case this value is identified by the
+                    parent-rel-pos value of the corresponding port
+                    entry (with class = port) in the list
+                    'hardware-state/component' in the
+                    ietf-hardware.yang module";
+            }
+
+            choice pon-id-type {
+                description "poin id type ";
+                case gpon {
+                    leaf gpon-pon-id {
+                        when "current()/../../" +
+                            "bbf-xpon:channel-termination-type" +
+                            " = 'bbf-xpon-types:gpon'";
+
+                        type bbf-xpon-types:string-hex14;
+                        description
+                            "This is typically the gpon-pon-id
+                            configured for the primary channel
+                            termination";
+                    }
+                }
+
+                case xgs {
+                    leaf xgs-pon-id {
+                        when "current()/../../" +
+                            "bbf-xpon:channel-termination-type" +
+                            " = 'bbf-xpon-types:xgs'";
+
+                        type uint32 {
+                            range "0..4294967295";
+                            // this is 2**32-1
+                        }
+                        description
+                            "This is typically the xgs-pon-id
+                            configured for the primary channel
+                            termination";
+                    }
+                }
+
+                case xgpon {
+                    leaf xgpon-pon-id {
+                        when "current()/../../" +
+                            "bbf-xpon:channel-termination-type" +
+                            " = 'bbf-xpon-types:xgpon'";
+
+                        type uint32 {
+                            range "0..4294967295";
+                            // this is 2**32-1
+                        }
+                        description
+                            "This is typically the xgpon-pon-id
+                            configured for the primary channel
+                            termination";
+                    }
+                }
+
+                case ngpon2-twdm {
+                    leaf ngpon2-twdm-admin-label {
+                        when "current()/../../" +
+                            "bbf-xpon:channel-termination-type" +
+                            " = 'bbf-xpon-types:ngpon2-twdm'";
+
+                        type uint32 {
+                            range "0..268435455";
+                            // this is 2**28-1
+                        }
+                        description
+                            "This is typically the
+                            ngpon2-twdm-admin-label configured for the
+                            primary channel termination";
+                    }
+                }
+
+                case ngpon2-ptp {
+                    leaf ngpon2-ptp-admin-label {
+                        when "current()/../../" +
+                            "bbf-xpon:channel-termination-type" +
+                            " = 'bbf-xpon-types:ngpon2-ptp'";
+
+                        type uint32 {
+                            range "0..4194303";
+                            // this is 2**22-1
+                        }
+                        description
+                            "This is typically the
+                            ngpon2-ptp-admin-label configured for the
+                            primary channel termination";
+                    }
+                }
+            }
+
+            leaf access-node-id {
+                type bbf-yang:string-ascii63-or-empty;
+                description
+                    "This is typically the access-node-id of the node
+                    which hosts the primary channel termination. In
+                    that case the value is identified by the object
+                    /system/subscriber-management/access-node-id
+                    defined in the bbf-subscriber-profiles.yang
+                    module.";
+            }
+        }
+
+        leaf laser-on-by-default {
+            type boolean;
+            default true;
+            description
+                "This flag can be used to help orderly start type-B
+                protection upon the configuration of primary and
+                secondary channel terminations. In particular, this
+                flag makes the system robust against possible race
+                conditions while the system initializes two channel
+                terminations belonging to the same channel pair.";
+        }
+    }
+}

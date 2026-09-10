@@ -1,0 +1,198 @@
+module nokia-ietf-trust-anchors-common-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+            + "nokia-ietf-trust-anchors-common-dev";
+
+  prefix nokia-ietf-trust-anchors-common-dev;
+
+  import ietf-trust-anchors {
+    prefix ta;
+  }
+
+  import nokia-yang-types {
+    prefix nok-typ;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "The NOKIA IETF/ietf-netconf-server YANG module supporting
+     deviations on top of standard.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2017, Nokia. All Rights Reserved.";
+  revision 2026-06-18 {
+    description
+      "Added restriction to exclude the use of './' in pinned-certificates and pinned-certificate names";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2023-06-09 {
+    description
+      "YANG lint error fixes";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2021-08-30 {
+    description
+      "Added not supported statements for features not enabled";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2021-08-02 {
+    description
+      "Added missing description";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2021-07-13 {
+    description
+      "Added deviation with description of extra validations taking place";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2020-10-19 {
+    description
+      "Added restriction to exclude the use of factory-callHome as a name for pinned certificates";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2020-08-07 {
+    description
+      "Added restriction to limit the number of pinned-certificates to a maximum of 20";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2019-05-07 {
+    description
+      "Modified pinned-certificate name type and pinned-certificates name type to nokia-string-ascii64";
+    reference
+      "Nokia specific";
+  }
+
+
+  revision 2019-05-02 {
+    description
+      "Move to common category.";
+    reference
+      "Nokia specific.";
+  }
+
+  revision 2019-02-26 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: yyyy-mm-dd.";
+    reference
+      "Nokia specific";
+  }
+
+  deviation "/ta:trust-anchors/ta:pinned-certificates" {
+    description "The maximum number of pinned certificates is restricted to 20.";
+    deviate add {
+      must "not(name='factory-callHome')"{
+        error-message "The use of factory-callHome as a name is not allowed";
+        description "Restriction concerning the name of a certificate. The use of factory-callHome as a name is not allowed.";
+      }
+      max-elements 20;
+    }
+  }
+
+  deviation "/ta:trust-anchors/ta:pinned-certificates/ta:pinned-certificate" {
+    description "The maximum number of pinned certificates in a list is restricted to 5.";
+    deviate add {
+      min-elements 1;
+      max-elements 5;
+    }
+  }
+
+  deviation "/ta:trust-anchors/ta:pinned-certificates/ta:pinned-certificate/ta:name" {
+    description "Pinned certificate name should conform to Nokia naming conventions";
+    deviate replace {
+      type nok-typ:nokia-string-ascii64{
+      }
+    }
+    deviate add {
+      must "not(contains(., './'))" {
+        error-message "The use of './' in the certificate name is not allowed";
+        description "Restriction concerning the certificate name. The use of './' is not allowed.";
+      }
+    }
+  }
+
+  deviation "/ta:trust-anchors/ta:pinned-certificates/ta:name" {
+    description "Pinned certificates name should conform to Nokia naming conventions";
+    deviate replace {
+      type nok-typ:nokia-string-ascii64{
+      }
+    }
+    deviate add {
+      must "not(contains(., './'))" {
+        error-message "The use of './' in the trust list name is not allowed";
+        description "Restriction concerning the trust list name. The use of './' is not allowed.";
+      }
+    }
+  }
+
+  deviation "/ta:trust-anchors/ta:pinned-certificates/ta:pinned-certificate/ta:cert" {
+    description "Certificates added should be in a correct pem format";
+    deviate add {}
+  }
+
+  deviation "/ta:trust-anchors/ta:pinned-certificates/ta:pinned-certificate/ta:certificate-expiration" {
+    description "Certificate expiration notification is issued as part of the nokia-certificate-alarm-types alarm";
+    deviate not-supported {}
+  }
+
+  deviation "/ta:trust-anchors/ta:pinned-host-keys" {
+    description "Host keys are not supported";
+    deviate not-supported {}
+  }
+}

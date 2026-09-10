@@ -1,0 +1,176 @@
+module nokia-sdan-xponvani-sma-groupings {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+          + "nokia-sdan-xponvani-sma-groupings";
+
+  prefix nokia-sdan-xponvani-sma-groupings;
+
+  import nokia-sdan-xponvani-sma-types {
+    prefix nokia-sdan-xponvani-sma-types;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This specification is published by Nokia under Non-Disclosure
+    Agreement(s) (NDA) with specific parties and has to be considered
+    as Confidential Information as defined in such NDA. Nokia reserves
+    the right to revise this document for any reason, including but
+    not limited to conformity with standards promulgated by various
+    agencies, utilization of advances in the state of the technical
+    areas, or the reflection of changes in the design of any
+    equipment, techniques, or procedures described or referred to
+    herein.
+
+    The product specifications and other technical or performance
+    information contained herein are subject to change without notice.
+    Updates of this document will be issued under the above NDA's.
+
+    Nokia makes no representation or warranty, expressed or implied,
+    with respect to the sufficiency, accuracy, or utility of any
+    information or opinion contained herein. Nokia expressly advises
+    that any use of for any purpose or reliance upon this technical
+    reference is at the risk of the user and that Nokia shall not be
+    liable for any damage or injury incurred by any person arising out
+    of the sufficiency, accuracy, or utility of any information or
+    opinion contained herein.
+
+    This document is not to be construed as a suggestion to any
+    manufacturer to modify or change any of its products, nor does
+    this document represent any commitment by Nokia to sell or
+    purchase any product. Nothing contained herein shall be construed
+    as conferring by implication, estoppel, or otherwise any license
+    or right under any patent, whether or not the use of any
+    information herein necessarily employs an invention of any
+    existing or later issued patent.
+
+    Nokia reserves the right not to offer any or all of these products
+    and to withdraw any or all of them at any future time.
+
+    Copyright (C) 2022, Nokia. All Rights Reserved.";
+
+  revision 2026-08-20 {
+    description
+      "Initial revision.";
+    reference
+      "TBD";
+  }
+
+  grouping xpon-vani-omci-sma {
+    description
+      "Configuration data nodes to control OMCI Secure Mutual Authentication
+      (SMA) in the specific case of xPON access.";
+
+    container omci-based-sma {
+      presence
+        "When present container controls ONU OMCI SMA.";
+      description
+        "Container providing data nodes controlling ONU OMCI SMA.";
+
+        leaf sma-required {
+          type boolean;
+          default "false";
+          description
+            "Controls whether the OLT triggers OMCI SMA or not for this ONU.
+            The OMCI SMA info is defined in ITU-T G.988 section 9.13.11.";
+        }
+
+      container authenticator {
+        description
+          "Controls whether the authenticator re-authenticates the existing
+          successful OMCI SMA session and retries authenticating the ONUs
+          that failed OMCI SMA.";
+
+        leaf reauth-enable {
+            type boolean;
+            default "false";
+            description
+            "Controls whether trigger reauthentication by OLT for the
+            successful OMCI SMA session.";
+        }
+
+        leaf reauth-period {
+            type uint32 {
+              range "24..8760";
+            }
+            units "hour";
+            default "24";
+            description
+            "This parameter configures re-authentication time periods for
+            OLT devices:
+              1. Defines the periodic interval for OLT-initiated (OLT-triggered)
+                 re-authentication;
+              2. Specifies the minimum time interval between two consecutive
+                 ONU-initiated(ONU-triggered) re-authentication attempts.
+            Upon successful SMA, the reauthentication timer is initialized to this
+            value.";
+        }
+
+        leaf retry-max {
+            type uint32 {
+              range "0..5";
+            }
+            default "2";
+            description
+            "Upon the OMCI SMA conversation ending with OMCI SMA timeout
+            (e.g., because an OMCI AVC is not received), the authenticator
+            runs another OMCI SMA conversation if retry-max>=1.
+            Upon retry-max consecutive OMCI SMA conversations ending in OMCI
+            SMA timeout, the authenticator will report OMCI SMA failed.";
+        }
+
+        leaf retry-period {
+            type uint32 {
+              range "1..180";
+            }
+            units "seconds";
+            default "60";
+            description
+            "Upon an OMCI SMA timeout, a retry timer is initialized to
+            retry-period. Another OMCI SMA conversation will be started
+            upon the timer expired.";
+
+        }
+      }
+    }
+  }
+
+  grouping xpon-vani-omci-sma-state {
+    description
+      "OMCI Secure Mutual Authentication (SMA) relevant state data of vANI.";
+
+    container omci-based-sma-state {
+      description
+        "Container of interface state of vANI with OMCI SMA state data.";
+
+      leaf cryptographic-capability-selected-by-onu {
+        type identityref {
+          base nokia-sdan-xponvani-sma-types:cryptographic-capability-base;
+        }
+        description
+          "This leaf indicates the cryptographic capability selected by ONU.";
+      }
+
+      leaf sma-state {
+        type identityref {
+          base nokia-sdan-xponvani-sma-types:sma-state-base;
+        }
+        description
+          "This leaf indicates the OMCI SMA result.";
+      }
+
+      leaf failure-cause {
+        type identityref {
+          base nokia-sdan-xponvani-sma-types:sma-failure-reason-base;
+        }
+        description
+          "This leaf indicates the reason of OMCI SMA failure.";
+      }
+    }
+  }
+}

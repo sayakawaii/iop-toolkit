@@ -1,0 +1,104 @@
+module nokia-ieee802-dot1ab-lldp-mounted-eonu-dev {
+   namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+      + "nokia-ieee802-dot1ab-lldp-mounted-eonu-dev";
+   prefix nokia-ieee802-dot1ab-lldp-mounted-eonu-dev;
+    
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+   import ieee802-dot1ab-lldp-mounted {
+      prefix lldp-mounted; 
+   }
+   organization
+       "Nokia";
+   contact
+       "isam.yang@nokia.com";
+   description
+       "The NOKIA IEEE 802.1AB-2016 YANG module supporting
+       deviations on top of standard.";
+   revision 2025-05-26 {
+     description
+       "Add description to deviation with replace enumeration any.";
+     reference
+       "Nokia specific";
+   }
+   revision 2024-05-30 {
+     description
+       "Initial version of deviation file for ieee802-dot1ab-lldp.yang";
+     reference
+       "Nokia specific";    
+   }
+   deviation "/onu:onus/onu:onu/onu:root/lldp-mounted:lldp/lldp-mounted:message-fast-tx" {
+       deviate not-supported;
+   }
+   deviation "/onu:onus/onu:onu/onu:root/lldp-mounted:lldp/lldp-mounted:message-tx-hold-multiplier" {
+       deviate not-supported;
+   }
+   deviation "/onu:onus/onu:onu/onu:root/lldp-mounted:lldp/lldp-mounted:message-tx-interval" {
+       deviate not-supported;
+   }
+   deviation "/onu:onus/onu:onu/onu:root/lldp-mounted:lldp/lldp-mounted:reinit-delay" {
+       deviate not-supported;
+   }
+   deviation "/onu:onus/onu:onu/onu:root/lldp-mounted:lldp/lldp-mounted:tx-credit-max" {
+       deviate not-supported;
+   }
+   deviation "/onu:onus/onu:onu/onu:root/lldp-mounted:lldp/lldp-mounted:tx-fast-init" {
+       deviate not-supported;
+   }
+   deviation "/onu:onus/onu:onu/onu:root/lldp-mounted:lldp/lldp-mounted:notification-interval" {
+       deviate not-supported;
+   }
+   deviation "/onu:onus/onu:onu/onu:root/lldp-mounted:lldp/lldp-mounted:remote-statistics" {
+       deviate not-supported;
+   }
+   deviation "/onu:onus/onu:onu/onu:root/lldp-mounted:lldp/lldp-mounted:local-system-data" {
+       deviate not-supported;
+   }
+   deviation "/onu:onus/onu:onu/onu:root/lldp-mounted:lldp/lldp-mounted:port/lldp-mounted:dest-mac-address" {
+       description
+         "To restrict MAC address which is not supported currently.";
+       deviate replace {
+         type enumeration {
+           enum any {
+             description
+               "MAC address leaf not supported.";
+           }
+         }
+       }
+   }
+   deviation "/onu:onus/onu:onu/onu:root/lldp-mounted:lldp/lldp-mounted:port/lldp-mounted:notification-enable" {
+      deviate not-supported;  
+   }
+   deviation "/onu:onus/onu:onu/onu:root/lldp-mounted:lldp/lldp-mounted:port/lldp-mounted:tlvs-tx-enable" {
+      deviate not-supported;  
+   }
+   deviation "/onu:onus/onu:onu/onu:root/lldp-mounted:lldp/lldp-mounted:port/lldp-mounted:notification-interval" {
+      deviate not-supported;  
+   }
+   deviation "/onu:onus/onu:onu/onu:root/lldp-mounted:lldp/lldp-mounted:port/lldp-mounted:management-address-tx-port" {
+      deviate not-supported;  
+   }
+   deviation "/onu:onus/onu:onu/onu:root/lldp-mounted:lldp/lldp-mounted:port/lldp-mounted:port-id-subtype" {
+      deviate not-supported;  
+   }
+   deviation "/onu:onus/onu:onu/onu:root/lldp-mounted:lldp/lldp-mounted:port/lldp-mounted:port-id" {
+      deviate not-supported;  
+   }
+   deviation "/onu:onus/onu:onu/onu:root/lldp-mounted:lldp/lldp-mounted:port/lldp-mounted:port-desc" {
+      deviate not-supported;  
+   } 
+   deviation "/onu:onus/onu:onu/onu:root/lldp-mounted:lldp/lldp-mounted:port/lldp-mounted:tx-statistics" {
+      deviate not-supported;  
+   }
+   deviation "/onu:onus/onu:onu/onu:root/lldp-mounted:lldp/lldp-mounted:port/lldp-mounted:rx-statistics" {
+      deviate not-supported;  
+   }
+   deviation "/onu:onus/onu:onu/onu:root/lldp-mounted:lldp/lldp-mounted:port/lldp-mounted:remote-systems-data" {
+      deviate not-supported;  
+   }
+   deviation "/onu:onus/onu:onu/onu:root/lldp-mounted:lldp/lldp-mounted:remote-table-change" {
+      deviate not-supported;  
+   }
+}

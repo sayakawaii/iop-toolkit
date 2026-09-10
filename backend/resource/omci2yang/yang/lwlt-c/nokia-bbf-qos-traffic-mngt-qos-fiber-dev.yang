@@ -1,0 +1,216 @@
+module nokia-bbf-qos-traffic-mngt-qos-fiber-dev {
+
+  namespace
+    "http://www.nokia.com/Fixed-Networks/BBA/yang/nokia-bbf-qos-traffic-mngt-qos-fiber-dev";
+
+  prefix  nokia-bbf-qos-traffic-mngt-qos-fiber-dev;
+
+  import bbf-qos-traffic-mngt {
+    prefix bbf-qos-tm;
+  }
+  
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "This module contains a collection of YANG deviations on top 
+     of standard for supporting BBF/bbf-qos-traffic-mgnt YANG module.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia 
+     reserves the right to revise this document for any reason, 
+     including but not limited to conformity with standards 
+     promulgated by various agencies, utilisation of advances in the 
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or 
+     referred to herein.
+
+     The product specifications and other technical or performance 
+     information contained herein are subject to change without 
+     notice. Updates of this document will be issued under the above 
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any 
+     information or opinion contained herein. Nokia expressly advises 
+     that any use of for any purpose or reliance upon this technical 
+     reference is at the risk of the user and that Nokia shall not be 
+     liable for any damage or injury incurred by any person arising 
+     out of the sufficiency, accuracy, or utility of any information 
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any 
+     manufacturer to modify or change any of its products, nor does 
+     this document represent any commitment by Nokia to sell or 
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license 
+     or right under any patent, whether or not the use of any 
+     information herein necessarily employs an invention of any 
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2017-2018, Nokia. All Rights Reserved.";
+
+  /* revision */
+  revision 2024-05-08 {
+    description
+      "add a deviation to check max-queue-size in bac entry";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2023-08-15 {
+    description
+      "remove a deviation to support 4Q mode in tc2q profile";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2022-11-29 {
+    description
+      "pre-emption of tm queue is not supported";
+    reference
+      "Nokia specific";
+  }
+  
+  revision 2019-03-28 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific";
+  }
+
+  /* Min Threshold must less than Max Threshold */
+  deviation "/bbf-qos-tm:tm-profiles/bbf-qos-tm:bac-entry/bbf-qos-tm:bac-type/bbf-qos-tm:red/bbf-qos-tm:red/bbf-qos-tm:min-threshold" {
+    deviate add
+    {
+       must " . < ../bbf-qos-tm:max-threshold "
+       {
+        error-message "Min Threshold value must be less than that of Max threshold.";
+       }
+    }
+  }
+
+  /* Min Threshold must less than Max Threshold of wred*/
+  deviation "/bbf-qos-tm:tm-profiles/bbf-qos-tm:bac-entry/bbf-qos-tm:bac-type/bbf-qos-tm:wred/bbf-qos-tm:wred/bbf-qos-tm:color/bbf-qos-tm:green/bbf-qos-tm:min-threshold" {
+    deviate add
+    {
+       must " . < ../bbf-qos-tm:max-threshold "
+       {
+        error-message "Min Threshold value must be less than that of Max threshold.";
+       }
+    }
+  }
+
+  deviation "/bbf-qos-tm:tm-profiles/bbf-qos-tm:bac-entry/bbf-qos-tm:bac-type/bbf-qos-tm:wred/bbf-qos-tm:wred/bbf-qos-tm:color/bbf-qos-tm:yellow/bbf-qos-tm:min-threshold" {
+    deviate add
+    {
+       must " . < ../bbf-qos-tm:max-threshold "
+       {
+        error-message "Min Threshold value must be less than that of Max threshold.";
+       }
+    }
+  }
+
+  deviation "/bbf-qos-tm:tm-profiles/bbf-qos-tm:bac-entry/bbf-qos-tm:bac-type/bbf-qos-tm:wred/bbf-qos-tm:wred/bbf-qos-tm:color/bbf-qos-tm:red/bbf-qos-tm:min-threshold" {
+    deviate add
+    {
+       must " . < ../bbf-qos-tm:max-threshold "
+       {
+        error-message "Min Threshold value must be less than that of Max threshold.";
+       }
+    }
+  }
+
+
+  /* Max threshold for taildrop cannot be zero */
+  deviation "/bbf-qos-tm:tm-profiles/bbf-qos-tm:bac-entry/bbf-qos-tm:bac-type/bbf-qos-tm:taildrop/bbf-qos-tm:taildrop/bbf-qos-tm:max-threshold" {
+    deviate add {
+       must "( . != 0)" {
+         error-message "TailDrop max-threshold cannot be zero.";
+       }
+    }
+  }
+
+  /* Max threshold for wtaildrop cannot be zero */
+  deviation "/bbf-qos-tm:tm-profiles/bbf-qos-tm:bac-entry/bbf-qos-tm:bac-type/bbf-qos-tm:wtaildrop/bbf-qos-tm:wtaildrop/bbf-qos-tm:color/bbf-qos-tm:green/bbf-qos-tm:max-threshold" {
+    deviate add {
+       must "( . != 0)" {
+         error-message "WtailDrop max-threshold cannot be zero.";
+       }
+    }
+  }
+
+  deviation "/bbf-qos-tm:tm-profiles/bbf-qos-tm:bac-entry/bbf-qos-tm:bac-type/bbf-qos-tm:wtaildrop/bbf-qos-tm:wtaildrop/bbf-qos-tm:color/bbf-qos-tm:yellow/bbf-qos-tm:max-threshold" {
+    deviate add {
+       must "( . != 0)" {
+         error-message "WtailDrop max-threshold cannot be zero.";
+       }
+    }
+  }
+
+  deviation "/bbf-qos-tm:tm-profiles/bbf-qos-tm:bac-entry/bbf-qos-tm:bac-type/bbf-qos-tm:wtaildrop/bbf-qos-tm:wtaildrop/bbf-qos-tm:color/bbf-qos-tm:red/bbf-qos-tm:max-threshold" {
+    deviate add {
+       must "( . != 0)" {
+         error-message "WtailDrop max-threshold cannot be zero.";
+       }
+    }
+  }
+
+  /* Max threshold for red cannot be zero */
+  deviation "/bbf-qos-tm:tm-profiles/bbf-qos-tm:bac-entry/bbf-qos-tm:bac-type/bbf-qos-tm:red/bbf-qos-tm:red/bbf-qos-tm:max-threshold" {
+    deviate add {
+       must "( . != 0)" {
+         error-message "Red max-threshold cannot be zero.";
+       }
+    }
+  }
+
+  /* Max threshold for wred cannot be zero */
+  deviation "/bbf-qos-tm:tm-profiles/bbf-qos-tm:bac-entry/bbf-qos-tm:bac-type/bbf-qos-tm:wred/bbf-qos-tm:wred/bbf-qos-tm:color/bbf-qos-tm:green/bbf-qos-tm:max-threshold" {
+    deviate add {
+       must "( . != 0)" {
+         error-message "Wred max-threshold cannot be zero.";
+       }
+    }
+  }
+
+  deviation "/bbf-qos-tm:tm-profiles/bbf-qos-tm:bac-entry/bbf-qos-tm:bac-type/bbf-qos-tm:wred/bbf-qos-tm:wred/bbf-qos-tm:color/bbf-qos-tm:yellow/bbf-qos-tm:max-threshold" {
+    deviate add {
+       must "( . != 0)" {
+         error-message "Wred max-threshold cannot be zero.";
+       }
+    }
+  }
+
+  deviation "/bbf-qos-tm:tm-profiles/bbf-qos-tm:bac-entry/bbf-qos-tm:bac-type/bbf-qos-tm:wred/bbf-qos-tm:wred/bbf-qos-tm:color/bbf-qos-tm:red/bbf-qos-tm:max-threshold" {
+    deviate add {
+       must "( . != 0)" {
+         error-message "Wred max-threshold cannot be zero.";
+       }
+    }
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-qos-tm:tm-root/bbf-qos-tm:children-type/bbf-qos-tm:queues/bbf-qos-tm:queue/bbf-qos-tm:pre-emption" {
+    deviate not-supported;
+  }
+
+  deviation "/bbf-qos-tm:tm-profiles/bbf-qos-tm:bac-entry/bbf-qos-tm:max-queue-size" {
+    deviate add {
+       must "( . >= 9600)" {
+         error-message "Bac max-queue-size should be explicitly specified, and its value must be no less than 9600.";
+       }
+      mandatory true;
+    }
+  }
+}

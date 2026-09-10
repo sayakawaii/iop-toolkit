@@ -1,0 +1,279 @@
+module bbf-frame-frommounted-classification {
+  yang-version 1.1;
+  namespace "urn:bbf:yang:bbf-frame-frommounted-classification";
+  prefix bbf-classif-frommounted;
+
+  import bbf-dot1q-types {
+    prefix bbf-dot1qt;
+  }
+
+  organization
+    "Broadband Forum <https://www.broadband-forum.org>
+     Common YANG Work Area";
+  contact
+    "Comments or questions about this Broadband Forum YANG module
+     should be directed to <mailto:help@broadband-forum.org>.
+
+     Editor:      Nick Hancock, ADTRAN
+
+     Editor:      Ludwig Pauwels, Nokia
+
+     PS Leader:   Joey Boyd, ADTRAN
+
+     PS Leader:   Sowrirajan Padmanabhan, Nokia
+
+     WA Director: Joey Boyd, ADTRAN
+
+     WA Director: Sven Ooghe, Nokia";
+  description
+    "This module contains a collection of YANG definitions for
+     supporting the Broadband Forum requirements on frame
+     classification as applicable to access network equipment. As
+     such, this module is specific to access network equipment (e.g.,
+     BBF-specified Access Nodes and FTTdp DPUs).
+
+     Specifically, this module contains reusable groupings defined for
+     frame classification.
+
+     Copyright (c) 2017-2020, Broadband Forum
+
+     Redistribution and use in source and binary forms, with or
+     without modification, are permitted provided that the following
+     conditions are met:
+
+     1. Redistributions of source code must retain the above copyright
+        notice, this list of conditions and the following disclaimer.
+
+     2. Redistributions in binary form must reproduce the above
+        copyright notice, this list of conditions and the following
+        disclaimer in the documentation and/or other materials
+        provided with the distribution.
+
+     3. Neither the name of the copyright holder nor the names of its
+        contributors may be used to endorse or promote products
+        derived from this software without specific prior written
+        permission.
+
+     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
+     CONTRIBUTORS \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+     INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+     DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+     CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+     SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+     NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+     CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+     STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+     ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+     ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+     The above license is used as a license under copyright only.
+     Please reference the Forum IPR Policy for patent licensing terms
+     <https://www.broadband-forum.org/ipr-policy>.
+
+     Any moral rights which are necessary to exercise under the above
+     license grant are also deemed granted under this license.
+
+     This version of this YANG module is part of TR-383a3; see
+     the TR itself for full legal notices.";
+
+  revision 2020-10-13 {
+    description
+      "Amendment 3.
+       * Approval Date:    2020-10-13.
+       * Publication Date: 2020-10-13.";
+    reference
+      "TR-383a3: Common YANG Modules
+                 <https://www.broadband-forum.org/technical/download/
+                          TR-383_Amendment-3.pdf>";
+  }
+  revision 2018-07-13 {
+    description
+      "Amendment 1.
+       * Approval Date:    2018-06-04.
+       * Publication Date: see revision date above.";
+    reference
+      "TR-383: Common YANG Modules
+               <https://www.broadband-forum.org/technical/download/
+                        TR-383_Amendment-1.pdf>";
+  }
+  revision 2017-05-08 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: 2017-06-02.";
+    reference
+      "TR-383: Common YANG Modules
+               <https://www.broadband-forum.org/technical/download/
+                        TR-383.pdf>";
+  }
+
+
+
+  grouping ethertype-match-no-default {
+    description
+      "Flexible match on the Ethertype of frames.";
+    leaf-list ethernet-frame-type {
+      type bbf-dot1qt:ether-type-or-acronym;
+      description
+        "The value to be compared with the first Ethertype of an
+         untagged Ethernet frame; or for frames that contain one or
+         more VLAN tags it is the value to be compared with the
+         Ethertype that is defined by the context where this grouping
+         is used. It can be even the Ethertype that identifies a VLAN
+         tag.";
+    }
+  }
+
+  typedef tag-index {
+    type uint8 {
+      range "0..1";
+    }
+    description
+      "The index of the VLAN tag in a frame.
+       - Tag 0 refers to the outer tag, i.e. the tag just after the
+       source MAC address.
+       - Tag 1 refers to the tag after tag 0.";
+  }
+
+  grouping dot1q-tag-ranges-or-any {
+    description
+      "Grouping to allow configuration to identify an 802.1Q VLAN tag
+       that matches any specific VLAN ID within a set of non
+       overlapping VLAN ID ranges, or the 'any' value to match any
+       VLAN ID.";
+    container dot1q-tag {
+      presence "dot1q-tag";
+      description
+        "Identifies an 802.1Q VLAN tag with an explicit tag-type, an
+         ordered list of VLAN ID ranges, or 'any' VLAN ID.";
+      leaf tag-type {
+        type union {
+          type bbf-dot1qt:dot1q-tag-type;
+          type bbf-dot1qt:ether-type;
+          type bbf-dot1qt:ether-type-hex;
+          type enumeration {
+            enum any {
+              description
+                "Matches any tag type.";
+            }
+          }
+        }
+        description
+          "VLAN tag type.";
+      }
+      leaf vlan-id {
+        type union {
+          type bbf-dot1qt:vlan-id-range;
+          type enumeration {
+            enum any {
+              description
+                "Matches any VLAN ID in the range 1 to 4094, or
+                 matches priority tagged frames.";
+            }
+            enum priority-tagged {
+              description
+                "Priority-tagged frames are frames with a VLAN tag
+                 present and that match VLAN ID 0.";
+            }
+          }
+        }
+        description
+          "Allowed VLAN IDs.";
+      }
+      leaf pbit {
+        type union {
+          type bbf-dot1qt:pbit-list;
+          type enumeration {
+            enum any {
+              description
+                "Matches any p-bits value in the range of 0 to 7.";
+            }
+          }
+        }
+        description
+          "Allowed p-bits values.";
+      }
+      leaf dei {
+        type union {
+          type bbf-dot1qt:dei;
+          type enumeration {
+            enum any {
+              description
+                "Matches any Drop Eligible Inidicator (DEI) value,
+                 i.e. value 0 or 1.";
+            }
+          }
+        }
+        description
+          "Allowed DEI values.";
+      }
+    }
+  }
+
+  grouping multiple-vlan-tag-match {
+    description
+      "Flexible match on the VLAN tags of Ethernet frames.";
+    choice vlan-tag-match-type {
+      description
+        "Provides a choice of how the frames may be matched.
+
+         If no case is configured, then the presence or absence of
+         VLAN tags in the frame is not a matching criterion and then,
+         as to this matching criterion, 'all frames match'.";
+      case untagged {
+        leaf untagged {
+          type empty;
+          description
+            "Untagged match. Matches all untagged traffic.";
+        }
+      }
+      case vlan-tagged {
+        list tag {
+          key "index";
+          description
+            "The tags to match, with the outermost tag to match
+             assigned index 0.";
+          leaf index {
+            type tag-index;
+            description
+              "The index into the tag stack, outermost tag first.";
+          }
+        }
+      }
+    }
+  }
+
+
+  grouping frame-destination-match {
+    description
+      "Flexible match on the Ethernet or IPv4 or IPv6 destination
+       address.";
+    choice frame-filter {
+      description
+        "Identifies the set of frames to which the frame-forwarding
+         action shall apply.
+
+         If no case is configured, then the destination of the frame
+         is not a matching criterion and then, as to this matching
+         criterion, 'all packets match'.";
+      case any-frame {
+        description
+          "Any frame.
+
+           Configuring this 'any-frame' case is equivalent to not
+           configuring any of the cases of this choice and means that
+           'all packets match'. Configuring allows to have some
+           explicit configuration, e.g. in case of the Transparent LAN
+           service.";
+        leaf any-frame {
+          type empty;
+          description
+            "Any frame.";
+        }
+      }
+    }
+  }
+
+}

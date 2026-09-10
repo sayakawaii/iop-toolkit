@@ -1,0 +1,119 @@
+module nokia-ietf-ipv4-unicast-routing-common-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-ietf-ipv4-unicast-routing-common-dev";
+
+  prefix nokia-ietf-ipv4-unicast-routing-common-dev;
+
+  import ietf-ipv4-unicast-routing {
+    prefix v4ur;
+  }
+
+  import ietf-routing {
+    prefix rt;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA IETF/Route YANG module supporting
+     deviations on top of standard.";
+
+/* revision */
+  revision 2023-05-02 {
+    description "Solve yang errors and  canonical order according to RFC 6020.";
+    reference "Nokia specific.";
+  }
+
+  revision 2023-01-23 {
+    description
+      "removed redundant not supported deviation as present in nokia-ietf-routing-common-dev";
+    reference "Nokia specific.";
+  }
+  
+  revision 2021-09-30 {
+    description
+      "Not supported deviations added";
+    reference "Nokia specific.";
+  }
+
+  revision 2019-05-07 {
+    description
+      "Move to common category.";
+    reference
+      "TBD";
+  }
+
+  revision 2016-11-16 {
+    description
+      "Initial revision.";
+    reference
+      "TBD";
+  }
+
+   deviation  "/rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/rt:static-routes/v4ur:ipv4/v4ur:route"{
+       description "Only 1 ipv4 static route can be configured";
+       deviate add {
+           max-elements 1;
+       }
+       
+   }
+
+  deviation "/rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/rt:static-routes/v4ur:ipv4/v4ur:route/v4ur:next-hop/v4ur:next-hop-options/v4ur:simple-next-hop/v4ur:outgoing-interface" {
+    description "Leaf not supported";
+    deviate not-supported;
+    
+  }
+
+  deviation "/rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/rt:static-routes/v4ur:ipv4/v4ur:route/v4ur:next-hop/v4ur:next-hop-options/v4ur:special-next-hop" {
+    description "Leaf not supported";
+    deviate not-supported;
+    
+  }
+
+  deviation "/rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/rt:static-routes/v4ur:ipv4/v4ur:route/v4ur:next-hop/v4ur:next-hop-options/v4ur:next-hop-list" {
+    description "Leaf not supported";
+    deviate not-supported;
+    
+  }
+
+  /* dummy deviations */
+  deviation "/rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/rt:static-routes/v4ur:ipv4/v4ur:route" {
+    description "An ipv4 address must be configured in order to configure an ipv4 route. The error message 'management ip not configured or mismatch' will be displayed when the constraint is violated";
+    deviate add {}
+  }
+
+  deviation "/rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/rt:static-routes/v4ur:ipv4/v4ur:route" {
+    description "The next hop address of an ipv4 route must match the subnet of the configured ipv4 address. The error message 'next hop ipv4 address does not match local subnet' will be displayed when the constraint is violated";
+    deviate add {}
+  }
+
+  deviation "/rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/rt:static-routes/v4ur:ipv4/v4ur:route" {
+    description "The next hop address of an ipv4 route cannot be equal to the network address of the configured ipv4 address. The error message 'next hop ipv4 address cannot be equal to network address' will be displayed when the constraint is violated";
+    deviate add {}
+  }
+
+  deviation "/rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/rt:static-routes/v4ur:ipv4/v4ur:route" {
+    description "The next hop address of an ipv4 route cannot be equal to the broadcast ipv4 address. The error message 'next hop address of ipv4 route cannot be broadcast address' will be displayed when the constraint is violated";
+    deviate add {}
+  }
+
+  deviation "/rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/rt:static-routes/v4ur:ipv4/v4ur:route" {
+    description "The next hop address of an ipv4 route cannot be equal to the multicast ipv4 address. The error message 'next hop address of ipv4 route cannot be multicast address' will be displayed when the constraint is violated";
+    deviate add {}
+  }
+
+  deviation "/rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/rt:static-routes/v4ur:ipv4/v4ur:route" {
+    description "The destination network address of an ipv4 route cannot be equal to the broadcast ipv4 address. The error message 'broadcast address is not valid ipv4 route' will be displayed when the constraint is violated";
+    deviate add {}
+  }
+
+  deviation "/rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/rt:static-routes/v4ur:ipv4/v4ur:route" {
+    description "The destination network address of an ipv4 route cannot be equal to the multicast ipv4 address. The error message 'dest address of ipv4 route can not be multicast address' will be displayed when the constraint is violated";
+    deviate add {}
+  } 
+}

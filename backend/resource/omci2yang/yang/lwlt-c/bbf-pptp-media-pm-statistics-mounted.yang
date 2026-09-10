@@ -1,0 +1,364 @@
+submodule bbf-pptp-media-pm-statistics-mounted {
+  yang-version 1.1;
+  belongs-to bbf-sip-voip-mounted  {
+    prefix bbf-sip-voip-mounted;
+  }
+
+  import bbf-yang-types {
+    prefix bbf-yang;
+  }
+   
+  organization
+    "Broadband Forum <https://www.broadband-forum.org>
+     Common YANG Work Area";
+
+  contact
+    "Comments or questions about this Broadband Forum YANG module
+     should be directed to <mailto:help@broadband-forum.org>.
+     Editor:      Frank Desseyn, ADTRAN
+     Editor:      Nadine Staelens, Nokia
+     PS Leader:   Joey Boyd, ADTRAN
+     PS Leader:   Ken Kerpez, ASSIA
+     WA Director: Joey Boyd, ADTRAN
+     WA Director: Sven Ooghe, Nokia";
+
+  description
+    "This submodule contains a collection of YANG definitions for
+     the media performance statistics.
+     Copyright (c) 2017-2018, Broadband Forum
+     Redistribution and use in source and binary forms, with or
+     without modification, are permitted provided that the following
+     conditions are met:
+     1. Redistributions of source code must retain the above copyright
+        notice, this list of conditions and the following disclaimer.
+     2. Redistributions in binary form must reproduce the above
+        copyright notice, this list of conditions and the following
+        disclaimer in the documentation and/or other materials
+        provided with the distribution.
+     3. Neither the name of the copyright holder nor the names of its
+        contributors may be used to endorse or promote products
+        derived from this software without specific prior written
+        permission.
+     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
+     CONTRIBUTORS \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+     INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+     DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+     CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+     SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+     NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+     CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+     STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+     ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+     ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     The above license is used as a license under copyright only.
+     Please reference the Forum IPR Policy for patent licensing terms
+     <https://www.broadband-forum.org/ipr-policy>.
+     Any moral rights which are necessary to exercise under the above
+     license grant are also deemed granted under this license.
+     This version of this YANG module is part of TR-383; see
+     the TR itself for full legal notices.";
+
+  revision 2020-03-06 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: 2020-03-06.";
+    reference
+      " ";
+  }
+ 
+  grouping pptp-media-pm-statistics {
+// BBOG: grouping is used inside a container augmenting /interfaces-state (or have a container here)
+//       when going to NMDA-style for interfaces then the container becomes config false.
+	leaf sent-rtp-packets {
+	  type bbf-yang:performance-counter32;
+//	  config false;
+	  description
+		"The total amount of RTP packets transmitted 
+		 by this POTS user interface per interval.";
+	}
+	leaf received-rtp-packets {
+	  type bbf-yang:performance-counter32;
+//	  config false;
+	  description
+		"The total amount of RTP packets received by
+		 this POTS user interface per interval.";
+	}
+	leaf lost-rtp-packet {
+	  type bbf-yang:performance-counter32;
+//	  config false;
+	  description
+		"The cumulative number of RTP packets lost at this POTS user
+		 interface for the incoming media streams been established 
+		 due to an incoming or an outgoing call. RFC3550 
+		 Cumulative-Number-Of-Packets-Lost equals: 
+		 (The sum over all media streams)(RTP-Expected-Package) 
+		 minus (the number of RFC3550 Packets-Received)
+		 Whereby, the number of RFC3550 Packets-Received is simply 
+		 the count of packets as they arrive, including any late, 
+		 early and duplicate packets.
+		 In case a media stream crosses the interval boundary, 
+		 the cumulative number of lost RTP packets for that media 
+		 stream is counted per interval.";
+	  reference
+		"RFC 3550 RTP: A Transport Protocol for Real-Time 
+		Applications.";
+	}
+	leaf expected-rtp-packets {
+	  type bbf-yang:performance-counter32;
+//	  config false;
+	  description
+		"The number of RTP packets expected by a POTS user interface
+ 		 for the incoming media streams	been established due to an 
+		 incoming or an	outgoing call.
+		 The number of expected RTP packets per interval equals: 
+		 (The sum over all media streams)(The extended last sequence 
+		 number received) minus (the initial sequence number received).
+		 The number of expected RTP packets counted for	a particular 
+		 media stream during an interval is	based on the receipt of 
+		 the periodic RTCP SR reports received from the other end
+		 (SSRC) within that same interval. 
+		 In case a media stream crosses the interval boundary, the 
+		 number of expected RTP packets	for that media stream is 
+		 counted per interval.";
+	  reference
+		"RFC 3550 RTP: A Transport Protocol for Real-Time 
+		 Applications.";
+	}
+	leaf accepted-rtp-packets {
+	  type bbf-yang:performance-counter32;
+//	  config false;
+	  description
+		"The number of RTP packets accepted by a POTS user interface 
+		 for the incoming media	streams been established due to an 
+		 incoming or an outgoing call.		
+		 The number of accepted RTP packets per interval equals: 
+		 (The sum over all media streams)(the number of RECEIVED 
+		 RTP packets) minus (the number of BAD PROTOCOL RTP packets)
+		 minus (the number of DUPLICATED RTP packets) minus (the 
+		 number of LATE ARRIVED RTP Packets) minus (the number of 
+		 EARLY ARRIVED RTP packets].
+		 In case a media stream crosses the interval boundary, 
+		 the number of accepted RTP packets	for that media stream is 
+		 counted per interval.";
+	  reference
+		"RFC 3550 RTP: A Transport Protocol for Real-Time 
+		 Applications.";
+	}
+	leaf discarded-rtp-packets {
+	  type bbf-yang:performance-counter32;
+//	  config false;
+	  description
+		"The number of discarded RTP packets other than	early or 
+		 late arrival at a SIP user interface for the incoming media
+		 streams established due to an incoming or an outgoing call.
+		 The number of discarded RTP packets other than	late or early
+		 arrivals equals the number of received but not used 
+		 downstream RTP packets, which can be assigned to the SIP 
+		 user interface.
+		 The number of DISCARDED RTP Packets, other than later or 
+		 early arrival, per interval equals: (The sum over all media
+		 streams)(The number of BAD PROTOCOL RTP packets) added	to (
+		 the number of DUPLICATED RTP packets).
+		 In case a media stream crosses the interval boundary, the 
+		 number of discarded RTP packets other than early or late 
+		 arrival for that media	stream is counted per interval.";
+	  reference
+		"RFC 3550 RTP: A Transport Protocol for	Real-Time 
+		 Applications.";
+	}
+	leaf early-arrived-rtp-packets {
+	  type bbf-yang:performance-counter32;
+//	  config false;
+	  description
+		"The number discarded RTP packets due to early or late 
+		 arrival at a SIP user interface for the incoming RTP 
+		 streams established due to an incoming or an outgoing 
+		 call.
+		 The number of early or late arrived RTP packets is the 
+		 number of downstream RTP packets, which can be assigned to 
+		 the SIP user interface, but are received too early 
+		 (jitter buffer over-flow) or too late (jitter buffer 
+		 under-run) and consequently not used for generation of the
+		 voice signal.
+		 The number of RTP packets Lost due to early or	late arrival 
+		 per interval equals:(The sum over all media streams)(the 
+		 number of RECEIVED RTP packets) minus (the number of BAD 
+		 PROTOCOL RTP packets) minus (the number of DUPLICATED RTP
+		 packets) minus (the number of ACCEPTED RTP Packets).
+		 In case a media stream crosses the interval boundary, the
+		 number of discarded RTP packets due to early or late arrival
+		 for that media stream is counted per interval.";
+	  reference
+		"RFC 3550 RTP: A Transport Protocol for Real-Time 
+		 Applications.";
+	}
+	leaf sent-rtp-octets {
+	  type bbf-yang:performance-counter32;
+//	  config false;
+	  description
+		"The total amount of RTP octets transmitted by this POTS
+ 		 user interface.";
+	}
+	leaf received-rtp-octets {
+		type bbf-yang:performance-counter32;
+//		config false;
+		description
+			"The total amount of RTP octets received by 
+			this POTS user interface.";
+	}
+	leaf average-round-trip-delay {
+	  type uint16;
+	  units "1 millisecond";
+//	  config false;
+	  description
+		"The average value of the round trip delay for	media streams
+ 		 established during the interval. One or multiple media 
+		 streams may be established	within the same interval. 
+		 A media stream may start and end within the same interval or
+		 may start and end in a different interval. 
+		 The counter provides the average round trip delay value for 
+		 the media streams and/or parts of media streams that were 
+		 active during the time period monitored from the beginning 
+		 of the interval till the end of that same interval.
+		 As different media streams will be different in duration, 
+		 the average value calculation over multiple media streams is
+		 based on the weighted average algorithm (whereby the 
+		 duration of the individual calls is considered as the 
+		 weight). According to RFC 3550, the round trip delay equals 
+		 the delay between receiving the last SR packet from source 
+		 SSRC_n and sending this reception report block.";
+	  reference
+		  "RFC 3550 RTP: A Transport Protocol for Real-Time 
+		   Applications.";
+	}
+	leaf peak-round-trip-delay {
+	  type uint16;
+	  units "1 millisecond";
+//	  config false;
+	  description
+		"The peak value of the round trip delay for media streams 
+		 established during the interval. One or multiple media 
+		 streams may be established within the same 1interval. 
+		 A media stream may start and end within the same
+		 interval or may start and end in a different interval. 
+		 The counter provides the peak round trip delay	value
+		 for the media streams and/or parts of media streams that
+		 were active during the time period monitored from the 
+		 beginning of the interval till the end of that same 
+		 interval.";
+	  reference
+		"RFC 3550 RTP: A Transport Protocol for	Real-Time 
+		 Applications.";
+	}
+	leaf average-inter-arrival-jitter {
+	  type uint16;
+	  units "1 millisecond";
+//	  config false;
+	  description
+		"The average value of the interarrival jitter for media 
+		 streams established during the interval. One or multiple 
+		 media streams may be established within the same interval. 
+		 A media stream may start and end within the same interval 
+		 or may start and end in a different interval. 
+		 The counter provides the average interarrival jitter value
+		 for the media streams and/or parts of media streams that 
+		 were active during the time period monitored from the 
+		 beginning of the interval till the end of the interval.
+		 As different media streams will be different in duration,
+		 the average value calculation over multiple media streams 
+		 is based on the weighted average algorithm (whereby the 
+		 duration of the individual calls is considered as the 
+		 weight).";
+	  reference
+		"RFC 3550 RTP: A Transport Protocol for Real-Time 
+		 Applications.";
+	}
+	leaf peak-inter-arrival-jitter {
+	  type uint16;
+	  units "1 millisecond";
+//	  config false;
+	  description
+		"The peak value of the interarrival jitter for media streams
+ 		 established during the interval. One or multiple media 
+		 streams may be established within the same interval. 
+		 A media stream may start and end within the same interval or
+		 may start and end in a different interval. 
+		 The counter provides the peak interarrival jitter value for 
+		 the media streams and/or parts of media streams that were 
+		 active during the time period monitored from the beginning 
+		 of the interval till the end of the interval.";
+	  reference
+		"RFC 3550 RTP: A Transport Protocol for Real-Time 
+		 Applications.";
+	}
+	leaf average-jitter-buffer-fill-level-g711alaw {
+	  type bbf-yang:percent;
+	  units "1 percent";
+//	  config false;
+	  description
+		"The average Jitter Buffer Fill Level measured for this POTS
+		 user interface during the receipt of the media streams 
+		 encoded with G711-a-law during the interval. The measurement
+		 includes the receipt of media streams for both, incoming and
+		 outgoing calls.";
+	}
+	leaf average-jitter-buffer-fill-level-g711ulaw {
+	  type bbf-yang:percent;
+	  units "1 percent";
+//	  config false;
+	  description
+		"The average Jitter Buffer Fill Level measured for this POTS
+		 user interface during the receipt of the media streams 
+		 encoded with G711-u-law during the interval. The measurement 
+		 includes the receipt of media streams for both, incoming and 
+	     outgoing calls.";
+	}
+	leaf average-jitter-buffer-fill-level-g722 {
+	  type bbf-yang:percent;
+	  units "1 percent";
+//	  config false;
+	  description
+		"The average Jitter Buffer Fill Level measured for this POTS
+ 		 user interface during the receipt of the media streams 
+		 encoded with G722 during the interval. The measurement
+		 includes the receipt of media streams for both, incoming and
+		 outgoing calls.";
+	}
+	leaf average-jitter-buffer-fill-level-g723 {
+	  type bbf-yang:percent;
+	  units "1 percent";
+//	  config false;
+	  description
+		"The average Jitter Buffer Fill Level measured for this POTS
+		 user interface during the receipt of the media streams 
+		 encoded with G723 during the interval. The measurement 
+		 includes the receipt of media streams for both, incoming and
+		 outgoing calls.";
+	}
+	leaf average-jitter-buffer-fill-level-g726 {
+	  type bbf-yang:percent;
+	  units "1 percent";
+//	  config false;
+	  description
+		"The average Jitter Buffer Fill Level measured for this POTS
+ 		 user interface during the receipt of the media streams 
+		 encoded with G726 during the interval. The measurement 
+		 includes the receipt of media streams for both, incoming and
+		 outgoing calls.";
+	}
+	leaf average-jitter-buffer-fill-level-g729 {
+	  type bbf-yang:percent;
+	  units "1 percent";
+//	  config false;	  
+	  description
+		"The average Jitter Buffer Fill Level measured for this POTS
+ 		 user interface during the receipt of the media streams 
+		 encoded with G729 during the interval. The measurement 
+		 includes the receipt of media streams for both, incoming and
+		outgoing calls.";
+	}
+  }	  
+}

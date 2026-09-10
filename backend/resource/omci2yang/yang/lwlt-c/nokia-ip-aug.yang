@@ -1,0 +1,228 @@
+module nokia-ip-aug {
+  yang-version 1.1;
+
+  namespace "urn:ietf:params:xml:ns:yang:nokia-ip-aug"; 
+
+  prefix ip-aug;
+    
+  import iana-if-type {
+    prefix ianaift;
+  }
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import ietf-routing {
+    prefix "rt";
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be 
+     directed to <mailto:isam.mibsupport@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG definitions for 
+     supporting Nokia specific requirements as applicable to its 
+     access network equipment.
+     
+     Specifically, this module augments ???????.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia 
+     reserves the right to revise this document for any reason, 
+     including but not limited to conformity with standards 
+     promulgated by various agencies, utilisation of advances in the 
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or 
+     referred to herein.
+
+     The product specifications and other technical or performance 
+     information contained herein are subject to change without 
+     notice. Updates of this document will be issued under the above 
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any 
+     information or opinion contained herein. Nokia expressly advises 
+     that any use of for any purpose or reliance upon this technical 
+     reference is at the risk of the user and that Nokia shall not be 
+     liable for any damage or injury incurred by any person arising 
+     out of the sufficiency, accuracy, or utility of any information 
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any 
+     manufacturer to modify or change any of its products, nor does 
+     this document represent any commitment by Nokia to sell or 
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license 
+     or right under any patent, whether or not the use of any 
+     information herein necessarily employs an invention of any 
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these 
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2017, Nokia. All Rights Reserved.";
+
+  revision 2025-07-24 {
+    description "Remove unused operational state container ipif-lower-layer";
+    reference "BBN-289524";
+  }
+
+  revision 2024-11-07 {
+    description "Typeb x-shelf changes.";
+    reference "Nokia specific";
+  }
+  revision 2023-03-30 {
+    description "Solve yang errors.";
+    reference "Nokia specific";
+  }
+  revision 2022-03-18 {
+    description
+      "Adding control protocol name reference";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2020-07-02 {
+    description
+      "Adding one more bit mgnt-access in the leaf tag-ip-intf
+       to have a mgnt access for the non inband interface.
+       Adding notification for subnet-conflict-error";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2019-11-18 {
+    description
+      "Moved ipif-lower-layer container out of ipv4 container to make it
+       common to both ipv4 and ipv6 and added a leaf tag-ip-intf to
+       tag inband interface";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2017-08-01 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: yyyy-mm-dd.";
+    reference
+      "Nokia specific"; 
+  }
+
+  augment "/if:interfaces/if:interface" {
+    when "if:type = 'ianaift:ipForward'" {
+      description
+        "Port type is ipForward.";
+    }      
+
+    container ipif-lower-layer {
+      presence
+        "This leaves provides the lower layer within the interface stack";
+
+      description
+        "Link ip interface to a lower layer network-port sub-interface";
+
+      leaf sub-interface {
+        type if:interface-ref;
+        mandatory true;
+          description
+            "References the lower layer interface";
+      }
+    }
+
+    container control-protocol {
+      presence
+        "This leaf provides the control protocol name within the interface stack";
+
+      description
+        "Link ip interface to control protocol name";
+
+      leaf name {
+          type leafref {
+             path "/rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/rt:name";
+          }
+          description
+               "References the control protocol name";
+       }
+    }
+ 
+    container tag-ip-intf {
+      presence "Enables tagging of an IP interface to specific functionality";
+        leaf tag-ip-intf {
+          type bits {
+            bit inband-mgnt {
+              position 0;
+              description
+                "This bit is used to tag this IP interface for generic
+                 inband management. The same inband interface is used
+                 for Call-home connection and also persisted in NOR";
+              
+            }
+            bit mgnt-access {
+              position 1;
+              description
+                "This bit is used to allow NETCONF/CLI/[TELNET]/DEBUG
+                 access for this IP-interface. This bit is not persisted
+                 in NOR";
+              
+            }
+            bit inter-shelf-mgnt {
+              position 2;
+              description
+                "This bit is used to tag this IP interface for
+                 inter-shelf management";
+            }
+          }
+          description
+            "This IP interface can't be tagged for any specific functionality
+             if the leaf is empty";
+        }
+        description "The view of the tag ip interface.";
+    }
+    description "The view of the interface structure.";
+ }
+  /* Operational state data nodes */
+  augment "/if:interfaces-state/if:interface" {
+
+    container control-protocol {
+      config false;
+
+      description
+        "Link ip interface to control protocol name";
+
+      leaf name {
+          type string;
+          description
+               "References the control protocol name";
+       }
+    }
+    description "The view of interface.";
+  }
+  
+
+  notification subnet-conflict-error {
+    description
+      "A notification indicating that there is a conflict in the
+       IP address assignment for one of the ipForwarding interfaces.";
+
+    leaf reason {
+       type string;
+       description
+         "Subnet conflict between the ipForwarding interfaces";
+    }
+
+    leaf details {
+       type string;
+       description
+         "Contains IP and netmask/prefix configured for the ipFowarding
+          as a additional detail";
+    }
+ }
+  
+}

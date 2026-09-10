@@ -1,0 +1,160 @@
+module nokia-ietf-system-mounted-eonu-dev {
+    namespace "urn:ietf:params:xml:ns:yang:nokia-ietf-system-mounted-eonu-dev";
+    prefix nokia-ietf-system-mounted-eonu-dev;
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+    import ietf-system-mounted {
+      prefix sys-mounted;
+    }
+
+   import ietf-inet-types {
+      prefix inet;
+   }
+    organization
+      "Nokia";
+
+    contact
+      "isam.yang@nokia.com";
+
+    description
+      "The NOKIA IETF/System YANG module supporting
+     deviations on top of standard.";
+    
+  /* revision */
+  revision 2024-11-20 {
+    description
+      "Adding Deviations for not-supported set-current-datetime, system-restart and system-shutdown";
+    reference
+      "Sub-task BBN-250454";
+  }
+
+  revision 2024-01-02 {
+    description
+      "Adding Deviations for not-supported system-state platform and clock";
+    reference
+      "Nokia specific";
+  }
+
+    revision 2022-04-05 {
+      description
+        "Adding deviations for timezone-name and timezone-utc-offset.";
+      reference
+        "Nokia Specific.";
+    }
+
+    revision 2022-01-13 {
+      description
+        "Initial revision.";
+      reference
+        "Nokia Specific.";
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/sys-mounted:system/sys-mounted:contact" {
+      description
+        "This deviation assures that contact leaf is not supported.";
+      deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/sys-mounted:system/sys-mounted:hostname" {
+      description
+        "This deviation assures that hostname leaf is not supported.";
+      deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/sys-mounted:system/sys-mounted:location" {
+      description
+        "This deviation assures that location leaf is not supported.";
+      deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/sys-mounted:system/sys-mounted:dns-resolver/sys-mounted:search" {
+      description
+        "This deviation assures that search leaf-list is not supported.";
+      deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/sys-mounted:system/sys-mounted:dns-resolver/sys-mounted:options" {
+      description
+        "This deviation assures that options leaf is not supported.";
+      deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/sys-mounted:system/sys-mounted:clock/sys-mounted:timezone/sys-mounted:timezone-utc-offset/sys-mounted:timezone-utc-offset" {
+      deviate add
+        {
+          must "((. <= 840) and (. >= -780) and (. mod 15 = 0))" {
+            error-message "A timezone offset must be on a 15 minute boundary and between -780 and +840 minutes, both boundaries included.";
+          }
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/sys-mounted:system/sys-mounted:clock/sys-mounted:timezone/sys-mounted:timezone-name/sys-mounted:timezone-name" {
+      description
+        "The valid timezone names are those defined in the IANA time zone
+        database present on the host OS.  If user tries to set an invalid timezone name the error
+        message 'invalid timezone name' appears.";
+      deviate add {
+        } // in-app validation
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/sys-mounted:system/sys-mounted:dns-resolver/sys-mounted:server/sys-mounted:transport/sys-mounted:udp-and-tcp/sys-mounted:udp-and-tcp/sys-mounted:address" {
+      deviate replace {
+        type inet:ipv4-address-no-zone;
+      }
+      /* Is Loopback IPv4 address(127.0.0.0 - 127.255.255.255) */
+      deviate add {
+        must "(substring-before(.,'.') != 127)" {
+              error-message "Loopback IPv4 address is invalid for DNS address";
+              description "Loopback IPv4 address is invalid to configure as DNS address";
+        }
+      }
+      /* IS_CLASSD (224.0.0.0 to 239.255.255.255) ?  */
+      deviate add {
+        must "not((substring-before(.,'.') >= 224)
+              and (substring-before(.,'.') <= 239))" {
+              error-message "224.0.0.0 - 239.255.255.255 are invalid for DNS address";
+              description "IPv4 address range from 224.0.0.0 to 239.255.255.255  are invalid to configure as DNS address ";
+        }
+      }
+      /* Is address.IS_ALL 1s ? */
+      deviate add {
+        must "current() != '255.255.255.255'" {
+              error-message "255.255.255.255 is invalid for DNS address";
+              description "IPv4 address 255.255.255.255 is invalid to configure as DNS address ";
+        }
+      }
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/sys-mounted:system-state/sys-mounted:platform" {
+    description
+      "This deviation assures that platform container is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/sys-mounted:system-state/sys-mounted:clock" {
+    description
+      "This deviation assures that clock container is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/sys-mounted:set-current-datetime" {
+    description
+      "This deviation assures that set-current-datetime container is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/sys-mounted:system-restart" {
+    description
+      "This deviation assures that system-restart is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/sys-mounted:system-shutdown" {
+    description
+      "This deviation assures that system-shutdown is not supported.";
+    deviate not-supported;
+  }
+}

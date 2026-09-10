@@ -1,0 +1,240 @@
+submodule bbf-sip-voip-base-mounted {
+  yang-version 1.1;
+  belongs-to bbf-sip-voip-mounted  {
+    prefix bbf-sip-voip-mounted;
+  }  
+  
+  import bbf-fiber-onu-emulated-mount {
+     prefix onu;
+  }
+
+  import nokia-template-common {
+    prefix template-common;
+  }   
+  
+  organization
+    "Broadband Forum <https://www.broadband-forum.org>
+     Common YANG Work Area";
+
+  contact
+    "Comments or questions about this Broadband Forum YANG module
+     should be directed to <mailto:help@broadband-forum.org>.
+     Editor:      Frank Desseyn, Nokia
+     Editor:      Nadine Staelens, Nokia
+     PS Leader:   Joey Boyd, ADTRAN
+     PS Leader:   Ken Kerpez, ASSIA
+     WA Director: Joey Boyd, ADTRAN
+     WA Director: Sven Ooghe, Nokia";
+
+  description
+    "This submodule contains a collection of YANG definitions for
+     managing SIP voip services and augmentations to
+     ietf-interfaces for sip signaling, media and POTS user
+	 interfaces.
+    Copyright (c) 2017-2018, Broadband Forum
+     Redistribution and use in source and binary forms, with or
+     without modification, are permitted provided that the following
+     conditions are met:
+     1. Redistributions of source code must retain the above copyright
+        notice, this list of conditions and the following disclaimer.
+     2. Redistributions in binary form must reproduce the above
+        copyright notice, this list of conditions and the following
+        disclaimer in the documentation and/or other materials
+        provided with the distribution.
+     3. Neither the name of the copyright holder nor the names of its
+        contributors may be used to endorse or promote products
+        derived from this software without specific prior written
+        permission.
+     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
+     CONTRIBUTORS \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+     INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+     DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+     CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+     SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+     NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+     CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+     STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+     ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+     ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     The above license is used as a license under copyright only.
+     Please reference the Forum IPR Policy for patent licensing terms
+     <https://www.broadband-forum.org/ipr-policy>.
+     Any moral rights which are necessary to exercise under the above
+     license grant are also deemed granted under this license.
+     This version of this YANG module is part of TR-383; see
+     the TR itself for full legal notices.";
+
+  revision 2021-03-24 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: 2020-03-06.";
+    reference
+      " ";
+  }
+  
+  typedef string-or-empty {
+    type string {
+	  length "0..63";
+	}
+	description
+	  "Used where a string is needed which has a maximum 
+	   length of 63 characters and also allows for a null
+	   string (length = 0).";
+  }
+  
+   typedef name-string128 {
+    type string {
+      length "1..128";
+    }
+    description
+      "Used where a string is needed which has a maximum length of
+       128 characters and a minimum length of 1 character.";
+  }
+  
+  feature sip-voip-service {
+    description
+      "The SIP signaling based VoIP service is supported.";
+  }
+
+  feature sip-pots-service {
+    description
+      "The POTS service is supported.";
+  }
+
+  feature sip-pots-termination {
+	description
+	  "The NE requires the configuration of SIP POTS terminations.";
+	  
+  }
+  
+  feature digit-manipulation {
+    description
+	  "The NE requires the configuration of digit manipulation rules.";
+  } 
+  
+  feature vm-servers {
+    description
+	  "The NE requires the configuration of voice mail servers.";
+  } 
+  
+  feature subscriptions {
+    description
+	  "The NE requires the configuration of subscriptions for 
+	   sip event packages.";
+  } 
+// BBOG below features have been added to define 2 styles of notifications
+// In the end we should choose one and get rid these features.
+
+  feature specific-notifications {
+    description
+      "This style associates an event with a specific notification,
+       the event is identified by the notification name.";
+  }
+
+  feature generic-notification {
+    description
+      "This style defines one notification per resource,
+       the event is identified by a leaf containing an identityref.";
+  }
+
+ augment '/onu:onus/onu:onu/onu:root' {
+  when "derived-from-or-self(../onu:usage, 'template-common:node-actual-usage') or "
+       + "derived-from-or-self(../onu:usage, 'template-common:node-template-usage')" {
+     description
+       "it should be a node-actual-usage or node-template-usage ONU";
+  } 	  
+  container sip-profiles {
+    container supplementary-services-profiles {
+	    description
+		  "The supplementary services configuration.";
+    }
+    container digit-manipulation-rule-profiles {
+	if-feature digit-manipulation;
+	  description
+	    "The digit manipulation rules configuration.";
+    }
+    container dialplan-digitmap-profiles {
+	  description
+		"The dialplan digitmap configuration profiles.";
+    } 
+    container subscription-profiles {
+	if-feature subscriptions;
+	  description
+		"The subscription profiles.";
+    }
+    container feature-access-codes-profiles {
+	  description
+		"The supplementary services feature access code profiles."; 
+    }
+    container sip-registerchar-profiles {
+	  description
+		"The SIP register characteristics configuration.";
+    }
+    container sip-protocol-data-profiles {
+	  description
+	    "The sip protocol related configuration data.";
+    }
+  }
+  
+  container sip-signaling {
+    description
+	  "The SIP signaling configuration nodes."; 
+    container sip-user-agents {
+	  description
+	    "The sip user agent configuration node.";
+    }
+    container voip-service-gateways {
+      description
+	    "The Voip Service Gateway (VSG) configuration node.";		   	    
+    } 
+    container sip-terminations {
+	  description
+	    "The SIP termination configuration node.";
+    }
+    container voip-access-gateways {
+      description
+	    "The Voip Access Gateway (VAG) configuration nodes.";
+    }
+    container sip-server-pools {
+	  description
+	    "The sip server pool configuration nodes.";
+    }
+    container voicemail-servers {
+// BBOG dependant on feature
+          if-feature vm-servers;
+	  description
+	    "The voice mail server configuration nodes.";
+    }
+    container voip-service-providers {
+      description
+	    "The Voip Service Provider (VSP) configuration node.";  
+    } 
+  }
+ }
+
+ augment '/onu:onus/onu:onu/onu:root' {
+  when "derived-from-or-self(../onu:usage, 'template-common:node-actual-usage') or "
+       + "derived-from-or-self(../onu:usage, 'template-common:node-from-template-usage')" {
+     description
+       "it should be a node-actual-usage or node-from-template-usage ONU";
+  }
+   container sip-signaling-state {
+    config false;
+    description
+      "The SIP signaling state nodes.";
+    container sip-user-agents {
+      config false;
+        description
+          "The sip user agent state node.";
+    }
+    container sip-terminations {
+      config false;
+        description
+          "The SIP termination state node.";
+    }
+  }
+ }
+}

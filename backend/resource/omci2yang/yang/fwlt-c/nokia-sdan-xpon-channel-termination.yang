@@ -1,0 +1,143 @@
+module nokia-sdan-xpon-channel-termination{
+ yang-version 1.1;
+ namespace "urn:broadband-forum-org:yang:nokia-sdan-xpon-channel-termination";
+
+prefix nokia-sdan-xpon-channel-termination;
+
+import bbf-xpon{
+    prefix bbf-xpon;
+}
+
+import nokia-sdan-xpon-types {
+    prefix nokia-sdan-xpon-types;
+}
+
+import nokia-sdan-hspon-types {
+    prefix nokia-sdan-hspon-types;
+}
+
+import ietf-interfaces {
+    prefix if;
+  }
+
+organization
+  "Nokia";
+
+contact
+  "Comments or questions about this Nokia YANG module should be
+  directed to <mailto:isam.yang@nokia.com>.";
+
+description
+  "This specification is published by Nokia under Non-Disclosure
+  Agreement(s) (NDA) with specific parties and has to be considered
+  as Confidential Information as defined in such NDA. Nokia reserves
+  the right to revise this document for any reason, including but
+  not limited to conformity with standards promulgated by various
+  agencies, utilization of advances in the state of the technical
+  areas, or the reflection of changes in the design of any
+  equipment, techniques, or procedures described or referred to
+  herein.
+
+  The product specifications and other technical or performance
+  information contained herein are subject to change without notice.
+  Updates of this document will be issued under the above NDA's.
+
+  Nokia makes no representation or warranty, expressed or implied,
+  with respect to the sufficiency, accuracy, or utility of any
+  information or opinion contained herein. Nokia expressly advises
+  that any use of for any purpose or reliance upon this technical
+  reference is at the risk of the user and that Nokia shall not be
+  liable for any damage or injury incurred by any person arising out
+  of the sufficiency, accuracy, or utility of any information or
+  opinion contained herein.
+
+  This document is not to be construed as a suggestion to any
+  manufacturer to modify or change any of its products, nor does
+  this document represent any commitment by Nokia to sell or
+  purchase any product. Nothing contained herein shall be construed
+  as conferring by implication, estoppel, or otherwise any license
+  or right under any patent, whether or not the use of any
+  information herein necessarily employs an invention of any
+  existing or later issued patent.
+
+  Nokia reserves the right not to offer any or all of these products
+  and to withdraw any or all of them at any future time.
+
+  Copyright (C) 2022, Nokia. All Rights Reserved";
+
+revision 2022-08-30 {
+    description
+      "add host-id for standby pon of type-b protection.";
+    reference
+      "TBD";
+}
+
+revision 2022-06-07 {
+  description
+    "add HSPON admin label.";
+  reference
+    "TBD";
+}
+
+revision 2022-03-09 {
+  description
+    "add Nokia under Non-Disclosure Agreement(s)";
+  reference
+    "TBD";
+}
+
+revision 2021-12-24 {
+  description
+    "Initial revision.";
+  reference
+    "TBD";
+}
+
+  augment '/if:interfaces/if:interface/bbf-xpon:channel-termination' {
+    description " augment channel termination";
+    leaf twentyfivegs-pon-id {
+      when  "derived-from-or-self"
+           + "(../bbf-xpon:channel-termination-type,"
+           + "'nokia-sdan-xpon-types:twentyfivegs')";
+      type uint32 {
+        range "0..4294967295";
+        // this is 2**32-1
+      }
+      description
+        "For 25GS-PON, the pon-id is entirely configurable and is
+         32 bit long. The pon-id is also available as state
+         data.";
+      reference
+        "25GS-PON MSA, based on ITU-T G.9807.1 section C.10.1.1.1.3";
+    }
+  }
+
+  augment '/if:interfaces/if:interface/bbf-xpon:channel-termination' {
+    description "augment channel termination";
+    leaf hs-pon-admin-label {
+      when "derived-from-or-self"
+           + "(../bbf-xpon:channel-termination-type,"
+           + "'nokia-sdan-hspon-types:hs-pon')"; 
+      type uint32 {
+        range "0..268435455";
+        // this is 2**28-1
+      }
+      description
+        "For HS-PON, the admin-label is configurable and is
+         28 bit long. It is the configurable part of the PON
+         Identifier (PON-ID) which is available as state data.";
+      reference
+        "ITU-T G.9804.2 section 10.1.1.3";
+    }
+
+    leaf host-id-of-primary-side {
+        type uint32 {
+            range 1..524287;
+        }
+        description
+            "when pon is in typeb protection, and is selected as standby,
+            the system level host-id of the device which hosts primary pon
+            should be configured to the secondary pon.";
+    }
+  }
+}

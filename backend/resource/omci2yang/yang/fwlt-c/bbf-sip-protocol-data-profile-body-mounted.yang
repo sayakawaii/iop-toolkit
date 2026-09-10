@@ -1,0 +1,269 @@
+submodule bbf-sip-protocol-data-profile-body-mounted {
+  yang-version 1.1;
+  belongs-to bbf-sip-voip-mounted  {
+	prefix bbf-sip-voip-mounted;
+  }
+  
+  organization
+    "Broadband Forum <https://www.broadband-forum.org>
+     Common YANG Work Area";
+
+  contact
+    "Comments or questions about this Broadband Forum YANG module
+     should be directed to <mailto:help@broadband-forum.org>.
+     Editor:      Frank Desseyn, Nokia
+     Editor:      Nadine Staelens, Nokia
+     PS Leader:   Joey Boyd, ADTRAN
+     PS Leader:   Ken Kerpez, ASSIA
+     WA Director: Joey Boyd, ADTRAN
+     WA Director: Sven Ooghe, Nokia";
+
+  description
+    "This submodule contains a collection of YANG definitions 
+	 used by the sip protocol handler.
+     Copyright (c) 2017-2018, Broadband Forum
+     Redistribution and use in source and binary forms, with or
+     without modification, are permitted provided that the following
+     conditions are met:
+     1. Redistributions of source code must retain the above copyright
+        notice, this list of conditions and the following disclaimer.
+     2. Redistributions in binary form must reproduce the above
+        copyright notice, this list of conditions and the following
+        disclaimer in the documentation and/or other materials
+        provided with the distribution.
+     3. Neither the name of the copyright holder nor the names of its
+        contributors may be used to endorse or promote products
+        derived from this software without specific prior written
+        permission.
+     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
+     CONTRIBUTORS \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+     INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+     DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+     CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+     SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+     NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+     CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+     STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+     ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+     ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     The above license is used as a license under copyright only.
+     Please reference the Forum IPR Policy for patent licensing terms
+     <https://www.broadband-forum.org/ipr-policy>.
+     Any moral rights which are necessary to exercise under the above
+     license grant are also deemed granted under this license.
+     This version of this YANG module is part of TR-383; see
+     the TR itself for full legal notices.";
+
+  revision 2020-03-06 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: 2020-03-06.";
+    reference
+      " ";
+  }     
+
+  grouping sip-protocol-data-profile-body {
+	leaf timer-A {
+ 	  type uint16 {range "100..1000";}
+ 	  units milliseconds;
+	  default 500; 			
+ 	  description
+ 		"This object reflects the initial value	for the retransmit
+		 timer for the INVITE method. The retransmit timer doubles
+		 after each retransmission, ensuring an exponential back-off
+		 in network traffic. This object represents	the initial time 
+		 a SIP entity will wait to receive a provisional response to
+		 an	INVITE before resending the INVITE request.	This timer 
+		 is only applicable for udp.";
+ 	}
+ 	leaf timer-B {
+ 	  type uint16 {range "2000..64000";}
+ 	  units milliseconds;
+	  default 32000;			
+ 	  description
+ 		"This object reflects the maximum time a SIP entity will wait
+		 to receive a final response to an INVITE.  The timer is 
+		 started upon transmission of the initial INVITE request.";
+	}
+	leaf timer-C {
+ 	  type uint32 {range "180000..300000";}
+ 	  units milliseconds;
+	  default 180000; 			
+ 	  description
+ 		"This object reflects the maximum time a SIP Proxy Server 
+		 will wait to receive a provisional	response to an INVITE. 
+		 The Timer C MUST be set for each client transaction when 
+		 an INVITE request is proxied.";
+ 	}
+ 	leaf timer-D {
+ 	  type uint32 {range "0..300000";}
+	  units milliseconds;
+ 	  default 32000; 			
+ 	  description
+ 		"This object reflects the amount of time that the server 
+		 transaction can remain in the <Completed> state when 
+		 unreliable transports are used.  The default value MUST
+		 be equal to or greater than 32000 for UDP transport,
+ 		 and its value MUST be 0 for TCP/SCTP transport.";
+ 	}
+  	leaf timer-E {
+ 	  type uint16 {range "100..1000";}
+	  units milliseconds;
+ 	  default 500; 			
+ 	  description
+ 		"This object reflects the initial value for the retransmit
+		 timer for a non-INVITE method while in <Trying> state.  
+		 The retransmit timer doubles after each retransmission 
+		 until it reaches T2 to ensure an exponential backoff in
+ 		 network traffic. This object represents the initial time 
+		 a SIP entity will wait	to receive a provisional response 
+		 to the request before resending the non-INVITE request.
+		 This timer is only applicable for udp.";
+ 	}
+    leaf timer-F {
+ 	  type uint16 {range "2000..64000";}
+	  units milliseconds;
+ 	  default 32000;			
+ 	  description
+ 		"This object reflects the maximum time a SIP entity will
+		 wait to receive a final response to a non-INVITE request.  
+		 The timer is started upon transmission of the initial 
+		 request.";
+ 	}
+  	leaf timer-G {
+ 	  type uint16 {range "0..1000";}
+	  units milliseconds;
+ 	  default 500;			
+ 	  description
+ 		"This object reflects the initial value for the retransmit
+		 timer for final responses to INVITE requests.  If timer G 
+		 fires, the response is passed to the transport layer again
+		 for retransmission, and timer G is set	to fire in 
+		 MIN(2*T1, T2) seconds.  From then on, when timer G fires, 
+		 the response is passed to the transport again for 
+		 transmission, and timer G is reset with a value that 
+		 doubles, unless that value exceeds T2, in which case, it is 
+		 reset with the value of T2.  The default value MUST be T1 
+		 for UDP transport, and	its value MUST be 0 for reliable 
+		 transport like	TCP/SCTP.";
+ 	}
+    leaf timer-H {
+ 	  type uint32 {range "32000..300000";}
+	  units milliseconds;
+ 	  default 32000;  			
+ 	  description
+ 		"This object reflects the maximum time a server will wait
+		 to receive an ACK before it abandons retransmitting the 
+		 response. The timer is	started upon entering the 
+		 <Completed> state.";
+ 	}
+    leaf timer-I {
+ 	  type uint16 {range "0..10000";}
+	  units milliseconds;
+ 	  default 5000; 			
+ 	  description
+ 		"This object reflects the maximum time a SIP entity will 
+		 wait to receive additional ACK message retransmissions.
+		 The timer is started upon entering the <Confirmed> state.
+		 The default value MUST be T4 for UDP transport and	its value
+		 MUST be 0 for reliable transport like TCP/SCTP.";
+ 	}
+  	leaf timer-J {
+ 	  type uint32 {range "32000..300000";}
+	  units milliseconds;
+ 	  default 32000;			
+ 	  description
+ 		"This object reflects the maximum time a SIP server will wait 
+		 to receive retransmissions of non-INVITE requests.  
+		 The timer is started upon entering the <Completed> state for
+		 non-INVITE	transactions.  When timer J fires, the server 
+		 MUST transition to the <Terminated> state.";
+ 	}
+   	leaf timer-K {
+ 	  type uint16 {range "0..10000";}
+	  units milliseconds;
+ 	  default 5000; 			
+ 	  description
+ 		"This object reflects the maximum time a SIP client will wait
+		 to receive retransmissions of responses to non-INVITE 
+		 requests. The timer is	started upon entering the <Completed>
+		 state for non-INVITE transactions.  When timer K fires, the 
+		 server MUST transition to the <Terminated> state.  The 
+		 default value MUST be T4 for UDP transport, and its value 
+		 MUST be 0 for reliable transport like TCP/SCTP.";
+ 	}			
+	leaf timer-L {
+ 	  type uint16 {range "2000..64000";}
+	  units milliseconds;
+ 	  default 32000; 			
+ 	  description
+ 		"This object reflects the amount of time the sip server
+		 could receive retransmission of INVITE requests and 
+		 avoids that the INVITE retransmission are processed as 
+	     new INVITE requests. When a 2xx response is received for the
+		 INVITE the Invite Server transaction transitions to the 
+		 <Accepted> state and Timer L is started, being set to 64*T1..
+		 When Timer L fires and the state machine is in the 
+		 <Accepted> state, the machine MUST transition to the 
+		 <Terminated> state. Once the transaction is in the 
+		 <Terminated> state, it MUST be destroyed immediately.";
+ 	}			
+	leaf timer-M {
+ 	  type uint16 {range "2000..64000";}
+	  units milliseconds;
+ 	  default 32000; 			
+ 	  description
+ 		"This object reflects the maximum time the sip client
+		 will wait to receive any retransmissions of the 2xx response
+		 and any additional 2xx responses from other branches 
+		 of the INVITE if it forked downstream. It allows to 
+		 distinguish 2xx retransmit responses from stray 2xx 
+		 responses.
+		 If a 2xx response is received while the client INVITE state 
+		 machine is in the <Calling> or <Proceeding> states, 
+		 it MUST transition to the <Accepted> state, pass the 
+		 2xx response to the TU, and start Timer M, being set to 
+		 64*T1.
+		 When Timer M fires and the state machine is in the 
+		 <Accepted> state, the machine MUST transition to the 
+		 <Terminated> state.
+		 Once the transaction is in the <Terminated> state, 
+		 it MUST be destroyed immediately.";
+ 	}				
+   	leaf timer-T1 {
+ 	  type uint16 {range "200..10000";}
+	  units milliseconds;
+ 	  default 500;			
+ 	  description
+ 		"This object reflects the T1 timer for a SIP entity.  T1
+		is an estimate of the round-trip time (RTT) between the 
+		client and server transactions.";
+ 	}
+ 	leaf timer-T2 {
+ 	  type uint16 {range "200..10000";}
+	  units milliseconds;
+ 	  default 4000;			
+ 	  description
+ 		"This object reflects the T2 timer for a SIP entity. T2 
+		 is the maximum retransmit interval for non-INVITE requests 
+		 and INVITE responses.
+		 It is used in various parts of the protocol to
+		 reset other Timer objects to this value.";
+ 	}
+ 	leaf timer-T4 {
+ 	  type uint16 {range "200..10000";}
+	  units milliseconds;
+ 	  default 5000; 			
+ 	  description
+ 		"This object reflects the T4 timer for a SIP entity. T4 is 
+		 the maximum duration a message will remain in the network.
+		 It represents the amount of time the network will take to 
+		 clear messages between client and server transactions.
+		 It is used in various parts of the protocol to reset other 
+		 Timer objects to this value.";
+ 	}
+  }
+} 

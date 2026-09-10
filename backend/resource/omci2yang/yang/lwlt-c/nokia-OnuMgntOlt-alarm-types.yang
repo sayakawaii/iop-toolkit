@@ -1,0 +1,248 @@
+module nokia-OnuMgntOlt-alarm-types {
+     yang-version 1.1;
+     namespace "https://www.nokia.com/Fixed-Networks/BBA/yang/nokia-OnuMgntOlt-alarm-types";
+     prefix OnuMgntOlt-al;
+
+     import nokia-base-alarm-types {
+         prefix base-al;
+     }
+
+     organization
+      "Nokia";
+
+     contact
+      "Comments or questions about this Nokia YANG module should be
+       directed to <mailto:isam.yang@nokia.com>.";
+
+     description
+       "This module provides the details of supported OnuMgntOlt alarm types.
+
+        This specification is published by Nokia under Non-Disclosure
+        Agreement(s) (NDA) with specific parties and has to be considered
+        as Confidential Information as defined in such NDA. Nokia
+        reserves the right to revise this document for any reason,
+        including but not limited to conformity with standards
+        promulgated by various agencies, utilisation of advances in the
+        state of the technical areas, or the reflection of changes in the
+        design of any equipment, techniques, or procedures described or
+        referred to herein.
+
+        The product specifications and other technical or performance
+        information contained herein are subject to change without
+        notice. Updates of this document will be issued under the above
+        NDA's.
+
+        Nokia makes no representation or warranty, expressed or implied,
+        with respect to the sufficiency, accuracy, or utility of any
+        information or opinion contained herein. Nokia expressly advises
+        that any use of for any purpose or reliance upon this technical
+        reference is at the risk of the user and that Nokia shall not be
+        liable for any damage or injury incurred by any person arising
+        out of the sufficiency, accuracy, or utility of any information
+        or opinion contained herein.
+
+        This document is not to be construed as a suggestion to any
+        manufacturer to modify or change any of its products, nor does
+        this document represent any commitment by Nokia to sell or
+        purchase any product. Nothing contained herein shall be construed
+        as conferring by implication, estoppel, or otherwise any license
+        or right under any patent, whether or not the use of any
+        information herein necessarily employs an invention of any
+        existing or later issued patent.
+
+        Nokia reserves the right not to offer any or all of these
+        products and to withdraw any or all of them at any future time.
+
+        Copyright (C) 2018, Nokia. All Rights Reserved.";
+
+     revision 2026-08-20 {
+      description
+        "adding omci-sma-failed";
+      reference
+        "Nokia specific";
+     }
+
+     revision 2023-04-06 {
+      description
+        "remove onu-optical-power-error";
+      reference
+        "Nokia specific";
+     }
+
+     revision 2023-03-09 {
+      description
+        "Onu Managment OLT alarms";
+      reference
+        "Nokia specific";
+     }
+
+     revision 2022-08-12 {
+       description
+         "adding rogue-onu-detected alarm";
+       reference
+         "Nokia specific";
+     }
+
+     revision 2022-06-01 {
+       description
+         "extending with alarm identity for exeeding ploam
+         ";
+       reference
+         "Nokia specific";
+     }
+
+     revision 2021-02-05 {
+       description
+         "Rename yang with nokia prefix.
+           - nokia-OnuMgntOlt-alarm-types
+         ";
+       reference
+         "Nokia specific";
+     }
+
+     revision 2020-05-29 {
+      description
+        "Onu Managment OLT alarms";
+      reference
+        "Nokia specific";
+     }
+
+     revision 2020-04-30 {
+      description
+        "Onu Managment OLT alarms";
+      reference
+        "Nokia specific";
+     }
+
+     revision 2018-04-23 {
+      description
+        "Onu Managment OLT alarms";
+      reference
+        "Nokia specific";
+     }
+
+
+    identity OnuMgntOlt {
+        base base-al:communications-alarm;
+         description
+            "Abstract alarm type for OnuMgntOlt alarms";
+    }
+
+
+// ---- draft proposal alarm identifiers for OnuMgntOlt ----
+
+
+    identity onu-loss-of-phy-layer {
+        base OnuMgntOlt;
+        description
+            "Loss of physical connectivity with ONU.";
+    }
+
+    identity onu-physical-equipment-error {
+        base OnuMgntOlt;
+        description
+            "Physical equipment error message (PEEi) received from ONU.";
+    }
+
+    identity onu-startup-failure {
+        base OnuMgntOlt;
+        description
+            "Start-up failure (SUFi) detected while activating ONU.";
+    }
+
+    identity onu-upstream-signal-degradation {
+        base OnuMgntOlt;
+        description
+            "Upstream BER exceeds signal degradation (SDi) threshold.";
+    }
+
+    identity onu-disabled {
+        base OnuMgntOlt;
+        description
+            "ONU has been autonomously disabled because of misbehaving transmissions. This is actually a defense alarm so that the ONU doesn't affect the entire PON.";
+    }
+
+    identity onu-message-error {
+        base OnuMgntOlt;
+        description
+            "Invalid PLOAM message received from ONU (MEMi).";
+    }
+
+    identity absence-of-phy {
+        base OnuMgntOlt;
+        description
+            "presumed absence of PHY connectivity for ONU.";
+    }
+
+    identity onu-dying-gasp {
+        base OnuMgntOlt;
+        description
+            "Loss of signal detected for ONU because of ONU power failure (DGi).";
+    }
+
+    identity onu-deactivation-failure {
+        base OnuMgntOlt;
+        description
+            "Deactivation failure (DFi) for ONU.";
+    }
+
+    identity onu-drift-of-window {
+        base OnuMgntOlt;
+        description
+            "ONU burst transmission drift exceeds drift-of-window (DOWi) threshold.";
+    }
+
+    identity onu-remote-defect-indication {
+        base OnuMgntOlt;
+        description
+            "Remode defect indication (RDIi) received from ONU.";
+    }
+
+    identity onu-rogue-and-disabled {
+        base OnuMgntOlt;
+        description
+            "ONU has been autonomously disabled because of misbehaving transmissions and is thought to be a ROGUE ONU. This is actually a defense alarm so that the ONU doesn't affect the entire PON.";
+    }
+
+    identity onu-differential-reach-exceeded {
+        base OnuMgntOlt;
+        description
+            "ONU has been deactivated because its location on the PON exceeds its differential reach.";
+    }
+
+    identity onu-upstream-rate-mismatch {
+        base OnuMgntOlt;
+        description
+            "ONU Mismatch detected between actual and planned upstream rate.";
+    }
+
+    identity onu-present-and-unexpected {
+        base OnuMgntOlt;
+        description
+            "Unprovisioned ONU detected on PON";
+    }
+
+    identity onu-ploam-rate-threshold-exceeded {
+        base OnuMgntOlt;
+        description
+            "Received PLOAM rate of ONU at OLT PON side, on per ONU basis, is exceeding a threshold for a certain time interval. This is actually a defense alarm to protect against spurious PLOAMs.";
+    }
+
+    identity rogue-onu-detected {
+        base OnuMgntOlt;
+        description
+            "Onu detected as rouge. Need to be replaced or disabled in order to not impact other normal ONUs ";
+    }
+
+    identity loss-of-omci-channel {
+        base OnuMgntOlt;
+        description
+            "Loss of OMCI channel (LOOCi) detected with ONU ";
+    }
+
+    identity omci-sma-failed {
+        base OnuMgntOlt;
+        description
+            "OMCI Secure Mutual Authentication(SMA) failed.";
+    }
+}

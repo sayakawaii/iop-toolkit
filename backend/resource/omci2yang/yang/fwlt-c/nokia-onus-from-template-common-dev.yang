@@ -1,0 +1,293 @@
+module nokia-onus-from-template-common-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/nokia-onus-from-template-common-dev";
+
+  prefix nokia-onus-from-template-common-dev;
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import nokia-onus-from-template {
+    prefix onus-from-template;
+  }
+
+  import ethernet-mounted {
+    prefix eth-mounted;
+  }
+
+  import nokia-ethernet-interface-external-speed-mounted {
+    prefix nokia-eth-intf-ext-speed-mounted;
+  }
+
+  import ietf-inet-types {
+    prefix inet;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA YANG module supporting
+     deviations on top of standard.";
+
+  revision 2024-02-03 {
+    description
+      "remove onus-from-template:ipv4/origin default value";
+    reference
+      "Sub-task BBN-181720";
+  }
+
+  revision 2021-03-11 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia Specific.";
+  }
+
+  deviation "/onu:onus/onu:onu/onus-from-template:template-parameters/onus-from-template:interfaces/onus-from-template:interface/onus-from-template:ethernet/onus-from-template:transmission-mode/onus-from-template:manual/onus-from-template:manual" {
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onus-from-template:template-parameters/onus-from-template:interfaces/onus-from-template:interface/onus-from-template:ethernet/onus-from-template:transmission-mode/onus-from-template:auto-negotiation/onus-from-template:auto-negotiation/onus-from-template:status" {
+    deviate add {
+      must "(current() = 'enabled')" {
+        error-message "Status must be configured 'enabled' for ethernet interface in auto-negotiation mode.";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onus-from-template:template-parameters/onus-from-template:interfaces/onus-from-template:interface/onus-from-template:ethernet/onus-from-template:transmission-mode/onus-from-template:auto-negotiation/onus-from-template:auto-negotiation/onus-from-template:advertised-flow-control" {
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onus-from-template:template-parameters/onus-from-template:interfaces/onus-from-template:interface/onus-from-template:ethernet/onus-from-template:transmission-mode/onus-from-template:auto-negotiation/onus-from-template:auto-negotiation/onus-from-template:forced-flow-control" {
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onus-from-template:template-parameters/onus-from-template:interfaces/onus-from-template:interface/onus-from-template:ethernet/onus-from-template:transmission-mode/onus-from-template:auto-negotiation/onus-from-template:auto-negotiation/onus-from-template:speed" {
+    deviate add {
+     must "not(boolean(current())) or "
+         +"(current() = 'eth-mounted:eth-if-speed-10mb') or "
+         +"(current() = 'eth-mounted:eth-if-speed-100mb') or "
+         +"(current() = 'eth-mounted:eth-if-speed-1gb') or "
+         +"(current() = 'eth-mounted:eth-if-speed-2.5gb' and current()/../duplex = 'full') or "
+         +"(current() = 'eth-mounted:eth-if-speed-5gb' and current()/../duplex = 'full') or "
+         +"(current() = 'eth-mounted:eth-if-speed-10gb' and current()/../duplex = 'full') or "
+         +"(current() = 'nokia-eth-intf-ext-speed-mounted:eth-if-speed-25gb' and current()/../duplex = 'full') or "
+         +"(current() = 'eth-mounted:eth-if-speed-40gb' and current()/../duplex = 'full')"
+      {
+        error-message "If duplex is not configured, speed can either not configured or the value should be 'eth-if-speed-10mb', 'eth-if-speed-100mb', 'eth-if-speed-1gb';
+            If duplex is configured 'half', speed can either not configured or the value should be 'eth-if-speed-10mb', 'eth-if-speed-100mb', 'eth-if-speed-1gb';
+            If duplex is configured 'full', speed can either not configured or the value should be 'eth-if-speed-10mb', 'eth-if-speed-100mb', 'eth-if-speed-1gb',
+            'eth-if-speed-2.5gb', 'eth-if-speed-5gb', 'eth-if-speed-10gb', 'nokia-eth-intf-ext-speed-mounted:eth-if-speed-25gb', 'eth-if-speed-40gb'";
+      }
+    }
+  }
+
+
+    deviation "/onu:onus/onu:onu/onus-from-template:template-parameters/onus-from-template:voip/onus-from-template:sip-termination/onus-from-template:auth-user-name" {
+        description
+            "user name required for authentication.";
+        deviate replace {
+            type string {
+            length "0..50";
+            }
+        }
+        deviate add {
+            default "";
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onus-from-template:template-parameters/onus-from-template:voip/onus-from-template:sip-server-pools/onus-from-template:sip-servers"
+            + "/onus-from-template:fully-qualified-domain-name" {
+        description
+            "The FQDN address of the first hop SIP server.";
+        deviate replace {
+            type string
+            {
+                length "0..100";
+            }
+        }
+
+        deviate add {
+            default "";
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onus-from-template:template-parameters/onus-from-template:voip/onus-from-template:sip-user-agent"
+            + "/onus-from-template:sip-user-agent-domain" {
+        description
+            "URI profile that contains the host or domain part of the SIP address of record.";
+        deviate replace {
+            type string
+            {
+                length "0..100";
+            }
+        }
+        deviate add {
+            default "";
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onus-from-template:template-parameters/onus-from-template:voip/onus-from-template:sip-termination/onus-from-template:sip-uni-uri" {
+        description
+        "user identification";
+        deviate replace {
+            type string
+            {
+                length "0..50";
+            }
+        }
+        deviate add {
+            default "";
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onus-from-template:template-parameters/onus-from-template:voip/onus-from-template:sip-termination"
+        + "/onus-from-template:sip-uni-display-name" {
+        description
+            "customer ID user for display name";
+        deviate replace {
+            type string
+            {
+                length "0..25";
+            }
+        }
+
+        deviate add {
+            default "";
+        }
+    }
+       deviation "/onu:onus/onu:onu/onus-from-template:template-parameters/onus-from-template:voip/onus-from-template:media-forwarder/onus-from-template:file-name" {
+      deviate replace {
+          type string {
+          length "0..50";
+          }
+      }
+       }
+       deviation "/onu:onus/onu:onu/onus-from-template:template-parameters/onus-from-template:voip/onus-from-template:media-forwarder/onus-from-template:user-name" {
+         deviate replace {
+                 type string {
+                 length "0..50";
+                 }
+         }
+         deviate add {
+               default "";
+         }
+       }
+       deviation "/onu:onus/onu:onu/onus-from-template:template-parameters/onus-from-template:voip/onus-from-template:media-forwarder/onus-from-template:realm" {
+         deviate replace {
+                 type string {
+                 length "0..25";
+                 }
+         }
+         deviate add {
+               default "";
+         }
+       }
+
+  deviation "/onu:onus/onu:onu/onus-from-template:template-parameters/onus-from-template:routing/onus-from-template:next-hop-address" {
+    /* Is Loopback IPv4 address(127.0.0.0 - 127.255.255.255) */
+    deviate add {
+      must "(substring-before(.,'.') != 127)" {
+          error-message "Loopback IPv4 address is invalid for next hop address";
+          description "Loopback IPv4 address is invalid to configure as next hop address";
+      }
+    }
+
+    /* IS_CLASSD (224.0.0.0 to 239.255.255.255) ?  */
+    deviate add {
+      must "not((substring-before(.,'.') >= 224)
+        and (substring-before(.,'.') <= 239))" {
+        error-message "224.0.0.0 - 239.255.255.255 are invalid for next hop address";
+        description "IPv4 address range from 224.0.0.0 to 239.255.255.255  are invalid to configure as next hop address ";
+      }
+    }
+
+    /* Is address.IS_ALL 1s ? */
+    deviate add {
+      must "current() != '255.255.255.255'" {
+          error-message "255.255.255.255 is invalid for next hop address";
+          description "IPv4 address 255.255.255.255 is invalid to configure as next hop address ";
+      }
+    }
+
+  }
+
+  deviation "/onu:onus/onu:onu/onus-from-template:template-parameters/onus-from-template:system/onus-from-template:server/onus-from-template:address" {
+    deviate replace {
+      type inet:ipv4-address-no-zone;
+    }
+    /* Is Loopback IPv4 address(127.0.0.0 - 127.255.255.255) */
+    deviate add {
+      must "(substring-before(.,'.') != 127)" {
+            error-message "Loopback IPv4 address is invalid for DNS address";
+            description "Loopback IPv4 address is invalid to configure as DNS address";
+      }
+    }
+    /* IS_CLASSD (224.0.0.0 to 239.255.255.255) ?  */
+    deviate add {
+      must "not((substring-before(.,'.') >= 224)
+            and (substring-before(.,'.') <= 239))" {
+            error-message "224.0.0.0 - 239.255.255.255 are invalid for DNS address";
+            description "IPv4 address range from 224.0.0.0 to 239.255.255.255  are invalid to configure as DNS address ";
+      }
+    }
+    /* Is address.IS_ALL 1s ? */
+    deviate add {
+      must "current() != '255.255.255.255'" {
+            error-message "255.255.255.255 is invalid for DNS address";
+            description "IPv4 address 255.255.255.255 is invalid to configure as DNS address ";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onus-from-template:template-parameters/onus-from-template:interfaces/onus-from-template:interface"
+          + "/onus-from-template:ipv4/onus-from-template:origin" {
+    deviate replace {
+      type enumeration {
+        enum static {
+          description
+          "Indicates that the address has been statically configured.";
+        }
+        enum dhcp {
+          description
+          "Indicates an address that has been assigned to this system by a DHCP server.";
+        }
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onus-from-template:template-parameters/onus-from-template:interfaces/onus-from-template:interface"
+          + "/onus-from-template:ipv4/onus-from-template:address/onus-from-template:ip" {
+    /* Is Loopback IPv4 address(127.0.0.0 - 127.255.255.255) */
+    deviate add {
+        must "(substring-before(.,'.') != 127)" {
+            error-message "Loopback IPv4 address is invalid for static IPv4 address";
+            description "Loopback IPv4 address is invalid to configure as static IPv4 address";
+        }
+    }
+
+    /* IS_CLASSD (224.0.0.0 to 239.255.255.255) ?  */
+    deviate add {
+       must "not((substring-before(.,'.') >= 224)
+             and (substring-before(.,'.') <= 239))" {
+             error-message "224.0.0.0 - 239.255.255.255 are not valid";
+             description "IPv4 address range from 224.0.0.0 to 239.255.255.255  are invalid to configure as static IPv4 address ";
+      }
+    }
+    /* Is broadcast address.IS_ALL 1s ? */
+    deviate add {
+       must "current() != '255.255.255.255'" {
+             error-message "255.255.255.255 is not valid";
+             description "IPv4 address 255.255.255.255 is invalid to configure as static IPv4 address ";
+      }
+    }
+  }
+
+}
+

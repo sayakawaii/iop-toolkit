@@ -1,0 +1,172 @@
+module nokia-qos-queue-monitoring-extension {
+  yang-version 1.1;  
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+          + "nokia-qos-queue-monitoring-extension";
+  
+  prefix nokia-queue-mon-ext;
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  import bbf-yang-types {
+    prefix bbf-yang;
+  }
+  
+  import bbf-qos-traffic-mngt {
+    prefix bbf-qos-tm;
+  }
+
+  import bbf-qos-enhanced-scheduling {
+    prefix bbf-qos-sched;
+  }
+  
+  import nokia-qos-queue-monitoring {
+    prefix nokia-queue-mon;
+  }
+
+  import ietf-netconf-acm {
+    prefix nacm;
+  }
+ 
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be 
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG definitions for 
+     supporting Nokia specific requirements as applicable to its 
+     access network equipment.
+     
+     Specifically, this module adds configuration and state data for 
+     QoS queue monitoring which includes statistics and history 
+     performance monitoring data.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia 
+     reserves the right to revise this document for any reason, 
+     including but not limited to conformity with standards 
+     promulgated by various agencies, utilisation of advances in the 
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or 
+     referred to herein.
+
+     The product specifications and other technical or performance 
+     information contained herein are subject to change without 
+     notice. Updates of this document will be issued under the above 
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any 
+     information or opinion contained herein. Nokia expressly advises 
+     that any use of for any purpose or reliance upon this technical 
+     reference is at the risk of the user and that Nokia shall not be 
+     liable for any damage or injury incurred by any person arising 
+     out of the sufficiency, accuracy, or utility of any information 
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any 
+     manufacturer to modify or change any of its products, nor does 
+     this document represent any commitment by Nokia to sell or 
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license 
+     or right under any patent, whether or not the use of any 
+     information herein necessarily employs an invention of any 
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these 
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2017, Nokia. All Rights Reserved.";
+
+  revision 2018-10-25 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: yyyy-mm-dd.";
+    reference
+      "Nokia specific";
+  }
+
+  augment '/if:interfaces/if:interface/bbf-qos-tm:tm-root'
+        + '/bbf-qos-tm:children-type/bbf-qos-sched:scheduler-node'
+        + '/bbf-qos-sched:scheduler-node' {
+    when "bbf-qos-sched:contains-queues = 'true'" {
+      description
+        "Augments a scheduler-node contains queues.";
+    }
+
+    description
+      "Data nodes for queue monitoring configuration parameters.";
+
+    uses nokia-queue-mon:queue-monitoring;     
+  }  
+
+  augment '/if:interfaces-state/if:interface/nokia-queue-mon:tm-root'
+        + '/nokia-queue-mon:children-type' {
+    description
+      "Operational data for queues in the scheduler node."; 
+
+    case scheduler-node {
+      list scheduler-node{
+        key "name";        
+
+        description
+          "Operational data for scheduler node in the TM root.";
+
+        leaf name{
+          type bbf-yang:string-ascii64;
+
+        description
+          "The identification of a scheduler node in traffic management
+           root.";      
+        }
+
+        action clear-statistics {
+          nacm:default-deny-all;    
+          if-feature "nokia-queue-mon:queue-statistics";
+          description
+            "When the action is received, the statistics within the 
+             scheduler node are cleared.";
+        }
+
+        leaf discontinuity-time {
+          if-feature "nokia-queue-mon:queue-statistics";
+          type yang:date-and-time;
+          description
+            "The time on the most recent occasion at which any one or
+             more of this scheduler node queue counters suffered a
+             discontinuity.  If no such discontinuities have occurred
+             since the last re-initialization of the local management
+             subsystem, then this node contains the time the local
+             management subsystem re-initialized itself.";
+        }  
+
+        list queue {
+          key "local-queue-id";
+          description
+            "A list of queues.";
+  
+          leaf local-queue-id {
+            type bbf-qos-tm:queue-id;
+            description
+              "The identification of a queue within the context of 
+               this list.";
+          }
+
+          uses nokia-queue-mon:queue-statistics;
+          uses nokia-queue-mon:queue-performance;
+        }
+      }  
+    }
+  }
+}
+

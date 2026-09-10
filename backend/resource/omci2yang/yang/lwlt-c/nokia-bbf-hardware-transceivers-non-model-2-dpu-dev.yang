@@ -1,0 +1,195 @@
+module nokia-bbf-hardware-transceivers-non-model-2-dpu-dev {
+
+  namespace
+     "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+   + "nokia-bbf-hardware-transceivers-non-model-2-dpu-dev";
+
+  prefix nokia-bbf-hardware-transceivers-non-model-2-dpu-dev;
+
+  import ietf-hardware {
+    prefix hw;
+  }
+
+  import bbf-hardware-transceivers {
+    prefix bbf-hw-xcvr;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "The NOKIA BBF/hardware YANG module supporting
+     deviations on top of standard.";
+
+/* revision */
+
+  revision 2023-12-12 {
+    description
+      "removed not-supported deviation for the leaf physical-device ";
+    reference
+      "BBN-7924";
+  }
+
+  revision 2021-09-14 {
+    description
+      "Added not-supported deviations to un-used yang leafs ";
+    reference
+      "BBN-5857";
+  }
+
+  revision 2021-08-25 {
+    description
+      "Move to common category";
+    reference
+      "Nokia specific";
+  }
+
+  deviation "/hw:hardware-state/hw:component/bbf-hw-xcvr:transceiver/bbf-hw-xcvr:identifiers-and-codes/bbf-hw-xcvr:physical-device-extended-identifier" {
+   deviate not-supported;
+  }
+
+  deviation "/hw:hardware-state/hw:component/bbf-hw-xcvr:transceiver/bbf-hw-xcvr:identifiers-and-codes/bbf-hw-xcvr:encoding" {
+   deviate not-supported;
+  }
+
+  deviation "/hw:hardware-state/hw:component/bbf-hw-xcvr:transceiver/bbf-hw-xcvr:identifiers-and-codes/bbf-hw-xcvr:nominal-bit-rate" {
+   deviate not-supported;
+  }
+
+  deviation "/hw:hardware-state/hw:component/bbf-hw-xcvr:transceiver/bbf-hw-xcvr:identifiers-and-codes/bbf-hw-xcvr:maximum-bit-rate" {
+   deviate not-supported;
+  }
+
+  deviation "/hw:hardware-state/hw:component/bbf-hw-xcvr:transceiver/bbf-hw-xcvr:identifiers-and-codes/bbf-hw-xcvr:minimum-bit-rate" {
+   deviate not-supported;
+  }
+
+  deviation "/hw:hardware-state/hw:component/bbf-hw-xcvr:transceiver/bbf-hw-xcvr:identifiers-and-codes/bbf-hw-xcvr:connector" {
+   deviate not-supported;
+  }
+
+  deviation "/hw:hardware-state/hw:component/bbf-hw-xcvr:transceiver/bbf-hw-xcvr:vendor-fields/bbf-hw-xcvr:oui" {
+   deviate not-supported;
+  }
+
+  deviation "/hw:hardware-state/hw:component/bbf-hw-xcvr:transceiver/bbf-hw-xcvr:vendor-fields/bbf-hw-xcvr:part-number" {
+   deviate not-supported;
+  }
+
+  deviation "/hw:hardware-state/hw:component/bbf-hw-xcvr:transceiver/bbf-hw-xcvr:enhanced-options" {
+   deviate not-supported;
+  }
+
+  deviation "/hw:hardware-state/hw:component/bbf-hw-xcvr:transceiver/bbf-hw-xcvr:diagnostics-monitoring-type" {
+   deviate not-supported;
+  }
+
+  deviation "/hw:hardware-state/hw:component/bbf-hw-xcvr:transceiver/bbf-hw-xcvr:link-length/bbf-hw-xcvr:length-single-mode-km" {
+   deviate not-supported;
+  }
+
+  deviation "/hw:hardware-state/hw:component/bbf-hw-xcvr:transceiver/bbf-hw-xcvr:link-length/bbf-hw-xcvr:length-single-mode-100m" {
+   deviate not-supported;
+  }
+
+  deviation "/hw:hardware-state/hw:component/bbf-hw-xcvr:transceiver/bbf-hw-xcvr:link-length/bbf-hw-xcvr:length-50um-om2" {
+   deviate not-supported;
+  }
+
+  deviation "/hw:hardware-state/hw:component/bbf-hw-xcvr:transceiver/bbf-hw-xcvr:link-length/bbf-hw-xcvr:length-62.5um-om2" {
+   deviate not-supported;
+  }
+
+  deviation "/hw:hardware-state/hw:component/bbf-hw-xcvr:transceiver/bbf-hw-xcvr:link-length/bbf-hw-xcvr:length-50um-om4" {
+   deviate not-supported;
+  }
+
+  deviation "/hw:hardware-state/hw:component/bbf-hw-xcvr:transceiver/bbf-hw-xcvr:link-length/bbf-hw-xcvr:length-active-cable-or-copper" {
+   deviate not-supported;
+  }
+
+  deviation "/hw:hardware-state/hw:component/bbf-hw-xcvr:transceiver/bbf-hw-xcvr:link-length/bbf-hw-xcvr:length-50um-om3" {
+   deviate not-supported;
+  }
+
+  deviation "/hw:hardware-state/hw:component/bbf-hw-xcvr:transceiver/bbf-hw-xcvr:thresholds/bbf-hw-xcvr:laser-temperature-high-alarm" {
+   deviate not-supported;
+  }
+
+  deviation "/hw:hardware-state/hw:component/bbf-hw-xcvr:transceiver/bbf-hw-xcvr:thresholds/bbf-hw-xcvr:laser-temperature-low-alarm" {
+   deviate not-supported;
+  }
+
+  deviation "/hw:hardware-state/hw:component/bbf-hw-xcvr:transceiver/bbf-hw-xcvr:thresholds/bbf-hw-xcvr:laser-temperature-high-warning" {
+   deviate not-supported;
+  }
+
+  deviation "/hw:hardware-state/hw:component/bbf-hw-xcvr:transceiver/bbf-hw-xcvr:thresholds/bbf-hw-xcvr:laser-temperature-low-warning" {
+   deviate not-supported;
+  }
+
+  deviation "/hw:hardware-state/hw:component/bbf-hw-xcvr:transceiver/bbf-hw-xcvr:thresholds/bbf-hw-xcvr:tec-current-high-alarm" {
+   deviate not-supported;
+  }
+
+  deviation "/hw:hardware-state/hw:component/bbf-hw-xcvr:transceiver/bbf-hw-xcvr:thresholds/bbf-hw-xcvr:tec-current-low-alarm" {
+   deviate not-supported;
+  }
+
+  deviation "/hw:hardware-state/hw:component/bbf-hw-xcvr:transceiver/bbf-hw-xcvr:thresholds/bbf-hw-xcvr:tec-current-high-warning" {
+   deviate not-supported;
+  }
+
+  deviation "/hw:hardware-state/hw:component/bbf-hw-xcvr:transceiver/bbf-hw-xcvr:thresholds/bbf-hw-xcvr:tec-current-low-warning" {
+   deviate not-supported;
+  }
+
+  deviation "/hw:hardware-state/hw:component/bbf-hw-xcvr:transceiver-link/bbf-hw-xcvr:diagnostics/bbf-hw-xcvr:laser-temperature" {
+   deviate not-supported;
+  }
+
+  deviation "/hw:hardware-state/hw:component/bbf-hw-xcvr:transceiver-link/bbf-hw-xcvr:diagnostics/bbf-hw-xcvr:tec-current" {
+   deviate not-supported;
+  }
+
+  deviation "/hw:hardware-state/hw:component/bbf-hw-xcvr:transceiver-link/bbf-hw-xcvr:wavelength-or-specification-compliance/bbf-hw-xcvr:active-cable-specification-compliance" {
+   deviate not-supported;
+  }
+
+  deviation "/hw:hardware-state/hw:component/bbf-hw-xcvr:transceiver-link/bbf-hw-xcvr:wavelength-or-specification-compliance/bbf-hw-xcvr:passive-cable-specification-compliance" {
+   deviate not-supported;
+  }
+
+  deviation "/hw:hardware-state/hw:component/bbf-hw-xcvr:transceiver-link/bbf-hw-xcvr:wavelength-or-specification-compliance/bbf-hw-xcvr:unspecified"
+  {
+   deviate not-supported;
+  }
+
+  deviation "/hw:hardware-state/hw:component/bbf-hw-xcvr:transceiver/bbf-hw-xcvr:vendor-fields" {
+   deviate not-supported;
+  }
+
+  deviation "/hw:hardware-state/hw:component/bbf-hw-xcvr:transceiver/bbf-hw-xcvr:link-length" {
+   deviate not-supported;
+  }
+
+  deviation "/hw:hardware-state/hw:component/bbf-hw-xcvr:transceiver-link/bbf-hw-xcvr:diagnostics/bbf-hw-xcvr:alarm-flag" {
+   deviate not-supported;
+  }
+
+  deviation "/hw:hardware-state/hw:component/bbf-hw-xcvr:transceiver-link/bbf-hw-xcvr:diagnostics/bbf-hw-xcvr:warning-flag" {
+   deviate not-supported;
+  }
+
+  deviation "/hw:hardware-state/hw:component/bbf-hw-xcvr:transceiver/bbf-hw-xcvr:diagnostics/bbf-hw-xcvr:alarm-flag" {
+   deviate not-supported;
+  }
+
+  deviation "/hw:hardware-state/hw:component/bbf-hw-xcvr:transceiver/bbf-hw-xcvr:diagnostics/bbf-hw-xcvr:warning-flag" {
+   deviate not-supported;
+  }
+}

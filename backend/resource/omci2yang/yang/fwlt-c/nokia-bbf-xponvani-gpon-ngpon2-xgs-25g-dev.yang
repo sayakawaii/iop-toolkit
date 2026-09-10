@@ -1,0 +1,111 @@
+module nokia-bbf-xponvani-gpon-ngpon2-xgs-25g-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/nokia-bbf-xponvani-gpon-ngpon2-xgs-25g-dev";
+
+  prefix nokia-bbf-xponvani-gpon-ngpon2-xgs-25g-dev;
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import bbf-xpon{
+    prefix bbf-xpon;
+  }
+
+  import bbf-xponvani{
+    prefix bbf-xponvani;
+  }
+
+  import bbf-xpon-types {
+    prefix bbf-xpon-types;
+  }
+
+  import nokia-sdan-xpon-types {
+    prefix nokia-sdan-xpon-types;
+}
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA IETF/System YANG module supporting
+     deviations on top of standard.";
+
+  revision 2024-08-26 {
+    description
+      "Correct the error message";
+    reference
+      "Nokia Specific.";
+  }
+
+  revision 2022-01-18 {
+    description
+      "Add error msg for 25GSPON";
+    reference
+      "Nokia Specific.";
+  }
+
+  revision 2019-12-26 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia Specific.";
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-xponvani:v-ani/bbf-xponvani:onu-id" {
+    deviate add {
+
+      must "((current() >= 0 and current() <= 255) and "
+         + "(/if:interfaces/if:interface[if:name = current()/../preferred-channel-pair]"
+         + "/bbf-xpon:channel-pair/bbf-xpon:channel-pair-type = 'bbf-xpon-types:ngpon2-twdm')) or "
+         + "((current() >= 0 and current() <= 127) and "
+         + "(/if:interfaces/if:interface[if:name = current()/../preferred-channel-pair]"
+         + "/bbf-xpon:channel-pair/bbf-xpon:channel-pair-type = 'bbf-xpon-types:gpon' or "
+         + "/if:interfaces/if:interface[if:name = current()/../preferred-channel-pair]"
+         + "/bbf-xpon:channel-pair/bbf-xpon:channel-pair-type = 'bbf-xpon-types:xgs' or "
+         + "/if:interfaces/if:interface[if:name = current()/../preferred-channel-pair]"
+         + "/bbf-xpon:channel-pair/bbf-xpon:channel-pair-type = 'nokia-sdan-xpon-types:twentyfivegs'))" {
+        error-message "For NGPON2: The onu-id range is 0~255. For others: The onu-id range is 0~127.";
+      }
+      mandatory true;
+    }
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-xponvani:v-ani/bbf-xponvani:upstream-channel-speed" {
+    deviate add {
+      must "((current() = 10000000000 and "
+         + "(/if:interfaces/if:interface[if:name = current()/../preferred-channel-pair]"
+         + "/bbf-xpon:channel-pair/bbf-xpon:channel-pair-type = 'bbf-xpon-types:xgs' or "
+         + "/if:interfaces/if:interface[if:name = current()/../preferred-channel-pair]"
+         + "/bbf-xpon:channel-pair/bbf-xpon:channel-pair-type = 'bbf-xpon-types:ngpon2-twdm' or "
+         + "/if:interfaces/if:interface[if:name = current()/../preferred-channel-pair]"
+         + "/bbf-xpon:channel-pair/bbf-xpon:channel-pair-type = 'nokia-sdan-xpon-types:twentyfivegs')) or "
+         + "(current() = 2500000000 and "
+         + "/if:interfaces/if:interface[if:name = current()/../preferred-channel-pair]"
+         + "/bbf-xpon:channel-pair/bbf-xpon:channel-pair-type = 'bbf-xpon-types:xgs') or "
+         + "(current() = 1250000000 and "
+         + "/if:interfaces/if:interface[if:name = current()/../preferred-channel-pair]"
+         + "/bbf-xpon:channel-pair/bbf-xpon:channel-pair-type = 'bbf-xpon-types:gpon') or "
+         + "(current() = 25000000000 and "
+         + "/if:interfaces/if:interface[if:name = current()/../preferred-channel-pair]"
+         + "/bbf-xpon:channel-pair/bbf-xpon:channel-pair-type = 'nokia-sdan-xpon-types:twentyfivegs'))" {
+        error-message "For GPON case, only value '1.25G' is supported. For XGSPON case, it can be 10G or 2.5G. For NGPON2 case, it can be 10G. For 25GSPON case, it can be 10G and 25G.";
+      }
+    }
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-xponvani:v-ani/bbf-xponvani:protection-channel-pair" {
+    deviate add {
+		must "/if:interfaces/if:interface[if:name = current()]"
+		   + "/bbf-xpon:channel-pair/bbf-xpon:channel-pair-type = 'bbf-xpon-types:ngpon2-twdm' and "
+		   + "/if:interfaces/if:interface[if:name = current()/../bbf-xponvani:preferred-channel-pair]"
+		   + "/bbf-xpon:channel-pair/bbf-xpon:channel-pair-type = 'bbf-xpon-types:ngpon2-twdm'" {
+		  error-message "If both preferred channel-pair and protection channel-pair are configured, the preferred channel-pair and protection channel-pair must both be NGPON2 type.";
+      }
+    }
+  }
+
+}

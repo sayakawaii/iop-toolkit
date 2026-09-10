@@ -1,0 +1,292 @@
+module nokia-bbf-qos-policies-inexpressible-constraints-qos-fiber-dev {
+
+  yang-version "1.1";
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+            + "nokia-bbf-qos-policies-inexpressible-constraints-qos-fiber-dev";
+
+  prefix nokia-bbf-qos-policies-inexpressible-constraints-qos-fiber-dev;
+
+  import bbf-qos-policies {
+    prefix bbf-qos-pol;
+  }
+  
+  organization
+    "NOKIA";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "The NOKIA common/nokia-bbf-qos-policies-inexpressible-constraints-qos-fiber-dev
+     YANG module supporting deviations on top of ietf-ssh-server standard.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2019, Nokia. All Rights Reserved.";
+
+  revision 2017-04-24 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific"; 
+  }
+
+  deviation "/bbf-qos-pol:qos-policy-profiles/bbf-qos-pol:policy-profile" {
+    description
+      "Currently there are these types of policies that appear in a qos-policy-profile: Marker-type, CCL-type, PortPolicer-type, Scheduler-type, QueueColor-type and Count-type. Marker-type is used for marking pbit/dei. CCL-type is used for CCL/ACL related scenario. PortPolicer-type is used for limiting the rate by policing-profile. Scheduler-type is used for specifying the traffic-class. QueueColor-type is used for specifying the bac-color for queue. Count-type is used for counting the ingress/egress flow statistics.
+       Other dependent xpaths where this rule applies are:
+        '/bbf-qos-pol:policies/bbf-qos-pol:policy'
+        '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry'
+        '/bbf-qos-plc:policing-profiles/bbf-qos-plc:policing-profile'
+        '/bbf-qos-filt:filters/bbf-qos-enhfilt:enhanced-filter'
+       The error message 'For qos-policy-profile, each type of policy can occur only once.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-qos-pol:qos-policy-profiles/bbf-qos-pol:policy-profile" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-qos-pol:policies/bbf-qos-pol:policy'
+        '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry'
+        '/bbf-qos-plc:policing-profiles/bbf-qos-plc:policing-profile'
+        '/bbf-qos-filt:filters/bbf-qos-enhfilt:enhanced-filter'
+       The error message 'For Marker-type policy, its actions must be one of the followings: pbit-marking and dei-marking.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-qos-pol:qos-policy-profiles/bbf-qos-pol:policy-profile" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-qos-pol:policies/bbf-qos-pol:policy'
+        '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry'
+        '/bbf-qos-plc:policing-profiles/bbf-qos-plc:policing-profile'
+        '/bbf-qos-filt:filters/bbf-qos-enhfilt:enhanced-filter'
+       The error message 'For PortPolicer-type policy in a qos policy profile, if a CCL-type policy does not exist, its filter must be one of the following: match-all, metered-flow( = false) and any-frame.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-qos-pol:qos-policy-profiles/bbf-qos-pol:policy-profile" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-qos-pol:policies/bbf-qos-pol:policy'
+        '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry'
+        '/bbf-qos-plc:policing-profiles/bbf-qos-plc:policing-profile'
+        '/bbf-qos-filt:filters/bbf-qos-enhfilt:enhanced-filter'
+       The error message 'For PortPolicer-type policy in a qos policy profile, if a CCL-type policy exists, its filter must be metered-flow = false.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-qos-pol:qos-policy-profiles/bbf-qos-pol:policy-profile" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-qos-pol:policies/bbf-qos-pol:policy'
+        '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry'
+        '/bbf-qos-plc:policing-profiles/bbf-qos-plc:policing-profile'
+        '/bbf-qos-filt:filters/bbf-qos-enhfilt:enhanced-filter'
+       The error message 'For a qos enhanced filter, if it has been referenced by other enhanced filters, it can't reference another enhanced filter.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-qos-pol:qos-policy-profiles/bbf-qos-pol:policy-profile" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-qos-pol:policies/bbf-qos-pol:policy'
+        '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry'
+        '/bbf-qos-plc:policing-profiles/bbf-qos-plc:policing-profile'
+        '/bbf-qos-filt:filters/bbf-qos-enhfilt:enhanced-filter'
+       The error message 'For CCL-type policies, the filter in classifiers only supports enhanced filter or any-frame.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-qos-pol:qos-policy-profiles/bbf-qos-pol:policy-profile" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-qos-pol:policies/bbf-qos-pol:policy'
+        '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry'
+        '/bbf-qos-plc:policing-profiles/bbf-qos-plc:policing-profile'
+        '/bbf-qos-filt:filters/bbf-qos-enhfilt:enhanced-filter'
+       The error message 'For CCL-type policies, the any-frame filter is not allowed to be the first one.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-qos-pol:qos-policy-profiles/bbf-qos-pol:policy-profile" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-qos-pol:policies/bbf-qos-pol:policy'
+        '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry'
+        '/bbf-qos-plc:policing-profiles/bbf-qos-plc:policing-profile'
+        '/bbf-qos-filt:filters/bbf-qos-enhfilt:enhanced-filter'
+       The error message 'For CCL-type policies, filters in a classifier cannot mix L2 and L3 filters.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-qos-pol:qos-policy-profiles/bbf-qos-pol:policy-profile" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-qos-pol:policies/bbf-qos-pol:policy'
+        '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry'
+        '/bbf-qos-plc:policing-profiles/bbf-qos-plc:policing-profile'
+        '/bbf-qos-filt:filters/bbf-qos-enhfilt:enhanced-filter'
+       The error message 'For multiple classifiers in the same policy, they can't reference the same enhanced filters.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-qos-pol:qos-policy-profiles/bbf-qos-pol:policy-profile" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-qos-pol:policies/bbf-qos-pol:policy'
+        '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry'
+        '/bbf-qos-plc:policing-profiles/bbf-qos-plc:policing-profile'
+        '/bbf-qos-filt:filters/bbf-qos-enhfilt:enhanced-filter'
+       The error message 'For PortPolicer-type policies, the action must be policer.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-qos-pol:qos-policy-profiles/bbf-qos-pol:policy-profile" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-qos-pol:policies/bbf-qos-pol:policy'
+        '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry'
+        '/bbf-qos-plc:policing-profiles/bbf-qos-plc:policing-profile'
+        '/bbf-qos-filt:filters/bbf-qos-enhfilt:enhanced-filter'
+       The error message 'For PortPolicer-type policies, the filter must be one of the following: metered-flow, match-all, or any-frame.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-qos-pol:qos-policy-profiles/bbf-qos-pol:policy-profile" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-qos-pol:policies/bbf-qos-pol:policy'
+        '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry'
+        '/bbf-qos-plc:policing-profiles/bbf-qos-plc:policing-profile'
+        '/bbf-qos-filt:filters/bbf-qos-enhfilt:enhanced-filter'
+       The error message 'For PolicerAction-type policies, filter operations in enhanced filters only support match-all in the first layer.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-qos-pol:qos-policy-profiles/bbf-qos-pol:policy-profile" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-qos-pol:policies/bbf-qos-pol:policy'
+        '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry'
+        '/bbf-qos-plc:policing-profiles/bbf-qos-plc:policing-profile'
+        '/bbf-qos-filt:filters/bbf-qos-enhfilt:enhanced-filter'
+       The error message 'For Scheduler-type policies, the filter must be in-pbit or pbit-marking list.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-qos-pol:qos-policy-profiles/bbf-qos-pol:policy-profile" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-qos-pol:policies/bbf-qos-pol:policy'
+        '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry'
+        '/bbf-qos-plc:policing-profiles/bbf-qos-plc:policing-profile'
+        '/bbf-qos-filt:filters/bbf-qos-enhfilt:enhanced-filter'
+       The error message 'For Scheduler-type policies, the action must be scheduling-traffic-class.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-qos-pol:qos-policy-profiles/bbf-qos-pol:policy-profile" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-qos-pol:policies/bbf-qos-pol:policy'
+        '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry'
+        '/bbf-qos-plc:policing-profiles/bbf-qos-plc:policing-profile'
+        '/nokia-qos-plc-ext:policing-pre-handling-profiles/nokia-qos-plc-ext:pre-handling-profile'
+       The error message 'pre-handling-profile contents should be same based on policing type within a qos policy profile;if policing type is two-rate-three-color-marker-mef, color in pre-handling-profile should be same;if policing type is two-rate-three-color-marker-with-cos/two-rate-three-color-marker-mef-with-cos, TC in pre-handling-profile should be same.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-qos-pol:qos-policy-profiles/bbf-qos-pol:policy-profile" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-qos-pol:policies/bbf-qos-pol:policy'
+        '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry'
+        '/bbf-qos-plc:policing-profiles/bbf-qos-plc:policing-profile'
+        '/nokia-qos-plc-ext:policing-action-profiles/nokia-qos-plc-ext:action-profile'
+       The error message 'For a qos policy profile, if a PortPolicer policy exists, then the action of Metered-flow in the policing-action profile of the CCL policy must be set to TRUE for the dedicated flows which would not be discarded to denote the frames processed by CCL policy.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-qos-pol:qos-policy-profiles/bbf-qos-pol:policy-profile" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-qos-pol:policies/bbf-qos-pol:policy'
+        '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry'
+        '/bbf-qos-plc:policing-profiles/bbf-qos-plc:policing-profile'
+        '/nokia-qos-plc-ext:policing-action-profiles/nokia-qos-plc-ext:action-profile'
+       The error message 'For a qos policy profile, if a QueueColor policy exists, then the action of Metered-color must be set to TRUE in the policing-action profile of the only 3 types (two-rate-three-color-marker-mef/two-rate-three-color-marker-with-cos/two-rate-three-color-marker-mef-with-cos) color-marking policer for the flow which would not be discarded.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-qos-pol:qos-policy-profiles/bbf-qos-pol:policy-profile" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-qos-pol:policies/bbf-qos-pol:policy'
+        '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry'
+        '/bbf-qos-plc:policing-profiles/bbf-qos-plc:policing-profile'
+        '/nokia-qos-plc-ext:policing-action-profiles/nokia-qos-plc-ext:action-profile'
+       The error message 'For single-rate-two-color-marker policing, the actions in the reference action-profile should only be discard or (metered-flow or/and bac-color).' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-qos-pol:policies/bbf-qos-pol:policy" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry'
+       The error message 'For Marker-type policy, if the filter of one classifier is dei-marking-list or pbit-marking-list, its action cannot be dei-from-frame-tag or pbit-from-frame-tag.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-qos-pol:policies/bbf-qos-pol:policy" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry'
+       The error message 'For Color-type policy, the filter must be one of the following: in-pbit-list, pbit-marking-list, in-dei, or dei-marking-list.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-qos-pol:policies/bbf-qos-pol:policy" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry'
+       The error message 'For dei/pbit-from-frame-tag action, it can be configured only in marker type policy.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+}

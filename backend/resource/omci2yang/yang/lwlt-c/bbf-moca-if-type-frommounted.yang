@@ -1,0 +1,129 @@
+module bbf-moca-if-type-frommounted {
+  yang-version 1.1;
+  namespace "urn:bbf:yang:bbf-moca-if-type-frommounted";
+  prefix bbf-mocaift-frommounted;
+
+  import bbf-if-type-frommounted {
+    prefix bbfift-frommounted;
+  }
+
+  organization
+    "Broadband Forum <https://www.broadband-forum.org>
+     Common YANG Work Area";
+  contact
+    "Comments or questions about this Broadband Forum YANG module
+     should be directed to <mailto:help@broadband-forum.org>.
+
+     Editor:      TBD
+
+     Editor:      TBD
+
+     PS Leader:   TBD
+
+     PS Leader:   TBD
+
+     WA Director: TBD
+
+     WA Director: TBD";
+  description
+    "This module contains a collection of YANG definitions for
+     supporting the Broadband Forum requirements on management of
+     MOCA Access interfaces as defined in MoCA Access MAC/PHY
+     Specification v2.5.
+
+     Specifically, this module defines MoCA interface types that are
+     needed for Broadband Forum aplications, but are not defined by
+     IANA.
+
+     Copyright (c) 2018-2024, Broadband Forum
+
+     Redistribution and use in source and binary forms, with or
+     without modification, are permitted provided that the following
+     conditions are met:
+
+     1. Redistributions of source code must retain the above copyright
+        notice, this list of conditions and the following disclaimer.
+
+     2. Redistributions in binary form must reproduce the above
+        copyright notice, this list of conditions and the following
+        disclaimer in the documentation and/or other materials
+        provided with the distribution.
+
+     3. Neither the name of the copyright holder nor the names of its
+        contributors may be used to endorse or promote products
+        derived from this software without specific prior written
+        permission.
+
+     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
+     CONTRIBUTORS \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+     INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+     DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+     CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+     SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+     NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+     CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+     STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+     ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+     ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+     The above license is used as a license under copyright only.
+     Please reference the Forum IPR Policy for patent licensing terms
+     <https://www.broadband-forum.org/ipr-policy>.
+
+     Any moral rights which are necessary to exercise under the above
+     license grant are also deemed granted under this license.
+
+     This version of this YANG module is part of WT-496; see
+     the WT itself for full legal notices.";
+
+  revision 2024-02-28 {
+    description
+      "Initial release.";
+    reference
+      "WT-496";
+  }
+
+  identity bbf-moca-interface-type {
+    base bbfift-frommounted:bbf-interface-type;
+    description
+      "This identity is used as a base for all MoCA interface types
+       defined by the BBF that are not in the 'ifType definitions'
+       registry maintained by IANA.";
+  }
+
+  identity mpi {
+    base bbf-moca-interface-type;
+    description
+      "The MoCA Physical Interface (MPI) that connects the node to
+       the Coaxial Distribution Network (CDN).";
+  }
+
+  identity lni {
+    base bbf-moca-interface-type;
+    description
+      "The MoCA Line Network Interface (LNI) that connects the
+       Network Controller (NC) to a Client Node (CN).";
+  }
+
+  identity enet {
+    base bbf-moca-interface-type;
+    base bbfift-frommounted:ethernet-like;
+    description
+      "Base type for the Network Controller Ethernet (NC-ENET)
+       interfaces. The NC-ENET interfaces are physical interfaces
+       belonging to the NC, which carry Ethernet frames, and which
+       are facing the network side of the NC.";
+  }
+
+  identity v-enet {
+    base bbf-moca-interface-type;
+    base bbfift-frommounted:ethernet-like;
+    description
+      "Base type for the Network Controller virtual Ethernet
+       (NC-vENET) interfaces. The NC-vENET interfaces are virtual
+       interfaces belonging to the NC, which carry Ethernet frames,
+       and which are facing the MoCA side of the CN.";
+  }
+}

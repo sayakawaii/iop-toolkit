@@ -1,0 +1,143 @@
+module nokia-ethernet-mounted-eonu-dev {
+
+  namespace
+    "http://www.nokia.com/Fixed-Networks/BBA/yang/nokia-ethernet-mounted-eonu-dev";
+
+  prefix  nokia-ethernet-mounted-eonu-dev;
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import ietf-interfaces-mounted {
+    prefix if-mounted;
+  }
+
+  import ethernet-mounted {
+    prefix eth-mounted;
+  }
+
+  import nokia-ethernet-interface-external-speed-mounted {
+    prefix nokia-eth-intf-ext-speed-mounted;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA ethernet mounted YANG module supporting
+     deviations on top of standard.";
+
+  revision 2022-09-28 {
+    description
+      "Adding Deviations for unsupported Yang leaves for epic BBN-88491.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2021-09-02 {
+    description
+      "Allow speed 25Gb";
+    reference
+      "TBD";
+  }
+
+  revision 2021-02-08 {
+    description
+      "Initial revision.";
+    reference
+      "TBD";
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/eth-mounted:ethernet/eth-mounted:transmission-mode/eth-mounted:manual/eth-mounted:manual" {
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/eth-mounted:ethernet/eth-mounted:transmission-mode/eth-mounted:auto-negotiation/eth-mounted:auto-negotiation/eth-mounted:status" {
+    deviate add {
+      must "(current() = 'enabled')" {
+        error-message "Status must be configured 'enabled' for ethernet interface in auto-negotiation mode.";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/eth-mounted:ethernet/eth-mounted:transmission-mode/eth-mounted:auto-negotiation/eth-mounted:auto-negotiation/eth-mounted:advertised-flow-control" {
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/eth-mounted:ethernet/eth-mounted:transmission-mode/eth-mounted:auto-negotiation/eth-mounted:auto-negotiation/eth-mounted:forced-flow-control" {
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/eth-mounted:ethernet/eth-mounted:transmission-mode/eth-mounted:auto-negotiation/eth-mounted:auto-negotiation/eth-mounted:speed" {
+    deviate add {
+     must "not(boolean(current())) or "
+         +"(current() = 'eth-mounted:eth-if-speed-10mb') or "
+         +"(current() = 'eth-mounted:eth-if-speed-100mb') or "
+         +"(current() = 'eth-mounted:eth-if-speed-1gb') or "
+         +"(current() = 'eth-mounted:eth-if-speed-2.5gb' and current()/../duplex = 'full') or "
+         +"(current() = 'eth-mounted:eth-if-speed-5gb' and current()/../duplex = 'full') or "
+         +"(current() = 'eth-mounted:eth-if-speed-10gb' and current()/../duplex = 'full') or "
+         +"(current() = 'nokia-eth-intf-ext-speed-mounted:eth-if-speed-25gb' and current()/../duplex = 'full') or "
+         +"(current() = 'eth-mounted:eth-if-speed-40gb' and current()/../duplex = 'full')"
+      {
+        error-message "If duplex is not configured, speed can either not configured or the value should be 'eth-if-speed-10mb', 'eth-if-speed-100mb', 'eth-if-speed-1gb';
+            If duplex is configured 'half', speed can either not configured or the value should be 'eth-if-speed-10mb', 'eth-if-speed-100mb', 'eth-if-speed-1gb';
+            If duplex is configured 'full', speed can either not configured or the value should be 'eth-if-speed-10mb', 'eth-if-speed-100mb', 'eth-if-speed-1gb',
+            'eth-if-speed-2.5gb', 'eth-if-speed-5gb', 'nokia-eth-intf-ext-speed-mounted:eth-if-speed-25gb', 'eth-if-speed-10gb', 'eth-if-speed-40gb'";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/eth-mounted:Ethernet/eth-mounted:auto-negotiation" {
+    description
+        "This deviation assures that Ethernet state does not support auto-negotiation.";
+    deviate not-supported;
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/eth-mounted:Ethernet/eth-mounted:flow-control" {
+    description
+        "This deviation assures that Ethernet state does not support flow-control.";
+    deviate not-supported;
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/eth-mounted:Ethernet/eth-mounted:rate-control" {
+    description
+        "This deviation assures that Ethernet state does not support rate-control.";
+    deviate not-supported;
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/eth-mounted:Ethernet/eth-mounted:macc-extension-control" {
+    description
+        "This deviation assures that Ethernet state does not support macc-extension-control.";
+    deviate not-supported;
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/eth-mounted:Ethernet/eth-mounted:macc-pfc-control" {
+    description
+        "This deviation assures that Ethernet state does not support macc-pfc-control.";
+    deviate not-supported;
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/eth-mounted:Ethernet/eth-mounted:macc-pause-control" {
+    description
+        "This deviation assures that Ethernet state does not support macc-pause-control.";
+    deviate not-supported;
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/eth-mounted:Ethernet/eth-mounted:macc-control" {
+    description
+        "This deviation assures that Ethernet state does not support macc-control.";
+    deviate not-supported;
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/eth-mounted:Ethernet/eth-mounted:frame-limit-slow-protocol" {
+    description
+        "This deviation assures that Ethernet state does not support frame-limit-slow-protocol.";
+    deviate not-supported;
+  }
+}
+

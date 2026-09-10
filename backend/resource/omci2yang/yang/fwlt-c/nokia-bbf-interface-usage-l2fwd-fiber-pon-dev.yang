@@ -1,0 +1,147 @@
+module nokia-bbf-interface-usage-l2fwd-fiber-pon-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/" +
+            "nokia-bbf-interface-usage-l2fwd-fiber-pon-dev";
+
+  prefix nokia-bbf-interface-usage-l2fwd-fiber-pon-dev;
+
+  import bbf-interface-usage {
+	prefix bbf-if-usg;
+  }
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import bbf-if-type {
+    prefix bbfift;
+  }
+  
+  import iana-if-type {
+    prefix ianaift;
+  }
+
+  import bbf-interfaces-performance-management{
+    prefix bbf-if-pm;
+  }
+  
+    import bbf-vlan-sub-interface-vector {
+	prefix bbf-vsi-vctr;
+  }
+
+  import bbf-vlan-sub-interface-vector-usage {
+    prefix bbf-vsi-vctr-usg;
+  }
+  
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "This module contains a collection of YANG deviations on top 
+     of standard for supporting l2fwd YANG module.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia 
+     reserves the right to revise this document for any reason, 
+     including but not limited to conformity with standards 
+     promulgated by various agencies, utilisation of advances in the 
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or 
+     referred to herein.
+
+     The product specifications and other technical or performance 
+     information contained herein are subject to change without 
+     notice. Updates of this document will be issued under the above 
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any 
+     information or opinion contained herein. Nokia expressly advises 
+     that any use of for any purpose or reliance upon this technical 
+     reference is at the risk of the user and that Nokia shall not be 
+     liable for any damage or injury incurred by any person arising 
+     out of the sufficiency, accuracy, or utility of any information 
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any 
+     manufacturer to modify or change any of its products, nor does 
+     this document represent any commitment by Nokia to sell or 
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license 
+     or right under any patent, whether or not the use of any 
+     information herein necessarily employs an invention of any 
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2017-2018, Nokia. All Rights Reserved.";
+     
+   revision 2021-12-06 {
+    description
+      "deviation for interface-usage in the context of vsi vector.";
+    reference
+      "Nokia specific";
+  }   
+
+  revision 2020-10-27 {
+    description
+      "move from l2fwd-fiber category.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2016-11-28 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific"; 
+  }
+ 
+	
+  /* when interface type is ethernetCsmacd, the interface-usage should be network-port */
+  deviation "/if:interfaces/if:interface/bbf-if-usg:interface-usage/bbf-if-usg:interface-usage" {      
+    deviate add {
+      must "current()/../../if:type != 'ianaift:ethernetCsmacd' or (current() = 'network-port')" {
+        error-message "when interface type is ethernetCsmacd, the interface-usage should be network-port.";
+      }
+    }
+  }
+  
+
+  /* interface-usage of vlan-sub-interface can't support network-port with pm enable*/
+  deviation "/if:interfaces/if:interface/bbf-if-usg:interface-usage/bbf-if-usg:interface-usage" {
+
+    deviate add {
+      must "current()/../../if:type != 'bbfift:vlan-sub-interface' or
+            current() != 'network-port' or (current()/../../bbf-if-pm:performance/bbf-if-pm:enable = 'false')"
+            {
+             error-message "Enable PM counter on vlan-sub-interface(network port) and it should be deny";
+            }
+    }
+
+  }
+
+   deviation "/if:interfaces/if:interface/bbf-if-usg:interface-usage/bbf-if-usg:interface-usage" {
+    deviate add{
+      must "((not(boolean(/bbf-vsi-vctr:vsi-vector-profiles/bbf-vsi-vctr:vsi-vector-profile[bbf-vsi-vctr:name = current()/../../bbf-vsi-vctr:vector-profile]/bbf-vsi-vctr-usg:interface-usage/bbf-vsi-vctr-usg:interface-usage)))
+              or
+             (current() = /bbf-vsi-vctr:vsi-vector-profiles/bbf-vsi-vctr:vsi-vector-profile[bbf-vsi-vctr:name = current()/../../bbf-vsi-vctr:vector-profile]/bbf-vsi-vctr-usg:interface-usage/bbf-vsi-vctr-usg:interface-usage))" 
+      {        
+        error-message " 
+                       it can be: 
+                       (1) interface usage configured with the same value in the interface and in ther referenced profile 
+                       or 
+                       (2) interface usage shall be configured in the interface or in the referenced profile, not both";
+      }
+    }
+  }
+
+ 
+}
+
+

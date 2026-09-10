@@ -1,0 +1,436 @@
+module nokia-netconf-server {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+            + "nokia-netconf-server";
+
+  prefix nokia-ncs;
+
+  import ietf-yang-types {
+    prefix "yang";
+  }
+
+  import ietf-netconf-server {
+    prefix ncs;
+  }
+
+  import ietf-inet-types {
+    prefix inet;
+  }
+
+  import nokia-sdan-certificate {
+    prefix nokia-cert;
+  }
+
+  import ietf-tls-common {
+    prefix tlscmn;
+  }
+
+  import iana-tls-cipher-suite-algs {
+    prefix tlscsa;
+  }
+
+  import nokia-sdan-keystore-types { 
+    prefix nokia-ks;
+  }
+
+  import nokia-sdan-est-client { 
+    prefix estc;
+  }
+
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "The NOKIA IETF/ietf-netconf-server YANG module supporting
+     notifications and operational data on top of standard.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2017, Nokia. All Rights Reserved.";
+
+    revision 2024-12-10 {
+      description
+        "Added keystore and est options";
+      reference
+        "Nokia specific.";
+    }
+
+    revision 2023-12-15 {
+      description
+        "Added TLS Version, TLS Cipher operational state";
+      reference
+        "Nokia specific.";
+    }
+
+    revision 2023-06-06 {
+      description
+        "Added action based grouping for callhome cert provisioning";
+      reference
+        "Nokia specific.";
+    }
+    
+    revision 2023-03-29 {
+
+     description "Add descriptions substatements.";
+     reference "Nokia specific";
+    }
+
+    revision 2022-03-08 {
+    description
+      "Added secondary-endpoints";
+     reference
+       "Nokia specific";
+   }
+
+  revision 2020-09-11 {
+    description
+      "Added PMA endpoint grouping which groups all PMA related info";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2020-03-25 {
+    description
+      "Added support to disable callhome cli-timer. Change
+      cli-timer default value to 0 (disabled).";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2019-02-05 {
+    description
+      "Added callhome-certificate-error notification
+       action to restart call-home session.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2018-06-26 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: yyyy-mm-dd.";
+     reference
+       "Nokia specific";
+   }
+
+  feature secondary-endpoints {
+    description
+     "The 'secondary-endpoints' feature indicates that the NETCONF server
+      supports initiating NETCONF secondary call home connections to
+      NETCONF clients.";
+  }
+
+  notification callhome-certificate-error {
+      description
+        "A notification indicating that callhome session over TLS has 
+         failed with the configured key & certificates and retrying 
+         with last working certificates.";
+
+      leaf reason {
+         type string;
+         description
+           "Reason for the certificate error during callhome session";
+      }
+
+      leaf details {
+         type string;
+         description
+           "Contains IP and port number of the PMA and the
+            additional details on the certificate error";
+      }
+  }
+
+
+  grouping pma-endpoint-grouping {
+        description
+          "A reusable PMA endpoint grouping.";
+        leaf name {
+            type string;
+            description
+              "An arbitrary name for this endpoint.";
+        }
+        leaf address {
+            type inet:host;
+            description
+              "The IP address or hostname of the endpoint.  If a
+               hostname is configured and the DNS resolution results
+               in more than one IP address, the NETCONF server
+               will process the IP addresses as if they had been
+               explicitly configured in place of the hostname.";
+        }
+        leaf port {
+            type inet:port-number;
+            description
+              "The IP port for this endpoint. The NETCONF server will
+               use the IANA-assigned well-known port if no value is
+               specified.";
+        }
+        leaf source {
+            type enumeration {
+                enum dynamic {
+                    value 1;
+                    description "The source for this endpoint is dynamic.";
+                }
+                enum static {
+                    value 2;
+                    description "The source of this endpoint is static.";
+                }
+            }
+            description
+              "Source of the endpoint. Operator configured endpoint is static endpoint
+               and dynamic endpoint is retrived by dhcp protocol";
+        }
+    }
+
+  grouping tls-hello-state {
+    description
+        "The protocol version and cipher chosen during handshake of a TLS
+        connection.";
+    leaf tls-version {
+      type identityref {
+        base tlscmn:tls-version-base;
+      }
+      description
+        "The TLS version used in a Call Home connection.";
+    }
+    leaf tls-cipher-suite {
+      type tlscsa:cipher-suite-algorithm-ref;
+      description
+        "The TLS cipher suite used in a Call Home connection.";
+    }
+  }
+
+  augment "/ncs:netconf-server/ncs:call-home"{
+     action callhome-restart {
+         description
+             "Initiate call-home session restart if new 
+              key and certificates are configured already.";
+         output {
+             leaf result {
+               type enumeration {
+                 enum success {
+                   value 1;
+                   description
+                     "Operation success";
+                 }
+                 enum failed  {
+                   value 2;
+                   description
+                     "Operation failed";
+                 }
+               }
+               description "The result of the call-home restart action.";
+             }
+             leaf details {
+                 type string;
+                 description
+                     "Contains the detailed information 
+                      on the action result";
+             }
+         }
+     }
+     container callhome-state {
+         config false;
+         description
+             "Specifies TLS-specific call-home transport
+              configuration.";
+         container endpoints {
+           description
+             "currently connected endpoint.";
+           list endpoint {
+             uses pma-endpoint-grouping;
+             description "The list of endpoints the NETCONF server will try to connect to.";
+          }
+       }
+       container active-endpoint {
+          presence "Specifies the currect connected endpoint operational state";
+          uses pma-endpoint-grouping;
+          leaf active-from {
+              type yang:date-and-time;
+              description
+                "The date and time of the start of this call-home connection.";
+          }
+          uses tls-hello-state;
+          description "The active endpoint of this call-home connection.";
+       }
+
+       container last-connected-endpoint {
+          presence "Specifies the last connected endpoint operational state";
+          uses pma-endpoint-grouping;
+          leaf disconnect-timestamp {
+              type yang:date-and-time;
+              description
+                "The date and time of the closure of last call-home connection.";
+          }
+          uses tls-hello-state;
+          description "The last connected endpoint of this call-home connection.";
+          
+       }
+    }
+    leaf cli-timer {
+      type uint16 {
+        range "0 .. 3600";
+      }
+      units "seconds";
+      default "0";
+      description
+        "This timer starts running when callhome session is disconnected. 
+         Upon expiry of this timer interval, local management CLI port 
+         will open, i.e it overrules the closed configuration untill callhome
+         session is re-established.
+
+         Timer value of 0 (which is the default) disables cli timer functionality.
+         local management CLI port status stays as configured.
+
+         Timer is stopped and no action is performed if callhome session 
+         is re-established again within the expiry of this timer interval."; 
+    }
+    description "The callhome configuration.";
+  }
+  augment "/ncs:netconf-server/ncs:call-home/ncs:netconf-client"{
+    container secondary-endpoints {
+      if-feature secondary-endpoints;
+      description
+        "Configures the secondary NETCONF call-home connections to
+          NETCONF clients (endpoints). Multiple secondary NETCONF call-home
+          connections can simultaneously co-exist, acting as 'redundant' connections
+          to the primary call-home connection, for performance only reasons.
+          Those secondary connections are treated as 'slave' NETCONF call-home
+          connections, meaning that in case the primary NETCONF call-home connection
+          is lost, then all the established secondary NETCONF call-home connections
+          will be disconnected too. Those will be re-established only after the
+          connectivity with the primary NETCONF call-home connection is restored";
+      container endpoints {
+        description
+          "Container for the list of secondary callhome endpoints";
+        list endpoint {
+          key name;
+          description
+            "A list of secondary callhome endpoints";
+            leaf name {
+              type string;
+              description
+                "An arbitrary name for a secondary callhome endpoint";
+            }
+            leaf address {
+              type inet:host;
+              description
+                "The IP address (or hostname) to be used when connecting to the
+                  secondary endpoint. If no 'address' value is specified,
+                  then the same 'address' will used as per the establihsed
+                  primary callhome connection";
+            }
+            leaf port {
+              type inet:port-number;
+              description
+                "The port to be used when connecting to the secondary callhome endpoint.
+                  If no 'port' value is specified, then the same
+                  port will used as per the established primary callhome connection.";
+            }
+            container state {
+              config false;
+              description
+                "State of a particular secondary callhome endpoint of the list";
+              leaf active-from {
+                type yang:date-and-time;
+                description
+                  "The connection date and time of this secondary call-home connection";
+              }
+              leaf disconnect-timestamp {
+                type yang:date-and-time;
+                description
+                  "The disconnection date and time of this secondary call-home connection";
+              }
+              uses tls-hello-state;
+              leaf status {
+                type string;
+                description
+                  "Optionally, describe the status of the secondary call-home connection";
+              }
+            }
+          }
+      }
+     
+    }
+    description "The netconf-client information of this call-home connection.";
+
+  }
+  
+  /** Augment ietf-netconf-server yang model with "install-cert-action-grouping" **/
+  augment "/ncs:netconf-server/ncs:call-home/ncs:netconf-client/ncs:endpoints/ncs:endpoint/ncs:transport/ncs:tls/ncs:tls/ncs:server-identity/ncs:local-or-keystore/ncs:local/ncs:local-definition"
+  {
+      uses nokia-cert:install-cert-action-grouping;
+      description "The lietf-netconf-server yang model with install-cert-action-grouping  of the call-home connection.";
+  }
+  
+  augment "/ncs:netconf-server/ncs:call-home/ncs:netconf-client/ncs:endpoints/ncs:endpoint/ncs:transport/ncs:tls/ncs:tls/ncs:server-identity/ncs:local-or-keystore/ncs:keystore" {
+    description "Augments certificate configuration with a choice between central keystore reference and EST certificate profile";
+ 
+    choice certificate-reference-choice {
+        description "Choice between a central keystore reference and an EST certificate profile";
+ 
+        case central-keystore-reference {
+            container central-keystore-reference {
+                uses nokia-ks:asymmetric-key-certificate-ref-grouping;
+                description "A reference to a specific certificate associated with an asymmetric key stored in the central keystore.";
+            }
+        }
+ 
+        case est-certificate-profile-reference {
+            container est-certificate-profile-reference {
+                uses estc:est-certificate-profile-ref-grouping;
+                description "Reference to an EST certificate profile for TLS identity configuration.";
+            }
+        }
+    }
+
+  }
+
+  augment "/ncs:netconf-server/ncs:call-home/ncs:netconf-client/ncs:endpoints/ncs:endpoint/ncs:transport/ncs:tls/ncs:tls/ncs:client-auth" {
+    description "Augments CA certificate configuration with a reference to an EST CA certificate profile";
+    uses estc:est-ca-certificate-profile-ref-grouping;
+  }
+
+}
+
+

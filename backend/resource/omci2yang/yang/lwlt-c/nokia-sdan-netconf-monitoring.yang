@@ -1,0 +1,173 @@
+module nokia-sdan-netconf-monitoring {
+    yang-version 1.1;
+    namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+            + "nokia-sdan-netconf-monitoring";
+
+    prefix nokia-ncm;
+
+    import ietf-netconf-monitoring {
+        prefix ncm;
+    }
+
+    organization
+      "Nokia";
+
+    contact
+      "Comments or questions about this Nokia YANG module should be
+       directed to <mailto:isam.yang@nokia.com>.";
+
+    description
+      "The NOKIA IETF/ietf-netconf-server YANG module supporting
+       actions, notifications and operational data on top of standard.
+
+       This specification is published by Nokia under Non-Disclosure
+       Agreement(s) (NDA) with specific parties and has to be considered
+       as Confidential Information as defined in such NDA. Nokia
+       reserves the right to revise this document for any reason,
+       including but not limited to conformity with standards
+       promulgated by various agencies, utilisation of advances in the
+       state of the technical areas, or the reflection of changes in the
+       design of any equipment, techniques, or procedures described or
+       referred to herein.
+
+       The product specifications and other technical or performance
+       information contained herein are subject to change without
+       notice. Updates of this document will be issued under the above
+       NDA's.
+
+       Nokia makes no representation or warranty, expressed or implied,
+       with respect to the sufficiency, accuracy, or utility of any
+       information or opinion contained herein. Nokia expressly advises
+       that any use of for any purpose or reliance upon this technical
+       reference is at the risk of the user and that Nokia shall not be
+       liable for any damage or injury incurred by any person arising
+       out of the sufficiency, accuracy, or utility of any information
+       or opinion contained herein.
+
+       This document is not to be construed as a suggestion to any
+       manufacturer to modify or change any of its products, nor does
+       this document represent any commitment by Nokia to sell or
+       purchase any product. Nothing contained herein shall be construed
+       as conferring by implication, estoppel, or otherwise any license
+       or right under any patent, whether or not the use of any
+       information herein necessarily employs an invention of any
+       existing or later issued patent.
+
+       Nokia reserves the right not to offer any or all of these
+       products and to withdraw any or all of them at any future time.
+
+       Copyright (C) 2024, Nokia. All Rights Reserved.";
+    revision 2024-08-01 {
+        description
+          "Added actions to simulate confirmed-commit capability described in RFC 6241";
+        reference
+          "Nokia specific";
+    }
+    revision 2023-04-25 {
+        description
+          "Added descriptions according to RFC 8407";
+        reference
+          "Nokia specific";
+    }
+    revision 2021-12-22 {
+        description
+          "Initial Revision";
+        reference
+          "Nokia specific";
+    }
+
+    feature confirmed-commit {
+      description
+        "Enables the required parameters for system protection against possible miss-configuration and connenctivity loss";
+    }
+
+    typedef netconf-processing-state-type {
+        type enumeration {
+            enum free {
+             description "free enum";
+           }
+            enum pre-validation {
+             description "pre-validation enum";
+           }
+            enum prepare-phase {
+             description "prepare-phase enum";
+           }
+            enum abort-phase {
+             description "abort-phase enum";
+           }
+            enum commit-phase {
+             description "commit-phase enum";
+           }
+        }
+        description
+          "Enumeration of possible NETCONF RPC Processor States.";
+    }
+
+    augment /ncm:netconf-state {
+        description
+             "This augment adds the processor-state container.";
+        container processor-state {
+            config false;
+            description
+              "The processor-state container includes the current state of RPC processing state for
+               Config data (CDB) transactions.";
+            leaf current-state {
+                type netconf-processing-state-type;
+                description
+                  "Representing the current RPC transaction processing state.";
+            }
+        }
+    }
+
+    typedef timeout-states {
+        type enumeration {
+            enum timer-is-configured {
+             description "The system timer is configured by the recoveryTimeout.";
+           }
+            enum timer-is-armed {
+             description "The system timer is armed.";
+           }
+            enum timer-is-running {
+             description "The system timer is running.";
+           }
+            enum timer-is-expired {
+             description "The system timer is expired.";
+           }
+         }
+         description
+           "Enumeration of possible system timer states.";
+    }
+
+	container mgmt-channel-commit {
+		if-feature "nokia-ncm:confirmed-commit";
+		description
+			"This container defines the required parameters for system protection against possible miss-configuration and connectivity loss.
+			 A NETCONF client MUST send the action prepare-for-commit to arm a system timer, before proceeding with configuration changes in the datastore.
+			 The system timer will start running after the completion of the next configuration change in the datastore.
+			 A NETCONF client MUST send the action commit to stop the system timer.
+			 If the system timer expires before action commit, the system will restart by recovering the datastore content as it was before the configuration changes performed by the NETCONF client.";
+		action prepare-for-commit {
+      description
+        "Backup the cdb and arm the system timer. The system timer will start running when the next incoming transaction is completed";
+		}
+		action commit {
+			description
+        "Previous incoming transaction completed and system timer is stopped.";
+		}
+		leaf recoveryTimeout {
+			type uint32 {
+        range "1..86400";
+			}
+			units seconds;
+			default "600"; // 10 minutes
+			description
+        "Configure the system timer.";
+		}
+		leaf recoveryTimeout-state {
+			type timeout-states;
+      config false;
+			description
+        "The states of system timer.";
+		}
+	}
+}

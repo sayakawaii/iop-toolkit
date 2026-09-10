@@ -1,0 +1,62 @@
+module nokia-bbf-oam-cfm-mep-to-interface-mounted-eonu-only-dev {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/" +
+            "nokia-bbf-oam-cfm-mep-to-interface-mounted-eonu-only-dev";
+  prefix nokia-bbf-oam-cfm-mep-to-interface-mounted-eonu-only-dev;
+
+  import bbf-fiber-onu-emulated-mount {
+     prefix onu;
+  }
+
+  import ieee802-dot1q-cfm-mounted {
+    prefix dot1q-cfm-mounted;
+  }
+  import bbf-oam-cfm-mep-to-interface-mounted {
+    prefix bbf-cfm-mep2i-mounted;
+  }
+  
+  import bbf-sub-interfaces-mounted {
+    prefix bbf-subif-mounted;
+  }
+  import nokia-template-common {
+    prefix template-common;
+  }
+
+  import iana-if-type-mounted {
+    prefix ianaift-mounted;
+  }
+  import ietf-interfaces-mounted {
+    prefix if-mounted;
+  } 
+ 
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA IETF/System YANG module supporting
+     deviations on top of standard.";
+
+  revision 2026-03-18 {
+    description
+      "init revision.";
+    reference
+      "Nokia Specific.";
+  }
+  
+
+   deviation "/onu:onus/onu:onu/onu:root/dot1q-cfm-mounted:cfm/dot1q-cfm-mounted:maintenance-group/dot1q-cfm-mounted:mep/bbf-cfm-mep2i-mounted:interface" {  
+    deviate add {
+       must "not(derived-from-or-self(../../../../../onu:usage, 'template-common:node-actual-usage'))"
+            +" or "
+            +"not(boolean(deref(current())/../bbf-subif-mounted:subif-lower-layer/bbf-subif-mounted:interface))"
+            +" or "
+            +"(deref(deref(current())/../bbf-subif-mounted:subif-lower-layer/bbf-subif-mounted:interface)/../if-mounted:type != 'ianaift-mounted:ieee8023adLag')" {
+          error-message "The lower-layer of the interface referenced by CFM cannot be a member of a LAG.";
+      }
+    }
+  } 
+
+}

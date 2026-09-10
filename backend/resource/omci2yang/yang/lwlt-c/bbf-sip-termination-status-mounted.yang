@@ -1,0 +1,210 @@
+submodule bbf-sip-termination-status-mounted {
+  yang-version 1.1;
+  belongs-to bbf-sip-voip-mounted  {
+    prefix bbf-sip-pots-mounted;
+  }
+
+  organization
+    "Broadband Forum <https://www.broadband-forum.org>
+     Common YANG Work Area";
+
+  contact
+    "Comments or questions about this Broadband Forum YANG module
+     should be directed to <mailto:help@broadband-forum.org>.
+     Editor:      Frank Desseyn, Nokia
+     Editor:      Nadine Staelens, Nokia
+     PS Leader:   Joey Boyd, ADTRAN
+     PS Leader:   Ken Kerpez, ASSIA
+     WA Director: Joey Boyd, ADTRAN
+     WA Director: Sven Ooghe, Nokia";
+
+  description
+    "This submodule contains the Pots termination status definitions.
+     Copyright (c) 2017-2018, Broadband Forum
+     Redistribution and use in source and binary forms, with or
+     without modification, are permitted provided that the following
+     conditions are met:
+     1. Redistributions of source code must retain the above copyright
+        notice, this list of conditions and the following disclaimer.
+     2. Redistributions in binary form must reproduce the above
+        copyright notice, this list of conditions and the following
+        disclaimer in the documentation and/or other materials
+        provided with the distribution.
+     3. Neither the name of the copyright holder nor the names of its
+        contributors may be used to endorse or promote products
+        derived from this software without specific prior written
+        permission.
+     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
+     CONTRIBUTORS \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+     INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+     DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+     CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+     SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+     NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+     CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+     STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+     ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+     ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     The above license is used as a license under copyright only.
+     Please reference the Forum IPR Policy for patent licensing terms
+     <https://www.broadband-forum.org/ipr-policy>.
+     Any moral rights which are necessary to exercise under the above
+     license grant are also deemed granted under this license.
+     This version of this YANG module is part of TR-383; see
+     the TR itself for full legal notices.";
+
+  revision 2020-03-06 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: 2020-03-06.";
+    reference
+      " ";
+  }
+	
+  grouping sip-termination-status {  
+    leaf sip-pots-uni-contact-user-info {
+	  type string {length "1..128";}
+	  config false;
+	  description
+	    "The user-part of the contact header in the SIP messages 
+	     associated with the sip POTS user itf.";
+    }
+	leaf sip-termination-call-state {
+	  type enumeration {
+	    enum onhook {
+		  value 0;
+		  description
+		    "Idle, on hook.";
+        }
+		enum offhook-dialtone {
+		  value 1;
+		  description
+		    "The subscriber goes off hook and dial tone is played.";
+        }
+		enum dialing {
+		  value 2;
+		  description
+		    "The subscriber is dialing.";
+        }
+		enum play-ring-tone {
+		  value 3;
+		  description
+		    "The ringing tone is being played at the subscriber 
+			 line.";
+	    }
+		enum play-ringback-tone {
+		  value 4;
+		  description
+		    "The ringback tone is being played at the calling 
+			 subscriber line.";
+	    }
+	    enum connecting {
+		  value 5;
+		  description 
+		    "The call is in a connecting phase.The NE has sent a SIP 
+			 INVITE request and is awaiting the response.";
+	    }
+	    enum connected {
+		  value 6;
+		  description
+		    "The call has been established and is stable call 
+			 phase.";
+	    }
+		enum releasing {
+		  value 7;
+		  description
+		    "The call has terminated. However the subscriber did not
+		     go on-hook yet. The subscriber line is in releasing 
+			 state. A particular tone may be put at the subscriber 
+			 line in this state.";
+	    }
+	    enum parking {
+		  value 8;
+		  description
+		    "The subscriber line is in idle off-hook state, no tone
+			 is generated.";
+	    }
+		enum roh-tone {
+          value 9;
+          description 
+            "Warning the subscriber of an off-hook state by 
+			 generating a receiver off hook (ROH) tone.";
+        }	
+		enum unknown-state {
+		  value 10;
+          description 
+            "Indicates an unknown state.";
+        }		
+	    enum shared-cut-off {
+		  value 11;
+		  description
+		    "This call state applies to the shared line only. When a 
+		     SIP user of the shared subscriber line is involved in 
+			 a call, the other SIP user, sharing the same subscriber
+		     line, goes to shared-cut-off state. The SIP user in 
+		     shared-cut-off state hears silence if it would go to 
+		     off-hook state. An incoming call request for this SIP 
+		     user will be rejected.";
+	    }        		
+	  }
+	  config false;	
+	  description
+	    "The call state of the sip POTS termination.";
+    }
+    leaf sip-termination-registration-state {
+	  type enumeration {
+	    enum initial {
+		  value 0;
+		  description  
+		    "Initial state, no registration is sent yet.";
+		}
+		enum registered {
+		  value 1;
+		  description  
+		    "The termination is successfully registered.";
+		}
+		enum reg-fail-auth {
+		  value 2;
+		  description  
+		    "Registration failed due to an authentication failure.";
+		}
+		enum reg-fail-timeout {
+		  value 3;
+		  description  
+		    "Registration failed due to an message timeput.";
+		}
+		enum reg-fail-server {
+		  value 4;
+		  description  
+		    "Registration failed due to a server failure.";
+		}
+	  }		
+	  config false;
+	  default initial;
+	  description
+		"Indicates the SIP termination registration status."; 
+	}
+	leaf emergency-call-status {
+	  type enumeration {
+	    enum no-emergency {
+		  value 0;
+		  description  
+		    "No emergency call in progress.";
+		}
+		enum emergency-in-progress {
+		  value 1;
+		  description  
+		    "Emergency call in progress.";
+		}
+	  }		
+	  config false;
+	  default no-emergency;
+	  description
+		"Indicating if an emergency call is ongoing or not.";
+    }   
+  }  
+}
+

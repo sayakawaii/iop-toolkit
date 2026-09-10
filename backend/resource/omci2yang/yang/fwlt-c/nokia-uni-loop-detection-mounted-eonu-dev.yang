@@ -1,0 +1,55 @@
+module nokia-uni-loop-detection-mounted-eonu-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-uni-loop-detection-mounted-eonu-dev";
+  prefix  nokia-uni-loop-detection-mounted-eonu-dev;
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import ietf-interfaces-mounted {
+    prefix if-mounted;
+  }
+
+  import ietf-hardware-mounted {
+    prefix hw-mounted;
+  }
+
+  import iana-hardware {
+    prefix ianahw;
+  }
+
+  import nokia-uni-loop-detection-mounted {
+    prefix nokia-loop-detect-mounted;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA BBF/nokia-uni-loop-detection YANG module supporting
+     deviations on top of standard.";
+
+  revision 2021-11-02 {
+    description
+      "Allow uni loop detect";
+    reference
+      "TBD";
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/nokia-loop-detect-mounted:uni-loop-detection" {
+     description
+        "Hardware component chassis must exist when uni-loop-detection is configured";
+      deviate add {
+        must "boolean(current()/../../hw-mounted:hardware/hw-mounted:component[hw-mounted:class = 'ianahw:chassis'])" {
+        error-message "Hardware component chassis must exist when uni-loop-detection is configured";
+      }
+    }
+  }
+
+}
+

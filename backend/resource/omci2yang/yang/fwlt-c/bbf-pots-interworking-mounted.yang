@@ -1,0 +1,419 @@
+submodule bbf-pots-interworking-mounted {
+  yang-version 1.1;
+  belongs-to bbf-sip-voip-mounted  {
+    prefix bbf-sip-voip-mounted;
+  }
+    
+  import ietf-inet-types {
+    prefix inet;
+	reference
+      "RFC 6991: Common YANG Data Types.";
+  }
+  
+  import ietf-yang-types {
+    prefix yang;
+  }
+  
+
+  
+  import bbf-yang-types {
+    prefix bbf-yang;
+  }
+  
+  import bbf-xpon-if-type-mounted {
+    prefix bbf-xponift-mounted;
+  }
+  import bbf-voip-configuration-mounted {
+    prefix bbf-voip-config-mounted;
+  }
+
+  import bbf-fiber-onu-emulated-mount {
+     prefix onu;
+  }
+
+  import nokia-template-common {
+    prefix template-common;
+  }  
+
+  import ietf-interfaces-mounted {
+     prefix if-mounted;
+  }  
+
+  import iana-if-type-mounted {
+    prefix ianaift-mounted;
+  }  
+  
+  
+  
+  include bbf-sip-voip-base-mounted;
+  include bbf-sip-terminations-mounted;
+  include bbf-voip-access-gateways-mounted;
+  include bbf-media-codec-profile-body-mounted;
+  
+  organization
+    "Broadband Forum <https://www.broadband-forum.org>
+     Common YANG Work Area";
+
+  contact
+    "Comments or questions about this Broadband Forum YANG module
+     should be directed to <mailto:help@broadband-forum.org>.
+     Editor:      Joey Boyd, ADTRAN
+     Editor:      Ludwig Pauwels, Nokia
+     PS Leader:   Joey Boyd, ADTRAN
+     PS Leader:   Ken Kerpez, ASSIA
+     WA Director: Joey Boyd, ADTRAN
+     WA Director: Sven Ooghe, Nokia";
+
+  description
+    "This submodule contains a collection of YANG definitions for
+     managing the pots interworking function.
+     Copyright (c) 2017-2018, Broadband Forum
+     Redistribution and use in source and binary forms, with or
+     without modification, are permitted provided that the following
+     conditions are met:
+     1. Redistributions of source code must retain the above copyright
+        notice, this list of conditions and the following disclaimer.
+     2. Redistributions in binary form must reproduce the above
+        copyright notice, this list of conditions and the following
+        disclaimer in the documentation and/or other materials
+        provided with the distribution.
+     3. Neither the name of the copyright holder nor the names of its
+        contributors may be used to endorse or promote products
+        derived from this software without specific prior written
+        permission.
+     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
+     CONTRIBUTORS \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+     INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+     DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+     CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+     SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+     NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+     CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+     STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+     ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+     ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     The above license is used as a license under copyright only.
+     Please reference the Forum IPR Policy for patent licensing terms
+     <https://www.broadband-forum.org/ipr-policy>.
+     Any moral rights which are necessary to exercise under the above
+     license grant are also deemed granted under this license.
+     This version of this YANG module is part of TR-383; see
+     the TR itself for full legal notices.";
+
+  revision 2021-09-27 {
+    description
+      "Add a reference to an onu-v-vrefpoint interface in
+       pots-interworking. Add when statements for sip-user-name,
+       voip-access-gateway and voip-vrefpoint-interface.";
+    reference
+      "";
+  }
+  revision 2021-07-06 {
+    description
+      "Add session-type in pots-x-connections container";
+    reference
+      "";
+  } 
+  revision 2021-03-24 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: 2020-03-06.";
+    reference
+      " ";
+  }
+  
+ augment '/onu:onus/onu:onu/onu:root' {
+  when "derived-from-or-self(../onu:usage, 'template-common:node-actual-usage') or "
+       + "derived-from-or-self(../onu:usage, 'template-common:node-template-usage')" {
+     description
+       "it should be a node-actual-usage or node-template-usage ONU";
+  } 
+  container pots-interworking-nodes {
+    description 
+	  "The pots interworking function.";
+    list pots-interworking {
+	  key "name";
+	  description
+        "Pots interworking nodes.";
+      leaf name {
+        type bbf-yang:name-string;    
+	    description
+     	  "Uniquely identifies the POTS interworking node.";
+      }
+	  leaf phys-pots-itf {
+           type string;
+	    must "../../../if-mounted:interfaces/if-mounted:interface[if-mounted:name = current()]"
+               + "/if-mounted:type = 'ianaift-mounted:voiceFXS'";
+	      mandatory true;
+   	      description
+   	         "References a physical Voice interface.";
+      }
+	  leaf sip-user-name {
+        when "../../../bbf-voip-config-mounted:voip-configuration-characteristics"
+              + "/bbf-voip-config-mounted:configuration-method = 'omci'";
+        /* type bbf-sip-voip-mounted:sip-termination-ref; */
+          type leafref {
+		  path "../../../bbf-sip-voip-mounted:sip-signaling"
+             + "/bbf-sip-voip-mounted:sip-terminations"
+		     + "/bbf-sip-voip-mounted:sip-termination"
+		     + "/bbf-sip-voip-mounted:sip-user-name";
+		}
+	    mandatory true;
+        description
+	      "References the SIP user name.";
+      }
+	  leaf voip-access-gateway {
+        when "../../../bbf-voip-config-mounted:voip-configuration-characteristics"
+              + "/bbf-voip-config-mounted:configuration-method = 'omci'";
+        /* type bbf-sip-voip-mounted:voip-access-gateway-ref;*/
+	    type leafref {
+		  path "../../../bbf-sip-voip-mounted:sip-signaling"
+			 + "/bbf-sip-voip-mounted:voip-access-gateways" 
+			 + "/bbf-sip-voip-mounted:voip-access-gateway"
+			 + "/bbf-sip-voip-mounted:name";
+		}
+	    mandatory true;
+	    description
+	      "Uniquely identifies the Sip user agent on the 
+	  	   network SIP interface side.";
+	  }
+      leaf voip-vrefpoint-interface {
+        when "../../../bbf-voip-config-mounted:voip-configuration-characteristics"
+              + "/bbf-voip-config-mounted:configuration-method = 'tr-104'";
+        type leafref {
+           path "../../../if-mounted:interfaces/if-mounted:interface/if-mounted:name";
+        }
+        mandatory true;
+        must "derived-from-or-self(../../../if-mounted:interfaces
+              /if-mounted:interface[if-mounted:name = current()]
+              /if-mounted:type,'bbf-xponift-mounted:onu-v-vrefpoint')";
+        description
+          "In case ONU voice service is managed through tr-104
+           method, an onu-v-vrefpoint interface may be specified
+           through this node.";
+      }
+    }
+  }
+}
+
+ augment '/onu:onus/onu:onu/onu:root' {
+  when "derived-from-or-self(../onu:usage, 'template-common:node-actual-usage') or "
+       + "derived-from-or-self(../onu:usage, 'template-common:node-from-template-usage')" {
+     description
+       "it should be a node-actual-usage or node-from-template-usage ONU";
+  } 
+  container pots-interworking-nodes-state {
+    config false;
+	description 
+	  "The pots interworking function.";
+    list pots-interworking {
+	  config false;
+	  key "name";    
+	  description
+        "Pots interworking nodes.";
+      leaf name {
+        type bbf-yang:name-string;    
+	    description
+     	  "Uniquely identifies the POTS interworking node.";
+      }
+      container pots-x-connections {
+	    config false;
+		description
+		  "Lists the ongoing sessions by this sip user on this
+ 		   physical line. The default scenario is that there is
+		   only one sip session ongoing. In case a conference call
+		   is taking place, there will be two sessions
+		   in this list. ";
+		list sip-sessions {   
+      	  leaf sip-remote-ip-version {
+	        type inet:ip-version;
+	        description
+		      "The ip version of the first hop Sip server used by the
+		       cross-connection.";
+	      }
+		  leaf calling-number {
+	        type string;
+	        description
+	          "For outgoing calls the calling party number is the Sip AOR
+ 	      	 of the calling party.
+               For incoming calls the calling party number is the 
+	      	 user@domain present in P-Asserted-Identity or From header
+               of the Sip message.";		  
+	      }
+	      leaf called-number {
+	        type string;
+	        description
+	          "For outgoing calls the called party number are the dialed
+	      	 digits of the called party.
+               For incoming calls the called party number is the Sip
+	      	 AOR of called party.";
+	      }
+	      leaf sip-remote-ip-prefix {
+	        type inet:ip-prefix;
+	        description
+		      "The ip address prefix of the first hop Sip server  
+		       used by the cross-connection.";
+	      }
+	      leaf sip-remote-ip-address {
+	        type inet:ip-address;
+	        description
+	          "The remote ip address of the first hop Sip server in 
+		       used by the cross-connection.";	
+	      }
+	      leaf sip-remote-port-used {
+	        type uint16;
+	        description
+	          "The port of the first hop Sip server used by the 
+	      	 cross-connection.";
+	      }
+	      leaf sip-transport-used {
+	        type uint16;
+	        description
+	          "The transport type used for the cross-connection.";
+          }
+          leaf session-type {
+            type enumeration {
+              enum idle-or-none {
+              description
+                "Idle or none.";
+              }
+              enum 2way {
+              description
+                "2way.";
+              }
+              enum 3way {
+             description
+                "3way.";
+              }
+              enum fax-or-modem {
+              description
+                "fax or modem.";
+              }
+              enum telemetry {
+              description
+                "telemetry.";
+              }
+              enum conference {
+              description
+                "conference.";
+              }              
+            }
+            description
+              "The session type reports the current state of a VoIP 
+              POTS port session";
+          }
+	      leaf session-start-time {
+	        type yang:date-and-time;
+	        description
+	          "Start time of the session. 
+	      	 - For outgoing successful calls : the moment that ACK to 
+	      	   200 OK (Initial INVITE) is received.
+	      	 - For outgoing unsuccessful calls : the moment that the 
+	      	   Initial INVITE is sent. 
+               - For incoming successful calls : the moment that ACK to 
+	      	   200 OK (Initial INVITE) is sent.
+               - For incoming unsuccessful calls: the moment that 180 
+	      	   Ringing is sent.";
+	      }	    
+          leaf session-direction {
+            type enumeration {
+	          enum incoming {
+	      	  value 1;
+	      	  description
+	      	    "Indicates if the established connection is an incoming
+	      		 call.";
+	      	}
+	      	enum outgoing {
+	      	value 2;
+	      	  description
+	      	    "Indicates if the established connection is an outgoing
+	      		 call.";
+	      	}
+	        }
+	        description
+	          "The session direction indicates of the established call is
+	      	 an incoming call or an outgoing call.";
+          }
+	      leaf session-duration {
+	        type uint16;
+	        units "1 second";
+	        description
+	          "The total call duration.";
+	      }
+          leaf session-failure-reason {
+            type string;
+            description
+              "In case the session was successful, there will be no failure
+               reason.
+               Otherwise the session failure reason will reflect the reason
+               for the failing call attempt:
+               - Final failure response received, being 3xx, 4xx, 5xx or
+                 6xx response received (=sip response code),
+               - Timer B expiry (no response received),
+               - Cancelled/terminated call attempt (by going on-hook before
+                 session established).";
+          }
+
+		  leaf media-remote-ip-address {
+	            config false;
+	        type inet:ip-address;
+	        description
+	          "Remote ip address for the media connection, received via
+		       Session Description Protocol (SDP) during session 
+		       establishment.";	
+		  }
+	      leaf media-remote-port-used {
+	        config false;
+	        type uint16;
+	        description
+	          "Remote port for the media connection, received via
+	      	 Session Description Protocol (SDP) during session 
+	      	 establishment.";
+	      }
+	      leaf media-local-port-used {
+	        config false;
+	        type uint16;
+	        description
+	          "Local port used for the media connection, in the 
+	      	 minimum/maximum configured port range.";
+	      }	
+	      leaf media-codec-used {
+	        config false;
+	        type bbf-sip-voip-mounted:codec-selection;
+	        description
+	          "Indicates the codec for the Media session.";  
+          } 
+          leaf media-packet-period {
+	        config false;
+	        type uint16;
+	        units "1 millisecond";
+	        description
+	          "Indicates the packet interval period for the Media
+ 	      	 session.";	
+	      }
+	      leaf vbd-session {
+	        config false;
+	        type enumeration {
+	          enum no_vbd {
+	    	    value 1;
+	    	    description
+	    	      "The session is not a VBD session.";
+	          }
+	    	  enum vbd {
+	    	    value 2;
+	    	    description
+	    	      "The session is a VBD session.";
+	          }
+	        }
+	        description
+	          "Indicates if the session is a vbd session or not.";
+	      } 
+        }		  
+      }
+	}	  
+    }
+  }  
+}

@@ -1,0 +1,38 @@
+module nokia-ietf-interfaces-l2fwd-fiber-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-ietf-interfaces-l2fwd-fiber-dev";
+
+  prefix nokia-ietf-interfaces-l2fwd-fiber-dev;
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA IETF Fiber L2Fwd YANG module supporting
+     deviations on top of standard.";
+
+  revision 2023-02-14 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia Specific.";
+  }
+
+ deviation "/if:interfaces/if:interface" {
+     description "Match criteria must exist for vlan-sub-interface in either of: referred frame-processing-profile/inline-frame-processing/vector-profile.
+                  Dependent XPath where this rule applies:
+                  1. /if:interfaces/if:interface/bbf-subif:frame-processing/bbf-frameproc:frame-processing-profile-ref
+                  2. /if:interfaces/if:interface/bbf-vsi-vctr:vector-profile
+                  3. /if:interfaces/if:interface/bbf-subif:frame-processing/bbf-subif:inline-frame-processing/bbf-subif:ingress-rule/
+                     bbf-subif:rule/bbf-subif:flexible-match/bbf-subif-tag:match-criteria";
+    deviate add {}
+  }
+}

@@ -1,0 +1,258 @@
+module nokia-netconf-server-common-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+            + "nokia-netconf-server-common-dev";
+  prefix  nokia-netconf-server-common-dev;
+
+  import ietf-netconf-server {
+    prefix ncs;
+  }
+
+  import nokia-netconf-server {
+    prefix "nokia-ncs";
+  }
+
+  import iana-tls-cipher-suite-algs {
+    prefix "tlscsa";
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "The NOKIA IETF/ietf-netconf-server YANG module supporting
+     deviations on top of standard.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2017, Nokia. All Rights Reserved.";
+
+  revision 2025-11-26 {
+      description "Add deviation for supported ciphers";
+      reference "Nokia specific";
+  }
+
+  revision 2025-06-06 {
+    description "Add EST deviations";
+    reference "Nokia specific.";
+  }
+
+  revision 2023-06-06 {
+    description "Action Based Certificate Replacement restriction";
+    reference "Nokia specific.";
+  }
+
+  revision 2023-05-02 {
+    description "Solve yang errors and resolve canonical order according to RFC 6020.";
+    reference "Nokia specific.";
+  }
+
+  revision 2022-03-08 {
+    description
+      "Introduction of deviations of secondary endpoints";
+    reference
+      "Nokia specific.";
+  }
+
+  /************************************************************/
+  /*            netconf-server yang deviations           */
+  /************************************************************/
+
+deviation "/ncs:netconf-server/ncs:call-home/ncs:netconf-client/nokia-ncs:secondary-endpoints/nokia-ncs:endpoints" {
+    deviate add {
+       must "count(./nokia-ncs:endpoint/nokia-ncs:name) < 6" {
+        error-message "Secondary endpoints must be less than six";
+        description "Secondary endpoints must be less than six";
+
+       }
+    }
+}
+
+deviation "/ncs:netconf-server/ncs:call-home/ncs:netconf-client/nokia-ncs:secondary-endpoints/nokia-ncs:endpoints/nokia-ncs:endpoint/nokia-ncs:address" {
+
+
+    /* multicast and broadcast address is not valid address  */
+    deviate add {
+      must "(not(translate(.,'0123456789','') = '...' and (substring-before(.,'.') >= 224) and (substring-before(.,'.') <= 255) and not(substring(., string-length(.) - string-length('.') +1) = '.')))"{
+          error-message "Invalid IP. Multicast address cannot be configured";
+          description "Invalid IP. Multicast address cannot be configured";
+
+      }
+    }
+
+    /* self address is not valid address  */
+    deviate add {
+      must "(not((substring-before(.,'.') = 127) and translate(.,'0123456789','') = '...' and not(substring(., string-length(.) - string-length('.') +1) = '.')))" {
+          error-message "Invalid IP. Loopback address cannot be configured";
+          description "Invalid IP. Loopback address cannot be configured";
+
+      }
+    }
+
+    /* 0.0.0.[0-255] is not valid address */
+    deviate add {
+      must "not(starts-with(.,'0.0.0.') and translate(.,'0123456789','') = '...' and not(substring(., string-length(.) - string-length('.') +1) = '.'))" {
+          error-message "Invalid IP. 0.0.0.[0-255] is not valid address";
+          description "Invalid IP. 0.0.0.[0-255] is not valid address";
+
+      }
+    }
+
+    /* Multicast address is not valid address  */
+    deviate add {
+      must "not(starts-with(.,'ff'))"{
+          error-message "Invalid IP. Multicast address cannot be configured";
+          description "Invalid IP. Multicast address cannot be configured";
+
+      }
+    }
+
+    /* Site-local address is not valid address  */
+    deviate add {
+      must "(substring-before(.,':') != 'fec0')"{
+          error-message "Invalid IP. Site-local address is a not valid address";
+          description "Invalid IP. Site-local address is a not valid address";
+
+      }
+    }
+
+    /* Loopback address is not valid address  */
+    deviate add {
+      must "(current() != '::1')"{
+          error-message "Invalid IP. Loopack address is not a valid address";
+          description "Invalid IP. Loopack address is not a valid address";
+
+      }
+    }
+  }
+
+  deviation "/ncs:netconf-server/ncs:call-home/ncs:netconf-client/ncs:endpoints/ncs:endpoint/ncs:transport/ncs:tls/ncs:tls/ncs:client-auth/nokia-ncs:est-certificate-profile" {
+    deviate add {
+      must "not(../ncs:pinned-ca-certs)" {
+        error-message "'est-certificate-profile' and 'pinned-ca-certs' cannot both be set at the same time.";
+        description
+          "This constraint ensures mutual exclusivity: either 'est-certificate-profile' or 'pinned-ca-certs' can be set, but not both.";
+      }
+    }
+  }
+
+
+  deviation "/ncs:netconf-server/ncs:call-home/ncs:netconf-client/ncs:endpoints/ncs:endpoint/ncs:transport/ncs:tls/ncs:tls/ncs:server-identity/ncs:local-or-keystore/ncs:keystore/nokia-ncs:certificate-reference-choice/nokia-ncs:central-keystore-reference/nokia-ncs:central-keystore-reference/nokia-ncs:asymmetric-key" {
+    deviate add {
+      must "../nokia-ncs:certificate" {
+        error-message "'asymmetric-key' must be configured together with 'certificate' under 'central-keystore-reference'";
+      }
+    }
+  }
+
+  deviation "/ncs:netconf-server/ncs:call-home/ncs:netconf-client/nokia-ncs:secondary-endpoints/nokia-ncs:endpoints/nokia-ncs:endpoint/nokia-ncs:port" {
+    deviate add {
+      must " ( . > 0 ) " {
+          error-message "0 is no valid port number";
+          description "0 is no valid port number";
+
+      }
+    }
+  }
+
+  deviation "/ncs:netconf-server/ncs:call-home/ncs:netconf-client/ncs:endpoints/ncs:endpoint/ncs:transport/ncs:tls/ncs:tls/ncs:server-identity/ncs:local-or-keystore/ncs:local/ncs:local-definition/nokia-ncs:install-certificate/nokia-ncs:input/nokia-ncs:cert" {
+    deviate add {
+      must "current()/../../../../../ncs:name='certificate_endpoint'"{
+          error-message "certificate can be configured for 'certificate_endpoint' only";
+          description "certificate can be configured for 'certificate_endpoint' only";
+      }
+    }
+  }
+
+  deviation "/ncs:netconf-server/ncs:call-home/ncs:netconf-client/ncs:endpoints/ncs:endpoint/ncs:transport/ncs:tls/ncs:tls/ncs:server-identity/ncs:local-or-keystore/ncs:local/ncs:local-definition/nokia-ncs:install-certificate/nokia-ncs:input/nokia-ncs:cert" {
+    description "Certificate does not contain valid time";
+    deviate add {}
+  }
+
+  deviation "/ncs:netconf-server/ncs:call-home/ncs:netconf-client/ncs:endpoints/ncs:endpoint/ncs:transport/ncs:tls/ncs:tls/ncs:server-identity/ncs:local-or-keystore/ncs:local/ncs:local-definition/nokia-ncs:install-certificate/nokia-ncs:input/nokia-ncs:cert" {
+    description "Certificate is not valid";
+    deviate add {}
+  }
+
+  deviation "/ncs:netconf-server/ncs:call-home/ncs:netconf-client/ncs:endpoints/ncs:endpoint/ncs:transport/ncs:tls/ncs:tls/ncs:server-identity/ncs:local-or-keystore/ncs:local/ncs:local-definition/nokia-ncs:install-certificate/nokia-ncs:input/nokia-ncs:cert" {
+    description "Certificate has expired";
+    deviate add {}
+  }
+
+  deviation "/ncs:netconf-server/ncs:call-home/ncs:netconf-client/ncs:endpoints/ncs:endpoint/ncs:transport/ncs:tls/ncs:tls/ncs:server-identity/ncs:local-or-keystore/ncs:local/ncs:local-definition/nokia-ncs:install-certificate/nokia-ncs:input/nokia-ncs:cert" {
+    description "Certificate does not contain Serial Number (SN) info";
+    deviate add {}
+  }
+
+  deviation "/ncs:netconf-server/ncs:call-home/ncs:netconf-client/ncs:endpoints/ncs:endpoint/ncs:transport/ncs:tls/ncs:tls/ncs:server-identity/ncs:local-or-keystore/ncs:local/ncs:local-definition/nokia-ncs:install-certificate/nokia-ncs:input/nokia-ncs:cert" {
+    description "Certificate does not contain Common Name (CN) info";
+    deviate add {}
+  }
+
+  deviation "/ncs:netconf-server/ncs:call-home/ncs:netconf-client/ncs:endpoints/ncs:endpoint/ncs:transport/ncs:tls/ncs:tls/ncs:server-identity/ncs:local-or-keystore/ncs:local/ncs:local-definition/nokia-ncs:install-certificate/nokia-ncs:input/nokia-ncs:cert" {
+    description "Common Name Mismatch between certificate CN and Device DUID";
+    deviate add {}
+  }
+
+  deviation "/ncs:netconf-server/ncs:call-home/ncs:netconf-client/ncs:endpoints/ncs:endpoint/ncs:transport/ncs:tls/ncs:tls/ncs:server-identity/ncs:local-or-keystore/ncs:local/ncs:local-definition/nokia-ncs:install-certificate/nokia-ncs:input/nokia-ncs:cert" {
+    description "Serial Number Mismatch between certificate SN and Device DUID";
+    deviate add {}
+  }
+
+  deviation "/ncs:netconf-server/ncs:call-home/nokia-ncs:callhome-state/nokia-ncs:active-endpoint/nokia-ncs:tls-cipher-suite" {
+    description "The YANG identifiers of the supported ciphers ordered by descending preference";
+    deviate add {
+      must "(current() = 'tlscsa:tls-aes-256-gcm-sha384' or current() = 'tlscsa:tls-chacha20-poly1305-sha256'"+
+        "or current() = 'tlscsa:tls-aes-128-gcm-sha256' or current() = 'tlscsa:tls-ecdhe-rsa-with-aes-256-gcm-sha384'"+
+        "or current() = 'tlscsa:tls-ecdhe-rsa-with-chacha20-poly1305-sha256' or current() = 'tlscsa:tls-ecdhe-rsa-with-aes-128-gcm-sha256'"+
+        "or current() = 'tlscsa:tls-ecdhe-rsa-with-aes-256-cbc-sha384' or current() = 'tlscsa:tls-ecdhe-rsa-with-aes-256-cbc-sha'"+
+        "or current() = 'tlscsa:tls-rsa-with-aes-256-gcm-sha384' or current() = 'tlscsa:tls-rsa-with-aes-256-cbc-sha256'"+
+        "or current() = 'tlscsa:tls-rsa-with-aes-256-cbc-sha' or current() = 'tlscsa:tls-ecdhe-rsa-with-aes-128-cbc-sha256'"+
+        "or current() = 'tlscsa:tls-ecdhe-rsa-with-aes-128-cbc-sha' or current() = 'tlscsa:tls-rsa-with-aes-128-gcm-sha256'"+
+        "or current() = 'tlscsa:tls-rsa-with-aes-128-cbc-sha256' or current() = 'tlscsa:tls-rsa-with-aes-128-cbc-sha')"{
+        error-message "this cipher is not supported";
+        description "The YANG identifiers of the supported ciphers ordered by descending preference";
+      }
+    }
+  }
+
+
+}

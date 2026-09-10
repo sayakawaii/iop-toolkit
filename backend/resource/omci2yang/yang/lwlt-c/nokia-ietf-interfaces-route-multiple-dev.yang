@@ -1,0 +1,52 @@
+module nokia-ietf-interfaces-route-multiple-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-ietf-interfaces-route-multiple-dev";
+
+  prefix nokia-ietf-interfaces-route-multiple-dev;
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA IETF/Route YANG module supporting
+     deviations on top of standard.";
+
+  revision 2022-06-02 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific";
+  }
+
+  /* dummy deviation */
+  deviation "/if:interfaces/if:interface" {
+    description "This restriction is applicable for itfType=ipForward: Inband and Mgnt access tag should be properly swapped when swapping primary and secondary inband interface. The error message 'Inband and/or Mgnt access tag not properly swapped' will be displayed when the constraint is violated";
+    deviate add {}
+  }
+
+  /* dummy deviation */
+  deviation "/if:interfaces/if:interface" {
+    description "This restriction is applicable for itfType=ipForward: Inband tag and control protocol name of the interface should be swapped along with the default route when swapping primary and secondary inband interface. The error message 'Inband tag and control protocol name of the interface should also be swapped' will be displayed when the constraint is violated";
+    deviate add {}
+  }
+
+  /* dummy deviation */
+  deviation "/if:interfaces/if:interface" {
+    description "This restriction is applicable for itfType=ipForward: Control protocol name should not be added to an inband tagged interface. The error message 'Control protocol name should not be added to an inband tagged interface' will be displayed when the constraint is violated";
+    deviate add {}
+  }
+
+  /* dummy deviation */
+  deviation "/if:interfaces/if:interface" {
+    description "This restriction is applicable for itfType=ipForward: Control protocol name should be swapped along with the tag when swapping primary and secondary inband interface. The error message 'Control protocol name should be swapped along with the tag' will be displayed when the constraint is violated";
+    deviate add {}
+  }
+}

@@ -1,0 +1,166 @@
+module nokia-ietf-netconf-acm-common-dev {
+  yang-version "1.1";
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/nokia-ietf-netconf-acm-common-dev";
+  prefix nokia-ietf-netconf-acm-common-dev;
+
+  import ietf-netconf-acm {
+    prefix "nacm";
+  }
+
+  import nokia-yang-types{
+    prefix "nok-typ";
+  }
+
+  organization "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "The NOKIA common/nokia-ietf-netconf-acm-common-dev YANG module
+         supporting deviations on top of ietf-netconf-acm standard.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2020, Nokia. All Rights Reserved.";
+
+  revision 2026-01-06 {
+    description
+      "LS26.3 Remove li users deviations.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2024-10-24 {
+    description
+      "LS25.3
+      Remove techsupport user deviations";
+    reference
+      "Nokia specific";
+    }
+
+  revision 2024-09-10 {
+    description
+      "LS2412
+       Admin can be deleted from 'admin-group'.";
+    reference
+      "Nokia specific";
+    }
+
+  revision 2023-04-25 {
+    description
+      "Added descriptions according to RFC 8407";
+    reference
+      "Nokia specific";
+    }
+
+  revision 2023-02-06 {
+    description "Add deviation to restrict user to be assigned in both cli-only-group and netconf-only-group";
+    reference "Nokia specific";
+  }
+
+  revision 2021-07-20 {
+    description "Add descriptions for all deviations";
+    reference "";
+  }
+
+  revision 2020-11-30 {
+    description "Add deviation for /nacm/groups/group/user-name";
+    reference "";
+  }
+
+  revision 2020-03-24 {
+    description "Initial version";
+    reference "Nokia specific";
+  }
+
+    deviation "/nacm:nacm/nacm:groups"{
+      deviate add{
+        must "(count(group[name='defaultGroup']/user-name)=0)"{
+          error-message "No reason for explicitly assigning users in defaultGroup,"
+                      + " as users are matched automatically by confd if they do not belong in any other group.";
+          description "DefaultGroup is auto-assigned users from confd during execution. No need for manually assigning them.";
+        }
+      }
+      deviate add{
+        must "((group/name='admin-group') and (group/name='techsupport-group'))"{
+          error-message "'admin-group' or 'techsupport-group' can not be deleted.";
+          description "Protected groups admin-group and techsupport-group cannot be deleted";
+        }
+      }
+
+      deviate add{
+        must "((group/name='cli-only-group') and (group/name='netconf-only-group'))"{
+          error-message "'cli-only-group' or 'netconf-only-group' can not be deleted.";
+          description "Protected groups cli-only-group and netconf-only-group cannot be deleted";
+        }
+      }
+      deviate add{
+        must "not(boolean(nacm:group[name='cli-only-group']/user-name[. = /nacm:nacm/groups/group[name='netconf-only-group']/user-name]))"{
+          error-message "A user can not be assigned to both cli-only-group and netconf-only-group.";
+          description "A user can not be assigned to both cli-only-group and netconf-only-group.";
+        }
+      }
+    }
+    deviation "/nacm:nacm"{
+      deviate add{
+        must "((rule-list/name='admin-rule-list') and (rule-list/name='techsupport-rule-list'))"{
+          error-message "'admin-rule-list' or 'techsupport-rule-list' can not be deleted.";
+          description "Protected rule lists 'admin-rule-list' and 'techsupport-rule-list' cannot be deleted";
+        }
+      }
+      deviate add{
+        must "((rule-list/name='cli-only-rule-list') and (rule-list/name='netconf-only-rule-list'))"{
+          error-message "'cli-only-rule-list' or 'netconf-only-rule-list' can not be deleted.";
+          description "Protected rule lists 'cli-only-rule-list' and 'netconf-only-rule-list' cannot be deleted";
+        }
+      }
+    }
+
+    deviation "/nacm:nacm/nacm:groups/nacm:group/nacm:user-name" {
+     description "Usernames must must adhere to nokia-string-ascii64 type. No group should have more than 20 users assigned to it";
+     deviate add {
+       max-elements 20;
+
+     }
+     deviate replace {
+       type nok-typ:nokia-string-ascii64;
+     }
+    }
+}
+

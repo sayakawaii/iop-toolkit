@@ -1,0 +1,74 @@
+module nokia-ont-remote-debug-common-dev {
+ yang-version 1.1;
+  namespace
+    "urn:bbf:yang:nokia-ont-remote-debug-common-dev";
+
+  prefix nokia-ont-debug-dev;
+
+ import nokia-ont-remote-debug {
+   prefix nokia-ont-debug;
+ }
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import bbf-interface-usage {
+    prefix bbf-if-usg;
+ }
+
+  import bbf-if-type {
+    prefix bbfift;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA ONT Remote Debug YANG module supporting
+     deviations.";
+
+  /* revision */
+
+  revision 2026-03-02 {
+    description
+      "Remove deviation to allow IPv6 client IP address for ONT remote SSH.";
+    reference
+      "Nokia specific: BBN-265325";
+  }
+
+  revision 2020-08-11 {
+     description
+       "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: yyyy-mm-dd.";
+    reference
+      "Nokia specific";
+  }
+
+  /* deviations max-elements */
+  /* ----------------------- */
+  /* add max-elements to limit the number of remote debug ONT SSH access-entry */
+  deviation "/nokia-ont-debug:debug-ont-ssh/nokia-ont-debug:access-entry"
+  {
+    deviate add {
+      max-elements 2;
+    }
+  }
+
+  deviation "/nokia-ont-debug:debug-ont-ssh/nokia-ont-debug:access-entry/nokia-ont-debug:user-vlan-sub-interface"{
+     deviate add{
+       must "derived-from-or-self(/if:interfaces/if:interface"
+          + "[if:name = current()]/if:type, 'bbfift:vlan-sub-interface')"
+          + " and "
+          + "/if:interfaces/if:interface[if:name = current()]"
+          + "/bbf-if-usg:interface-usage/bbf-if-usg:interface-usage = 'user-port'" {
+          error-message "user-vlan-sub-interface must be associated only to user port";
+        }
+     }
+  }
+}
+

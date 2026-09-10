@@ -1,0 +1,498 @@
+submodule bbf-media-codec-profile-body-mounted  {
+  yang-version 1.1;
+  belongs-to bbf-sip-voip-mounted  {
+    prefix bbf-sip-voip-mounted;
+  }
+
+  import bbf-yang-types {
+    prefix bbf-yang;
+  }
+  
+
+  import bbf-fiber-onu-emulated-mount {
+     prefix onu;
+  }
+  
+    
+  include bbf-media-base-mounted;
+  
+  organization
+    "Broadband Forum <https://www.broadband-forum.org>
+     Common YANG Work Area";
+
+  contact
+    "Comments or questions about this Broadband Forum YANG module
+     should be directed to <mailto:help@broadband-forum.org>.
+     Editor:      Frank Desseyn, Nokia
+     Editor:      Nadine Staelens, Nokia
+     PS Leader:   Joey Boyd, ADTRAN
+     PS Leader:   Ken Kerpez, ASSIA
+     WA Director: Joey Boyd, ADTRAN
+     WA Director: Sven Ooghe, Nokia";
+
+  description
+    "This submodule contains the YANG definitions for managing the 
+	 media codec profiles.
+     Copyright (c) 2017-2018, Broadband Forum
+     Redistribution and use in source and binary forms, with or
+     without modification, are permitted provided that the following
+     conditions are met:
+     1. Redistributions of source code must retain the above copyright
+        notice, this list of conditions and the following disclaimer.
+     2. Redistributions in binary form must reproduce the above
+        copyright notice, this list of conditions and the following
+        disclaimer in the documentation and/or other materials
+        provided with the distribution.
+     3. Neither the name of the copyright holder nor the names of its
+        contributors may be used to endorse or promote products
+        derived from this software without specific prior written
+        permission.
+     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
+     CONTRIBUTORS \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+     INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+     DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+     CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+     SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+     NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+     CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+     STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+     ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+     ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     The above license is used as a license under copyright only.
+     Please reference the Forum IPR Policy for patent licensing terms
+     <https://www.broadband-forum.org/ipr-policy>.
+     Any moral rights which are necessary to exercise under the above
+     license grant are also deemed granted under this license.
+     This version of this YANG module is part of TR-383; see
+     the TR itself for full legal notices.";
+
+  revision 2020-03-06 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: 2020-03-06.";
+    reference
+      " ";
+  } 
+  
+  typedef codec-selection-1st-order { 
+    type enumeration {
+	  enum g711-a-law {
+	  value 1;	  
+	  description
+		"G711a-law codec.";
+	  }
+	  enum g711-u-law {
+		value 2;		
+		description
+		  "G711u-law codec.";
+	  }
+	  enum g722 {
+	    value 3;		
+		description
+		  "G722 codec.";
+	  }
+	  enum g722.1 {
+		value 4;		
+		description
+		  "G722.1 codec.";
+	  }
+	  enum g722.2 {
+		value 5;		
+		description
+		  "G722.2 codec.";
+	  }
+	  enum g723.1-5.3kb {
+		value 6;		
+		description
+		  "G723.1 5.3 Kbits/sec codec.";
+	  }
+	  enum g723.1-6.3kb {
+		value 7;		
+		description
+		  "G723.1 6.3 Kbits/sec codec.";
+	  }
+	  enum g726-16kb {
+		value 8;		
+		description
+		  "G726 16 Kbits/sec codec.";
+	  }
+	  enum g726-24kb {
+		value 9;		
+		description
+		  "G726 24 Kbits/sec codec.";
+					}
+	  enum g726-32kb {
+		value 10;		
+		description
+		  "G726 32 Kbits/sec codec.";
+	  }
+	  enum g726-40kb {
+		value 11;		
+		description
+		  "G726 40 Kbits/sec codec.";
+	  }
+	  enum g729 {
+		value 12;		
+		description
+		  "G729 codec.";
+	  }
+	  enum g729-a {
+		value 13;		
+		description
+		  "G729a codec.";
+	  }	  
+	  enum g729-b {
+	    value 14;		
+		description
+		  "G729b codec.";
+      }
+	  enum g729-ab {
+		value 15;		
+		description
+		  "G729ab codec.";
+	  }
+	  enum t38 {
+		value 16;		
+		description
+		  "T.38 codec.";
+	  } 
+	}
+  }	
+	
+  typedef codec-selection {
+	type enumeration {
+	  enum g711-a-law {
+	  value 1;	  
+	  description
+		"G711a-law codec.";
+	  }
+	  enum g711-u-law {
+		value 2;		
+		description
+		  "G711u-law codec.";
+	  }
+	  enum g722 {
+		value 3;		
+		description
+		  "G722 codec.";
+	  }
+	  enum g722.1 {
+		value 4;		
+		description
+		  "G722.1 codec.";
+	  }
+	  enum g722.2 {
+		value 5;		
+		description
+		  "G722.2 codec.";
+	  }
+	  enum g723.1-5.3kb {
+		value 6;		
+		description
+		  "G723.1 5.3 Kbits/sec codec.";
+	  }
+	  enum g723.1-6.3kb {
+		value 7;		
+		description
+		  "G723.1 6.3 Kbits/sec codec.";
+	  }
+	  enum g726-16kb {
+		value 8;		
+		description
+		  "G726 16 Kbits/sec codec.";
+	  }
+	  enum g726-24kb {
+		value 9;		
+		description
+		  "G726 24 Kbits/sec codec.";
+					}
+	  enum g726-32kb {
+		value 10;		
+		description
+		  "G726 32 Kbits/sec codec.";
+	  }
+	  enum g726-40kb {
+		value 11;		
+		description
+		  "G726 40 Kbits/sec codec.";
+	  }
+	  enum g729 {
+		value 12;		
+		description
+		  "G729 codec.";
+	  }
+	  enum g729-a {
+		value 13;		
+		description
+		  "G729a codec.";
+	  }
+	  enum g729-b {
+	    value 14;		
+		description
+		  "G729b codec.";
+      }
+	  enum g729-ab {
+		value 15;		
+		description
+		  "G729ab codec.";
+	  }
+	  enum t38 {
+		value 16;		
+		description
+		  "T.38 codec.";
+	  }
+	  enum not-applicable {
+		value 17;		
+		description
+		  "No additional codec selected.";
+	  }
+	}	
+	description
+	  "Used to reference a codec profile.";
+  }
+  
+  /* typedef codec-profile-ref {
+    type leafref {
+      path "/bbf-sip-voip-mounted:media-profiles"
+         + "/bbf-sip-voip-mounted:media-codec-profiles"
+	     + "/bbf-sip-voip-mounted:media-codec-profile"
+	     + "/bbf-sip-voip-mounted:name";
+    }
+    description
+       "References a codec profile";
+  } */
+  
+  grouping media-codec-parameters {
+    description
+      "Codec parameters.";
+    leaf codec-selection-1st-order {
+	  type codec-selection-1st-order; 	  
+	  description
+		"The codec.";
+	}
+    leaf codec-packetization-time-1st-order {
+	  type uint8 {range "5..60";}
+	  units milli-seconds;		
+	  description
+		"The codec packetisation time.";
+	}
+	leaf silence-suppression-1st-order {
+	  type enumeration {
+		enum on {
+		  value 1;		  
+		  description
+		    "silence suppression enabled.";
+		}
+		enum off {
+		  value 2;		  
+		  description
+			"silence suppression disabled.";
+		}
+	  }
+	  default off;
+	  description
+		"Silence suppression.";
+	}
+    leaf codec-selection-2nd-order {
+		type codec-selection;
+		default not-applicable;		
+		description
+			"The codec.";
+	}
+    leaf codec-packetization-time-2nd-order {
+	  type union {
+        type uint8 {range "5..60";}
+		  type enumeration {
+          	enum not-desired {
+			  description
+              	"Indicates that the ptime is not applicable.";
+			}
+		  }
+	  }
+	  units milli-seconds;
+	  default not-desired;		
+	  description
+		"The codec packetisation time.";
+	}
+	leaf silence-suppression-2nd-order {
+	  type enumeration {
+		enum on {
+		  value 1;		  
+		  description
+			"silence suppression enabled.";
+		}
+		enum off {
+		  value 2;		  
+		  description
+			"silence suppression disabled.";
+		}
+		enum not-applicable {
+		  value 3;		  
+		  description
+			"parameter not applicable.";
+		}
+	  }
+	  default not-applicable;
+	  description
+		"Silence suppression.";
+	}
+    leaf codec-selection-3rd-order {
+	  type codec-selection;
+	  default not-applicable;		
+	  description
+		"The codec.";
+	}
+    leaf codec-packetization-time-3rd-order {
+	  type union {
+        type uint8 {range "5..60";}
+		  type enumeration {
+          	enum not-desired {
+			  description
+              	"Indicates that the ptime is not applicable.";
+			}
+		  }
+	  }
+	  units milli-seconds;
+	  default not-desired;		
+  	  description
+		"The codec packetisation time.";
+	}
+	leaf silence-suppression-3rd-order {
+	  type enumeration {
+		enum on {
+		  value 1;		  
+		  description
+			"silence suppression enabled.";
+		}
+		enum off {
+		  value 2;		  
+		  description
+			"silence suppression disabled.";
+		}
+		enum not-applicable {
+		  value 3;		  
+		  description
+			"parameter not applicable.";
+		}
+	  }
+	  default not-applicable;	  
+      description
+		"Silence suppression.";
+	}
+    leaf codec-selection-4th-order {
+	  type codec-selection;
+	  default not-applicable;		
+	  description
+		"The codec.";
+	}
+    leaf codec-packetization-time-4th-order {
+	  type union {
+        type uint8 {range "5..60";}
+		  type enumeration {
+          	enum not-desired {
+			  description
+              	"Indicates that the ptime is not applicable.";
+			}
+		  }
+	  }
+	  units milli-seconds;
+	  default not-desired;		
+	  description
+		"The codec packetisation time.";
+	}
+	leaf silence-suppression-4th-order {
+	  type enumeration {
+		enum on {
+		  value 1;		  
+		  description
+			"silence suppression enabled.";
+		}
+		enum off {
+		  value 2;					
+		  description
+			"silence suppression disabled.";
+		}
+		enum not-applicable {
+		  value 3;					
+		  description
+			"parameter not applicable.";
+		}
+	  }
+	  default not-applicable;
+	  description
+		"Silence suppression.";
+	}
+    leaf codec-selection-5th-order {
+	  type codec-selection;
+	  default not-applicable;		
+	  description
+		"The codec.";
+	}
+    leaf codec-packetization-time-5th-order {
+	  type union {
+        type uint8 {range "5..60";}
+		  type enumeration {
+          	enum not-desired {
+			  description
+              	"Indicates that the ptime is not applicable.";
+			}
+		  }
+	  }
+	  units milli-seconds;
+	  default not-desired;		
+	  description
+		"The codec packetisation time.";
+	}
+	leaf silence-suppression-5th-order {
+	  type enumeration {
+		enum on {
+		  value 1;		  
+		  description
+			"silence suppression enabled.";
+		}
+		enum off {
+		  value 2;		  
+		  description
+		    "silence suppression disabled.";
+		}
+		enum not-applicable {
+		  value 3;		  
+		  description
+			"parameter not applicable.";
+		}
+	  }
+	  default not-applicable;	  
+	  description
+		"Silence suppression.";
+	}
+  }
+ 
+  grouping media-codec-profile-body {
+    description
+      "Defines the parameters included in the codec profile.";
+    uses media-codec-parameters;
+  }
+
+  grouping media-codec-conf {
+    list media-codec-profile {
+      key "name";
+      description
+        "A media codec profiles.";
+      leaf name {
+        type bbf-yang:name-string;		
+ 	    description
+     	  "Uniquely identifies the profile.";
+      }
+      uses media-codec-profile-body;
+    }  
+  }
+  
+  augment "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-profiles"
+        + "/bbf-sip-voip-mounted:media-codec-profiles" {
+    uses media-codec-conf; 
+  } 
+
+} 

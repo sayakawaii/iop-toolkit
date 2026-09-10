@@ -1,0 +1,103 @@
+module nokia-bbf-sub-interfaces-mounted-eonu-only-dev {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/" 
+           + "nokia-bbf-sub-interfaces-mounted-eonu-only-dev";
+
+  prefix nokia-bbf-sub-interfaces-mounted-eonu-only-dev;
+
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import ietf-interfaces-mounted{
+    prefix if-mounted;
+  }
+
+  import bbf-sub-interfaces-mounted {
+    prefix bbf-subif-mounted;
+  }
+
+
+  import iana-if-type-mounted {
+    prefix ianaift-mounted;
+  }
+
+  import bbf-xpon-if-type-mounted {
+    prefix bbf-xponift-mounted;
+  }
+
+  import bbf-if-type-mounted{
+    prefix bbfift-mounted;
+  }
+
+  import nokia-conf-clock-frequency-mounted {
+    prefix clock-frequency-mounted;
+  }
+
+  import nokia-template-common {
+    prefix template-common;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "This module contains a collection of YANG deviations on top 
+     of standard for supporting BBF/bbf-sub-interfaces-tagging YANG module.
+     Copyright (C) 2017-2018, Nokia. All Rights Reserved.";
+
+  revision 2022-07-27 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific";
+  }
+
+    deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:subif-lower-layer/bbf-subif-mounted:interface" {
+        deviate add {
+            must "not(derived-from-or-self(../../../../../onu:usage, 'template-common:node-actual-usage'))"
+                + " or "
+                + "not(derived-from-or-self(current()/../../if-mounted:type, 'bbfift-mounted:vlan-sub-interface'))"
+                + " or "
+                + "(not(derived-from-or-self(deref(current())/../if-mounted:type, 'ianaift-mounted:ethernetCsmacd'))"
+                + " and not(derived-from-or-self(deref(current())/../if-mounted:type, 'bbf-xponift-mounted:onu-v-vrefpoint')))"
+                + " or "
+                + "((count(deref(current())/../clock-frequency-mounted:ssm-out/clock-frequency-mounted:ssm-out-enable) = 0"
+                + " or "
+                + "(count(deref(current())/../clock-frequency-mounted:ssm-out/clock-frequency-mounted:ssm-out-enable) > 0"
+                + " and deref(current())/../clock-frequency-mounted:ssm-out/clock-frequency-mounted:ssm-out-enable = 'false'))"
+                + " and "
+                + "count(current()/../../../if-mounted:interface[derived-from-or-self(if-mounted:type, 'bbfift-mounted:vlan-sub-interface')]"
+                + "[derived-from-or-self(deref(bbf-subif-mounted:subif-lower-layer/bbf-subif-mounted:interface)/../if-mounted:type, 'ianaift-mounted:ethernetCsmacd')]"
+                + "[bbf-subif-mounted:subif-lower-layer/bbf-subif-mounted:interface = current()]) <= 8"
+                + " and "
+                + "count(current()/../../../if-mounted:interface[derived-from-or-self(if-mounted:type, 'bbfift-mounted:vlan-sub-interface')]"
+                + "[derived-from-or-self(deref(bbf-subif-mounted:subif-lower-layer/bbf-subif-mounted:interface)/../if-mounted:type, 'bbf-xponift-mounted:onu-v-vrefpoint')]"
+                + "[bbf-subif-mounted:subif-lower-layer/bbf-subif-mounted:interface = current()]) <= 8)"
+                + " or "
+                + "(count(deref(current())/../clock-frequency-mounted:ssm-out/clock-frequency-mounted:ssm-out-enable) > 0"
+                + " and deref(current())/../clock-frequency-mounted:ssm-out/clock-frequency-mounted:ssm-out-enable = 'true')"
+                + " and "
+                + "(count(current()/../../../if-mounted:interface[derived-from-or-self(if-mounted:type, 'bbfift-mounted:vlan-sub-interface')]"
+                + "[derived-from-or-self(deref(bbf-subif-mounted:subif-lower-layer/bbf-subif-mounted:interface)/../if-mounted:type, 'ianaift-mounted:ethernetCsmacd')]"
+                + "[bbf-subif-mounted:subif-lower-layer/bbf-subif-mounted:interface = current()]) <= 7"
+                + " and "
+                + "count(current()/../../../if-mounted:interface[derived-from-or-self(if-mounted:type, 'bbfift-mounted:vlan-sub-interface')]"
+                + "[derived-from-or-self(deref(bbf-subif-mounted:subif-lower-layer/bbf-subif-mounted:interface)/../if-mounted:type, 'bbf-xponift-mounted:onu-v-vrefpoint')]"
+                + "[bbf-subif-mounted:subif-lower-layer/bbf-subif-mounted:interface = current()]) <= 7)"
+
+            {
+                error-message "Max vlan-sub-interface number can not more than 8 for per UNI.If ssm is enabled on UNI, max vlan-sub-interface number can not more than 7 for per UNI.";
+            }
+        }
+    }
+
+
+
+
+}
+

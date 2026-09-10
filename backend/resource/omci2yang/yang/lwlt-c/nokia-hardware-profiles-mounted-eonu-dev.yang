@@ -1,0 +1,160 @@
+module nokia-hardware-profiles-mounted-eonu-dev {
+
+  namespace
+     "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+   + "nokia-hardware-profiles-mounted-eonu-dev";
+
+  prefix nokia-hw-prof-mounted-eonu-dev;
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import nokia-hardware-profiles-mounted {
+    prefix nokia-hw-prof-mounted;
+  }
+  
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "Create deviation for nokia-hardware-profiles";
+
+  revision 2022-03-14 {
+    description
+      "Create deviation for nokia-hardware-profiles to restrict yang ranges";
+    reference
+      "Nokia specific";
+  }
+
+  deviation '/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/'
+             +'nokia-hw-prof-mounted:transceiver-link-tca-profile/'
+             +'nokia-hw-prof-mounted:rx-power-threshold-low-alarm'{
+    deviate replace {
+      type int16 {
+        range "-1270..0";
+      }
+    }
+  }
+
+  deviation '/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/'
+             +'nokia-hw-prof-mounted:transceiver-link-tca-profile/'
+             +'nokia-hw-prof-mounted:rx-power-threshold-low-warning'{
+    deviate replace {
+      type int16 {
+        range "-1270..0";
+      }
+    }
+  }
+
+  
+  deviation '/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/'
+             +'nokia-hw-prof-mounted:transceiver-link-tca-profile/'
+             +'nokia-hw-prof-mounted:rx-power-threshold-high-warning'{
+    deviate replace {
+      type int16 {
+        range "-1270..0";
+      }
+    }
+  }
+
+  deviation '/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/'
+             +'nokia-hw-prof-mounted:transceiver-link-tca-profile/'
+             +'nokia-hw-prof-mounted:rx-power-threshold-high-alarm'{
+    deviate replace {
+      type int16 {
+        range "-1270..0";
+      }
+    }
+  }
+
+  deviation '/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/'
+             +'nokia-hw-prof-mounted:transceiver-link-tca-profile/'
+             +'nokia-hw-prof-mounted:tx-power-threshold-low-alarm'{
+    deviate replace {
+      type int16 {
+        range "-635..200";
+      }
+    }
+  }
+
+  deviation '/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/'
+             +'nokia-hw-prof-mounted:transceiver-link-tca-profile/'
+             +'nokia-hw-prof-mounted:tx-power-threshold-low-warning'{
+    deviate replace {
+      type int16 {
+        range "-635..200";
+      }
+    }
+  }
+
+  deviation '/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/'
+             +'nokia-hw-prof-mounted:transceiver-link-tca-profile/'
+             +'nokia-hw-prof-mounted:tx-power-threshold-high-warning'{
+    deviate replace {
+      type int16 {
+        range "-635..200";
+      }
+    }
+  }
+
+  deviation '/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/'
+             +'nokia-hw-prof-mounted:transceiver-link-tca-profile/'
+             +'nokia-hw-prof-mounted:tx-power-threshold-high-alarm'{
+    deviate replace {
+      type int16  {
+        range "-635..200";
+      }
+    }
+  }
+
+  deviation '/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/'
+             +'nokia-hw-prof-mounted:transceiver-link-tca-profile/'
+             +'nokia-hw-prof-mounted:tx-bias-threshold-low-alarm'{
+    deviate replace {
+      type uint32 {
+        range "0..131000";
+      }
+    }
+  }
+
+  deviation '/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/'
+             +'nokia-hw-prof-mounted:transceiver-link-tca-profile/'
+             +'nokia-hw-prof-mounted:tx-bias-threshold-low-warning'{
+    deviate replace {
+      type uint32 {
+        range "0..131000";
+      }
+    }
+  }
+
+  deviation '/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/'
+             +'nokia-hw-prof-mounted:transceiver-link-tca-profile/'
+             +'nokia-hw-prof-mounted:tx-bias-threshold-high-warning'{
+    deviate replace {
+      type uint32 {
+        range "0..131000";
+      }
+    }
+  }
+
+  deviation '/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/'
+             +'nokia-hw-prof-mounted:transceiver-link-tca-profile/'
+             +'nokia-hw-prof-mounted:tx-bias-threshold-high-alarm'{
+    deviate replace {
+      type uint32 {
+        range "0..131000";
+      }
+    }
+  }
+
+}
+
+
+
+

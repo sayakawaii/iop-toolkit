@@ -1,0 +1,271 @@
+module nokia-sdan-xpon-alarm {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"+
+  "nokia-sdan-xpon-alarm";
+
+  prefix nokia-sdan-xpon-al;
+
+  import bbf-xpon {
+    prefix bbf-xpon;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia reserves
+     the right to revise this document for any reason, including but
+     not limited to conformity with standards promulgated by various
+     agencies, utilization of advances in the state of the technical
+     areas, or the reflection of changes in the design of any
+     equipment, techniques, or procedures described or referred to
+     herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without notice.
+     Updates of this document will be issued under the above NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising out
+     of the sufficiency, accuracy, or utility of any information or
+     opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these products
+     and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2022, Nokia. All Rights Reserved";
+
+  revision 2024-11-23 {
+    description
+      "add publish-onu-dying-gasp-on-ct-los.";
+    reference
+      "TBD";
+  }
+
+  revision 2024-08-23 {
+    description
+      "add suppress-ct-los-alarm-when-no-v-ani-configured.";
+    reference
+      "TBD";
+  }
+
+  revision 2024-05-24 {
+    description
+      "add alarm-persistent-control and vani-and-ponlos-alarm-control.";
+    reference
+      "TBD";
+  }
+
+  revision 2023-12-15 {
+    description
+      "add ct-data-path-integrity-alarm-control and threshold-or-disabled type.";
+    reference
+      "TBD";
+  }
+
+  revision 2023-07-30 {
+    description
+      "update container onu-present-and-unexpected-alarm-control:
+       1. update leaf report-onu-parameters description
+       2. add a new leaf report-mac-address
+       3. add a new leaf suppress-mac-addr-separator.";
+    reference
+      "TBD";
+  }
+
+  revision 2023-04-10 {
+    description
+      "add min-dying-gasp-ratio-to-declare-ct-los-with-dying-gasp.";
+    reference
+      "TBD";
+  }
+
+  revision 2022-12-07 {
+    description
+      "add onu-present-and-unexpected-control.";
+    reference
+      "TBD";
+  }
+
+  revision 2022-06-24 {
+    description
+      "add channel-termination-loss-of-signal-alarm-control.";
+    reference
+      "TBD";
+  }
+
+  typedef threshold-or-disabled {
+    type union {
+      type int8 {
+        range "1..100";
+      }
+
+      type enumeration {
+        enum disabled {
+          description
+            "Alam generation is disabled.";
+        }
+      }
+    }
+
+    description
+      "A type meant to control the generation of an alarm
+        by specifying a threshold before raising the alarm or
+        by unconditionally disabling the alarm.";
+  }
+
+  augment "/bbf-xpon:xpon" {
+    description
+      "Augment system level xPON configuration for alarm control";
+
+    container channel-termination-loss-of-signal-alarm-control {
+      description
+        "It controls the channel-termination-loss-of-signal
+         alarm raising.";
+      leaf suppress-ct-los-alarm-when-only-one-onu-connected {
+        type boolean;
+        default "false";
+        description
+          "This leaf indicates whether channel-termination-loss-of-signal
+           alarm is suppressed when only one ONU is connected.";
+      }
+
+      leaf min-dying-gasp-ratio-to-declare-ct-los-with-dying-gasp {
+          type uint8 {
+              range "1..100";
+          }
+          default "100";
+          description
+          "This data node allows to determine whether CT LOS is due to
+          'LOSi/LOBi' or due to 'dying gasp for all ONUs' when several ONUs
+          disappear at once from the CT and cause a CT LOS.  A value of - say
+          80 - means that CT LOS will be considered to be caused by 'dying
+          gasp for all ONUs' if at least 80% of the ONUs could sent a dying
+          gasp before disappearing from the CT (e.g.  because of a general
+          power failure at ONU sites).  Otherwise the CT LOS will be
+          considered to be caused by 'LOSi/LOBi'.  The 'dying gasp for all
+          ONUs' or 'LOSi/LOBi' qualifier will be indicated in the the CT LOS
+          alarm additional info.";
+      }
+
+      leaf suppress-ct-los-alarm-when-no-v-ani-configured {
+        type boolean;
+        default "false";
+        description
+          "This leaf indicates whether channel-termination-loss-of-signal
+           alarm is suppressed when no vANI is configured.";
+      }
+    }
+
+    container onu-present-and-unexpected-alarm-control {
+      description
+        "It controls whether the OLT fetches or not the
+         ONU parameters from the ONU when ONU authentication failed";
+      leaf report-onu-parameters {
+        type boolean;
+        default "false";
+        description
+          "This leaf indicates whether the OLT fetches or not the
+           ONU parameters from the ONU when ONU authentication failed.
+           The onu parameters are defined in ITU-T G.988:
+           1. ONT Vendor-ID (Vendor ID attribute in ME ONU-G)
+           2. ONT Equipment-ID (Equipment ID attribute in ME ONU2-G)
+           3. ONT Hardware Version (Version attribute in ME ONU-G)
+           4. ONT Active Software Version (Version attribute in ME Software image)
+           5. ONT Model Name (Model name attribute in ME ONU manufacturing data)";
+      }
+
+      leaf report-mac-address {
+        type boolean;
+        default "false";
+        description
+          "This leaf indicates whether the OLT fetches or not the
+           ONU MAC address from the ONU when ONU authentication failed.
+           The ONU MAC address is defined in Nokia proprietary OMCI ME.";
+      }
+
+      leaf suppress-mac-addr-separator {
+        type boolean;
+        default "false";
+        description
+          "This leaf indicates whether suppress separator in ONU MAC address
+           when reporting it in onu-present-and-unexpected alarm.
+           When this leaf is false, ONU MAC address format is as AA:BB:CC:DD:EE:FF;
+           When this leaf is true, ONU MAC address format is as AABBCCDDEEFF.";
+      }
+    }
+
+    container ct-data-path-integrity-alarm-control {
+      presence
+        "Presence of this container indicates that
+         CT data path integrity failure alarm detection
+         is supported.";
+      description
+        "Controls whether the OLT reports CT data path integrity failure
+         alarm or not.";
+      leaf alarm-control {
+        type threshold-or-disabled;
+        default "disabled";
+      description
+          "This data node indicates enablement of channel termination (CT)
+           data path integrity failure alarm, as well as the threshold to
+           report the alarm, threshold is the percentage greater than
+           or equal to which data path integrity alarm will be raised.";
+      }
+    }
+
+    container alarm-persistent-control {
+      description
+        "Controls the OLT persistent store xPON alarms.";
+      leaf vani-and-ponlos-alarm-control {
+        type boolean;
+        default "false";
+      description
+          "when this leaf is true, vANI absence-of-phy/loss-of-phy-layer/
+           onu-dying-gasp alarm and channel-termination-loss-of-signal alarm
+           will be persistently stored as long as the corresponding alarm
+           cause(s) are present. More specifically, if such an alarm was
+           raised before the OLT restarts, then, after the OLT has restarted:
+             - if the alarm condition is still present, the OLT will raise
+               again the alarm with its original time-stamp (= before the
+               restart). 
+             - If the alarm condition is cleared, the OLT will not raise
+               again the alarm for this condition and it will clear
+               persistent data for this alarm.";
+      }
+    }
+
+    container onu-alarm-control {
+      description
+        "It controls the onu alarm raising.";
+      leaf publish-onu-dying-gasp-on-ct-los {
+        type boolean;
+        default "false";
+      description
+          "This leaf indicates whether publish the onu-dying-gasp alarm
+           when there is a channel-termination-loss-of-signal
+           (because of fiber-cut or dying gasp).";
+      }
+    }
+
+  }
+}

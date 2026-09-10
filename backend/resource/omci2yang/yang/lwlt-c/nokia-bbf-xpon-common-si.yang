@@ -1,0 +1,73 @@
+module nokia-bbf-xpon-common-si {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-bbf-xpon-common-si";
+
+  prefix nokia-bbf-xpon-common-si;
+
+  import nokia-sdan-service-impact {
+    prefix nokia-si;
+  }
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import bbf-xpon{
+    prefix bbf-xpon;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA IETF/System YANG module supporting
+     deviations on top of standard.";
+
+  revision 2023-01-26 {
+    description
+      "Update description.";
+    reference
+      "Nokia Specific.";
+  }
+
+  revision 2022-11-20 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia Specific.";
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-xpon:channel-partition/bbf-xpon:downstream-fec" {
+      description
+       "When downstream-fec is modified, the interface will be operational down for a short time period.  
+        As a consequence all connected and operational onus under this channel-partition will re-range.  
+        This will result in service interruptions of several seconds.";
+      deviate add {
+        nokia-si:service-impact;
+      }
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-xpon:channel-partition/bbf-xpon:closest-onu-distance" {
+      description
+       "When closest-onu-distance is modified, the interface will be operational down for a short time period.  
+        As a consequence all connected and operational onus under this channel-partition will re-range.  
+        This will result in service interruptions of several seconds.";
+      deviate add {
+        nokia-si:service-impact;
+      }
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-xpon:channel-partition/bbf-xpon:maximum-differential-xpon-distance" {
+      description
+       "When maximum-differential-xpon-distance is modified, the interface will be operational down for a short time period.  
+        As a consequence all connected and operational onus under this channel-partition will re-range.  
+        This will result in service interruptions of several seconds.";
+      deviate add {
+        nokia-si:service-impact;
+      }
+  }
+}

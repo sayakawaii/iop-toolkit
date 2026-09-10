@@ -1,0 +1,191 @@
+module nokia-ont-remote-debug {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+            + "nokia-ont-remote-debug";
+
+  prefix nokia-ont-debug;
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+ import ietf-inet-types {
+   prefix inet;
+ }
+
+ import bbf-if-type {
+    prefix bbfift;
+  }
+
+  import bbf-yang-types {
+    prefix bbf-yang;
+  }
+
+  import ietf-yang-types {
+     prefix yang;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+      "This module contains a collection of YANG definitions for
+      supporting Nokia specific requirements as applicable to
+      ONT remote debugging.
+
+     Specifically this module contains a collection of YANG
+     definitions for establishing ONT SSH Remote debug session.
+     This capability serves as a critical function to support the
+     ONT troubleshooting and recovery.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2020, Nokia. All Rights Reserved.";
+
+     revision 2020-09-14 {
+         description
+           " Removed the enable and updated the
+             container parameters";
+         reference
+            "Nokia specific";
+     }
+
+     revision 2020-08-11 {
+         description
+             "Initial revision.
+             * Approval Date:    see revision date above.
+             * Publication Date: yyyy-mm-dd.";
+         reference
+             "Nokia specific";
+     }
+
+     container debug-ont-ssh {
+         description
+             "Remote Debug ONT SSH related OLT configuration.";
+
+         list access-entry {
+             key "name";
+             unique "user-vlan-sub-interface";
+             unique "ont-mac-address";
+             description
+                 "Profile containing configuration data to be used by
+                 ONT Remote Debug via SSH";
+
+             leaf name {
+                 type bbf-yang:string-ascii64;
+                 mandatory true;
+                 description
+                     "The name of an ONT Remote Debug SSH access-entry.";
+             }
+
+             leaf ont-mac-address {
+                 type yang:mac-address;
+                 mandatory true;
+                 description
+                     "ONT MAC Address derived from the serial number
+                      of the ONT with which the OLT connects.";
+             }
+
+             leaf client-ip-address {
+                 type inet:ip-address;
+                 mandatory true;
+                 description
+                     "This object specifies the Client IP Address from which
+                     SSH-Client will connect with ONT";
+             }
+
+             leaf user-vlan-sub-interface {
+                 type if:interface-ref;
+                 must "derived-from-or-self(/if:interfaces/if:interface
+                     [if:name = current()]/if:type,
+                     'bbfift:vlan-sub-interface')" {
+                         description
+                         "The interface must be of the type
+                         'vlan-sub-interface'";
+                }
+                mandatory true;
+                description
+                    "This object specifies the user VLAN sub interface associated
+                    with this session access-entry in OLT.
+                    The associated User VLAN Sub-interface should have
+                    egress rule as single tagged and ingress rule
+                    as priority tagged for establishing ONT SSH Debug Session";
+             }
+
+	 }
+     }
+
+
+     container debug-ont-ssh-state {
+         config false;
+         description
+             "Remote Debug ONT SSH session related OLT
+             configuration status.";
+
+         list access-entry {
+             key "name";
+             description "list of remote debug ssh entries";
+             leaf name {
+                 type bbf-yang:string-ascii64;
+                 description
+                     "The name of an ONT Remote Debug SSH access-entry.";
+             }
+
+             leaf ont-ssh-debug-port {
+                 type uint32;
+                 description
+                     "This object specifies the external TCP port
+                     associated with the ONT remote debug session";
+             }
+
+             leaf proposed-debug-gemport-id {
+                 type uint32;
+                 description
+                     "The id of the Debug gemport associated to the
+                     ONT. The Gem port Id is calculated based on the TC-Layer
+                     ONU ID which is assigned by OLT to ONU during ONU's
+                     activation.";
+             }
+
+         }
+     }
+
+}

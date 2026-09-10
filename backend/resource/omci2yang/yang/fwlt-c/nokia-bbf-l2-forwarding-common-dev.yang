@@ -1,0 +1,180 @@
+module nokia-bbf-l2-forwarding-common-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/" +
+            "nokia-bbf-l2-forwarding-common-dev";
+
+  prefix nokia-bbf-l2-forwarding-common-dev;
+
+  import nokia-yang-types {
+    prefix nok-typ;
+  }
+
+  import bbf-l2-forwarding {
+    prefix bbf-l2-fwd;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "This module contains a collection of YANG deviations on top 
+     of standard for supporting BBF YANG module.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia 
+     reserves the right to revise this document for any reason, 
+     including but not limited to conformity with standards 
+     promulgated by various agencies, utilisation of advances in the 
+     state of the technical areas, or the reflection of changes in the 
+     design of any equipment, techniques, or procedures described or  
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2017-2018, Nokia. All Rights Reserved.";
+
+  revision 2024-06-20 {
+    description
+      "Restrict empty string values for key leafs";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2023-09-01 {
+    description
+      "Change length of some name strings from 64 to 100.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2022-11-24 {
+    description
+      "Remove unsupported yang node.";
+    reference
+      "Nokia specific";
+  }
+  
+  revision 2021-07-19 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific";
+  }
+
+  /* bbf-l2-forwarding-forwarders */
+  deviation "/bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarders/bbf-l2-fwd:forwarder/bbf-l2-fwd:name" {
+    deviate replace {
+      type nok-typ:nokia-string-ascii100 {
+      }
+    }
+  }
+
+  deviation "/bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarders/bbf-l2-fwd:forwarder/bbf-l2-fwd:ports/bbf-l2-fwd:port/bbf-l2-fwd:name" {
+    deviate replace {
+      type nok-typ:nokia-string-ascii100 {
+      }
+    }
+  }
+
+
+  /* bbf-l2-forwarding-flooding-policies */
+  deviation "/bbf-l2-fwd:forwarding/bbf-l2-fwd:flooding-policies-profiles/bbf-l2-fwd:flooding-policies-profile/bbf-l2-fwd:name" {
+    deviate replace {
+      type nok-typ:nokia-string-ascii64 {
+      }
+    }
+  }
+
+  deviation "/bbf-l2-fwd:forwarding/bbf-l2-fwd:flooding-policies-profiles/bbf-l2-fwd:flooding-policies-profile/bbf-l2-fwd:flooding-policy/bbf-l2-fwd:name" {
+    deviate replace {
+      type nok-typ:nokia-string-ascii64 {
+      }
+    }
+  }
+
+
+  /* bbf-l2-forwarding-forwarding-databases */
+  deviation "/bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarding-databases/bbf-l2-fwd:forwarding-database/bbf-l2-fwd:name" {
+    deviate replace {
+      type nok-typ:nokia-string-ascii100 {
+      }   
+    }
+  }
+
+
+  /* bbf-l2-forwarding-mac-learning-control */
+  deviation "/bbf-l2-fwd:forwarding/bbf-l2-fwd:mac-learning-control-profiles/bbf-l2-fwd:mac-learning-control-profile/bbf-l2-fwd:name" {
+    deviate replace {
+      type nok-typ:nokia-string-ascii64 {
+      }   
+    }
+  }
+
+
+  /* bbf-l2-forwarding-split-horizon-profiles */
+  deviation "/bbf-l2-fwd:forwarding/bbf-l2-fwd:split-horizon-profiles/bbf-l2-fwd:split-horizon-profile/bbf-l2-fwd:name" {
+    deviate replace {
+      type nok-typ:nokia-string-ascii64 {
+      }
+    }
+  }
+
+  deviation "/bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarding-databases/bbf-l2-fwd:forwarding-database/bbf-l2-fwd:static-mac-address/bbf-l2-fwd:learning-constraint/bbf-l2-fwd:do-not-learn-and-discard-frame"
+  {
+       description
+         "'do-not-learn-and-discard-frame' option not supported for a static-mac-address configuration inside a forwarding-database.";
+       deviate not-supported;
+  }
+
+  /* bbf-l2-forwarding-forwarders */
+  deviation "/bbf-l2-fwd:forwarding-state/bbf-l2-fwd:forwarders/bbf-l2-fwd:forwarder/bbf-l2-fwd:name" {
+    deviate replace {
+      type nok-typ:nokia-string-ascii100 {
+      }
+    }
+  }
+
+  deviation "/bbf-l2-fwd:forwarding-state/bbf-l2-fwd:forwarders/bbf-l2-fwd:forwarder/bbf-l2-fwd:ports/bbf-l2-fwd:port/bbf-l2-fwd:name" {
+    deviate replace {
+      type nok-typ:nokia-string-ascii100 {
+      }
+    }
+  }
+
+  /* bbf-l2-forwarding-forwarding-databases */
+  deviation "/bbf-l2-fwd:forwarding-state/bbf-l2-fwd:forwarding-databases/bbf-l2-fwd:forwarding-database/bbf-l2-fwd:name" {
+    deviate replace {
+      type nok-typ:nokia-string-ascii100 {
+      }   
+    }
+  }
+
+} 

@@ -1,0 +1,57 @@
+module nokia-bbf-interfaces-performance-management-common-dev {
+
+  namespace
+    "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+  + "nokia-bbf-interfaces-performance-management-common-dev";
+
+  prefix  nokia-bbf-interfaces-performance-management-common-dev;
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import bbf-interfaces-performance-management{
+    prefix bbf-if-pm;
+  }
+
+ import iana-if-type {
+    prefix ianaift;
+  }
+  
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA ethernet YANG module supporting
+     deviations on top of standard.";
+
+ revision 2021-10-15 {
+    description
+      "Move Lemi restrictions to other file";
+    reference
+      "Nokia Specific.";
+  }
+  
+  revision 2019-08-05 {
+    description
+      "Initial revision.";
+    reference
+      "TBD";
+  }
+  
+  
+   deviation "/if:interfaces/if:interface/bbf-if-pm:performance/bbf-if-pm:enable" {
+    deviate add{
+      must "(../../if:type != 'ianaift:ipForward'
+            or
+            current() = 'false')" {
+        error-message "Enable PM counter on Ip forward-interface not supported";
+      }
+    }
+  }
+
+
+}

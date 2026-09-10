@@ -1,0 +1,312 @@
+module nokia-moca-performance-management-mounted {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-moca-performance-management-mounted";
+
+  prefix  nokia-moca-pm-mounted;
+
+   import bbf-yang-types {
+    prefix bbf-yang;
+  }
+
+  import nokia-interface-identities-mounted {
+    prefix nokia-if-id-mounted;
+  }
+  import ietf-interfaces-mounted {
+    prefix if-mounted;
+  }
+
+  import bbf-interfaces-performance-management-mounted {
+    prefix bbf-if-pm-mounted;
+  }
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  import bbf-fiber-onu-emulated-mount {
+     prefix onu;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG definitions for
+     supporting Nokia specific requirements as applicable to its
+     access network equipment.
+
+     Specifically, this module augments the
+     bbf-xponcommon-performance-management
+     model with additional Nokia specific PM counters.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2024, Nokia. All Rights Reserved.";
+
+  revision 2025-07-15 {
+    description
+      "Added in-unknowns under moca frame container ";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2025-06-10 {
+    description
+      "Added PM counters for the moca interface ";
+    reference
+      "Nokia specific";
+  }
+
+
+  grouping moca-physical-layer-performance-counters {
+      description
+          "Physical moca frame performance monitoring counters";
+      container phy{
+	description
+	  "Physical moca frame performance monitoring counters";
+        leaf phy-tx-bcast-rate {
+          type bbf-yang:performance-counter64;
+          units "bits per second";
+          description
+            "This attribute indicates the moca PHY broadcast transmit
+             rate from the ONU moca interface to all the CPEs in bits per second.";
+          reference
+            "G.988 ONU management and control interface (OMCI) specification
+              PHY Tx broadcast rate counter in Section 9.10.3";
+        }
+        list moca-cpe-table {
+          key "index";
+          max-elements 32;
+          description
+           "Indicates the  unique identifier of a CPE  within the table";
+          leaf index {
+            type uint8 {
+                range "1..32";
+            }
+            description
+                "The sequence number of the moca-cpe-table on the moca uni";
+          }
+          leaf mac-address {
+            type yang:mac-address;
+              description
+                "The mac address of the far end moca CPE  and this is the unique
+                 identifier of this table";
+          }
+          leaf tx-rate {
+            type bbf-yang:performance-counter64;
+            units "bits per second";
+            description
+              "This attribute indicates moca PHY unicast transmit rate
+               from the ONU moca interface to the CPE identified by MAC address
+               in bits per second.";
+            reference
+              "G.988 ONU management and control interface (OMCI) specification
+               PHY Tx unicast transmit rate counter in Section 9.10.3";
+          }
+          leaf rx-rate {
+            type bbf-yang:performance-counter64;
+            units "bits per second";
+            description
+              "This attribute indicates unicast receive rate at the ONU moca
+              interface from the CPE identified by the MAC address,
+              in bits per second.";
+              reference
+                "G.988 ONU management and control interface (OMCI) specification
+                 PHY Rx unicast receive rate counter in Section 9.10.3";
+          }
+          leaf tx-packets {
+            type bbf-yang:performance-counter64;
+            units "frames";
+              description
+                " Number of packets transmitted from the MOCA PHY
+                  to the CPE identified by the mac address";
+              reference
+                "G.988 ONU management and control interface (OMCI) specification
+                Tx packet in Section 9.10.3";
+          }
+          leaf rx-packets {
+            type bbf-yang:performance-counter64;
+            units "frames";
+            description
+              " Number of packets received at the MOCA PHY from the CPE
+                identified by the MAC address";
+            reference
+              "G.988 ONU management and control interface (OMCI) specification
+              Rx packet in Section 9.10.3";
+          }
+          leaf rx-errors-missed {
+            type bbf-yang:performance-counter64;
+            units "frames";
+            description
+              "Number of errored and missed packets received from the CPE identified by Mac address.";
+              reference
+                "G.988 ONU management and control interface (OMCI) specification
+                 Rx errored and missed in Section 9.10.3";
+          }
+          leaf rx-errors {
+            type bbf-yang:performance-counter64;
+            units "frames";
+            description
+              "Number of errored packets received from the node.";
+            reference
+              "G.988 ONU management and control interface (OMCI) specification
+               Rx errored  in Section 9.10.3";
+          }
+          leaf rx-bcast-rate {
+            type bbf-yang:performance-counter64;
+            units "bits per second";
+              description
+                "This attribute indicates the broadcast receive rate at the ONU moca interface
+                 from the CPE identified by MAC address,
+                 in bits per second";
+              reference
+                "G.988 ONU management and control interface (OMCI) specification
+                PHY rx broadcast rate counter in Section 9.10.3";
+          }
+          leaf rx-power-level {
+            type int8 {range "-80..10";}
+            units "dBm";
+            description
+              "The attribute indicates the power level received at the ONU moca interface
+               from the CPE identified by the MAC address, in dBm,
+               represented as a 2s complement integer.
+               Valid values range from +10 to -80";
+              reference
+                "G.988 ONU management and control interface (OMCI) specification
+                Rx power level rate counter in Section 9.10.3";
+          }
+          leaf rx-bcast-power-level {
+            type int8 {range "-80..10";}
+            units "dBm";
+            description
+              "The attribute indicated the power level received at the ONU moca interface
+               from the CPE identified by the MAC address, in dBm,
+               represented as a 2s complement integer.
+               Valid values range from +10 to -80. ";
+            reference
+              "G.988 ONU management and control interface (OMCI) specification
+              Rx broadcast power level in Section 9.10.3";
+          }
+          leaf tx-power-ctrl-reduction {
+            type uint8 {range "0..60";}
+            units "dB";
+            description
+              "This attribute indicates the reduction in transmitter level due
+               to power control,on the ONU MOCA interface to the CPE identified
+               by the MAC address in dB.
+               Valid values range from 0 (full power) to 60";
+              reference
+                "G.988 ONU management and control interface (OMCI) specification
+                 Tx power control reduction  rate counter in Section 9.10.3";
+          }
+       }
+     }
+  }
+
+  grouping moca-frame-performance-counters{
+    description
+      "Moca frame inbound/outbound performance monitoring counters";
+    container frame {
+      description
+        "Moca frame inbound/outbound performance monitoring counters";
+          leaf out-unknowns{
+            type bbf-yang:performance-counter64;
+            units "frames";
+            description
+              "The total number of unknown packets received by ONT at the moca UNI";
+            reference
+              "G.988: ONU management and control interface (OMCI)
+              specification in Section 9.10.2";
+         }
+         leaf in-unknowns{
+            type bbf-yang:performance-counter64;
+            units "frames";
+            description
+              "The total number of unknown packets transmitted by ONT at the moca UNI";
+            reference
+              "G.988: ONU management and control interface (OMCI)
+              specification in Section 9.10.2";
+         }
+         leaf rx-errors-missed {
+            type bbf-yang:performance-counter64;
+            units "frames";
+            description
+              "Number of errored and missed packets received from the CPE identified by Mac address.";
+              reference
+                "G.988 ONU management and control interface (OMCI) specification
+                 Rx errored and missed in Section 9.10.3";
+          }
+    }
+  }
+
+  augment '/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:current'{
+    when " derived-from-or-self(../../../if-mounted:type, 'nokia-if-id-mounted:moca-uni')" {
+      description
+        "Only applicable to MOCA interface";
+    }
+    description
+      "Augment the current 15 minute interface performance counts
+       with moca specific attributes.";
+    container moca{
+      description 
+        "Moca frame inbound/outbound performance monitoring counters";
+    uses moca-physical-layer-performance-counters;
+    uses moca-frame-performance-counters;
+    }
+   }
+
+  augment '/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:history'{
+    when " derived-from-or-self(../../../if-mounted:type, 'nokia-if-id-mounted:moca-uni')" {
+      description
+        "Only applicable to MOCA interface";
+    }
+    description
+      "Augment the current 15 minute interface performance counts
+       with moca specific attributes.";
+    container moca{
+    description
+      "Physical moca frame performance monitoring counters";
+    uses moca-frame-performance-counters;
+    }
+   }
+}
+

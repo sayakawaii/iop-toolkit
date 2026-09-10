@@ -1,0 +1,824 @@
+submodule bbf-sip-server-redundancy-settings-mounted {
+  yang-version 1.1;
+  belongs-to bbf-sip-voip-mounted  {
+    prefix bbf-sip-voip-mounted;
+  }
+  
+  include bbf-sip-server-mounted;
+  include bbf-sip-server-redundancy-operational-data-mounted;
+  
+  organization
+    "Broadband Forum <https://www.broadband-forum.org>
+     Common YANG Work Area";
+
+  contact
+    "Comments or questions about this Broadband Forum YANG module
+     should be directed to <mailto:help@broadband-forum.org>.
+     Editor:      Frank Desseyn, Nokia
+     Editor:      Nadine Staelens, Nokia
+     PS Leader:   Joey Boyd, ADTRAN
+     PS Leader:   Ken Kerpez, ASSIA
+     WA Director: Joey Boyd, ADTRAN
+     WA Director: Sven Ooghe, Nokia";
+
+  description
+    "This submodule contains a collection of YANG definitions for
+     managing the first hop Sip servers and their settings in a redundancy
+	 context.
+     Copyright (c) 2017-2018, Broadband Forum
+     Redistribution and use in source and binary forms, with or
+     without modification, are permitted provided that the following
+     conditions are met:
+     1. Redistributions of source code must retain the above copyright
+        notice, this list of conditions and the following disclaimer.
+     2. Redistributions in binary form must reproduce the above
+        copyright notice, this list of conditions and the following
+        disclaimer in the documentation and/or other materials
+        provided with the distribution.
+     3. Neither the name of the copyright holder nor the names of its
+        contributors may be used to endorse or promote products
+        derived from this software without specific prior written
+        permission.
+     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
+     CONTRIBUTORS \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+     INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+     DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+     CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+     SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+     NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+     CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+     STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+     ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+     ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     The above license is used as a license under copyright only.
+     Please reference the Forum IPR Policy for patent licensing terms
+     <https://www.broadband-forum.org/ipr-policy>.
+     Any moral rights which are necessary to exercise under the above
+     license grant are also deemed granted under this license.
+     This version of this YANG module is part of TR-383; see
+     the TR itself for full legal notices.";
+
+  revision 2020-03-06 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: 2020-03-06.";
+    reference
+      " ";
+  }
+  
+  grouping sip-server-redundancy-settings {
+	description
+	  "Defines the settings for the SIP server
+	   redundancy.";
+	container foreground-monitoring {
+	  presence
+	    "If present, indicates foreground monitoring is enabled.";
+	  description
+		"Foreground monitoring checks the connection with the 
+		 First Hop sip server.";		   
+      leaf foreground-monitoring-method {
+        type enumeration {
+	      enum register {
+		    value 1;
+		    description
+	  	  	  "The foreground health monitoring
+	  	  	   happens by means of the SIP 
+	  	  	   register method.";
+		  }
+		  enum options {
+		    value 2;
+			description
+	  	  	  "The foreground health monitoring
+	  	  	  happens by means of the SIP 
+	  	  	  options method.";
+		  }
+		  enum passive-heartbeat {
+		    value 3;
+			description
+	  	 	  "The foreground health monitoring
+		 	   happens by means of the passive 
+		 	   heartbeat method.";
+		  }		  
+		}
+		default register;
+		description
+	  	  "The applied foreground monitoring method.
+	  	   The Foreground monitoring method checks the 
+	  	   connection with the first hop SIP server
+	  	   that is addressed for the successful registration
+	  	   of at least 1 SIP user interface.
+	  	   Foreground monitoring can be done by means of the
+	  	   SIP Register method or the SIP Options method.
+	  	   If passive-heartbeat is selected, the NE will 
+	  	   monitor SIP First Hop Server without sending
+	  	   itself periodically a foreground monitoring 
+	  	   request. If there's no request/response received
+	  	   from the first hop SIP server during the 
+	  	   configured passive heartbeat interval, the NE 
+	  	   decides that the first hop SIP server cannot be
+	  	   reached anymore.";	  
+      }	
+	  leaf register-mode {
+	  when "../bbf-sip-voip-mounted:foreground-monitoring-method = "
+	     + "'register'";
+	  	type enumeration {	  
+	  	  enum fixed-ownership {
+	  	  	value 1;
+	  	  	description
+	  	  	  "The responsibility to send the
+	  	  	   FGHM re-register requests gets
+	  	  	   awarded to a single SIP user
+	  	  	   interface.";
+	  	  }		  
+	  	  enum varying-ownership {
+	  	  	value 2;
+	  	  	description
+	  	  	  "The responsibility to send the
+	  	  	   FGHM re-register request gets 
+	  	  	   awarded alternatively to each of
+	  	  	   the SIP user interfaces in the 
+	  	  	   SIP Termination Group and this 
+	  	  	   regardless of the FGHM re-register
+	  	  	   request being successfully or 
+	  	  	   non-successfully responded.";
+	  	  }
+	  	}
+	  	default fixed-ownership;
+	  	description
+	  		"The mode to be applied by the 
+	  		foreground health monitoring.";
+	  }
+	  leaf fghm-options-max-forward {
+	  when "../bbf-sip-voip-mounted:foreground-monitoring-method = "
+	     + "'options'";
+	  	type uint8 {range "0..1";}
+	  	default 0;
+	  	description
+	  	  "The maximum forwarding property 
+	  	   of the SIP OPTIONS request.
+	  	   0: The original destination of the
+	  	      SIP OPTIONS request must not 
+	  	      further forward the SIP OPTIONS
+	  	      request.
+	  	   1: The original destination of the
+	  	      SIP OPTIONS request may forward
+	  	      the SIP OPTIONS request once.";
+	  }
+	  leaf passive-heartbeat-expected-interval {
+	  when "../bbf-sip-voip-mounted:foreground-monitoring-method = "
+	     + "'passive-heartbeat'";
+		  type uint16 {range "32..3600";}
+		  units "1 second";
+		  default 90;
+		  description
+		  	"The passive heartbeat interval.";
+	  }	
+	}
+	container background-monitoring {
+	  presence
+	    "If present, indicates foreground monitoring is enabled.";
+	  description
+	    "The background monitoring checks the connection 
+	     state of the first hop SIP server(s) that were not
+	     addressed so far for the registration of a SIP user
+	     interface.";		
+	  leaf background-monitoring-method {
+	    type enumeration {
+	      enum options {
+		    value 1;
+			description
+	  	  	  "The background health monitoring
+		  	   happens by means of the SIP 
+		  	   options method.";
+		  }		  
+		}
+		default options;	
+	    description
+	      "The applied background monitoring method.";	       
+	  }
+	  leaf bghm-options-max-forward {
+		type uint8 {range "0..1";}
+		default 0;
+		description
+		  "The maximum forwarding property 
+		   of the SIP OPTIONS request.
+		   0: The original destination of the
+		      SIP OPTIONS request must not 
+		  	  further forward the SIP OPTIONS
+		  	  request.
+		   1: The original destination of the
+		  	  SIP OPTIONS request may forward
+		  	  the SIP OPTIONS request once.";
+	  }
+	  leaf bghm-monitoring-interval {
+		type uint32 {range "60..86400";}
+		units "1 second";
+		default 3600;
+		description
+		  "The background monitoring interval.";
+	  }		  
+	} 
+	container sip-server-failover {
+	  presence
+	    "if present, indicates sip server failover is enabled.";
+	  description
+	    "  ";  
+	  leaf hysteresis-threshold {
+	    type union {
+	      type uint8 {range "1..5";}
+            type enumeration {
+              enum disabled {
+		        description
+              	  "Indicates that the hysteresis threshold is
+ 		  	       disabled.";
+	          }
+	        }
+	    }
+	    default disabled;		
+	    description
+	       "In order to avoid an unnecessary first hop 
+	        SIP Server Fail-over and as such avoiding any
+	        connection toggling between the NE and a first
+	        hop SIP server, a fail-over hysteresis threshold
+	        can be configured.
+	        The number of occurences being configured is the
+	        number of occurences to happen before a first 
+	        hop SIP server fail-over will happen. 
+	        It allows the NE to distinguish accidental from
+	        persistent non-recoverable error conditions. 
+	        Accidental error conditions are considered to 
+	        appear seldom and often it is even impossible to
+	        find a clear explanation for them. Consequently,
+	        such occurrences are considered stand-alone 
+	        events detected at a single moment in time but 
+	        disappearing quite fast. 
+	        It is obvious that such occurrences shall not 
+	        give rise to a first hop SIP server fail-over
+	        action.";
+	  }	  
+	  leaf graceful-fo-threshold {
+	  	type union {
+	  	  type uint32 {range "1..86400";}
+      	  type enumeration {
+            enum disabled {
+			  description
+           	    "Indicates that the fail-over 
+			     graceful threshold is disabled.
+			     i.e. at the moment the fail-over
+			     is triggered, all ongoing calls
+			     are immediately dropped and the
+			     fail-Over of all SIP user
+			     interfaces is immediately performed.";
+		    }
+	  	  }
+	  	}
+	    units "1 second";
+	    default 86400;
+	    description
+	      "The maximum time period by which a graceful first
+	       hop SIP Server Fail-Over has to happen i.e. the 
+	       fail-over of a SIP user interface involved in a call
+	       is postponed till the call has been released. 
+	       Once the graceful threshold has expired, ongoing calls
+	       are forcibly dropped and the fail-over for the SIP 
+	       user interfaces that were involved in the ongoing 
+	       call is immediately be performed.";
+	  } 	  
+	  leaf max-retry-after-value {
+	  	type union {
+	  	  type uint16 {range "1..32";}
+      	  type enumeration {
+          	enum disabled {
+			  description
+          		"Indicates that the retry-after 
+	  	  	     threshold is disabled.";
+	  	  	}
+	  	  }
+	  	}
+	  	units "1 second";
+	  	default disabled;
+	  	description
+	  	  "In case an error response is returned by the first 
+	  	   hop SIP server and the retry-after value returned
+	  	   by the first hop SIP server exceeds the configured 
+	  	   retry-after threshold, a first hop SIP server 
+	  	   fail-over must triggered.";
+	  }	  
+	  leaf fo-register-mode {
+	  	type enumeration{
+	  	  enum no-dereg-still-inireg-required {
+	  	  	value 1;
+	  	  	description
+	  	  	  "No de-register request must be sent to 
+	  	  	   the newly selected first hop SIP server; 
+	  	  	   still a new initial register request must
+	  	  	   be sent to the newly selected first hop
+	  	  	   SIP server.";
+	  	  } 		  
+	  	  enum no-dereg-no-inireg-required {
+	  	  	value 2;
+	  	  	description
+	  	  	  "Neither a de-register request nor an 
+			   initial register request must
+			   be sent to the newly selected first hop
+			   SIP server.";
+	  	  }		  
+	  	  enum dereg-specific-contact-address {
+	  	  	value 3;
+	  	  	description
+			  "A de-register request must be sent to 
+			   the newly selected first hop SIP server
+			   prior to a new initial register request
+			   be sent to that same newly selected 
+			   first hop SIP server. The de-register 
+			   request must include the REGISTER-specific
+			   Contact header field set to the specific
+			   contact address of the SIP user interface.";
+	  	  }	  
+	  	  enum dereg-all-contact-addresses {
+	  		value 4;
+	  		description
+	  		  "A de-register request must be sent to 
+	  		   the newly selected first hop SIP server 
+	  		   prior to a new initial register request 
+	  		   be sent to that same newly selected first
+	  		   hop SIP server. The de-registration request
+	  		   must include the REGISTER-specific Contact 
+	  		   header field  set to '*'.
+	  		   The use of the '*' Contact header field 
+	  		   value allows a registering UA to request
+	  		   to remove all bindings associated with 
+	  		   an address-of-record without knowing their
+	  		   precise values.";
+	  	  }
+	  	}
+	  	default no-dereg-still-inireg-required;
+	  	description
+	  	  "The fail-over register mode defines whether,
+	  	   upon first hop SIP server fail-over, a 
+	  	   de-register is to be sent to the newly 
+	  	   selected first hop SIP server and what the
+	  	   content of this de-register request must be
+	  	   and whether this needs to be followed by a
+	  	   new initial register request to that same
+	  	   newly selected first hop SIP server.";
+	  }	  
+	  leaf fo-notification {
+	  	type enumeration {
+	  	  enum fo-notification-enabled {
+	  	    value 1;
+	  	    description
+	  	      "SIP server failover notification is enabled.";
+	  	  }		  
+	  	  enum fo-notification-disabled {
+	  	    value 2;
+	  	    description
+	  	      "SIP server failover notification is disabled.";
+	  	  }
+	  	}
+	  	default fo-notification-disabled;
+	  	description
+	  	  "Allows to enable / disable the generation
+	  	  of a notification upon the occurrence
+	  	  of a SIP server failover.";
+	  }
+      container sip-server-failback {
+	    presence
+	      "if present, indicates sip server failback is enabled.";
+	    description
+	      "  ";		
+	  	  leaf stable-observation-period {
+	  	    type union {
+	  	      type uint32 {range "1..86400";}
+      	      type enumeration {
+                enum disabled {
+			      description
+                	"Indicates that the stable 
+			   	     observation period is disabled.
+			   	     The observed first hop SIP 
+			   	     server needs not to be checked
+			   	     for stability and as such is 
+			   	     considered immediately to be
+			   	     stable.";
+	  	        }
+	  	      }
+	  	  	}
+	  	  	units "1 second";
+	  	  	default 21600;
+	  	  	description
+	  	  	  "The stable observation period intends to 
+	  	  	   observe the stability of the first hop SIP 
+	  	  	   server once this first hop SIP server is
+	  	  	   back in service after having failed.";
+	  	  }		  
+	  	  leaf graceful-fb-threshold {
+	  	  	type union {
+	  	  	  type uint32 {range "1..86400";}
+      	  	  type enumeration {
+          	    enum disabled {
+			      description
+          	  	    "Indicates that the failback 
+			         graceful threshold is disabled.
+			         i.e. at the moment the failback
+			         is triggered, all ongoing calls
+			         are immediately dropped and the
+			         failback of all SIP user
+			         interfaces is immediately 
+			         performed.";
+	  	  	    }
+	  	  	  }
+	  	  	}
+	  	  	units "1 second";
+	  	  	default 86400;
+	  	  	description
+	  	  		"The maximum time period by which a graceful 
+	  	  		first hop SIP Server Fail-back has to happen
+	  	  		i.e. the fail-back of a SIP user interface
+	  	  		involved in a call is postponed till the
+	  	  		call has been released.
+	  	  		Once the graceful threshold has expired,
+	  	  		ongoing calls are forcibly dropped and the
+	  	  		fail-back for the SIP user interfaces that
+	  	  		were involved in the ongoing call is
+	  	  		immediately be performed.";
+	  	  }		  
+	  	  leaf fb-register-mode {
+	  	  	type enumeration {
+	  	  	  enum no-dereg-still-inireg-required {
+	  	  	  	value 1;
+	  	  	  	description
+	  	  	      "No de-register request must be sent to
+	  	  	       the currently addressed secondary first 
+	  	  	       hop SIP server, though a new initial 
+	  	  	       register request must be sent to the 
+	  	  	       newly selected primary first hop SIP 
+	  	  	       server.";
+	  	  	  }			  
+	  	  	  enum no-dereg-no-inireg-required {
+	  	  	    value 2;
+	  	  	    description
+				  "Neither a de-register request to the
+				   currently addressed secondary first hop
+				   server nor an initial register request 
+				   must be sent to the newly selected 
+				   primary first hop SIP server.";
+	  	  	  }			  
+	  	  	  enum dereg-specific-contact-address {
+	  	  	  	value 3;
+	  	  	    description
+				  "A de-register request must be sent to
+				   the currently addressed secondary first
+				   hop SIP server prior to a new initial 
+				   register request be sent to the newly
+				   selected primary first hop SIP server.
+				   The de-register request must include 
+				   the REGISTER-specific Contact header
+				   field set to the specific contact 
+				   address of the SIP termination.";
+			  }			  
+	  	  	  enum dereg-all-contact-addresses {
+	  	  	  	value 4;
+	  	  	  	description
+				  "A de-register request must be sent to
+				   the currently addressed secondary
+				   first hop SIP server prior to a new 
+				   initial register request be sent to 
+				   the newly selected primary first hop SIP
+				   server. The de-registration request must
+				   include the REGISTER-specific Contact 
+				   header field  set to '*'. The use of the
+				   '*' Contact header field value allows a 
+				   registering UA to request to remove all
+				   bindings associated with an 
+				   address-of-record without knowing their
+				   precise values.";
+				}
+	  	  	  }
+	  	  	default dereg-all-contact-addresses;			  
+	  	  	description
+	  	  	  "The failback register mode defines whether, 
+	  	  	   upon first hop SIP server fail-back, a 
+	  	  	   de-register is to be sent to the current
+	  	  	   addressed (secondary) first hop SIP server
+	  	  	   and what the content of this de-register
+	  	  	   request must be and whether this needs
+	  	  	   to be followed by a new initial register
+	  	  	   request to the newly selected primary first
+	  	  	   hop SIP server.";
+	  	  }		  
+	  	  leaf fb-notification {
+	  	  	type enumeration {
+	  	  	  enum fb-notification-enabled {
+	  	  	    value 1;
+	  	  	    description
+	  	  	      "Failback notification is enabled.";
+	  	  	  }
+	  	  	  enum fb-notification-disabled {
+	  	  	    value 2;
+	  	  	    description
+	  	  	      "Failback notification is disabled.";
+	  	  	  }
+	  	    }
+	  	  	default fb-notification-disabled;			  
+	  	  	description
+	  	  	  "Allows to enable / disable the generation of a 
+	  	  	   notification upon the occurrence of a
+	  	  	   SIP server failback.";
+	  	  }		  
+	  	} 		    
+	  } 	   
+	container primary-sip-server-substitution {
+	  presence
+	    "if present, indicates sip server substitution is 
+		 enabled.";
+	  description
+	    "Enables/disables the replacement of the primary
+	  	first hop SIP server.";   
+      leaf graceful-sub-threshold {
+	  	type union {
+	  	  type uint32 {range "1..86400";}
+      	  type enumeration {
+        	enum dns-cache-refresh {
+			  description
+        	  	"Indicates that the primary 
+				 first hop SIP server 
+				 substitution shall be triggered
+				 upon the next DNS cache refresh.
+				 It shall be completed prior to 
+				 the subsequent DNS cache refresh
+				 to happen.";
+	  		}
+	  	  }
+	  	}
+	  	units "1 second";
+	  	default 86400;		  
+	  	description
+	  	  "The maximum time period by which a graceful 
+	  	   primary first hop SIP Server substitution has
+	  	   to happen i.e. the fail-over of a SIP user 
+	  	   interface involved in a call is postponed till
+	  	   the call has been released. 
+	  	   Once the graceful threshold has expired, ongoing
+	  	   calls are forcibly dropped and the fail-over for
+	  	   the SIP user interfaces that were involved in the
+	  	   ongoing call is immediately be performed. 
+	  	   The primary first hop SIP server substitution 
+	  	   shall immediately be triggered from the moment the
+	  	   update of the first hop sip server list has been
+	  	   detected.";
+	  }	  
+	  leaf sub-register-mode {
+	  	type enumeration {
+	   	  enum no-dereg-still-inireg-required {
+	  	  	value 1;
+	  	  	description
+			  "No de-register request must be sent to 
+			   the currently addressed primary first hop
+			   SIP server, though a new initial register
+			   request must be sent to the newly selected
+			   primary first hop SIP server.";
+	  	  	}		  
+	  	  enum no-dereg-no-inireg-required {
+	  	  	value 2;
+	  	  	description
+			  "Neither a de-register request to the 
+			   currently addressed primary first hop 
+			   server nor an initial register request 
+			   must be sent to the newly selected primary
+			   first hop SIP server.";
+	  	  }		  
+	  	  enum dereg-specific-contact-address {
+	  	    value 3;
+	  	  	description
+			  "A de-register request must be sent to the 
+			   currently addressed primary first hop SIP
+			   server prior to a new initial register 
+			   request be sent to the newly selected 
+			   primary first hop SIP server.
+			   The de-register request must include the
+			   REGISTER-specific Contact
+			   header field set to the specific contact
+			   address of the SIP termination.";
+	  	  }		  
+	  	  enum dereg-all-contact-addresses {
+	  	  	value 4;
+	  	  	description
+			  "A de-register request must be sent to the
+			   currently addressed primary first hop SIP
+			   server prior to a new initial register 
+			   request be sent to the newly selected 
+			   primary first hop SIP server. 
+			   The de-registration request must include the
+			   REGISTER-specific Contact header field  set
+			   to '*'. The use of the '*' Contact header
+			   field value allows a registering UA to
+			   request to remove all bindings associated
+			   with an address-of-record without
+			   knowing their precise values.";
+	  	  }
+	  	}
+	  	default dereg-all-contact-addresses;		  
+	  	description
+	  		"The substitution register mode defines whether, 
+	  		upon the primary first hop SIP server substitution,
+	  		a de-register is to be sent to the current addressed
+	  		primary first hop SIP server and what the content
+	  		of this de-register request must be and whether this
+	  		needs to be followed by a new initial register request
+	  		to the newly selected primary first hop SIP server.";
+	  }	  
+	  leaf sub-notification {
+	    type enumeration {
+	      enum sub-notification-enabled {
+	    	value 1;
+	    	description
+	    	  "Substitution notification is enabled.";
+	      }
+	      enum sub-notification-disabled {
+	        value 2;
+	        description
+	          "substitution notification is disabled.";
+	      }
+	    }
+	    default sub-notification-disabled;
+	    description
+	      "Allows to enable / disable the generation of a 
+	      notification upon the occurrence of a primary
+	      SIP server substitution.";
+	  }	  
+	}  
+	container emergency-sip-server-failover {  
+	  presence
+	    "if present, indicates a failover to an emergency sip 
+		 server is enabled.";
+      description
+        "Enables/disables failover to the emergency SIP server.";	  
+	  leaf emergency-fo-notification {
+	  	type enumeration {
+	  	  enum emergency-fo-notification-enabled {
+	  	    value 1;
+	  	    description
+	  	      "Emergency notification is enabled.";
+	  	  }
+	  	  enum emergency-fo-notification-disabled {
+	  	    value 2;
+	  	    description
+	  	      "Emergency notification is disabled.";
+	  	  }
+	  	}
+	  	default emergency-fo-notification-disabled;
+	  	description
+	  		"Allows to enable / disable the generation of a 
+	  		notification upon the occurrence of a failover to the 
+	  		emergency SIP server.";
+	  }
+      container emergency-failback {
+        presence 
+          "if present, fail-back from the emergency
+		   sip server is enabled.";		
+	    description
+		  "Fail-back from the emergency sip server.";
+		leaf graceful-emergency-threshold {
+	  	  type union {
+	  	  	type uint32 {range "1..86400";}
+      	  	type enumeration {
+          	  enum disabled {
+				description
+          	  	  "Indicates that the failback
+				   graceful threshold is disabled.
+				   i.e. at the moment the failback
+				   is triggered, all ongoing calls
+				   are immediately dropped and the
+				   failback of all SIP user
+				   interfaces is immediately 
+				   performed.";
+	  	  	  }
+	  	  	}
+	  	  }
+	  	  units "1 second";
+	  	  default 86400;
+	  	  description
+	  	  	"The maximum time period by which a graceful 
+	  	  	emergency SIP Server Fail-back has to happen
+	  	  	i.e. the fail-back of a SIP user interface 
+	  	  	involved in a call is postponed till the
+	  	  	call has been released. Once the graceful
+	  	  	threshold has expired, ongoing calls are
+	  	  	forcibly dropped and the fail-back for the
+	  	  	SIP user interfaces that were involved in
+	  	  	the ongoing call is immediately be
+	  	  	performed.";
+	  	}		  
+	  	leaf emergency-fb-notification {
+	  	  type enumeration {
+	  	  	enum emergency-fb-notification-enabled {
+	  	  	  value 1;
+	  	  	  description
+	  	  	    "Emergency failback notification is
+	  	  	     enabled.";
+	  	  	}
+	  	  	enum emergency-fb-notification-disabled {
+	  	  	  value 2;
+	  	  	  description
+	  	  	    "Emergency failback notification is
+	  	  	     disabled.";
+	  	  	}
+	  	  }
+	  	  default emergency-fb-notification-disabled;
+	  	  description
+	  	  	"To enable / disable the generation
+	  	  	of a notification upon the occurrence of
+	  	  	failback from the emergency SIP server.";
+		}		    
+	  }  
+	}	  
+	container lsa-sip-server-failover {
+	  presence
+	    "if present,Failover to the local stand-alone SIP server
+		 is enabled."; 
+	  description
+	    "Failover to the local stand-alone SIP server.";
+	  leaf lsa-fo-notification {
+		type enumeration {
+		  enum lsa-fo-notification-enabled {
+		    value 1;
+		    description
+		   	  "LSA failover notification is enabled.";
+		  }
+		  enum lsa-fo-notification-disabled {
+		    value 2;
+		    description
+		      "LSA failover notification is disabled.";
+		  }
+		}
+		default lsa-fo-notification-disabled;
+		description
+		  "Allows to enable / disable the generation of a 
+		  notification upon the occurrence of a failover to
+		  the local stand-alone SIP server.";
+	  }
+	  container lsa-failback {
+        presence
+          "if present, fail-back to the local stand-alone 
+		   SIP server is enabled.";
+		description
+		  "To enable the fail-back to the local stand-alone 
+		   SIP server."; 
+		leaf graceful-lsa-threshold {
+		  type union {
+		  	type uint32 {range "1..86400";}
+    	  	type enumeration {
+      	  	  enum disabled {
+		        description
+          		  "Indicates that the failback
+		           graceful threshold is disabled.
+		           i.e. at the moment the failback
+		           is triggered, all ongoing calls
+		           are immediately dropped and the
+		           failback of all SIP user
+		           interfaces is immediately 
+		           performed.";
+		      }
+		  	}
+		  }
+		  units "1 second";
+		  default 86400;
+		  description
+		  	"The maximum time period by which a graceful 
+		  	LSA SIP Server Fail-back has to happen
+		  	i.e. the fail-back of a SIP user interface 
+		  	involved in a call is postponed till the
+		  	call has been released. Once the graceful
+		  	threshold has expired, ongoing calls are
+		  	forcibly dropped and the fail-back for the
+		  	SIP user interfaces that were involved in
+		  	the ongoing call is immediately be
+		  	performed.";
+	  	}		  
+		leaf lsa-fb-notification {
+		  type enumeration {
+		  	enum lsa-fb-notification-enabled {
+		  	  value 1;
+		  	  description
+		  	    "LSA failback notification is enabled.";
+		  	}
+		  	enum lsa-fb-notification-disabled {
+		  	  value 2;
+		  	  description
+		  	    "LSA failback notification is disabled.";
+		  	}
+		  }
+		  default lsa-fb-notification-disabled;
+		  description
+		  	"To enable / disable the generation of a 
+		  	notification upon the occurrence of a
+		  	failback from the local stand-alone SIP
+		  	server.";
+		}			  
+	  }
+	}  
+  } 
+}

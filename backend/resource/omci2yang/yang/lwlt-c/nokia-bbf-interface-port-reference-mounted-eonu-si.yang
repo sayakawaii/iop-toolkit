@@ -1,0 +1,50 @@
+module nokia-bbf-interface-port-reference-mounted-eonu-si {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-bbf-interface-port-reference-mounted-eonu-si";
+
+  prefix nokia-bbf-interface-port-reference-mounted-eonu-si;
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import ietf-interfaces-mounted {
+    prefix if-mounted;
+  }
+
+  import bbf-interface-port-reference-mounted {
+    prefix bbf-if-port-ref-mounted;
+  }
+
+  import nokia-sdan-service-impact {
+    prefix nokia-si;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "indicate that modifying a data node of bbf-interface-port-reference
+     module would cause a service impact.";
+
+  revision 2023-07-07 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia Specific.";
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-if-port-ref-mounted:port-layer-if"
+  {
+      description
+        "Modifying port-layer-if of an interface would cause eqpt service impact";
+      deviate add {
+        nokia-si:service-impact;
+      }
+  }
+}

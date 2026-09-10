@@ -1,0 +1,462 @@
+module bbf-fiber-onu-emulated-mount {
+  yang-version 1.1;
+
+  namespace "urn:bbf:params:xml:ns:yang:bbf-fiber-onu-emulated-mount";
+
+  prefix onu;
+    
+  import nokia-template-common {
+    prefix template-common;
+  }
+
+  import nokia-sdan-mib-upload-behavior-types-mounted {
+    prefix nokia-sdan-mib-upload-behavior-types-mounted;
+  }
+
+  description
+     "This module contains ONU data.";
+
+  revision 2026-03-10 {
+      description
+        "Update software-upgrading-status-type enums and descriptions according to PLM request.";
+  }
+
+  revision 2026-03-03 {
+      description
+        "Add active-commit-fail into software-upgrading-status-type.";
+  }
+
+  revision 2025-02-27 {
+      description
+        "Add fromroot container.";
+  }
+
+  revision 2024-12-12 {
+      description
+        "Add mib-upload-behavior due to epic BBN-216774.";
+  }
+
+  revision 2024-11-05 {
+      description
+        "Add some status enums into software-upgrading-status-type due to epic BBN-214297.";
+  }
+
+  revision 2024-10-25 {
+      description
+        "Add mib-reset-sync-count due to epic BBN-196763.";
+  }
+
+  revision 2023-08-24 {
+      description
+        "Add ignored into software-upgrading-status-type due to epic BBN-139852.";
+  }
+
+   revision 2022-12-08 {
+       description
+         "Adding self-test and system-state for ONU.";
+   }
+
+   revision 2022-08-29 {
+       description
+         "Included bbf-ethernet-performance-management-mounted";
+   }
+
+   revision 2022-06-02 {
+       description
+          "GEM port pm and voice pm modules.";
+   }
+
+   revision 2020-07-13 {
+     description 
+       "Initial revision.";
+   }
+
+
+   typedef software-upgrading-status-type {
+     type enumeration {
+       enum unknown {
+         description
+         "ONT has not been connected yet.";
+       }
+       enum active-downloading {
+         description
+         "ONT active software download is on-going.";
+       }
+       enum active-activating {
+         description
+         "ONT active software is being activated.";
+       }
+       enum activate-delay {
+         description
+         "ONT active software is downloaded, but the activation is delayed.";
+       }
+       enum active-activation-failed {
+         description
+         "ONT active software activation failed.";
+       }
+       enum active-download-failed {
+         description
+         "ONT active software download failed.";
+       }
+       enum active-sw-aligned {
+         description
+         "Only ONU actual active aligned with configured active software. Configured passive software is not aligned.";
+       }
+       enum passive-downloading {
+         description
+         "ONT passive software download is on-going.";
+       }
+       enum passive-download-failed {
+         description
+         "ONT passive software download failed.";
+       }
+       enum active-passive-sw-aligned {
+         description
+         "Both ONU active and passive software are aligned with configured software.";
+       }
+       enum ignored {
+         description
+           "ONU software/vendor-specific-sw-image are marked as 'ignored' in ONU-mapping file.";
+       }
+       enum active-sw-image-missing {
+         description
+           "ONU active image is missing in the NT file system.";
+       }
+       enum passive-sw-image-missing {
+         description
+           "ONU passive image is missing in the NT file system.";
+       }
+       enum active-release-reference-missing {
+         description
+           "ONU active release is missing.";
+       }
+       enum passive-release-reference-missing {
+         description
+           "ONU passive release is missing.";
+       }
+       enum active-hwpartnum-entry-missing {
+         description
+           "ONU active hwpartnum entry in mapping file is missing.";
+       }
+       enum passive-hwpartnum-entry-missing {
+         description
+           "ONU passive hwpartnum entry in mapping file is missing.";
+       }
+       enum software-evaluation-pending {
+         description
+           "ONU is offline or ONU's chassis's admin-state is down, software evaluation is pending in this time.";
+       }
+       enum active-sw-mismatch {
+         description
+           "ONU actual active software is not aligned with configured software.";
+       }
+       enum passive-sw-mismatch {
+         description
+           "ONU actual passive software is not aligned with configured software.";
+       }
+       enum active-sw-aligned-passive-sw-ignored {
+         description
+           "ONU actual active software is aligned with configured software, but passive one is ignored.";
+       }
+       enum active-commit-failed {
+         description
+           "ONT has failed to commit the active software.";
+       }
+     }
+     description "ONU upgrade procedure's status";
+   }
+
+   typedef vendor-specific-type {
+     type enumeration {
+       enum onu_vendor_specific_software_1 {
+         description
+         "The first vendor specific SW Image pair";
+       }
+       enum onu_vendor_specific_software_2 {
+         description
+         "The second vendor specific SW Image pair";
+       }
+     }
+     description "The ONU's SW Image ME instances pair for vendor specific software upgrade purposes";
+   }
+
+   typedef target-software-control-type {
+     type enumeration {
+       enum immediate-activation {
+         description
+         "Immediately activate the software after the software download succeed";
+       }
+       enum delayed-activation {
+         description
+         "After software download succeed, don't activate the software,
+         only when ONT ranged again, activate the software.";
+       }
+     }
+     description "Control type for the ONT SW Planning and Activation";
+   }
+
+   grouping ont-software {
+     choice software-version {
+       case release {
+         leaf release {
+           description
+            "This is a string describing the onu software release to be used,
+              Typically, like R06.02.01,it's released by onu vendor";
+           type string;
+
+         }
+       }
+       /* case image-uri {
+         leaf image-uri {
+           description
+            "This is a uri describing the location that the onu software stored";
+            type inet:uri;
+         }
+       } */
+     }
+
+   }
+
+   grouping onu-vendor-specific-file-package-name {
+      leaf vendor-specific-file-package-name {
+           description
+            "This is a string describing the vendor-specific file package name to be applied on the ONU";
+           type string;
+     }
+   }
+
+   container onus {
+     description
+       "configuration data for all ONUs.";
+
+     list onu {
+       key "name";
+
+       leaf name {
+         type string {
+            length "0..60";
+         }
+         description
+           "name of the template.";
+       }
+
+       leaf description {
+         type string;
+         description
+         "  ";
+       }
+
+       leaf usage {
+         type identityref {
+            base template-common:node-usage;
+         }
+         default "template-common:node-actual-usage";
+         description
+           "This leave identifies whether the ONU is to 
+            be used in a template or for an actual subscriber.";
+       }
+
+       container onu-management {
+         description
+          "Container containing meta configuration data for ONU management.";
+
+         container target-active-software {
+           description
+             "Container providing a release name which reference to the software image 
+              for the specific ONU in function of the detected ONU HW type.
+              This image will be downloaded, activated and committed";
+           uses ont-software;
+         }
+         container target-passive-software {
+           description
+             "Container providing a release name which reference to the software image 
+              for the specific ONU in function of the detected ONU HW type.
+              This image will be downloaded on the passive bank of the ONU";
+           uses ont-software;
+         }
+         leaf target-software-control {
+           type target-software-control-type;
+           default "immediate-activation";
+           description
+             "The Control of the ONT SW Planning and Activation";
+         }
+
+         list vendor-specific-software {
+           key "vendor-specific-type";
+           max-elements 127;
+           description
+             "A list of different vendor specific software that can be applied to ONU's vendor specific SW Image instances pairs";
+
+           leaf vendor-specific-type {
+             type vendor-specific-type;
+             description
+               "The SW Image ME instances pair for vendor specific software upgrade";
+           }
+
+           leaf target-software-control {
+             type target-software-control-type;
+             default "immediate-activation";
+             description
+               "The Control of the ONT vendor specific software Planning and Activation";
+           }
+
+           container target-active-vendor-specific-software {
+             description
+               "Container providing the vendor-specific file package name applied on the specific ONU.
+               According to vendor-specific package's mapping file a specific vendor-specific file will be selected
+               based on the specific ONU HW type. The vendor-specific file will be downloaded, activated and committed";
+               uses onu-vendor-specific-file-package-name;
+           }
+
+           container target-passive-vendor-specific-software {
+             description
+               "Container providing the vendor-specific file package name applied on the specific ONU.
+               According to vendor-specific package's mapping file a specific vendor-specific file will be selected
+               based on the specific ONU HW type. The vendor-specific file will be downloaded on the passive slot";
+             uses onu-vendor-specific-file-package-name;
+           }
+         }
+
+         leaf mib-reset-sync-count {
+           when "../../usage = 'template-common:node-template-usage'";
+            type uint32 {range "1..4294967295";}
+            description
+             "(1)onu template can be modified multiple times during device offline, each time can be different cases:
+                 need mibreset or not need mibreset
+              (2)mib-reset-sync-count will be increased (+1) by operator each time when the change need device to perform mibreset
+              (3)when device side receive this mib-reset-sync-count it will compare with the local stored one:
+                 -- if not matched: perform mibreset after template modification (for all ONU instances using this template)
+                 -- if matched: not perform mibreset after template modification";
+         }
+
+         leaf mib-upload-behavior {
+            when "../../usage = 'template-common:node-actual-usage' or
+                  ../../usage = 'template-common:node-template-usage'" {
+              description
+                "It should be a node-actual-usage or node-from-template-usage ONU for MIB upload behavior configuration.";
+            }
+            type identityref {
+              base nokia-sdan-mib-upload-behavior-types-mounted:mib-upload-mode;
+            }
+            default "nokia-sdan-mib-upload-behavior-types-mounted:mib-upload-per-onu-flavor";
+            description
+              "The desired MIB upload behavior for this ONU";
+         }
+       }
+
+     container onu-management-state {
+       config false;
+       description
+         "Container containing meta state data for ONU management.";
+
+       leaf software-upgrading-status {
+         type software-upgrading-status-type;
+         description
+           "ONU software upgrade progress status";
+       }
+
+       list vendor-specific-upgrading-status {
+         key "vendor-specific-type";
+         max-elements 127;
+         description
+           "A list providing the upgrade status of vendor-specific-software files";
+
+         leaf vendor-specific-type {
+           type vendor-specific-type;
+           description
+             "The SW Image ME instances pair for vendor specific software upgrade";
+         }
+
+         leaf vendor-specific-upgrading-status {
+           type software-upgrading-status-type;
+           description
+             "ONU software upgrade progress status";
+         }
+     }
+
+       leaf configuration-error {
+         type boolean;
+         description
+            "True is the last <edit-config> or <copy-config> task was rejected by the device with a fatal error.";
+       }
+
+       leaf configuration-error-reply {
+          type string;
+          when "../configuration-error = 'true'";
+       }
+   }
+
+   container fromroot {
+       when "../usage = 'template-common:node-from-template-usage'";
+       presence "fromroot";
+   }
+
+       container root {
+       
+          description
+             " configuration root for models supported by ONU. This mount point will be use-schema as defined in RFC 8528.
+                Mounted IETF/BBF yang file list as below:
+                ietf-hardware-mounted.yang
+                ietf-interfaces-mounted.yang
+                iana-if-type-mounted.yang
+                ethernet-mounted.yang
+                bbf-mgmd-configuration-interface-to-host-mounted.yang
+                bbf-mgmd-configuration-interface-to-router-mounted.yang
+                bbf-mgmd-configuration-multicast-snoop-mounted.yang
+                bbf-mgmd-mounted.yang
+                bbf-interface-port-reference-mounted.yang
+                bbf-interfaces-performance-management-mounted.yang
+                bbf-sub-interface-tagging-mounted.yang
+                bbf-sub-interfaces-mounted.yang
+                bbf-qos-classifiers-mounted.yang
+                bbf-qos-policies-sub-interfaces-mounted.yang
+                bbf-qos-policies-mounted.yang
+                bbf-qos-traffic-mngt-mounted.yang
+                bbf-if-type-mounted.yang
+                bbf-xpon-if-type-mounted.yang
+                bbf-xponani-ani-body-mounted.yang
+                bbf-xponani-base-mounted.yang
+                bbf-xponani-v-enet-body-mounted.yang
+                bbf-xpon-performance-management-mounted.yang
+                bbf-xpongemtcont-mounted.yang
+                bbf-xpongemtcont-gemport-body-mounted.yang
+                bbf-xpongemtcont-tcont-body-mounted.yang
+                bbf-xpongemtcont-traffic-descriptor-profile-body-mounted.yang
+                nokia-software-image-management-extension-mounted.yang
+                bbf-software-image-management-one-dot-one-mounted.yang
+                bbf-software-image-management-base-mounted.yang
+                bbf-software-image-management-common-body-mounted.yang
+                bbf-software-image-management-download-body-mounted.yang
+                bbf-software-image-management-revision-body-mounted.yang
+                bbf-sip-voip-mounted.yang
+                nokia-ip-test-mounted.yang
+                ietf-system-mounted.yang
+                nokia-yang-types-mounted.yang 
+                bbf-voip-configuration-mounted.yang
+                ieee802-dot1q-cfm-mounted.yang
+                bbf-oam-cfm-mep-to-interface-mounted.yang
+                bbf-interface-usage-mounted.yang
+                ieee802-dot1q-cfm-bridge-mounted.yang
+                nokia-ethernet-cfm-oam-ais-mounted.yang
+		        bbf-hardware-transceivers-mounted.yang
+                bbf-xpongemtcont-gemport-performance-management-mounted.yang
+                nokia-interfaces-performance-management-mounted.yang
+                nokia-onu-gemport-performance-management-mounted.yang
+                nokia-voice-performance-management-mounted.yang
+                bbf-ethernet-performance-management-mounted.yang
+                nokia-sdan-system-mounted.yang
+                nokia-sdan-hardware-component-test-mounted.yang
+              ";
+        }
+        
+      }
+  }
+
+  typedef onu-name-ref {
+    type leafref {
+      path "/onu:onus/onu:onu/onu:name";
+    }
+  }
+
+  
+}

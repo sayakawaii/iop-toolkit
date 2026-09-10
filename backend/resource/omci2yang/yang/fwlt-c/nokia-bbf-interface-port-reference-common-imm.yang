@@ -1,0 +1,57 @@
+module nokia-bbf-interface-port-reference-common-imm {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-bbf-interface-port-reference-common-imm";
+
+  prefix inokia-bbf-interface-port-reference-common-imm;
+
+  import ietf-immutable{
+    prefix im;
+  }
+
+  import nokia-sdan-ietf-immutable{
+     prefix nokia-im;
+  }
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import bbf-interface-port-reference {
+     prefix bbf-if-port-ref;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA IETF/System YANG module supporting
+     deviations on top of standard.";
+
+  revision 2022-12-14 {
+    description
+      "Condition check added for ethernetCsmacd.";
+    reference
+      "Nokia Specific.";
+  }
+
+  revision 2022-11-20 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia Specific.";
+  }
+
+  deviation '/if:interfaces/if:interface/bbf-if-port-ref:port-layer-if' {
+      description
+      "The port-layer-if of a channel-termination/ethernetCsmacd interface cannot be modified.
+       The client can delete or remove the interface and subsequently create the interface again.";
+      deviate add {
+        im:immutable "create delete";
+        nokia-im:condition "../if-type = channel-termination | ../if-type = ethernetCsmacd";
+      }
+  }
+}

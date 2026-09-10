@@ -1,0 +1,236 @@
+module nokia-sub-option-extn {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+          + "nokia-sub-option-extn";
+  prefix nokia-sub-opt-extn;
+
+  import ietf-system {
+    prefix sys;
+  }
+
+  import bbf-subscriber-profiles{
+    prefix bbf-subprof;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG definitions for
+     supporting Nokia specific requirements as applicable to its
+     access network equipment.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2020, Nokia. All Rights Reserved.";
+
+  revision 2026-08-11 {
+    description
+      "Feature flag introduced for subscriber options access aggregation
+       and downshift threshold attributes.";
+    reference
+      "Nokia specific.";
+  }
+
+  revision 2023-11-16 {
+    description
+      "Added new identities for DHCPv4/v6/PPPoE profile sub-option attribute";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2020-06-23 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: yyyy-mm-dd.";
+    reference
+      "Nokia specific";
+  }
+
+  feature sub-option-access-aggregation-attributes {
+    description
+      "Feature supporting keywords for access aggregation attributes.";
+  }
+
+  feature sub-option-downshift-threshold-attributes {
+    description
+      "Feature supporting keywords for downshift threshold attributes.";
+  }
+
+  identity sub-option-attributes {
+    description
+     "Base identity for defining additional sub options
+      requested to insert in protocol frames.
+      This is an abstract identity and MUST NOT be
+      used for sub options attributes.";
+  }
+
+  identity sub-option-attribute-dhcpv4 {
+    base sub-option-attributes;
+    description
+      "Base identity for defining additional sub options
+       attributes for dhcpv4 protocol";
+  }
+
+  identity sub-option-attribute-dhcpv6 {
+    base sub-option-attributes;
+    description
+      "Base identity for defining additional sub options
+       attributes for dhcpv6 protocol";
+  }
+
+  identity sub-option-attribute-pppoe {
+    base sub-option-attributes;
+    description
+      "Base identity for defining additional sub options
+       attributes for PPPoE protocol";
+  }
+
+  identity access-aggregation-circuit-id-ascii  {
+    if-feature "sub-option-access-aggregation-attributes";
+    base sub-option-attribute-dhcpv4;
+    base sub-option-attribute-dhcpv6;
+    base sub-option-attribute-pppoe;
+    description
+      "Add the Access Aggregation Circuit ID ASCII TLV 
+       with Type 0x03 in the protocol message in vendor- 
+       specific suboption 9 for DHCPv4 and 0x105 vendor-
+       specific Tag in PPPoE and option 17 vendor-specific
+       information option in DHCPv6.
+
+       The value of the TLV contains the backhaul-id string
+       configuration. This backhaul-id string is system wide
+       configuration parameter defined in leaf backhaul-id.";
+  }
+
+  identity access-aggregation-circuit-id-binary  {
+    if-feature "sub-option-access-aggregation-attributes";
+    base sub-option-attribute-dhcpv4;
+    base sub-option-attribute-dhcpv6;
+    base sub-option-attribute-pppoe;
+    description
+      "Add the Access Aggregation Circuit ID Binary TLV 
+       with Type 0x06 in the protocol message in vendor- 
+       specific suboption 9 for DHCPv4 and 0x105 vendor-
+       specific Tag in PPPoE and option 17 vendor-specific
+       information option in DHCPv6.
+
+       The format of the suboption is same as TLV Access-
+       Aggresgation-Circuit-ID-Binary specified in RFC 
+       6320 with Type 0x06.
+
+       This TLV identifies or partially identifies a
+       specific access line by means of its logical
+       circuit identifier on the NAS side of the Access
+       Node. It is defined to contain VLAN-id(s).
+
+       The value of the TLV contains the VLAN-ids of the
+       VLAN tags to be used in data frames sent on a
+       network interface. However, this is not necessarily
+       the same for all data frames coming from a single
+       access line.";
+
+    reference
+      "RFC 6320 section 5.1.2.3, TR-101i2 Section 3.9.3.";
+  }
+
+  identity dsl-type  {
+    base sub-option-attribute-dhcpv4;
+    base sub-option-attribute-dhcpv6;
+    base sub-option-attribute-pppoe;
+    description
+      "Add the DSL-Type TLV with type 0x91 in the protocol 
+       message in vendor-specific suboption 9 for DHCPv4 and
+       0x105 vendor-specific Tag in PPPoE and option 17 
+       vendor-specific information option in DHCPv6.
+
+       The format of the suboption is same as TLV DSL-Type
+       specified in RFC 6320 with Type 0x91.
+
+       This TLV identifies type of transmission system
+       in use.";
+    reference
+      "RFC 6320 section 6.5.2";
+  }
+
+  identity actual-data-rate-downshift-threshold-upstream  {
+    if-feature "sub-option-downshift-threshold-attributes";
+    base sub-option-attribute-dhcpv4;
+    base sub-option-attribute-dhcpv6;
+    base sub-option-attribute-pppoe;
+    description
+      "Sub-option type 0x81 - Value of actual upstream data rate of an access loop
+       reduced by a value of upstream shift-down threshold configured as part of ANCP partition
+
+       Note if ANCP partition upstream shift-down threshold is not configured or
+       the lower layer interface is not attached to the ANCP partition,
+       default value of '0' will be taken as upstream shift-down threshold";
+  }
+
+  identity actual-data-rate-downshift-threshold-downstream  {
+    if-feature "sub-option-downshift-threshold-attributes";
+    base sub-option-attribute-dhcpv4;
+    base sub-option-attribute-dhcpv6;
+    base sub-option-attribute-pppoe;
+    description
+      "Sub-option type 0x82 - Value of actual downstream data rate of an access loop
+       reduced by a value of downstream shift-down threshold configured as part of ANCP partition
+
+       Note if ANCP partition downstream shift-down threshold is not configured or
+       the lower layer interface is not attached to the ANCP partition,
+       default value of '0' will be taken as downstream shift-down threshold";
+  }
+
+  augment "/sys:system/bbf-subprof:subscriber-management" {
+    description "augment subscriber management";
+    leaf backhaul-id {
+      type string {
+        length "1..32";
+        pattern '[ a-z0-9#\- ]*';
+      }
+      description
+        "An identifier representing the backhaul-id. This string
+         will be inserted in TLV with type value 0x03 in case of
+         leaf access-aggregation-circuit-id-ascii configured.";
+    }
+  }
+}

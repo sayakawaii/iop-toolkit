@@ -1,0 +1,110 @@
+module nokia-bbf-hardware-transceivers-mounted-eonu-dev {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-bbf-hardware-transceivers-mounted-eonu-dev";
+
+  prefix nokia-bbf-hardware-transceivers-mounted-eonu-dev;
+
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import bbf-hardware-transceivers-mounted {
+    prefix bbf-hw-xcvr-mounted;
+  }
+
+  import ietf-hardware-mounted {
+    prefix hw-mounted;
+  }
+
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA IETF/System YANG module supporting
+     deviations on top of standard.";
+
+  revision 2022-09-26 {
+    description
+      "Adding Deviations for unsupported Yang leaves for epic BBN-88491.";
+    reference
+      "Nokia specific";
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/bbf-hw-xcvr-mounted:transceiver/bbf-hw-xcvr-mounted:diagnostics/bbf-hw-xcvr-mounted:alarm-flag"{
+    description
+       "This deviation assures that transceiver diagnostics does not support alarm-flag.";
+    deviate not-supported;
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/bbf-hw-xcvr-mounted:transceiver/bbf-hw-xcvr-mounted:diagnostics/bbf-hw-xcvr-mounted:warning-flag"{
+    description
+       "This deviation assures that transceiver diagnostics does not support warning-flag.";
+    deviate not-supported;
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/bbf-hw-xcvr-mounted:transceiver/bbf-hw-xcvr-mounted:identifiers-and-codes"{
+    description
+       "This deviation assures that identifiers-and-codes is not supported.";
+    deviate not-supported;
+  }
+    
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/bbf-hw-xcvr-mounted:transceiver/bbf-hw-xcvr-mounted:link-length"{
+    description
+       "This deviation assures that link-length is not supported.";
+    deviate not-supported;
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/bbf-hw-xcvr-mounted:transceiver/bbf-hw-xcvr-mounted:vendor-fields"{
+    description
+       "This deviation assures that vendor-fields is not supported.";
+    deviate not-supported;
+  }
+      
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/bbf-hw-xcvr-mounted:transceiver/bbf-hw-xcvr-mounted:diagnostics-monitoring-type"{
+    description
+       "This deviation assures that diagnostics-monitoring-type is not supported.";
+    deviate not-supported;
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/bbf-hw-xcvr-mounted:transceiver/bbf-hw-xcvr-mounted:enhanced-options"{
+    description
+       "This deviation assures that enhanced-options is not supported.";
+    deviate not-supported;
+  }
+        
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/bbf-hw-xcvr-mounted:transceiver/bbf-hw-xcvr-mounted:thresholds"{
+    description
+       "This deviation assures that thresholds is not supported.";
+    deviate not-supported;
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/bbf-hw-xcvr-mounted:transceiver-link/bbf-hw-xcvr-mounted:diagnostics/bbf-hw-xcvr-mounted:alarm-flag"{
+    description
+       "This deviation assures that transceiver-link diagnostics does not support alarm-flag.";
+    deviate not-supported;
+  }
+    
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/bbf-hw-xcvr-mounted:transceiver-link/bbf-hw-xcvr-mounted:diagnostics/bbf-hw-xcvr-mounted:warning-flag"{
+    description
+       "This deviation assures that transceiver-link diagnostics does not support warning-flag.";
+    deviate not-supported;
+  }
+    
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/bbf-hw-xcvr-mounted:transceiver-link/bbf-hw-xcvr-mounted:diagnostics/bbf-hw-xcvr-mounted:tec-current"{
+    description
+       "This deviation assures that transceiver-link diagnostics does not support tec-current.";
+    deviate not-supported;
+  }
+      
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/bbf-hw-xcvr-mounted:transceiver-link/bbf-hw-xcvr-mounted:wavelength-or-specification-compliance"{
+    description
+       "This deviation assures that wavelength-or-specification-compliance is not supported.";
+    deviate not-supported;
+  }
+}

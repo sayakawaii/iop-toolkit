@@ -1,0 +1,630 @@
+module nokia-onu-alarm-types {
+     yang-version 1.1;
+     namespace "https://www.nokia.com/Fixed-Networks/BBA/yang/nokia-onu-alarm-types";
+     prefix onu-al;
+
+     import nokia-base-alarm-types {
+         prefix base-al;
+     }
+
+     organization
+      "Nokia";
+
+     contact
+      "Comments or questions about this Nokia YANG module should be
+       directed to <mailto:isam.yang@nokia.com>.";
+
+     description
+       "This module provides the details of supported Ont side alarm types.";
+
+     revision 2026-08-06 {
+       description
+         "Define chassis-temperature-yellow and chassis-temperature-red alarms";
+       reference
+         "Nokia specific";
+     }
+
+     revision 2026-07-08 {
+       description
+         "Define Verizon Open OMCI customized alarms identities";
+       reference
+         "Nokia specific Epic BBN-326129";
+     }
+
+     revision 2025-09-01 {
+       description
+         "Define clock customized alarms identities
+          Define fan failure alarm";
+       reference
+         "Nokia specific Epic BBN-132900
+          Nokia specific BBN-307323";
+     }
+
+     revision 2025-06-06 {
+       description
+         "Define HGU customized alarms identities";
+       reference
+         "Nokia specific Epic BBN-193963";
+     }
+
+    revision 2025-04-01 {
+       description
+         "Define Voice service profile File not found related alarms identities";
+       reference
+         "Nokia specific Epic BBN-207901";
+     }
+
+     revision 2024-06-01 {
+       description
+         "Define pluggable module on ONU's UNI side related alarms identities";
+       reference
+         "Nokia specific Epic BBN-107806";
+     }
+
+     revision 2024-05-14 {
+       description
+         "Define Moca alarms identities";
+       reference
+         "Nokia specific";
+     }
+
+     revision 2023-10-23 {
+       description
+         "Update software download alarms identities.
+          There are only onu-software-not-found and onu-software-upgrade-failed alarms.";
+       reference
+         "Nokia specific";
+     }
+
+     revision 2023-10-18 {
+       description
+         "Update PPTP video alarms identities.";
+       reference
+         "Nokia specific";
+     }
+
+     revision 2023-07-26 {
+       description
+         "define PPTP video UNI alarms(rf-output-high, rf-output-low and video-uni-los)
+          and PPTP video ANI alarms(video-optsig-level-high, video-optsig-level-low and video-ani-los).";
+       reference
+         "Nokia specific Epic BBN-27738";
+     }
+
+     revision 2023-02-24 {
+       description
+         "removed the TCA alarms for Ethernet CRC Upstream/Downstream";
+       reference
+         "Nokia specific";    
+     }
+
+     revision 2022-08-28 {
+      description
+        "Introduced TCA alarms related to performance monitoring";
+      reference
+        "Nokia specific.";
+     }
+
+     revision 2022-08-26 {
+       description
+         "define new alarm omci-communication.";
+       reference
+         "Nokia specific Epic BBN-69626";
+     }
+
+     revision 2022-06-09 {
+       description
+         "define POE alarms(pse-overload-yellow and pse-overload-red).";
+       reference
+         "Nokia specific Epic BBN-52301";
+     }
+     
+     revision 2022-01-25 {
+      description
+        "define part TCA alarms(transceiver-power-feed-voltage).";
+      reference
+        "Nokia specific Epic BBN-701";
+     }
+
+     revision 2021-02-05 {
+       description
+         "Rename yang with nokia prefix.
+           - nokia-onu-alarm-types
+         ";
+       reference
+         "Nokia specific";
+     }
+
+     revision 2019-08-21 {
+      description
+        "ONU alarms";
+      reference
+        "Nokia specific";
+     }
+
+
+  identity OnuAlarms {
+     base base-al:onu-alarm;
+     description
+        "Abstract alarm type for Onu alarms";
+  }
+
+// ---- draft proposal alarm identifiers for OnuAlarms ----
+
+    identity transceiver-link-signal-fail {
+        base OnuAlarms;
+        description
+            "Bit error-based signal fail. Industry practice normally expects the BER to improve by at least an order of magnitude before clearing the alarm.";
+    }
+
+    identity transceiver-link-signal-degrade {
+        base OnuAlarms;
+        description
+            "Bit error-based signal degrade. Industry practice normally expects the BER to improve by at least an order of magnitude before clearing the alarm.";
+    }
+
+    identity chassis-failure {
+        base OnuAlarms;
+        description
+            "Functional failure on an internal interface.";
+    }
+
+    identity chassis-battery-charger-power-loss {
+        base OnuAlarms;
+        description
+            "Loss of external power to battery backup unit.
+             This alarm is typically derived through an external interface to a battery backup unit,
+             and indicates that AC is no longer available to maintain battery charge.";
+    }
+
+    identity chassis-battery-missing {
+        base OnuAlarms;
+        description
+            "Battery is provisioned but missing.";
+    }
+
+    identity chassis-battery-failure {
+        base OnuAlarms;
+        description
+            "Battery is provisioned and present but cannot recharge.";
+    }
+
+    identity chassis-battery-low {
+        base OnuAlarms;
+        description
+            "Battery is provisioned and present but its voltage is too low.";
+    }
+
+    identity chassis-voltage-low-warning {
+        base OnuAlarms;
+        description
+            "No service shutdown at present, but the line power voltage is below its recommended minimum.
+             Service restrictions may be in effect, such as permitting no more than N lines off-hook or ringing at one time.";
+    }
+
+    identity chassis-voltage-low {
+        base OnuAlarms;
+        description
+            "Some services have been shut down to avoid power collapse.
+             The operational state of the affected PPTPs indicates the affected services.";
+    }
+
+    identity board-presence-mismatch {
+        base OnuAlarms;
+        description
+            "Configured circuit pack is not present. If this alarm is active, none of the mismatch alarms are declared.";
+    }
+
+    identity board-property-mismatch {
+        base OnuAlarms;
+        description
+            "Inserted circuit pack is wrong type.";
+    }
+
+    identity board-improper-presence-mismatch {
+        base OnuAlarms;
+        description
+            "Circuit pack has been removed without being de-provisioned or administratively locked.
+             This is a redundant alarm that helps the OLT distinguish between transitions from state S2 to state S1 (Figure 9.1.5-1)
+             and transitions from state S4 to state S1. This alarm is sent only when a transition occurs from state S2 to state S1.";
+    }
+
+    identity board-id-mismatch {
+        base OnuAlarms;
+        description
+            "Inserted circuit pack has the wrong equipment ID.";
+    }
+
+    identity board-protection-switch {
+        base OnuAlarms;
+        description
+            "An autonomous equipment protection switch has occurred. This notification is reported by the protected cardholder.";
+    }
+
+    identity board-failure {
+        base OnuAlarms;
+        description
+            "A failure on an internal interface or failed self-test.";
+    }
+
+// ---- define some transceiver-link alarms for onu -------
+
+    identity transceiver-sensor-temperature {
+       base OnuAlarms;
+       description
+         "Temperature measured by the hardware is exceeding the system defined thresholds.";
+    }
+
+    identity transceiver-supply-voltage {
+       base OnuAlarms;
+       description
+         "Voltage measured by the transceiver is exceeding the system defined thresholds.";
+    }
+
+    identity transceiver-link-tx-bias {
+        base OnuAlarms;
+        description
+            //"TX bias current measured by the transceiver is exceeding the system defined thresholds.";
+            "Transmitted laser bias current is exceeding the system defined thresholds.";
+    }
+
+    identity transceiver-link-rx-power {
+        base OnuAlarms;
+        description
+            //"Transceiver-link rx power measured by the transceiver is exceeding the system defined thresholds.";
+            "Received downstream optical power is exceeding the system defined thresholds.";
+    }
+
+    identity transceiver-link-tx-power {
+        base OnuAlarms;
+        description
+            //"Transceiver-link tx power measured by the transceiver is exceeding the system defined thresholds.";
+            "Transmitted optical power is exceeding the system defined thresholds.";
+    }
+
+    identity transceiver-link-rx-power-low {
+        base OnuAlarms;
+        description
+            "Received downstream optical power below threshold.";
+    }
+
+    identity transceiver-link-rx-power-high {
+        base OnuAlarms;
+        description
+            "Received downstream optical power above threshold.";
+    }
+
+    identity transceiver-link-tx-power-low {
+        base OnuAlarms;
+        description
+            "Transmit optical power below lower threshold.";
+    }
+
+    identity transceiver-link-tx-power-high {
+        base OnuAlarms;
+        description
+            "Transmit optical power above upper threshold.";
+    }
+
+    identity transceiver-link-tx-bias-high {
+        base OnuAlarms;
+        description
+            "Laser bias current above threshold determined by vendor.";
+    }
+
+    identity sip-termination-register-authorisation-failure {
+        base OnuAlarms;
+        description
+            "The SIP register request has failed because of an authorisation failure.";
+    }
+
+    identity sip-termination-register-request-timeout {
+        base OnuAlarms;
+        description
+            "The SIP register request has failed because of a SIP request timeout.";
+    }
+
+    identity sip-termination-register-error-response {
+        base OnuAlarms;
+        description
+            "The SIP register request has been replied by the SIP register server with an error response.";
+    }
+
+    identity sip-termination-register-unresolved-dn {
+        base OnuAlarms;
+        description
+            "The SIP register request has failed because of a domain name that could not be resolved.";
+    }
+
+    identity physical-pots-interface-file-download-failed {
+        base OnuAlarms;
+        description
+            "The file download has failed.";
+    }
+
+    identity sip-termination-emergency-call-ongoing {
+        base OnuAlarms;
+        description
+            "The SIP termination is actually involved in an emergency call.";
+    }
+
+    identity onu-software-not-found {
+        base OnuAlarms;
+        description
+            "ONU planned software version isn't found, vendor specific software isn't found, or the ONU do not support vendor specific file.";
+    }
+
+    identity onu-software-upgrade-failed {
+        base OnuAlarms;
+        description
+            "Onu software or vendor specifc file upgrade failed, including download failure, or activate failure, or commit failure.";
+    }
+
+    identity lan-los {
+        base OnuAlarms;
+        description
+            "Ethernet link down.";
+    }
+
+    identity sip-termination-register-failure {
+        base OnuAlarms;
+        description
+            "A condition meaning SIP registration failed for the POTS line.";
+    }
+
+    identity sip-termination-invite-failure {
+        base OnuAlarms;
+        description
+            "A condition meaning SIP invite failed for the POTS line.";
+    }
+
+    identity sip-termination-subscribe-failure {
+        base OnuAlarms;
+        description
+            "A condition meaning SIP subscribe failed for the POTS line.";
+    }
+
+    identity mep-ethernet-ais {
+        base OnuAlarms;
+        description
+            "Ethernet AIS received.";
+    }
+
+    identity onu-tod-out-of-sync {
+        base OnuAlarms;
+        description
+            "ONU system time is unlocked to the time source(OLT).";
+    }
+
+    identity onu-freq-out-of-sync {
+        base OnuAlarms;
+        description
+            "ONU has lost frequency reference from OLT.";
+    }
+
+    identity ESMC-loss {
+        base OnuAlarms;
+        description
+            "ONU has lost SSM messages from OLT for 5 seconds.";
+    }
+
+    identity transceiver-power-feed-voltage {
+        base OnuAlarms;
+        description
+            "Power feed voltage level of optical module is exceeding the system defined thresholds.";
+    }
+
+    identity uni-loop-detect {
+        base OnuAlarms;
+        description
+            "Loop happened at ONU side UNI.";
+    }
+
+    identity ip-host-down {
+        base OnuAlarms;
+        description
+        " IPHOST is operationally down.";
+    }
+
+    identity configuration-mismatch {
+        base OnuAlarms;
+        description
+            "Error responses received from the ONT during omci-configuration";
+    }
+    
+    identity pse-overload-yellow {
+        base OnuAlarms;
+        description
+            "Indicates that the ONU is nearing its maximum ability to supply the known PoE demand of the attached PDs.";
+    }
+    
+    identity pse-overload-red {
+        base OnuAlarms;
+        description
+            "Indicates that the ONU is unable to supply all of the PoE demand of the attached PDs and has removed or reduced power to at least one PD.";
+    }
+
+    identity omci-communication {
+        base OnuAlarms;
+        description
+            "OMCI communication failure detected in communication with ONU";
+    }
+
+// ---- define PM TCA alarms for onu -------
+    identity cpu-usage-exceeding  {
+        base OnuAlarms;
+        description
+        "the cpu usage is too high.";
+    }
+
+    identity memory-usage-exceeding {
+        base OnuAlarms;
+        description
+        "the memory usage is too high.";
+    }
+
+//  ---- define PPTP video UNI alarms for onu -------
+    identity uni-rf-video-sig-los {
+        base OnuAlarms;
+        description
+            "video loss of signal on uni. Please refer to video-LOS alarm in chapter 9.13.1 of ITU-T G.988.";
+    }
+
+    identity uni-rf-video-sig-level-low {
+        base OnuAlarms;
+        description
+            "rf video output power level too low. Please refer to Video-OOR-low alarm in chapter 9.13.1 of ITU-T G.988.";
+    }
+
+    identity uni-rf-video-sig-level-high {
+        base OnuAlarms;
+        description
+            "rf video output power level too high. Please refer to Video-OOR-high alarm in chapter 9.13.1 of ITU-T G.988.";
+    }
+    
+//  ---- define PPTP video ANI alarms for onu -------
+    identity ani-rf-video-sig-los {
+        base OnuAlarms;
+        description
+            "video loss of signal on ani. Please refer to video-LOS alarm in chapter 9.13.2 of ITU-T G.988.";
+    }
+
+    identity ani-rf-video-sig-level-low {
+        base OnuAlarms;
+        description
+            "Signal strength below lower optical threshold. Please refer to Video-OOR-low alarm in chapter 9.13.2 of ITU-T G.988.";
+    }
+
+    identity ani-rf-video-sig-level-high {
+        base OnuAlarms;
+        description
+            "Signal strength above upper optical threshold. Please refer to Video-OOR-high alarm in chapter 9.13.2 of ITU-T G.988.";
+    }
+
+    identity moca-lol {
+        base OnuAlarms;
+        description
+            "Loss of link of the MoCA interface. ";
+    }
+
+    identity moca-limited-link {
+        base OnuAlarms;
+        description
+            "Bandwidth of link between between 2 nodes on the MoCA network is less than specified value.";
+    }
+
+    identity transceiver-presence-missing {
+        base OnuAlarms;
+        description
+            "A transceiver is configured on ONU's UNI while none is detected.";
+    }
+
+    identity transceiver-property-mismatch {
+        base OnuAlarms;
+        description
+            "Mismatch between configured and installed transceiver on ONU's UNI.";
+    }
+
+    identity voip-network-specific-file-not-found {
+        base OnuAlarms;
+        description
+            "The voice service profile attempted to access a network specific extensions file that is not available.";
+    }
+
+    identity HGUTR069CUST1 {
+        base OnuAlarms;
+        description
+            "WAN1 link down.";
+    }
+
+    identity HGUTR069CUST2 {
+        base OnuAlarms;
+        description
+            "PPPoE authentication failure on WAN1.";
+    }
+
+    identity HGUTR069CUST3 {
+        base OnuAlarms;
+        description
+            "WAN2 link down.";
+    }
+
+    identity HGUTR069CUST4 {
+        base OnuAlarms;
+        description
+            "PPPoE authentication failure on WAN2.";
+    }
+
+    identity HGUTR069CUST5 {
+        base OnuAlarms;
+        description
+            "WAN3 link down.";
+    }
+
+    identity HGUTR069CUST6 {
+        base OnuAlarms;
+        description
+            "PPPoE authentication failure on WAN3.";
+    }
+
+    identity HGUTR069CUST7 {
+        base OnuAlarms;
+        description
+            "WAN4 link down.";
+    }
+
+    identity HGUTR069CUST8 {
+        base OnuAlarms;
+        description
+            "PPPoE authentication failure on WAN4.";
+    }
+  
+    identity fan-failure {
+        base OnuAlarms;
+        description
+            "Fan is missing or starting up failure.";
+    }
+
+    identity temporal-rogue-interference {
+        base OnuAlarms;
+        description
+            "ONU has detected upstream transmission outside of the allocated time interval. This condition could disturb upstream traffic of other ONUs on the PON.";
+    }
+
+    identity bias-voltage-fault {
+        base OnuAlarms;
+        description
+            "The laser bias control voltage is outside of normative operational range, indicating transmitter drive/control instability.";
+    }
+
+    identity modulation-voltage-fault {
+        base OnuAlarms;
+        description
+            "The laser modulation voltage is abnormal, which may cause degradation or failure in upstream signal modulation.";
+    }
+
+    identity pin-voltage-fault {
+        base OnuAlarms;
+        description
+            "Receiver PIN/photodiode-related voltage is out of range, indicating possible receive-path or optical front-end issue.";
+    }
+
+    identity optics-module-temp {
+        base OnuAlarms;
+        description
+            "Optical module temperature exceeded normal operating limits, risking link instability or hardware damage.";
+    }
+
+    identity chassis-temperature-yellow {
+        base OnuAlarms;
+        description
+            "No service shutdown at present, but the circuit pack is operating beyond its recommended range.";
+    }
+
+    identity chassis-temperature-red {
+        base OnuAlarms;
+        description
+            "Some services have been shut down to avoid equipment damage. The operational state 
+             of the affected PPTPs indicates the affected services.";
+    }
+}

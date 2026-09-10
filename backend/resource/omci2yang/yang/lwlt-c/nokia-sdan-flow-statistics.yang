@@ -1,0 +1,234 @@
+module nokia-sdan-flow-statistics {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+          + "nokia-sdan-flow-statistics";
+
+  prefix nokia-flow-stats;
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  import ietf-netconf-acm {
+    prefix nacm;
+  }
+
+  import bbf-qos-policies-state {
+    prefix bbf-qos-pol-s;
+  }
+
+  import bbf-qos-classifiers {
+    prefix bbf-qos-cls;
+  }
+
+  import nokia-sdan-qos-classifier-extension {
+    prefix nokia-qos-cls-ext;
+  }
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG definitions for
+     flow statistics.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2021, Nokia. All Rights Reserved.";
+
+  revision 2022-12-09 {
+    description
+      "Added discard-bytes,discard-frames,reset-counter for
+       flow-statistics";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2022-10-12 {
+    description
+      "Added classifier index augment.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2022-07-15 {
+    description
+      "Added check to display flow-stats only when policy is count";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2021-11-21 {
+    description
+      "Initial revision. flow attributes for IPDR.";
+    reference
+      "Nokia specific";
+  }
+
+  grouping flow-statistics {
+    description
+      "Statistics associated with a flow.";
+    container statistics {
+      description
+        "Statistics associated with flow.";
+
+      leaf creation-time {
+        type uint32;
+        units "seconds";
+        description
+          "The measured system up time in seconds when the policy profile
+           contains classifier entry within policy whose action is to
+           count associated to the interface";
+      }
+
+      leaf duration-active {
+        type uint32;
+        units "seconds";
+        description
+          "Total measured time that the flow is active since its creation";
+      }
+
+      leaf fwd-bytes {
+        type yang:counter64;
+        description
+          "The number of bytes forwarded per flow on the interface.";
+      }
+
+      leaf fwd-frames {
+        type yang:counter64;
+        description
+          "The number of frames forwarded per flow on the interface.";
+      }
+
+      leaf discard-bytes {
+        type yang:counter64;
+        description
+          "The number of bytes discarded per flow on the interface.";
+      }
+
+      leaf discard-frames {
+        type yang:counter64;
+        description
+          "The number of frames discarded per flow on the interface.";
+      }
+    }
+  }
+
+  augment "/if:interfaces-state/if:interface"
+        + "/bbf-qos-pol-s:qos-policies"
+        + "/bbf-qos-pol-s:ingress"
+        + "/bbf-qos-pol-s:policy"
+        + "/bbf-qos-pol-s:classifier" {
+    description
+      "Augment flow state data and the classifier index onto classifiers
+       associated with the ingress QoS policies associated with an interface.";
+
+    leaf index {
+      when '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry[bbf-qos-cls:name = current()/../bbf-qos-pol-s:name]/'
+           + 'bbf-qos-cls:classifier-action-entry-cfg/bbf-qos-cls:action-type = "nokia-qos-cls-ext:count"' {
+        description
+          "Only applicable when the classifier action-type is count.";
+      }
+      type uint32;
+      config false;
+      description
+        "The index of the classifier.";
+    }
+
+    container flow {
+      when '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry[bbf-qos-cls:name = current()/../bbf-qos-pol-s:name]/'
+           + 'bbf-qos-cls:classifier-action-entry-cfg/bbf-qos-cls:action-type = "nokia-qos-cls-ext:count"' {
+        description
+          "Flow state data.";
+      }
+      description "flow";
+      uses flow-statistics;
+
+      action reset-counter {
+        nacm:default-deny-all;
+        description
+          "An action to reset the counters per classifier.";
+      }
+    }
+  }
+
+  augment "/if:interfaces-state/if:interface"
+        + "/bbf-qos-pol-s:qos-policies"
+        + "/bbf-qos-pol-s:egress"
+        + "/bbf-qos-pol-s:policy"
+        + "/bbf-qos-pol-s:classifier" {
+    description
+      "Augment flow state data and the classifier index onto classifiers
+       associated with the egress QoS policies associated with an interface.";
+
+    leaf index {
+      when '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry[bbf-qos-cls:name = current()/../bbf-qos-pol-s:name]/'
+           + 'bbf-qos-cls:classifier-action-entry-cfg/bbf-qos-cls:action-type = "nokia-qos-cls-ext:count"' {
+        description
+          "Only applicable when the classifier action-type is count.";
+      }
+      type uint32;
+      config false;
+      description
+        "The index of the classifier.";
+    }
+
+    container flow {
+      when '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry[bbf-qos-cls:name = current()/../bbf-qos-pol-s:name]/'
+           + 'bbf-qos-cls:classifier-action-entry-cfg/bbf-qos-cls:action-type = "nokia-qos-cls-ext:count"' {
+        description
+          "Flow state data.";
+      }
+      description "flow";
+      uses flow-statistics;
+
+      action reset-counter {
+        nacm:default-deny-all;
+        description
+          "An action to reset the counters per classifier.";
+      }
+    }
+  }
+}
+

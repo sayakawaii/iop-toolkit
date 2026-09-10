@@ -1,0 +1,47 @@
+module nokia-sdan-mgmd-unmatched-members-cac {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+          + "nokia-sdan-mgmd-unmatched-members-cac";
+
+  prefix nokia-mgmd-unmatched;
+
+  import bbf-mgmd {
+    prefix bbf-mgmd;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+     "this module augments the mgmd model with data on multicast VPN
+     to support CAC when there is a join for an unconfigured multicast channel";
+
+
+  revision 2022-06-05 {
+    description
+      "Initial revision.CAC for unmatched  members
+       for an multicast VSI";
+    reference
+      "Nokia specific";
+  }
+
+  augment '/bbf-mgmd:multicast/bbf-mgmd:mgmd/bbf-mgmd:multicast-vpn' {
+
+    description
+      "Contains data nodes to support CAC when there is a join for an unconfigured multicast channel";
+
+    leaf channel-rate-for-unmatched-multicast-channel {
+            type uint32;
+            units "kilobits per second";
+            default "0";
+
+    description
+              "The bandwidth of the unconfigured multicast channel to be used at CAC.";
+      }
+  }
+}
+

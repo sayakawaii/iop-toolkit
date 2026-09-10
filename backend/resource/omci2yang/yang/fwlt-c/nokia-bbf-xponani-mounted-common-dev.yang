@@ -1,0 +1,48 @@
+module nokia-bbf-xponani-mounted-common-dev  {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/nokia-bbf-xponani-mounted-common-dev";
+
+  prefix nokia-bbf-xponani-mounted-common-dev;
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+  
+  import ietf-interfaces-mounted {
+    prefix if-mounted;
+  }
+  
+  import bbf-xponani-mounted {
+    prefix bbf-xponani-mounted;
+  }
+
+ import nokia-yang-types {
+    prefix nok-typ;
+  }
+
+  
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA IETF/System YANG module supporting
+     deviations on top of standard.";
+
+  revision 2024-03-06 {
+    description
+      "Devaition to elarge length";
+    reference
+      "Nokia Specific.";
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-xponani-mounted:ani/bbf-xponani-mounted:multicast-gemport/bbf-xponani-mounted:name" {
+    deviate replace {
+      type nok-typ:nokia-string-ascii100;
+    }
+  }
+  
+
+}

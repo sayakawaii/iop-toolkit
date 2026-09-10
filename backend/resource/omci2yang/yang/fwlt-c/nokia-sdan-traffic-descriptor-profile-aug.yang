@@ -1,0 +1,99 @@
+module nokia-sdan-traffic-descriptor-profile-aug {
+    yang-version 1.1;
+    namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"+
+       "nokia-sdan-traffic-descriptor-profile-aug";
+
+    prefix nokia-sdan-traffic-descriptor-profile-aug;
+
+    import bbf-xpongemtcont {
+        prefix bbf-xpongemtcont;
+    }
+
+    organization "Nokia";
+    contact "isam.yang@nokia.com";
+
+    description
+    "This specification is published by Nokia under Non-Disclosure
+    Agreement(s) (NDA) with specific parties and has to be considered
+    as Confidential Information as defined in such NDA. Nokia reserves
+    the right to revise this document for any reason, including but
+    not limited to conformity with standards promulgated by various
+    agencies, utilization of advances in the state of the technical
+    areas, or the reflection of changes in the design of any
+    equipment, techniques, or procedures described or referred to
+    herein.
+
+    The product specifications and other technical or performance
+    information contained herein are subject to change without notice.
+    Updates of this document will be issued under the above NDA's.
+
+    Nokia makes no representation or warranty, expressed or implied,
+    with respect to the sufficiency, accuracy, or utility of any
+    information or opinion contained herein. Nokia expressly advises
+    that any use of for any purpose or reliance upon this technical
+    reference is at the risk of the user and that Nokia shall not be
+    liable for any damage or injury incurred by any person arising out
+    of the sufficiency, accuracy, or utility of any information or
+    opinion contained herein.
+
+    This document is not to be construed as a suggestion to any
+    manufacturer to modify or change any of its products, nor does
+    this document represent any commitment by Nokia to sell or
+    purchase any product. Nothing contained herein shall be construed
+    as conferring by implication, estoppel, or otherwise any license
+    or right under any patent, whether or not the use of any
+    information herein necessarily employs an invention of any
+    existing or later issued patent.
+
+    Nokia reserves the right not to offer any or all of these products
+    and to withdraw any or all of them at any future time.
+
+    Copyright (C) 2022, Nokia. All Rights Reserved";
+
+    revision 2022-01-13 {
+        description
+        "splitting bbf-xponinfra-augment-nodes by yang module.";
+        reference
+        "TBD";
+    }
+
+    revision 2019-04-19 {
+        description
+            "Add jitter-tolerance";
+        reference
+            "TBD";
+    }
+
+    augment '/bbf-xpongemtcont:xpongemtcont' +
+    '/bbf-xpongemtcont:traffic-descriptor-profiles' +
+    '/bbf-xpongemtcont:traffic-descriptor-profile' {
+        description "augment traffic-descriptor-profile with jitter tolerance";
+        leaf jitter-tolerance {
+            type union {
+                type uint32 {
+                    range "1..240";
+                }
+                type decimal64 {
+                    fraction-digits 2;
+                    range "0.25";
+                }
+            }
+
+            default "8";
+
+            description
+                "Tjt, minimum time interval over which an active
+                traffic flow shall receive an allocation of the size
+                corresponding at least to the assigned bandwidth,
+                expressed as multiple of 125us upstream PHY frame
+                (example :
+                   value 8 means minimum one allocation every 8 PHY
+                   frames, i.e. minimum one allocation every 1ms;
+                   value 0.25 means minimum 4 allocations every PHY
+                   frame.).";
+
+            reference
+                "ITU-T G.989.3 Amd2, section 7.1";
+        }
+    }
+}

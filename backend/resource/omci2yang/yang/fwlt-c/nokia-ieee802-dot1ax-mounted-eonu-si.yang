@@ -1,0 +1,48 @@
+module nokia-ieee802-dot1ax-mounted-eonu-si {
+   namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+      + "nokia-ieee802-dot1ax-mounted-eonu-si";
+   prefix nokia-ieee802-dot1ax-mounted-eonu-si;
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+   import nokia-sdan-service-impact {
+    prefix nokia-si;
+  }
+
+   import ietf-interfaces-mounted {
+     prefix if-mounted;
+   }
+
+   import ieee802-dot1ax-mounted {
+      prefix dot1ax-mounted; 
+   }
+
+   organization
+       "Nokia";
+   contact
+       "isam.yang@nokia.com";
+   description
+       "The NOKIA IEEE 802.1AX-2008 YANG module supporting
+       deviations on top of standard.";
+
+   revision 2026-03-08 {
+     description
+       "Initial version for ieee802-dot1ax.yang";
+     reference
+       "Nokia specific";    
+   }
+
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/dot1ax-mounted:aggregator/dot1ax-mounted:primary-lag-port-ref" {
+      description
+        "When an interface is referred by a LAG as its primary port, if it is modified, traffic will be down for a short time period.
+         This will result in service interruptions of several seconds.";
+      deviate add {
+        nokia-si:service-impact;
+      }
+  }
+
+
+}

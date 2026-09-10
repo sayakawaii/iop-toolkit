@@ -1,0 +1,151 @@
+module nokia-sdan-olt-v-enet {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+          + "nokia-sdan-olt-v-enet";
+
+  prefix nokia-olt-v-enet;
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import bbf-xponvani {
+    prefix bbf-xponvani;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG definitions for
+     supporting Nokia specific requirements as applicable to its
+     access network equipment.
+
+     Specifically, this module contains definitions of filter
+     criteria.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2022, Nokia. All Rights Reserved.";
+
+  revision 2025-06-09 {
+      description
+          "modify leaf slot-id and port-id description";
+      reference
+          "Nokia specific";
+  }
+
+  revision 2025-02-28 {
+      description
+          "add container protocol-identifier-helper";
+      reference
+          "Nokia specific";
+  }
+	 
+  revision 2022-08-30 {
+      description
+          "add v-ethernet-id leaf for CFM";
+      reference
+          "Nokia specific";
+  }
+
+  revision 2022-01-20 {
+    description
+      "Initial revision";
+    reference
+      "Nokia specific";
+  }
+
+  augment "/if:interfaces/if:interface/bbf-xponvani:olt-v-enet" {
+    description
+      "Augment olt-v-enet interface for 802.1x and CFM.";
+
+    leaf uni-name {
+      type string;
+      description
+        "The name of uni on onu side.";
+    }
+
+    leaf v-ethernet-id {
+        type uint16 {
+            range "1..32767";
+        }
+        description
+            "v-ethernet-id is configured to generate MAC address
+            for olt v-enet interface, the MAC address may be used
+                for CFM or other protocol";
+    }
+  }
+
+  augment "/if:interfaces/if:interface/bbf-xponvani:olt-v-enet" {
+    description
+	  "Augment olt-v-enet.";
+
+    container protocol-identifier-helper {
+      presence
+        "Data nodes to help forming port identifiers used by protocols
+         such as DHCP, PPPoE or Radius for interfaces related to an
+         ONU Ethernet UNIs, such as VSI's.";
+      description
+        "Data nodes to help forming port identifiers used by protocols
+         such as DHCP, PPPoE or Radius for interfaces related to an
+         ONU Ethernet UNIs, such as VSI's.";
+
+      leaf slot-id {
+        type uint16;
+        description
+          "The identifier of the ONU (virtual) slot; this value can
+           be inserted in various protocol messages that need to
+           exchange information about the port (e.g., to form
+           'circuit-id' in DHCP).";
+      }
+
+      leaf port-id {
+        type uint16;
+        description
+          "The identifier of the ONU Ethernet UNI port under a given
+           ONU (virtual) slot; this value can be inserted in various
+           protocol messages that need to exchange information about
+           the port (e.g., to form 'circuit-id' in DHCP).";
+      }
+    }
+  }
+}

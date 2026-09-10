@@ -1,0 +1,45 @@
+module nokia-bbf-xpongemtcont-gemport-performance-management-mounted-eonu-dev {
+  yang-version 1.1;
+  namespace "urn:bbf:yang:"
+          + "nokia-bbf-xpongemtcont-gemport-performance-management-mounted-eonu-dev";
+
+  prefix nokia-bbf-xpongemtcont-gemport-pm-mounted-eonu-dev;
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import bbf-xpongemtcont-mounted {
+    prefix bbf-xpongemtcont-mounted;
+  }
+
+  import bbf-xpongemtcont-gemport-performance-management-mounted {
+    prefix bbf-xpongemtcont-gemport-pm-mounted;
+  }
+
+  organization
+    "Nokia";
+  contact
+    "isam.yang@nokia.com";
+  description
+    "The NOKIA YANG module supporting
+     deviations on top of standard.";
+  revision 2022-07-27 {
+    description
+      "Initial revision.";
+    reference
+      "TBD";
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-xpongemtcont-mounted:xpongemtcont-state/bbf-xpongemtcont-mounted:gemports/bbf-xpongemtcont-mounted:gemport/bbf-xpongemtcont-gemport-pm-mounted:performance/bbf-xpongemtcont-gemport-pm-mounted:intervals-15min/bbf-xpongemtcont-gemport-pm-mounted:current/bbf-xpongemtcont-gemport-pm-mounted:v-ani-side" {
+      description
+         "This deviation assures that v-ani-side container is not supported.";
+      deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-xpongemtcont-mounted:xpongemtcont-state/bbf-xpongemtcont-mounted:gemports/bbf-xpongemtcont-mounted:gemport/bbf-xpongemtcont-gemport-pm-mounted:performance/bbf-xpongemtcont-gemport-pm-mounted:intervals-15min/bbf-xpongemtcont-gemport-pm-mounted:history/bbf-xpongemtcont-gemport-pm-mounted:v-ani-side" {
+      description
+         "This deviation assures that v-ani-side container is not supported.";
+      deviate not-supported;
+  }
+}

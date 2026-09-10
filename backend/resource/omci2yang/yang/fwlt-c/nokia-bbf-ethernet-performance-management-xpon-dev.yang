@@ -1,0 +1,44 @@
+module nokia-bbf-ethernet-performance-management-xpon-dev {
+
+  namespace
+    "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+  + "nokia-bbf-ethernet-performance-management-xpon-dev";
+
+  prefix  nokia-bbf-ethernet-performance-management-xpon-dev;
+
+  import ietf-interfaces {
+    prefix if;
+  }
+  
+  import bbf-interfaces-performance-management {
+    prefix bbf-if-pm;
+  }
+  
+  import bbf-ethernet-performance-management {
+    prefix bbf-eth-pm;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA ethernet performace management Yang module supporting
+     deviations on top of standard.";
+
+  revision 2024-03-03 {
+    description
+      "Initial revision.";
+    reference
+      "TBD";
+  }
+  
+  deviation "/if:interfaces-state/if:interface/bbf-if-pm:performance/bbf-if-pm:intervals-15min/bbf-if-pm:current/bbf-eth-pm:ethernet" {
+    deviate not-supported;
+  }
+  deviation "/if:interfaces-state/if:interface/bbf-if-pm:performance/bbf-if-pm:intervals-15min/bbf-if-pm:history/bbf-eth-pm:ethernet" {
+    deviate not-supported;
+  }
+}

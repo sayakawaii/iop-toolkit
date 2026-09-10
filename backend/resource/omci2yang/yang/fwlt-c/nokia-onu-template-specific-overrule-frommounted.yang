@@ -1,0 +1,130 @@
+module nokia-onu-template-specific-overrule-frommounted {
+  yang-version 1.1;
+  namespace "https://www.nokia.com/Fixed-Networks/BBA/yang/nokia-onu-template-specific-overrule-frommounted";
+
+  prefix onu-specific-overrule;
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+  
+  import ieee802-dot1q-cfm-types {
+    prefix cfm-types;
+  }
+
+  import ieee802-dot1q-cfm-frommounted {
+    prefix dot1q-cfm-frommounted;
+  }
+
+  import nokia-sdan-mib-upload-behavior-types-frommounted {
+    prefix nokia-sdan-mib-upload-behavior-types-frommounted;
+  }
+  
+    
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG definitions for
+     supporting Nokia specific requirements as applicable to its
+     access network equipment.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+    Copyright (C) 2017, Nokia. All Rights Reserved.";
+
+  revision 2025-04-03 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific";
+  }
+   
+  augment "/onu:onus/onu:onu/onu:fromroot/dot1q-cfm-frommounted:cfm/dot1q-cfm-frommounted:maintenance-group/dot1q-cfm-frommounted:mep" {
+    description
+      "Augment the base/common CFM model with CFM Bridge specific attributes.";
+
+     leaf overrule-mep-id {
+      type cfm-types:mep-id-type;
+      description
+       "used to overrule several mep-id leaves the template, the template expansion method is to use mep-id key above
+        to match id in onu template xPath below firstly, then overule them using this overrule-mep-id secondly
+        (1) /onu:onus/onu:onu/onu:root/dot1q-cfm-mounted:cfm/dot1q-cfm-mounted:maintenance-domain/dot1q-cfm-mounted:maintenance-association
+            + /dot1q-cfm-mounted:maintenance-association-mep/dot1q-cfm-mounted:mep-id;
+        (2) /onu:onus/onu:onu/onu:root/dot1q-cfm-mounted:cfm/dot1q-cfm-mounted:maintenance-group/dot1q-cfm-mounted:maintenance-mep
+            + /dot1q-cfm-mounted:mep-id;
+        (3) /onu:onus/onu:onu/onu:root/dot1q-cfm-mounted:cfm/dot1q-cfm-mounted:maintenance-group/dot1q-cfm-mounted:maintenance-mep
+            + /dot1q-cfm-mounted:inactive-remote-mep/dot1q-cfm-mounted:inactive-rmep-id";
+    }
+  }
+
+
+  augment "/onu:onus/onu:onu/onu:fromroot" {
+    description
+      "Augment the meta data specific attributes.";
+    container onu-management {
+         presence "onu-management";
+         description
+          "Container containing meta configuration data for ONU management.";
+
+         leaf mib-reset-sync-count {
+            type uint32 {range "1..4294967295";}
+            description
+             "(1)onu template can be modified multiple times during device offline, each time can be different cases:
+                 need mibreset or not need mibreset
+              (2)mib-reset-sync-count will be increased (+1) by operator each time when the change need device to perform mibreset
+              (3)when device side receive this mib-reset-sync-count it will compare with the local stored one:
+                 -- if not matched: perform mibreset after template modification (for all ONU instances using this template)
+                 -- if matched: not perform mibreset after template modification";
+         }
+
+         leaf mib-upload-behavior {
+            type identityref {
+              base nokia-sdan-mib-upload-behavior-types-frommounted:mib-upload-mode;
+            }
+            description
+              "The desired MIB upload behavior for this ONU";
+         }
+       }
+   }
+     
+}
+

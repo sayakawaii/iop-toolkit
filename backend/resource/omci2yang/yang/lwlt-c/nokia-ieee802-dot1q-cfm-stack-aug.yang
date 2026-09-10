@@ -1,0 +1,249 @@
+module nokia-ieee802-dot1q-cfm-stack-aug {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+          + "nokia-ieee802-dot1q-cfm-stack-aug";
+
+  prefix cfm-stack;
+
+  import ieee802-dot1q-cfm {
+    prefix dot1q-cfm;
+  }
+  import ieee802-dot1q-cfm-types {
+    prefix cfm-types;
+  }
+  import ietf-interfaces {
+    prefix if;
+  }
+  import bbf-if-type {
+    prefix bbfift;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG definitions for
+     supporting Nokia specific requirements as applicable to its
+     access network equipment.
+
+     Specifically, this module augments the ietf-interface yang
+     model, for providing support nokia specific requirements for CFM.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2020, Nokia. All Rights Reserved.";
+
+  revision 2024-01-19 {
+    description
+      "Not supported interface types got removed";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2021-03-16 {
+    description
+      "Yang definitions for nokia specific requirements.";
+    reference
+      "Nokia specific";
+  }
+
+  grouping stack-mep-info {
+    description
+      "Defines the group of output parameters for a MEP.";
+    leaf maintenance-group-id {
+      type leafref {
+        path '/dot1q-cfm:cfm/dot1q-cfm:maintenance-group'
+           + '/dot1q-cfm:maintenance-group-id';
+      }
+      mandatory true;
+      description
+        "The maintenance group that the MEP is associated with.";
+    }
+    leaf mep-id {
+      type leafref {
+        path '/dot1q-cfm:cfm'
+           + '/dot1q-cfm:maintenance-group'
+           + '[dot1q-cfm:maintenance-group-id = current()'
+           + '/../maintenance-group-id]'
+           + '/dot1q-cfm:mep/dot1q-cfm:mep-id';
+      }
+      mandatory true;
+      description
+        "Integer that is unique among all the MEPs in the same
+         Maintenance Association.";
+      reference
+        "12.14.2.1.3d of IEEE Std 802.1Q-2018";
+    }
+  }
+
+  grouping stack-mhf-info {
+    description
+      "Defines the group of output parameters for a MHF.";
+
+    choice mip-creation {
+      case auto-created {
+        leaf md-id {
+          type leafref {
+            path '/dot1q-cfm:cfm/dot1q-cfm:maintenance-domain'
+              + '/dot1q-cfm:md-id';
+          }
+          mandatory true;
+          description
+            "The maintenance domain that the MHF is associated with.";
+        }
+        leaf ma-id {
+          type leafref {
+            path '/dot1q-cfm:cfm'
+              +'/dot1q-cfm:maintenance-domain'
+              +'[dot1q-cfm:md-id = current()/../md-id]'
+              +'/dot1q-cfm:maintenance-association/dot1q-cfm:ma-id';
+          }
+          mandatory true;
+          description
+            "The maintenance association that the MHF is associated
+             with.";
+        }
+      }
+      case explicit{
+        leaf maintenance-group-id {
+          type leafref {
+            path '/dot1q-cfm:cfm/dot1q-cfm:maintenance-group'
+               + '/dot1q-cfm:maintenance-group-id';
+          }
+          mandatory true;
+          description
+            "The maintenance group that the MEP is associated with.";
+        }
+      }
+      mandatory true;
+      description
+        "Identifies where the MIP exists.";
+    }
+  }
+
+  /* -----------------------------------------------------------
+   *  cfm-stack display - augment the interface yang model.
+   * -----------------------------------------------------------
+   */
+
+  augment '/if:interfaces-state/if:interface' {
+    when
+      "derived-from-or-self(./if:type,'bbfift:vlan-sub-interface') " {
+      description
+      "CFM Maintenence Points are applicable only for interfaces of
+       type vlan-sub-interface.";
+    }
+    description
+      "Augment the interface-state model.";
+
+    container cfm-stack {
+      presence
+        "Presence of this container indicates that CFM Maintenance
+         Points exist on this interface.";
+      description
+        "This container provides information about the Maintenance
+          Points on the interface.";
+      list cfm-stack {
+        key "md-level direction";
+        description
+          "The CFM Stack contains information about the Maintenance
+           Points on the interface. It contains data nodes that allow
+           to find back the related CFM Maintenance Point
+           configuration and operational data nodes.";
+
+        leaf md-level {
+          type cfm-types:md-level-type;
+          description
+            "The MD level of the maintenance point";
+          reference
+            "12.14.2.1.2b  of IEEE Std 802.1Q-2018";
+        }
+        leaf direction {
+          type cfm-types:mp-direction-type;
+          description
+            "The direction in which the Maintenance Point faces on the
+             interface. Example, up or down.";
+          reference
+            "12.14.2.1.2c of IEEE Std 802.1Q-2018";
+        }
+        leaf mac-address {
+          type cfm-types:unicast-mac-address-type;
+          mandatory true;
+          description
+            "The MAC address of the Maintenance Point.";
+          reference
+            "12.14.2.1.3e of IEEE Std 802.1Q-2018";
+        }
+        choice maintenance-point {
+          case mep {
+            container mep {
+              presence
+                "Presence of this container indicates a MEP exist on
+                 this interface with the level and direction of the
+                 list containing this contaner.";
+              description
+                "This container provides information about the MEP.";
+              uses stack-mep-info;
+            }
+          }
+          case mhf {
+            container mhf {
+              presence
+                "Presence of this container indicates a MHF exist on
+                 this interface with the level and direction of the
+                 list containing this container.";
+              description
+                "This container provides information about the MHF.";
+              uses stack-mhf-info;
+            }
+          }
+          mandatory true;
+          description
+            "Indicates the type of maintenance point.That is whether
+             it is a MEP or MHF.";
+          reference
+            "12.14.2.1.3a of IEEE Std 802.1Q-2018";
+        }
+      } // cfm-stack
+    }
+  } // if:interface
+} // nokia-ieee802-cfm-stack
+

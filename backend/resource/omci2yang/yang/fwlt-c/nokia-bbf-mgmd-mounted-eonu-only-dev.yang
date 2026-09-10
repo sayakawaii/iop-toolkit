@@ -1,0 +1,90 @@
+module nokia-bbf-mgmd-mounted-eonu-only-dev {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/" +
+            "nokia-bbf-mgmd-mounted-eonu-only-dev";
+  prefix nokia-bbf-mgmd-mounted-eonu-only-dev;
+
+  import bbf-mgmd-mounted {
+    prefix bbf-mgmd-mounted;
+  }
+  import bbf-fiber-onu-emulated-mount {
+     prefix onu;
+  }  
+  import bbf-sub-interfaces-mounted {
+    prefix bbf-subif-mounted;
+  }
+  import nokia-template-common {
+    prefix template-common;
+  }
+  import bbf-sub-interface-tagging-mounted {
+    prefix bbf-subif-tag-mounted;
+  }
+
+  import iana-if-type-mounted {
+    prefix ianaift-mounted;
+  }
+  import ietf-interfaces-mounted {
+    prefix if-mounted;
+  } 
+ 
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA IETF/System YANG module supporting
+     deviations on top of standard.";
+
+  revision 2026-04-19 {
+    description
+      "add deviation to multicast cannot reference the VSI that lower-layer is a lag.";
+    reference
+      "Nokia Specific.";
+  }
+
+  revision 2023-06-19 {
+    description
+      "init revision.";
+    reference
+      "Nokia Specific.";
+  }
+  
+
+   deviation "/onu:onus/onu:onu/onu:root/bbf-mgmd-mounted:multicast/bbf-mgmd-mounted:mgmd/bbf-mgmd-mounted:multicast-vpn/bbf-mgmd-mounted:multicast-interface-to-host/bbf-mgmd-mounted:vlan-sub-interface" {  
+    deviate add {
+      must "not(derived-from-or-self(../../../../../../onu:usage, 'template-common:node-actual-usage'))"
+             +" or "
+             +"(count(../../../bbf-mgmd-mounted:multicast-vpn/bbf-mgmd-mounted:multicast-interface-to-host[deref(bbf-mgmd-mounted:vlan-sub-interface)/../bbf-subif-mounted:subif-lower-layer/bbf-subif-mounted:interface="
+                   +"deref(current())/../bbf-subif-mounted:subif-lower-layer/bbf-subif-mounted:interface])<=1)" {
+          error-message "The number of multicast-interface-to-host nodes associated with a UNI/VEIP port should not be greater than one.";
+      }
+
+       must "not(derived-from-or-self(../../../../../../onu:usage, 'template-common:node-actual-usage'))"
+            +" or "
+            +"not(boolean(deref(current())/../bbf-subif-mounted:subif-lower-layer/bbf-subif-mounted:interface))"
+            +" or "
+            +"(deref(deref(current())/../bbf-subif-mounted:subif-lower-layer/bbf-subif-mounted:interface)/../if-mounted:type != 'ianaift-mounted:ieee8023adLag')" {
+          error-message "The lower-layer interface of the vlan-sub-interface referenced by multicast-interface-to-host cannot be a member of a LAG.";
+      }
+    }
+  } 
+
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-mgmd-mounted:multicast/bbf-mgmd-mounted:mgmd/bbf-mgmd-mounted:multicast-vpn/bbf-mgmd-mounted:multicast-network-interface/bbf-mgmd-mounted:multicast-transport/bbf-mgmd-mounted:single-uplink/bbf-mgmd-mounted:single-uplink-interface-data/bbf-mgmd-mounted:vlan-sub-interface" {  
+    deviate add {
+      must "not(derived-from-or-self(../../../../../../../onu:usage, 'template-common:node-actual-usage'))"
+            +" or "
+            +"((count(../../../../bbf-mgmd-mounted:multicast-vpn/bbf-mgmd-mounted:multicast-network-interface[deref(bbf-mgmd-mounted:single-uplink-interface-data/bbf-mgmd-mounted:vlan-sub-interface)/../bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:ingress-rule/bbf-subif-mounted:rule/bbf-subif-mounted:flexible-match/bbf-subif-tag-mounted:match-criteria/bbf-subif-tag-mounted:tag[bbf-subif-tag-mounted:index=0]/bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:vlan-id="
+                   +"deref(current())/../bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:ingress-rule/bbf-subif-mounted:rule/bbf-subif-mounted:flexible-match/bbf-subif-tag-mounted:match-criteria/bbf-subif-tag-mounted:tag[bbf-subif-tag-mounted:index=0]/bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:vlan-id])<=1)"
+               +" and "
+               +"(deref(current())/../bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:ingress-rule/bbf-subif-mounted:rule/bbf-subif-mounted:flexible-match/bbf-subif-tag-mounted:match-criteria/bbf-subif-tag-mounted:tag[bbf-subif-tag-mounted:index=0]/bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:vlan-id != 'any'))" {
+          error-message "The number of multicast-network-interfaces using a specific VLAN on the pon should not be greater than one, and 
+                         multicast-network-interfaces VLAN can not use 'any' for match-criteria";
+      }
+    }
+    
+  } 
+
+}

@@ -1,0 +1,172 @@
+module nokia-clock-alarm-types {
+     yang-version 1.1;
+     namespace "https://www.nokia.com/Fixed-Networks/BBA/yang/nokia-clock-alarm-types";
+     prefix clock-al;
+
+     import nokia-base-alarm-types {
+         prefix base-al;
+     }
+
+     organization
+      "Nokia";
+
+     contact
+      "Comments or questions about this Nokia YANG module should be
+       directed to <mailto:isam.yang@nokia.com>.";
+
+     description
+       "This module provides the details of supported clock alarm types.
+
+        This specification is published by Nokia under Non-Disclosure
+        Agreement(s) (NDA) with specific parties and has to be considered
+        as Confidential Information as defined in such NDA. Nokia
+        reserves the right to revise this document for any reason,
+        including but not limited to conformity with standards
+        promulgated by various agencies, utilisation of advances in the
+        state of the technical areas, or the reflection of changes in the
+        design of any equipment, techniques, or procedures described or
+        referred to herein.
+
+        The product specifications and other technical or performance
+        information contained herein are subject to change without
+        notice. Updates of this document will be issued under the above
+        NDA's.
+
+        Nokia makes no representation or warranty, expressed or implied,
+        with respect to the sufficiency, accuracy, or utility of any
+        information or opinion contained herein. Nokia expressly advises
+        that any use of for any purpose or reliance upon this technical
+        reference is at the risk of the user and that Nokia shall not be
+        liable for any damage or injury incurred by any person arising
+        out of the sufficiency, accuracy, or utility of any information
+        or opinion contained herein.
+
+        This document is not to be construed as a suggestion to any
+        manufacturer to modify or change any of its products, nor does
+        this document represent any commitment by Nokia to sell or
+        purchase any product. Nothing contained herein shall be construed
+        as conferring by implication, estoppel, or otherwise any license
+        or right under any patent, whether or not the use of any
+        information herein necessarily employs an invention of any
+        existing or later issued patent.
+
+        Nokia reserves the right not to offer any or all of these
+        products and to withdraw any or all of them at any future time.
+
+        Copyright (C) 2017, Nokia. All Rights Reserved.";
+     revision 2022-03-11 {
+      description
+        "split alarm63 into five alarmTypes";
+      reference
+        "Nokia specific";
+     }
+
+     revision 2020-09-01 {
+      description
+        "add clock alarms";
+      reference
+        "Nokia specific";
+     }
+
+     identity sync-alarms {
+       base base-al:communications-alarm;
+       description
+         "sync specific alarm type definitions";
+     }
+
+//Draft proposal for alarm identifiers for sync ----
+/*
+ *
+ *  base-alarm-types
+ *  +--communications-alarm
+ *     +--sync-alarms
+ *        +--all-freq-fail     (concrete)
+ *        +--bits-out-shutoff  (concrete)
+ *        +--internal-clk-fail (concrete)
+ *        +--all-phase-fail    (concrete)
+ *        +--ptp-fail          (concrete)
+ *
+ */
+
+     identity freq-port {
+       base sync-alarms;
+       description
+         "Abstract alarm type for frequency alarms";
+     }
+
+     identity phase-port {
+       base sync-alarms;
+       description
+         "Abstract alarm type for phase alarms";
+     }
+
+     identity all-freq-fail {
+       base sync-alarms;
+       description
+         "all external timing frequency references are in failure";
+     }
+
+     identity bits-out-shutoff {
+       base sync-alarms;
+       description
+         "System QL is lower than the configuration of the QL threshlod for BITS-out,
+          resulting in the shutoff of the BITS output.";
+     }
+
+     identity internal-clk-fail {
+       base sync-alarms;
+       description
+         "clock related hardwares are fail or broken";
+     }
+
+     identity all-phase-fail {
+       base sync-alarms;
+       description
+         "All external timing ToD references are in failure.";
+     }
+
+     identity ptp-fail {
+       base sync-alarms;
+       description
+         "Failure or unavailability of the PTP ToD source.";
+     }
+
+
+/*
+ *  base-alarm-types
+ *  +--communications-alarm
+ *     +--sync-alarms
+ *        +--freq-port (abstract)
+ *           +--bits-fail         (concrete)
+ *           +--synce-fail        (concrete)
+ *
+ */
+     identity bits-fail {
+       base freq-port;
+       description
+         "Failure or unavailability of the BITS timing source.";
+     }
+
+     identity synce-fail {
+       base freq-port;
+       description
+         "Failure or unavailability of the SyncE timing source.";
+     }
+
+
+/*
+ *  base-alarm-types
+ *  +--communications-alarm
+ *     +--sync-alarms
+ *         +--phase-port (abstract)
+ *            +--gnss-fail  (concrete)
+ *
+ */
+
+     identity gnss-fail {
+       base phase-port;
+       description
+         "Failure or unavailability of the GNSS ToD source.";
+     }
+
+}

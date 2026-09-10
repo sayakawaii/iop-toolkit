@@ -1,0 +1,292 @@
+module nokia-sdan-radius-dynamic-authorization-types {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+          + "nokia-sdan-radius-dynamic-authorization-types";
+
+  prefix "nokia-dyn-auth-types";
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG definitions for
+     supporting Nokia specific requirements as applicable to its
+     access network equipment.
+
+     Specifically, this module defines the supporting types for the
+     dynamic association.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2024, Nokia. All Rights Reserved.";
+
+  revision 2025-03-26 {
+    description
+      "Supporting identities defined for port-bounce failure.";
+    reference
+      "Nokia specific";
+  }
+  revision 2024-06-12 {
+    description
+      "Supporting identities defined for dynamic association and
+      dynamic authorization control.";
+    reference
+      "Nokia specific";
+  }
+
+  /** Dynamic association origin base */
+  /************************************/
+
+  identity dyn-assoc-origin-base {
+    description
+      "Base identity used to identify the origin of dynamic
+      association request.";
+  }
+  identity dyn-assoc-origin-radius-auth {
+    base nokia-dyn-auth-types:dyn-assoc-origin-base;
+    description
+      "The dynamic association parameters received via access-accept
+      as part of the RADIUS 802.1X user authentication.";
+  }
+  identity dyn-assoc-origin-radius-dac-coa {
+    base nokia-dyn-auth-types:dyn-assoc-origin-base;
+    description
+	    "The dynamic association parameters received via RADIUS
+       Dynamic Authorization Client(DAC).";
+  }
+
+  /** Dynamic association removal reasons */
+  /*****************************************/
+
+  identity dyn-assoc-removal-reason-base {
+    description
+      "Base identity used to indicate the reason for the
+       dynamic association removal.";
+  }
+  identity vsi-dyn-forwarder-assoc-changed-to-disabled {
+    base nokia-dyn-auth-types:dyn-assoc-removal-reason-base;
+    description
+      "The dynamically associated parameter is removed because VSI
+      to the forwarder dynamic association feature is changed to
+      disabled.";
+  }
+  identity vsi-dyn-qos-assoc-changed-to-disabled {
+    base nokia-dyn-auth-types:dyn-assoc-removal-reason-base;
+    description
+      "The dynamically associated parameter is removed because VSI to
+      the QoS policy profile dynamic association feature is changed
+      to disabled.";
+  }
+  identity venet-dyn-auth-control-changed-to-disabled {
+    base nokia-dyn-auth-types:dyn-assoc-removal-reason-base;
+    description
+      "The dynamically associated parameter is removed because the
+      vENET dynamic authorization feature is changed to disabled.";
+  }
+  identity venet-dot1x-authentication-mode-changed {
+    base nokia-dyn-auth-types:dyn-assoc-removal-reason-base;
+    description
+      "The dynamically associated parameter is removed because the
+       802.1X authentication mode is changed at the vENET.
+       mac-based or mab-based to port-based.
+       mac-based to port-based or mab-based.
+       mab-based to port-based or mac-based.";
+  }
+
+  /** Dynamic association parameter attach failure reasons */
+  /*********************************************************/
+
+  identity dyn-assoc-attach-failure-reason-base {
+    description
+      "Base identity used to indicate the reason for the
+       dynamic association failure.";
+  }
+  identity vsi-dyn-forwarder-assoc-not-enabled {
+    base nokia-dyn-auth-types:dyn-assoc-attach-failure-reason-base;
+    description
+      "The dynamic association request received from the RADIUS server
+      (or) Dynamic Authorization Client(DAC) could not be applied to
+      the system because VSI to the l2-forwarder attach dynamic
+      feature flag is not enabled";
+  }
+  identity vsi-dyn-forwarder-assoc-internal-failure {
+    base nokia-dyn-auth-types:dyn-assoc-attach-failure-reason-base;
+    description
+      "The dynamic association request received from the RADIUS server
+      (or) Dynamic Authorization Client(DAC) could not be applied
+      because the requested attachment of the VSI to the l2-forwarder
+      failed due to internal system restrictions.";
+  }
+  identity vsi-dyn-qos-assoc-not-enabled {
+    base nokia-dyn-auth-types:dyn-assoc-attach-failure-reason-base;
+    description
+      "The dynamic association request received from the RADIUS server
+      (or) Dynamic Authorization Client(DAC) could not be applied to
+      the system because VSIs dynamic association flag for the QoS
+      policy profile is not enabled";
+  }
+  identity vsi-ingress-qos-assoc-internal-failure {
+    base nokia-dyn-auth-types:dyn-assoc-attach-failure-reason-base;
+    description
+      "The dynamic association request received from the RADIUS server
+      (or) Dynamic Authorization Client(DAC) could not be applied to
+      the system because the requested attachment of the QoS policy
+      profile as ingress to the VSI failed due to internal system
+      restrictions.";
+  }
+  identity vsi-egress-qos-assoc-internal-failure {
+    base nokia-dyn-auth-types:dyn-assoc-attach-failure-reason-base;
+    description
+      "The dynamic association request received from the RADIUS server
+      (or) Dynamic Authorization Client(DAC) could not be applied to
+      the system because the requested attachment of the QoS policy
+      profile as egress to the VSI failed due to internal system
+      restrictions.";
+  }
+  identity vsi-not-existing {
+    base nokia-dyn-auth-types:dyn-assoc-attach-failure-reason-base;
+    description
+      "The dynamic association request received from the RADIUS server
+      (or) Dynamic Authorization Client(DAC) could not be applied to
+      the system because it relates to a VSI that does not exist
+      in the system.
+      Note that this identity does not preclude that other issues
+      might also be present preventing the application of the
+      dynamic data.";
+  }
+  identity forwarder-not-existing {
+    base nokia-dyn-auth-types:dyn-assoc-attach-failure-reason-base;
+    description
+      "The dynamic association request received from the RADIUS server
+      (or) Dynamic Authorization Client(DAC) could not be applied to
+      the system because it relates to a forwarder that does not
+      exist in the system.
+      Note that this identity does not preclude that other issues
+      might also be present preventing the application of the
+      dynamic data.";
+  }
+	identity ingress-qos-policy-not-existing {
+    base nokia-dyn-auth-types:dyn-assoc-attach-failure-reason-base;
+    description
+      "The dynamic association request received from the RADIUS server
+      (or) Dynamic Authorization Client(DAC) could not be applied to
+      the system because it relates to a QoS policy profile that does
+      not exist in the system.
+      Note that this identity does not preclude that other issues
+      might also be present preventing the application of the
+      dynamic data.";
+  }
+	identity egress-qos-policy-not-existing {
+    base nokia-dyn-auth-types:dyn-assoc-attach-failure-reason-base;
+    description
+      "The dynamic association request received from the RADIUS server
+      (or) Dynamic Authorization Client(DAC) could not be applied to
+      the system because it relates to a QoS policy profile does not
+      exist in the system.
+      Note that this identity does not preclude that other issues
+      might also be present preventing the application of
+      the dynamic data.";
+  }
+  identity short-of-system-resource {
+    base nokia-dyn-auth-types:dyn-assoc-attach-failure-reason-base;
+    description
+      "The dynamic association request received from the RADIUS server
+      (or) Dynamic Authorization Client(DAC) could not be applied to
+      the system because of a lack of system resources.
+      Note that this identity does not preclude that other issues
+      might also be present preventing the application of the
+      dynamic data.";
+  }
+
+  /** dynamic-auth-control : identities */
+  /**************************************/
+
+  identity dynamic-auth-enable-control-base {
+    description
+		  "Determines whether OLT accepts dynamic authorization requests.
+       Change of Authorization(CoA) and Disconnect Message(DM) are
+       the features.
+	     The Change of Authorization(CoA) requests includes VSI,
+       forwarder and QoS policy profiles received via Access-accept
+       as part of RADIUS 802.1X user authentication (or) via CoA
+       requests from the Dynamic Authorization Client(DAC) once after
+       the RADIUS 802.1X user session authentication.
+       The Disconnect Messages(DM) are expected to receive after the
+       RADIUS 802.1X user session authentication from the Dynamic
+       Authorization Client(DAC).";
+  }
+  identity dynamic-auth-enable-coa-and-dm {
+    base nokia-dyn-auth-types:dynamic-auth-enable-control-base;
+    description
+      "This indicates the Change of Authorization(CoA) and
+       Disconnect Message(DM) request processing is enabled.";
+  }
+  identity dynamic-auth-enable-only-coa {
+    base nokia-dyn-auth-types:dynamic-auth-enable-control-base;
+    description
+     "This indicates the feature support enable for Change of
+      Authorization(CoA).The dynamic authorization parameters
+      could be received as part of the RADIUS 802.1X user
+      authentication (or) from the Dynamic Authorization Client(DAC)
+      as a CoA request after the 802.1X RADIUS user authentication.";
+  }
+  identity dynamic-auth-enable-only-dm {
+    base nokia-dyn-auth-types:dynamic-auth-enable-control-base;
+    description
+     "This indicates the feature support enable for the
+      Disconnect Message(DM) requests processing received from the
+      Dynamic Authorization Client(DAC).These requests are expected
+      to be received after the 802.1X RADIUS user authentication.";
+  }
+  identity port-bounce-failure-reason-base {
+    description
+      "Base identity used to indicate the reason for the
+       port-bounce failure.";
+  }
+
+  identity port-bounce-internal-failure {
+    base nokia-dyn-auth-types:port-bounce-failure-reason-base;
+    description
+      "The port-bounce request received from the RADIUS server
+      (or) Dynamic Authorization Client(DAC) could not be applied to
+      the system because of internal failures";
+  }
+}

@@ -1,0 +1,101 @@
+module nokia-ip-aug-mounted-eonu-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-ip-aug-mounted-eonu-dev";
+
+  prefix nokia-ip-aug-mounted-eonu-dev;
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import ietf-interfaces-mounted {
+    prefix if-mounted;
+  }
+  import ietf-ip-mounted {
+    prefix ip-mounted;
+  }
+
+  import nokia-ip-aug-mounted {
+    prefix ip-aug-mounted;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA IETF/System YANG module supporting
+     deviations on top of standard.";
+
+  /* revision */
+  revision 2024-12-20 {
+    description
+      "Adding Deviations for not-supported nokia-ip-aug config-data";
+    reference
+      "Sub-task BBN-258321";
+  }
+
+  revision 2024-05-28 {
+    description
+      "Add deviation YANG to remove unsupported voip oper-data yang node";
+    reference
+      "Sub-task BBN-216498";
+  }
+
+  revision 2021-07-19 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia Specific.";
+  }
+
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/ip-aug-mounted:tag-ip-intf" {
+    description
+      "This deviation assures that tag-ip-intf is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/ip-aug-mounted:ip-if-identification/ip-aug-mounted:ip-if-identifier" {
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/ip-mounted:ipv4/ip-aug-mounted:ip-address-acquisition-method/ip-aug-mounted:origin" {
+    deviate replace {
+      type enumeration {
+        enum static {
+          description
+            "Indicates that the address has been statically configured.";
+        }
+        enum dhcp {
+          description
+            "Indicates an address that has been assigned to this system by a DHCP server.";
+        }
+      }
+    }
+    deviate add {
+      default static;
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/ip-aug-mounted:ip-diagnose-control/ip-aug-mounted:respond-to-pings" {
+    deviate add {
+      default false;
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/ip-aug-mounted:ip-diagnose-control/ip-aug-mounted:respond-to-traceroute-messages" {
+    deviate add {
+      default false;
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/ip-aug-mounted:ipif-lower-layer/ip-aug-mounted:sub-interface" {
+    description
+      "This deviation assures that sub-interface is not supported.";
+    deviate not-supported;
+  }
+}

@@ -1,0 +1,167 @@
+module nokia-ieee802-dot1x-fiber-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+            + "nokia-ieee802-dot1x-fiber-dev";
+
+  prefix nokia-ieee802-dot1x-fiber-dev;
+
+  import ieee802-dot1x {
+    prefix "dot1x";
+  }
+
+  import ietf-interfaces {
+    prefix "if";
+  }
+
+  import ietf-system {
+    prefix "sys";
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG deviations on top
+     of the standard bbf-ancp-interfaces.yang module.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2020, Nokia. All Rights Reserved.";
+
+
+  revision 2026-07-16 {
+    description
+      "Introduced range restriction for reauth-period. Added deviations to
+       remove default value for reauth-enable, reauth-period and retry-max";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2022-04-28 {
+    description
+      "Add deviations to unsupport retry-max and reauth-period.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2022-03-15 {
+    description
+      "Add one deviation for dot1x enable/disable.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2022-01-28 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific";
+  }
+
+  deviation "/if:interfaces/if:interface/dot1x:pae/"
+          + "dot1x:authenticator/dot1x:reauth-period" {
+    deviate replace {
+      type uint32 {
+        range "30..65535";
+      }
+    }
+  }
+
+  deviation "/sys:system/dot1x:pae-system/"
+          + "dot1x:system-access-control" {
+    description
+      "No support to enable system access control in current feature
+       scope.";
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces/if:interface/dot1x:pae/dot1x:port-capabilities/dot1x:auth"{
+    deviate add {
+      default "false";
+    }
+  }
+
+/**
+ * Bug: https://jiradc2.ext.net.nokia.com/browse/BBN-371449 - [HT][SW][2609.376][EQMT] metric edit_config/
+ * copy_config/confd_reach/reboot_confd_reach performance degraded compared with build 2609.371.
+ *
+ * This CCR increase issue is concluded as confd issue.
+ * https://jiradc2.ext.net.nokia.com/browse/BBN-377697 - CONFD-863
+ * Solution expected in the next confd version.
+ *
+ * As a workaround, to regain CCR performance, removal of default values from reauthentication configuration
+ * parameters almost aligns with the baseline CCR.
+ *
+ * In future, once confd issue is solved, the removal of default values change to be reverted.
+ *
+ * System internal behavior:
+ * -------------------------
+ * Even though the default values are removed from the YANG parameters, still the NE considers YANG defined
+ * default values internally for the reauthentication operations.
+ *** If reauth-enable is not explicitly configured = NE considers 'false' as the default value.
+ *** If reauth-period is not explicitly configured = NE considers '3600' secs as the default value.
+ *** If retry-max is not explicitly configured = NE considers '2' as the default value.
+ *** Note: These values are only internal to the device, it will not be updated in the confd data store.
+ *** The parameters remain as an optional configuration parameters and the value will be present in confd
+ *** data store only if it is explicitly configured.
+**/
+
+  deviation "/if:interfaces/if:interface/dot1x:pae/"
+          + "dot1x:authenticator/dot1x:reauth-period" {
+    deviate delete {
+      default "3600";
+    }
+  }
+
+  deviation "/if:interfaces/if:interface/dot1x:pae/"
+          + "dot1x:authenticator/dot1x:reauth-enable" {
+    deviate delete {
+      default "false";
+    }
+  }
+
+  deviation "/if:interfaces/if:interface/dot1x:pae/"
+          + "dot1x:authenticator/dot1x:retry-max" {
+    deviate delete {
+      default "2";
+    }
+  }
+}

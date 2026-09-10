@@ -1,0 +1,184 @@
+module nokia-sdan-itf-loopback-mounted {
+  yang-version 1.1;
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+           + "nokia-sdan-itf-loopback-mounted";
+
+  prefix nokia-sdan-itf-lb-mounted;
+
+  import ietf-interfaces-mounted {
+    prefix if-mounted;
+  }
+
+  import iana-if-type-mounted {
+    prefix ianaift-mounted;
+  }
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.mibsupport@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG definitions for
+     supporting Nokia specific requirements as applicable to its
+     access network equipment.
+
+     Specifically, this module contains a collection of YANG 
+     definitions for loopback control on ONU UNI ethernet port.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2022, Nokia. All Rights Reserved.";
+  
+  
+  revision 2026-09-01 {
+    description
+      "restrict loopback control to Ethernet UNI interfaces only.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2025-07-08 {
+    description
+      "extend max loopback duration from 43200 to 93600 as request";
+    reference
+      "BBN-287889";
+  }
+
+
+  revision 2024-09-11 {
+    description
+      "remove operational data related when statement";
+    reference
+      "BBN-107706";
+  }
+
+  revision 2023-10-30 {
+    description
+      "add yang definition for loopback control on ONU UNI ethernet port.";
+    reference
+      "Nokia specific";
+  }
+  
+  typedef loopback-time {
+    type union {
+      type uint32 {
+        range "1..93600";
+      }
+      type enumeration {
+        enum infinite {
+          description
+            "Infinite loopback.";
+        }
+      }
+    }
+    description
+      "Define time format for loopback duration and remaining-time.";
+  }  
+  
+  augment '/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface' {
+    when "derived-from-or-self(if-mounted:type, 'ianaift-mounted:ethernetCsmacd')"; 
+    description
+      "Augment interface model for loopback control on ONU ethernet UNI port.";  
+    container loopback {
+      description
+        "UNI loopback related parameters.";
+      leaf status {
+        type enumeration {
+          enum loopback {
+            description
+              "The UNI port is in loopback mode.";
+          }
+        }
+        description 
+          "Indicates loopback status."; 
+      } 
+      leaf duration {
+        type loopback-time;
+        units seconds;
+        description
+          "Indicates the configured loopback duration."; 
+      }
+      leaf remaining-time {
+        type loopback-time;
+        units seconds;
+        description
+          "Indicates the remaining time for current ongoing loopback period of UNI port, measured in seconds,infinite means infinite loopback.";
+      }
+      action enable {
+        description
+          "Enables the loopback mode of the ethernet UNI port locally inside the ONU.
+           When the UNI port is in loopback 'enabled',then loopback of downstream traffic after PHY transceiver."; 
+        reference
+             "ITU-T G.988 9.5.1 Physical path termination point Ethernet UNI: Ethernet loopback configuration.";
+        input {
+          leaf duration {
+            type loopback-time;
+            units seconds; 
+            default 1800;   
+            description
+              "Indicates for how long the interface shall be kept in loopback mode.";           
+          }
+        }
+      }
+      action disable {
+        description
+          "Disables the loopback mode of the ethernet UNI port locally inside the ONU.
+           When the UNI port is in loopback 'disabled',then the UNI port is back in normal forwarding mode."; 
+        reference
+             "ITU-T G.988 9.5.1 Physical path termination point Ethernet UNI: Ethernet loopback configuration.";
+      }
+    }
+    
+    notification loopback-duration-timeout {
+      description
+        "inform that loopback was disabled due to duration timeout.";
+      leaf notification-text {
+        type string;
+        description
+          "The description string used to inform the operators about the notification event";
+      }
+    }
+  }
+}

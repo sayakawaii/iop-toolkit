@@ -1,0 +1,63 @@
+module nokia-sdan-if-xponvani-aug-common-dev {
+
+  namespace
+    "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+  + "nokia-sdan-if-xponvani-aug-common-dev";
+
+  prefix nokia-sdan-if-xponvani-aug-common-dev;
+
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import bbf-xponvani {
+    prefix bbf-xponvani;
+  }
+
+  import nokia-sdan-if-xponvani-aug {
+    prefix nokia-sdan-if-xponvani-aug;
+  }
+
+  import nokia-template-common {
+    prefix template-common;
+  }
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA IETF/System YANG module supporting
+     deviations on top of standard.";
+
+  revision 2024-09-04 {
+    description
+      "Correct the error message.";
+    reference
+      "Nokia Specific.";
+  }
+
+  revision 2020-07-20 {
+    description
+      "Initial revision.";
+    reference
+      "TBD";
+  }
+
+  deviation
+  "/if:interfaces/if:interface/bbf-xponvani:v-ani/nokia-sdan-if-xponvani-aug:onu-name" {
+    deviate add {
+      must "/onu:onus/onu:onu[onu:name = current()]/onu:usage != 'template-common:node-template-usage'" {
+        error-message "Can't reference a node-template-usage onu in OLT v-ani interface.";
+      }
+    }
+  }
+
+}

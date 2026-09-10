@@ -1,0 +1,477 @@
+module nokia-ietf-system-common-dev {
+
+  yang-version 1.1;
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-ietf-system-common-dev";
+
+  prefix  nokia-ietf-system-common-dev;
+
+  import ietf-inet-types {
+    prefix inet;
+  }
+
+  import ietf-system {
+    prefix sys;
+  }
+
+  import nokia-yang-types {
+    prefix nok-typ;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA IETF/System YANG module supporting
+     deviations on top of standard.";
+
+
+
+/* revision */
+
+  revision 2024-10-21 {
+    description
+      "Deviation added for empty key leaf";
+    reference
+      "Nokia internal.";
+  }
+
+  revision 2023-11-17 {
+    description "Disable RPC's";
+    reference "Nokia specific.";
+  }
+  
+  revision 2023-05-02 {
+    description "Add references and resolve canonical order according to RFC 7950.";
+    reference "Nokia specific.";
+  }
+
+  revision 2023-03-10 {
+    description
+      "Fixed restrictions on NTP server invalid addresses.";
+    reference
+      "Nokia reference";
+  }
+
+  revision 2023-01-18 {
+    description
+      "Added restrictions on radius server
+       invalid addresses.";
+    reference
+      "Nokia reference";
+  }
+
+  revision 2022-04-05 {
+    description
+      "Added limitation on radius server list size.";
+    reference
+      "Nokia reference";
+  }
+  
+  revision 2021-07-30 {
+    description
+      "Added missing descriptions for must-statements and max-elements
+      statements.  Also added description for application-side validation
+      regarding timezone-name.";
+    reference
+      "Nokia specific.";
+  }
+
+  revision "2020-03-11" {
+    description
+      "Update the default value for hostname leaf";
+    reference "Nokia specific.";
+  }
+
+  revision "2020-01-22" {
+    description
+      "Update type of hostname to nokia-string-ascii64";
+    reference "Nokia specific.";
+  }
+
+  revision "2019-11-08" {
+    description
+      "Update type of ntp server name and dns-resolver server name to nokia-string-ascii64";
+    reference "Nokia specific.";
+  }
+
+  revision 2019-09-09 {
+    description
+      "Add IPAddress restriction for NTP and DNS";
+    reference "Nokia specific.";
+  }
+
+  revision "2018-10-15" {
+    description
+      "add yang version1.1 and update ip checks with re-match";
+    reference "Nokia specific.";
+  }
+  
+  revision 2016-08-31 {
+    description
+      "Initial revision.";
+    reference
+      "TBD";
+  }
+
+/**********************************************/
+/* definitions which should always be present */
+/**********************************************/
+
+/* deviations max-elements */
+/* ----------------------- */
+/* add max-elements to limit the number of created ntp servers   */
+/* max-elements defined for demo differs from product defined */
+/* max values                                                 */
+
+/* profiles defined in ietf-system.yang         */
+
+  deviation "/sys:system/sys:ntp/sys:server" {
+    description
+      "At most 3 NTP server IPs can be configured.";
+    deviate add {
+      max-elements 3;
+    }
+  }
+
+/***********************************************************************************/
+/* definitions which are nokia system restrictions compared to standard definition */
+/***********************************************************************************/
+
+  deviation "/sys:system/sys:ntp/sys:server/sys:transport/sys:udp/sys:udp/sys:port" {
+    deviate replace {
+      type inet:port-number {
+        range "123"; //other values not supported by proxy
+      }
+    }
+  }
+
+  deviation "/sys:system/sys:clock/sys:timezone/sys:timezone-name/sys:timezone-name" {
+    deviate replace {
+      type sys:timezone-name {
+        length "1 .. 255"; //other values not supported by proxy
+      }
+    }
+  }
+
+  deviation "/sys:system/sys:hostname" {
+    deviate replace {
+      type nok-typ:nokia-string-ascii64;
+    }
+    deviate add {
+      default "isam-reborn";
+    }
+  }
+  
+  deviation "/sys:system/sys:ntp/sys:server/sys:name" {
+    deviate replace {
+      type nok-typ:nokia-string-ascii64;
+    }
+  }
+
+  deviation "/sys:system/sys:ntp/sys:server" {
+    description
+      "Configured NTP server IPs must be different from one another.";
+    deviate add {
+      unique "sys:transport/sys:udp/sys:udp/sys:address";
+    }
+  }
+ 
+  deviation "/sys:system/sys:ntp/sys:server/sys:transport/sys:udp/sys:udp/sys:address" {
+
+    deviate add {
+      must 'not(re-match(current(), "(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])(%[\p{N}\p{L}]+)?") '
+         + '    and ((substring-before(current(),".") = 127) '
+         + '      or (substring-before(current(),".") = 0) '
+         + '      or starts-with(current(),"192.0.0.") '
+         + '      or starts-with(current(),"192.0.2.") '
+         + '      or starts-with(current(),"198.51.100.") '
+         + '      or starts-with(current(),"203.0.113.") '
+         + '      or ((substring-before(current(),".") >= 224) '
+         + '           and (substring-before(current(),".") <= 255)))'
+         + ') '
+         + 'and '
+         + 'not(re-match(current(), "((:|[0-9a-fA-F]{0,4}):)([0-9a-fA-F]{0,4}:){0,5}((([0-9a-fA-F]{0,4}:)?(:|[0-9a-fA-F]{0,4}))|(((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])))(%[\p{N}\p{L}]+)?") '
+         + '    and re-match(current(), "(([^:]+:){6}(([^:]+:[^:]+)|(.*\..*)))|((([^:]+:)*[^:]+)?::(([^:]+:)*[^:]+)?)(%.+)?") '
+         + '    and ((current() = "::") '
+         + '      or (current() = "::1") '
+         + '      or (starts-with(current(),"::ffff")) '
+         + '      or (starts-with(current(),"ff")) '
+         + '      or (starts-with(current(),"2001") '
+         + '          and (contains(substring(substring-after(current(),"2001"),2,3),"db8") '
+         + '               or contains(substring(substring-after(current(),"2001"),2,3),":"))) '
+         + '      or (starts-with(current(),"2001") '
+         + '          and contains(substring(substring-after(current(),"2001"),1,2),":1") '
+         + '          and contains(substring(substring-after(current(),"2001"),3,3),":")))'
+         + ')'
+      {
+         error-message "Invalid NTP IPv4/IPv6 address";
+         description
+           "This deviation ensures to restrict invalid IPv4/IPv6 NTP address with reference of:
+           1. https://www.iana.org/assignments/iana-ipv4-special-registry/iana-ipv4-special-registry.xhtml
+               127.0.0.0/8         - Loopback
+               0.0.0.0/8           - Host on this network
+               192.0.0.0/24        - IETF Protocol Assignments
+               192.0.2.0/24        - Documentation (TEST-NET-1)
+               198.51.100.0/24     - Documentation (TEST-NET-2)
+               203.0.113.0/24      - Documentation (TEST-NET-3)
+               224.0.0.0/4         - Multicast
+               240.0.0.0/4         - Reserved
+               255.255.255.255/32  - Broadcast
+
+           2. https://www.iana.org/assignments/iana-ipv6-special-registry/iana-ipv6-special-registry.xhtml
+               2001::/23       -  IETF Protocol Assignments
+               ::/128          -  Unspecified Address
+               ::1/128         -  Loopback Address
+               ::ffff:0:0/96   -  IPv4-mapped Address
+               ff00::/8        -  Multicast Address
+               2001:db8::/32   -  Documentation";
+
+      }
+    }
+  }
+  
+  deviation "/sys:system/sys:dns-resolver/sys:server" {
+    description
+      "At most 3 DNS server IPs can be configured, which must be different from one another.";
+    deviate add {
+      unique "sys:transport/sys:udp-and-tcp/sys:udp-and-tcp/sys:address";
+      max-elements 3;
+    }
+  }
+
+  deviation "/sys:system/sys:dns-resolver/sys:server/sys:transport/sys:udp-and-tcp/sys:udp-and-tcp/sys:address" {
+
+    deviate add {
+      must 'not((substring-before(current(),".") = 127) '
+         +     'or (substring-before(current(),".") = 0) '
+         +     'or (starts-with(current(),"192.0.0.")) '
+         +     'or (starts-with(current(),"192.0.2.")) '
+         +     'or (starts-with(current(),"198.51.100.")) '
+         +     'or (starts-with(current(),"203.0.113.")) '
+         +     'or ((substring-before(current(),".") >= 224) '
+         +     'and (substring-before(current(),".") <= 255)) '
+         +     'or (current() = "::") or (current() = "::1") '
+         +     'or (starts-with(current(),"::ffff")) '
+         +     'or (starts-with(current(),"ff")) '
+         +     'or ((starts-with(current(),"2001")) '
+         +     'and ((contains(substring(substring-after(current(),"2001"),2,3),"db8")) '
+         +     'or (contains(substring(substring-after(current(),"2001"),2,3),":")))) '
+         +     'or ((starts-with(current(),"2001")) '
+         +     'and ((contains(substring(substring-after(current(),"2001"),1,2),":1")) '
+         +     'and (contains(substring(substring-after(current(),"2001"),3,3),":")))))'
+      { 
+         error-message "Invalid DNS IPv4/IPv6 address";
+         description
+           "This deviation ensures to restrict invalid IPv4/IPv6 NTP address with reference of:
+           1. https://www.iana.org/assignments/iana-ipv4-special-registry/iana-ipv4-special-registry.xhtml
+               127.0.0.0/8         - Loopback
+               0.0.0.0/8           - Host on this network
+               192.0.0.0/24        - IETF Protocol Assignments
+               192.0.2.0/24        - Documentation (TEST-NET-1)
+               198.51.100.0/24     - Documentation (TEST-NET-2)
+               203.0.113.0/24      - Documentation (TEST-NET-3)
+               224.0.0.0/4         - Multicast
+               240.0.0.0/4         - Reserved
+               255.255.255.255/32  - Broadcast
+
+           2. https://www.iana.org/assignments/iana-ipv6-special-registry/iana-ipv6-special-registry.xhtml
+               2001::/23       -  IETF Protocol Assignments
+               ::/128          -  Unspecified Address
+               ::1/128         -  Loopback Address
+               ::ffff:0:0/96   -  IPv4-mapped Address
+               ff00::/8        -  Multicast Address
+               2001:db8::/32   -  Documentation";
+      }
+    }
+  }
+
+  deviation "/sys:system/sys:dns-resolver/sys:server/sys:transport/sys:udp-and-tcp/sys:udp-and-tcp/sys:port" {
+    deviate replace {
+      type inet:port-number {
+        range "53"; //other values not supported by proxy
+      }
+    }
+  }
+
+  deviation "/sys:system/sys:dns-resolver/sys:server/sys:name" {
+    deviate replace {
+      type nok-typ:nokia-string-ascii64;
+    }
+  }
+
+  deviation "/sys:system/sys:dns-resolver/sys:search" {
+    description
+      "At most 5 DNS search domains can be configured.";
+    deviate replace {
+      type inet:domain-name {
+        length "1 .. 48";
+      }
+    }
+    deviate add {
+      max-elements 5;
+    }
+  }
+  
+  deviation "/sys:system/sys:clock/sys:timezone" {
+
+    /* This deviation provides a default value to the timezone,
+       i.e. which case statement to take by default.
+       For the selected default case the next statement then provides a default.
+    */
+    deviate add {
+      default timezone-utc-offset;
+    }
+  }
+
+  deviation "/sys:system/sys:clock/sys:timezone/sys:timezone-utc-offset/sys:timezone-utc-offset" {
+    deviate replace {
+      type int16 {
+          range "-720|-660|-600|-540|-480|-420|-360|-300|-240|-180|-120|-60|0|60|120|180|240|300|360|420|480|540|600|660|720|780|840";
+      }
+    }
+  }
+
+  deviation "/sys:system/sys:clock/sys:timezone/sys:timezone-utc-offset/sys:timezone-utc-offset" {
+    /* This deviation provides a default value.
+    */
+    deviate add {
+      default 0;
+    }
+  }
+
+  deviation "/sys:system/sys:clock/sys:timezone/sys:timezone-name/sys:timezone-name" {
+    description
+      "The valid timezone names are those defined in the IANA time zone
+      database.  If user tries to set an invalid timezone name the error
+      message 'invalid timezone name' appears.";
+    deviate add {} // in-app validation
+  }
+
+  deviation "/sys:system/sys:dns-resolver/sys:options/sys:timeout" {
+    deviate replace {
+      type uint8 {
+        range "1 .. 30";
+      }
+    }
+  }
+
+  deviation "/sys:system/sys:dns-resolver/sys:options/sys:attempts" {
+    deviate replace {
+      type uint8 {
+        range "1 .. 5";
+      }
+    }
+  }
+
+  deviation "/sys:system/sys:ntp/sys:server"{
+    deviate add {
+      must "(./iburst='false') or ((./iburst='true') and (./association-type='server' or ./association-type='pool'))" {
+        error-message "only support server or pool when iburst is configured";
+        description
+          "Server or pool associations for an NTP server are only allowed when
+          the iburst option is also configured for it.";
+      }
+    }
+  }
+
+  deviation "/sys:system/sys:radius/sys:server/sys:name" {
+     deviate replace {
+            type nok-typ:nokia-string-ascii64 {
+            }
+      }
+  }
+
+  deviation "/sys:set-current-datetime" {
+    deviate  not-supported;
+  }
+  
+  deviation "/sys:system-shutdown" {
+    deviate  not-supported;
+  }
+  
+  deviation "/sys:system-restart" {
+    deviate  not-supported;
+  }
+  
+  /* not shown for security reasons */
+  deviation "/sys:system-state/sys:platform/sys:os-name" {
+    deviate  not-supported;
+  }
+  
+  /* not shown for security reasons */
+  deviation "/sys:system-state/sys:platform/sys:os-release" {
+    deviate  not-supported;
+  }
+  
+  /* not shown for security reasons */
+  deviation "/sys:system-state/sys:platform/sys:os-version" {
+    deviate  not-supported;
+  }
+  
+  deviation "/sys:system-state/sys:platform/sys:machine" {
+    deviate  not-supported;
+  }
+
+  deviation "/sys:system/sys:radius/sys:server" {
+    description "Limits the maximum number of radius servers.";
+    deviate add {
+      max-elements 32;
+    }
+  }
+ deviation "/sys:system/sys:radius/sys:server/sys:transport/sys:udp/sys:udp/sys:address" {
+    deviate add {
+      must 'not((substring-before(current(),".") = 127) '
+         +     'or (substring-before(current(),".") = 0) '
+         +     'or (starts-with(current(),"192.0.0.")) '
+         +     'or (starts-with(current(),"192.0.2.")) '
+         +     'or (starts-with(current(),"198.51.100.")) '
+         +     'or (starts-with(current(),"203.0.113.")) '
+         +     'or ((substring-before(current(),".") >= 224) '
+         +     'and (substring-before(current(),".") <= 255)) '
+         +     'or (current() = "::") or (current() = "::1") '
+         +     'or (starts-with(current(),"::ffff")) '
+         +     'or (starts-with(current(),"ff")) '
+         +     'or ((starts-with(current(),"2001")) '
+         +     'and ((contains(substring(substring-after(current(),"2001"),2,3),"db8")) '
+         +     'or (contains(substring(substring-after(current(),"2001"),2,3),":")))) '
+         +     'or ((starts-with(current(),"2001")) '
+         +     'and ((contains(substring(substring-after(current(),"2001"),1,2),":1")) '
+         +     'and (contains(substring(substring-after(current(),"2001"),3,3),":")))))'
+      {
+         error-message "Invalid radius server IPv4/IPv6 address";
+         description
+           "This deviation ensures to restrict invalid radius server IPv4/IPv6 address with reference of:
+           1. https://www.iana.org/assignments/iana-ipv4-special-registry/iana-ipv4-special-registry.xhtml
+               127.0.0.0/8         - Loopback
+               0.0.0.0/8           - Host on this network
+               192.0.0.0/24        - IETF Protocol Assignments
+               192.0.2.0/24        - Documentation (TEST-NET-1)
+               198.51.100.0/24     - Documentation (TEST-NET-2)
+               203.0.113.0/24      - Documentation (TEST-NET-3)
+               224.0.0.0/4         - Multicast
+               240.0.0.0/4         - Reserved
+               255.255.255.255/32  - Broadcast
+
+           2. https://www.iana.org/assignments/iana-ipv6-special-registry/iana-ipv6-special-registry.xhtml
+               2001::/23       -  IETF Protocol Assignments
+               ::/128          -  Unspecified Address
+               ::1/128         -  Loopback Address
+               ::ffff:0:0/96   -  IPv4-mapped Address
+               ff00::/8        -  Multicast Address
+               2001:db8::/32   -  Documentation";
+      }
+    }
+  }
+  deviation "/sys:system/sys:radius/sys:server/sys:authentication-type"{
+    description "system authentication type is not supported";
+    deviate not-supported;
+  }
+}
+
+
+

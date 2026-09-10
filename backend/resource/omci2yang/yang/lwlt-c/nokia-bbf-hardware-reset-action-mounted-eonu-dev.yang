@@ -1,0 +1,48 @@
+module nokia-bbf-hardware-reset-action-mounted-eonu-dev {
+
+  namespace
+     "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+   + "nokia-bbf-hardware-reset-action-mounted-eonu-dev";
+
+  prefix nokia-bbf-hardware-reset-action-mounted-eonu-dev;
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import bbf-hardware-reset-action-mounted {
+    prefix bbf-hw-rst-act-mounted;
+  }
+
+  import ietf-hardware-mounted {
+    prefix hw-mounted;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "The NOKIA BBF/hardware YANG module supporting
+     deviations on top of standard.";
+
+/* revision */
+
+  revision 2022-11-03 {
+    description
+      "reset-type is mandatory with reset action input";
+      reference
+         "Nokia specific ";
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/bbf-hw-rst-act-mounted:reset/bbf-hw-rst-act-mounted:input/bbf-hw-rst-act-mounted:reset-type" {
+    description "reset-type is mandatory with reset action input";
+    deviate add
+    {
+      mandatory true;
+    }
+  }
+}

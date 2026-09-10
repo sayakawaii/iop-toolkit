@@ -1,0 +1,177 @@
+module nokia-sdan-xponani-pm-threshold-profiles-mounted-eonu-dev {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+  + "nokia-sdan-xponani-pm-threshold-profiles-mounted-eonu-dev";
+  prefix nokia-xponani-pm-tca-prof-mounted-eonu-dev;
+  
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import nokia-hardware-profiles-mounted {
+    prefix nokia-hw-prof-mounted;
+  }
+
+  import nokia-sdan-hardware-pm-threshold-profiles-mounted {
+    prefix nokia-hw-pm-threshold-prof-mounted;
+  }
+
+  import nokia-sdan-xponani-pm-threshold-profiles-mounted {
+    prefix nokia-xponani-pm-tca-profile-mounted;
+  }
+
+  organization
+    "Nokia";
+  contact
+    "Nokia";
+  description
+    "This module contains a collection of YANG deviations on top of NOKIA specific xPON ANI PM TCA profile yang module";
+
+  revision 2025-02-12 {
+    description
+      "Removed the deviation that limits the values of the threshold between 1 and (2^32)-2 for XPON ANI PM TCA profile.";
+    reference "BBN-207889";
+  }
+
+  revision 2023-06-14 {
+    description
+      "Limits the values of the threshold between 1 and (2^32)-2.";
+    reference "Nokia specific";
+  }
+  
+  revision 2023-03-11 {
+    description
+      "Adding deviations for restricting number of TCA profiles for xPON ANI PM";
+    reference "Nokia specific";
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-xponani-pm-tca-profile-mounted:xpon-fec-error-profile" {
+    deviate add {
+      must "count(current()/../nokia-xponani-pm-tca-profile-mounted:xpon-fec-error-profile) <= 10" {
+      error-message "Exceeds maximum number of xpon-fec-error-profile supported in the system.";
+      description
+        "This deviation limits the number of xpon-fec-error-profile configured per system to 10.";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-xponani-pm-tca-profile-mounted:xpon-fec-error-profile/nokia-xponani-pm-tca-profile-mounted:fec-seconds-threshold" {
+    description
+      "This deviation limits the values of the threshold between 1 and (2^32)-2.";
+   deviate replace {
+      type uint32 {
+        range "1..4294967294";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-xponani-pm-tca-profile-mounted:xgponani-tc-error-profile" {
+    deviate add {
+      must "count(current()/../nokia-xponani-pm-tca-profile-mounted:xgponani-tc-error-profile) <= 10" {
+      error-message "Exceeds maximum number of xgponani-tc-error-profile supported in the system.";
+      description
+        "This deviation limits the number of xgponani-tc-error-profile configured per system to 10.";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-xponani-pm-tca-profile-mounted:xgponani-tc-error-profile/nokia-xponani-pm-tca-profile-mounted:psbd-hec-error-threshold" {
+    description
+      "This deviation limits the values of the threshold between 1 and (2^32)-2.";
+    deviate replace {
+      type uint32 {
+        range "1..4294967294";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-xponani-pm-tca-profile-mounted:xgponani-tc-error-profile/nokia-xponani-pm-tca-profile-mounted:xgtc-hec-error-threshold" {
+    description
+      "This deviation limits the values of the threshold between 1 and (2^32)-2.";
+    deviate replace {
+      type uint32 {
+        range "1..4294967294";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-xponani-pm-tca-profile-mounted:xgponani-tc-error-profile/nokia-xponani-pm-tca-profile-mounted:unknown-profile-threshold" {
+    description
+      "This deviation limits the values of the threshold between 1 and (2^32)-2.";
+    deviate replace {
+      type uint32 {
+        range "1..4294967294";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-xponani-pm-tca-profile-mounted:xgponani-downstream-error-profile" {
+    deviate add {
+      must "count(current()/../nokia-xponani-pm-tca-profile-mounted:xgponani-downstream-error-profile) <= 10" {
+      error-message "Exceeds maximum number of xgponani-downstream-error-profile supported in the system.";
+      description
+        "This deviation limits the number of xgponani-downstream-error-profile configured per system to 10.";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-xponani-pm-tca-profile-mounted:xgponani-downstream-error-profile/nokia-xponani-pm-tca-profile-mounted:ploam-mic-error-threshold" {
+    description
+      "This deviation limits the values of the threshold between 1 and (2^32)-2.";
+    deviate replace {
+      type uint32 {
+        range "1..4294967294";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-xponani-pm-tca-profile-mounted:xgponani-downstream-error-profile/nokia-xponani-pm-tca-profile-mounted:omci-mic-error-threshold" {
+    description
+      "This deviation limits the values of the threshold between 1 and (2^32)-2.";
+    deviate replace {
+      type uint32 {
+        range "1..4294967294";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-xponani-pm-tca-profile-mounted:gem-frame-error-profile" {
+    deviate add {
+      must "count(current()/../nokia-xponani-pm-tca-profile-mounted:gem-frame-error-profile) <= 10" {
+      error-message "Exceeds maximum number of gem-frame-error-profile supported in the system.";
+      description
+        "This deviation limits the number of gem-frame-error-profile configured per system to 10.";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-xponani-pm-tca-profile-mounted:gem-frame-error-profile/nokia-xponani-pm-tca-profile-mounted:in-lost-gem-frames-threshold" {
+    description
+      "This deviation limits the values of the threshold between 1 and (2^32)-2.";
+    deviate replace {
+      type uint32 {
+        range "1..4294967294";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-xponani-pm-tca-profile-mounted:gem-frame-error-profile/nokia-xponani-pm-tca-profile-mounted:out-lost-gem-frames-threshold" {
+    description
+      "This deviation limits the values of the threshold between 1 and (2^32)-2.";
+    deviate replace {
+      type uint32 {
+        range "1..4294967294";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-xponani-pm-tca-profile-mounted:gem-frame-error-profile/nokia-xponani-pm-tca-profile-mounted:bad-gem-header-error-threshold" {
+    description
+      "This deviation limits the values of the threshold between 1 and (2^32)-2.";
+    deviate replace {
+      type uint32 {
+        range "1..4294967294";
+      }
+    }
+  }
+}

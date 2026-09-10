@@ -1,0 +1,96 @@
+module nokia-bbf-sub-interfaces-mounted-eonu-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/" 
+           + "nokia-bbf-sub-interfaces-mounted-eonu-dev";
+
+  prefix nokia-bbf-sub-interfaces-mounted-eonu-dev;
+
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import ietf-interfaces-mounted{
+    prefix if-mounted;
+  }
+
+  import bbf-sub-interfaces-mounted {
+    prefix bbf-subif-mounted;
+  }
+
+
+  import iana-if-type-mounted {
+    prefix ianaift-mounted;
+  }
+
+  import bbf-xpon-if-type-mounted {
+    prefix bbf-xponift-mounted;
+  }
+
+  import bbf-qos-policies-mounted{
+    prefix bbf-qos-pol-mounted;
+  }
+
+  import bbf-if-type-mounted{
+    prefix bbfift-mounted;
+  }
+
+  import ieee802-dot1ax-mounted {
+    prefix dot1ax-mounted;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "This module contains a collection of YANG deviations on top 
+     of standard for supporting BBF/bbf-sub-interfaces-tagging YANG module.
+     Copyright (C) 2017-2018, Nokia. All Rights Reserved.";
+
+  revision 2026-03-08 {
+    description
+      "Add deviation for lag admin-key.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2022-07-27 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific";
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:subif-lower-layer" {
+      deviate add {
+         must "(current()/../if-mounted:type !='bbfift-mounted:vlan-sub-interface')
+         or
+         boolean(current()/bbf-subif-mounted:interface)"
+         {
+            error-message "subif-lower-layer interface must be configured for vlan-sub-interface.";
+         }
+     }
+  }
+
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:subif-lower-layer/bbf-subif-mounted:interface" {
+      deviate add {
+         must "((current()/../../../if-mounted:interface[if-mounted:name = current()]/if-mounted:type != 'ianaift-mounted:ethernetCsmacd')
+         and 
+         (current()/../../../if-mounted:interface[if-mounted:name = current()]/if-mounted:type != 'bbf-xponift-mounted:onu-v-vrefpoint'))
+         or
+         boolean(current()/../../bbf-qos-pol-mounted:ingress-qos-policy-profile)"
+         {
+            error-message "if lower-layer interface is ethernetCsmacd or vrefpoint, then ingress-qos-policy-profile must be configured for vlan-sub-interface.";
+         }
+
+         must "not(boolean(current()/../../../if-mounted:interface[if-mounted:name = current()]/dot1ax-mounted:aggregation-port/dot1ax-mounted:aggregation-port-lacp/dot1ax-mounted:actor-admin-key))" {
+             error-message "The subif-lower-layer interface cannot be a member of a LAG.";
+         }
+     }
+  }
+}
+

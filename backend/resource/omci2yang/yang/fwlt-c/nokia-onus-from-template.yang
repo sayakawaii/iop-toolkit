@@ -1,0 +1,1653 @@
+module nokia-onus-from-template {
+   yang-version 1.1;
+
+   namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/onus-from-template";
+
+   prefix onus-from-template;
+
+   import bbf-fiber-onu-emulated-mount {
+      prefix onu;
+   }
+
+   import nokia-template-common {
+      prefix template-common;
+   }
+
+   import bbf-yang-types {
+      prefix bbf-yang;
+   }
+
+   import ietf-yang-types {
+       prefix yang;
+   }
+
+   import ietf-inet-types {
+      prefix inet;
+   }
+
+   import ietf-ip-mounted {
+      prefix ip-mounted;
+   }
+
+   import tailf-common {
+      prefix tailf;
+   }
+
+   import ietf-interfaces-mounted {
+      prefix if-mounted;
+   }
+
+   import bbf-if-type-mounted {
+      prefix bbfift-mounted;
+   }
+
+   import bbf-sub-interfaces-mounted {
+      prefix bbf-subif-mounted;
+   }
+
+   import bbf-sip-voip-mounted  {
+      prefix bbf-sip-voip-mounted;
+   }
+   /*
+   import bbf-qos-policies-mounted {
+      prefix bbf-qos-pol-mounted;
+   }
+
+   import bbf-xpongemtcont-mounted {
+      prefix bbf-xpongemtcont-mounted;
+   }
+
+   import bbf-sub-interface-tagging-mounted {
+      prefix bbf-subif-tag-mounted;
+   }
+
+   import iana-if-type-mounted {
+      prefix ianaift-mounted;
+   }   */
+
+   import ethernet-mounted {
+      prefix eth-mounted;
+   }
+
+   import bbf-dot1q-types {
+      prefix bbf-dot1qt;
+   }
+
+   import nokia-ethernet-interface-external-speed-mounted {
+      prefix nokia-eth-intf-ext-speed-mounted;
+   }
+
+   import nokia-ethernet-interface-fec-mounted {
+      prefix nokia-eth-intf-fec-mounted;
+   }
+
+   import ieee802-dot1q-cfm-types {
+      prefix cfm-types;
+   }
+
+   import ieee802-dot1q-cfm-mounted {
+      prefix dot1q-cfm-mounted;
+   }
+
+   import ieee802-dot1q-types {
+      prefix dot1q-types;
+   }
+   
+   import ietf-hardware-mounted {
+      prefix hw-mounted; 
+   }
+
+   import nokia-yang-types-mounted {
+      prefix nok-typ-mounted;
+   }
+
+   /* import nokia-onu-gemport-performance-management-mounted {
+       prefix nokia-xpongemtcont-gemport-pm-mounted;
+   }
+
+   import nokia-voice-performance-management-mounted {
+       prefix nokia-voice-pm-mounted;
+
+   }*/
+
+   import nokia-sdan-hardware-module-types-mounted {
+    prefix nokia-sdan-hwmdlt-mounted;
+   }
+
+   import nokia-sdan-mib-upload-behavior-types-mounted {
+     prefix nokia-sdan-mib-upload-behavior-types-mounted;
+   }
+
+   organization
+    "Nokia";
+
+   contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+   description
+     "This module contains onus-from-template configuration.";
+
+   revision 2025-04-15 {
+       description
+         "extend the type range of yang leaf pse-class-control";
+       reference
+         "Epic BBN-207669";
+   }
+
+   revision 2025-03-20 {
+       description
+         "Fill missing enum description for dest-mac-address.";
+       reference
+         "Nokia specific";
+   }
+
+   revision 2024-12-12 {
+       description
+         "Add mib-upload-behavior.";
+       reference
+         "Epic BBN-216774";
+   }
+
+   revision 2024-06-17 {
+       description
+         "Support for LLDP MED port and network policy parameters";
+       reference
+         "Nokia specific";
+   }
+   
+   revision 2024-06-01 {
+       description
+         "planned-module-type for ONU hardware component in template parameters override";
+       reference
+         "Nokia specific";
+   }
+
+   revision 2024-05-22 {
+ 
+       description
+         "Moca parameters override";
+       reference
+         "Epic BBN-729";
+   }
+
+   revision 2024-02-14 {
+ 
+       description
+         "max-frame-size for ONU UNI interfaces in template parameters override";
+       reference
+         "Nokia specific";
+   }
+
+   revision 2024-01-31 {
+       description
+         "Remove IPV4 node from non-iphost interface by adding
+          presence in container ipv4";
+       reference
+         "Sub-task BBN-181720";
+   }
+
+   revision 2023-11-16 {
+       description
+         "admin-state for ONU in template parameters override.";
+       reference
+         "BBN-167634";
+   }
+
+   revision 2023-11-03 {
+       description
+         "RF Video parameters override.";
+       reference
+          "Epic BBN-27738";
+   }
+
+   revision 2023-08-30 {
+       description
+         "power shed profile ref and battery backup support";
+       reference
+          "Epic BBN-7403";
+   }
+
+   revision 2023-07-25 {
+    description
+      "Removed default value for pm-counter-size";
+    reference
+      "Nokia specific";
+   }
+
+   revision 2023-07-17 {
+    description
+      "Add sip uni supplementary services profile ";
+    reference
+      "Nokia specific"; 
+   }
+
+   revision 2023-04-20 {
+    description
+      "Aggregated UNI counters support and 64bit counter support for
+       Ethernet performance monitoring counters";
+    reference
+      "Nokia specific"; 
+   }
+   
+   revision 2023-03-13 {
+       description
+           "PM TCA profile for Ethernet, ANI, Gemport and POTS interworking";
+     reference
+      " ";
+   }
+
+   revision 2023-01-12 {
+       description
+           "Updated EQPT leaves descriptions";
+     reference
+      " ";
+   }
+   
+   revision 2023-01-09 {
+       description
+           "Updated CFM leaves descriptions";
+     reference
+      " ";
+   }
+
+   revision 2023-01-06 {
+       description
+           "update description in voice module";
+     reference
+      " ";
+   }
+
+   revision 2022-09-06 {
+       description
+         "Enabled PM counter group profile support";
+     reference
+      " ";
+   }
+
+   revision 2022-08-28 {
+        description
+          "CPU and Memory TCA configuration parameters";
+        reference
+          "Epic BBN-27734";
+    }
+
+   revision 2022-06-02 {
+       description
+         "GEM port and POTS interworking PM parameters";
+       reference
+         "Epic BBN-5998";
+   }
+
+   revision 2022-04-11 {
+    description
+      "New PoE parameters in ONU instance yang";
+    reference
+      " Epic BBN-52301";
+  }
+
+   revision 2022-02-21 {
+     description
+       "Add dot1x-auth to enable 802.1x.";
+     reference
+      " ";
+   }
+
+   revision 2021-10-21 {
+     description
+       "Initial revision.";
+     reference
+      " ";
+   }
+     
+
+   grouping base-moca-parameters {
+      description "base-moca-parameters";
+      leaf privacy-enabled {
+        type enumeration {
+          enum "deactivated" {
+            value 0;
+            description
+              "deactivate link-layer security.";
+          }
+          enum "activated" {
+            value 1;
+            description
+              "activate link-layer security.";
+          }
+        }
+        description
+          "This attribute indicates if the link-layer security is
+           deactivated (disabled) or activated (enabled).";
+        reference
+          "ITU-T G.988 9.10.1 Physical path termination point
+           MoCA UNI: Privacy enabled.";
+      }
+
+      leaf min-bw-alarm-threshold {
+        type union {
+          type enumeration {
+            enum disabled {
+              description
+                "disabled means 'disable the threshold'.";
+            }
+          }
+          type uint16 {range "57 .. 3200";}
+        }
+        units "Mbps";
+        description
+          "This attribute indicates the minimum desired PHY link bandwidth between
+           two nodes. If less, an alarm is raised indicating the failure.
+           Valid values are 0, 57 to 3200 Mbps. The default value is 180Mbps,
+           with a value zero used to disable the threshold.";
+        reference
+          "ITU-T G.988 9.10.1 Physical path termination point
+           MoCA UNI: Minimum bandwidth alarm threshold.";
+      }  
+  }
+
+    augment '/onu:onus/onu:onu' {
+        when "derived-from-or-self (onu:usage, 'template-common:node-from-template-usage')" {
+           description
+          "it should be a node-from-template-usage ONU";
+        }
+        description "augment onu with template parameters";
+        container template-parameters {
+          presence "template-parameters";
+          description "template parameters";
+          leaf template-ref {
+            type onu:onu-name-ref;
+              must "derived-from-or-self(/onu:onus/onu:onu[onu:name = current()]/onu:usage, "
+                 + "'template-common:node-template-usage')";
+              mandatory true;
+            description
+              "Identifies another ONU configuration that is marked for being used as a template
+              and which provides an intial set of data for the actual ONU instance.";
+          }
+
+          container tconts {
+            description "tconts";
+            list tcont {
+              key "template-ref";
+              description "list of tconts";
+              leaf template-ref {
+                type string;
+                /* replaced by string for performance reasons
+                            type leafref {
+                              path "/onu:onus/onu:onu[onu:name = current()/../../../onus-from-template:template-ref]/onu:root"
+                                 + "/bbf-xpongemtcont-mounted:tconts/bbf-xpongemtcont-mounted:tcont/bbf-xpongemtcont-mounted:name";
+                     }
+                 */
+                description
+                  "Identifies within the ONU template a TCONT that is to be instantiated within the actual ONU instance.
+                   The actual TCONT will have the data as configured in the template but completed / overruled with the
+                   data provided in this list entry.";
+              }
+              leaf name {
+                type string;
+                description
+                    "Name of the Transmission Container (T-CONT).";
+              }
+              leaf id {
+                type uint16;
+                mandatory true;
+                description
+                  "The TCONT id to be used in the actual ONU.";
+              }
+            }
+          }
+
+          container gemports {
+            description "gemports";
+            list gemport {
+              key "template-ref";
+              description "list of gemports";
+              leaf template-ref {
+              type string;
+              /* replaced by string for performance reasons
+                 type leafref {
+                   path "/onu:onus/onu:onu[onu:name = current()/../../../onus-from-template:template-ref]/onu:root"
+                        + "/bbf-xpongemtcont-mounted:gemports/bbf-xpongemtcont-mounted:gemport/bbf-xpongemtcont-mounted:name";
+                 }
+              */
+                description
+                "Identifies within the ONU template a GEMPORT that is to be instantiated within the actual ONU instance.
+                 The actual GEMPORT will have the data as configured in the template but completed / overruled with the
+                 data provided in this list entry";
+              }
+              leaf name {
+                type string;
+                description
+                    "Name of G-PON Encapsulation Method (GEM) port.";
+              }
+              leaf id {   /*  xPath: /bbf-xpongemtcont:xpongemtcont/bbf-xpongemtcont:gemports/bbf-xpongemtcont:gemport/bbf-xpongemtcont:gemport-id  */
+                type uint32;
+                mandatory true;
+                description
+                "The TCONT id to be used in the actual ONU.";
+              }
+            }
+         }
+
+         container interfaces {
+            description
+              "For all interfaces except for VSIs: the interfaces are instantiated based on their existence in the template.
+               The data here allows to overrule some data.
+               For VSIs the data is instantiated from this list and not from the template.
+               I.e. only the VSIs present in this list will be instantiated.
+               VSIs present in the template but not present in this list will not be instantiated.";
+             
+            container all-unis {
+              presence "If present, the common configuration for all UNIs are present.";
+              description
+                "Data related to all UNIs present in the the ONU";
+              container ethernet {
+                  presence "If present, the common configuration for all Ethernet UNIs are present.";
+                  description
+                      "Data related to all Ethernet UNIs present in the the ONU";
+                  leaf pm-enable {
+                      type boolean;            /* xPath:
+                      /onu:onus/onu:onu/onu:root/if-mounted:interfaces/nokia-sdan-if-mounted:all-unis/nokia-sdan-if-mounted:ethernet/nokia-interfaces-performance-management-mounted:performance/nokia-interfaces-performance-management-mounted:enable */
+                      description
+                          "This parameter is used to enable or disable aggregated Ethernet performance monitoring.";
+                  }
+              }
+            }
+             list interface {
+                 key "template-ref";
+                 description "list of interfaces";
+                 leaf template-ref {
+                   type string;
+                   /* replaced by string for performance reasons
+                    type leafref {
+                    path "/onu:onus/onu:onu[onu:name = current()/../../../onus-from-template:template-ref]/onu:root"
+                        + "/if-mounted:interfaces/if-mounted:interface/if-mounted:name";
+                   }
+                   */
+                   description
+                    "Identifies within the ONU template an interface that is to be instantiated within the actual ONU instance.
+                     The actual instance will have the data as configured in the template but completed / overruled with the
+                     data provided in this list entry";
+                 }
+                 leaf name {
+                   type string;
+                   description
+                       "The name of the interface.";
+                 }
+                 leaf admin {          /*  xPath: /onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/if-mounted:enabled */
+                   type boolean;
+                   description
+                       "This leaf contains the configured, desired state of the
+                        interface.";
+                 }
+                 leaf pm-enable {
+                   type boolean;            /* xPath: /onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-if-pm-mounted:performance/bbf-if-pm-mounted:enable */
+                   description
+                       "This parameter is used to enable or disable performance monitoring in the interface";
+                 }
+                 container pm-tca-profile-ref {
+                  /* removed for performance reasons
+                      when "derived-from-or-self(/onu:onus/onu:onu[onu:name = current()/../../../template-ref]/onu:root"
+                         + "/if-mounted:interfaces/if-mounted:interface[if-mounted:name = current()/../template-ref]"
+                         + "/if-mounted:type,'ianaift-mounted:ethernetCsmacd')"
+                   {
+                      description
+                        "Only for UNI interfaces";
+                   }
+                   */
+                  description "pm-tca-profile-ref"; 
+                  leaf eth-frame-err-us { /* xPath: /onu:onus/onu:onu/onu:root/ietf-interfaces-mounted:interfaces/interface/bbf-interfaces-performance-management-mounted:performance/tca-eth-frame-err-us-profile*/
+                    type string;
+                    description
+                      "Identifies within the ONU template reference, the TCA error profile for the Ethernet upstream performance monitoring, that is to be associated to the UNI interface within the actual ONU instance";
+                  }
+                  leaf eth-frame-err-ds { /* xPath: /onu:onus/onu:onu/onu:root/ietf-interfaces-mounted:interfaces/interface/bbf-interfaces-performance-management-mounted:performance/tca-eth-frame-err-ds-profile */
+                    type string;
+                    description
+                      "Identifies within the ONU template reference, the TCA error profile for the Ethernet downstream performance monitoring, that is to be associated to the UNI interface within the actual ONU instance";
+                  }
+                  leaf eth-physical-layer-err { /* xPath: /onu:onus/onu:onu/onu:root/ietf-interfaces-mounted:interfaces/interface/bbf-interfaces-performance-management-mounted:performance/tca-eth-physical-err-profile */
+                    type string;  
+                    description "eth-physical-layer-err";
+                  }
+                  leaf eth-frame-err-extended { /* xPath:
+                  /onu:onus/onu:onu/onu:root/ietf-interfaces-mounted:interfaces/interface/bbf-interfaces-performance-management-mounted:performance/tca-eth-frame-error-extended-profile/name */
+                    type string;
+                    description "eth-frame-err-extended";
+                  }
+
+                  /* removed for performance reasons
+                      when "derived-from-or-self(/onu:onus/onu:onu[onu:name = current()/../../../template-ref]/onu:root"
+                         + "/if-mounted:interfaces/if-mounted:interface[if-mounted:name = current()/../template-ref]"
+                         + "/if-mounted:type,'ianaift-mounted:ani')"
+                   {
+                      description
+                        "Only for ANI interfaces";
+                   }
+                   */
+                   leaf xponani-fec-err { /*xPath: /onu:onus/onu:onu/onu:root/ietf-interfaces-mounted:interfaces/interface/bbf-interfaces-performance-management-mounted:performance/tca-xpon-fec-err-profile */
+                     type string;
+                     description "xponani-fec-err";
+                   }
+                   leaf xgponani-tc-err { /*xPath: /onu:onus/onu:onu/onu:root/ietf-interfaces-mounted:interfaces/interface/bbf-interfaces-performance-management-mounted:performance/tca-xgpon-xgs-tc-err-profile */
+                     type string;
+                     description "xgponani-tc-err ";
+                   }
+                   leaf xgponani-ds-err { /*xPath: /onu:onus/onu:onu/onu:root/ietf-interfaces-mounted:interfaces/interface/bbf-interfaces-performance-management-mounted:performance/tca-xgpon-xgs-ds-err-profile */
+                     type string;
+                     description "xgponani-ds-err";
+                   }
+                   leaf gem-frame-err { /*xPath:
+                   /onu:onus/onu:onu/onu:root/ietf-interfaces-mounted:interfaces/interface/bbf-interfaces-performance-management-mounted:performance/tca-gem-frame-err-profile */
+                     type string;
+                     description "gem-frame-err";
+                   }
+              }
+                 container vsi {
+                   presence "vsi";
+                   description "vsi";
+                   /* removed for performance reasons
+                      when "derived-from-or-self(/onu:onus/onu:onu[onu:name = current()/../../../template-ref]/onu:root"
+                         + "/if-mounted:interfaces/if-mounted:interface[if-mounted:name = current()/../template-ref]"
+                         + "/if-mounted:type,'bbfift-mounted:vlan-sub-interface')"
+                   {
+                      description
+                        "only for VLAN sub-interfaces";
+                   }
+                   */
+                   list ingress-rule {
+                     key "name";
+                     description "list of ingress-rules";
+                     leaf name {
+                     type string;
+                     /* replaced by string for performance reasons
+                       type leafref {
+                         path "/onu:onus/onu:onu[onu:name = current()/../../../../../template-ref]/onu:root"
+                            + "/if-mounted:interfaces/if-mounted:interface[if-mounted:name = current()/../../../template-ref]"
+                            + "/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:ingress-rule"
+                            + "/bbf-subif-mounted:rule/bbf-subif-mounted:name";
+                       }
+                       */
+                     description
+                         "The rule name.";
+                    }
+                    leaf match-criteria-tag-0-vlan-id {
+                      /* remove first due to confd's delete non-performant issue
+                      when "boolean(/onu:onus/onu:onu[onu:name = current()/../../../../../template-ref]"
+                          + "/onu:root/if-mounted:interfaces/if-mounted:interface[if-mounted:name = current()/../../../template-ref]"
+                          + "/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:ingress-rule"
+                          + "/bbf-subif-mounted:rule[bbf-subif-mounted:name = current()/../name]/bbf-subif-mounted:flexible-match"
+                          + "/bbf-subif-tag-mounted:match-criteria/bbf-subif-tag-mounted:tag[bbf-subif-tag-mounted:index=0]"
+                          + "/bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:vlan-id)" {
+                          description
+                            "Only applicable when the 'vlan-id' in corresponding vsi's match criteria's tag 0 in the template";
+                      }
+                      */
+                      type bbf-dot1qt:vlan-id-range;
+                        description
+                         "Allowed VLAN IDs.";
+                   }
+                   leaf ingress-rewrite-tag-0-vlan-id {
+                     /* remove first due to confd's delete non-performant issue
+                                     when "boolean(/onu:onus/onu:onu[onu:name = current()/../../../../../template-ref]"
+                                        + "/onu:root/if-mounted:interfaces/if-mounted:interface[if-mounted:name = current()/../../../template-ref]"
+                                        + "/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:ingress-rule"
+                                        + "/bbf-subif-mounted:rule[bbf-subif-mounted:name = current()/../name]/bbf-subif-mounted:ingress-rewrite"
+                                        + "/bbf-subif-tag-mounted:push-tag[bbf-subif-tag-mounted:index=0]/bbf-subif-tag-mounted:dot1q-tag"
+                                        + "/bbf-subif-tag-mounted:vlan-id)" {
+                                         description
+                                             "Only applicable when the 'vlan-id' in corresponding vsi's push-tag's tag 0 in the template";
+                                      }
+                      */
+                      type bbf-dot1qt:vlan-id-or-0;
+                      description
+                        "Allowed VLAN IDs.";
+                       }
+                    }
+                    leaf ingress-qos-policy-profile {
+                     /* remove first due to confd's delete non-performant issue
+                      type leafref {
+                        path "/onu:onus/onu:onu[onu:name = current()/../../../../template-ref]/onu:root"
+                           + "/bbf-qos-pol-mounted:qos-policy-profiles/bbf-qos-pol-mounted:policy-profile"
+                           + "/bbf-qos-pol-mounted:name";
+                      } */
+                      type string;
+                      description
+                        "A reference to a QoS policy profile. The profile is to be
+                         applied to incoming packets.";
+                    }
+                 }
+                 container ethernet {
+                   presence "ethernet";
+                   description "ethernet";
+                   /* removed for performance reasons
+                    when "derived-from-or-self(/onu:onus/onu:onu[onu:name = current()/../../../template-ref]/onu:root"
+                         + "/if-mounted:interfaces/if-mounted:interface[if-mounted:name = current()/../template-ref]"
+                         + "/if-mounted:type,'ianaift-mounted:ethernetCsmacd')"
+                    description
+                      "Contains all Ethernet interface related configuration";
+                   */
+                   uses eth-mounted:ethernet;
+                   leaf dot1x-auth {          /*  xPath: /onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/dot1x-mounted:pae/dot1x-mounted:port-capabilities/dot1x-mounted:auth */
+                     type boolean;
+                     description
+                         "Indicates if PACP EAP Authenticator is supported.";
+                   }
+
+                   leaf max-frame-size {
+                       type enumeration {
+                           enum frame-size-1518 {
+                               value 1518;
+                               description
+                                   "Set the max-frame-size value to IEEE 802.3 basic frame size of 1518";
+                           }
+                           enum frame-size-1522 {
+                               value 1522;
+                               description
+                                   "Set the max-frame-size value to IEEE 802.3 Q-tagged frame size of 1522";
+                           }
+                           enum frame-size-2000 {
+                               value 2000;
+                               description
+                                   "Set the max-frame-size value to IEEE 802.3 multi-tagged envelope frame size of 2000";
+                           }
+                           enum frame-size-9216 {
+                               value 9216;
+                               description
+                                   "Set the max-frame-size value to Jumbo frame size of 9216";
+                           }
+                           enum system-default {
+                               description
+                                   "System defaults the 'max-frame-size' value to 2000 (to support multi-tagged envelope frames)
+                                   for GPON system(G.984.3) and to 9216 for subsequent ITU-T PON systems";
+                           }
+                       }
+                       units "bytes";
+                       description
+                           "This leaf defines the maximum frame size to be allowed across this Ethernet interface";
+                   }
+                 }  
+
+                 container ipv4 {
+                    presence "ipv4";
+                    description "ipv4";
+                    leaf origin { /* xPath: /onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface[template-ref]/ipv4/ip-aug-mounted:ip-address-acquisition-method/origin */
+                        type ip-mounted:ip-address-origin;
+                        description
+                            "The leaf is used to set the ip address acquisition method for the interface";
+                    }
+                    list address {
+                        key "ip";
+                        max-elements 1;
+                        description
+                            "The list of configured IPv4 addresses on the interface.";
+                        leaf ip {
+                            type inet:ipv4-address-no-zone;
+                            description
+                                "The IPv4 address on the interface.";
+                        }
+                        choice subnet {
+                            description
+                                "The subnet can be specified as a netmask.";
+                            leaf netmask {
+                                type yang:dotted-quad;
+                                description
+                                    "The subnet specified as a netmask.";
+                            }
+                        }
+                    }
+                  }
+                container pots {
+                  description "pots";
+                  leaf call-statistics-enabled { /* xPath: /onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface[template-ref]/phys-voice-itf/pptp-pots-uni/call-statistics-enabled */
+                    type boolean;
+                    description
+                      "Enable the VoIP call statistics for a particular POTS line.";
+                  }
+                }
+
+                container rf-video-ani {
+                  presence "rf-video-ani";
+                  description "rf video ani";
+                  leaf agc-offset { /* xPath: /onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface[template-ref]/rf-video-ani/agc-offset */
+                    type int8 {range "-120 .. 120";}
+                    description
+                      "override the leaf agc-offset in template";
+                  }
+                  leaf lower-optical-threshold { /* xPath: /onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface[template-ref]/rf-video-ani/lower-optical-threshold */
+                    type int8 {range "-120 .. 60";}
+                    description
+                      "override the leaf lower-optical-threshold in template";
+                  }
+                  leaf upper-optical-threshold { /* xPath: /onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface[template-ref]/rf-video-ani/upper-optical-threshold */
+                    type int8 {range "-120 .. 60";}
+                    description
+                      "override the leaf upper-optical-threshold in template";
+                  }
+                }
+
+ 	      container moca-uni {			
+            presence "moca-uni";
+            description "moca uni";
+                choice moca-service {
+                  description
+                    "Provides the choices to configure MoCA1.1/MoCA2.5 capable ONT or 
+                     MoCA2.5 capable ONT.";
+                  case moca-home {
+                    container moca { /* xPath: /onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface[template-ref]/moca */
+                      description
+                        "The config node for MoCA1.1/MoCA2.5 capable ONT.";
+                      uses base-moca-parameters;  
+		    }
+                  }
+                  case moca-access { 
+                    container moca-access { /* xPath: /onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface[template-ref]/moca-access */
+                     description
+                       "The config node for MoCA2.5 capable ONT.";
+                     uses base-moca-parameters; 
+                     leaf moca-far-end-node-mac-address {
+                       type yang:mac-address;
+                       description
+                         "override the leaf moca-far-end-node-mac-address in template.";
+                     }
+                     leaf moca-client-ds-rate {
+                       type yang:gauge32 {range "1 .. 2500";}
+                       units "Mbps";
+                       description
+                         "override the leaf moca-client-ds-rate in template.";
+                     }
+                     leaf moca-client-us-rate {
+                       type yang:gauge32 {range "1 .. 2500";}
+                       units "Mbps";
+                       description
+                         "override the leaf moca-client-us-rate in template.";
+                     }
+                   }  
+                  }
+                 }
+                }
+	     }
+ 	  }
+          container voip {
+            description "voip";
+            list sip-termination {
+              key "name";
+              description "list of sip terminations";
+              leaf name {     /* xPath: /onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/sip-terminations/sip-termination[sip-user-name] */
+                type string;
+	            description
+	              "A name that uniquely identifies the SIP termination.";
+                /* remove must check first due to confd's delete non-performant issue
+                must "boolean(/onu:onus/onu:onu[onu:name = current()/../../../template-ref]/onu:root"
+                      + "/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-terminations/bbf-sip-voip-mounted:sip-termination[bbf-sip-voip-mounted:sip-user-name = current()]/bbf-sip-voip-mounted:sip-user-name)"  {
+                       error-message
+                        "The name must be one defined in sip-termination in the template.";
+                } */
+              }
+              leaf sip-uni-display-name {   /* xPath: /onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/sip-terminations/sip-termination[sip-user-name]/sip-uni-display-name */
+                type bbf-yang:name-string;		
+                description
+                  "The display name of the SIP user interface.";
+              }
+              leaf sip-uni-uri { /* xPath: /onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/sip-terminations/sip-termination[sip-user-name]/sip-uni-uri */
+                type inet:uri;			
+                description
+                  "The SIP  user interface URI.";
+              }
+              leaf auth-user-name {   /* xPath: /onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:ssip-signaling/sip-terminations/sip-termination[sip-user-name]/auth-user-name */
+                type bbf-yang:name-string;
+	            description
+		          "The authentication user name.";
+              }
+              leaf digest-password {    /* xPath: /onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:ssip-signaling/sip-terminations/sip-termination[sip-user-name]/digest-password */
+                type tailf:aes-cfb-128-encrypted-string;
+                description
+                  "The authentication password.";
+              }
+              leaf sip-uni-suppl-services-profile {    /* xPath: /onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:ssip-signaling/sip-terminations/sip-termination[sip-user-name]/sip-uni-suppl-services-profile */
+                type string;
+                description
+                  "The call services profile";
+              }
+            }
+            list sip-server-pools {
+              key "name";
+              description "list of sip server pools";
+              leaf name {     /* xPath: /onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/sip-server-pools/sip-server-pool[name] */
+                type string;
+	            description
+	              "The name of sip server pool";
+                /* remove must check first due to confd's delete non-performant issue
+                must "boolean(/onu:onus/onu:onu[onu:name = current()/../../../../template-ref]/onu:root"
+                      + "/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-server-pools/bbf-sip-voip-mounted:sip-server-pool[bbf-sip-voip-mounted:name = current()]/bbf-sip-voip-mounted:name)"  {
+                       error-message
+                        "The name must be one defined in sip-server-pool in the template.";
+                } */
+              }
+              list sip-servers {
+                key "name";
+                description "list of sip servers";
+                leaf name {           /* xPath: /onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/sip-server-pools/sip-server-pool[name]/sip-servers[name] */
+                  type string;      	
+                  description
+    	            "The name of the first hop SIP server.";
+                  /* remove must check first due to confd's delete non-performant issue
+                  must "boolean(/onu:onus/onu:onu[onu:name = current()/../../../../template-ref]/onu:root"
+                      + "/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-server-pools/bbf-sip-voip-mounted:sip-server-pool[bbf-sip-voip-mounted:name = current()/../../name]"
+                      + "/bbf-sip-voip-mounted:sip-servers[bbf-sip-voip-mounted:name = current()]/bbf-sip-voip-mounted:name)"  {
+                       error-message
+                        "The name must be one defined in sip-servers in the template.";
+                 } */
+                }
+                leaf fully-qualified-domain-name {
+                  type inet:domain-name;        /* xPath: /onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/sip-server-pools/sip-server-pool[name]/sip-servers[name]/sip-server-address/fully-qualified-domain/fully-qualified-domain-name */
+                  description
+                    "The FQDN address of the first hop SIP server.";
+                }
+              }
+            }
+            list sip-user-agent {
+              key name;
+              description "list of sip user agents";
+              leaf name {                      /* xPath: /onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/sip-user-agents/sip-user-agent/name */
+                type bbf-yang:string-ascii64;
+                description
+                  "The name of the SIP User Agent instance.";
+                /* remove must check first due to confd's delete non-performant issue
+                must "boolean(/onu:onus/onu:onu[onu:name = current()/../../../template-ref]/onu:root"
+                      + "/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-user-agents/bbf-sip-voip-mounted:sip-user-agent[bbf-sip-voip-mounted:name = current()]/bbf-sip-voip-mounted:name)"  {
+                       error-message
+                        "The name must be one defined in sip-user-agent in the template.";
+                } */
+              }
+              leaf sip-user-agent-domain {
+                type bbf-yang:string-ascii64;  /* xPath: /onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/sip-user-agents/sip-user-agent/sip-user-agent-domain */
+                description
+                  "The SIP User Agent domain. This will be the host part of 
+                   the sip-uri of all sip terminations belonging to this sip 
+                   user agent";
+              }
+            }
+            list media-forwarder {
+              key "name";
+              description "list of media-forwarders";
+              leaf name {     /* xPath: /onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-forwarders/media-forwarder[name] */
+                type bbf-yang:string-ascii64;
+	            description
+	              "The name of the media forwarder.";
+              }
+              leaf file-name {   /* xPath: /onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-forwarders/media-forwarder[name]/file-name */
+                type bbf-sip-voip-mounted:name-string128;
+	            description
+	              "The file name of the media forwarder.";
+              }
+              leaf ftp-server { /* xPath: /onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-forwarders/media-forwarder[name]/download-characteristics/ftp-server */
+                type inet:ip-address; 
+	            description
+	              "IP-address of the ftp-server.";
+              }
+              leaf user-name {   /* xPath: /onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-forwarders/media-forwarder[name]/download-characteristics/user-name */
+                type bbf-yang:name-string;		
+	            description
+	              "The user name for file transfer to be validated.";
+              }
+              leaf password {    /* xPath: /onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-forwarders/media-forwarder[name]/download-characteristics/password */
+                type tailf:aes-cfb-128-encrypted-string;
+	            description
+		          "The authentication password for file transfer.";
+              }
+              leaf realm {    /* xPath: /onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-forwarders/media-forwarder[name]/download-characteristics/realm */
+                type bbf-yang:name-string;
+                description
+                  "This string attribute specifies the realm used in MD5 digest authentication.";
+              }
+            }
+            list supplementary-services-profile {
+              key "name";
+              description "list of supplementary-services-profiles";
+              leaf name {     /* xPath: /onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/supplementary-services-profiles/supplementary-services-profile[name] */
+                type bbf-yang:string-ascii64;
+                description
+                  "A list of POTS sip user supplementary services profiles.";
+              }
+              leaf connect-uri {   /* xPath: /onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/supplementary-services-profiles/supplementary-services-profile[name]/direct-connect-service/connect-uri  */
+                type inet:uri;
+		        description
+		          "The direct connect service URI.";
+              }
+            }
+          }
+          container system {
+            description "container";
+            list server {
+              key "name";
+              description "list of servers";
+              leaf name { /* xPath: /onu:onus/onu:onu/onu:root/sys-mounted:system/sys-mounted:dns-resolver[name]/ */
+                type string;
+                description
+                    "An arbitrary name for the DNS server.";
+              }
+              leaf address{ /* xPath: /onu:onus/onu:onu/onu:root/sys-mounted:system/sys-mounted:udp-and-tcp/sys-mounted:address */
+                type inet:ip-address;
+                description
+                    "The address of the DNS server.";
+              }
+            }
+          }
+          container routing {
+              description "routing";
+              leaf next-hop-address { /* xPath: /onu:onus/onu:onu/onu:root/rt-mounted:routing/rt-mounted:control-plane-protocols/rt-mounted:control-plane-protocol[static]/rt-mounted:static-routes/v4ur-mounted:ipv4/v4ur-mounted:route[0.0.0.0]/v4ur-mounted:next-hop/v4ur-mounted:next-hop-address */
+                type inet:ipv4-address;
+                description
+                  "IPv4 address of the next hop.";
+              }
+          }
+
+         container cfm {
+           presence "cfm";
+           description "cfm";
+           list maintenance-domain { /* xPath: /onu:onus/onu:onu/onu:root/dot1q-cfm-mounted:cfm/dot1q-cfm-mounted:maintenance-domain */
+              key "md-id";
+              description "list of maintenance-domains";
+              leaf md-id {
+                type cfm-types:name-key-type;
+                /* replaced by string for performance reasons
+                type leafref {
+                   path "/onu:onus/onu:onu[onu:name = current()/../../../onus-from-template:template-ref]/onu:root"
+                        + "/dot1q-cfm-mounted:cfm/dot1q-cfm-mounted:maintenance-domain/dot1q-cfm-mounted:md-id";
+                 }
+                */
+                description
+                "Identifies within the ONU template a CFM that is to be instantiated within the actual ONU instance.
+                 The actual CFM will have the data as configured in the template but completed / overruled with the
+                 data provided in this list entry";
+              }
+              list maintenance-association { /* xPath: /onu:onus/onu:onu/onu:root/dot1q-cfm-mounted:cfm/dot1q-cfm-mounted:maintenance-domain/dot1q-cfm-mounted:maintenance-association */
+                key "ma-id";
+                description "list of maintenance-associations";
+                leaf ma-id {
+                  type cfm-types:name-key-type;
+                  description
+                    "Key of the maintenance association list of entries";
+                }
+                uses dot1q-cfm-mounted:ma-name-choice-grouping;
+                leaf ma-vlan-id {
+                  type dot1q-types:vlanid;
+                  description
+                    "VLAN ID under MA for auto created MIPS. 12 bits represented in a 2-octet integer.";
+                }
+              }
+            }
+            list maintenance-group { /* xPath: /onu:onus/onu:onu/onu:root/dot1q-cfm-mounted:cfm/dot1q-cfm-mounted:maintenance-group/ */
+              key "maintenance-group-id";
+              description "maintenance-group list";
+              leaf maintenance-group-id {
+                type cfm-types:name-key-type;
+                /* replaced by string for performance reasons
+                type leafref {
+                   path "/onu:onus/onu:onu[onu:name = current()/../../../onus-from-template:template-ref]/onu:root"
+                        + "/dot1q-cfm-mounted:cfm/dot1q-cfm-mounted:maintenance-group/dot1q-cfm-mounted:maintenance-group-id";
+                 }
+                */
+               description
+                "Identifies within the ONU template a CFM that is to be instantiated within the actual ONU instance.
+                 The actual CFM will have the data as configured in the template but completed / overruled with the
+                 data provided in this list entry";
+              }
+              list mep {  /* (1) xPath: /onu:onus/onu:onu/onu:root/dot1q-cfm-mounted:cfm/dot1q-cfm-mounted:maintenance-domain/dot1q-cfm-mounted:maintenance-association/dot1q-cfm-mounted:maintenance-association-mep
+                             (2) xPath: /onu:onus/onu:onu/onu:root/dot1q-cfm-mounted:cfm/dot1q-cfm-mounted:maintenance-group/dot1q-cfm-mounted:maintenance-mep*/
+                key "mep-id";
+                unique "overrule-mep-id";
+                description "mep list";
+                leaf mep-id {
+                 type cfm-types:mep-id-type;
+                 description
+                  "Integer that is unique among all the MEPs in the 
+                  same maintenance association";
+                 /* replaced by string for performance reasons
+                    type leafref {
+                      path "/onu:onus/onu:onu[onu:name = current()/../../../onus-from-template:template-ref]/onu:root"
+                        + "/dot1q-cfm-mounted:cfm/dot1q-cfm-mounted:maintenance-domain/dot1q-cfm-mounted:maintenance-association"
+                        + "/dot1q-cfm-mounted:maintenance-association-mep/dot1q-cfm-mounted:mep-id";
+                 }
+                */
+                }
+                leaf overrule-mep-id {
+                  type cfm-types:mep-id-type;
+                    must 'current() != current()/../onus-from-template:mep-id' {
+                     error-message
+                      "overrule-mep-id must be different value compared with mep-id";
+                    }
+                  description
+                   "used to overrule several mep-id leaves the template, the template expansion method is to use mep-id key above
+                    to match id in onu template xPath below firstly, then overule them using this overrule-mep-id secondly
+                    (1) /onu:onus/onu:onu/onu:root/dot1q-cfm-mounted:cfm/dot1q-cfm-mounted:maintenance-domain/dot1q-cfm-mounted:maintenance-association
+                        + /dot1q-cfm-mounted:maintenance-association-mep/dot1q-cfm-mounted:mep-id;
+                    (2) /onu:onus/onu:onu/onu:root/dot1q-cfm-mounted:cfm/dot1q-cfm-mounted:maintenance-group/dot1q-cfm-mounted:maintenance-mep
+                        + /dot1q-cfm-mounted:mep-id;
+                    (3) /onu:onus/onu:onu/onu:root/dot1q-cfm-mounted:cfm/dot1q-cfm-mounted:maintenance-group/dot1q-cfm-mounted:maintenance-mep
+                        + /dot1q-cfm-mounted:inactive-remote-mep/dot1q-cfm-mounted:inactive-rmep-id";
+                }
+                leaf enabled { /* xPath: /onu:onus/onu:onu/onu:root/dot1q-cfm-mounted:cfm/dot1q-cfm-mounted:maintenance-group/dot1q-cfm-mounted:maintenance-mep/dot1q-cfm-mounted:enabled */
+                  type boolean;
+                  description
+                    "The administrative state of the MEP. TRUE indicates
+                    that the MEP is to functional normally, and FALSE
+                    indicates that it is to cease functioning";
+                }
+                leaf interface {
+                   type string;
+                   mandatory true;
+                   description
+                    "UNI interface on which MEP is created";
+                   /* replaced by string for performance reasons
+                     type leafref {
+                      path "/onu:onus/onu:onu[onu:name = current()/../../../onus-from-template:template-ref]/onu:root"
+                        + "/dot1q-cfm-mounted:cfm/dot1q-cfm-mounted:maintenance-group/dot1q-cfm-mounted:maintenance-mep
+                        + "[dot1q-cfm-mounted:mep-id = current()/../onus-from-template:mep-id]/bbf-cfm-mep2i-mounted:interface";
+                    }*/
+                }
+                container continuity-check { /* xPath: /onu:onus/onu:onu/onu:root/dot1q-cfm-mounted:cfm/dot1q-cfm-mounted:maintenance-group/dot1q-cfm-mounted:maintenance-mep/dot1q-cfm-mounted:continuity-check */
+                  description
+                    "Continuity check protocol";
+                  leaf ccm-enabled {
+                    type boolean;
+                    description
+                      "Indicates whether the MEP can generate CCMs. If
+                      TRUE, the MEP will generate CCM PDUs";
+                  }
+                }
+                container ais { /* xPath: /onu:onus/onu:onu/onu:root/dot1q-cfm-mounted:cfm/dot1q-cfm-mounted:maintenance-group/dot1q-cfm-mounted:maintenance-mep/dot1q-cfm-mounted:ais */
+                  description
+                    "Ethernet cfm oam - AIS support";
+                  leaf enable {
+                    type boolean;
+                    description
+                      "This parameter is used to enable/disable AIS generation
+                      of the MEP";
+                  }
+                }
+              }
+            }
+          }
+
+          container lldp {
+           presence "lldp";
+            description
+              "Link Layer Discovery Protocol configuration and operational
+              information.";
+            /* LLDP port configuration table */
+            list port {
+                key "name dest-mac-address";
+                description
+                    "LLDP configuration information for a particular port.";
+                leaf name {
+                    /* xPath: /onu:onus/onu:onu/onu:root/lldp-mounted:lldp/lldp-mounted:port/lldp-mounted:name */
+                    /* type if-mounted:interface-ref; */
+                    type string; 
+                    description
+                        "The port name used to identify the port component (contained in
+                        the local chassis with the LLDP agent) associated with this entry.";
+                }
+                leaf dest-mac-address {
+                    type enumeration {
+                        enum any {
+                            description
+                                "Destination MAC address";
+                        }
+                    }
+                    /* xPath: /onu:onus/onu:onu/onu:root/lldp-mounted:lldp/lldp-mounted:port/lldp-mounted:dest-mac-address */
+                    description
+                        "Destination MAC address. The ieee:mac-address type has a pattern
+                        that allows upper and lower case letters. To avoid issues with
+                        string comparison, it is suggested to only use Upper Case for the
+                        letters in the hexadecimal numbers. There is still an issue with a
+                        difference between the IETF mac-address definition and the IEEE
+                        mac-address definition, so consider that if implementing code that
+                        compares mac-addresses.";
+                }
+                leaf admin-status {
+                    type enumeration {
+                        enum tx-only {
+                            value 1;
+                            description
+                                "Transmit LLDP frames only";
+                        }
+                        enum rx-only {
+                            value 2;
+                            description
+                                "Receive LLDP frames only";
+                        }
+                        enum tx-and-rx {
+                            value 3;
+                            description
+                                "Transmit and Receive LLDP frames";
+                        }
+                        enum disabled {
+                            value 4;
+                            description
+                                "Do Not Transmit or Receive LLDP frames";
+                        }
+                    }
+                    /* xPath: /onu:onus/onu:onu/onu:root/lldp-mounted:lldp/lldp-mounted:port/lldp-mounted:admin-status */
+                    description
+                        "Administrative status of the local LLDP agent.";
+                    reference
+                        "9.2.5.1 of IEEE Std 802.1AB-2016";
+                }
+                leaf message-fast-tx {
+                    type uint32 {
+                        range "1..3600";
+                    }
+                    /* xPath: /onu:onus/onu:onu/onu:root/lldp-mounted:lldp/lldp-mounted:port/lldp-mounted:message-fast-tx */
+                    units "second";
+                    description
+                        "Time interval in timer ticks between transmissions during fast
+                        transmission periods(i.e., txFast is non-zero)";
+                    reference
+                        "9.2.5.5 of IEEE Std 802.1AB-2016";
+                }
+                leaf message-tx-hold-multiplier {
+                    type uint32 {
+                        range "2..10";
+                    }
+                    /* xPath: /onu:onus/onu:onu/onu:root/lldp-mounted:lldp/lldp-mounted:port/lldp-mounted:message-tx-hold-multiplier */
+                    description
+                        "Multiplier of msg-tx-interval";
+                    reference
+                        "9.2.5.6 of IEEE Std 802.1AB-2016";
+                }
+                leaf message-tx-interval {
+                    /* xPath: /onu:onus/onu:onu/onu:root/lldp-mounted:lldp/lldp-mounted:port/lldp-mounted:message-tx-interval */
+                    type uint32 {
+                        range "1..3600";
+                    }
+                    units "second";
+                    description
+                        "Time interval in timer ticks between transmissions during normal
+                        transmission periods (i.e., txFast is zero).";
+                    reference
+                        "9.2.5.7 of IEEE Std 802.1AB-2016";
+                }
+                leaf reinit-delay {
+                    /* xPath: /onu:onus/onu:onu/onu:root/lldp-mounted:lldp/lldp-mounted:port/lldp-mounted:reinit-delay */
+                    type uint32 {
+                        range "1..10";
+                    }
+                    units "second";
+                    description
+                        "Amount of delay (in units of seconds) from when admin-status becomes
+                        'disabled' until re-initialization is attempted.";
+                    reference
+                        "9.2.5.10 of IEEE Std 802.1AB-2016";
+                }
+                leaf tx-credit-max {
+                    /* xPath: /onu:onus/onu:onu/onu:root/lldp-mounted:lldp/lldp-mounted:port/lldp-mounted:tx-credit-max */
+                    type uint32 {
+                        range "1..10";
+                    }
+                    description
+                        "The maximum number of consecutive LLDPDUs that can be transmitted at
+                        any time.";
+                    reference
+                        "9.2.5.17 of IEEE Std 802.1AB-2016";
+                }
+                leaf tx-fast-init {
+                    /* xPath: /onu:onus/onu:onu/onu:root/lldp-mounted:lldp/lldp-mounted:port/lldp-mounted:tx-fast-init */
+                    type uint32 {
+                        range "1..8";
+ 
+                    }
+                    description
+                        "Initial value for the fast transmitting LLDPPDU.";
+                    reference
+                        "9.2.5.19 of IEEE Std 802.1AB-2016";
+                }
+                leaf lldp-med-media-policy-associate {/* xPath: /onu:onus/onu:onu/onu:root/lldp-mounted:lldp/lldp-mounted:port/nokia-sdan-lldp-mounted:lldp-med-media-policy-associate */
+                    type string;
+                    description
+                        "Indicates the LLDP MED media policy associated to the UNI interface";  
+                } 
+            }
+          }
+
+          container hardware-config {
+            description "hardware config";
+            list hardware {
+              key "template-ref";
+              description "list of hardware";
+              leaf template-ref {
+                /*when "derived-from-or-self(/onu:onus/onu:onu[onu:name = current()/../../../template-ref]/onu:root"
+                         + "/hw-mounted:hardware/hw-mounted:component/[hw-mounted:name = current()]"
+                         + "/hw-mounted:class,'bbf-hwt:transceiver')"
+                         or 
+                         "derived-from-or-self(/onu:onus/onu:onu[onu:name = current()/../../../template-ref]/onu:root"
+                         + "/hw-mounted:hardware/hw-mounted:component/[hw-mounted:name = current()]"
+                         + "/hw-mounted:class,'ianahw:cpu')"*/
+                type string;
+                description
+                  "Identifies within the ONU template reference the hardware component that is to be instantiated within the actual ONU instance";
+              }
+              leaf tca-monitoring-enabled {/* xPath: /onu:onus/onu:onu/onu:root/hw-mounted:hardware/hw-mounted:component/tca-monitoring-enabled */
+                type boolean;
+                description
+                    "Indicates whether transceiver's voltage, temperature, transceiver-link tca parameters rx-power,tx-power, bias-current monitoring is enabled or disabled per transceiver. When enabled, current values are compared with the defined thresholds to raise alarm incase crossing defined thresholds. ";
+              }
+              leaf pm-enable {/* xPath: /onu:onus/onu:onu/onu:root/hw-mounted:hardware/hw-mounted:component/[hw-mounted:class = 'ianahw:cpu']/nokia-cpu-pm-mgnt-mounted:performance/nokia-cpu-pm-mgnt-mounted:enable */
+                  type boolean;
+                  description
+                      "This parameter is used to enable or disable performance monitoring for CPU usage and memory usage of the CPU hardware component";
+              }
+              leaf planned-module-type { /* xPath: /onu:onus/onu:onu/onu:root/hw-mounted:hardware/hw-mounted:component/[hw-mounted:class = 'bbf-hwt:transceiver']/nokia-hw-ext-mounted:planned-module-type */
+                type identityref {
+                   base nokia-sdan-hwmdlt-mounted:expected-eth-module-type-base;
+                }
+                description
+                  "Indicates the planned type of physical hardware module,per ITU-T G.988 Table 9.1.5-1(and extensions).";
+              }
+              container pm-tca-profile-ref {
+                /* when "derived-from-or-self(/onu:onus/onu:onu[onu:name = current()/../../../template-ref]/onu:root"
+                         + "/hw-mounted:hardware/hw-mounted:component/[hw-mounted:name = current()]"
+                         + "/hw-mounted:class,'ianahw:cpu')" */
+                description "pm-tca-profile-ref";
+                leaf cpu { /* xPath: /onu:onus/onu:onu/onu:root/hw-mounted:hardware/hw-mounted:component/performance/cpu-tca-profile */
+                  type string;
+                  description 
+                    "Identifies within the ONU template reference, the TCA profile for the CPU usage performance monitoring, that is to be associated to the CPU hardware component within the actual ONU instance";
+                }
+                leaf memory { /* xPath: /onu:onus/onu:onu/onu:root/hw-mounted:hardware/hw-mounted:component/performance/memory-tca-profile */
+                  type string;
+                  description
+                    "Identifies within the ONU template reference, the TCA profile for the memory usage performance monitoring, that is to be associated to the CPU hardware component within the actual ONU instance";
+                }
+              } 
+              container poe {
+                  description "poe";
+                  /* removed for performance reasons
+                  when "derived-from-or-self(/onu:onus/onu:onu[onu:name = current()/../../../template-ref]/onu:root"
+                      + "/hw-mounted:hardware/hw-mounted:component[hw-mounted:name = current()/../template-ref]"
+                      + "/hw-mounted:class,'ianahw:rj45')"
+                    {
+                      description
+                        "only for 'ianahw:rj45' component";
+                    }
+                    presence "poe";
+                    description "poe";
+                    */
+                    /*  xPath: /onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/hw-mounted:POE/hw-mounted:enabled  */
+                    leaf enable {
+                      type boolean;
+                      description
+                        "This leaf controls whether power is provided to external 
+                         equipment over this Ethernet UNI.";
+                    }
+                    leaf pse-class-control {
+                      type uint16 {
+                          range "0..9";
+                      }
+                      description
+                        "Used to place specific limits on the class of power 
+                         supported by this port. Optional leaf.
+                         0: Power Feed Enabled at default level.
+                         1: Power Feed Enabled at Class 0 power level.
+                         2: Power Feed Enabled at Class 1 power level.
+                         3: Power Feed Enabled at Class 2 power level.
+                         4: Power Feed Enabled at Class 3 power level.
+                         5: Power Feed Enabled at Class 4 power level.
+                         6: Power Feed Enabled at Class 5 power level.
+                         7: Power Feed Enabled at Class 6 power level.
+                         8: Power Feed Enabled at Class 7 power level.
+                         9: Power Feed Enabled at Class 8 power level. ";
+                      reference 
+                        "ITU-T G.988 9.5.6 Power over Ethernet control: 
+                         PsE class control.";
+                    }
+                    
+                    leaf power-priority {
+                      type enumeration {
+                        enum "critical" {
+                          description
+                            "Indicates that the most highst power priority.";
+                        }
+                        enum "high" {
+                          description
+                            "Indicates that the high power priority.";
+                        }
+                        enum "low" {
+                          description
+                            "Indicates that the low power priority.";
+                        }
+                      }
+                      description
+                        "This leaf controls the priority of the port from the point
+                         of view of a power management algorithm. The priority that
+                         is set by this leaf could be used by a control mechanism 
+                         that prevents overcurrent situations by first disconnecting
+                         ports with lower power priority (higher numerical value).
+                         Optional leaf.";
+                      reference 
+                        "ITU-T G.988 9.5.6 Power over Ethernet control: Power priority.";
+                    }
+              }
+              leaf power-shedding-profile-ref
+              {
+                /* xPath: /onu:onus/onu:onu/onu:root/hw-mounted:hardware/hw-mounted:component/nokia-hw-pwr-shed-mounted:power-shedding/nokia-hw-pwr-shed-mounted:power-shedding-profile-ref  */
+                type bbf-yang:name-string;		
+                description
+                  "The reference name to power shedding profile.";
+              }
+              leaf backup-battery-monitoring
+              {
+                /* xPath: /onu:onus/onu:onu/onu:root/hw-mounted:hardware/hw-mounted:component/nokia-hw-pwr-shed-mounted:power-shedding/nokia-hw-pwr-shed-mounted:backup-battery-monitoring */
+                type bbf-yang:name-string;		
+                description
+                  "Controls whether the ONU can monitor the backup 
+                   battery and report battery related alarms.";
+              }
+              leaf admin-state {/* xPath: /onu:onus/onu:onu/onu:root/hw-mounted:hardware/hw-mounted:component/[hw-mounted:class = 'ianahw:chassis']/hw-mounted:admin-state  */
+                 type hw-mounted:admin-state;
+                description
+                    "The administrative state for this component.";
+              }
+            }
+         }
+
+        container uni-loop-detection {
+          presence "Presence of this container indicates the ONU's unis loop detection behavior are under control.";
+          description
+            "This container allows to overwrite the template configuration
+             of the ONU loop detection configuration, located at the xPath:
+             /onu:onus/onu:onu/onu:root/if-mounted:interfaces
+             /loop-detect-mounted:uni-loop-detection.";
+
+          leaf enable {
+            type boolean;
+            default "true";
+            description
+              "This YANG leaf is used to enable/disable
+               uni-loop-detect testing for all physical interfaces
+               of type equal or derived from 'ianaift:ethernetCsmacd'
+               at once.when this YANG leaf is enabled a
+               uni-loop-detect test is performed periodic.
+               The ONU will report a 'loop-detect-alarm' related to
+               affected UNIs as soon such UNIs fail the
+               uni-loop-detect test.The ONU will clear the
+               'loop-detect-alarm' of affected UNIs if they succeed
+               a uni-loop-test or if this YANG leaf is configured as
+               'disabled'.";
+          }
+
+          leaf auto-shut-off {
+            type boolean;
+            default "true";
+            description
+              "This YANG leaf is used to cause interfaces that fail
+               the uni-loop-detect test to be automatically put in
+               operational state 'down'. In some ONU models, the
+               interface might be re-enabled when the uni-test-detect
+               'enable' is configured to 'false',however,some ONU
+               models maybe not, better read the ONU user manual.";
+          }
+        }
+        
+        container intended-beyond-onu-v-vrefpoint {
+          presence "intended-beyond-onu-v-vrefpoint";
+          description
+            "This container allows to overwrite the template configuration
+             of the ONU TR-069 configuration, located at the xPath:
+             /onu:onus/onu:onu/onu:root/nokia-sdan-tr069-mgnt-mounted:intended-beyond-onu-v-vrefpoint.";
+          
+          container reachable-tr069-servers {
+            description
+              "Allows to overwrite template data about reachable ACS TR-069 servers.";
+            list reachable-tr069-server {
+              key "template-ref";
+              description "list of reachable tr069 servers";
+              leaf template-ref {
+                type nok-typ-mounted:nokia-string-ascii64;
+              /* replaced by string for performance reasons
+                 type leafref {
+                   path "/onu:onus/onu:onu[onu:name = current()/../../../../onus-from-template:template-ref]/onu:root"
+                        + "/nokia-sdan-tr069-mgnt-mounted:intended-beyond-onu-v-vrefpoint"
+                        + "/nokia-sdan-tr069-mgnt-mounted:tr069-servers/nokia-sdan-tr069-mgnt-mounted:tr069-server/nokia-sdan-tr069-mgnt-mounted:reference-onu-v-vrefpoint";
+                 }
+              */
+                description
+                "The VEIP name through which a specific TR-069 server is reachable and 
+                 for which template data needs to be overwritten. The actual TR-069 
+                 server data will originate from the template but completed / overruled 
+                 with the data provided in this list entry.";
+              }
+              
+              leaf admin-state {   
+              /*  xPath: /onu:onus/onu:onu/onu:root/nokia-sdan-tr069-mgnt-mounted:intended-beyond-onu-v-vrefpoint
+                         /nokia-sdan-tr069-mgnt-mounted:tr069-servers/nokia-sdan-tr069-mgnt-mounted:tr069-server/nokia-sdan-tr069-mgnt-mounted:admin-state */
+                type enumeration {
+                  enum unlocked {
+                    value 0;
+                    description
+                      "The TR-069 connection is unlocked.";
+                  }
+                  enum locked {
+                    value 1;
+                    description
+                      "The TR-069 connection is locked.";
+                  }					
+                }
+                description
+                    "The administrative state of the TR-069 connection.";
+              }
+              
+              container authentication {
+                description "authentication";
+                leaf user-name {
+              /*  xPath: /onu:onus/onu:onu/onu:root/nokia-sdan-tr069-mgnt-mounted:intended-beyond-onu-v-vrefpoint/nokia-sdan-tr069-mgnt-mounted:tr069-servers
+              /nokia-sdan-tr069-mgnt-mounted:tr069-server/nokia-sdan-tr069-mgnt-mounted:authentication/nokia-sdan-tr069-mgnt-mounted:user-name */
+                  type string {
+	                length "1..50";
+	              }
+                  description
+                      "The user name for login TR-069 server.";
+                }
+              
+                leaf password {
+              /*  xPath: /onu:onus/onu:onu/onu:root/nokia-sdan-tr069-mgnt-mounted:intended-beyond-onu-v-vrefpoint/nokia-sdan-tr069-mgnt-mounted:tr069-servers
+              /nokia-sdan-tr069-mgnt-mounted:tr069-server/nokia-sdan-tr069-mgnt-mounted:authentication/nokia-sdan-tr069-mgnt-mounted:password */
+                  type tailf:aes-cfb-128-encrypted-string;
+                  description
+                      "The authentication password for login TR-069 server.";
+                }
+              }
+            }
+          }
+        }
+
+        leaf mib-upload-behavior {
+           type identityref {
+              base nokia-sdan-mib-upload-behavior-types-mounted:mib-upload-mode;
+           }
+           description
+              "The desired MIB upload behavior for this ONU";
+        }
+
+      }
+    }
+
+
+   augment '/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing/'
+        + 'bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-'
+        + 'frame-processing/bbf-subif-mounted:ingress-rule/bbf-subif-mounted:rule' {
+    when
+      "derived-from-or-self(../../../../../../onu:usage, 'template-common:node-template-usage')" {
+         description
+           "Only applicable for node-template-usage";
+        }
+        description "augment onu subif with auto instantiate";
+        leaf auto-instantiate {
+          type boolean;
+          default "true";
+          description
+            "true means during template expansion this object will be auto instantiated,
+            false means it will depend on the ONU instance side corresponding configuration exist or not.";
+        }
+    }
+
+   augment '/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface' {
+    when
+      "derived-from-or-self(if-mounted:type,'bbfift-mounted:vlan-sub-interface')
+       and
+       derived-from-or-self(../../../onu:usage, 'template-common:node-template-usage')" {
+        description
+          "Only applicable for node-template-usage";
+        }
+       description "onu interface augment auto instantiate";
+       leaf auto-instantiate {
+          type boolean;
+          default "true";
+          description
+            "true means during template expansion this object will be auto instantiated,
+            false means it will depend on the ONU instance side corresponding configuration exist or not.";
+        }
+    }
+
+   augment '/onu:onus/onu:onu/onus-from-template:template-parameters/onus-from-template:interfaces/onus-from-template:interface/onus-from-template:ethernet/onus-from-template:transmission-mode/onus-from-template:auto-negotiation/onus-from-template:auto-negotiation'{
+    when "onus-from-template:speed = 'eth-mounted:eth-if-speed-100gb' or onus-from-template:speed = 'nokia-eth-intf-ext-speed-mounted:eth-if-speed-25gb'";
+    description
+         "Data nodes for enable/disable the FEC.";
+    leaf fec {
+      type nokia-eth-intf-fec-mounted:fec-value;
+      default per-802.3;
+      description
+        "Allows to enable or disable the FEC on ethernet interface.";
+     }
+   }
+
+      augment '/onu:onus/onu:onu/onus-from-template:template-parameters/onus-from-template:gemports/onus-from-template:gemport' {
+       description
+          "Data nodes to enable/disable performance monitoring in GEM port";
+
+       leaf pm-enable {
+           type boolean;  /* xPath: augment /onu:onus/onu:onu/onu:root/bbf-xpongemtcont-mounted:xpongemtcont/bbf-xpongemtcont-mounted:gemports/bbf-xpongemtcont-mounted:gemport/performance/enable */
+           description
+             "This parameter is used to enable or disable performance monitoring in gemport";
+       }
+
+       container pm-tca-profile-ref {
+          description "pm treshold crssing alarm profile reference";
+          leaf gemport-tca-profile { /* xPath: /onu:onus/onu:onu/onu:root/bbf-xpongemtcont-mounted:xpongemtcont-state/bbf-xpongemtcont-gemport-pm-mounted:performance/tca-gemport-err-profile */
+            type string;
+            description "gemport treshold crossing alarm profile reference";  
+          }
+       }
+
+       /* Currently the default values for leaf-list is not supported in FNMS. In future release once implementation
+          is complete for FNMS-112954, default values will be enabled */
+       /* leaf-list eligible-pm-counter-group {
+            type nokia-xpongemtcont-gemport-pm-mounted:gemport-counter-group-type;
+            description
+                "GEM port performance group type that enables / disables the monitoring
+                 of GEM port performance counters";
+        }*/
+   }
+
+   augment '/onu:onus/onu:onu/onus-from-template:template-parameters/onus-from-template:voip' {
+       description
+          "Data nodes to enable/disable performance monitoring in the POTS interworking node";
+       list pots-interworking {
+           key "name";
+           description "pots interworking";
+           leaf name {    /* xPath: /onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-interworking-nodes/bbf-sip-voip-mounted:pots-interworking/name */
+               type string;
+               description
+                 "Identifies within the ONU template reference the POTS interface that is to be instantiated within the actual ONU instance";
+           }
+           leaf pm-enable {
+               type boolean; /* xpath: /onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-interworking-nodes/bbf-sip-voip-mounted:pots-interworking/performance/enable */
+               description
+                  "This parameter is used to enable or disable performance monitoring in pots-interworking node";
+           }
+
+           container pm-tca-profile-ref {
+             description "pm treshold crossing alarm profile references ";
+             leaf pots-call-control-profile { /* xPath: /onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-interworking-nodes/bbf-sip-voip-mounted:pots-interworking/nokia-voice-pm-mounted:performance/tca-pots-call-control-profile */
+                 type string;
+                 description "pots call control profile ";
+             }
+
+             leaf pots-rtp-profile { /* xPath: /onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-interworking-nodes/bbf-sip-voip-mounted:pots-interworking/nokia-voice-pm-mounted:performance/tca-pots-rtp-profile */
+                 type string;
+                 description "pots rtp profile";
+             }
+           }
+
+           /* Currently the default values for leaf-list is not supported in FNMS. In future release once implementation
+              is complete for FNMS-112954, default values will be enabled */
+           /* leaf-list eligible-pm-counter-group {
+               if-feature "nokia-voice-pm-mounted:pm-counter-group";
+               type nokia-voice-pm-mounted:pots-iw-counter-group-type;
+               must '../pm-enable = "true"' {
+                   error-message
+                       "Performance monitoring must be enabled";
+               }
+               description
+                   "POTS interworking performance group type that enables / disables the monitoring of POTS
+                   interworking node performance counters";
+           } */
+       }
+   }
+   augment '/onu:onus/onu:onu/onus-from-template:template-parameters/onus-from-template:interfaces/onus-from-template:interface' {
+       description
+          "Data nodes to enable/disable performance monitoring counter group in the interface";
+       /* leaf continuous-accumulation-enable{
+          type boolean;
+          must '../pm-enable = "true"' {
+              error-message
+                 "Performance monitoring must be enabled";
+          }
+          description
+              "Enables the continuous accumulation of PM counters regardless of the 15 minute intervals. 
+               When enabled there is no difference between the current and historical PM data. Both return the current value
+               of counters";
+       } */
+      
+       /* container pm-profile-association {
+           presence "Enables performance monitoring of specific performance monitoring counters";
+           leaf name {
+               //type leafref {
+               //    path "/onu:onus/onu:onu[onu:name = current()../../onus-from-template:template-ref]/onu:root"
+               //    + "/nokia-if-pm-mounted:pm-counter-profiles/nokia-if-pm-mounted:pm-counter-profile/nokia-if-pm-mounted:name";
+               //}
+               type string;
+               description
+                  "A reference to the pm-counter-profile name.";
+           }
+       } */
+   }
+   
+   augment '/onu:onus/onu:onu/onus-from-template:template-parameters/onus-from-template:interfaces/onus-from-template:interface' {
+      description "augment onus-from-template interface with pm";
+      /* removed for performance reasons */
+      /* when "derived-from-or-self(/onu:onus/onu:onu[onu:name = current()/../../../template-ref]/onu:root"
+            + "/if-mounted:interfaces/if-mounted:interface[if-mounted:name = current()/../template-ref]"
+ 
+            + "/if-mounted:type, 'ianaift-mounted:ethernetCsmacd')" 
+            or
+            "derived-from-or-self(/onu:onus/onu:onu[onu:name = current()/../../../template-ref]/onu:root"
+            + "/if-mounted:interfaces/if-mounted:interface[if-mounted:name = current()/../template-ref]"
+            + "/if-mounted:type ,'bbf-xponift-mounted:onu-v-vrefpoint')" */ 
+ 
+      leaf pm-counter-size {
+         type enumeration { /* xPath: /onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-if-pm-mounted:performance/bbf-if-pm-mounted:pm-counter-size */
+            enum 32bit-performance-monitoring {
+              description "32 bit";
+            }
+            enum 64bit-performance-monitoring {
+              description "64 bit";
+            }
+         }
+         description
+           "The size of Ethernet performance monitoring counters from ONU. If pm-counter-size is set to 64bit-performance-monitoring Ethernet 64-bit performance counters are
+            enabled, and 32-bit performance monitoring counters are disabled, and vice versa.";
+      }
+   }
+ }

@@ -1,0 +1,389 @@
+module nokia-voice-performance-management-mounted {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-voice-performance-management-mounted";
+  prefix  nokia-voice-pm-mounted;
+  import bbf-yang-types {
+    prefix bbf-yang;
+  }
+  import ietf-yang-types {
+    prefix yang;
+  }
+  import bbf-sip-voip-mounted  {
+    prefix bbf-sip-voip-mounted;
+  }
+  import bbf-fiber-onu-emulated-mount {
+     prefix onu;
+  }
+  import bbf-interfaces-performance-management-mounted {
+     prefix bbf-if-pm-mounted;
+  }
+  import nokia-sdan-voice-pm-threshold-profiles-mounted {
+     prefix nokia-voice-pm-threhsold-profiles-mounted;
+  }
+  import nokia-hardware-profiles-mounted {
+    prefix nokia-hw-prof-mounted;
+  }
+  import nokia-sdan-hardware-pm-threshold-profiles-mounted {
+    prefix nokia-hw-pm-threshold-prof-mounted;
+  }
+
+  organization
+    "Nokia";
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+  description
+    "This module contains a collection of YANG definitions for
+     supporting Nokia specific requirements as applicable to its
+     access network equipment.
+     Specifically, this module augments the bbf-xponcommon-performance-management
+     model with additional Nokia specific PM counters.
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+     Copyright (C) 2022, Nokia. All Rights Reserved.";
+
+  revision 2025-06-04 {
+    description
+      "Added support for PM counter group profile for the VOIP interfaces";
+    reference
+      "Nokia specific for EPIC BBN-107831";
+  }
+
+  revision 2022-12-22 {
+    description
+      "Support for voice performance monitoring TCA profiles configurtaion and TCA notification.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2022-02-16 {
+    description
+      "Initial revision";
+    reference
+      "Nokia specific";
+  }
+
+  feature performance-monitoring {
+    description
+      "Indicates the support of performance monitoring.";
+  }
+
+  feature pm-counter-group {
+    description
+      "Indicates that the server supports configuration of
+       performance monitoring group.";
+
+  }
+
+
+  grouping performance-monitoring-config {
+      description
+          "Configuration support to enable performance monitoring.";
+      container performance {
+      if-feature "nokia-voice-pm-mounted:performance-monitoring";
+          description
+              "Performance parameters.";
+
+          leaf enable {
+              type boolean;
+              default "false";
+              description
+                  "Enables performance counters on this SIP User Agent and media forwarder.";
+          }
+      }
+  }
+  grouping pots-performance-counters {
+    description
+      "The POTS performance counters.";
+    leaf call-attempt-failures {
+      type bbf-yang:performance-counter64;
+      description
+        "The total number of failed call attempts.";
+      reference
+        "ITU-T G.988, ONU management and control interface (OMCI),
+         clause 9.9.12, Call setup failures.";
+    }
+    leaf call-terminate-failures {
+      type bbf-yang:performance-counter64;
+      description
+        "The total number of call attempts terminated with a cause.";
+      reference
+        "ITU-T G.988, ONU management and control interface (OMCI),
+         clause 9.9.12, Call terminate failures.";
+    }
+    leaf maximum-call-setup-duration {
+      type uint32;
+      units "1 millisecond";
+      description
+        "A high water-mark that records the longest duration of a
+         single call set-up detected during this interval. Time is
+         measured in milliseconds from the time an initial set-up
+         was requested by the subscriber until the time at which a
+         response was provided to the subscriber in the form
+         of busy tone, audible ring tone, etc.";
+      reference
+        "ITU-T G.988, ONU management and control interface (OMCI),
+         clause 9.9.12, Call setup timer.";
+    }
+    leaf maximum-off-hook-duration {
+      type uint32;
+      units "1 millisecond";
+      description
+        "Records the longest period of a single off-hook
+         detected on the analogue port. Time is measured
+         in milliseconds.";
+       reference
+         "ITU-T G.988, ONU management and control interface
+          (OMCI), clause 9.9.12, Analog port off-hook timer.";
+    }
+    leaf releases-without-dialing {
+      type yang:counter32;
+      description
+        "Indicates the number of analog port releases without
+         dialing detected.";
+      reference
+        "ITU-T G.988, ONU management and control interface (OMCI),
+         clause 9.9.12, Analog port releases.";
+    }
+  }
+
+  grouping media-performance-counters {
+    description
+      "The media statistics.";
+    leaf rtp-packet-errors {
+      type bbf-yang:performance-counter64;
+      description
+        "The total number of RTP packet errors.";
+      reference
+        "ITU-T G.988, ONU management and control interface (OMCI),
+         clause 9.9.13, RTP errors.";
+    }
+    leaf rtp-packet-loss {
+        type bbf-yang:performance-counter64;
+        description
+           "The total number of RTP packets lost.";
+        reference
+           "ITU-T G.988, ONU management and control interface (OMCI),
+            clause 9.9.13, Packet loss.";
+    }
+    leaf maximum-time-rtcp-packets {
+      type uint32;
+      units "1 millisecond";
+      description
+        "The high-water mark that represents the maximum
+         time measured between RTCP packets, expressed in
+         milliseconds.";
+     reference
+        "ITU-T G.988, ONU management and control interface (OMCI),
+         clause 9.9.13, Maximum time between real-time transport
+         control protocol (RTCP) packets.";
+    }
+    leaf maximum-jitter {
+      type bbf-yang:performance-counter64;
+      description
+        "The high-water mark that represents the maximum jitter
+         identified during a measured interval, expressed in RTP
+         timestamp units.";
+     reference
+        "ITU-T G.988, ONU management and control interface (OMCI),
+         clause 9.9.13, Maximum jitter.";
+    }
+    leaf buffer-underflows {
+      type bbf-yang:performance-counter64;
+      description
+        "Counts the number of times the reassembly buffer
+         underflows. In case of continuous underflow caused by a
+         loss of IP packets, a single buffer underflow should be
+         counted. If the interworking function is implemented with
+         multiple buffers, such as a packet level buffer and a bit
+         level buffer, then underflow of either buffer increments
+         this counter.";
+     reference
+        "ITU-T G.988, ONU management and control interface (OMCI),
+         clause 9.9.13, Buffer underflows.";
+    }
+    leaf buffer-overflows {
+      type bbf-yang:performance-counter64;
+      description
+       "Counts the number of times the reassembly buffer
+        overflows. If the interworking function is implemented
+        with multiple buffers, such as a packet level buffer and
+        a bit level buffer, then overflow of either buffer
+        increments this counter.";
+     reference
+        "ITU-T G.988, ONU management and control interface (OMCI),
+         clause 9.9.13, Buffer overflows.";
+    }
+
+    leaf out-rtp-packets {
+      type bbf-yang:performance-counter64;
+      description
+        "The total number of RTP packets transmitted.";
+    }
+    leaf in-rtp-packets {
+      type bbf-yang:performance-counter64;
+      description
+        "The total number of RTP packets received.";
+    }
+  }
+
+  grouping pots-performance-monitoring {
+       description
+          "POTS performance monitoring.";
+
+       container intervals-15min {
+          description
+             "15 minute interval performance counters.";
+          container current {
+             description
+                "Contains the counts that are currently accumulating.";
+             uses nokia-voice-pm-mounted:pots-performance-counters;
+             uses nokia-voice-pm-mounted:media-performance-counters;
+          }
+
+          uses bbf-if-pm-mounted:performance-15min-history-parameters;
+
+          list history {
+             key "interval-number";
+             max-elements 96;
+             description
+                "A history of 15 minute intervals.";
+
+             leaf interval-number {
+                type bbf-if-pm-mounted:performance-15min-history-interval;
+                description
+                   "The number of the interval relative to the current
+                    interval.";
+             }
+
+             uses bbf-if-pm-mounted:performance-history-15min-interval-parameters;
+             uses nokia-voice-pm-mounted:pots-performance-counters;
+             uses nokia-voice-pm-mounted:media-performance-counters;
+         }
+      }
+  }
+
+  typedef pots-iw-pm-group-type {
+      type enumeration {
+          enum "call-control-pm" {
+              description
+                 "This enables the performance monitoring of POTS interworking node counters.
+                 When this PM counter group type is enabled, the below POTS performance counters
+                 are enabled:
+                     call-attempt-failures, call-terminate-failures, maximum-call-setup-duration,
+                     maximum-off-hook-duration, releases-without-dialing
+                 These counters are enabled for intervals-15min current and history
+                 performance data";
+          }
+          enum "rtp-pm" {
+              description
+                 "This enables the performance monitoring of RTP packet counters.
+                 When this PM counter group type is enabled, the below media performance counters
+                 for RTP are enabled:
+                     out-rtp-packets, in-rtp-packets rtp-packet-errors, rtp-packet-loss,
+                     maximum-time-rtcp-packets, maximum-jitter, buffer-underflows, buffer-overflows
+                 These counters are enabled for intervals-15min current and history
+                 performance data";
+          }
+      }
+      description "type definition";
+  }
+
+  augment '/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-interworking-nodes/bbf-sip-voip-mounted:pots-interworking' {
+      description
+          "Data nodes for the performance configuration parameters.";
+
+      uses nokia-voice-pm-mounted:performance-monitoring-config;
+  }
+
+  augment "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-interworking-nodes-state/bbf-sip-voip-mounted:pots-interworking" {
+      description "augment pots interworking";
+      container performance{
+         if-feature "nokia-voice-pm-mounted:performance-monitoring";
+         description "performance";
+         uses nokia-voice-pm-mounted:pots-performance-monitoring;
+      }
+  }
+
+  augment "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-interworking-nodes/bbf-sip-voip-mounted:pots-interworking"
+         + "/nokia-voice-pm-mounted:performance" {
+      description
+        "Data nodes for threshold crossing alert configuration parameters";
+
+      leaf tca-pots-call-control-profile {
+           type leafref {
+               path "../../../../nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-voice-pm-threhsold-profiles-mounted:ccpm-failure-profile/nokia-voice-pm-threhsold-profiles-mounted:name";
+          }
+         description
+            "Reference to the voice call control performance monitoring TCA profile. TCA is disabled when no profile is referenced";
+      }
+      leaf tca-pots-rtp-profile {
+          type leafref {
+               path "../../../../nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-voice-pm-threhsold-profiles-mounted:rtp-failure-profile/nokia-voice-pm-threhsold-profiles-mounted:name";
+          }
+          description
+            "Reference to the voice call control performance monitoring TCA profile. TCA is disabled when no profile is referenced";
+      }
+      leaf-list pots-pm-group {
+	  type pots-iw-pm-group-type;
+	  description
+	    "Performance monitoring group type to enable or disable
+	     specific POTS UNI performance monitoring counters";
+      }
+  }
+
+  augment "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-interworking-nodes-state/bbf-sip-voip-mounted:pots-interworking"
+         + "/nokia-voice-pm-mounted:performance/nokia-voice-pm-mounted:intervals-15min/nokia-voice-pm-mounted:current" {
+      description
+        "Data nodes for threshold crossing alert notifications";
+
+    notification threshold-crossing-alert {
+      description
+        "A threshold has been crossed during the current 15-min interval";
+      leaf tca-identity {
+        type identityref {
+          base nokia-voice-pm-threhsold-profiles-mounted:pots-pm-tca-alert;
+        }
+        mandatory true;
+        description
+          "Indicating which TCA element has reached threshold value.";
+      }
+      leaf notification-text {
+        type string;
+        description
+          "The description string used to inform the operators about the notification event";
+      }
+    }
+  }
+}
+

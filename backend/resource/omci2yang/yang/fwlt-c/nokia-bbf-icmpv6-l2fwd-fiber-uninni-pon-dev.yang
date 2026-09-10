@@ -1,0 +1,53 @@
+module nokia-bbf-icmpv6-l2fwd-fiber-uninni-pon-dev {
+
+  namespace
+     "urn:bbf:yang:nokia-bbf-icmpv6-l2fwd-fiber-uninni-pon-dev";
+
+  prefix nokia-bbf-icmpv6-l2fwd-fiber-uninni-pon-dev;
+
+  import bbf-icmpv6 {
+      prefix bbf-icmpv6;
+  }
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import bbf-interface-usage {
+    prefix bbf-if-usg;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA BBF/bbf-icmpv6 YANG module supporting
+     deviations on top of standard.";
+
+  /* revision */
+
+  revision 2020-06-22 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia internal.";
+  }
+   
+
+  /***************************************************************************************/
+  /* icmpv6 configuration only at user side                                              */
+  /***************************************************************************************/
+
+  deviation "/if:interfaces/if:interface/bbf-icmpv6:icmpv6" {
+    deviate add{
+      must "current()/../bbf-if-usg:interface-usage/bbf-if-usg:interface-usage = 'user-port'"
+      {
+        error-message "Icmpv6 configuration must be in user port";
+      }
+    }
+  }
+
+}

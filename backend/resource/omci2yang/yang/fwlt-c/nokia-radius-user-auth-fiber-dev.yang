@@ -1,0 +1,133 @@
+module nokia-radius-user-auth-fiber-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+            + "nokia-radius-user-auth-fiber-dev";
+
+  prefix nokia-radius-user-auth-fiber-dev;
+
+  import ietf-system {
+    prefix "sys";
+  }
+
+  import ietf-inet-types {
+    prefix inet;
+  }
+
+  import nokia-radius {
+    prefix nokia-radius;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG deviations on top
+     of the standard radius yang module.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2023, Nokia. All Rights Reserved.";
+
+  revision 2023-04-01 {
+    description
+      "Initial version";
+    reference
+      "Nokia specific";
+  }
+
+  deviation "/sys:system/sys:radius/"
+          + "sys:server/nokia-radius:server-auth" {
+    deviate add {
+      must "not(boolean(current()/pinned-ca-certs) and "
+         + "boolean(current()/pinned-server-certs))"{
+        error-message "Only one pinning mechanism (CA pinning or Certificate Pinning) should be specified";
+        description "Specify one pinnining mechanism (CA pinning or Certificate Pinning)";
+      }
+    }
+  }
+
+  deviation "/sys:system/sys:radius/"
+          + "nokia-radius:policy/nokia-radius:auth-server-second" {
+    description
+      "Secondary Authentication server shall not be same as the
+       Primary Authentication Server";
+    deviate add {
+      must "current() != current()/../auth-server-first" {
+        error-message "Secondary Authentication server shall "
+                    + "not be same as the Primary "
+                    + "Authentication Server";
+      }
+    }
+  }
+
+  deviation "/sys:system/sys:radius/nokia-radius:policy/nokia-radius:nas-ip-address" {
+    description
+      "The nas-ip-address is four octects, IPv4 address. ";
+    deviate replace {
+      type inet:ipv4-address;
+    }
+    deviate add {
+      must 'not((substring-before(current(),".") = 127) '
+         +     'or (substring-before(current(),".") = 0) '
+         +     'or (starts-with(current(),"192.0.0.")) '
+         +     'or (starts-with(current(),"192.0.2.")) '
+         +     'or (starts-with(current(),"198.51.100.")) '
+         +     'or (starts-with(current(),"203.0.113.")) '
+         +     'or ((substring-before(current(),".") >= 224) '
+         +     'and (substring-before(current(),".") <= 255))) '
+      {
+         error-message "Invalid NAS IPv4 address";
+         description
+           "This deviation ensures to restrict invalid IPv4 NAS IP address with reference of:
+           1. https://www.iana.org/assignments/iana-ipv4-special-registry/iana-ipv4-special-registry.xhtml
+               127.0.0.0/8         - Loopback
+               0.0.0.0/8           - Host on this network
+               192.0.0.0/24        - IETF Protocol Assignments
+               192.0.2.0/24        - Documentation (TEST-NET-1)
+               198.51.100.0/24     - Documentation (TEST-NET-2)
+               203.0.113.0/24      - Documentation (TEST-NET-3)
+               224.0.0.0/4         - Multicast
+               240.0.0.0/4         - Reserved
+               255.255.255.255/32  - Broadcast";
+      }
+    }
+  }
+}

@@ -1,0 +1,52 @@
+module nokia-bbf-sub-interface-tagging-frommounted-eonu-only-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+           + "nokia-bbf-sub-interface-tagging-frommounted-eonu-only-dev";
+
+  prefix nokia-bbf-sub-interface-tagging-frommounted-eonu-only-dev;
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import ietf-interfaces-frommounted {
+    prefix if-frommounted;
+  }
+
+  import bbf-sub-interface-tagging-frommounted {
+    prefix bbf-subif-tag-frommounted;
+  }
+
+  import bbf-sub-interfaces-frommounted {
+    prefix bbf-subif-frommounted;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "This module contains a collection of YANG deviations on top
+     of standard for supporting BBF/bbf-sub-interfaces-tagging YANG module.
+     Copyright (C) 2017-2018, Nokia. All Rights Reserved.";
+
+  revision 2025-08-26 {
+    description
+      "remove egress-rewrite check";
+    reference
+      "Nokia specific";
+  }
+
+  deviation "/onu:onus/onu:onu/onu:fromroot/if-frommounted:interfaces/if-frommounted:interface/bbf-subif-frommounted:frame-processing"
+           +"/bbf-subif-frommounted:inline-frame-processing/bbf-subif-frommounted:inline-frame-processing/bbf-subif-frommounted:egress-rewrite"
+           +"/bbf-subif-tag-frommounted:push-tag/bbf-subif-tag-frommounted:dot1q-tag/bbf-subif-tag-frommounted:dei"
+           +"/bbf-subif-tag-frommounted:write-dei-0" {
+    description
+       "This deviaton assures egress-rewrite not support write-dei-0.";
+     deviate not-supported;
+ }
+}
+
+

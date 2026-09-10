@@ -1,0 +1,60 @@
+module nokia-sdan-hardware-power-shed-mounted-eonu-dev {
+  yang-version 1.1;
+  namespace
+     "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+   + "nokia-sdan-hardware-power-shed-mounted-eonu-dev";
+
+  prefix nokia-sdan-hardware-power-shed-mounted-eonu-dev;
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import ietf-hardware-mounted {
+    prefix hw-mounted;
+  }
+
+  import bbf-hardware-types {
+    prefix bbf-hwt;
+  }
+
+  import nokia-hardware-identities {
+    prefix nokia-hwi;
+  }
+
+  import nokia-sdan-hardware-power-shed-mounted {
+    prefix nokia-hw-pwr-shed-mounted;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "The NOKIA BBF/hardware YANG module supporting
+     deviations on top of standard.";
+
+  revision 2024-05-22 {
+      description
+        "Extend limit class type with moca. Update it for BBN-729";
+      reference
+        "Nokia specific";
+  }
+  revision 2023-07-10 {
+      description
+        "Add deviation to limit class type to rj45/rj11/rf-video. Update it for BBN-5820";
+      reference
+        "Nokia specific";
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware/hw-mounted:component/nokia-hw-pwr-shed-mounted:port-power-shedding/nokia-hw-pwr-shed-mounted:power-shed-override" {
+    deviate add {
+      must "(derived-from-or-self (../../hw-mounted:class, 'bbf-hwt:rj45') or derived-from-or-self (../../hw-mounted:class, 'nokia-hwi:rj11') or derived-from-or-self (../../hw-mounted:class, 'nokia-hwi:rf-video') or derived-from-or-self (../../hw-mounted:class, 'nokia-hwi:moca'))" {
+        error-message "port power shed override only supported on rj45/rj11/rf-video/moca.";
+      }
+    }
+  }
+}

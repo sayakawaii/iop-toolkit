@@ -1,0 +1,252 @@
+module nokia-bbf-olt-vomci-grpc-client-tls-common-dev {
+
+    namespace
+        "http://www.nokia.com/Fixed-Networks/BBA/yang/" +
+        "nokia-bbf-olt-vomci-grpc-client-tls-common-dev";
+
+    prefix nokia-bbf-olt-vomci-grpc-client-tls-common-dev;
+
+    import bbf-olt-vomci-grpc-client-tls {
+        prefix bbf-olt-vomci-grpcc-tls;
+    }
+
+    import bbf-olt-vomci {
+        prefix bbf-olt-vomci;
+    }
+
+    import bbf-olt-vomci-grpc-client {
+        prefix bbf-olt-vomci-grpcc;
+    }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be 
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG definitions for 
+     supporting Nokia specific requirements as applicable to its 
+     access network equipment.
+     
+     Specifically, this module augments the interface model with data
+     specific for the classification and processing of Layer 2 Control
+     Protocol (L2CP) frames.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia 
+     reserves the right to revise this document for any reason, 
+     including but not limited to conformity with standards 
+     promulgated by various agencies, utilisation of advances in the 
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or 
+     referred to herein.
+
+     The product specifications and other technical or performance 
+     information contained herein are subject to change without 
+     notice. Updates of this document will be issued under the above 
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any 
+     information or opinion contained herein. Nokia expressly advises 
+     that any use of for any purpose or reliance upon this technical 
+     reference is at the risk of the user and that Nokia shall not be 
+     liable for any damage or injury incurred by any person arising 
+     out of the sufficiency, accuracy, or utility of any information 
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any 
+     manufacturer to modify or change any of its products, nor does 
+     this document represent any commitment by Nokia to sell or 
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license 
+     or right under any patent, whether or not the use of any 
+     information herein necessarily employs an invention of any 
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2023, Nokia. All Rights Reserved.";
+
+    revision 2023-03-21 {
+        description
+        "Initial revision.";
+        reference
+        "TBD";
+    }
+
+    deviation "/bbf-olt-vomci:remote-nf/bbf-olt-vomci:nf-client/bbf-olt-vomci:initiate/" +
+              "bbf-olt-vomci:remote-server/bbf-olt-vomci:transport/bbf-olt-vomci-grpcc:grpc/" +
+              "bbf-olt-vomci-grpcc:grpc-client/bbf-olt-vomci-grpcc:access-point/" +
+              "bbf-olt-vomci-grpcc:grpc-transport-parameters/bbf-olt-vomci-grpcc:tcp-client-options/" +
+              "bbf-olt-vomci-grpcc-tls:tls-transport/bbf-olt-vomci-grpcc-tls:tcp-client-parameters/" +
+              "bbf-olt-vomci-grpcc-tls:local-address" {
+        description "tcp-client-parameters local-address not supported";
+        deviate not-supported;
+    }
+
+    deviation "/bbf-olt-vomci:remote-nf/bbf-olt-vomci:nf-client/bbf-olt-vomci:initiate/" +
+              "bbf-olt-vomci:remote-server/bbf-olt-vomci:transport/bbf-olt-vomci-grpcc:grpc/" +
+              "bbf-olt-vomci-grpcc:grpc-client/bbf-olt-vomci-grpcc:access-point/" +
+              "bbf-olt-vomci-grpcc:grpc-transport-parameters/bbf-olt-vomci-grpcc:tcp-client-options/" +
+              "bbf-olt-vomci-grpcc-tls:tls-transport/bbf-olt-vomci-grpcc-tls:tcp-client-parameters/" +
+              "bbf-olt-vomci-grpcc-tls:local-port" {
+        description "tcp-client-parameters local-port not supported";
+        deviate not-supported;
+    }
+
+    deviation "/bbf-olt-vomci:remote-nf/bbf-olt-vomci:nf-client/bbf-olt-vomci:initiate/" +
+              "bbf-olt-vomci:remote-server/bbf-olt-vomci:transport/bbf-olt-vomci-grpcc:grpc/" +
+              "bbf-olt-vomci-grpcc:grpc-client/bbf-olt-vomci-grpcc:access-point/" +
+              "bbf-olt-vomci-grpcc:grpc-transport-parameters/bbf-olt-vomci-grpcc:tcp-client-options/" +
+              "bbf-olt-vomci-grpcc-tls:tls-transport/bbf-olt-vomci-grpcc-tls:tcp-client-parameters/" +
+              "bbf-olt-vomci-grpcc-tls:keepalives" {
+        description "tcp-client-parameters keepalives not supported";
+        deviate not-supported;
+    }
+
+    deviation "/bbf-olt-vomci:remote-nf/bbf-olt-vomci:nf-client/bbf-olt-vomci:initiate/" +
+              "bbf-olt-vomci:remote-server/bbf-olt-vomci:transport/bbf-olt-vomci-grpcc:grpc/" +
+              "bbf-olt-vomci-grpcc:grpc-client/bbf-olt-vomci-grpcc:access-point/" +
+              "bbf-olt-vomci-grpcc:grpc-transport-parameters/bbf-olt-vomci-grpcc:tcp-client-options/" +
+              "bbf-olt-vomci-grpcc-tls:tls-transport/bbf-olt-vomci-grpcc-tls:tls-client-parameters/" +
+              "bbf-olt-vomci-grpcc-tls:server-auth" {
+        deviate delete {
+            must 'pinned-ca-certs or pinned-server-certs';
+        }
+    }
+
+    deviation "/bbf-olt-vomci:remote-nf/bbf-olt-vomci:nf-client/bbf-olt-vomci:initiate/" +
+              "bbf-olt-vomci:remote-server/bbf-olt-vomci:transport/bbf-olt-vomci-grpcc:grpc/" +
+              "bbf-olt-vomci-grpcc:grpc-client/bbf-olt-vomci-grpcc:access-point/" +
+              "bbf-olt-vomci-grpcc:grpc-transport-parameters/bbf-olt-vomci-grpcc:tcp-client-options/" +
+              "bbf-olt-vomci-grpcc-tls:tls-transport/bbf-olt-vomci-grpcc-tls:tls-client-parameters/" +
+              "bbf-olt-vomci-grpcc-tls:server-auth" {
+        description "pinned CA certificate must be configured";
+        deviate add {
+            must "pinned-ca-certs";
+        }
+    }
+
+    deviation "/bbf-olt-vomci:remote-nf/bbf-olt-vomci:nf-client/bbf-olt-vomci:initiate/" +
+              "bbf-olt-vomci:remote-server/bbf-olt-vomci:transport/bbf-olt-vomci-grpcc:grpc/" +
+              "bbf-olt-vomci-grpcc:grpc-client/bbf-olt-vomci-grpcc:access-point/" +
+              "bbf-olt-vomci-grpcc:grpc-transport-parameters/bbf-olt-vomci-grpcc:tcp-client-options/" +
+              "bbf-olt-vomci-grpcc-tls:tls-transport/bbf-olt-vomci-grpcc-tls:tls-client-parameters/" +
+              "bbf-olt-vomci-grpcc-tls:server-auth/bbf-olt-vomci-grpcc-tls:pinned-server-certs" {
+        description "tls-client-parameters server-auth pinned-server-certs not supported";
+        deviate not-supported;
+    }
+
+    deviation "/bbf-olt-vomci:remote-nf/bbf-olt-vomci:nf-client/bbf-olt-vomci:initiate/" +
+              "bbf-olt-vomci:remote-server/bbf-olt-vomci:transport/bbf-olt-vomci-grpcc:grpc/" +
+              "bbf-olt-vomci-grpcc:grpc-client/bbf-olt-vomci-grpcc:access-point/" +
+              "bbf-olt-vomci-grpcc:grpc-transport-parameters/bbf-olt-vomci-grpcc:tcp-client-options/" +
+              "bbf-olt-vomci-grpcc-tls:tls-transport/bbf-olt-vomci-grpcc-tls:tls-client-parameters/" +
+              "bbf-olt-vomci-grpcc-tls:hello-params" {
+        description "tls-client-parameters hello-params not supported";
+        deviate not-supported;
+    }
+
+    deviation "/bbf-olt-vomci:remote-nf/bbf-olt-vomci:nf-client/bbf-olt-vomci:initiate/" +
+              "bbf-olt-vomci:remote-server/bbf-olt-vomci:transport/bbf-olt-vomci-grpcc:grpc/" +
+              "bbf-olt-vomci-grpcc:grpc-client/bbf-olt-vomci-grpcc:access-point/" +
+              "bbf-olt-vomci-grpcc:grpc-transport-parameters/bbf-olt-vomci-grpcc:tcp-client-options/" +
+              "bbf-olt-vomci-grpcc-tls:tls-transport/bbf-olt-vomci-grpcc-tls:tls-client-parameters/" +
+              "bbf-olt-vomci-grpcc-tls:client-identity/bbf-olt-vomci-grpcc-tls:auth-type/bbf-olt-vomci-grpcc-tls:certificate/" +
+              "bbf-olt-vomci-grpcc-tls:certificate/bbf-olt-vomci-grpcc-tls:local-or-keystore/bbf-olt-vomci-grpcc-tls:local/" +
+              "bbf-olt-vomci-grpcc-tls:local-definition/bbf-olt-vomci-grpcc-tls:algorithm" {
+        description "tls-client-parameters local local-definition algorithm not supported";
+        deviate not-supported;
+    }
+
+    deviation "/bbf-olt-vomci:remote-nf/bbf-olt-vomci:nf-client/bbf-olt-vomci:initiate/" +
+              "bbf-olt-vomci:remote-server/bbf-olt-vomci:transport/bbf-olt-vomci-grpcc:grpc/" +
+              "bbf-olt-vomci-grpcc:grpc-client/bbf-olt-vomci-grpcc:access-point/" +
+              "bbf-olt-vomci-grpcc:grpc-transport-parameters/bbf-olt-vomci-grpcc:tcp-client-options/" +
+              "bbf-olt-vomci-grpcc-tls:tls-transport/bbf-olt-vomci-grpcc-tls:tls-client-parameters/" +
+              "bbf-olt-vomci-grpcc-tls:client-identity/bbf-olt-vomci-grpcc-tls:auth-type/bbf-olt-vomci-grpcc-tls:certificate/" +
+              "bbf-olt-vomci-grpcc-tls:certificate/bbf-olt-vomci-grpcc-tls:local-or-keystore/bbf-olt-vomci-grpcc-tls:local/" +
+              "bbf-olt-vomci-grpcc-tls:local-definition/bbf-olt-vomci-grpcc-tls:public-key" {
+        description "tls-client-parameters local local-definition public-key not supported";
+        deviate not-supported;
+    }
+
+    deviation "/bbf-olt-vomci:remote-nf/bbf-olt-vomci:nf-client/bbf-olt-vomci:initiate/" +
+              "bbf-olt-vomci:remote-server/bbf-olt-vomci:transport/bbf-olt-vomci-grpcc:grpc/" +
+              "bbf-olt-vomci-grpcc:grpc-client/bbf-olt-vomci-grpcc:access-point/" +
+              "bbf-olt-vomci-grpcc:grpc-transport-parameters/bbf-olt-vomci-grpcc:tcp-client-options/" +
+              "bbf-olt-vomci-grpcc-tls:tls-transport/bbf-olt-vomci-grpcc-tls:tls-client-parameters/" +
+              "bbf-olt-vomci-grpcc-tls:client-identity/bbf-olt-vomci-grpcc-tls:auth-type/bbf-olt-vomci-grpcc-tls:certificate/" +
+              "bbf-olt-vomci-grpcc-tls:certificate/bbf-olt-vomci-grpcc-tls:local-or-keystore/bbf-olt-vomci-grpcc-tls:local/" +
+              "bbf-olt-vomci-grpcc-tls:local-definition/bbf-olt-vomci-grpcc-tls:private-key" {
+        description "tls-client-parameters local local-definition private-key not supported";
+        deviate not-supported;
+    }
+
+    deviation "/bbf-olt-vomci:remote-nf/bbf-olt-vomci:nf-client/bbf-olt-vomci:initiate/" +
+              "bbf-olt-vomci:remote-server/bbf-olt-vomci:transport/bbf-olt-vomci-grpcc:grpc/" +
+              "bbf-olt-vomci-grpcc:grpc-client/bbf-olt-vomci-grpcc:access-point/" +
+              "bbf-olt-vomci-grpcc:grpc-transport-parameters/bbf-olt-vomci-grpcc:tcp-client-options/" +
+              "bbf-olt-vomci-grpcc-tls:tls-transport/bbf-olt-vomci-grpcc-tls:tls-client-parameters/" +
+              "bbf-olt-vomci-grpcc-tls:client-identity/bbf-olt-vomci-grpcc-tls:auth-type/bbf-olt-vomci-grpcc-tls:certificate/" +
+              "bbf-olt-vomci-grpcc-tls:certificate/bbf-olt-vomci-grpcc-tls:local-or-keystore/bbf-olt-vomci-grpcc-tls:local/" +
+              "bbf-olt-vomci-grpcc-tls:local-definition/bbf-olt-vomci-grpcc-tls:generate-hidden-key" {
+        description "tls-client-parameters local local-definition generate-hidden-key not supported";
+        deviate not-supported;
+    }
+
+    deviation "/bbf-olt-vomci:remote-nf/bbf-olt-vomci:nf-client/bbf-olt-vomci:initiate/" +
+              "bbf-olt-vomci:remote-server/bbf-olt-vomci:transport/bbf-olt-vomci-grpcc:grpc/" +
+              "bbf-olt-vomci-grpcc:grpc-client/bbf-olt-vomci-grpcc:access-point/" +
+              "bbf-olt-vomci-grpcc:grpc-transport-parameters/bbf-olt-vomci-grpcc:tcp-client-options/" +
+              "bbf-olt-vomci-grpcc-tls:tls-transport/bbf-olt-vomci-grpcc-tls:tls-client-parameters/" +
+              "bbf-olt-vomci-grpcc-tls:client-identity/bbf-olt-vomci-grpcc-tls:auth-type/bbf-olt-vomci-grpcc-tls:certificate/" +
+              "bbf-olt-vomci-grpcc-tls:certificate/bbf-olt-vomci-grpcc-tls:local-or-keystore/bbf-olt-vomci-grpcc-tls:local/" +
+              "bbf-olt-vomci-grpcc-tls:local-definition/bbf-olt-vomci-grpcc-tls:install-hidden-key/" +
+              "bbf-olt-vomci-grpcc-tls:input/bbf-olt-vomci-grpcc-tls:algorithm" {
+        description "tls-client-parameters local install-hidden-key algorithm not supported";
+        deviate not-supported;
+    }
+
+    deviation "/bbf-olt-vomci:remote-nf/bbf-olt-vomci:nf-client/bbf-olt-vomci:initiate/" +
+              "bbf-olt-vomci:remote-server/bbf-olt-vomci:transport/bbf-olt-vomci-grpcc:grpc/" +
+              "bbf-olt-vomci-grpcc:grpc-client/bbf-olt-vomci-grpcc:access-point/" +
+              "bbf-olt-vomci-grpcc:grpc-transport-parameters/bbf-olt-vomci-grpcc:tcp-client-options/" +
+              "bbf-olt-vomci-grpcc-tls:tls-transport/bbf-olt-vomci-grpcc-tls:tls-client-parameters/" +
+              "bbf-olt-vomci-grpcc-tls:client-identity/bbf-olt-vomci-grpcc-tls:auth-type/bbf-olt-vomci-grpcc-tls:certificate/" +
+              "bbf-olt-vomci-grpcc-tls:certificate/bbf-olt-vomci-grpcc-tls:local-or-keystore/bbf-olt-vomci-grpcc-tls:local/" +
+              "bbf-olt-vomci-grpcc-tls:local-definition/bbf-olt-vomci-grpcc-tls:install-hidden-key/" +
+              "bbf-olt-vomci-grpcc-tls:input/bbf-olt-vomci-grpcc-tls:public-key" {
+        description "tls-client-parameters local install-hidden-key public-key not supported";
+        deviate not-supported;
+    }
+
+    deviation "/bbf-olt-vomci:remote-nf/bbf-olt-vomci:nf-client/bbf-olt-vomci:initiate/" +
+              "bbf-olt-vomci:remote-server/bbf-olt-vomci:transport/bbf-olt-vomci-grpcc:grpc/" +
+              "bbf-olt-vomci-grpcc:grpc-client/bbf-olt-vomci-grpcc:access-point/" +
+              "bbf-olt-vomci-grpcc:grpc-transport-parameters/bbf-olt-vomci-grpcc:tcp-client-options/" +
+              "bbf-olt-vomci-grpcc-tls:tls-transport/bbf-olt-vomci-grpcc-tls:tls-client-parameters/" +
+              "bbf-olt-vomci-grpcc-tls:client-identity/bbf-olt-vomci-grpcc-tls:auth-type/bbf-olt-vomci-grpcc-tls:certificate/" +
+              "bbf-olt-vomci-grpcc-tls:certificate/bbf-olt-vomci-grpcc-tls:local-or-keystore/bbf-olt-vomci-grpcc-tls:local/" +
+              "bbf-olt-vomci-grpcc-tls:local-definition/bbf-olt-vomci-grpcc-tls:certificate-expiration" {
+        description "tls-client-parameters local local-definition certificate-expiration not supported";
+        deviate not-supported;
+    }
+
+    deviation "/bbf-olt-vomci:remote-nf/bbf-olt-vomci:nf-client/bbf-olt-vomci:initiate/" +
+              "bbf-olt-vomci:remote-server/bbf-olt-vomci:transport/bbf-olt-vomci-grpcc:grpc/" +
+              "bbf-olt-vomci-grpcc:grpc-client/bbf-olt-vomci-grpcc:access-point/" +
+              "bbf-olt-vomci-grpcc:grpc-transport-parameters/bbf-olt-vomci-grpcc:tcp-client-options/" +
+              "bbf-olt-vomci-grpcc-tls:tls-transport/bbf-olt-vomci-grpcc-tls:tls-client-parameters/" +
+              "bbf-olt-vomci-grpcc-tls:client-identity/bbf-olt-vomci-grpcc-tls:auth-type/bbf-olt-vomci-grpcc-tls:certificate/" +
+              "bbf-olt-vomci-grpcc-tls:certificate/bbf-olt-vomci-grpcc-tls:local-or-keystore/bbf-olt-vomci-grpcc-tls:keystore" {
+        description "tls-client-parameters keystore not supported";
+        deviate not-supported;
+    }
+}
+

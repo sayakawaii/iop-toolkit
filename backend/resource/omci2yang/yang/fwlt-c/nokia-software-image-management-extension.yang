@@ -1,0 +1,636 @@
+module nokia-software-image-management-extension {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+          + "nokia-software-image-management-extension";
+  prefix nokia-swm-ext;
+
+  import bbf-software-image-management-one-dot-one {
+    prefix bbf-sim;
+  }
+
+  import ietf-hardware {
+    prefix hw;
+  }
+  import ietf-inet-types {
+    prefix inet;
+  }
+
+  import bbf-yang-types {
+    prefix bbf-yang;
+  }
+
+  import nokia-file-transfer {
+    prefix nokia-ft;
+  }
+
+  import ietf-trust-anchors {
+    prefix ta;
+    reference
+      "RFC YYYY: YANG Data Model for Global Trust Anchors";
+  }
+
+  import nokia-sdan-keystore-types {
+    prefix nokia-ks;
+  }
+
+  import nokia-sdan-est-client {
+    prefix estc;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "This module contains extension of YANG definitions for
+     the overall structure of software image management on physical
+     entities as defined by ietf-hardware.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2026, Nokia. All Rights Reserved.";
+
+   revision 2026-05-26 {
+     description
+       "added activate-state container under software revisions revision and
+        activate-mode leaf under activate-revision.";
+     reference
+      "Nokia specific";
+   }
+
+   revision 2026-04-14 {
+     description
+       "added leaf for targetConfig under config download request.";
+     reference
+      "Nokia specific";
+
+   }
+
+   revision 2025-08-28 {
+     description
+       "Added sftp support for config-download";
+     reference
+      "Nokia specific";
+   }
+
+   revision 2025-08-22 {
+     description
+       "EST certificate profile reference added";
+     reference
+      "Nokia specific";
+   }
+
+   revision 2025-04-09 {
+     description
+       "mTLS download support extended to ont_software, onu_vendor_specific_software and transformation_software.";
+     reference
+      "Nokia specific";
+   }
+
+   revision 2025-02-21 {
+     description
+       "Updated central-keystore-reference container description";
+     reference
+      "Nokia specific";
+   }
+
+   revision 2024-06-14 {
+     description
+       "added  leaf asymmetric cerificate and key";
+     reference
+      "Nokia specific";
+   }
+
+   revision 2022-06-06 {
+     description
+       "added product-code per software revision to display software descriptor name";
+     reference
+      "Nokia specific";
+   }
+
+   revision 2021-10-01 {
+     description
+       "added if-feature ta:x509-certificates for server-public-key";
+     reference
+      "Nokia specific";
+   }
+
+   revision 2021-05-26 {
+     description
+       "added leaf for sftp download support in a new yang module
+        nokia-software-download-sftp-support.yang";
+     reference
+      "Nokia specific";
+   }
+
+   revision 2020-11-05 {
+     description
+       "added leaf for defaultDB for activate action support in
+        nokia-software-image-management-extension.yang";
+     reference
+      "Nokia specific";
+   }
+
+   revision 2020-07-15 {
+     description
+       "added new actions and statedata for swm offline migration support in
+        nokia-software-image-management-extension.yang";
+     reference
+      "Nokia specific";
+   }
+
+  revision 2019-05-10 {
+    description
+      "added leaf server-public-key in
+       nokia-software-image-management-extension.yang";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2018-03-15 {
+    description
+      "Initial revision.";
+    reference
+      "TBD";
+  }
+
+  identity activate-state {
+     description 
+       "Shows the progress of activation.";
+  }
+  
+  identity idle {
+     base activate-state;
+     description
+        "currently no software revision activation is ongoing.";
+  }
+
+  identity in-progress {
+     base activate-state;
+     description
+        "The software revision activation is ongoing.";
+  }
+
+  identity in-progress-standby
+  {
+     base activate-state;
+     description
+       "Standby NT activation in progress as part of sequential activation.";
+  }
+
+  identity in-progress-previous-active
+  {
+     base activate-state;
+     description
+       "Previous active NT activation in progress as part of sequential 
+        activation.";
+  }
+
+  identity activate-mode {
+     description 
+       "To support new activation mode.";
+  }
+  
+  identity parallel-activation {
+     base activate-mode;
+     description
+       "Parallel activation on active NT and standby NT, Outage expected during
+        activation reboot of NT's, This is applicable only on redundant NT's.";
+  }
+
+  identity sequential-activation {
+     base activate-mode;
+     description
+       "Sequential activation on standby NT followed by switchover and 
+        activation of previous active NT.This is applicable only on 
+        redundant NT's. Limited Outage of data and management plane.";
+  }
+
+  feature offline-migration-support {
+    description
+      "This feature indicate offline migration supported";
+  }
+  feature activate-with-default-datastore {
+    description
+      "This feature enables the activate action with default datastore";
+  }
+  feature pre-load-config {
+    description
+      "This feature indicates that the intended target configurations can be downloaded using the config-download action without performing a copy and merge";
+  }
+  feature activation-mode {
+    description
+      "Enable the feature to select the activation mode.";
+  }
+  feature activation-current-state {
+    description
+      "Enable the feature to show current activation status.";
+  }
+
+  augment "/hw:hardware-state/hw:component/bbf-sim:software/bbf-sim:software/bbf-sim:download/bbf-sim:current-state" {
+
+    description
+      "An augmentation of a physical entity to add support for the
+       CPE software download progress in percentage.";
+      leaf download-progress {
+        when "current()/../bbf-sim:state = 'in-progress'" {
+          description
+            "The precentage of download is valid when a download is in
+             progress.";
+        }
+        type uint32;
+        description
+          "The precentage of the cpe software revision currently being
+           downloaded.";
+      }
+  }
+  augment "/hw:hardware-state/hw:component/bbf-sim:software/bbf-sim:software" {
+   description
+      "An augmentation of Offline migration support
+       For current config-download and current prepare-migration state";
+    container config-download {
+     if-feature "nokia-swm-ext:offline-migration-support";
+     description "config download container";
+     container current-state {
+      description "current state of config download";
+      leaf state {
+        type enumeration {
+          enum idle {
+            description
+            "No config-download is currently in progress.";
+          }
+          enum config-downloading {
+            description
+            "config-downloading in progress.";
+          }
+          enum config-preparing {
+            description
+            "config-preparing in progress.";
+          }
+        }
+        description
+         "The current state of config-download.";
+       }
+       leaf software-name {
+       when "../state != 'idle'" {
+          description
+            "The software name is only valid when a download is in
+             progress.";
+        }
+        type bbf-sim:software-name;
+        description
+          "The name of the software revision currently being
+           downloaded.";
+        }
+      }
+      container last-download-state {
+      description
+        "Objects associated with the last attempt at a config
+         download.";
+
+      leaf state {
+        type enumeration {
+          enum none-attempted {
+            description
+              "No config download has been attempted.";
+          }
+          enum successful {
+            description
+              "The last config download was successful.";
+          }
+          enum failed {
+            description
+              "The last config download failed to complete.";
+          }
+          enum aborted {
+            description
+              "The last config download aborted either through an
+               explicit action or some other means.";
+          }
+        }
+        description
+          "The result of the last config download.";
+		}
+      container failure {
+        when "../state = 'failed'" {
+          description
+            "Only applicable if a download failed.";
+        }
+        description
+          "Objects asssociated with a download failure.";
+
+        uses bbf-sim:failure;
+      }
+      leaf software-name {
+        when "../state != 'none-attempted'" {
+          description
+            "The software name is only valid when a download has been
+             attempted.";
+        }
+        type bbf-sim:software-name;
+        description
+          "The name of the software revision associated with the
+           last download attempt.";
+      }
+     }
+    }
+  }
+  augment "/hw:hardware-state/hw:component/bbf-sim:software/bbf-sim:software/bbf-sim:revisions/bbf-sim:revision" {
+   description "An augmentation of actions to support offline-migration";
+   container download {
+        when "../../../bbf-sim:name = 'application_software' and ../bbf-sim:is-valid = 'true' and ../bbf-sim:is-active = 'false' and ../bbf-sim:is-committed = 'false'" {
+          description
+            "ConfigDownload only valid for inactive and uncommitted revisions. ";
+        }
+        if-feature "nokia-swm-ext:offline-migration-support";
+
+        description
+          "Actions and notifications associated with a
+           configuration download for this revision.";
+
+        action config-download {
+          description
+            "config-download to this physical entity.";
+
+          input {
+            choice download-method {
+              description
+                "Method for retrieving the file.";
+
+              case url {
+                leaf url {
+                  type inet:uri;
+                  description
+                    "URL containing the information required to
+	                     download the specified configuration file included
+                     protocol, IP address, filepath, etc..";
+                }
+              }
+            }
+           leaf ssh-auth {
+             when "(starts-with(./../nokia-swm-ext:url, 'sftp'))" {
+                 description "ssh key based authentication is applicable only for SFTP protocol.";
+             }
+             type nokia-ft:ssh-auth-key-type;
+            description
+              "ssh client authentication using ssh key.";
+           }
+
+
+        choice server-key-choice {
+           description "Choice between a server-public-key and an EST certificate profile";
+	     case server-public-key {
+	       leaf server-public-key {
+                 when "(starts-with(./../nokia-swm-ext:url, 'https'))" {
+                   description "Certificate Based authentication is applicable only for HTTPS protocol.";
+                 }
+                 if-feature ta:x509-certificates;
+                   type ta:pinned-certificates-ref;
+                     description
+                       "A reference to a list of certificate authority (CA)
+                       certificates used while download using https.";
+               }
+             }
+	     case est-certificate-profile-key-reference {
+	       container est-ca-certificate-profile-reference {
+                  when "(starts-with(./../nokia-swm-ext:url, 'https'))" {
+                    description "Certificate Based authentication is applicable only for HTTPS protocol.";
+                  }
+                  uses estc:est-certificate-profile-ref-grouping;
+                  description
+                    "Reference to an EST CA certificate profile configuration.";
+               }
+           }
+        }
+
+        choice certificate-reference-choice {
+           description "Choice between a central keystore reference and an EST certificate profile";
+             case central-keystore-reference {
+               container central-keystore-reference {
+                 when "(starts-with(./../nokia-swm-ext:url, 'https'))" {
+                   description "Certificate Based authentication is applicable only for HTTPS protocol.";
+                 }
+                 uses nokia-ks:asymmetric-key-certificate-ref-grouping;
+                   description
+                     "A reference to a specific certificate associated with an asymmetric key, referenced cert-key pair is used for mTLS
+                     file transfer and encryption of the configuration file.";
+                }
+	      }
+	      case est-certificate-profile-reference {
+	    	container est-certificate-profile-reference {
+                  when "(starts-with(./../nokia-swm-ext:url, 'https'))" {
+                    description "Certificate Based authentication is applicable only for HTTPS protocol.";
+                  }
+                  uses estc:est-certificate-profile-ref-grouping;
+                    description
+                      "Reference to an EST certificate profile configuration for mTLS file transfer, referenced EST certificate is used for the encryption of the configuration file.";
+                }
+	      }
+	   }
+
+           leaf target-config{
+              if-feature nokia-swm-ext:pre-load-config;
+              type boolean;
+              default false;
+              description
+                 "the input leaf to mention config-download with target configuration";
+            }
+        }
+
+          output {
+            uses bbf-sim:failure;
+          }
+        }
+
+        notification config-downloaded {
+          description
+            "Indicates that the specified configuration has successfully
+             downloaded to the target physical entity.";
+          leaf transaction-id {
+             type bbf-yang:string-ascii64;
+             description
+                "The transaction id after downloaded config prepared successfully.";
+      }
+
+        }
+
+        notification config-download-failed {
+          description
+            "Indicates that the specified configuration failed to download
+             to the target physical entity.";
+
+          uses bbf-sim:failure;
+        }
+
+        action abort-config-download {
+          description
+            "Abort the config download process.";
+        }
+
+        notification config-download-aborted {
+          description
+            "Indicates that the download of the specified configuration has
+             been successfully aborted.";
+        }
+     }
+  }
+  augment "/hw:hardware-state/hw:component/bbf-sim:software/bbf-sim:software/bbf-sim:download/bbf-sim:download-software/bbf-sim:input" {
+   description
+      " An augmentation of a physical entity to add server public key  needed for download action using https or ssh key type for sftp. HTTPS mTLS download requires client asymmetric key and  client certificate";
+        choice server-key-choice {
+          description "Choice between a server-public-key and an EST certificate profile";
+	    case server-public-key {
+	      leaf server-public-key {
+                when "(starts-with(./../bbf-sim:url, 'https'))" {
+                  description "Certificate Based authentication is applicable only for HTTPS protocol.";
+                }
+                if-feature ta:x509-certificates;
+                  type ta:pinned-certificates-ref;
+                description
+                  "A reference to a list of certificate authority (CA)
+                  certificates used while download using https.";
+              }
+            }
+	    case est-certificate-profile-key-reference {
+	      container est-ca-certificate-profile-reference {
+                when "(starts-with(./../bbf-sim:url, 'https'))" {
+                  description "Certificate Based authentication is applicable only for HTTPS protocol.";
+                }
+                uses estc:est-certificate-profile-ref-grouping;
+                description
+                  "Reference to an EST CA certificate profile configuration.";
+              }
+           }
+        }
+        choice certificate-reference-choice {
+          description "Choice between a central keystore reference and an EST certificate profile";
+            case central-keystore-reference {
+              container central-keystore-reference {
+                when "(starts-with(./../bbf-sim:url, 'https'))" {
+                  description "Certificate Based authentication is applicable only for HTTPS protocol.";
+                }
+                uses nokia-ks:asymmetric-key-certificate-ref-grouping;
+                  description
+                    "A reference to a specific certificate associated with an asymmetric key, referenced cert-key pair is used for mTLS
+                    file transfer and encryption of the configuration file.";
+                }
+	      }
+	      case est-certificate-profile-reference {
+	        container est-certificate-profile-reference {
+                   when "(starts-with(./../bbf-sim:url, 'https'))" {
+                     description "Certificate Based authentication is applicable only for HTTPS protocol.";
+                   }
+                   uses estc:est-certificate-profile-ref-grouping;
+                   description
+                     "Reference to an EST certificate profile configuration for mTLS file transfer.";
+                 }
+	      }
+	}
+}
+augment "/hw:hardware-state/hw:component/bbf-sim:software/bbf-sim:software/bbf-sim:revisions/bbf-sim:revision/bbf-sim:activate-revision/bbf-sim:activate/bbf-sim:input" {
+   if-feature "nokia-swm-ext:activate-with-default-datastore";
+   description
+     "An augmentation of activate action to have the new input leaf to enable the activation with
+      default datastore";
+
+
+    leaf with-default-datastore{
+    when "../../../../../bbf-sim:name = 'application_software'";
+          type boolean;
+          default false;
+          description
+             "the input leaf to mention activate with default-datastore";
+     }
+}
+
+augment "/hw:hardware-state/hw:component/bbf-sim:software/bbf-sim:software/bbf-sim:revisions"{
+   description "augment for hardware state software revisions notify revisions update result ";
+   leaf revisions-updated{
+       type boolean;
+       description
+         "Indicates that the revisions data has successfully updated by target physical entity";
+   }
+   notification software-revisions-updated {
+         description
+          "Indicates that the revisions data has successfully updated by target physical entity";
+   }
+ }
+augment "/hw:hardware-state/hw:component/bbf-sim:software/bbf-sim:software/bbf-sim:revisions/bbf-sim:revision"{
+    description "augment for hardware state software revision indicating download URL and product code";
+    leaf source{
+        type inet:uri;
+        description
+           "source url path of descriptor file used in download of the particular revision";
+    }
+    leaf product-code {
+        type string;
+        description
+	   "Reports the product code information(software descriptor name) of the software revision, if applicable. Note that this leaf will have empty value  if no valid product code for the revision is applicable.";
+    }
+}
+augment "/hw:hardware-state/hw:component/bbf-sim:software/bbf-sim:software/bbf-sim:revisions/bbf-sim:revision/bbf-sim:delete-revision"{
+    description "augment for hardware state sw revision delete notification.";
+    notification delete-failed {
+          description
+            "Indicates that the specified revision failed to delete
+             on its target physical entity.";
+
+          uses bbf-sim:failure;
+    }
+}
+
+augment "/hw:hardware-state/hw:component/bbf-sim:software/bbf-sim:software/bbf-sim:revisions/bbf-sim:revision"{
+   if-feature "nokia-swm-ext:activation-current-state";
+   description "Augment for hardware state software revisions to show the activation status.";
+   container activate {
+      when "../../../bbf-sim:name = 'application_software'";
+      description
+        "Objects associated with the current software revision activation status.";
+
+      leaf current-state {
+        type identityref {
+           base activate-state;
+        }
+        description
+          "The result of the software revision activation.";
+      }
+
+      leaf failure-reason {
+        type identityref {
+          base bbf-sim:failure-reason;
+        }
+        description
+          "The reason the software revision activation failure.";
+      }
+
+      leaf failure-string {
+         when "../failure-reason != 'bbf-sim:no-failure'" {
+            description
+              "Only valid when there is a failure in activation.";
+         }
+         type string;
+         description
+            "Text indicating the activation failure reason.";
+      }
+    }
+}
+
+augment "/hw:hardware-state/hw:component/bbf-sim:software/bbf-sim:software/bbf-sim:revisions/bbf-sim:revision/bbf-sim:activate-revision/bbf-sim:activate/bbf-sim:input" {
+   if-feature "nokia-swm-ext:activation-mode";
+   description
+     "An augmentation of activate action to have the new input leaf to select activation mode.";
+
+    leaf activation-mode {
+      when "../../../../../bbf-sim:name = 'application_software'";
+      type identityref {
+         base activate-mode;
+      }
+      description
+       "Leaf to mention activate mode";
+    }
+}
+
+}

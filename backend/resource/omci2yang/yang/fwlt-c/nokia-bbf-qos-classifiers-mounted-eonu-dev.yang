@@ -1,0 +1,207 @@
+module nokia-bbf-qos-classifiers-mounted-eonu-dev {
+   namespace
+    "http://www.nokia.com/Fixed-Networks/BBA/yang/nokia-bbf-qos-classifiers-mounted-eonu-dev";
+
+  prefix  nokia-bbf-qos-classifiers-mounted-eonu-dev;
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import bbf-qos-classifiers-mounted {
+        prefix bbf-qos-cls-mounted;
+    }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "This module contains a collection of YANG deviations on top 
+     of standard for supporting BBF/bbf-qos-classifiers YANG module.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia 
+     reserves the right to revise this document for any reason, 
+     including but not limited to conformity with standards 
+     promulgated by various agencies, utilisation of advances in the 
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or 
+     referred to herein.
+
+     The product specifications and other technical or performance 
+     information contained herein are subject to change without 
+     notice. Updates of this document will be issued under the above 
+     NDA's.lic-appsufficiency, accuracy, or utility of any 
+     information or opinion contained herein. Nokia expressly advises 
+     that any use of for any purpose or reliance upon this technical 
+     reference is at the risk of the user and that Nokia shall not be 
+     liable for any damage or injury incurred by any person arising 
+     out of the sufficiency, accuracy, or utility of any information 
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any 
+     manufacturer to modify or change any of its products, nor does 
+     this document represent any commitment by Nokia to sell or 
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license 
+     or right under any patent, whether or not the use of any 
+     information herein necessarily employs an invention of any 
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2017-2018, Nokia. All Rights Reserved.";
+
+  /* revision */
+  revision 2023-03-10 {
+    description
+      "add pbit-making-list deviation";
+    reference
+       "Nokia specific";
+  }
+
+  revision 2022-12-05 {
+    description
+      "update not-supported for protocols yang leaf";
+    reference
+       "Nokia specific";
+  }
+
+  revision 2022-10-17 {
+    description
+      "Adding Deviations for filter-operation";
+    reference
+       "Nokia specific";
+  }
+
+  revision 2021-04-08 {
+    description
+      "Adding Deviations for not supported Yang leaves";
+    reference
+       "Nokia specific";
+  }
+
+  deviation '/onu:onus/onu:onu/onu:root/bbf-qos-cls-mounted:classifiers/bbf-qos-cls-mounted:classifier-entry'
+            +'/bbf-qos-cls-mounted:filter-method/bbf-qos-cls-mounted:inline'
+            +'/bbf-qos-cls-mounted:match-criteria/bbf-qos-cls-mounted:vlan-tag-match-type'
+            +'/bbf-qos-cls-mounted:match-all/bbf-qos-cls-mounted:match-all' {
+    description
+       "This deviation assures that match-all leaf under match-criteria is not supported.";
+    deviate not-supported;
+  }  
+
+  deviation '/onu:onus/onu:onu/onu:root/bbf-qos-cls-mounted:classifiers/bbf-qos-cls-mounted:classifier-entry' 
+            +'/bbf-qos-cls-mounted:filter-method/bbf-qos-cls-mounted:inline'
+            +'/bbf-qos-cls-mounted:match-criteria/bbf-qos-cls-mounted:protocols' {
+     description
+       "This deviation assures that protocols leaf under match-criteria is not supported.";
+    deviate not-supported;
+  }
+
+  deviation '/onu:onus/onu:onu/onu:root/bbf-qos-cls-mounted:classifiers/bbf-qos-cls-mounted:classifier-entry'
+            +'/bbf-qos-cls-mounted:classifier-action-entry-cfg'
+            +'/bbf-qos-cls-mounted:action-cfg-params'
+            +'/bbf-qos-cls-mounted:dei-marking' {
+    description
+       "This deviation assures that dei-marking leaf under classifiers is not supported.";
+    deviate not-supported;
+  } 
+
+  deviation '/onu:onus/onu:onu/onu:root/bbf-qos-cls-mounted:classifiers/bbf-qos-cls-mounted:classifier-entry'
+           +'/bbf-qos-cls-mounted:classifier-action-entry-cfg'
+           +'/bbf-qos-cls-mounted:action-cfg-params'
+           +'/bbf-qos-cls-mounted:dscp-marking'{
+    description
+       "This deviation assures that dscp-marking leaf under classifiers is not supported.";
+    deviate not-supported;
+  } 
+   
+  deviation '/onu:onus/onu:onu/onu:root/bbf-qos-cls-mounted:classifiers/bbf-qos-cls-mounted:classifier-entry'
+            +'/bbf-qos-cls-mounted:filter-method/bbf-qos-cls-mounted:inline'
+            +'/bbf-qos-cls-mounted:match-criteria/bbf-qos-cls-mounted:vlan-tag-match-type'
+            +'/bbf-qos-cls-mounted:vlan-tagged/bbf-qos-cls-mounted:tag'
+            +'/bbf-qos-cls-mounted:in-dei' {
+    description
+       "This deviation assures that in-dei leaf under match-criteria is not supported.";
+    deviate not-supported;
+  }  
+
+  deviation '/onu:onus/onu:onu/onu:root/bbf-qos-cls-mounted:classifiers/bbf-qos-cls-mounted:classifier-entry'
+           +'/bbf-qos-cls-mounted:classifier-action-entry-cfg'
+           +'/bbf-qos-cls-mounted:action-cfg-params'
+           +'/bbf-qos-cls-mounted:pbit-marking'
+           +'/bbf-qos-cls-mounted:pbit-marking-cfg'
+           +'/bbf-qos-cls-mounted:pbit-marking-list' {
+    description
+       "P-bit value is mandatory when pbit remarking is applied";
+    deviate add {
+        must "boolean(./bbf-qos-cls-mounted:pbit-value)" {
+        error-message "P-bit value is mandatory when pbit remarking is applied";
+        }
+    }
+  }
+  
+
+  deviation '/onu:onus/onu:onu/onu:root/bbf-qos-cls-mounted:classifiers/bbf-qos-cls-mounted:classifier-entry'
+           +'/bbf-qos-cls-mounted:classifier-action-entry-cfg'
+           +'/bbf-qos-cls-mounted:action-cfg-params'
+           +'/bbf-qos-cls-mounted:pbit-marking'
+           +'/bbf-qos-cls-mounted:pbit-marking-cfg'{
+    description
+       "Pbit-marking list must contain minimum one element.";
+    deviate add {
+        must "count(current()/bbf-qos-cls-mounted:pbit-marking-list) > 0" {
+        error-message "Pbit-marking list must contain minimum one element.";
+      }
+    }     
+  } 
+  
+  deviation '/onu:onus/onu:onu/onu:root/bbf-qos-cls-mounted:classifiers/bbf-qos-cls-mounted:classifier-entry/bbf-qos-cls-mounted:filter-operation'{
+   deviate replace {
+       default "bbf-qos-cls-mounted:match-all-filter" ;
+    }
+    deviate add {
+      must "contains(current(), 'match-all-filter')" {
+       error-message "only support match-all-filter for filter-operation";
+     }
+    }
+  }
+
+  deviation '/onu:onus/onu:onu/onu:root/bbf-qos-cls-mounted:classifiers/bbf-qos-cls-mounted:classifier-entry'
+           +'/bbf-qos-cls-mounted:filter-method/bbf-qos-cls-mounted:inline/bbf-qos-cls-mounted:match-criteria'
+           +'/bbf-qos-cls-mounted:vlan-tag-match-type/bbf-qos-cls-mounted:vlan-tagged'
+           +'/bbf-qos-cls-mounted:tag/bbf-qos-cls-mounted:index'{
+
+    description
+        "classifier match-criteria tag index must be 0.";
+    deviate add {
+      must "current() = 0 " {
+        error-message "match-criteria tagged index value in classifier must be 0";
+      }
+    }
+  }
+
+
+  deviation '/onu:onus/onu:onu/onu:root/bbf-qos-cls-mounted:classifiers/bbf-qos-cls-mounted:classifier-entry'
+           +'/bbf-qos-cls-mounted:classifier-action-entry-cfg'
+           +'/bbf-qos-cls-mounted:action-cfg-params'
+           +'/bbf-qos-cls-mounted:pbit-marking'
+           +'/bbf-qos-cls-mounted:pbit-marking-cfg'
+           +'/bbf-qos-cls-mounted:pbit-marking-list'
+           +'/bbf-qos-cls-mounted:index'{
+
+    description
+        "pbit-marking-list index value must be 0.";
+    deviate add {
+      must "current() = 0 " {
+        error-message "pbit-marking-list index value in classifier-action-entry-cfg must be 0";
+      }
+    }
+  }
+
+}

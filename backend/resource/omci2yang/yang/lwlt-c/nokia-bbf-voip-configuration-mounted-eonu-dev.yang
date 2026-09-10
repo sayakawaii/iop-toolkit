@@ -1,0 +1,54 @@
+module nokia-bbf-voip-configuration-mounted-eonu-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-bbf-voip-configuration-mounted-eonu-dev";
+
+  prefix nokia-bbf-voip-configuration-mounted-eonu-dev;
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import bbf-voip-configuration-mounted {
+    prefix bbf-voip-config-mounted;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA IETF/System YANG module supporting
+     deviations on top of standard.";
+
+  /* revision */
+  revision 2024-11-20 {
+    description
+      "Adding Deviations for not-supported voip-config-state";
+    reference
+      "Sub-task BBN-250454";
+  }
+
+  revision 2021-07-19 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia Specific.";
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-voip-config-mounted:voip-configuration-characteristics/bbf-voip-config-mounted:signaling-protocol" {
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-voip-config-mounted:voip-configuration-characteristics/bbf-voip-config-mounted:voip-omci-config-file" {
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-voip-config-mounted:voip-configuration-characteristics/bbf-voip-config-mounted:voip-config-state" {
+    description
+      "This deviation assures that voip-config-state is not supported.";
+    deviate not-supported;
+  }
+}

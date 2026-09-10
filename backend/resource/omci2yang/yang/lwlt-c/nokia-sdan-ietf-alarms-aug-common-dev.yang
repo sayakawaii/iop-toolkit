@@ -1,0 +1,85 @@
+module nokia-sdan-ietf-alarms-aug-common-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-sdan-ietf-alarms-aug-common-dev";
+
+  prefix nokia-sdan-ietf-alarms-aug-common-dev;
+
+  import ietf-alarms {
+    prefix al;
+  }
+
+  import nokia-sdan-ietf-alarms-aug {
+    prefix nokia-al;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG deviations on top
+     of the standard module.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2024, Nokia. All Rights Reserved.";
+
+    revision 2025-04-04 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia Specific.";
+  }
+
+/**********************************************/
+/* definitions which should always be present */
+/**********************************************/
+
+
+  deviation "/al:alarms/al:control/nokia-al:alarms-delay-profile/nokia-al:alarm-type-profile/"
+            +"nokia-al:alarm-type-id" {
+    description
+      "Identifies an alarm type. Only identities of concrete alarm types (present in the alarm"
+      +" inventory) can be configured. Usage of an abstract alarm type will be rejected. An "
+      +"abstract alarm type is used as a base for other alarm type ids and not as a value for an alarm.";
+    deviate add {}
+  }
+}

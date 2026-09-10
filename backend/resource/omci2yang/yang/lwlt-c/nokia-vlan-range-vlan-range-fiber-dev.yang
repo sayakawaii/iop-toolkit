@@ -1,0 +1,48 @@
+module nokia-vlan-range-vlan-range-fiber-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+          + "nokia-vlan-range-vlan-range-fiber-dev";
+
+  prefix nokia-vlan-range-vlan-range-fiber-dev;
+
+  import nokia-vlan-range {
+    prefix nokia-vlan-range;
+  }
+
+  organization
+    "NOKIA";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA vlan-range YANG module supporting
+     deviations on top of standard.";
+
+  /* revision */
+
+  revision 2020-04-02 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific";
+  }
+
+  /* deviations max-elements */
+  /* ----------------------- */
+  /* add max-elements to limit the number of vlan-range profiles */
+
+  deviation "/nokia-vlan-range:vlan-range-profiles/nokia-vlan-range:vlan-range-profile"
+  {
+    deviate add {
+      max-elements 64;
+    }
+  }
+  
+  deviation "/nokia-vlan-range:vlan-range-profiles/nokia-vlan-range:vlan-range-profile/nokia-vlan-range:range"{
+    description "The vlan-range-profile shall be configured with correct VLAN Id range. The error-message: The configure value is an invalid range in vlan-range-profile";
+   deviate add{}
+  }
+
+}
+

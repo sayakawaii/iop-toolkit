@@ -1,0 +1,124 @@
+module nokia-ber-tca-profiles {
+  yang-version 1.1;
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+  + "nokia-ber-tca-profiles";
+
+  prefix nokia-ber-tca-prof;
+
+  import bbf-yang-types {
+    prefix bbf-yang;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+     "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+     "This module contains a collection of YANG definitions for
+     supporting Nokia specific requirements as applicable to its
+     access network equipment.
+
+     Specifically, this module defines at system level a ber-tca-profile 
+     list providing Signal Degradation and Signal Failure thresholds.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2020, Nokia. All Rights Reserved.";
+
+     revision 2022-09-09 {
+        description
+          "Correct the error message";
+        reference
+          "Nokia specific. RCR ALU02503366 ";
+     }
+
+     revision 2020-09-25 {
+        description
+          "Introduction of BER TCA profile to store SD/SF thresholds";
+        reference
+          "Nokia specific. RCR ALU02503366 ";
+     }
+
+     container ber-tca-profiles {
+        description "container with ber-tca-profiles";
+        list ber-tca-profile {
+          key "name";
+          max-elements 200;
+          description
+            "Indicates ber-tca profile with configurable Signal Degradation and Signal Failure thresholds
+             that can be applied to channel-pair and ANI level";
+
+        leaf name {
+          type bbf-yang:string-ascii64;
+          description
+            "Indicates name of the profile that can be applied to channel-pair and ANI level";
+        }
+
+        leaf sd-threshold {
+          type uint16{
+            range "4 .. 10";
+          }
+          must ". > ../sf-threshold" {
+            error-message
+              "The signal degrade BER threshold value, 10^(-[sd-threshold]), must be "
+              + "lower than the signal fail BER threshold value, 10^(-[sf-threshold]). "
+              + "Hence 'sd-threshold' must be > 'sf-threshold'.)";
+          }
+          mandatory true;
+          
+          description
+            "This is specifing the bit error rate (BER) threshold for detecting the SD alarm. 
+             When this value is x, the BER threshold for SD is 10^(-x). Valid values are 4..10.";
+        }
+
+        leaf sf-threshold {
+          type uint16{
+            range "3 .. 8";
+          }
+          mandatory true;
+          description
+            "This is specifing the bit error rate (BER) threshold for detecting the SF alarm. 
+             When this value is y, the BER threshold is 10^(-y). Valid values are 3..8.";
+        }
+     }
+  }
+}
+

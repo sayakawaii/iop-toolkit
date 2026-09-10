@@ -15,6 +15,11 @@ backend/omciAnalyzer
 backend/.venv/
 backend/config/config.yaml
 
+# The omci2yang schema index is a build artefact: it is a flattened pickle of
+# the YANG modules next to it, tied to the pyang version that produced it, and
+# the image rebuilds it so the first request does not have to.
+backend/resource/omci2yang/yang/*/.schema_cache_v3.pickle
+
 # ---- Collector (Python) ----
 __pycache__/
 *.pyc

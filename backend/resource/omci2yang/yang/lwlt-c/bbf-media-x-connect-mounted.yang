@@ -1,0 +1,137 @@
+submodule bbf-media-x-connect-mounted {
+  yang-version 1.1;
+  belongs-to bbf-sip-voip-mounted  {
+    prefix bbf-sip-voip-mounted;
+  }
+
+  import ietf-inet-types {
+    prefix inet;
+  }
+  
+  include bbf-media-voice-call-profile-body-mounted;
+  include bbf-media-voice-band-data-profile-body-mounted;
+  include bbf-media-x-connect-operational-data-mounted;
+
+  organization
+    "Broadband Forum <https://www.broadband-forum.org>
+     Common YANG Work Area";
+
+  contact
+    "Comments or questions about this Broadband Forum YANG module
+     should be directed to <mailto:help@broadband-forum.org>.
+     Editor:      Frank Desseyn, Nokia
+     Editor:      Nadine Staelens, Nokia
+     PS Leader:   Joey Boyd, ADTRAN
+     PS Leader:   Ken Kerpez, ASSIA
+     WA Director: Joey Boyd, ADTRAN
+     WA Director: Sven Ooghe, Nokia";
+
+  description
+    "This submodule contains the Yang definitions to manage the 
+	 Media cross-connection profiles.
+     Copyright (c) 2017-2018, Broadband Forum
+     Redistribution and use in source and binary forms, with or
+     without modification, are permitted provided that the following
+     conditions are met:
+     1. Redistributions of source code must retain the above copyright
+        notice, this list of conditions and the following disclaimer.
+     2. Redistributions in binary form must reproduce the above
+        copyright notice, this list of conditions and the following
+        disclaimer in the documentation and/or other materials
+        provided with the distribution.
+     3. Neither the name of the copyright holder nor the names of its
+        contributors may be used to endorse or promote products
+        derived from this software without specific prior written
+        permission.
+     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
+     CONTRIBUTORS \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+     INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+     DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+     CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+     SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+     NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+     CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+     STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+     ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+     ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     The above license is used as a license under copyright only.
+     Please reference the Forum IPR Policy for patent licensing terms
+     <https://www.broadband-forum.org/ipr-policy>.
+     Any moral rights which are necessary to exercise under the above
+     license grant are also deemed granted under this license.
+     This version of this YANG module is part of TR-383; see
+     the TR itself for full legal notices.";
+
+  revision 2020-03-06 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: 2020-03-06.";
+    reference
+      " ";
+  }
+ 
+  grouping media-x-connect {
+    leaf media-connection-type {
+	  type enumeration {
+	    enum pots-loop {
+		  value 1;
+		  description
+		  	"The POTS loop connection configuration.";
+		}
+		enum pots-extension-loop {
+		  value 2;
+		  description
+		  	"The POTS extension loop connection configuration.";
+	    }
+	  }
+	}
+	leaf media-dscp-mark {
+	  type inet:dscp;
+	  default 46;		
+	  description
+		"The differentiated service code point for
+		 outgoing media traffic for this media x-connect for
+		 the voice calls and VBD sessions.";
+	}
+	leaf voice-call-profile {
+	  /* type bbf-sip-voip-mounted:voice-call-profile-ref; */
+      /* type leafref {
+         path "../../../../bbf-sip-voip-mounted:media-profiles"
+         + "/bbf-sip-voip-mounted:media-voice-call-profiles"
+		 + "/bbf-sip-voip-mounted:media-voice-call-profile"
+		 + "/bbf-sip-voip-mounted:name";
+      }	 */
+      type string;  /* hesong : due to pyang 1.7.8 bug, using string first */
+	  must "../bbf-sip-voip-mounted:media-connection-type = 'pots-loop' or "
+	     + "../bbf-sip-voip-mounted:media-connection-type = " 
+             + "'pots-extension-loop'" {
+            error-message "Only applicable for pots loops or pots "
+	                 + "extension loops";
+          }
+	  description
+		    "References the Voice call configuration data.";
+	} 
+    leaf vbd-profile {
+	  /* type bbf-sip-voip-mounted:voice-band-data-profile-ref; */
+      /* type leafref {
+        path "../../../../bbf-sip-voip-mounted:media-profiles"
+           + "/bbf-sip-voip-mounted:media-voice-band-data-profiles"
+		   + "/bbf-sip-voip-mounted:media-voice-band-data-profile"
+	       + "/bbf-sip-voip-mounted:name";
+      }	  */
+      type string;  /* hesong : due to pyang 1.7.8 bug, using string first */      
+	  must "../bbf-sip-voip-mounted:media-connection-type = 'pots-loop' or "
+	     + "../bbf-sip-voip-mounted:media-connection-type = "
+	     + "'pots-extension-loop'" {
+	    error-message "Only applicable for pots loops or pots "
+	                + "extension loops";
+	  }
+	  description
+		  "References the Voice Band Data configuration profile.";
+	}
+    uses media-x-connect-operational-data;
+  }
+}

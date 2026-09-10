@@ -1,0 +1,147 @@
+module nokia-conf-clock-frequency-frommounted {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"+
+            "nokia-conf-clock-frequency-frommounted";
+
+  prefix clock-frequency-frommounted;
+
+  import ietf-interfaces-frommounted {
+    prefix if-frommounted;
+  }
+
+
+  import bbf-fiber-onu-emulated-mount {
+     prefix onu;
+  }
+
+  organization "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "This module contains extension of YANG definitions for 
+    the overall structure of clock frequency on physical 
+    entities.
+
+    Nokia reserves the right not to offer any or all of these
+    products and to withdraw any or all of them at any future time.
+
+    Copyright (C) 2018, Nokia. All Rights Reserved.";
+
+  revision 2025-09-01 {
+    description
+      "Update for BBN-132900";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2020-08-19 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: 2020-08-19.";
+    reference
+      "Nokia specific";
+  }
+
+  grouping ssm-out {
+    description "grouping ssm-out";
+    container ssm-out{
+      presence "Present if SSM is enabled on this interface";
+      description "ssm-out";
+      leaf ssm-out-enable {
+       type boolean;
+        description
+          "Enable or disable SSM out function at the interface.";
+     }
+    }         
+  }
+
+
+  augment "/onu:onus/onu:onu/onu:fromroot/if-frommounted:interfaces/if-frommounted:interface" {
+    uses ssm-out;
+    description "Indicate to enable/disable SSM out on an interface.";
+  }
+  /*
+  augment "/onu:onus/onu:onu/onu:fromroot/if-frommounted:interfaces/if-frommounted:interface"  {
+    description "augment ethernet interface for ssm";
+    leaf ssm-out-profile-ref {
+      type string;
+    status obsolete;
+      description
+        "Reference to the ssm-out vlan-id profile. If you want to configure this parameter, please make sure the ssm-out-enable is false.";
+    }    
+  }
+*/
+  
+  augment "/onu:onus/onu:onu/onu:fromroot" {
+    description "augment onu root with SyncE";
+    container synce-ssm {
+      presence "Present if SyncE is configured";
+      description "SyncE configuration";
+      leaf admin-state {
+        type enumeration {
+          enum lock {
+            value 0;
+            description
+              "The SyncE/SSM function is lock.";
+          }
+          enum unlock {
+            value 1;
+            description
+              "The SyncE/SSM function is unlock.";
+          }
+        }
+        description
+          "The administrative state of the SyncE function.";
+        reference
+          "ITU-T G.988 9.12.21 Synchronous Ethernet operation";
+      }
+      leaf QL-options {
+        type enumeration{
+          enum EEC-option-1 {
+            value 0;
+            description
+              "ITU-T G.8264 EEC option 1 network.";
+          }
+          enum EEC-option-2 {
+            value 1;
+            description
+              "ITU-T G.8264 EEC option 2 network.";
+          }
+          enum eEEC-option-1 {
+            value 2;
+            description
+              "ITU-T G.8262.1 eEEC option 1 network.";
+          }
+          enum eEEC-option-2 {
+            value 3;
+            description
+              "ITU-T G.8262.1 eEEC option 2 network.";
+          }
+        }
+        description
+          "specifies the expected network QL states";
+        reference
+          "ITU-T G.988 9.12.21 Synchronous Ethernet operation";
+      }
+      leaf ESMC-vlan-id {
+        type union {
+          type enumeration {
+            enum untag {
+              value 65535;
+              description
+                "Indicates that no VLAN association for ESMC messages";
+            }
+          }
+          type uint32 {range "0..4095";}
+        }
+        description
+          "Specifies the VLAN associated with ESMC messages.";
+        reference
+          "ITU-T G.988 9.12.21 Synchronous Ethernet operation";
+      }
+    }
+  }
+}

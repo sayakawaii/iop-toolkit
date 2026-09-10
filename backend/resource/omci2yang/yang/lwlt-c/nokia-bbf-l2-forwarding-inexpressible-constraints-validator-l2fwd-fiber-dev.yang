@@ -1,0 +1,191 @@
+module nokia-bbf-l2-forwarding-inexpressible-constraints-validator-l2fwd-fiber-dev {
+
+  yang-version "1.1";
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+            + "nokia-bbf-l2-forwarding-inexpressible-constraints-validator-l2fwd-fiber-dev";
+
+  prefix nokia-bbf-l2-forwarding-inexpressible-constraints-validator-l2fwd-fiber-dev;
+
+  import bbf-l2-forwarding {
+    prefix bbf-l2-fwd;
+  }
+  
+  organization
+    "NOKIA";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "The NOKIA common/nokia-bbf-l2-forwarding-inexpressible-constraints-validator-l2fwd-fiber-dev
+     YANG module supporting deviations on top of ietf-ssh-server standard.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2019, Nokia. All Rights Reserved.";
+
+  revision 2017-04-24 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific"; 
+  }
+
+  deviation "/bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarders/bbf-l2-fwd:forwarder" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarders/bbf-l2-fwd:forwarder/bbf-l2-fwd:ports/bbf-l2-fwd:port'
+        '/if:interfaces/if:interface'
+       The error message 'No two forwarder ports can refer to the same layer 2 termination interfaces.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarders/bbf-l2-fwd:forwarder" {
+    description
+      "When user VSI's egress-rewrite uses pbit/dei marking-index to push tag, the marking-index value depends on the peer network VSI's ingress match-criteria: if the network VSI matches dual tags, then the marking-index in user VSI's egress-rewrite must be 1, otherwise it must be 0. In this case, network VSI must configure copy-from-tags-to-marking-list.
+       Other dependent xpaths where this rule applies are:
+        '/if:interfaces/if:interface'
+        '/bbf-frameproc:frame-processing-profiles/bbf-frameproc:frame-processing-profile'
+       The error message 'Invalid marking-index to push tag.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarders/bbf-l2-fwd:forwarder" {
+    description
+      "If user VSI matches tag A but does not pop, then: (1) If network VSI pushes tag B at egress-side, then it must match (outer tag B and inner tag A). (2) If network VSI does not push at egress-side, then it must match tag A.
+       Other dependent xpaths where this rule applies are:
+        '/if:interfaces/if:interface'
+        '/bbf-frameproc:frame-processing-profiles/bbf-frameproc:frame-processing-profile'
+       The error message 'Invalid frame processing flow.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarders/bbf-l2-fwd:forwarder" {
+    description
+      "If user VSI pop tag, then network VSI mush push tags at egress side and the pushing tags should be same as its' ingress match tags.
+       Other dependent xpaths where this rule applies are:
+        '/if:interfaces/if:interface'
+        '/bbf-frameproc:frame-processing-profiles/bbf-frameproc:frame-processing-profile'
+       The error message 'Invalid frame processing flow.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarders/bbf-l2-fwd:forwarder" {
+    description
+      "If network VSI matches (outer tag B and inner tag A) and pop 1 tag, then the user VSI must match tag A; If network VSI matches tag A and does not pop, then the user VSI must match tag A.
+       Other dependent xpaths where this rule applies are:
+        '/if:interfaces/if:interface'
+        '/bbf-frameproc:frame-processing-profiles/bbf-frameproc:frame-processing-profile'
+       The error message 'Invalid frame processing flow.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarders/bbf-l2-fwd:forwarder" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarders/bbf-l2-fwd:forwarder/bbf-l2-fwd:ports/bbf-l2-fwd:port'
+        '/if:interfaces/if:interface'
+       The error message 'Same vlan-sub-interface can not support to attach two different forwarders!' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarders/bbf-l2-fwd:forwarder" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarders/bbf-l2-fwd:forwarder/bbf-l2-fwd:ports/bbf-l2-fwd:port'
+        '/if:interfaces/if:interface'
+       The error message 'Inband network VSI with Frame processing profile not supported! ' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarders/bbf-l2-fwd:forwarder" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarders/bbf-l2-fwd:forwarder/bbf-l2-fwd:ports/bbf-l2-fwd:port'
+        '/if:interfaces/if:interface'
+       The error message 'Inband VSI without interface usage is not supported! ' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarders/bbf-l2-fwd:forwarder" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarders/bbf-l2-fwd:forwarder/bbf-l2-fwd:ports/bbf-l2-fwd:port'
+        '/if:interfaces/if:interface'
+       The error message 'Inband user VSI vlan id should match with network VSI vlan id! ' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarders/bbf-l2-fwd:forwarder" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarders/bbf-l2-fwd:forwarder/bbf-l2-fwd:ports/bbf-l2-fwd:port'
+        '/if:interfaces/if:interface'
+       The error message 'Maxmimum 64 user VSIs are allowed per inband forwarder! ' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarders/bbf-l2-fwd:forwarder" {
+    description
+      "At ingress-side VSI, all VLAN tags in match-criteria must be popped, when the VSI is attached to forwarder.
+       Other dependent xpaths where this rule applies are:
+        '/if:interfaces/if:interface'
+        '/bbf-frameproc:frame-processing-profiles/bbf-frameproc:frame-processing-profile'
+       The error message 'Invalid frame processing flow. All VLAN tags in match-criteria must be popped.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarders/bbf-l2-fwd:forwarder" {
+    description
+      "VSI egress-rewrite pushed vlan tags (including tag count and vlan id) must be aligned with the match-criteria of one of the ingress-rules in the same VSI, when the VSI is attached to forwarder.
+       Other dependent xpaths where this rule applies are:
+        '/if:interfaces/if:interface'
+        '/bbf-frameproc:frame-processing-profiles/bbf-frameproc:frame-processing-profile'
+       The error message 'Invalid frame processing flow. Vlan tags must be aligned between ingress match-criteria and egress-push.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarders/bbf-l2-fwd:forwarder/bbf-l2-fwd:ports/bbf-l2-fwd:port" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/if:interfaces/if:interface'
+       The error message 'Before detach the VLAN sub-interface, prevent-ipv4-address-spoofing and prevent-ipv6-address-spoofing should be disabled.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+}

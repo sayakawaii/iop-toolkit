@@ -1,0 +1,60 @@
+module nokia-software-download-sftp-support {
+ yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+          + "nokia-software-download-sftp-support";
+  prefix nokia-swm-download-ext;
+  
+  import bbf-software-image-management-one-dot-one {
+    prefix bbf-sim;
+  }
+
+  import ietf-hardware {
+    prefix hw;
+  }
+
+  import nokia-file-transfer {
+    prefix nokia-ft;
+  }
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+  description
+    "This module contains extension of YANG definitions for
+     the overall structure of software image management on physical
+     entities as defined by ietf-hardware.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2018, Nokia. All Rights Reserved.";
+
+   revision 2021-07-27 {
+     description
+       "Use standard prefix when importing nokia-file-transfer";
+     reference
+       "Nokia specific";
+   }
+
+   revision 2021-05-26 {
+     description
+       "added leaf for sftp download support in a new yang module
+        nokia-software-download-sftp-support.yang";
+     reference
+      "Nokia specific";
+   }
+    augment "/hw:hardware-state/hw:component/bbf-sim:software/bbf-sim:software/bbf-sim:download/bbf-sim:download-software/bbf-sim:input" {
+   description
+    "swm sftp support in download";
+   leaf ssh-auth {
+         when "(starts-with(./../bbf-sim:url, 'sftp'))" {
+              description "ssh key based authentication is applicable only for SFTP protocol.";
+         }
+         type nokia-ft:ssh-auth-key-type;
+         description
+           "ssh client authentication using ssh key.";
+
+    }
+  }
+}

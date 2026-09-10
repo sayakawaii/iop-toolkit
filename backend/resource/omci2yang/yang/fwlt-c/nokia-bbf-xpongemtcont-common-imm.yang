@@ -1,0 +1,50 @@
+module nokia-bbf-xpongemtcont-common-imm {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-bbf-xpongemtcont-common-imm";
+
+  prefix nokia-bbf-xpongemtcont-common-imm;
+
+  import ietf-immutable{
+    prefix im;
+  }
+
+  import  bbf-xpongemtcont {
+    prefix  bbf-xpongemtcont;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA IETF/System YANG module supporting
+     deviations on top of standard.";
+
+  revision 2022-11-20 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia Specific.";
+  }
+
+  deviation "/bbf-xpongemtcont:xpongemtcont/bbf-xpongemtcont:tconts/bbf-xpongemtcont:tcont/bbf-xpongemtcont:interface-reference" {
+      description
+      "The interface-reference of a tcont cannot be modified.
+       The client can delete or remove the tcont and subsequently create the tcont again.";
+      deviate add {
+        im:immutable "create delete";
+      }
+  }
+
+  deviation "/bbf-xpongemtcont:xpongemtcont/bbf-xpongemtcont:gemports/bbf-xpongemtcont:gemport/bbf-xpongemtcont:interface" {
+      description
+      "The interface of a gemport cannot be modified.
+       The client can delete or remove the gemport and subsequently create the gemport again.";
+      deviate add {
+        im:immutable "create delete";
+      }
+  }
+}

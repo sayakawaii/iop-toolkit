@@ -1,0 +1,177 @@
+module nokia-sdan-onu-defective-type{
+
+ yang-version 1.1;
+
+ namespace "urn:broadband-forum-org:yang:nokia-sdan-onu-defective-type";
+ 
+prefix nokia-sdan-onu-defective-type;
+
+    import ietf-interfaces {
+        prefix if;
+    }
+
+    import bbf-xpon {
+        prefix bbf-xpon;
+    }
+
+    import bbf-xpon-types {
+        prefix bbf-xpon-types;
+    }
+
+    organization
+        "Nokia";
+
+    contact
+        "Comments or questions about this Nokia YANG module should be
+        directed to <mailto:isam.yang@nokia.com>.";
+
+    description
+        "This module contains a collection of YANG definitions for
+        supporting Nokia specific requirements as applicable to its
+        access network equipment.
+
+        This specification is published by Nokia under Non-Disclosure
+        Agreement(s) (NDA) with specific parties and has to be
+        considered as Confidential Information as defined in such NDA.
+        Nokia reserves the right to revise this document for any
+        reason, including but not limited to conformity with standards
+        promulgated by various agencies, utilisation of advances in
+        the state of the technical areas, or the reflection of changes
+        in the design of any equipment, techniques, or procedures
+        described or referred to herein.
+
+        The product specifications and other technical or performance
+        information contained herein are subject to change without
+        notice.  Updates of this document will be issued under the
+        above NDA's.
+
+        Nokia makes no representation or warranty, expressed or
+        implied, with respect to the sufficiency, accuracy, or utility
+        of any information or opinion contained herein.  Nokia
+        expressly advises that any use of for any purpose or reliance
+        upon this technical reference is at the risk of the user and
+        that Nokia shall not be liable for any damage or injury
+        incurred by any person arising out of the sufficiency,
+        accuracy, or utility of any information or opinion contained
+        herein.
+
+        This document is not to be construed as a suggestion to any
+        manufacturer to modify or change any of its products, nor does
+        this document represent any commitment by Nokia to sell or
+        purchase any product.  Nothing contained herein shall be
+        construed as conferring by implication, estoppel, or otherwise
+        any license or right under any patent, whether or not the use
+        of any information herein necessarily employs an invention of
+        any existing or later issued patent.
+
+        Nokia reserves the right not to offer any or all of these
+        products and to withdraw any or all of them at any future
+        time.
+
+        Copyright (C) 2022, Nokia.  All Rights Reserved.";
+
+    revision 2026-05-25 {
+        description
+            "add identity onu-disabled";
+        reference
+            "TBD";
+    }
+
+    revision 2022-07-28 {
+        description
+            "Initial revision.";
+        reference
+            "Nokia specific";
+    }
+
+    identity defective-onu-base {
+        description
+            "Base identity used for defining defective ONUs.
+            This identity can for instance be used in the
+            'forget-about-onu-defect' action.";
+    }
+
+    identity rogue-onu {
+        base defective-onu-base;
+        description
+            "The defective ONU is a rogue ONU.";
+        reference
+            "ITU-T G.9807.1 clause C.19";
+    }
+
+    identity overload-upstream-ploam {
+        base defective-onu-base;
+        description
+            "The defective ONU is an ONU that generates
+            excessive upstream PLOAM traffic.";
+    }
+
+    identity onu-disabled {
+        base defective-onu-base;
+        description
+            "The defective ONU is a disabled ONU.";
+    }
+
+    augment "/if:interfaces-state/if:interface"
+        + "/bbf-xpon:channel-termination" {
+        description
+          "Augment the channel termination with an action to indicate
+          to the Optical Line Termination (OLT) that the handling of
+          a specific defective Optical Network Unit (ONU) has been
+          completed.";
+
+    action forget-about-onu-defect {
+      description
+        "This action indicates to the Optical Line Termination
+         (OLT) that the handling of a specific defective Optical
+         Network Unit (ONU) has been completed.
+         When receiving this action, the OLT will terminate any
+         pending handling procedure about this ONU for the
+         indicated defect. This includes the clear of any alarm
+         related to the defect (if any such alarm is pending)
+         and the clear of any state related to the defect (if
+         any such state is present) for this ONU.
+         The action is considered successful even when the
+         OLT has no pending alarm nor state data related to
+         this defect for this ONU.
+         Per RFC 6241, if the invocation of this action is
+         unsuccessful the action will be replied with an error
+         and the 'error-app-tag' and 'error-message' in the
+         <rpc-error> element returned by the server are to
+         be populated as follows:
+           error-app-tag: A string in the form
+                          <module-name>:<identity> where <identity> is
+                          a string version of an identity value based
+                          on the identity
+                          'nokia-yang-types-mounted:action-error-tag'
+                          that describes the reason the error occurred
+                          and <module-name> is the name of the module
+                          in which the identity is defined, i.e.
+                          'nokia-yang-types-mounted'
+           error-message: A text string describing the cause of the
+                          error when either no defined reason exists
+                          or additional information is available
+                          beyond that defined by the tag itself; it is
+                          a string suitable for human display.";
+      input {
+        leaf serial-number {
+          type bbf-xpon-types:onu-serial-number;
+          mandatory true;
+          description
+            "The serial number of the Optical Network Unit (ONU)
+             that is currently subjected to the indicated
+             'defective ONU' handling procedure.";
+        }
+        leaf defect {
+         type identityref {
+            base nokia-sdan-onu-defective-type:defective-onu-base;
+          }
+          mandatory true;
+          description
+            "The specific ONU defect for which the handling
+             procedure has been completed.";
+        }
+      }
+    }
+  }
+ }

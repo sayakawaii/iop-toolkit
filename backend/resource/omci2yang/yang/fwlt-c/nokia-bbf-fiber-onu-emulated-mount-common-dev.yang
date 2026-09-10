@@ -1,0 +1,67 @@
+module nokia-bbf-fiber-onu-emulated-mount-common-dev {
+
+  namespace
+     "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+   + "nokia-bbf-fiber-onu-emulated-mount-common-dev";
+
+  prefix nokia-bbf-fiber-onu-emulated-mount-common-dev;
+  
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+  
+  import nokia-yang-types {
+     prefix nok-typ;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "The NOKIA BBF/hardware YANG module supporting
+     deviations on top of standard.";
+
+  revision 2023-08-29 {
+    description
+      "Allow onu name upto 100 characters";
+    reference
+      "Nokia Specific.";
+  }
+
+  revision 2019-09-27 {
+    description
+      "Move onu deviations to e-onu category";
+    reference
+      "Nokia Specific.";
+  }
+
+  deviation "/onu:onus/onu:onu/onu:name" {
+    deviate replace {
+      type nok-typ:nokia-string-ascii100;
+    }    
+  }
+
+  deviation "/onu:onus/onu:onu/onu:onu-management/onu:target-active-software/onu:software-version/onu:release/onu:release" {
+    deviate add {
+      must "not(current()/../../onu:target-passive-software/onu:release = current())" {
+       error-message "Target-active-software release should not the same as target-passive-software's.";
+       }
+     }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:onu-management/onu:vendor-specific-software/onu:target-active-vendor-specific-software/onu:vendor-specific-file-package-name" {
+    deviate add {
+      must "not(current()/../../onu:target-passive-vendor-specific-software/onu:vendor-specific-file-package-name = current())" {
+       error-message "Target-active-vendor-specific-software's package name should not the same with target-passive-vendor-specific-software's.";
+       }
+     }
+  }
+
+}
+
+
+

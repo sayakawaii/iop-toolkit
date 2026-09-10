@@ -1,0 +1,403 @@
+module nokia-sdan-ethernet-pm-threshold-profiles-mounted {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+          + "nokia-sdan-ethernet-pm-threshold-profiles-mounted";
+  prefix nokia-eth-pm-tca-prof-mounted;
+
+  import bbf-yang-types {
+    prefix bbf-yang;
+  }
+  import nokia-yang-types-mounted {
+    prefix nok-typ-mounted;
+  }
+  import nokia-hardware-profiles-mounted {
+    prefix nokia-hw-prof-mounted;
+  }
+  import nokia-sdan-hardware-pm-threshold-profiles-mounted {
+    prefix nokia-hw-pm-threshold-prof-mounted;
+  }
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  organization
+    "Nokia";
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+  description
+    "This module contains a collection of YANG definitions for
+     supporting Nokia specific requirements as applicable to its
+     access network equipment.
+
+     This module, in particular, augments the performance monitoring threshold
+     profiles with data that allows you to configure thresholding values for
+     performance data associated with Ethernet counters.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2022, Nokia. All Rights Reserved.";
+
+  revision 2023-06-21 {
+    description
+      "Added identities to support new ANI PM TCA";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2023-03-13 {
+    description
+      "TCA profile support for Ethernet physical layer performance monitoring counters";
+    reference
+      "ITU-T G.988 OMCI specification";
+  }
+
+  revision 2022-05-16 {
+    description
+      "Implementation of threshold profiles to assiciate with performance monitoring counters.";
+    reference
+      "G.988";
+  }
+
+  identity eth-pm-tca-alert {
+    description
+      "Indicates which Ethernet performance monitoring TCA element has reached the configured
+       threshold within the current interval";
+  }
+
+  identity eth-crc-errored-pkts-counts-exceeding {
+    base eth-pm-tca-alert;
+    description
+      "Indicates that the number of Ethernet CRC errored packets has reached the configured threshold value
+       within the current interval";
+  }
+
+  identity eth-rx-drop-events-exceeding {
+    base eth-pm-tca-alert;
+    description
+      "Indicates that the Ethernet total Rx drop events has reached the configured threshold value
+       within the current interval";
+  }
+
+  identity eth-tx-drop-events-exceeding {
+    base eth-pm-tca-alert;
+    description
+      "Indicates that the Ethernet total Tx drop events has reached the configured threshold value
+       within the current interval";
+  }
+
+  identity eth-rx-drop-bytes-count-exceeding {
+    base eth-pm-tca-alert;
+    description
+      "Indicates that the total received dropped bytes has reached the configured threshold value
+       within the current interval";
+  }
+
+  identity eth-rx-drop-frames-count-exceeding {
+    base eth-pm-tca-alert;
+    description
+      "Indicates that the total received ethernet frame drop count has reached the configured threshold value
+       within the current interval";
+  }
+
+  identity eth-tx-drop-frames-count-exceeding {
+    base eth-pm-tca-alert;
+    description
+      "Indicates that the total transmitted ethernet frame drop count has reached the configured threshold value
+       within the current interval";
+  }
+
+  identity undersize-frame-count-exceeding {
+    base eth-pm-tca-alert;
+    description
+      "Indicates that the upstream Rx undersize Ethernet frame count has reached the configured threshold value
+       within the current interval";
+  }
+
+  identity oversize-frame-count-exceeding {
+    base eth-pm-tca-alert;
+    description
+      "Indicates that the upstream Rx oversize Ethernet frame count has reached the configured threshold value
+       within the current interval";
+  }
+
+  identity excessive-collision-count-exceeding {
+    base eth-pm-tca-alert;
+    description
+      "Indicates that the Ethernet frame excessive collision count has reached the configured threshold value
+       within the current interval";
+  }
+
+  identity late-collision-count-exceeding {
+    base eth-pm-tca-alert;
+    description
+      "Indicates that the Ethernet frame late collision count has reached the configured threshold value
+       within the current interval";
+  }
+
+  identity rx-buffer-overflow-count-exceeding {
+    base eth-pm-tca-alert;
+    description
+      "Indicates that the Ethernet frame receive buffer overflow count has reached the configured threshold value
+       within the current interval";
+  }
+
+  identity tx-buffer-overflow-count-exceeding {
+    base eth-pm-tca-alert;
+    description
+      "Indicates that the Ethernet frame transmit buffer overflow count has reached the configured threshold value
+       within the current interval";
+  }
+
+  identity single-collision-count-exceeding {
+    base eth-pm-tca-alert;
+    description
+      "Indicates that the Ethernet frame single collision count has reached the configured threshold value
+       within the current interval";
+  }
+
+  identity multiple-collision-count-exceeding {
+    base eth-pm-tca-alert;
+    description
+      "Indicates that the Ethernet frame multiple collision count has reached the configured threshold value
+       within the current interval";
+  }
+
+  identity sqe-counter-exceeding {
+    base eth-pm-tca-alert;
+    description
+      "Indicates that the Ethernet frame SQE test error message count has reached the configured threshold value
+       within the current interval";
+  }
+
+  identity deferred-tx-exceeding {
+    base eth-pm-tca-alert;
+    description
+      "Indicates that the Ethernet frames whose first transmission attempt was delayed has reached the configured threshold value
+       within the current interval";
+  }
+
+  identity internal-mac-tx-error-exceeding {
+    base eth-pm-tca-alert;
+    description
+      "Indicates that the Ethernet frames internal MAC sublayer transmit error count has reached the configured threshold value
+       within the current interval";
+  }
+
+  identity carrier-sense-error-exceeding {
+    base eth-pm-tca-alert;
+    description
+      "Indicates that the Ethernet frames carrier sense lost error count has reached the configured threshold value
+       within the current interval";
+  }
+
+  identity alignment-error-exceeding {
+    base eth-pm-tca-alert;
+    description
+      "Indicates that the Ethernet frames alignment error count has reached the configured threshold value
+       within the current interval";
+  }
+
+  identity internal-mac-rx-error-exceeding {
+    base eth-pm-tca-alert;
+    description
+      "Indicates that the Ethernet frames internal MAC sublayer receive error count has reached the configured threshold value
+       within the current interval";
+  }
+
+  augment "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles" {
+    description "augment pm profiles";
+    list ethernet-frame-error-profile {
+      key "name";
+      description
+        "TCA profile to configure ethernet frame error parameters";
+      leaf name {
+        type nok-typ-mounted:nokia-string-ascii64;
+        description
+          "Indicates name of the profile that can be applied to ethernet
+           frame error performace monitoring counters.";
+      }
+      leaf drop-events-threshold {
+        type bbf-yang:performance-counter64;
+        description
+          "Threshold value for the total number of events in which inbound packets
+           were dropped due to a lack of resources. When number of drop events crosses
+           this threshold a TCA is raised.";
+      }
+      leaf crc-err-pkts-threshold {
+        type bbf-yang:performance-counter64;
+        description
+          "Threshold value for the total number packets identified with CRC error.
+           When number of CRC errored packet crosses this threshold a TCA is raised.";
+      }
+      leaf undersize-pkts-threshold {
+        type bbf-yang:performance-counter64;
+        description
+          "Threshold value for the total number undersized packets.
+           When number of undersized packet crosses this threshold a TCA is raised.";
+      }
+      leaf oversize-pkts-threshold {
+        type bbf-yang:performance-counter64;
+        description
+          "Threshold value for the total number oversized packets.
+           When number of oversized packet crosses this threshold a TCA is raised.";
+      }
+    }
+
+    list ethernet-physical-layer-error-profile {
+      key "name";
+      description
+        "TCA profile to configure the threshold for Ethernet physical layer counters";
+      leaf name {
+        type nok-typ-mounted:nokia-string-ascii64;
+        description
+          "Indicates the name of the TCA profile that can be applied to Ethernet physical layer
+           performance monitoring counters.";
+      }
+      leaf  excessive-collision-threshold{
+        type bbf-yang:performance-counter64;
+        description
+          "Threshold value for the total number of frames whose transmission failed due to
+           excessive collisions.When number of oversized packet crosses this threshold
+           a TCA is raised.";
+      }
+      leaf late-collision-threshold {
+        type bbf-yang:performance-counter64;
+        description
+          "Threshold value for the number of times that a collision was detected
+          later than 512 bit times into the transmission of a packet.When the number crosses
+          this threshold a TCA is raised.";
+      }
+      leaf rx-buffer-overflow-threshold {
+        type bbf-yang:performance-counter64;
+        description
+          "Threshold value for the number of times that the receive buffer
+          overflowed. When the buffer overflow count crosses this threshold a TCA is raised.";
+      }
+      leaf tx-buffer-overflow-threshold {
+        type bbf-yang:performance-counter64;
+        description
+          "Threshold value for the number of times that the transmit buffer
+          overflowed. When the buffer overflow count crosses this threshold a TCA is raised.";
+      }
+      leaf single-collision-threshold {
+        type bbf-yang:performance-counter64;
+        description
+          "Threshold value for the number of successfully transmitted frames whose
+          transmission was delayed by exactly one collision. When the single collision frame count
+          crosses this threshold a TCA is raised.";
+      }
+      leaf multiple-collision-threshold {
+        type bbf-yang:performance-counter64;
+        description
+          "Threshold value for the number of successfully transmitted frames whose
+          transmission was delayed by more than one collision. When the multiple collision frame count
+          crosses this threshold a TCA is raised.";
+      }
+      leaf sqe-counter-threshold {
+        type bbf-yang:performance-counter64;
+        description
+          "Threshold value for the number of times that the SQE test error message was
+          generated by the PLS sublayer. When the SQE test error message count crosses this threshold
+          a TCA is raised.";
+      }
+      leaf deferred-tx-threshold {
+        type bbf-yang:performance-counter64;
+        description
+          "Threshold value for the number of frames whose first transmission attempt was delayed because
+          the medium was busy. When the number of delayed first transmission frames crosses this threshold
+          a TCA is raised.";
+      }
+      leaf internal-mac-tx-error-threshold {
+        type bbf-yang:performance-counter64;
+        description
+          "Threshold value for the number of frames whose transmission failed due to an internal MAC sublayer
+          transmit error. When the number of internal mac transmit error count crosses this threshold
+          a TCA is raised.";
+      }
+      leaf carrier-sense-error-threshold {
+        type bbf-yang:performance-counter64;
+        description
+          "Threshold value for the number of times that carrier sense was lost or never asserted when attempting
+          to transmit a frame. When the carrier sense error count crosses this threshold a TCA is raised.";
+      }
+      leaf alignment-error-threshold {
+        type bbf-yang:performance-counter64;
+        description
+          "Threshold value for the number of received frames that were not an integral number of octets in length
+          and did not pass the FCS check. When the alignment error count crosses this threshold a TCA is raised.";
+      }
+      leaf internal-mac-rx-error-threshold {
+        type bbf-yang:performance-counter64;
+        description
+          "Threshold value for the number of frames whose reception failed due to an internal MAC sublayer
+          receive error. When the number of internal mac receive error count crosses this threshold
+          a TCA is raised.";
+      }
+    }
+
+    list ethernet-frame-error-extended-profile {
+      key "name";
+      description
+        "TCA profile to configure Ethernet upstream/downstrem specific parameters";
+      leaf name {
+        type nok-typ-mounted:nokia-string-ascii64;
+        description
+          "Indicates the name of the TCA profile that can be applied to Ethernet
+           upstream/downstrem specific performance monitoring counters.";
+      }
+      leaf in-drop-frames-threshold {
+        type bbf-yang:performance-counter64;
+        description
+          "Threshold value for the total number of inbound frames dropped due to a lack of resources.
+           When the number of dropped frames crosses this threshold, a TCA is raised.";
+      }
+      leaf out-drop-frames-threshold {
+        type bbf-yang:performance-counter64;
+        description
+          "Threshold value for the total number of outbound frames dropped due to a lack of resources.
+           When the number of dropped frames crosses this threshold, a TCA is raised.";
+      }
+      leaf in-drop-octets-threshold {
+        type bbf-yang:performance-counter64;
+        description
+          "Threshold value for the total number of inbound bytes dropped due to a lack of resources.
+           When the number of dropped octets crosses this threshold, a TCA is raised.";
+      }
+    }
+  }    
+}

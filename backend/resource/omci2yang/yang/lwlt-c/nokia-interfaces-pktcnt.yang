@@ -1,0 +1,186 @@
+module nokia-interfaces-pktcnt {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+          + "nokia-interfaces-pktcnt";
+
+  prefix nokia-itfpktcnt;
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import bbf-if-type {
+    prefix bbfift;
+  }
+
+  import bbf-interfaces-performance-management {
+    prefix bbf-if-pm;
+  }
+  
+  import bbf-yang-types {
+    prefix bbf-yang;
+  }
+
+  import iana-if-type {
+    prefix ianaift;
+  }
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be 
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG definitions for 
+     supporting Nokia specific requirements as applicable to its 
+     access network equipment.
+     
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia 
+     reserves the right to revise this document for any reason, 
+     including but not limited to conformity with standards 
+     promulgated by various agencies, utilisation of advances in the 
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or 
+     referred to herein.
+
+     The product specifications and other technical or performance 
+     information contained herein are subject to change without 
+     notice. Updates of this document will be issued under the above 
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any 
+     information or opinion contained herein. Nokia expressly advises 
+     that any use of for any purpose or reliance upon this technical 
+     reference is at the risk of the user and that Nokia shall not be 
+     liable for any damage or injury incurred by any person arising 
+     out of the sufficiency, accuracy, or utility of any information 
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any 
+     manufacturer to modify or change any of its products, nor does 
+     this document represent any commitment by Nokia to sell or 
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license 
+     or right under any patent, whether or not the use of any 
+     information herein necessarily employs an invention of any 
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2018, Nokia. All Rights Reserved.";
+
+  revision 2024-04-09 {
+    description
+      "Added ethernetCsmacd and LAG condition and Removed in-pkts and out-pkts for statistics container";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2022-06-11 {
+    description
+      "Added feature performance-24hr for respective container";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2018-10-25 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific"; 
+  }
+
+  grouping nokia-interface-performance-counters {
+    description
+      "Counters associated with current and historical 15 minute and
+       24 hour performance counters.";
+
+    leaf in-pkts {
+          type bbf-yang:performance-counter64;
+          description
+              "The total number of packets that are received at this 
+			  sub-layer interface, including all unicast, multicast 
+			  and broadcast packets, irrespective of whether these 
+			  packets are actually being forwarded /discarded by 
+			  the higher layer.";
+      }
+
+      leaf out-pkts {
+          type bbf-yang:performance-counter64;
+          description
+              "The total number of packets that are requested be 
+			  transmitted at this sub-layer interface, including all 
+			  unicast, multicast and broadcast packets, irrespective 
+			  of whether these packets are actually being sent or 
+			  are discarded at the lower level interface.";
+      }
+  }
+
+  augment '/if:interfaces-state/if:interface'
+        + '/bbf-if-pm:performance/bbf-if-pm:intervals-15min/bbf-if-pm:current' {
+      when "derived-from-or-self(../../../if:type,'bbfift:vlan-sub-interface') or 
+            derived-from-or-self(../../../if:type, 'ianaift:ethernetCsmacd') or
+	          derived-from-or-self(../../../if:type, 'ianaift:ieee8023adLag')"  {
+          description
+              "Applies only to ethernet or LAG or Vlan Sub Interfaces (User,Network and 
+               Subtended-node-port).";
+      }
+      description
+          "This augments packet counters of current 15min for VLAN sub-interfaces.";
+
+      uses nokia-interface-performance-counters;
+  }
+
+  augment '/if:interfaces-state/if:interface'
+        + '/bbf-if-pm:performance/bbf-if-pm:intervals-15min/bbf-if-pm:history' {
+      when "derived-from-or-self(../../../if:type,'bbfift:vlan-sub-interface') or 
+            derived-from-or-self(../../../if:type, 'ianaift:ethernetCsmacd') or
+            derived-from-or-self(../../../if:type, 'ianaift:ieee8023adLag')" {
+          description
+              "Applies only to ethernet or LAG or Vlan Sub Interfaces (User,Network and 
+               Subtended-node-port).";
+      }
+      description
+          "This augments packet counters of history 15min for VLAN sub-interfaces.";
+
+      uses nokia-interface-performance-counters;
+  }
+
+  augment '/if:interfaces-state/if:interface'
+        + '/bbf-if-pm:performance/bbf-if-pm:intervals-24hr/bbf-if-pm:current' {
+      when "derived-from-or-self(../../../if:type,'bbfift:vlan-sub-interface') or 
+            derived-from-or-self(../../../if:type, 'ianaift:ethernetCsmacd') or
+            derived-from-or-self(../../../if:type, 'ianaift:ieee8023adLag')" {
+          description
+              "Applies only to ethernet or LAG or Vlan Sub Interfaces (User,Network and 
+               Subtended-node-port).";
+      }
+      if-feature "bbf-if-pm:performance-24hr";
+      description
+          "This augments packet counters of current 24hr for VLAN sub-interfaces.";
+
+      uses nokia-interface-performance-counters;
+  }
+
+   augment '/if:interfaces-state/if:interface'
+        + '/bbf-if-pm:performance/bbf-if-pm:intervals-24hr/bbf-if-pm:history' {
+      when "derived-from-or-self(../../../if:type,'bbfift:vlan-sub-interface') or 
+            derived-from-or-self(../../../if:type, 'ianaift:ethernetCsmacd') or 
+            derived-from-or-self(../../../if:type, 'ianaift:ieee8023adLag')" {
+          description
+              "Applies only to ethernet or LAG or Vlan Sub Interfaces (User,Network and 
+               Subtended-node-port).";
+      }
+      if-feature "bbf-if-pm:performance-24hr";
+      description
+          "This augments packet counters of history 24hr for VLAN sub-interfaces.";
+
+      uses nokia-interface-performance-counters;
+  }  
+ 
+}

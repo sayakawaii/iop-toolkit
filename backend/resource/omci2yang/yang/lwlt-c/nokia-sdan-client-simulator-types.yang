@@ -1,0 +1,231 @@
+module nokia-sdan-client-simulator-types {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+          + "nokia-sdan-client-simulator-types";
+
+  prefix client-simulator-types;
+
+  import bbf-dot1q-types {
+    prefix bbf-dot1qt;
+  }
+
+  import ietf-yang-types {
+     prefix yang;
+  }
+
+  import ietf-inet-types {
+    prefix inet;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains new nodes according to Nokia specific
+     requirements for client simulator session types.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not  to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2022, Nokia. All Rights Reserved.";
+
+  revision 2023-01-04 {
+    description
+      "Added module prefix for detailed-status leaf when condition
+      which uses the test-status identity value";
+    reference
+      "RFC 7950 - section 9.10.3";
+  }
+
+  revision 2022-09-21 {
+    description
+      "Initial version";
+    reference
+      "";
+  }
+
+  identity test-status {
+    description
+      "Base identity for simulation test status.";
+  }
+  identity success {
+    base test-status;
+    description
+      "Identity to notify simulation test
+       status successful.";
+  }
+  identity failed {
+    base test-status;
+    description
+      "Identity to notify simulation test
+       status failure.";
+  }
+  identity in-progress {
+    base test-status;
+    description
+      "Identity to notify simulation test
+       status in-progress.";
+  }
+
+  typedef time-out {
+    type uint8 {
+      range "0 | 5..64";
+    }
+    units seconds;
+    default "30";
+    description
+      "The time interval within which the simulated Client
+      test session is expected to be successful. On timeout the
+      test is considered as a failure and the session-status
+      is marked as 'failure'. The value 0 indicates no timeout,
+      indefinite retry until session is bound.";
+  }
+
+  grouping simulation-vlan-tag-params {
+    description
+      "Client Simulator vlan tag parameters.";
+
+    leaf inner-vlan-pbit-value {
+      type bbf-dot1qt:pbit;
+      default "7";
+      description
+        "The pbit-value to be inserted in the PBIT field of the
+        inner VLAN tag of the outgoing DHCP packets.If
+        vlan-sub-interface configuration is dual-tagged, the
+        priority value to be considered for inner-tag otherwise
+        not considered.";
+    }
+    leaf outer-vlan-pbit-value {
+      type bbf-dot1qt:pbit;
+      default "7";
+      description
+        "The pbit-value to be inserted in the PBIT field of the
+        outer VLAN tag of the outgoing DHCP packets. If
+        vlan-sub-interface configuration is single-tagged
+        or dual-tagged, the priority value to be considered for
+        outer-tag otherwise not considered.";
+    }
+  }
+
+  grouping simulation-status-params {
+    description " grouping simulation status params";
+    leaf client-mac {
+      type yang:mac-address;
+      description
+        "MAC Address of the client.";
+    }
+    leaf server-mac {
+      type yang:mac-address;
+      description
+        "MAC Address of the server.";
+    }
+    leaf user-ip {
+      type inet:ip-address;
+      description
+        "IP address assigned to the client.";
+    }
+    leaf gateway-ip {
+      type inet:ip-address;
+      description
+        "IP address of the Gateway.";
+    }
+  }
+
+  grouping simulation-session-status {
+    description
+      "Defines the session status parameters";
+
+    leaf status {
+      type identityref{
+        base test-status;
+      }
+      description
+        "Defines the results of the Client simulation test.
+        Once the session is initiated with a start action the
+        state of the session moves to 'in-progress'. Once the
+        session is successful(eg: IP is acquired) the state of the
+        session status is marked as 'success'.If the test is failed
+        (eg : IP acquire is failed),the status is marked as 'failure'.";
+    }
+
+    leaf detailed-status {
+      when "(derived-from-or-self (../status, 'client-simulator-types:failed'))" {
+        description "Applicable only for failed status";
+      }
+      type string;
+      description
+        "Displays additional details about the session status.
+        Only applicable for session failure to indicate failure
+        reason.";
+    }
+  }
+
+  grouping simulation-timing-params {
+    description
+      "Defines the state data for the simulated client session";
+
+    leaf session-start-time {
+      type yang:date-and-time;
+      description
+        "The Time at which the Client Simulation Session was established.
+        This time indicates the session established time.This time will
+        not be updated when session is in-progress or failure occurs.";
+    }
+
+    leaf simulation-start-time {
+      type yang:date-and-time;
+      description
+        "Time at which the Client Simulation Session was initiated.
+        This time indicates the session starting time upon
+        receiving a start action command and will be updated
+        irrespective of whether the session is successfully
+        established or not.";
+    }
+
+    leaf simulation-duration {
+      type uint32;
+      units milliseconds;
+      description
+        "Displays Total time for which the simulated sessions are
+        active from the simulation-start-time.";
+    }
+  }
+}

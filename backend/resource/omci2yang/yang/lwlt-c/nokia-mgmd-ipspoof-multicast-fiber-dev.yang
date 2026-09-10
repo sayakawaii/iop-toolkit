@@ -1,0 +1,39 @@
+module nokia-mgmd-ipspoof-multicast-fiber-dev {
+
+  yang-version 1.1;
+
+  namespace "urn:broadband-forum-org:yang:" +
+            "nokia-mgmd-ipspoof-multicast-fiber-dev";
+
+  prefix "nokia-mgmd-ipspoof-multicast-fiber-dev";
+
+  import bbf-mgmd {
+    prefix "bbf-mgmd";
+  }
+
+  import nokia-mgmd-ipspoof {
+    prefix nokia-mgmd-ipspoof;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA BBF/nokia-mgmd-ipspoof YANG module supporting
+     deviations on top of standard. ";
+
+  revision 2022-12-05 {
+    description
+      "Initial revision on 2022-12-05.";
+    reference
+      "TBD";
+  }
+
+  deviation "/bbf-mgmd:multicast/bbf-mgmd:mgmd/bbf-mgmd:multicast-vpn/bbf-mgmd:multicast-interface-to-host/nokia-mgmd-ipspoof:vlan-sub-interface-ref-for-ipspoof"{
+    description "multicast mgmd vlan-sub-interface-ref-for-ipspoof not supported for this board";
+    deviate not-supported;
+  }
+}

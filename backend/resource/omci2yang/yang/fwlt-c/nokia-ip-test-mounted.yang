@@ -1,0 +1,533 @@
+module nokia-ip-test-mounted {
+  yang-version 1.1;
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+           + "nokia-ip-test-mounted";
+
+  prefix nokia-ip-test-mounted;
+
+ // import ietf-interfaces-mounted {
+ //   prefix if-mounted;
+ // }
+  import ietf-inet-types {
+   prefix inet;
+  }
+ // import iana-if-type-mounted {
+ //   prefix ianaift-mounted;
+ // }
+  import nokia-yang-types-mounted {
+    prefix nok-typ-mounted;
+  }
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+  import nokia-template-common {
+    prefix template-common;
+  }
+  import nokia-ip-test-identities {
+    prefix nokia-ip-test-identities;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.mibsupport@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG definitions for
+     supporting Nokia specific requirements as applicable to its
+     access network equipment.
+
+     Specifically, this module contains a collection of YANG
+     definitions for testing IP connectivity.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2021, Nokia. All Rights Reserved.";
+
+
+  revision 2026-06-22 {
+    description
+      "Add traceroute action.";
+    reference
+      "Nokia specific EPIC BBN-326129";
+  }
+
+  revision 2021-07-30 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: yyyy-mm-dd.";
+    reference
+      "Nokia specific";
+  }
+/* //Move the identity to a seperate module (nokia-ip-test-identities)
+   //to avoid the suffix "-mounted" issue for eONU
+  identity ping-result-base {
+    description
+      "This identity is used to denote the possible result of an IP
+       ping.";
+  }
+  identity success {
+    base ping-result-base;
+    description
+      "This identity is used to denote a successful ping.";
+  }
+  identity unexpected-icmp-received {
+    base ping-result-base;
+    description
+      "This identity is used to denote that there was an unexpected
+       ICMP message received following the ping request.";
+  }
+  identity no-response {
+    base ping-result-base;
+    description
+      "This identity is used to denote that there was no ICMP message
+       received following the ping request.";
+  }
+  identity unresolved-domain-name {
+    base ping-result-base;
+    description
+      "This identity is used to denote that the target domain name
+       could not be resolved.";
+  }
+  */
+  augment '/onu:onus/onu:onu/onu:root' {
+    when "derived-from-or-self(../onu:usage, 'template-common:node-actual-usage') or "
+         + "derived-from-or-self(../onu:usage, 'template-common:node-from-template-usage')" {
+       description
+         "it should be a node-actual-usage or node-from-template-usage ONU";
+    }
+    description "augment onu root with ip-test";
+    container ip-test {
+      config false;
+      description
+        "Container for IPv4 and IPv6 connectivity tests.";
+      container ipv4 {
+        description
+          "Container for IPv4 connectivity tests.";
+        action ping {
+          description
+            "Ping an explicit IP address or a domain name.
+
+             Successful invocation of this action results in reporting
+             the result through an asynchronous notification.
+
+             No notification will be sent, if the invocation of this
+             action is unsuccessful. In that case the action will be
+             replied with an error and the 'error-app-tag' and
+             'error-message' in the <rpc-error> element returned by the
+             server are to be populated as follows:
+
+             error-app-tag: A string in the form
+                           <module-name>:<identity> where <identity> is
+                           a string version of an identity value based
+                           on the identity
+                           'nok-typ-mounted:action-error-tag' that describes
+                           the reason the error occurred and
+                           <module-name> is the name of the module in
+                           which the identity is defined.
+
+             error-message: A text string describing the cause of the
+                            error when either no defined reason exists
+                            or additional information is available
+                            beyond that defined by the tag itself; it is
+                            a string suitable for human display.";
+
+          input {
+            leaf test-name {
+              type nok-typ-mounted:nokia-string-ascii64;
+              mandatory true;
+              description
+                "Is the instance name of the ping action. Since the ping
+                 action is executed in asynchronous mode, this object is
+                 used by the server to associate the ping action with a
+                 notification message.";
+            }
+            leaf source-interface {
+              type string;
+              description
+                "In case there are several IP interfaces, a source
+                 interface may be specified through this node.";
+            }
+            choice target {
+              mandatory true;
+              description "target choice";
+              case ip-address {
+                leaf target-ip-address{
+                  type inet:ipv4-address;
+                  description
+                    "Explicit IP address of destination.";
+                }
+              }
+              case domain-name {
+                leaf target-domain-name {
+                  type inet:domain-name;
+                  description
+                    "Domain name of destination.";
+                }
+              }
+            }
+            leaf count {
+              type uint8 {
+                range "1..max";
+              }
+              default "1";
+              description
+                "Number of times to ping.";
+            }
+          }
+        }
+        notification ping-result {
+          description
+            "Indicates the result of a ping.";
+          leaf test-name {
+            type nok-typ-mounted:nokia-string-ascii64;
+            mandatory true;
+            description
+              "Since the ping action is executed in asynchronous mode,
+               this object is used by the server to associate the
+               notification message with a ping action.";
+          }
+          leaf actual-ip-address {
+            type inet:ipv4-address;
+            description
+              "The actual IP address used for all ping attempts.";
+          }
+          list attempt {
+            key index;
+            description
+              "Provides the result of each ping attempt.";
+            leaf index {
+              type uint8 {
+                range "1..max";
+              }
+              description
+                "The sequence number of the ping attempt.";
+            }
+            leaf result {
+              type identityref {
+                base nokia-ip-test-identities:ping-result-base;
+              }
+              description
+                "The result of the ping attempt.";
+            }
+            leaf delay {
+              when "../result = 'nokia-ip-test-identities:success'" {
+                description
+                  "Only valid when the ping was successful.";
+              }
+              type uint16;
+              units "ms";
+              description
+                "Provides the measured response delay.";
+            }
+          }
+        }
+
+        action traceroute {
+          description
+            "Traceroute to an explicit IP address or a domain name.
+
+             Traces the route packets take to reach a destination by
+             sending probe packets with incrementing TTL values and
+             recording intermediate hop responses.
+
+             Successful invocation of this action results in reporting
+             the result through an asynchronous notification.
+
+             No notification will be sent, if the invocation of this
+             action is unsuccessful. In that case the action will be
+             replied with an error and the 'error-app-tag' and
+             'error-message' in the <rpc-error> element returned by the
+             server are to be populated as follows:
+
+             error-app-tag: A string in the form
+                           <module-name>:<identity> where <identity> is
+                           a string version of an identity value based
+                           on the identity
+                           'nok-typ-mounted:action-error-tag' that describes
+                           the reason the error occurred and
+                           <module-name> is the name of the module in
+                           which the identity is defined.
+
+             error-message: A text string describing the cause of the
+                            error when either no defined reason exists
+                            or additional information is available
+                            beyond that defined by the tag itself; it is
+                            a string suitable for human display.";
+          reference
+            "Verizon OpenOMCI V2.4, section 8.2;
+             ITU-T G.988 clause A.2.21.2";
+
+          input {
+            leaf test-name {
+              type nok-typ-mounted:nokia-string-ascii64;
+              mandatory true;
+              description
+                "Is the instance name of the traceroute action. Since
+                 the traceroute action is executed in asynchronous mode,
+                 this object is used by the server to associate the
+                 traceroute action with a notification message.";
+            }
+            leaf source-interface {
+              type string;
+              description
+                "In case there are several IP interfaces, a source
+                 interface may be specified through this node.";
+            }
+            choice target {
+              mandatory true;
+              description "target choice";
+              case ip-address {
+                leaf target-ip-address {
+                  type inet:ipv4-address;
+                  description
+                    "Explicit IPv4 address of destination.";
+                }
+              }
+              case domain-name {
+                leaf target-domain-name {
+                  type inet:domain-name;
+                  description
+                    "Domain name of destination. Resolved by the ONU
+                     via a DNS-parsable string referenced through a
+                     large string ME.";
+                }
+              }
+            }
+            leaf max-hops {
+              type uint8 {
+                range "1..255";
+              }
+              default "30";
+              description
+                "Maximum number of hops (TTL value). Allowed range is
+                 1 to 255. The default is 30.";
+              reference
+                "Verizon OpenOMCI V2.4, section 8.2.1 - Byte P";
+            }
+            leaf probe-count {
+              type uint8 {
+                range "1..3";
+              }
+              default "3";
+              description
+                "Number of probe packets per hop. The default is 3.";
+              reference
+                "Verizon OpenOMCI V2.4, section 8.2.1 - Byte P+5
+                 bits CC";
+            }
+            leaf timeout {
+              type uint8 {
+                range "1..15";
+              }
+              units "seconds";
+              default "3";
+              description
+                "Timeout for each probe packet, expressed in seconds.
+                 The default is 3 seconds.";
+              reference
+                "Verizon OpenOMCI V2.4, section 8.2.1 - Byte P+5
+                 bits TTTT";
+            }
+            leaf probe-size {
+              type uint16 {
+                range "0..32767";
+              }
+              units "bytes";
+              default "0";
+              description
+                "Size of the probe packet in bytes. The value 0
+                 indicates the test and protocol-specific default.";
+              reference
+                "Verizon OpenOMCI V2.4, section 8.2.1 - Bytes P+3
+                 and P+4";
+            }
+            leaf dont-fragment {
+              type boolean;
+              default "false";
+              description
+                "Don't Fragment flag. When set to true, probe packets
+                 are sent with the DF bit set, disallowing
+                 fragmentation.";
+              reference
+                "Verizon OpenOMCI V2.4, section 8.2.1 - Byte P+3
+                 bit F";
+            }
+            leaf dont-resolve {
+              type boolean;
+              default "false";
+              description
+                "Don't Resolve flag. When set to true, intermediate
+                 hop addresses are not resolved to hostnames.";
+              reference
+                "Verizon OpenOMCI V2.4, section 8.2.1 - Byte P+5
+                 bit R";
+            }
+            leaf protocol {
+             type enumeration {
+                enum icmp {
+                  value 1;
+                  description
+                    "Internet Control Message Protocol.";
+                }
+                enum tcp {
+                  value 6;
+                  description
+                    "Transmission Control Protocol.";
+                }
+                enum udp {
+                  value 17;
+                  description
+                    "User Datagram Protocol.";
+                }
+              }
+              default "udp";
+              description
+                "Protocol to use for traceroute probe packets.
+                 Supported protocols: ICMP (0x01), TCP (0x06),
+                 UDP (0x11).";
+              reference
+                "Verizon OpenOMCI V2.4, section 8.2.1 - Byte P+6";
+            }
+            leaf destination-port {
+              when "../protocol != 'icmp'" {
+                description
+                  "Applicable for TCP/UDP traceroute.";
+              }
+              type inet:port-number;
+              description
+                "Destination port number for TCP or UDP based
+                 traceroute. For UDP, the default starting port is
+                 typically 33434. For TCP, a specific port must be
+                 specified (e.g., 80, 443).";
+              reference
+                "Verizon OpenOMCI V2.4, section 8.2.1 - Bytes P+7
+                 and P+8";
+            }
+          }
+        }
+
+        notification traceroute-result {
+          description
+            "Indicates the result of a traceroute.";
+          reference
+            "Verizon OpenOMCI V2.4, section 8.2.3;
+             ITU-T G.988 clause A.2.39.4";
+          leaf test-name {
+            type nok-typ-mounted:nokia-string-ascii64;
+            mandatory true;
+            description
+              "Since the traceroute action is executed in asynchronous
+               mode, this object is used by the server to associate
+               the notification message with a traceroute action.";
+          }
+          leaf result {
+            type identityref {
+              base nokia-ip-test-identities:traceroute-result-base;
+            }
+            description
+              "The overall result of the traceroute operation.";
+          }
+          leaf actual-ip-address {
+            type inet:ipv4-address;
+            description
+              "The actual resolved IPv4 address of the target
+               destination.";
+          }
+          list hop {
+            key index;
+            description
+              "Provides the result of each hop along the route.
+               Each hop contains the address of the responding
+               router and latency measurements for each probe.";
+            leaf index {
+              type uint8 {
+                range "1..255";
+              }
+              description
+                "The hop number (TTL value) in the route.";
+            }
+            leaf hop-ip-address {
+              type inet:ipv4-address;
+              description
+                "The IPv4 address of the router at this hop.
+                 A value of 0.0.0.0 indicates no response was
+                 received from this hop.";
+            }
+            leaf hop-host-name {
+              type string;
+              description
+                "The resolved hostname of the router at this hop,
+                 if available and dont-resolve was not set.";
+            }
+            list probe {
+              key probe-index;
+              description
+                "Provides the latency result for each probe at
+                 this hop.";
+              leaf probe-index {
+                type uint8 {
+                  range "1..3";
+                }
+                description
+                  "The probe sequence number within this hop.";
+              }
+              leaf latency {
+                type uint32;
+                units "microseconds";
+                description
+                  "The round-trip latency for this probe, expressed
+                   in microseconds. The special value 4294967295
+                   (0xFFFFFFFF) indicates a timeout (no response
+                   within the configured timeout period).";
+                reference
+                  "Verizon OpenOMCI V2.4, section 8.2.3 - Latency
+                   encoding: 32 bits unsigned integer in microseconds";
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+

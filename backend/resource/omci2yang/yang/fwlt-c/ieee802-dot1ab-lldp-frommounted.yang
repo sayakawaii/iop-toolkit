@@ -1,0 +1,177 @@
+module ieee802-dot1ab-lldp-frommounted {
+  yang-version "1.1";
+  /*** NAMESPACE / PREFIX DEFINITION ***/
+  namespace urn:ieee:std:802.1AB:yang:ieee802-dot1ab-lldp-frommounted;
+  prefix lldp-frommounted;
+  /*** LINKAGE (IMPORTS / INCLUDES) ***/
+
+  import bbf-fiber-onu-emulated-mount {
+     prefix onu;
+  }
+
+  /*** META INFORMATION ***/
+  organization
+    "Institute of Electrical and Electronics Engineers";
+  contact
+    "WG-URL: http://ieee802.org/1/
+     WG-EMail: stds-802-1-l@ieee.org
+       Contact: IEEE 802.1 Working Group Chair
+       Postal: C/O IEEE 802.1 Working Group
+       IEEE Standards Association
+            445 Hoes Lane
+            Piscataway, NJ 08854
+            USA
+    E-mail: stds-802-1-chairs@ieee.org";
+  description
+    "Management Information Base module for LLDP configuration, statistics,
+    local system data and remote systems data components.";
+  revision 2021-04-05 {
+    description
+      "published as part of IEEE Std 802.1ABcu";
+    reference
+      "IEEE Std 802.1AB-2016";
+  }
+  /*** GROUPING DEFINITIONS ***/
+  grouping lldp-cfg {
+    description
+      "LLDP basic configuration group.";
+    leaf message-fast-tx {
+      type uint32 {
+        range "1..3600";
+      }
+      units "second";
+      description
+        "Time interval in timer ticks between transmissions during fast
+        transmission periods(i.e., txFast is non-zero)";
+      reference
+        "9.2.5.5 of IEEE Std 802.1AB-2016";
+    }
+    leaf message-tx-hold-multiplier {
+      type uint32 {
+        range "2..10";
+      }
+      description
+        "Multiplier of msg-tx-interval";
+      reference
+        "9.2.5.6 of IEEE Std 802.1AB-2016";
+    }
+    leaf message-tx-interval {
+      type uint32 {
+        range "1..3600";
+      }
+      units "second";
+      description
+        "Time interval in timer ticks between transmissions during normal
+        transmission periods (i.e., txFast is zero).";
+      reference
+        "9.2.5.7 of IEEE Std 802.1AB-2016";
+    }
+    leaf reinit-delay {
+      type uint32 {
+        range "1..10";
+      }
+      units "second";
+      description
+        "Amount of delay (in units of seconds) from when admin-status becomes
+        'disabled' until re-initialization is attempted.";
+      reference
+        "9.2.5.10 of IEEE Std 802.1AB-2016";
+    }
+    leaf tx-credit-max {
+      type uint32 {
+        range "1..10";
+      }
+      description
+        "The maximum number of consecutive LLDPDUs that can be transmitted at
+        any time.";
+      reference
+        "9.2.5.17 of IEEE Std 802.1AB-2016";
+    }
+    leaf tx-fast-init {
+      type uint32 {
+        range "1..8";
+      }
+      description
+        "Initial value for the fast transmitting LLDPPDU.";
+      reference
+        "9.2.5.19 of IEEE Std 802.1AB-2016";
+    }
+  }  
+  /*** SCHEMA DEFINITIONS ***/
+augment '/onu:onus/onu:onu/onu:fromroot' {
+   container lldp {
+     presence "lldp";
+    description
+      "Link Layer Discovery Protocol configuration and operational
+      information.";
+    /* LLDP port configuration table */
+    list port {
+      key "name dest-mac-address";
+      description
+        "LLDP configuration information for a particular port.";
+      leaf name {
+        type string;
+        /*TODO: Commented due to FNMS does not support 'deref'*/
+        /*must
+            "derived-from-or-self(deref(.)/../if:type,"+
+            " 'ianaift:ethernetCsmacd')"+
+            "or derived-from-or-self(deref(.)/../if:type,"+
+            " 'ianaift:ieee8023adLag')" {
+            error-message
+              "The LLDP is only configured on Link Aggregation and Ethernet"+
+              "Ports.";
+        }*/
+        description
+          "The port name used to identify the port component (contained in
+          the local chassis with the LLDP agent) associated with this entry.";
+      }
+      leaf dest-mac-address {
+        type enumeration {
+          enum any {
+            description
+              "MAC address leaf not supported.";
+          }
+        }
+        description
+          "Destination MAC address. The ieee:mac-address type has a pattern
+          that allows upper and lower case letters. To avoid issues with
+          string comparison, it is suggested to only use Upper Case for the
+          letters in the hexadecimal numbers. There is still an issue with a
+          difference between the IETF mac-address definition and the IEEE
+          mac-address definition, so consider that if implementing code that
+          compares mac-addresses.";
+      }
+      leaf admin-status {
+        type enumeration {
+          enum tx-only {
+            value 1;
+            description
+              "Transmit LLDP frames only";
+          }
+          enum rx-only {
+            value 2;
+            description
+              "Receive LLDP frames only";
+          }
+          enum tx-and-rx {
+            value 3;
+            description
+              "Transmit and Receive LLDP frames";
+          }
+          enum disabled {
+            value 4;
+            description
+              "Do Not Transmit or Receive LLDP frames";
+          }
+        }
+        description
+          "Administratively status of the local LLDP agent.";
+        reference
+          "9.2.5.1 of IEEE Std 802.1AB-2016";
+      }
+     uses lldp-cfg;
+ }
+}
+}
+ 
+}

@@ -1,0 +1,177 @@
+module nokia-sdan-hgu-tr069-mounted  {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+           + "nokia-sdan-hgu-tr069-mounted";
+  prefix nokia-hgu-tr069-mounted;
+  
+  import bbf-fiber-onu-emulated-mount {
+     prefix onu;
+  }
+
+  import nokia-template-common {
+    prefix template-common;
+  }
+  
+  import tailf-common {
+    prefix tailf;
+  }
+
+  organization
+    "NOKIA";
+
+  contact
+    "";
+
+  description
+    "This module contains a collection of YANG definitions for
+     supporting Nokia specific requirements as applicable to its
+     access network equipment.
+     
+     In HGU, the RG side configuration is inaccessible via OMCI. 
+     As per the standards the RG-side of HGU should be managed 
+     by an ACS server. But some customers don't have or don't 
+     want to invest in ACS platform, but still demand that 
+     relevant HGU parameters can be configured via access 
+     network equipment. So, this module contains a collection 
+     of YANG definitions for supporting to configure HGU 
+     parameters. HGU-TR069 data is sent to ONUs using a 
+     proprietary OMCI MEs.
+     
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilization of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represents any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2025, Nokia. All Rights Reserved.";
+     
+  revision 2025-02-28 {
+    description
+      "Initial revision.";
+   reference
+      "Nokia specific";
+  }
+
+  augment '/onu:onus/onu:onu/onu:root' {
+    when "derived-from-or-self"
+     + "(../onu:usage, 'template-common:node-actual-usage')"
+     + "or derived-from-or-self"
+     + "(../onu:usage, 'template-common:node-template-usage')" {
+       description
+         "It should be a node-actual-usage
+          or node-template-usage ONU.";
+    }
+    description
+       "Augments root configuration with HGU TR069 parameters";
+       
+    container hgu-tr069-parameters {
+      presence "hgu-tr069-parameters";
+      
+      description
+        "Holds HGU TR069 key-value pairs provisioned by a user";
+
+      list name-value-pair {
+        key "index";
+        unique "param-name";
+        description
+          "Each entry contains a non-sensitive name-value pair,
+           the name is related to a hgu TR069 
+           parameter name, the value is this 
+           parameter's value. In this list, value
+           non sensitive.";
+
+        leaf index {
+           type uint32 {range "1..40";}
+           description
+              "Index of pair";
+        }
+        
+        leaf param-name {
+          type string {
+            length "10..255";
+          }
+          mandatory true;
+          description
+            "Indicates the TR069 parameter name.";
+        }
+          
+        leaf param-value {
+          type string {
+            length "1..255";
+          }
+          mandatory true;
+          description
+            "Indicates the TR069 parameter value.";
+        }
+      }
+      
+      list sensitive-name-value-pair{
+        key "index";
+        unique "param-name";
+        description
+          "Each entry contains sensitive name-value pair,
+           the name is related to a TR069
+           parameter name, the value is this 
+           parameter's value.";
+           
+        leaf index {
+           type uint32 {range "1..40";}
+	   must "count(current()/../../name-value-pair[index = current()]) = 0" {
+             error-message "HGU TR069 Index is not unique.";
+           }
+           description
+              "Index of pair";
+        }
+
+        leaf param-name {
+          type string {
+            length "10..255";
+          }
+	  must "count(current()/../../name-value-pair[param-name = current()]) = 0" {
+            error-message "HGU TR069 Param-name is not unique.";
+          }
+          mandatory true;
+          description
+            "Indicates the TR069 parameter name.";
+        }
+          
+        leaf param-value {
+          type tailf:aes-cfb-128-encrypted-string;
+          mandatory true;
+          description
+            "Indicates the TR069 parameter value.";
+        }
+      }
+    }
+  }
+}

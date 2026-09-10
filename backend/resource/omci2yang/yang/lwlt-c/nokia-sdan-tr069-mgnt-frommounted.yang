@@ -1,0 +1,262 @@
+module nokia-sdan-tr069-mgnt-frommounted  {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+           + "nokia-sdan-tr069-mgnt-frommounted";
+  prefix nokia-sdan-tr069-mgnt-frommounted;
+
+  import ietf-inet-types {
+    prefix inet;
+  }
+
+  import bbf-fiber-onu-emulated-mount {
+     prefix onu;
+  }
+
+
+
+  import bbf-dot1q-types {
+    prefix bbf-dot1qt;
+  }
+
+
+  organization
+    "TBD";
+
+  contact
+    "TBD";
+
+  description
+    "This module contains a collection of YANG definitions for
+     supporting the Broadband Forum requirements on creating
+     TR-069 management channel in access network equipment. As such,
+     this module is specific to access network equipment (e.g.,
+     BBF-specified Access Nodes and FTTdp DPUs).
+
+     This version of this YANG module is part of G.988, especially
+     9.12.16 TR-069 management server, 9.12.3 Network address and
+     9.12.4 Authentication security method; see the G.988 itself for
+     full legal notices.";
+
+  revision 2022-03-03 {
+    description
+      "Initial revision.";
+    reference
+      "TBD";
+  }
+
+  typedef tr069-server-uri {
+    type inet:uri {
+      length "1..255";
+    }
+    description
+      "Used where a uri is needed which has a maximum length of
+       255 characters.";
+  }
+
+  typedef name-string25 {
+    type string {
+      length "1..25";
+    }
+    description
+      "Used where a string is needed which has a maximum length of
+       25 characters and a minimum length of 1 character.";
+  }
+
+  typedef name-string50 {
+    type string {
+      length "1..50";
+    }
+    description
+      "Used where a string is needed which has a maximum length of
+       50 characters and a minimum length of 1 character.";
+  }
+
+  augment '/onu:onus/onu:onu/onu:fromroot' {
+    description "augment onu:fromroot";
+    container intended-beyond-onu-v-vrefpoint {
+      presence "intended-beyond-onu-v-vrefpoint";
+      description
+        "TR-069 management configuration. Contains TR-069 ACS server
+        connectivity related nodes and configuration of TCI value for
+        TR-069 management traffic passing through the VEIP.";
+
+      container reachable-tr069-servers {
+        presence "reachable-tr069-servers";
+        description
+          "Configuration data to reach ACS TR-069 servers.";
+
+        list reachable-tr069-server {
+          key "reference-onu-v-vrefpoint";
+
+          description
+            "A list of reachable TR-069 ACS servers and their authentication
+            configuration. It contains all the information that TR-069
+            client needs to connect to TR-069 ACS server: the VEIP interface
+            through which it is reachable, administrative state of the connection,
+            VLAN/pbit/dei to be used, the server URI, authentication credentials
+            such as user-name and password for client to establish connection
+            with the server.";
+
+          leaf reference-onu-v-vrefpoint {
+            type string;
+
+
+            description
+              "The name of onu-v-vrefpoint interface that associated with TR-069 connection.";
+            reference
+              "G.988: ONU management and control interface (OMCI)
+              specification clause 9.12.16 BBF TR-069 management
+              server attributes Managed entity ID.";
+          }
+
+          leaf admin-state {
+            type enumeration {
+              enum unlocked {
+                value 0;
+                description
+                  "The TR-069 connection is unlocked.";
+              }
+              enum locked {
+                value 1;
+                description
+                  "The TR-069 connection is locked.";
+              }
+            }
+
+            description
+              "The administrative state of the TR-069 connection.";
+            reference
+              "G.988: ONU management and control interface (OMCI)
+              specification clause 9.12.16 BBF TR-069 management
+              server attribute Administrative state.";
+          }
+
+          leaf vlan-id {
+            type bbf-dot1qt:vlan-id-or-0;
+            description
+              "This node specify vlan id for BBF TR-069 management
+              traffic passes through the onu-v-vrefpoint interface.
+              If this leaf is not configured, the BBF TR-069
+              management traffic passes through the virtual Ethernet
+              interface point with neither a VLAN nor a priority tag.";
+            reference
+              "G.988: ONU management and control interface (OMCI)
+              specification clause 9.12.16 BBF TR-069 management
+              server attribute Associated tag.";
+          }
+
+          leaf pbit {
+            type bbf-dot1qt:pbit;
+
+            description
+              "Pbit value for TR069 traffic.
+              If leaf vlan-id is not configured, would
+              ignore this leaf configuration.";
+            reference
+              "G.988: ONU management and control interface (OMCI)
+              specification clause 9.12.16 BBF TR-069 management
+              server attribute Associated tag.";
+          }
+
+          leaf dei {
+	        type bbf-dot1qt:dei {
+	           range "0"{              
+	             error-message                
+	               "For dei value, only 0 is supported.";            
+	           }
+	        }
+            description
+              "Dei value for TR069 traffic.
+              If leaf vlan-id is not configured, would
+              ignore this leaf configuration.";
+            reference
+              "G.988: ONU management and control interface (OMCI)
+              specification clause 9.12.16 BBF TR-069 management
+              server attribute Associated tag.";
+          }
+
+          leaf uri {
+            type tr069-server-uri;
+
+            description
+              "The URI for accessing the TR-069 server.";
+            reference
+              "G.988: ONU management and control interface (OMCI)
+              specification clause 9.12.3 Network address attribute
+              Address pointer.";
+          }
+
+          container authentication {
+            presence "authentication";
+            description
+              "The authentication information for
+              accessing TR-069 server.";
+
+            leaf validation-scheme {
+              type enumeration {
+                enum disabled {
+                  value 0;
+                  description
+                    "Validation disabled.";
+                }
+                enum md5-digest {
+                  value 1;
+               description
+                   "Validate using MD5 digest authentication
+                    as defined in [IETF RFC 2617].";
+                }
+                enum basic {
+                  value 3;
+                  description
+                  "Validate using basic authentication
+                 as defined in [IETF RFC 2617].";
+                }
+              }
+
+              description
+                "Authentication validation scheme for user authentication.";
+
+              reference
+                "G.988: ONU management and control interface (OMCI)
+                specification clause 9.12.4 Authentication security method attribute
+                Validation scheme.";
+            }
+
+            leaf realm {
+              type name-string25;
+
+              description
+                "Realm used in digest authentication.";
+              reference
+                "G.988: ONU management and control interface (OMCI)
+                specification clause 9.12.4 Authentication security method attribute
+                Realm.";
+            }
+
+            leaf user-name {
+              type name-string50;
+
+              description
+                "The user name for login TR-069 server.";
+              reference
+                "G.988: ONU management and control interface (OMCI)
+                specification clause 9.12.4 Authentication security method attribute
+                Username 1 and Username 2.";
+            }
+
+            leaf password {
+              type name-string25;
+
+              description
+                "The authentication password for login TR-069 server.";
+              reference
+                "G.988: ONU management and control interface (OMCI)
+                specification clause 9.12.4 Authentication security method attribute
+                Password.";
+            }
+          }
+        }
+      }
+    }
+  }
+}

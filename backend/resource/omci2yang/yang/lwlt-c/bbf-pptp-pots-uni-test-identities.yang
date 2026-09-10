@@ -1,0 +1,274 @@
+module bbf-pptp-pots-uni-test-identities {
+  yang-version 1.1;
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+           + "bbf-pptp-pots-uni-test-identities";
+
+  prefix bbf-pptp-pots-uni-test-identities;
+
+  organization
+    "Broadband Forum <https://www.broadband-forum.org>
+     Common YANG Work Area";
+
+  contact
+    "Comments or questions about this Broadband Forum YANG module
+     should be directed to <mailto:help@broadband-forum.org>.
+     Editor:      Frank Desseyn, Nokia
+     Editor:      Nadine Staelens, Nokia
+     PS Leader:   Joey Boyd, ADTRAN
+     PS Leader:   Ken Kerpez, ASSIA
+     WA Director: Joey Boyd, ADTRAN
+     WA Director: Sven Ooghe, Nokia";
+
+  description
+    "This submodule contains the test of the pptp pots uni.
+     Copyright (c) 2017-2018, Broadband Forum
+     Redistribution and use in source and binary forms, with or
+     without modification, are permitted provided that the following
+     conditions are met:
+     1. Redistributions of source code must retain the above copyright
+        notice, this list of conditions and the following disclaimer.
+     2. Redistributions in binary form must reproduce the above
+        copyright notice, this list of conditions and the following
+        disclaimer in the documentation and/or other materials
+        provided with the distribution.
+     3. Neither the name of the copyright holder nor the names of its
+        contributors may be used to endorse or promote products
+        derived from this software without specific prior written
+        permission.
+     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
+     CONTRIBUTORS \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+     INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+     DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+     CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+     SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+     NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+     CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+     STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+     ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+     ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     The above license is used as a license under copyright only.
+     Please reference the Forum IPR Policy for patent licensing terms
+     <https://www.broadband-forum.org/ipr-policy>.
+     Any moral rights which are necessary to exercise under the above
+     license grant are also deemed granted under this license.
+     This version of this YANG module is part of TR-383; see
+     the TR itself for full legal notices.";
+
+  revision 2021-07-06 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: 2020-06-01.";
+    reference
+      " ";
+  }
+
+  identity mlt-result-base {
+    description
+      "This identity is used to denote the possible results of
+       a mlt item.";
+  }
+  identity mlt-failed {
+    base mlt-result-base;
+    description
+      "Test failed.";
+  }
+  identity mlt-passed-or-not-run {
+    base mlt-result-base;
+    description
+      "Test passed or test not run ";
+  }
+  identity mlt-measurement-base {
+    description
+      "This identity is used to denote the possible results of
+       a mlt item and whether to report.";
+  }
+  identity test-not-run {
+    base mlt-measurement-base;
+    description
+      "Test not run ";
+  }
+  identity failed-and-not-reported {
+    base mlt-measurement-base;
+    description
+      "Failed, measurement not reported. ";
+  }
+  identity failed-and-reported {
+    base mlt-measurement-base;
+    description
+      "Failed, measurement reported. ";
+  }
+  identity passed-and-not-reported {
+    base mlt-measurement-base;
+    description
+      "Passed, measurement not reported. ";
+  }
+  identity passed-and-reported {
+    base mlt-measurement-base;
+    description
+      "Passed, measurement reported. ";
+  }
+  identity dt-break-result-base {
+    description
+      "This identity is used to denote the possible results of
+       a dial tone break.";
+  }
+  identity break-not-run {
+    base dt-break-result-base;
+    description
+      "Dial tone break not run ";
+  }
+  identity break-failed-and-not-reported {
+    base dt-break-result-base;
+    description
+      "Dial tone break failed, measurement not reported. ";
+  }
+  identity break-failed-and-reported {
+    base dt-break-result-base;
+    description
+      "Dial tone break failed, measurement reported. ";
+  }
+  identity break-passed-and-not-reported {
+    base dt-break-result-base;
+    description
+      "Dial tone break passed, measurement not reported. ";
+  }
+  identity break-passed-and-reported {
+    base dt-break-result-base;
+    description
+      "Dial tone break passed, measurement reported. ";
+  }
+  identity slow-break-and-not-reported {
+    base dt-break-result-base;
+    description
+      "Slow break, measurement not reported. ";
+  }
+  identity slow-break-and-reported {
+    base dt-break-result-base;
+    description
+      "Slow break, measurement reported. ";
+  }
+  identity dt-draw-result-base {
+    description
+      "This identity is used to denote the possible results of
+       a dial tone draw.";
+  }
+  identity draw-not-run {
+    base dt-draw-result-base;
+    description
+      "Dial tone draw not run ";
+  }
+  identity draw-failed-and-not-reported {
+    base dt-draw-result-base;
+    description
+      "Dial tone draw failed, measurement not reported. ";
+  }
+  identity draw-failed-and-reported {
+    base dt-draw-result-base;
+    description
+      "Dial tone draw failed, measurement reported. ";
+  }
+  identity draw-passed-and-not-reported {
+    base dt-draw-result-base;
+    description
+      "Dial tone draw passed, measurement not reported. ";
+  }
+  identity draw-passed-and-reported {
+    base dt-draw-result-base;
+    description
+      "Dial tone draw passed, measurement reported. ";
+  }
+  identity slow-draw-and-not-reported {
+    base dt-draw-result-base;
+    description
+      "Slow draw, measurement not reported. ";
+  }
+  identity slow-draw-and-reported {
+    base dt-draw-result-base;
+    description
+      "Slow draw, measurement reported. ";
+  }
+  identity pbdt-test-result-base {
+    description
+      "This identity is used to denote the possible results of
+       a sip pbdt test.";
+  }
+  identity pbdt-failed {
+    base pbdt-test-result-base;
+    description
+      "Sip pbdt test failed";
+  }
+  identity pbdt-passed {
+    base pbdt-test-result-base;
+    description
+      "Sip pbdt test passed";
+  }
+  identity not-completed-due-to-off-hook {
+    base pbdt-test-result-base;
+    description
+      "Sip pbdt test not completed (line off-hook).";
+  }
+  identity not-completed-due-to-other-reason {
+    base pbdt-test-result-base;
+    description
+      "Sip pbdt test not completed (other reason)";
+  }
+  identity pbdt-automatic-ping-result-base {
+    description
+      "This identity is used to denote the possible results of
+       an automatic ping.";
+  }
+  identity not-attemped {
+    base pbdt-automatic-ping-result-base;
+    description
+      "Ping not attempted.";
+  }
+  identity attempted-and-failed {
+    base pbdt-automatic-ping-result-base;
+    description
+      "Ping attempted and failed";
+  }
+  identity passed {
+    base pbdt-automatic-ping-result-base;
+    description
+      "Ping passed";
+  }
+  identity self-test-result-base {
+    description
+      "This identity is used to denote the possible results of
+       self test";
+  }
+  identity failed {
+    base self-test-result-base;
+    description
+      "Self test failed.";
+  }
+  identity self-test-passed {
+    base self-test-result-base;
+    description
+      "Self test passed.";
+  }
+  identity not-completed {
+    base self-test-result-base;
+    description
+      "Self test not completed.";
+  }
+  identity voip-error-tag{
+    description
+      "A base identity for defining failures with the invocation of an
+       VoIP test action";
+  }
+  identity voip-parameter-error {
+    base voip-error-tag;
+    description
+      "Parameter error.";
+  }
+  identity voip-undetermined-error {
+    base voip-error-tag;
+    description
+      "Undetermined error.";
+  }
+}

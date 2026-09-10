@@ -1,0 +1,303 @@
+module nokia-sdan-hardware-transceivers-extension {
+  yang-version 1.1;
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+  + "nokia-sdan-hardware-transceivers-extension";
+
+  prefix nokia-sdan-hw-xcvr-extn;
+
+  import ietf-hardware {
+    prefix hw;
+  }
+
+  import bbf-hardware-transceivers {
+    prefix bbf-hw-xcvr;
+  }
+
+  import bbf-hardware-transceiver-identities {
+    prefix bbf-hw-xcvr-id;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+     "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+
+  description
+     "This module contains a collection of YANG definitions for
+     supporting Nokia specific requirements as applicable to its
+     access network equipment.
+
+     Specifically, this module augments the hardware model with
+     additional identifying operational data of a transceiver
+     component.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2023, Nokia. All Rights Reserved.";
+
+  revision 2023-12-13 {
+       description
+         "Support Nokia specific transceiver state data fields";
+       reference
+         "Nokia specific.";
+  }
+
+  /* ODN class */
+  /* ========= */
+
+  identity pon-odn-class {
+    description
+      "Base identity for pon optical distribution network
+       class.";
+  }
+
+  identity BPLUS {
+    base pon-odn-class;
+    description
+      "B+ ODN class.";
+  }
+
+  identity CPLUS {
+    base pon-odn-class;
+    description
+      "C+ ODN class.";
+  }
+
+  identity CPLUSPLUS {
+    base pon-odn-class;
+    description
+      "C++ ODN class.";
+  }
+
+  identity D {
+    base pon-odn-class;
+    description
+      "D ODN class.";
+  }
+
+  identity DLITE {
+    base pon-odn-class;
+    description
+      "DLITE ODN class.";
+  }
+
+  identity E1 {
+    base pon-odn-class;
+    description
+      "E1 ODN class.";
+  }
+
+  identity E2 {
+    base pon-odn-class;
+    description
+      "E2 ODN class.";
+  }
+
+  identity N1 {
+    base pon-odn-class;
+    description
+      "N1 ODN class.";
+  }
+
+  identity N2 {
+    base pon-odn-class;
+    description
+      "N2 ODN class.";
+  }
+
+  /* temperature grade */
+  /* ================= */
+
+  identity pon-temperature-grade {
+    description
+      "Base identity for PON temperature grade";
+  }
+
+  identity C-temp {
+    base pon-temperature-grade;
+    description
+      "Commercial temperature grade.";
+  }
+
+  identity I-temp {
+    base pon-temperature-grade;
+    description
+      "Industrial temperature grade.";
+  }
+
+  identity E-temp {
+    base pon-temperature-grade;
+    description
+      "Extended temperature grade.";
+  }
+
+  /* PON identifier */
+  /* ============== */
+
+  identity pon-identifier {
+    description
+      "Base identity for pon";
+  }
+
+  identity GPON {
+    base pon-identifier;
+    description
+      "GPON";
+  }
+
+  identity XGPON {
+    base pon-identifier;
+    description
+      "XG-PON";
+  }
+
+  identity XGSPON {
+    base pon-identifier;
+    description
+      "XGS-PON";
+  }
+
+  identity DUALGPON {
+    base pon-identifier;
+    description
+      "DUAL-GPON";
+  }
+
+  identity TWENTYFIVEGSPON {
+    base pon-identifier;
+    description
+      "25G-PON";
+  }
+
+  identity HSPON {
+     base pon-identifier;
+    description
+      "50G-PON";
+  }
+
+  identity MPM {
+    base pon-identifier;
+    description
+      "MPM";
+  }
+
+  identity TWDM {
+    base pon-identifier;
+    description
+      "TWDM";
+  }
+
+  /* vendor specific physical device */
+  /* =============================== */
+
+  identity sfpplus {
+    base bbf-hw-xcvr-id:vendor-specific;
+    description
+    "XGPON/XGSPON";
+  }
+
+  identity sfp28 {
+    base bbf-hw-xcvr-id:vendor-specific;
+    description
+    "25GSPON/HSPON";
+  }
+
+  identity sfp-dd {
+    base bbf-hw-xcvr-id:vendor-specific;
+    description
+    "MPM/DUAL-GPON";
+  }
+
+  augment "/hw:hardware-state/hw:component/bbf-hw-xcvr:transceiver" {
+    description
+      "Augment the transceiver hardware state with NOKIA specific fields.";
+
+      container nokia-fields {
+        presence
+         "Presence of this container indicates transceiver has nokia specific fields.";
+            description
+            "contains nokia specific state data fields for the transceiver.";
+        leaf-list pon-type {
+          type identityref {
+            base pon-identifier;
+          }
+          description
+           "List of optical link types that can be supported on
+            specific transceiver.";
+        }
+      }
+      container nokia-eeprom {
+        presence
+         "Presence of this container indicates transceiver module has nokia
+          specific eeprom data fields.";
+            description
+            "Contains nodes for nokia specific eeprom data fields of
+             the transceiver.";
+        leaf odn-class {
+          type identityref {
+            base pon-odn-class;
+          }
+          description
+            "ODN class of the transceiver.";
+        }
+        leaf temp-grade {
+          type identityref {
+            base pon-temperature-grade;
+          }
+          description
+            "Operating temperature level of the transceiver.";
+        }
+      }
+    }
+
+    augment "/hw:hardware-state/hw:component/bbf-hw-xcvr:transceiver/bbf-hw-xcvr:identifiers-and-codes" {
+      description
+      "Augment the transceiver identifier and codes with Nokia specific physical
+       device identifier fields.";
+      leaf physical-device-extended-identifier-nokia {
+        type identityref {
+            base pon-identifier;
+        }
+        description
+          "Nokia specific Physical device extended identifier for the transceiver.";
+      }
+    }
+  }

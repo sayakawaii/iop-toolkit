@@ -1,0 +1,157 @@
+module nokia-bbf-xpongemtcont-mounted-eonu-dev {
+yang-version 1.1;
+  namespace
+    "http://www.nokia.com/Fixed-Networks/BBA/yang/nokia-bbf-xpongemtcont-mounted-eonu-dev";
+
+  prefix nokia-bbf-xpongemtcont-mounted-eonu-dev;
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import bbf-xpongemtcont-mounted {
+    prefix bbf-xpongemtcont-mounted;
+  }
+
+  import ietf-interfaces-mounted {
+    prefix if-mounted;
+  }
+
+  import ieee802-dot1ax-mounted {
+    prefix dot1ax-mounted;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+  
+  description
+    "This module contains a collection of YANG deviations on top
+     of standard for supporting BBF/bbf-xpongemtcont-tcont-body YANG module.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2021, Nokia. All Rights Reserved.";
+
+
+     /* revision */
+
+  revision 2026-03-08 {
+    description
+      "add deviation yang to check interface in a lag cannot be reference by gemport";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2024-11-28 {
+    description
+      "add deviation yang to check actual-gemport-id and tconts under xpongemtcont-state must be not-supported";
+    reference
+      "Nokia specific";
+  }
+
+    revision 2022-09-22 {
+    description
+      "add deviation yang to check some leaf must be configured";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2021-12-17 {
+    description
+      "Xpath update according to TR-385 model";
+    reference
+      "Nokia specific";
+  }
+    revision 2021-07-14 {
+      description
+        "Initial revision";
+      reference
+        "Nokia specific";
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-xpongemtcont-mounted:xpongemtcont/bbf-xpongemtcont-mounted:tconts/bbf-xpongemtcont-mounted:tcont/bbf-xpongemtcont-mounted:traffic-descriptor-profile-ref" {
+      description
+       "This deviaton assures that tcont does not support traffic-descriptor-profile-ref.";
+      deviate not-supported;
+   }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-xpongemtcont-mounted:xpongemtcont/bbf-xpongemtcont-mounted:traffic-descriptor-profiles" {
+      deviate not-supported;
+   }
+   
+   deviation "/onu:onus/onu:onu/onu:root/bbf-xpongemtcont-mounted:xpongemtcont/bbf-xpongemtcont-mounted:tconts/bbf-xpongemtcont-mounted:tcont/bbf-xpongemtcont-mounted:interface-reference" {
+        deviate add {
+            mandatory true;
+        }
+   }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-xpongemtcont-mounted:xpongemtcont/bbf-xpongemtcont-mounted:gemports/bbf-xpongemtcont-mounted:gemport/bbf-xpongemtcont-mounted:tcont-ref" {
+        deviate add {
+            mandatory true;
+        }
+   }
+
+   deviation "/onu:onus/onu:onu/onu:root/bbf-xpongemtcont-mounted:xpongemtcont/bbf-xpongemtcont-mounted:gemports/bbf-xpongemtcont-mounted:gemport/bbf-xpongemtcont-mounted:interface" {
+        deviate add {
+            mandatory true;
+        }
+   }
+
+   deviation "/onu:onus/onu:onu/onu:root/bbf-xpongemtcont-mounted:xpongemtcont-state/bbf-xpongemtcont-mounted:gemports/bbf-xpongemtcont-mounted:gemport/bbf-xpongemtcont-mounted:actual-gemport-id" {
+     description
+       "This deviation assures that gemport-state does not support actual-gemport-id.";
+     deviate not-supported;
+   }
+
+   deviation "/onu:onus/onu:onu/onu:root/bbf-xpongemtcont-mounted:xpongemtcont-state/bbf-xpongemtcont-mounted:tconts" {
+     description
+       "This deviation assures that tcont-state does not support.";
+     deviate not-supported;
+   }
+
+   deviation "/onu:onus/onu:onu/onu:root/bbf-xpongemtcont-mounted:xpongemtcont/bbf-xpongemtcont-mounted:gemports/bbf-xpongemtcont-mounted:gemport/bbf-xpongemtcont-mounted:interface" {
+        deviate add {
+            must "not(boolean(current()/../../../../if-mounted:interfaces/if-mounted:interface[if-mounted:name = current()]/dot1ax-mounted:aggregation-port/dot1ax-mounted:aggregation-port-lacp/dot1ax-mounted:actor-admin-key))" {
+                error-message "The interface cannot be a member of a LAG.";
+            }
+        }
+   }
+}
+

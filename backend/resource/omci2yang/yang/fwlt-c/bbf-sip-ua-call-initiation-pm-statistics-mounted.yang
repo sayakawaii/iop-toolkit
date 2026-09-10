@@ -1,0 +1,354 @@
+submodule bbf-sip-ua-call-initiation-pm-statistics-mounted {
+  yang-version 1.1;
+  belongs-to bbf-sip-voip-mounted  {
+    prefix bbf-sip-voip-mounted;
+  }
+
+  import bbf-yang-types {
+    prefix bbf-yang;
+  }
+  
+  organization
+    "Broadband Forum <https://www.broadband-forum.org>
+     Common YANG Work Area";
+
+  contact
+    "Comments or questions about this Broadband Forum YANG module
+     should be directed to <mailto:help@broadband-forum.org>.
+     Editor:      Frank Desseyn, Nokia
+     Editor:      Nadine Staelens, Nokia
+     PS Leader:   Joey Boyd, ADTRAN
+     PS Leader:   Ken Kerpez, ASSIA
+     WA Director: Joey Boyd, ADTRAN
+     WA Director: Sven Ooghe, Nokia";
+
+  description
+    "This submodule contains a collection of YANG definitions for
+     sip user agent call statistics.
+     Copyright (c) 2017-2018, Broadband Forum
+     Redistribution and use in source and binary forms, with or
+     without modification, are permitted provided that the following
+     conditions are met:
+     1. Redistributions of source code must retain the above copyright
+        notice, this list of conditions and the following disclaimer.
+     2. Redistributions in binary form must reproduce the above
+        copyright notice, this list of conditions and the following
+        disclaimer in the documentation and/or other materials
+        provided with the distribution.
+     3. Neither the name of the copyright holder nor the names of its
+        contributors may be used to endorse or promote products
+        derived from this software without specific prior written
+        permission.
+     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
+     CONTRIBUTORS \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+     INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+     DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+     CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+     SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+     NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+     CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+     STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+     ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+     ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     The above license is used as a license under copyright only.
+     Please reference the Forum IPR Policy for patent licensing terms
+     <https://www.broadband-forum.org/ipr-policy>.
+     Any moral rights which are necessary to exercise under the above
+     license grant are also deemed granted under this license.
+     This version of this YANG module is part of TR-383; see
+     the TR itself for full legal notices.";
+
+  revision 2020-03-06 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: 2020-03-06.";
+    reference
+      " ";
+  }
+ 
+  grouping sip-ua-call-initiation-pm-statistics {
+	leaf user-itf-admin-unlocked-duration {
+	  type uint16;
+	  units "1 second";
+	  config false;
+	  description
+	  	"The total amount of time a SIP user 
+	  	 interface is considered to be 
+	  	 administratively available.";
+	  }
+	leaf nbr-success-register-request {
+	  type bbf-yang:performance-counter32;
+	  config false;
+	  description
+	  	"The amount of (re-)registration requests 
+	  	which are successfully replied in this 
+	  	interval.
+	  	Successfully replied means that a 
+	  	response = 200 OK with expire header time = 0
+	  	or expire header <> 0 has been returned by 
+	  	the Registrar.";		
+	}
+	leaf nbr-fail-register-request {
+	  type bbf-yang:performance-counter32;
+	  config false;
+	  description
+	  	"The amount of (re-)registration requests
+	  	which failed in this interval. 
+	  	Failed means that a response <> 200 OK was
+	  	returned by the SIP First Hop server / 
+	  	Registrar or that SIP transaction time-out
+	  	occured.";
+	}
+	leaf user-itf-register-duration {
+	  type uint16;
+	  units "1 second";
+	  config false;
+	  description
+	  	"The total amount of time that from an NE 
+	  	 point of view, a SIP user interface is 
+	  	 considered 
+	  	 to be successfully registered at the IMS core.
+ 	  	 Usually the NE registers or de-registers a SIP
+	  	 user interface to the IMS core. 
+	  	 However, it should be noted that a registration
+	  	 can also autonomously be deleted by the IMS 
+	  	 core.
+	  	 Such registration state change is not 
+	  	 explicitly notified to the NE (unless the reg
+	  	 event package
+	  	 would be supported and subscribed by the NE).
+ 	  	 The total amount of time that from an NE point
+	  	 of view, a SIP user interface is considered to
+	  	 be successfully registered at the IMS core,  
+	  	 may be different from that same SIP user 
+	  	 interface to be successfully registered from an
+	  	 IMS core point of view.
+ 	  	 When the NE considers a SIP user interface to 
+	  	 be successfully registered at the IMS core, 
+	  	 its operational state is set to unlocked.
+ 	  	 When the NE considers a SIP user interface not 
+	  	 to be registered at the IMS core, its 
+	  	 operational state is set to locked.
+ 	  	 The registration duration counter of a 
+	  	 particular SIP user interface starts counting
+	  	 upon the receipt of the 200 OK to the initial 
+	  	 registration request.
+ 	  	 The register duration stop counting for a 
+	  	 particular SIP user interface:
+ 	  	 - upon the receipt of the 200 OK to the 
+	  	   de-registration request.
+ 	  	 - Upon fail-back, requiring a de-register to be
+	  	   sent to the secondary SIP server.
+ 	  	 - Upon sip server substitution, requiring a 
+	  	   de-register to be sent to the current primary
+	  	   SIP server.
+ 	  	 - Upon the receipt of an error response to a SIP
+	  	   RE-REGISTER request, with one of the following
+	  	   error codes:
+ 	  	   408 (Request Timeout), 
+	  	   500 (Server Internal Error), 
+	  	   503 (Service Unavailable), 
+	  	   504 (Server Time-Out)
+ 	  	   or 600 (Busy Everywhere) response.
+ 	  	 - Upon the detection of a non-recoverable error
+	  	   requiring a fail-over and requiring a new 
+	  	   initial registration to be done to the 
+ 	  	   secondary SIP server.
+ 	  	 - Upon the receipt of an error response to a SIP
+	  	   INVITE request, with an error code for which the
+	  	   SSP has been provisioned with an error-code 
+	  	   clause that, as recovery action,  requires a new
+	  	   initial register to be sent.";
+	  }
+	leaf nbr-active-register-user-itf {
+	  type bbf-yang:performance-counter32;
+	  config false;
+	  description
+	  	"The amount of registrations being active at a SIP
+	  	 user interface at the end of the interval. 
+	  	 An active registration is counted when a 
+	  	 registration request has been successfully 
+	  	 completed in the past (200 OK received to register
+	  	 request with 'expire header' time <> 0) and the 
+	  	 register expiration interval hasn't expired.";
+	}
+	leaf nbr-outg-call-attempt {
+	  type bbf-yang:performance-counter32;
+	  config false;
+	  description
+	  	"The number of off-hooks being detected and 
+	  	considered as being the starting event to make an 
+	  	outgoing call attempt (The detection of an off-hook
+	  	event as the result of  an incoming call attempt 
+	  	must not be considered).
+ 	  	This counter counts both, the off-hook events 
+	  	detected as being the starting event of a outgoing
+	  	call attempt in the scope of a  basic call and the
+	  	Hook-flashes as being the starting event of a new
+	  	outgoing call attempt in the scope of a conference
+	  	call.";
+	}
+	leaf nbr-outg-success-initial-invite {
+	  type bbf-yang:performance-counter32;
+	  config false;
+	  description
+	  	"The number of initial SIP INVITE requests that are
+	  	replied by the IMS core with a 100-Trying followed 
+	  	by A 180-Ringing Provisional Response or a 
+	  	183-Session Progress Provisional Response, A 200 OK 
+	  	(18x Provisional Response in between the receipt of
+	  	the 100-trying and the 200 OK). The  NE does not 
+	  	take into account what response is subsequently 
+	  	received after the 180-ringing / 183-Session 
+	  	Progress has been received.
+ 	  	This applies to both, outgoing call attempts made in
+	  	the scope of the basic call and outgoing call 
+	  	attempts made in the scope of a supplementary 
+	  	service.";
+	}
+	leaf nbr-outg-call-answered {
+	  type bbf-yang:performance-counter32;
+	  config false;
+	  description
+	  	"The number of outgoing call attempts for which an 
+	  	 initial INVITE request is sent AND for which a 
+	  	 response is received. The NE allows to provision what
+	  	 kind of response must be received as to be counted as
+	  	 a successful outgoing call attempt. The NE offers the
+	  	 following options : 
+	  	 - Any response be received (irrespective of whether
+	  	   this is a successful or unsuccessful response). 
+	  	 - A successful response be received (180 or 
+	  	   200 response only).";
+	}
+	leaf nbr-outg-call-fail-lost-seizure {
+	  type bbf-yang:performance-counter32;
+	  config false;
+	  description
+	  	"The number of outgoing call attempts that could not
+	  	successfully be completed  because of a lost seizure
+	  	with the control network. Or in other words, the 
+	  	number of outgoing call attempts that fail because of
+	  	an access failure to the voice network :
+ 	  	- Failing/aborted TCP connection
+ 	  	- Timer B expiry
+ 	  	An outgoing call attempt that could not successfully
+	  	completed because of an erroneous or abnormal
+ 	  	subscriber behavior (no dialing incl. incomplete 
+	  	dialing, early on-hook) shall not be consider by this
+	  	counter.
+ 	  	This applies to both, outgoing calls made in the scope
+	  	of the basic call and outgoing call attempts made in
+ 	  	the scope of the conference call.";
+	}
+	leaf outg-call-port-seizure-duration {
+	  type uint16;
+	  units "1 second";
+	  config false;
+	  description
+	  	"The port seizure time for outgoing call attempts. 
+	     This counter is only applicable to the outgoing call 
+	     attempts whereby  the subscriber dials a valid digit
+	     before the starting dial timer expiry.
+ 	     (With valid digit is to be understood a digit that at
+	     least partially matches one digit map pattern in the
+ 	     configured digit map.)
+ 	     This counter is not applicable to outgoing call 
+	     attempts that are abnormally ended due to a subscriber
+	     action
+ 	     (before the starting dial timer expiry)  or  whereby
+	     no dial tone could be put at the line or whereby the
+	     system interrupts the outgoing call attempt before the
+	     subscriber is even able to dial a first digit.";
+	}
+	leaf nbr-inc-call-attempt {
+	  type bbf-yang:performance-counter32;
+	  config false;
+	  description
+	  	"The total number of incoming SIP INVITE requests, 
+	     considered as being a SIP INVITE request for a new
+ 	     incoming call attempt, and this regardless of whether
+	     the incoming call attempt has successfully been
+ 	     processed / replied or not.
+ 	     A SIP INVITE request being the retransmission of a 
+	     SIP INVITE request already been handled (and counted)
+ 	     shall NOT be counted once again.
+ 	     It shall be noted that the count of the incoming SIP
+	     INVITE request may not be fully correct :
+ 	     - Incoming SIP INVITE messages dropped at a layer 
+	       beneath the SIP stack layer cannot be counted. 
+	       (e.g. high load situations)
+ 	     - Incoming SIP INVITE messages without CSEQ are 
+	       silently dropped by the SIP stack. Since the 
+	       calling side does not receive a response to such
+	       SIP INVITE request, the calling side will retry the
+	       SIP INVITE. At the called site the SIP stack cannot
+	       know whether such SIP INVITE requests are retry 
+	       messages or not. Thus the counter will be increased
+	       for the first SIP INVITE request been received as
+	       well as for the subsequent SIP INVITE retries
+ 	       been received.";
+	}
+	leaf nbr-inc-call-answered {
+	  type bbf-yang:performance-counter32;
+	  config false;
+	  description
+	  	"The amount of incoming call attempts for which a SIP
+	  	response is sent being the result of the off-hook 
+	  	event been detected. The NE allows to provision the 
+	  	kind of response that will be considered as to be 
+	  	counted as a successful incoming call attempt. 
+	  	The NE offers the following options : 
+	  	- Any response be sent. 
+	  	- 180 response be sent.
+	  	- 200 response be sent.";
+	}
+	leaf nbr-inc-call-fail-lost-seizure {
+	  type bbf-yang:performance-counter32;
+	  config false;
+	  description
+	  	"The number of received incoming call attempts that
+	     could not successfully be completed  because of a 
+	     lost seizure with the control network. 
+ 	     Or in other words, the number of incoming call 
+	     attempts that fail because of an access failure to 
+	     the voice network :
+ 	     - Failing/aborted  TCP connection
+ 	     - Timer B expiry
+ 	     An incoming call attempt that could not successfully
+	     be completed because of an erroneous or abnormal
+ 	     subscriber behavior (early on-hook) shall not be 
+	     consider by this counter.";
+	}
+	leaf inc-call-user-itf-seizure-duration	{
+	  type uint16;
+	  units "1 second";
+	  config false;
+	  description
+	  	"The  port seizure time for incoming call attempts.
+	     The port seizure duration is the time elapsed from 
+	     the moment the called subscriber gets notified that
+	     an incoming call attempt has arrived 
+	     (ringing / call-waiting tone put at the line) till
+	     one of the following events is detected :
+ 	     	- the receipt of the off-hook or 
+ 	     	- the receipt of the flash-hook event or
+ 	     	- the receipt of the SIP CANCEL request or
+ 	     	- the expiry of the ringing tone sequence or
+ 	     	- the expiry of the 
+	     	  (call forwarding no reply) No Answer Timer
+	     	  or
+ 	     	- the receipt of the call-waiting tone 
+	     	  sequence. 
+	     	- the transmission of a 487 Request 
+	     	  Terminated (without sending SIP CANCEL 
+	     	  request) by the called 
+	     	  side before the expiry of the ringing tone
+	     	  (the called side gets e.g. physical 
+	     	  failure or the admin-status set to down).";
+	  }
+  } 
+}

@@ -1,0 +1,190 @@
+module nokia-bbf-l2-forwarding-l2fwd-fiber-single-uplink-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/" +
+            "nokia-bbf-l2-forwarding-l2fwd-fiber-single-uplink-dev";
+
+  prefix nokia-bbf-l2-forwarding-l2fwd-fiber-single-uplink-dev;
+
+  import bbf-l2-forwarding {
+    prefix bbf-l2-fwd;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "This module contains a collection of YANG deviations on top 
+     of standard for supporting BBF/bbf-l2-forwarding YANG module.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia 
+     reserves the right to revise this document for any reason, 
+     including but not limited to conformity with standards 
+     promulgated by various agencies, utilisation of advances in the 
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or 
+     referred to herein.
+
+     The product specifications and other technical or performance 
+     information contained herein are subject to change without 
+     notice. Updates of this document will be issued under the above 
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any 
+     information or opinion contained herein. Nokia expressly advises 
+     that any use of for any purpose or reliance upon this technical 
+     reference is at the risk of the user and that Nokia shall not be 
+     liable for any damage or injury incurred by any person arising 
+     out of the sufficiency, accuracy, or utility of any information 
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any 
+     manufacturer to modify or change any of its products, nor does 
+     this document represent any commitment by Nokia to sell or 
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license 
+     or right under any patent, whether or not the use of any 
+     information herein necessarily employs an invention of any 
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2017-2018, Nokia. All Rights Reserved.";
+
+  revision 2022-08-26 {
+    description
+      "Move from l2fwd-fiber-non-u2u.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2022-06-14 {
+    description
+      "modify NNI rule.";
+    reference
+      "Nokia specific"; 
+  }
+
+  revision 2016-11-28 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific"; 
+  }
+
+  /* Max allow configurated forwarder number is 32768.  */
+  deviation "/bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarders/bbf-l2-fwd:forwarder" {
+   description
+      "From requirements perspective we need 2 types of forwarders:
+       1:1 (crossconnect) VLANs:
+       - maximum 1 user port or maximum 1 subtended-node port
+       - support MAC learning is optional (as a network security feature to limit the number of user MACs)
+         in YANG: an FDB and a MAC learning control profile is optional
+       - no split horizon profile
+       - no flooding profile
+       N:1 (Bridge) VLANs:
+       - allow multiple users and forwarding to the right user is based on the destination MAC address
+       - this makes a forwarding-database that contains these MAC addresses mandatory
+         in YANG: an FDB and a MAC learning control profile is mandatory
+       - this reveals the issue on how to forward downstream frames: for security: to the right user only
+         In YANG: controlled using a flooding profile.
+         The absence of a profile has a well defined behavior (flood everything, but support of this is not
+         required, hence a flooding profile is made mandatory)
+       - for security: do not allow user to user communication.
+         In YANG: a split horizon profile is mandatory.";
+
+    deviate add {
+      must "(count(current()/bbf-l2-fwd:ports/bbf-l2-fwd:port ) <= 2) "
+         + " or "
+         + "(boolean(./bbf-l2-fwd:split-horizon-profiles"
+         +           "/bbf-l2-fwd:split-horizon-profile) and "
+         +  "boolean(./bbf-l2-fwd:flooding-policies"
+         +           "/bbf-l2-fwd:flooding-policies-profile) and "
+         +  "boolean(./bbf-l2-fwd:mac-learning"
+         +           "/bbf-l2-fwd:forwarding-database))" {
+        error-message
+          "Forwarder configuration is not consistent:"
+        + "- either have maximum 2 ports -or- "
+        + "- attach a split horizon and a flooding profile and a forwarding-database to the forwarder";
+
+        description
+          "As in the error message. Note that this deviation allows more than required.
+           E.g. it also allows a forwarder with 2 user-ports without profiles attached.";
+      }
+    }
+  }
+
+  deviation "/bbf-l2-fwd:forwarding/bbf-l2-fwd:split-horizon-profiles/bbf-l2-fwd:split-horizon-profile" {
+    deviate add{
+      must "not(boolean (current()/bbf-l2-fwd:split-horizon/bbf-l2-fwd:in-interface-usage = 'network-port')) and"
+         + " not(boolean (current()/bbf-l2-fwd:split-horizon/bbf-l2-fwd:in-interface-usage = 'inherit'))" {
+         error-message "Only allow to configure block user 2 user";
+	  }
+	}
+  }
+
+  deviation "/bbf-l2-fwd:forwarding/bbf-l2-fwd:flooding-policies-profiles/bbf-l2-fwd:flooding-policies-profile/bbf-l2-fwd:flooding-policy"{
+
+    deviate add{
+      must "(boolean(current()/bbf-l2-fwd:in-interface-usages/bbf-l2-fwd:interface-usages)) and
+            not((boolean(current()/bbf-l2-fwd:in-interface-usages/bbf-l2-fwd:interface-usages = current()/bbf-l2-fwd:out-interface-usages/bbf-l2-fwd:interface-usages)))"
+        {
+          error-message "in-interface-usage can't be null and can't be the same as out-interface-usages";
+        }
+    }
+  }
+
+  deviation '/bbf-l2-fwd:forwarding'
+        +'/bbf-l2-fwd:mac-learning-control-profiles'
+        +'/bbf-l2-fwd:mac-learning-control-profile'
+        +'/bbf-l2-fwd:mac-learning-rule'
+        +'/bbf-l2-fwd:receiving-interface-usage' {
+      deviate replace {
+        type enumeration {
+          enum "user-port" {
+            description
+            "The interface having this interface usage connects the
+            Access Node to a user.";
+          }
+          enum "subtended-node-port" {
+            value 2;
+            description
+            "The interface having this interface usage connects the
+            Access Node to a another Access Node.";
+          }
+        }
+      }
+   }
+
+  deviation '/bbf-l2-fwd:forwarding'
+        +'/bbf-l2-fwd:mac-learning-control-profiles'
+        +'/bbf-l2-fwd:mac-learning-control-profile'
+        +'/bbf-l2-fwd:mac-learning-rule'
+        +'/bbf-l2-fwd:mac-learning-action'
+        +'/bbf-l2-fwd:learn-but-do-not-move'
+        +'/bbf-l2-fwd:mac-can-not-move-to' {
+      deviate replace {
+        type enumeration {
+          enum "user-port" {
+            description
+            "The interface having this interface usage connects the
+            Access Node to a user.";
+          }
+          enum "subtended-node-port" {
+            value 2;
+            description
+            "The interface having this interface usage connects the
+            Access Node to another Access Node.";
+          }
+        }
+      }
+  }
+
+
+}

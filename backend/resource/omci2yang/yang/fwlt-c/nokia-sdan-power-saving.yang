@@ -1,0 +1,129 @@
+module nokia-sdan-power-saving {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+  + "nokia-sdan-power-saving";
+
+  prefix nokia-sdan-ps;
+
+  import ietf-hardware {
+    prefix hw;
+  }
+
+  import bbf-hardware-types {
+    prefix bbf-hwt;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG definitions for
+     supporting Nokia specific requirements as applicable to its
+     access network equipment.
+
+     Specifically, this module models data to manage power saving
+     in the OLT.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+     Copyright (C) 2025, Nokia. All Rights Reserved.";
+
+  revision 2025-05-30 {
+    description
+      "Initial version of module to manage
+       power saving on OLT";
+    reference
+      "Nokia specific";
+  }
+
+  container power-saving {
+    description
+      "System level configuration data to control power saving of
+       the OLT.";
+  }
+
+  augment "/hw:hardware/hw:component" {
+    when "derived-from-or-self(hw:class, 'bbf-hwt:transceiver')" {
+      description
+        "This augment is only applicable to a hardware transceiver
+         component.";
+    }
+    description
+      "Augments a specific hardware component with power saving
+       containers.";
+
+    container power-saving {
+      presence
+        "Presence of this container indicates that power saving is
+         controlled at the component level.";
+      description
+       "Data that defines the power saving behavior of the hardware
+        component. The data configured at this level overrides global
+        power saving setting made for this hardware class, if any";
+   }
+ }
+
+ augment "/hw:hardware-state/hw:component" {
+   when "derived-from-or-self(hw:class, 'bbf-hwt:transceiver')
+         or derived-from-or-self(hw:class,
+          'bbf-hwt:transceiver-link')" {
+     description
+       "This augment is only applicable to hardware transceiver
+        and transceiver-link component.";
+   }
+   description
+     "Augments a specific hardware state component with power saving
+      containers.";
+
+   container power-saving {
+     presence
+       "Presence of this container indicates that hardware component
+        has power saving state data.";
+     description
+       "State data that defines the power saving behavior of the hardware
+        component.";
+     container state {
+       config false;
+       description
+         "Power saving state data for the hardware component.";
+     }
+   }
+ }
+}
+
+

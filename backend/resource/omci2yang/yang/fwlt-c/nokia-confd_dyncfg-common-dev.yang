@@ -1,0 +1,607 @@
+module nokia-confd_dyncfg-common-dev {
+  yang-version 1.1;
+  namespace "http://tail-f.com/ns/confd_dyncfg/1.0:nokia-confd_dyncfg-common-dev";
+  prefix "nokia-confd-dyncfg-common-dev";
+
+  import confd_dyncfg {
+    prefix "confd_dyncfg";
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+      "The NOKIA confd_dyncfg YANG module supporting
+      deviations on top of standard.
+
+      This specification is published by Nokia under Non-Disclosure
+      Agreement(s) (NDA) with specific parties and has to be considered
+      as Confidential Information as defined in such NDA. Nokia
+      reserves the right to revise this document for any reason,
+      including but not limited to conformity with standards
+      promulgated by various agencies, utilisation of advances in the
+      state of the technical areas, or the reflection of changes in the
+      design of any equipment, techniques, or procedures described or
+      referred to herein.
+
+      The product specifications and other technical or performance
+      information contained herein are subject to change without
+      notice. Updates of this document will be issued under the above
+      NDA's.
+
+      Nokia makes no representation or warranty, expressed or implied,
+      with respect to the sufficiency, accuracy, or utility of any
+      information or opinion contained herein. Nokia expressly advises
+      that any use of for any purpose or reliance upon this technical
+      reference is at the risk of the user and that Nokia shall not be
+      liable for any damage or injury incurred by any person arising
+      out of the sufficiency, accuracy, or utility of any information
+      or opinion contained herein.
+
+      This document is not to be construed as a suggestion to any
+      manufacturer to modify or change any of its products, nor does
+      this document represent any commitment by Nokia to sell or
+      purchase any product. Nothing contained herein shall be construed
+      as conferring by implication, estoppel, or otherwise any license
+      or right under any patent, whether or not the use of any
+      information herein necessarily employs an invention of any
+      existing or later issued patent.
+
+      Nokia reserves the right not  to offer any or all of these
+      products and to withdraw any or all of them at any future time.
+
+      Copyright (C) 2019, Nokia. All Rights Reserved.";
+
+  revision 2026-08-05 {
+    description
+      "LS26.12
+       Add ecdsa-sha2-nistp384 to the allowed serverHostKey algorithms and
+       promote rsa-sha2-512, rsa-sha2-256 and ecdsa-sha2-nistp384 into the default.";
+    reference  "BBN-192047";
+  }
+
+  revision 2026-07-06 {
+    description
+      "Enable rsa-sha2-256 and rsa-sha2-512 in SSH algorithms for FIPS mode support";
+    reference  "";
+  }
+
+  revision 2026-04-28 {
+    description
+      "Update /confdConfig/netconf/transport/tcp/ip";
+    reference  "";
+  }
+
+  revision 2025-08-20 {
+    description
+      "Restrict enabling /confdConfig/restconf";
+    reference  "";
+  }
+
+  revision 2024-08-20 {
+    description
+      "Restrict enabling /confdConfig/restconf";
+    reference  "";
+  }
+
+  revision 2024-02-27 {
+    description
+      "lsr2403
+       2024-02-27 Remove unsecure values from SSH algorithms ( serverHostKey, kex, mac and encryption ).";
+    reference
+      "";
+  }
+
+  revision 2023-09-11 {
+    description
+      "lsr2312
+       2023-09-11 Valid values for SSH algorithms ( serverHostKey, kex, mac and encryption ).";
+    reference
+      "";
+  }
+
+  revision 2023-08-31 {
+    description
+      "Added must constraint for netconfLog path.";
+    reference
+      "";
+  }
+
+  revision 2023-07-19 {
+    description
+      "Reverted must constraint for netconfLog path.";
+    reference
+      "";
+  }
+
+  revision 2023-07-12 {
+    description
+      "Added must constraint for netconfLog path.";
+    reference
+      "";
+  }
+
+  revision 2023-02-23 {
+    description
+      "Improve maxSession and maxConfigSessions limits display.";
+    reference
+      "";
+  }
+
+
+  revision 2022-12-16 {
+    description
+      "Increase max number of allowed sessions to 15.";
+    reference
+      "";
+  }
+
+  revision 2022-11-24 {
+    description
+      "Restrict developerLog filename and enable in info level.";
+    reference
+      "";
+  }
+
+
+  revision 2022-10-24 {
+    description
+      "Remove CRAFT check for CLI relay.";
+    reference
+      "";
+  }
+
+  revision 2021-10-01 {
+    description
+      "Add yang version 1.1";
+    reference
+      "";
+  }
+
+  revision 2021-07-20 {
+    description
+      "Add descriptions for security deviations.";
+    reference
+      "";
+  }
+
+
+  revision 2020-07-21 {
+    description
+      "Authentication callback cannot be set to false.";
+    reference
+      "";
+  }
+
+  revision 2019-07-23 {
+    description
+      "Restrict modifications to maxPasswordLength.";
+    reference
+      "";
+  }
+
+  revision 2019-07-19 {
+    description
+      "Restrict the length of cli banner";
+    reference
+      "";
+  }
+
+  revision 2019-01-17 {
+    description
+      "Initial revision.";
+    reference
+      "";
+  }
+
+
+  deviation "/confd_dyncfg:confdConfig/confd_dyncfg:logs/confd_dyncfg:syslogConfig/confd_dyncfg:syslogServers/confd_dyncfg:server" {
+   deviate add {
+    max-elements 5;
+   }
+  }
+
+  deviation "/confd_dyncfg:confdConfig/confd_dyncfg:sessionLimits/confd_dyncfg:maxSessions" {
+
+   deviate replace {
+        default 10;
+        type uint32 {
+          range "2..15"{
+          error-message "the number of maxSessions should be greater or equal to 2 and not exceed max value 15";
+          description "Limit maxSessions to 2..15";
+     }
+    }
+   }
+  }
+
+  deviation "/confd_dyncfg:confdConfig/confd_dyncfg:sessionLimits/confd_dyncfg:sessionLimit/confd_dyncfg:maxSessions" {
+   deviate add {
+    must "(../confd_dyncfg:context = 'cli' and 1 <= current() and current() <= 10)"
+      + " or (../confd_dyncfg:context = 'netconf' and 1 <= current()"
+      + " and current() <= 10)" {
+      error-message "the number of cli/netconf maxSessions to Confd"
+        + " should be greater or equal to 1 and not exceed the max value 10 respectively";
+      description "Limit maximum sessions for cli/netconf connections for performance reasons";
+    }
+   }
+  }
+
+  deviation "/confd_dyncfg:confdConfig/confd_dyncfg:sessionLimits/confd_dyncfg:sessionLimit/confd_dyncfg:context" {
+   deviate add {
+    must "current() = 'cli' or current() = 'netconf'" {
+      error-message "the context must be 'cli' or 'netconf'";
+      description "Only allow the modification of session limits for cli/netconf connections";
+    }
+   }
+  }
+
+  deviation "/confd_dyncfg:confdConfig/confd_dyncfg:sessionLimits/confd_dyncfg:maxConfigSessions" {
+   deviate replace {
+        default 10;
+        type uint32 {
+          range "2..15"{
+          error-message "the number of maxConfigSessions should be greater or equal to 2 and not exceed max value 15";
+          description "Limit maxConfigSessions to 2..15";
+     }
+    }
+   }
+ }
+
+  deviation "/confd_dyncfg:confdConfig/confd_dyncfg:sessionLimits/confd_dyncfg:configSessionLimit/confd_dyncfg:maxSessions" {
+   deviate add {
+    must "(../confd_dyncfg:context = 'cli' and 1 <= current() and current() <= 10)"
+      + " or (../confd_dyncfg:context = 'netconf' and 1 <= current()"
+      + " and current() <= 10)" {
+      error-message "the number of cli/netconf maxSessions to ConfD"
+        + "should be greater or equal to 1 and not exceed the max value 10 respectively";
+      description "Limit maximum configuration sessions for cli/netfonf connections for performance reasons";
+    }
+   }
+  }
+
+
+
+  deviation "/confd_dyncfg:confdConfig/confd_dyncfg:sessionLimits/confd_dyncfg:configSessionLimit/confd_dyncfg:context" {
+   deviate add {
+    must "current() = 'cli' or current() = 'netconf'" {
+      error-message "the context must be 'cli' or 'netconf'";
+      description "Only allow the modification of configuration session limits for cli/netconf connections";
+    }
+   }
+  }
+
+  /* container mandatory present */
+  deviation "/confd_dyncfg:confdConfig" {
+    deviate add {
+       must " (boolean(/confd_dyncfg:confdConfig/confd_dyncfg:netconf)) " {
+        error-message "use nokia-ietf-system-aug to disable netconf";
+       }
+    }
+  }
+
+
+  /* netconf is by default enabled, prevent modification */
+  deviation "/confd_dyncfg:confdConfig/confd_dyncfg:netconf/confd_dyncfg:enabled" {
+    deviate add {
+       must " (current() = 'true') " {
+        error-message "use nokia-ietf-system-aug to disable netconf";
+       }
+    }
+  }
+
+  /* container netconf transport mandatory present */
+  deviation "/confd_dyncfg:confdConfig/confd_dyncfg:netconf" {
+    deviate add {
+       must " (boolean(/confd_dyncfg:confdConfig/confd_dyncfg:netconf/confd_dyncfg:transport)) " {
+        error-message "use nokia-ietf-system-aug to disable netconf";
+       }
+    }
+  }
+
+  /* container netconf transport ssh mandatory present */
+  deviation "/confd_dyncfg:confdConfig/confd_dyncfg:netconf/confd_dyncfg:transport" {
+    deviate add {
+       must " (boolean(/confd_dyncfg:confdConfig/confd_dyncfg:netconf/confd_dyncfg:transport/confd_dyncfg:ssh)) " {
+        error-message "use nokia-ietf-system-aug to disable netconf";
+       }
+    }
+  }
+
+  /* netconf transport ssh is by default enabled, prevent modification */
+  deviation "/confd_dyncfg:confdConfig/confd_dyncfg:netconf/confd_dyncfg:transport/confd_dyncfg:ssh/confd_dyncfg:enabled" {
+    deviate add {
+       must "(current() = 'true') " {
+        error-message "use nokia-ietf-system-aug to disable netconf over ssh";
+       }
+    }
+  }
+
+  /* netconf transport ssh defualt port is 2022, so replace it by 830 and prevent modification */
+  deviation "/confd_dyncfg:confdConfig/confd_dyncfg:netconf/confd_dyncfg:transport/confd_dyncfg:ssh/confd_dyncfg:port" {
+    deviate replace {
+       default 830;
+    }
+    deviate add {
+       must "current() = 830" {
+        error-message "port not modifiable";
+       }
+    }
+  }
+
+   /* netconf transport ssh default ip is 0.0.0.0 , prevent modification
+   deviation "/confd_dyncfg:confdConfig/confd_dyncfg:netconf/confd_dyncfg:transport/confd_dyncfg:ssh/confd_dyncfg:ip" {
+    deviate add {
+       must "current() = '0.0.0.0' " {
+        error-message "ip not modifiable";
+       }
+    }
+  }
+  */
+
+   /* netconf transport ssh default ipv6 port is empty, define it and prevent modification */
+   deviation "/confd_dyncfg:confdConfig/confd_dyncfg:netconf/confd_dyncfg:transport/confd_dyncfg:ssh/confd_dyncfg:extraIpPorts" {
+    deviate add {
+       must "current() = '[0::0]:830' " {
+        error-message "extra ip ports not modifiable";
+       }
+    }
+  }
+
+  /* netconf tcp transport is default false, make it true and prevent modification */
+  deviation "/confd_dyncfg:confdConfig/confd_dyncfg:netconf/confd_dyncfg:transport/confd_dyncfg:tcp/confd_dyncfg:enabled" {
+   deviate replace {
+       default true;
+    }
+    deviate add {
+       must " (current() = 'true') " {
+       error-message "not modifiable";
+     }
+    }
+  }
+
+  /* netconf tcp transport port is by default 2023, prevent modification */
+  deviation "/confd_dyncfg:confdConfig/confd_dyncfg:netconf/confd_dyncfg:transport/confd_dyncfg:tcp/confd_dyncfg:port" {
+    deviate add {
+      must "current() = 2023" {
+       error-message "port not modifiable";
+     }
+    }
+  }
+
+
+  /* netconf transport tcp default ip is 0.0.0.0 , prevent modification*/
+  deviation "/confd_dyncfg:confdConfig/confd_dyncfg:netconf/confd_dyncfg:transport/confd_dyncfg:tcp/confd_dyncfg:ip" {
+    deviate add {
+      must "current() = '0.0.0.0' " {
+       error-message "ip not modifiable";
+     }
+    }
+  }
+
+
+  /* netconf tcp ipv6 port is by default empty, replace it and prevent any modification */
+  deviation "/confd_dyncfg:confdConfig/confd_dyncfg:netconf/confd_dyncfg:transport/confd_dyncfg:tcp/confd_dyncfg:extraIpPorts" {
+    deviate add {
+      must "current() = '[0::1]:2023' " {
+       error-message "extra ip ports port not modifiable";
+     }
+    }
+  }
+
+
+
+ /* container cli must be present */
+ deviation "/confd_dyncfg:confdConfig" {
+    deviate add {
+      must "(boolean(/confd_dyncfg:confdConfig/confd_dyncfg:cli)) " {
+       error-message "use nokia-ietf-system-aug to disable cli";
+     }
+    }
+  }
+
+  /* cli is by default enabled, prevent any modification */
+  deviation "/confd_dyncfg:confdConfig/confd_dyncfg:cli/confd_dyncfg:enabled" {
+    deviate add {
+      must "current() = 'true' " {
+       error-message "use nokia-ietf-system-aug to disable cli";
+     }
+    }
+  }
+
+ /* container cli ssh must be presnet */
+ deviation "/confd_dyncfg:confdConfig/confd_dyncfg:cli" {
+    deviate add {
+      must "(boolean(/confd_dyncfg:confdConfig/confd_dyncfg:cli/confd_dyncfg:ssh)) " {
+       error-message "use nokia-ietf-system-aug to disable cli";
+     }
+    }
+  }
+
+  /* CLI ssh is by default enabled , prevent any nmodification */
+  deviation "/confd_dyncfg:confdConfig/confd_dyncfg:cli/confd_dyncfg:ssh/confd_dyncfg:enabled" {
+    deviate add {
+      must  "( current() = 'true' ) " {
+       error-message "use nokia-ietf-system-aug to disable cli over ssh";
+     }
+    }
+  }
+
+  /* CLI ssh port is by default 2024, prevent modification */
+  deviation "/confd_dyncfg:confdConfig/confd_dyncfg:cli/confd_dyncfg:ssh/confd_dyncfg:port" {
+    deviate add {
+      must "current() = 2024" {
+       error-message "port not modifiable";
+     }
+    }
+  }
+
+  /* CLI ssh ip is by default 0.0.0.0, prevent modification */
+  deviation "/confd_dyncfg:confdConfig/confd_dyncfg:cli/confd_dyncfg:ssh/confd_dyncfg:ip" {
+    deviate add {
+       must "current() = '0.0.0.0' " {
+        error-message "ip not modifiable";
+       }
+    }
+  }
+
+   /* CLI ssh ipv6 is by default empty, add default and prevent modification */
+  deviation "/confd_dyncfg:confdConfig/confd_dyncfg:cli/confd_dyncfg:ssh/confd_dyncfg:extraIpPorts" {
+    deviate add {
+       must "current() = '[0::0]:2024' " {
+        error-message "extra ip ports not modifiable";
+       }
+    }
+  }
+
+  deviation "/confd_dyncfg:confdConfig/confd_dyncfg:logs/confd_dyncfg:syslogConfig/confd_dyncfg:udp/confd_dyncfg:port" {
+    deviate add {
+      must "current() = 514" {
+       error-message "port not modifiable";
+     }
+    }
+  }
+
+  deviation "/confd_dyncfg:confdConfig/confd_dyncfg:logs/confd_dyncfg:developerLog/confd_dyncfg:file/confd_dyncfg:name" {
+    deviate add {
+      must "current() = '/isam/logs/confd_internal/devel.log'" {
+       error-message "filename is not modifiable";
+     }
+    }
+  }
+
+  deviation "/confd_dyncfg:confdConfig/confd_dyncfg:logs/confd_dyncfg:netconfLog/confd_dyncfg:file/confd_dyncfg:name" {
+    deviate add {
+      must "current() = '/isam/logs/confd_internal/netconf.log'" {
+       error-message "filename is not modifiable";
+     }
+    }
+  }
+
+  deviation "/confd_dyncfg:confdConfig/confd_dyncfg:cli/confd_dyncfg:banner" {
+    deviate replace {
+      type string {
+         length "0..2048";
+      }
+    }
+  }
+
+  deviation "/confd_dyncfg:confdConfig/confd_dyncfg:cli/confd_dyncfg:ssh/confd_dyncfg:banner" {
+    deviate replace {
+      type string {
+         length "0..2048";
+      }
+    }
+   description "Limit the amount of ssh banner characters for performance reasons";
+  }
+
+  deviation "/confd_dyncfg:confdConfig/confd_dyncfg:aaa/confd_dyncfg:maxPasswordLength" {
+    deviate add {
+      must "current() = 32" {
+       error-message "maxPasswordLength not modifiable";
+       description "Permanently set the number of maximum allowed password characters";
+      }
+    }
+    deviate replace{
+      default 32;
+    }
+    description "Permanently set the number of maximum allowed password characters";
+  }
+
+  deviation "/confd_dyncfg:confdConfig/confd_dyncfg:aaa/confd_dyncfg:sshLoginGraceTime" {
+    deviate replace{
+      default PT1M;
+    }
+  }
+
+  deviation "/confd_dyncfg:confdConfig/confd_dyncfg:aaa/confd_dyncfg:authenticationCallback/confd_dyncfg:enabled"  {
+
+    /* authentication callback cannot be set to false can not be modified */
+    deviate add {
+      must "(current() = 'true')" {
+       error-message "authentication callback not modifiable";
+       description "Permanently enable authentication callback";
+      }
+    }
+  }
+
+  deviation "/confd_dyncfg:confdConfig/confd_dyncfg:ssh/confd_dyncfg:algorithms/confd_dyncfg:serverHostKey"  {
+
+    /* Ensure only allowed values are permitted */
+    deviate add {
+      must 're-match(current(), "(ssh-rsa|ssh-dss|'
+         + 'rsa-sha2-256|rsa-sha2-512|ecdsa-sha2-nistp384)'
+         + '(,(ssh-rsa|ssh-dss|rsa-sha2-256|rsa-sha2-512|'
+         + 'ecdsa-sha2-nistp384))*")' {
+        error-message
+          "Not supported value, choose any combination of: "
+        + "ssh-rsa,ssh-dss,rsa-sha2-256,rsa-sha2-512,"
+        + "ecdsa-sha2-nistp384 (separated by comma ,)";
+        description
+          "Ensure only allowed values are permitted. Only the
+           following values and any combination of them is
+           valid: ssh-rsa,ssh-dss,rsa-sha2-256,rsa-sha2-512,
+           ecdsa-sha2-nistp384";
+      }
+    }
+    deviate replace {
+      default "rsa-sha2-512,rsa-sha2-256,"
+            + "ecdsa-sha2-nistp384,ssh-rsa,ssh-dss";
+    }
+  }
+
+  deviation "/confd_dyncfg:confdConfig/confd_dyncfg:ssh/confd_dyncfg:algorithms/confd_dyncfg:kex"  {
+
+    /* Ensure only allowed values are permitted */
+    deviate add {
+      must 're-match(current(), "(diffie-hellman-group14-sha256|diffie-hellman-group-exchange-sha256)(,(diffie-hellman-group14-sha256|diffie-hellman-group-exchange-sha256))*")' {
+       error-message "Not supported value, choose any combination of: diffie-hellman-group14-sha256,diffie-hellman-group-exchange-sha256 (separated by comma ,).";
+       description "Ensure only allowed values are permitted. Only the following values and any combination of them is valid: diffie-hellman-group14-sha256,diffie-hellman-group-exchange-sha256.";
+      }
+    }
+    deviate replace {
+       default "diffie-hellman-group14-sha256,diffie-hellman-group-exchange-sha256";
+    }
+  }
+
+  deviation "/confd_dyncfg:confdConfig/confd_dyncfg:ssh/confd_dyncfg:algorithms/confd_dyncfg:mac"  {
+
+    /* Ensure only allowed values are permitted */
+    deviate add {
+      must 're-match(current(), "(hmac-sha2-256|hmac-sha2-512)(,(hmac-sha2-256|hmac-sha2-512))*")' {
+       error-message "Not supported value, choose any combination of: hmac-sha2-256 and hmac-sha2-512 (separated by comma ,)";
+       description "Ensure only allowed values are permitted. Only the following values and any combination of them is valid: hmac-sha2-256,hmac-sha2-512";
+      }
+    }
+    deviate replace {
+       default "hmac-sha2-256,hmac-sha2-512";
+    }
+  }
+
+  deviation "/confd_dyncfg:confdConfig/confd_dyncfg:ssh/confd_dyncfg:algorithms/confd_dyncfg:encryption"  {
+
+    /* Ensure only allowed values are permitted */
+    deviate add {
+      must 're-match(current(), "(aes128-ctr|aes192-ctr|aes256-ctr)(,(aes128-ctr|aes192-ctr|aes256-ctr))*")' {
+       error-message "Not supported value, choose any combination of: aes128-ctr,aes192-ctr and aes256-ctr (separated by comma ,)";
+       description "Ensure only allowed values are permitted. Only the following values and any combination of them is valid: aes128-ctr,aes192-ctr,aes256-ctr";
+      }
+    }
+    deviate replace {
+       default "aes128-ctr,aes192-ctr,aes256-ctr";
+    }
+  }
+
+  deviation "/confd_dyncfg:confdConfig/confd_dyncfg:restconf/confd_dyncfg:enabled"  {
+
+    deviate add {
+      must "(current() = 'false')" {
+       error-message "RESTCONF is not supported.";
+       description "RESTCONF is not supported.";
+      }
+    }
+  }
+
+}

@@ -1,0 +1,185 @@
+ module nokia-multicast-cac {
+  yang-version 1.1;
+  namespace "uri:http://www.nokia.com/Fixed-Networks/BBA/yang/"
+          + "nokia-multicast-cac";
+
+  prefix nokia-mcast-cac;
+
+
+  import bbf-mgmd {
+    prefix bbf-mgmd;
+  }
+
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import bbf-xpon-if-type {
+    prefix bbf-xponift;
+  }  
+
+  import iana-if-type {
+    prefix ianaift;
+  }
+
+  
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG definitions for
+     supporting the Nokia specific requirements on layer 2 multicast
+     management as applicable to access network equipment. As such,
+     this module is specific to access network equipment (e.g.,
+     BBF-specified Access Nodes and FTTdp DPUs).
+
+     Specifically, this module contains a collection of YANG definitions for
+     multicast Call Admission Control (CAC) support at interface level.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2019-2022, Nokia. All Rights Reserved.";
+
+  revision 2022-06-04 {
+    description
+      "Addition of multicast CAC support for PTM interface";
+    reference
+      "TR-383: Common YANG Modules
+               <https://www.broadband-forum.org/technical/download/
+                        TR-383.pdf>";
+  }
+
+  revision 2019-06-05 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: yyyy-mm-dd.";
+    reference
+      "TR-383: Common YANG Modules
+               <https://www.broadband-forum.org/technical/download/
+                        TR-383.pdf>";
+  }
+
+ typedef vpn-ref {
+    type leafref {
+      path "/bbf-mgmd:multicast/bbf-mgmd:mgmd/bbf-mgmd:multicast-vpn/bbf-mgmd:name";
+    }
+    description
+      "This type is used by data models that need to reference
+       configured vpns.";
+  }
+
+  grouping multicast-cac-data {
+     description "CAC data";
+     leaf max-group-number {
+            type bbf-mgmd:usage-limit;
+            default "no-limit";
+            description
+              "This attribute specifies the maximum number of dynamic
+               multicast groups that may be replicated to the 
+               interface at any one time. Dynamic refers to including 
+               all multicast groups requested via MGMD reports, and
+               excludes all the static multicast branches. The 
+               default value  no-limit' means that no administrative 
+               limit is imposed.";
+      }
+
+      leaf max-multicast-rate-limit {
+            type bbf-mgmd:usage-limit;
+            units "kbits/second";
+            default "no-limit";
+            description
+              "The multicast rate limit specifies the total bandwidth 
+               available on the interface for multicast traffic.";
+      }
+
+      leaf multicast-rate-limit-exceed-action {
+            type bbf-mgmd:rate-limit-action-enum;
+            default "best-effort";
+            description
+              "The multicast rate limit exceed action specifies how a 
+               multicast switch shall act when the multicast CAC 
+               concludes that accepting the MGMD request would result
+               in a situation that more bandwith is needed than 
+               available on the host interface, then this 
+               request can be accepted, possibly resulting in packet 
+               loss, or the request can be dropped.";
+      }
+  }
+  
+  augment '/if:interfaces/if:interface' {
+   when
+      "derived-from-or-self(if:type,'bbf-xponift:channel-pair')
+       or derived-from-or-self(if:type, 'ianaift:ethernetCsmacd')
+       or derived-from-or-self(if:type, 'ianaift:ieee8023adLag')
+       or derived-from-or-self(if:type, 'ianaift:ptm') " {
+      description
+        "Applies only to channel-pair or ethernetCsmacd or ieee8023adLag or PTM.";
+    }
+    description "augment interface with multicast-cac.";
+
+    container multicast-cac {
+    
+      description "multicast-cac.";
+      
+      uses multicast-cac-data;
+      
+      list cac-per-VPN {
+          when "derived-from-or-self(../../if:type,'bbf-xponift:channel-pair')
+		  or derived-from-or-self(../../if:type, 'ianaift:ethernetCsmacd')
+		  or derived-from-or-self(../../if:type, 'ianaift:ieee8023adLag') ";
+          key "VPN-name";
+            description "This list specifies max multicast bandwidth per VPN for channel pair or ethernetCsmacd or ieee8023adLag.";
+          leaf VPN-name {
+             type vpn-ref;
+             mandatory true;
+             description
+               "This object specifies the VPN which will be imposed for multicast cac check.";
+          }
+          
+          uses multicast-cac-data;
+      }
+    }
+  }
+
+}
+
+

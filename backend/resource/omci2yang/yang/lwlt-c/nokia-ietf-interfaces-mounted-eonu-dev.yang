@@ -1,0 +1,133 @@
+module nokia-ietf-interfaces-mounted-eonu-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-ietf-interfaces-mounted-eonu-dev";
+
+  prefix nokia-ietf-interfaces-mounted-eonu-dev;
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import ietf-interfaces-mounted {
+    prefix if-mounted;
+  }
+
+  import bbf-if-type-mounted {
+    prefix bbfift-mounted;
+   }
+
+  import iana-if-type-mounted {
+    prefix ianaift-mounted;
+  }
+ 
+  import bbf-xpon-if-type-mounted {
+    prefix bbf-xponift-mounted;
+  }
+
+  import nokia-interface-identities-mounted {
+    prefix nokia-if-id-mounted;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA IETF/System YANG module supporting
+     deviations on top of standard.";
+
+  revision 2026-03-08 {
+    description
+      "Allow interface type ieee8023adLag for lag.";
+    reference
+      "Nokia specific EPIC BBN-729";
+  }
+
+  revision 2024-05-22 {
+    description
+      "Extend interface type check for MoCA.";
+    reference
+      "Nokia specific EPIC BBN-729";
+  }
+
+  revision 2023-08-31 {
+    description
+      "Add deviations for rf-video-ani and rf-video-uni.";
+    reference
+      "Nokia specific EPIC BBN-27738";
+  }
+
+  revision 2022-07-01 {
+    description
+      "Added not-supported deviation for if-mounted:statistics container";
+    reference
+      "Nokia Specific.";
+  }
+  revision 2021-04-09 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia Specific.";
+  }
+
+
+deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/if-mounted:enabled" {
+    deviate add {
+       must "((current()/../if-mounted:type = 'bbfift-mounted:vlan-sub-interface') and (current() = 'true')) or "
+           +"(current()/../if-mounted:type != 'bbfift-mounted:vlan-sub-interface')" {
+            error-message "for vlan-sub-interface only enabled is allowed";
+       }
+    }
+ }
+
+deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/if-mounted:enabled" {
+    deviate add {
+       must "((current()/../if-mounted:type = 'nokia-if-id-mounted:rf-video-ani') and (current() = 'true')) or "
+           +"(current()/../if-mounted:type != 'nokia-if-id-mounted:rf-video-ani')" {
+            error-message "for rf-video-ani only enabled is allowed";
+       }
+    }
+ }
+
+ deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/if-mounted:enabled" {
+    deviate add {
+       must "((current()/../if-mounted:type = 'ianaift-mounted:ieee8023adLag') and (current() = 'true')) or "
+           +"(current()/../if-mounted:type != 'ianaift-mounted:ieee8023adLag')" {
+            error-message "for ieee8023adLag only enabled is allowed";
+       }
+    }
+ }
+
+deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/if-mounted:type" {
+    deviate add {
+        must "(current() = 'ianaift-mounted:ethernetCsmacd') or "
+            +"(current() = 'bbf-xponift-mounted:ani') or "
+            +"(current() = 'bbf-xponift-mounted:onu-v-enet') or "
+            +"(current() = 'bbf-xponift-mounted:onu-v-vrefpoint') or "
+            +"(current() = 'bbfift-mounted:onu-v-vrefpoint') or "
+            +"(current() = 'ianaift-mounted:voiceFXS') or "
+            +"(current() = 'ianaift-mounted:ipForward') or "
+            +"(current() = 'bbfift-mounted:vlan-sub-interface') or "
+            +"(current() = 'nokia-if-id-mounted:rf-video-ani') or "
+            +"(current() = 'nokia-if-id-mounted:rf-video-uni') or " 
+            +"(current() = 'nokia-if-id-mounted:moca-uni') or "
+            +"(current() = 'ianaift-mounted:ieee8023adLag')"
+        {
+          error-message "The interface type must be either 'ethernetCsmacd','ani', 'onu-v-enet', 'onu-v-vrefpoint', 'voiceFXS', 'ipForward', 'vlan-sub-interface', 'rf-video-ani' or 'rf-video-uni' or 'moca-uni', or 'ieee8023adLag'";
+        }
+      }
+   }
+
+deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/if-mounted:link-up-down-trap-enable" {
+    deviate not-supported;
+  }
+
+deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/if-mounted:statistics" {
+     description
+            "This deviation assures that if-mounted:statistics is not supported.";
+     deviate not-supported;
+  }
+}

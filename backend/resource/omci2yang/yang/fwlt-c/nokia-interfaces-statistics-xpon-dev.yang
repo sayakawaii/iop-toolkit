@@ -1,0 +1,60 @@
+module nokia-interfaces-statistics-xpon-dev {
+
+  /*namespace "urn:bbf:yang:" +
+            "nokia-interfaces-statistics-xpon-dev";
+            */
+  namespace "urn:broadband-forum-org:yang:nokia-interfaces-statistics-xpon-dev";
+
+  prefix nokia-interfaces-statistics-xpon-dev;
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import nokia-interfaces-statistics {
+    prefix nokia-itfstat;
+  }
+
+  import bbf-if-type {
+    prefix bbfift;
+  }
+
+  organization
+    "NOKIA";
+
+  contact
+    "TBD";
+
+  description
+    "This module contains tcont data";
+
+  revision 2024-08-26 {
+    description
+      "Correct the error message";
+    reference
+      "Nokia Specific.";
+  }
+
+  revision 2019-05-03 {
+    description
+      "Move to onu-mgnt category.";
+    reference
+      "TBD";
+  }
+
+  revision 2018-08-20 {
+    description
+      "Initial revision.";
+    reference
+      "TBD";
+  }
+
+  deviation "/if:interfaces/if:interface/nokia-itfstat:statistics"{
+    deviate add {
+      must "../if:type = 'bbfift:vlan-sub-interface' or current()/nokia-itfstat:enable != 'all-available' "
+      {
+        error-message "The all-available is only supported on vlan-sub-interface";
+      }
+    }
+  }
+}

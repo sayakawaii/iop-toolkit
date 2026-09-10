@@ -1,0 +1,313 @@
+module nokia-certificate-management {
+  yang-version 1.1;
+
+  namespace
+     "http://www.nokia.com/Fixed-Networks/BBA/yang/nokia-certificate-management";
+
+  prefix cert-app;
+
+  import ietf-yang-types { prefix yang; }
+  import nokia-yang-types { prefix nok-typ; }
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG definitions for
+     supporting Nokia specific requirements as applicable to its
+     access network equipment.
+
+     Specifically, this module identifies data that potentially
+     contains private data. Note that this classification is product
+     independent while the support of this data is product dependent.
+     I.e. it might be that data that is identified as private is not
+     supported in a particular product variant.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2018, Nokia. All Rights Reserved.";
+
+/* revision */
+  revision 2025-07-01 {
+    description
+    "Changes required for EST";
+    reference
+    "Nokia specific";
+  }
+
+  revision 2023-06-13 {
+    description
+    "YANG lint error fixes";
+    reference
+    "Nokia specific";
+  }
+
+  revision 2023-06-09 {
+    description
+    "YANG lint error fixes";
+    reference
+    "Nokia specific";
+  }
+
+  revision 2023-05-22 {
+    description
+    "Certificate State Data";
+    reference
+    "Nokia specific";
+  }
+
+  revision 2023-04-21 {
+    description
+    "YANG error fixes";
+    reference
+    "Nokia specific";
+  }
+
+  revision 2020-08-08 {
+    description
+      "Change of copyrights.";
+    reference
+	"Nokia Specific.";
+  }
+
+  typedef format {
+    type enumeration {
+      enum raw {
+        value 0;
+        description
+          "Display certificate as raw data.";
+      }
+      enum details {
+        value 1;
+        description
+          "Display certificate as formatted text.";
+      }
+    }
+    description "Certificate display format.";
+  }
+
+  typedef installed-type {
+    type enumeration {
+      enum  inline-definition  {
+        value 0;
+        description
+          "local-keystore.";
+      }
+      enum keystore {
+        value 1;
+        description
+          "keystore";
+      }
+      enum trust-anchor {
+        value 2;
+        description
+          "trust-anchor.";
+      }
+      enum est {
+        value 3;
+        description
+          "EST dowload.";
+      }
+    }
+    description "Certificate display format.";
+  }
+
+  grouping certificate-data {
+      description "certificate data.";
+    leaf valid-from {
+      type yang:date-and-time;
+      description "Validity start date.";
+    }
+    leaf valid-to {
+      type yang:date-and-time;
+      description "Expiration date.";
+    }
+    leaf signature{
+      type nok-typ:nokia-string-ascii64;
+      description "Signature Algorithm.";
+    }
+    leaf key-encryption {
+      type nok-typ:nokia-string-ascii64;
+      description "Key Type.";
+    }
+    leaf key-size {
+      type uint32;
+      description "Key Bits.";
+    }
+    leaf ca-flag{
+      type boolean;
+      description "CA Info.";
+    }
+    leaf subject {
+      type string;
+      description "Subject.";
+    }
+    leaf issuer {
+      type string;
+      description "Issuer.";
+    }
+  }
+
+  grouping show-certificate {
+    description "Show certificate grouping.";
+    action show-cert {
+      description "Action to show the details of a certificate.";
+      input {
+        leaf format {
+          type format;
+          mandatory true;
+          description "Certificate's format to be displayed.";
+        }
+      }
+      output {
+        leaf info {
+          type string;
+          mandatory true;
+          description "Certificate data retrieved.";
+        }
+      }
+    }
+  }
+  grouping certificate-grouping {
+    description "Certificate grouping.";
+    container certificates {
+      description "Certificate container.";
+      list certificate {
+        key "cert";
+        description "Certificate list.";
+        leaf cert {
+          type nok-typ:nokia-string-ascii64;
+          description "certificate name";
+        }
+        uses certificate-data;
+        uses show-certificate;
+      }
+    }
+  }
+
+  container certificate {
+    description "Configuration of certificates alarm and state";
+    container alarm-configuration {
+    description "Alarm Configuration.";
+      container certificate-expiration {
+        description "Management of certificates management";
+        leaf notify-days {
+          type uint8 {
+            range "15..90" {
+              error-message "Number of days shall be in the range of 15 to 90.";
+            }
+          }
+          units "days";
+          default 30;
+          description "Number of days before the expiration of a certificate";
+        }
+      }
+    }
+    container certificates-state {
+      config false;
+      description "Provide an overview of available certificates";
+      container pinned-certificates {
+        description "Pinned Certificates.";
+        list pinned-certificate {
+          key "trust-list";
+          leaf trust-list {
+            type nok-typ:nokia-string-ascii64;
+            description "Name of trustore list";
+          }
+          uses certificate-grouping;
+	        description "Pinned certificate list.";
+        }
+      }
+      container end-user-certificates{
+        description "End-User Certificates.";
+        list end-certs {
+          key "feature";
+          description "End-User certificate list.";
+          leaf feature {
+            type nok-typ:nokia-string-ascii64;
+            description "feature that uses the certificate";
+          }
+          uses certificate-grouping;
+        }
+      }
+      container est-certificates {
+        description "EST certificates container.";
+        list est-profiles {
+          key "profile";
+          description "EST profile list.";
+          leaf profile {
+            type nok-typ:nokia-string-ascii64;
+                description "profile name";
+          }
+          container ca-certificates {
+            description "EST CA-certificates container.";
+            list ca-certificate {
+              key "cert";
+              description "EST CA-certificates list.";
+              leaf cert {
+                type nok-typ:nokia-string-ascii64;
+                description "certificate name";
+              }
+              uses certificate-data;
+              uses show-certificate;
+            }
+            leaf-list feature {
+              type nok-typ:nokia-string-ascii64;
+              description "CA Feature leaf list.";
+            }
+          }
+          container end-user-certificate {
+            description "End-User certificate container.";
+            leaf cert {
+              type nok-typ:nokia-string-ascii64;
+              description "certificate name";
+            }
+            uses certificate-data;
+            uses show-certificate;
+            leaf-list feature {
+              type nok-typ:nokia-string-ascii64;
+              description "Feature leaf list.";
+            }
+          }
+        }
+      }
+    }
+  }
+}

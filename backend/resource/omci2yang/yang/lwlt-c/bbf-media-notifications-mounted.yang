@@ -1,0 +1,416 @@
+submodule bbf-media-notifications-mounted {
+  yang-version 1.1;
+  belongs-to bbf-sip-voip-mounted  {
+    prefix bbf-sip-voip-mounted;  
+  }
+	
+  include bbf-media-codec-profile-body-mounted;
+  include bbf-media-voice-call-profile-body-mounted;
+  include bbf-media-voice-band-data-profile-body-mounted;
+  include bbf-media-notification-identities-mounted;
+  include bbf-sip-voip-base-mounted;
+
+  organization
+    "Broadband Forum <https://www.broadband-forum.org>
+     Common YANG Work Area";
+
+  contact
+    "Comments or questions about this Broadband Forum YANG module
+     should be directed to <mailto:help@broadband-forum.org>.
+     Editor:      Frank Desseyn, Nokia
+     Editor:      Nadine Staelens, Nokia
+     PS Leader:   Joey Boyd, ADTRAN
+     PS Leader:   Ken Kerpez, ASSIA
+     WA Director: Joey Boyd, ADTRAN
+     WA Director: Sven Ooghe, Nokia";
+
+  description
+    "This module contains a collection of YANG 
+	 definitions for the SIP VoIP alarm/inform notifications.
+	 
+	 ==> draft-ietf-ccamp-alarm-module-06 :
+	 
+	 An alarm signifies an undesirable state in a resource
+	 that requires corrective action.
+	 
+   	 There are two main things to remember from this 
+	 definition:
+	 
+	 1.  the definition focuses on leaving out events
+	 and logging information in general.  Alarms should 
+	 only be used for undesired states that require action.
+	 
+	 2.  the definition also focus on alarms as a state on
+	 a resource, not the notifications that report the 
+	 state changes.
+	 
+	 ==> Relevant definitions of the term 'alarm' in other 
+	 alarm standards.
+	 
+	 X.733 : 
+	 error: A deviation of a system from normal operation.
+	 fault: The physical or algorithmic cause of a malfunction. 
+	 Faults manifest themselves as errors. 
+	 Alarm: A notification, of the form defined by this
+	 function, of a specific event. An alarm may or may not 
+	 represent an error. 
+	 
+	 G.7710 :
+	 Alarms are indications that are automatically generated 
+	 by an NE as a result of the declaration of a failure.  
+	 
+	 RFC 3877 :
+	 Error : A deviation of a system from normal operation.
+	 Fault : Lasting error or warning condition.
+	 Event : Something that happens which may be of interest.
+	 	A fault, a change in status, crossing a threshold,
+	 	or an external input to the system, for example.
+	 Notification : Unsolicited transmission of management
+	 	information.
+	 Alarm : Persistent indication of a fault. 
+	 
+	 ISA182 :
+	 Alarm: An audible and/or visible means of indicating to
+	 the operator an equipment malfunction, process deviation
+	 or abnormal condition requiring a response.
+	 
+	 EEMUA :
+	 An alarm is an event to which an operator must knowingly
+	 react,respond, and acknowledge - not simply acknowledge 
+	 and ignore.
+	 
+	 3GPP Alarm IRP : 
+	 3GPP v15: 
+	 An alarm signifies an undesired condition of a resource
+	 (e.g. network element, link) for which an operator action
+	 is required. It emphasizes a key requirement that 
+	 operators [...] should not be informed about an undesired
+	 condition unless it requires operator action.
+	 3GPP v12: 
+	 alarm: abnormal network entity condition, which categorizes
+	 an event as a fault.  
+	 fault: a deviation of a system from normal operation, 
+	 which may result in the loss of operational capabilities
+	 [...] .
+	 Copyright (c) 2017-2018, Broadband Forum
+     Redistribution and use in source and binary forms, with or
+     without modification, are permitted provided that the following
+     conditions are met:
+     1. Redistributions of source code must retain the above copyright
+        notice, this list of conditions and the following disclaimer.
+     2. Redistributions in binary form must reproduce the above
+        copyright notice, this list of conditions and the following
+        disclaimer in the documentation and/or other materials
+        provided with the distribution.
+     3. Neither the name of the copyright holder nor the names of its
+        contributors may be used to endorse or promote products
+        derived from this software without specific prior written
+        permission.
+     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
+     CONTRIBUTORS \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+     INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+     DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+     CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+     SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+     NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+     CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+     STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+     ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+     ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     The above license is used as a license under copyright only.
+     Please reference the Forum IPR Policy for patent licensing terms
+     <https://www.broadband-forum.org/ipr-policy>.
+     Any moral rights which are necessary to exercise under the above
+     license grant are also deemed granted under this license.
+     This version of this YANG module is part of TR-383; see
+     the TR itself for full legal notices.";
+
+  revision 2020-03-06 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: 2020-03-06.";
+    reference
+      " ";
+  }
+
+  identity media-voice-call-codec-not-supported {
+	base media-itf-inform-notification;
+	description
+	  "The voice call codec is not supported.";
+  }
+  
+  identity media-vbd-codec-not-supported {
+    base media-itf-inform-notification;
+	description
+	  "The voice band data codec is not supported.";
+  }
+  
+  identity media-fwd-rtp-errors-thr-exceeded {
+    base media-itf-inform-notification;
+	description
+	  "The RTP errors threshold has been exceeded.";
+  }
+  
+  identity media-fwd-packet-loss-thr-exceeded {
+    base media-itf-inform-notification;
+	description
+	  "The packet loss threshold has been exceeded.";
+  }
+  
+  identity media-fwd-packet-max-jitter-thr-exceeded {
+    base media-itf-inform-notification;
+	description
+	  "The maximum jitter threshold has been exceeded.";
+  }
+  
+  identity media-fwd-packet-max-intv-packets-thr-exceeded {
+    base media-itf-inform-notification;
+	description
+	  "The maximum time between RTCP packets threshold has been
+	   exceeded.";
+  }
+  
+  identity media-fwd-packet-buffer-underflow-thr-exceeded {
+    base media-itf-inform-notification;
+	description
+	  "The buffer underflows threshold has been exceeded.";
+  }
+  
+  identity media-fwd-packet-buffer-overflow-thr-exceeded {
+    base media-itf-inform-notification;
+	description
+	  "The buffer overflows threshold has been exceeded.";
+  }
+
+  grouping media-notifications {
+    notification media-voice-call-codec-not-supported {
+      if-feature specific-notifications;
+      description 
+	    "The voice call codec is not supported.";
+// BBOG: redundant with notification name unless more identities will be defined
+//       with this base.
+//       If there will be only 1 identity then this leaf is redundant with the
+//       notification name and can be removed
+      leaf media-inform-identity {
+	    type identityref {
+	      base media-voice-call-codec-not-supported;
+	    }
+	    mandatory true;
+	    description
+	      "A unique identity associated with this notification.";
+      }
+      leaf voice-call-profile-name {
+	    /* type bbf-sip-voip-mounted:voice-call-profile-ref; */
+	    type string;
+	    description
+	      "References the Voice call profile.";
+      }
+      leaf codec-profile-name {
+	    /* type bbf-sip-voip-mounted:codec-profile-ref; */
+	    type string;
+	    mandatory true;
+	    description
+		  "References the codec profile.";
+      }
+      leaf codec {
+        type bbf-sip-voip-mounted:codec-selection;
+        description
+          "This codec isn't supported.";	  
+      }
+    }
+
+    notification media-vbd-codec-not-supported {
+      if-feature specific-notifications;
+      description 
+	  "The voice band data codec is not supported.";
+// BBOG: redundant with notification name unless more identities will be defined
+//       with this base.
+//       If there will be only 1 identity then this leaf is redundant with the
+//       notification name and can be removed
+      leaf media-inform-identity {
+	    type identityref {
+	      base media-vbd-codec-not-supported;
+	    }
+	    mandatory true;
+	    description
+	      "A unique identity associated with this notification.";
+      }
+      leaf voice-call-profile-name {
+	    /* type bbf-sip-voip-mounted:voice-band-data-profile-ref; */
+	    type string;
+	    description
+	      "References the Voice band data profile.";
+      }
+      leaf codec-profile-name {
+	    /* type bbf-sip-voip-mounted:codec-profile-ref; */
+	    type string;
+	    mandatory true;
+	    description
+		  "References the codec profile.";
+      }
+      leaf codec {
+        type bbf-sip-voip-mounted:codec-selection;
+        description
+          "This codec isn't supported.";	  
+      }
+    }
+
+    notification media-voice-call-codec-notification {
+      if-feature generic-notification;
+      description 
+	    "A generic notification related to call codecs.";
+      leaf media-inform-identity {
+	    type identityref {
+	      base media-itf-inform-notification;
+	    }
+	    mandatory true;
+	    description
+	      "A unique identity associated with this notification.";
+      }
+      leaf voice-call-profile-name {
+	    /* type bbf-sip-voip-mounted:voice-call-profile-ref; */
+	    type string;
+	    description
+	      "References the Voice call profile.";
+      }
+      leaf codec-profile-name {
+	    /* type bbf-sip-voip-mounted:codec-profile-ref; */
+	    type string;
+	    mandatory true;
+	    description
+		  "References the codec profile.";
+      }
+      leaf codec {
+        type bbf-sip-voip-mounted:codec-selection;
+        description
+          "The codec selection.";	  
+      }
+    }
+
+    notification media-fwd-rtp-errors-thr-exceeded {
+      if-feature specific-notifications;
+      description 
+	    "The RTP errors threshold has been exceeded.";
+// BBOG: redundant with notification name unless more identities will be defined
+//       with this base.
+//       If there will be only 1 identity then this leaf is redundant with the
+//       notification name and can be removed
+      leaf media-inform-identity {
+	    type identityref {
+	      base media-fwd-rtp-errors-thr-exceeded;
+	    }
+	    mandatory true;
+	    description
+	      "A unique identity associated with this notification.";
+      }
+    }
+  
+    notification media-fwd-packet-loss-thr-exceeded {
+      if-feature specific-notifications;
+      description 
+	    "The packet loss threshold has been exceeded.";
+// BBOG: redundant with notification name unless more identities will be defined
+//       with this base.
+//       If there will be only 1 identity then this leaf is redundant with the
+//       notification name and can be removed
+      leaf media-inform-identity {
+	    type identityref {
+	      base media-fwd-packet-loss-thr-exceeded;
+	    }
+	    mandatory true;
+	    description
+	      "A unique identity associated with this notification.";
+      }
+    }
+  
+    notification media-fwd-packet-max-jitter-thr-exceeded {
+      if-feature specific-notifications;
+      description 
+	    "The maximum jitter threshold has been exceeded.";
+// BBOG: redundant with notification name unless more identities will be defined
+//       with this base.
+//       If there will be only 1 identity then this leaf is redundant with the
+//       notification name and can be removed
+      leaf media-inform-identity {
+	    type identityref {
+	      base media-fwd-packet-max-jitter-thr-exceeded;
+	    }
+	    mandatory true;
+	    description
+	      "A unique identity associated with this notification.";
+      }
+    }
+  
+    notification media-fwd-packet-max-intv-packets-thr-exceeded {
+      if-feature specific-notifications;
+      description 
+	    "The maximum time between RTCP packets threshold has been
+	     exceeded.";
+// BBOG: redundant with notification name unless more identities will be defined
+//       with this base.
+//       If there will be only 1 identity then this leaf is redundant with the
+//       notification name and can be removed
+      leaf media-inform-identity {
+	    type identityref {
+	      base media-fwd-packet-max-intv-packets-thr-exceeded;
+	    }
+	    mandatory true;
+	    description
+	      "A unique identity associated with this notification.";
+      }
+    }
+  
+    notification media-fwd-packet-buffer-underflow-thr-exceeded {
+      if-feature specific-notifications;
+      description 
+	    "The buffer underflows threshold has been exceeded.";
+// BBOG: redundant with notification name unless more identities will be defined
+//       with this base.
+//       If there will be only 1 identity then this leaf is redundant with the
+//       notification name and can be removed
+      leaf media-inform-identity {
+	    type identityref {
+	      base media-fwd-packet-buffer-underflow-thr-exceeded;
+	    }
+	    mandatory true;
+	    description
+	      "A unique identity associated with this notification.";
+      }
+    }
+  
+    notification media-fwd-packet-buffer-overflow-thr-exceeded {
+      if-feature specific-notifications;
+      description 
+	    "The buffer overflows threshold has been exceeded.";
+// BBOG: redundant with notification name unless more identities will be defined
+//       with this base.
+//       If there will be only 1 identity then this leaf is redundant with the
+//       notification name and can be removed
+      leaf media-inform-identity {
+	    type identityref {
+	      base media-fwd-packet-buffer-overflow-thr-exceeded;
+	    }
+	    mandatory true;
+	    description
+	      "A unique identity associated with this notification.";
+      }
+    }
+
+    notification media-fwd-inform-notification {
+      if-feature generic-notification;
+      description 
+	    "A generic notification to inform about a media forwarder event";
+      leaf media-inform-identity {
+	    type identityref {
+	      base media-itf-inform-notification;
+	    }
+	    mandatory true;
+	    description
+	      "A unique identity associated with this notification.";
+      }
+    }
+  }
+} 

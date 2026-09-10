@@ -1,0 +1,66 @@
+module nokia-bbf-qos-traffic-mngt-mounted-eonu-si {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+           + "nokia-bbf-qos-traffic-mngt-mounted-eonu-si";
+
+  prefix  nokia-bbf-qos-traffic-mngt-mounted-eonu-si;
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import nokia-sdan-service-impact {
+    prefix nokia-si;
+  }
+
+  import bbf-qos-traffic-mngt-mounted {
+      prefix bbf-qos-tm-mounted;
+  }
+
+  import ietf-interfaces-mounted {
+      prefix if-mounted;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "This module contains a collection of YANG deviations on top
+     of standard for supporting BBF/bbf-qos-traffic-mgnt YANG module.
+     Copyright (C) 2021, Nokia. All Rights Reserved.";
+
+  revision 2025-12-09 {
+    description
+      "uni tm-root si";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2023-06-30 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific";
+  }
+
+  deviation '/onu:onus/onu:onu/onu:root/bbf-qos-tm-mounted:tm-profiles/bbf-qos-tm-mounted:tc-id-2-queue-id-mapping-profile/bbf-qos-tm-mounted:mapping-entry' {
+      description
+        "When tc-id-2-queue-id-mapping-profile is referred by TCONT, if its mapping-entry is modified, traffic will be down for a short time period.
+         This will result in service interruptions of several seconds.";
+      deviate add {
+        nokia-si:service-impact;
+      }
+  }
+
+  deviation '/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-qos-tm-mounted:tm-root' {
+      description
+        "When VSI or Uni is referred by Gemport, when this Uni's tm-root is modified, traffic will be down for a short time period.
+         This will result in service interruptions of several seconds.";
+      deviate add {
+        nokia-si:service-impact;
+      }
+  }
+}

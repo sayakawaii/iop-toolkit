@@ -1,0 +1,261 @@
+submodule bbf-voip-service-gateway-characteristics-mounted {
+  yang-version 1.1;
+  belongs-to bbf-sip-voip-mounted  {
+	prefix bbf-sip-voip-mounted;
+  } 
+  
+  import ietf-inet-types {
+    prefix inet;
+	reference
+      "RFC 6991: Common YANG Data Types.";
+  }
+  
+  import bbf-yang-types {
+    prefix bbf-yang;
+  }
+  
+  include bbf-sip-voip-base-mounted;
+  include bbf-sip-profiles-mounted;
+  include bbf-sip-types-mounted;
+  
+  
+ organization
+    "Broadband Forum <https://www.broadband-forum.org>
+     Common YANG Work Area";
+
+  contact
+    "Comments or questions about this Broadband Forum YANG module
+     should be directed to <mailto:help@broadband-forum.org>.
+     Editor:      Frank Desseyn, Nokia
+     Editor:      Nadine Staelens, Nokia
+     PS Leader:   Joey Boyd, ADTRAN
+     PS Leader:   Ken Kerpez, ASSIA
+     WA Director: Joey Boyd, ADTRAN
+     WA Director: Sven Ooghe, Nokia";
+
+  description
+    "This submodule contains the tone pattern profiles.
+     Copyright (c) 2017-2018, Broadband Forum
+     Redistribution and use in source and binary forms, with or
+     without modification, are permitted provided that the following
+     conditions are met:
+     1. Redistributions of source code must retain the above copyright
+        notice, this list of conditions and the following disclaimer.
+     2. Redistributions in binary form must reproduce the above
+        copyright notice, this list of conditions and the following
+        disclaimer in the documentation and/or other materials
+        provided with the distribution.
+     3. Neither the name of the copyright holder nor the names of its
+        contributors may be used to endorse or promote products
+        derived from this software without specific prior written
+        permission.
+     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
+     CONTRIBUTORS \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+     INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+     DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+     CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+     SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+     NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+     CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+     STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+     ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+     ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     The above license is used as a license under copyright only.
+     Please reference the Forum IPR Policy for patent licensing terms
+     <https://www.broadband-forum.org/ipr-policy>.
+     Any moral rights which are necessary to exercise under the above
+     license grant are also deemed granted under this license.
+     This version of this YANG module is part of TR-383; see
+     the TR itself for full legal notices.";
+
+  revision 2020-03-06 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: 2020-03-06.";
+    reference
+      " ";
+  }   
+
+  grouping voip-service-gateway-characteristics {
+    description
+      "The voip service gateway parameters.";
+	leaf vsg-phone-number	{
+	  type string {length "1..32";}
+	  description
+		"The phone number to contact the voice gateway
+		 provider.";
+	}
+	leaf vsg-contact-address {
+	  type string {length "1..64";}
+	  
+	  description
+		"The contact address of the voip gateway
+		 provider.";
+	}
+	leaf sip-dscp-mark {
+	  type inet:dscp;
+	  default 46;		
+	  description
+		"The differentiated service code point for
+		 outgoing signaling traffic.";
+	}
+	leaf dtmf-sip-info {
+	  type enumeration {
+		enum enabled {
+		value 1;
+		  description
+		  "DTMF via SIP INFO is enabled.";
+		}
+		enum disabled {
+		  value 2;
+		  description
+		  "DTMF via SIP INFO is disabled.";
+		}
+	  }
+	  default disabled;			
+	  description
+		"To enable/disable DTMF transmission via SIP
+		 INFO method.";
+	}
+	leaf release-timer {
+	  type uint16;
+	  units seconds;
+	  default 10;
+	  description
+	    "Release timer.";
+	}	
+	leaf digit-sending-mode {
+	  type enumeration {
+	  	enum en-bloc {
+	  	  value 1;
+	  	  description
+	  	    "En-bloc dialing.";
+	  	}
+	  	enum overlap-invite {
+	  	  value 2;
+	  	  description
+	  	    "Overlap dialing - send subsequent requests
+	  	    by means of SIP invites.";
+	  	}
+	  	enum overlap-indialog {
+	  	  value 3;
+	  	  description
+	  	    "Overlap dialing - send subsequent requests
+	  	    by means of in-dialog messages.";
+	  	}
+	  }
+	  default en-bloc;	  
+	  description
+	  	"The digit sending mode.";
+	}
+	container overlap-dialing {
+	  when "../digit-sending-mode != 'en-bloc'";
+	description
+	  "The overlap dialing parameters";	
+	  leaf overlap-dialing-receive-484 {
+		type enumeration {
+		  enum release-call {
+		  	value 1;
+		  	description
+  			  "Release the call upon the receipt of
+		  	   a 484 Address Incomplete.";
+		  }
+		  enum proceed-with-call {
+		  	value 2;
+		  	description
+		  	  "Proceed with the call upon the receipt
+		  	  of a 484 'address incomplete'.";
+		  }
+		}
+		default release-call;		
+		description
+		  "Determines whether to release the call or
+		   to proceed with the call in case a 484 
+		   'address incomplete' is received. This status
+		   code allows overlapped dialing.  
+		   With overlapped dialing, the SIP UA does not
+		   know the length of the dialing string.
+		   It sends strings of increasing lengths, 
+		   prompting the user for more input, until it
+		   no longer receives a 484 status response.";
+	  }
+	  leaf overlap-dialing-ta4-timer {
+		type uint32 {range "1..3600000";}
+		units milli-seconds;
+		default 4000;		
+		description
+		  "Timer started upon the receipt of new digit
+		   information. Timer stopped upon the receipt
+		   of fresh digit information. Upon expiry, send
+		   a SIP INVITE request.";
+	  }
+	  leaf overlap-dialing-tacm-timer {
+	    type uint32 {range "1..3600000";}
+	    units milli-seconds;
+	    default 18000;		  
+	    description
+	    	"Timer started upon the expiry of the 
+	    	 T-interdigit timer while a SIP INVITE 
+	    	 transaction is ongoing.
+	    	 The expiry of T-acmdelta timer terminates
+	    	 the attempt to establish a call.";
+	  }	
+	  leaf overlap-dialing-digit-collection-timer {
+	    type uint32 {range "1..3600000";}
+	    units milli-seconds;
+	    default 1000;	  
+	     description
+	   	  "In overlap dialing mode, when the SIP UA 
+	  	   receives a 484 (Address Incomplete) response 
+	  	   with/without min-length, it will continue to
+	  	   collect more digits and send subsequent SIP 
+	  	   INVITE requests with all digits collected so
+	  	   far. This timer (Tinfo) is started when a SIP
+	  	   INVITE is sent.
+	  	   In case a 484 with min-length response is 
+	  	   received:
+	  	   If min-length is reached during the duration of
+	  	   Tinfo, the next SIP INVITE is sent when Tinfo
+	  	   has expired.
+	  	   Should Tinfo expire but min-length is not 
+	  	   reached, the next SIP INVITE is sent after 
+	  	   min-length is reached.
+	  	   In case a 484 without min-length response is
+	  	   received:
+	  	   If there is no expected min-length, the next
+	  	   SIP INVITE is sent when Tinfo has expired on
+	  	   the condition that additional digits were 
+	  	   received meanwhile.
+	  	   If there is no expected min-length, and no 
+	  	   additional digit were received upon Tinfo 
+	  	   expiry, however after Tinfo has expired a new
+	  	   digit is received, a SIP INVITE is immediately
+	  	   sent and Tinfo is started again.";
+	  }
+    }  
+    list sip-response-table {
+	  key "sip-response-code";
+	  leaf sip-response-code {
+	    type uint16;
+	    description
+	     "The sip response code.";
+	   reference
+		 "IETF RFC 3261 Session Initiation Protocol.";
+	  }
+	  leaf text-message {
+	    type bbf-sip-voip-mounted:string-or-empty;
+	    description
+	      "Text string explaining the SIP response code.";
+	  }
+      leaf tone-pattern-name {
+	    type bbf-yang:string-ascii64; 	  
+	    description 
+          "Tone pattern name referring to the tone to generate 
+		   when the particular sip response is received";	  
+	  }  
+	}
+  }  
+} 

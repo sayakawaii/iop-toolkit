@@ -1,0 +1,59 @@
+module nokia-sdan-tr069-mgnt-mounted-eonu-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/" 
+           + "nokia-sdan-tr069-mgnt-mounted-eonu-dev";
+
+  prefix nokia-sdan-tr069-mgnt-mounted-eonu-dev;
+
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import nokia-sdan-tr069-mgnt-mounted {
+    prefix nokia-sdan-tr069-mgnt-mounted;
+  }
+
+  import bbf-dot1q-types {    
+    prefix bbf-dot1qt;  
+  }
+ 
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "This module contains a collection of YANG deviations on top 
+     of standard for supporting NOKIA/TR069/nokia-sdan-tr069-mgnt YANG module.
+     Copyright (C) 2017-2018, Nokia. All Rights Reserved.";
+ 
+  revision 2022-06-01 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific"; 
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-sdan-tr069-mgnt-mounted:intended-beyond-onu-v-vrefpoint/nokia-sdan-tr069-mgnt-mounted:reachable-tr069-servers/nokia-sdan-tr069-mgnt-mounted:reachable-tr069-server"{
+      deviate add {
+        max-elements 1;
+    }
+ }
+ 
+  deviation "/onu:onus/onu:onu/onu:root/nokia-sdan-tr069-mgnt-mounted:intended-beyond-onu-v-vrefpoint/nokia-sdan-tr069-mgnt-mounted:reachable-tr069-servers/nokia-sdan-tr069-mgnt-mounted:reachable-tr069-server"
+      + "/nokia-sdan-tr069-mgnt-mounted:dei"{
+      deviate replace {
+        type bbf-dot1qt:dei {
+           range "0"{              
+             error-message                
+               "For dei value, only 0 is supported.";            
+           }
+        }
+     }
+  }
+}
+
+  
+

@@ -1,0 +1,145 @@
+module nokia-sdan-interfaces-oper-state-reason {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/" +
+            "nokia-sdan-interfaces-oper-state-reason";
+ 
+  prefix "nokia-sdan-if-oper-st-reason";
+  
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import iana-if-type {
+    prefix ianaift;
+  }
+
+  import bbf-xpon-if-type {
+    prefix bbf-xponift;
+  }
+
+  organization
+    "Nokia";
+    
+  contact
+    "Comments or questions about this Nokia YANG module should be 
+     directed to <mailto:isam.yang@nokia.com>.";
+    
+  description
+    "This module contains a collection of YANG definitions for 
+    supporting Nokia specific requirements as applicable to its 
+    access network equipment.
+    
+    Specifically, this module augments the interface model with data
+    that supports to show the reason for interface oper status as dormant.
+
+    This specification is published by Nokia under Non-Disclosure
+    Agreement(s) (NDA) with specific parties and has to be considered
+    as Confidential Information as defined in such NDA. Nokia 
+    reserves the right to revise this document for any reason, 
+    including but not limited to conformity with standards 
+    promulgated by various agencies, utilisation of advances in the 
+    state of the technical areas, or the reflection of changes in the
+    design of any equipment, techniques, or procedures described or 
+    referred to herein.
+
+    The product specifications and other technical or performance 
+    information contained herein are subject to change without 
+    notice. Updates of this document will be issued under the above 
+    NDA's.
+
+    Nokia makes no representation or warranty, expressed or implied,
+    with respect to the sufficiency, accuracy, or utility of any 
+    information or opinion contained herein. Nokia expressly advises 
+    that any use of for any purpose or reliance upon this technical 
+    reference is at the risk of the user and that Nokia shall not be 
+    liable for any damage or injury incurred by any person arising 
+    out of the sufficiency, accuracy, or utility of any information 
+    or opinion contained herein.
+
+    This document is not to be construed as a suggestion to any 
+    manufacturer to modify or change any of its products, nor does 
+    this document represent any commitment by Nokia to sell or 
+    purchase any product. Nothing contained herein shall be construed
+    as conferring by implication, estoppel, or otherwise any license 
+    or right under any patent, whether or not the use of any 
+    information herein necessarily employs an invention of any 
+    existing or later issued patent.
+
+    Nokia reserves the right not to offer any or all of these
+    products and to withdraw any or all of them at any future time.
+
+    Copyright (C) 2025, Nokia. All Rights Reserved.";
+   
+  revision 2026-08-20 {
+    description
+      "Add dormant-state-reason for olt-v-enet blocked by ONT loop detection.";
+    reference
+      "Nokia ONT-LD oper-down on olt-v-enet.";
+  }
+
+  revision 2025-04-29 {
+    description
+      "Initial revision of YANG model support to show the reason 
+	  for interface oper status as dormant.";
+    reference 
+      "";  
+  }
+
+  feature ethernet-interface-shut-down {
+    description
+      "Indicates that state data applicable to ethernet interface shut down operation.";
+  }
+
+  feature cross-ont-loopdetection {
+    description
+      "Indicates dormant-state-reason for olt-v-enet oper-down by ONT loop detection.";
+  }
+
+  augment '/if:interfaces-state/if:interface' {
+    when "derived-from-or-self(if:type,'ianaift:ethernetCsmacd') or "
+       + "derived-from-or-self(if:type,'bbf-xponift:olt-v-enet')" {
+       description
+         "Applies to ethernetCsmacd and olt-v-enet interfaces";
+    }
+    description
+      "Show the reason for interface oper status as dormant";
+    leaf-list dormant-state-reason {
+      if-feature "ethernet-interface-shut-down or cross-ont-loopdetection";
+        type enumeration {
+           enum turn-off-laser-by-cfm-ais {
+             value 1;
+             if-feature "ethernet-interface-shut-down";
+             description
+               "laser turn off by Cfm for ais.";
+             }
+           enum turn-off-laser-by-eld {
+             value 2;
+             if-feature "ethernet-interface-shut-down";
+             description
+               "laser turn off by Eld.";
+           }
+           enum turn-off-laser-by-lag-sub-group {
+             value 3;
+             if-feature "ethernet-interface-shut-down";
+             description
+               "laser turn off by Lamgnt";
+           }
+           enum turn-off-laser-by-cross-lag-dac-failure {
+             value 4;
+             if-feature "ethernet-interface-shut-down";
+             description
+               "laser turn off by Lamgnt for cross lag dac failure";
+           }
+           enum traffic-block-by-Eld {
+             value 5;
+             description
+               "Oper down by ONT loop detection on olt-v-enet.";
+           }
+        }
+        description
+          "A list of dormant state reason's.";
+    }
+  }
+}
+
+

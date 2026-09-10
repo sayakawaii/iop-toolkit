@@ -1,0 +1,114 @@
+module nokia-bbf-xpon-common-imm {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-bbf-xpon-common-imm";
+
+  prefix nokia-bbf-xpon-common-imm;
+
+  import ietf-immutable{
+    prefix im;
+  }
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import bbf-xpon{
+    prefix bbf-xpon;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA IETF/System YANG module supporting
+     deviations on top of standard.";
+
+  revision 2023-01-10 {
+    description
+      "change wavelength-profiles to unconfigurable.";
+    reference
+      "Nokia Specific.";
+  }
+
+  revision 2022-11-20 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia Specific.";
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-xpon:channel-partition/bbf-xpon:channel-group-ref" {
+      description
+      "The channel-group-ref of a channel-partition interface cannot be modified.
+       The client can delete or remove the interface and subsequently create the interface again.";
+      deviate add {
+        im:immutable "create delete";
+      }
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-xpon:channel-pair/bbf-xpon:channel-group-ref" {
+      description
+      "The channel-group-ref of a channel-pair interface cannot be modified.
+       The client can delete or remove the interface and subsequently create the interface again.";
+      deviate add {
+        im:immutable "create delete";
+      }
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-xpon:channel-pair/bbf-xpon:channel-partition-ref" {
+      description
+      "The channel-partition-ref of a channel-pair interface cannot be modified.
+       The client can delete or remove the interface and subsequently create the interface again.";
+      deviate add {
+        im:immutable "create delete";
+      }
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-xpon:channel-pair/bbf-xpon:channel-pair-type" {
+      description
+      "The channel-pair-type of a channel-pair interface cannot be modified.
+       The client can delete or remove the interface and subsequently create the interface again.";
+      deviate add {
+        im:immutable "create delete";
+      }
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-xpon:channel-termination/bbf-xpon:channel-pair-ref" {
+      description
+      "The channel-pair-ref of a channel-termination interface cannot be modified.
+       The client can delete or remove the interface and subsequently create the interface again.";
+      deviate add {
+        im:immutable "create delete";
+      }
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-xpon:channel-termination/bbf-xpon:channel-termination-type" {
+      description
+      "The mandatory channel-termination-type of a channel-termination interface cannot be modified. 
+       The client can delete or remove the interface and subsequently create the interface again with new channel-termination-type configuration values.";
+      deviate add {
+        im:immutable "create delete";
+      }
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-xpon:channel-termination/bbf-xpon:location" {
+      description
+      "The location of a channel-termination interface cannot be modified.
+       The client can delete or remove the interface and subsequently create the interface again.";
+      deviate add {
+        im:immutable "create delete";
+      }
+  }
+
+  deviation "/bbf-xpon:xpon/bbf-xpon:wavelength-profiles" {
+     description
+       "The wavelength-profiles and its child data nodes cannot be created, modified or deleted.";
+      deviate add {
+        im:immutable "";
+      }
+  }
+}

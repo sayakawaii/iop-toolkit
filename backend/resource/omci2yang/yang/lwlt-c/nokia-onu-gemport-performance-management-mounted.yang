@@ -1,0 +1,254 @@
+module nokia-onu-gemport-performance-management-mounted {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+          + "nokia-onu-gemport-performance-management-mounted";
+  prefix nokia-xpongemtcont-gemport-pm-mounted;
+  import bbf-fiber-onu-emulated-mount {
+     prefix onu;
+  }
+  import bbf-xpongemtcont-mounted {
+    prefix bbf-xpongemtcont-mounted;
+  }
+  import bbf-xpongemtcont-gemport-performance-management-mounted {
+    prefix bbf-xpongemtcont-gemport-pm-mounted;
+  }
+  import nokia-hardware-profiles-mounted {
+    prefix nokia-hw-prof-mounted;
+  }
+  import nokia-sdan-hardware-pm-threshold-profiles-mounted {
+    prefix nokia-hw-pm-threshold-prof-mounted;
+  }
+  /* import bbf-interfaces-performance-management-mounted {
+    prefix bbf-if-pm-mounted;
+  }
+  import nokia-interfaces-performance-management-mounted {
+    prefix nokia-interfaces-performance-management-mounted;
+  }*/
+  import bbf-yang-types {
+    prefix bbf-yang;
+  }
+  import nokia-sdan-gemport-pm-threshold-profiles-mounted {
+    prefix nokia-gemport-pm-tca-prof-mounted;
+  }
+  organization
+    "Nokia";
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+  description
+    "This module contains a collection of YANG definitions for
+     supporting Nokia specific requirements as applicable to its
+     access network equipment.
+     Specifically, this module augments the bbf-xponcommon-performance-management
+     model with additional Nokia specific PM counters.
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+     Copyright (C) 2022, Nokia. All Rights Reserved.";
+
+  revision 2025-06-04 {
+       description
+         "Removed support for PM counter group profile";
+       reference
+         "Nokia specific for EPIC BBN-107831";
+  }
+
+  revision 2023-07-25 {
+    description
+      "Added new PM counters";
+    reference
+      "Nokia specific";
+  }
+   revision 2022-12-22 {
+    description
+      "Support for gemport performance monitoring TCA profiles configurtaion and TCA notification.";
+    reference
+      "Nokia specific";
+   }
+
+   revision 2022-02-11 {
+    description
+      "Initial revision";
+    reference
+      "Nokia specific";
+  }
+  grouping gemport-packets-pm {
+    description
+      "Counters associated with current and historical 15 minute and
+       24 hour performance counters.";
+    reference
+      "G.988: ONU management and control interface (OMCI) specification";
+    leaf lost-in-frames {
+      type bbf-yang:performance-counter64;
+      description
+        "Total number of received G-PON Encapsulation Method (GEM) frames lost.";
+      reference
+        "ITU-T G.984.3 clause 9.2.6";
+    }
+    leaf lost-out-frames {
+      type bbf-yang:performance-counter64;
+      description
+        "Total number of transmitted G-PON Encapsulation Method (GEM) frames lost.";
+      reference
+        "ITU-T G.984.3 clause 9.2.6";
+    }
+    leaf misinserted-frames {
+      type bbf-yang:performance-counter64;
+      description
+        "The count of G-PON Encapsulation Method (GEM) frames misrouted to this GEM port";
+      reference
+        "ITU-T G.984.3 clause 9.2.6";
+    }
+    leaf rx-gem-blocks {
+      type  bbf-yang:performance-counter64;
+      description
+        "The count of GEM blocks that were received correctly at the monitored GEM port";
+      reference
+        "ITU-T G.984.3 clause 9.2.6";
+    }
+    leaf tx-gem-blocks {
+      type bbf-yang:performance-counter64;
+      description
+        "The count of GEM blocks originated by the transmitting end point
+        (i.e., backward reporting is assumed).";
+      reference
+        "ITU-T G.984.3 clause 9.2.6";
+    }
+    leaf impaired-blocks {
+      type bbf-yang:performance-counter64;
+      description
+        "The count of following events
+            1. The number of misinserted packets reaches its threshold
+            2. The number of bipolar violations reaches itsthreshold
+            3. The number of lost packets reaches its threshold.
+          Threshold values are based on vendor-operator negotiation.";
+        reference
+        "ITU-T G.984.3 clause 9.2.6";
+    }
+    leaf rx-payload-bytes {
+      type bbf-yang:performance-counter64;
+      description
+        "The count of user payload bytes received on the monitored GEM port";
+      reference
+        "ITU-T G.984.3 clause 9.2.6";
+    }
+    leaf tx-payload-bytes {
+      type bbf-yang:performance-counter64;
+      description
+        "The count of user payload bytes transmitted on the monitored GEM port";
+      reference
+        "ITU-T G.984.3 clause 9.2.6";
+    }
+    leaf encryption-key-err {
+      type bbf-yang:performance-counter64;
+      description
+        "The count of GEM frames with erroneous encryption key indexes.
+        If the GEM port is not encrypted, this attribute counts any frame
+        with a key index not equal to 0. If the GEM port is encrypted,
+        this attribute counts any frame whose key index specifies a key
+        that is not known to the ONU";
+      reference
+        "ITU-T G.984.3 clause 9.2.6";
+    }
+    leaf rx-bad-headers {
+      type bbf-yang:performance-counter64;
+      description
+        "Total number of received G-PON Encapsulation Method (GEM) headers that are bad";
+    }
+  }
+  
+  augment "/onu:onus/onu:onu/onu:root/bbf-xpongemtcont-mounted:xpongemtcont-state"
+      + "/bbf-xpongemtcont-mounted:gemports/bbf-xpongemtcont-mounted:gemport"
+      + "/bbf-xpongemtcont-gemport-pm-mounted:performance/bbf-xpongemtcont-gemport-pm-mounted:intervals-15min"
+      + "/bbf-xpongemtcont-gemport-pm-mounted:current/bbf-xpongemtcont-gemport-pm-mounted:ani-side" {
+      description "augment bbf-xpongemtcont-gemport-pm-mounted:ani-side";
+      uses gemport-packets-pm;
+      /* container ethernet-pm-data {
+          description
+             "Data nodes for the Ethernet frame performance counters with GEM port as monitoring point";
+          uses bbf-if-pm-mounted:interface-performance-counters;
+          uses nokia-interfaces-performance-management-mounted:ethernet-frame-performance-counters;
+      }*/
+  }
+  augment "/onu:onus/onu:onu/onu:root/bbf-xpongemtcont-mounted:xpongemtcont-state"
+      + "/bbf-xpongemtcont-mounted:gemports/bbf-xpongemtcont-mounted:gemport"
+      + "/bbf-xpongemtcont-gemport-pm-mounted:performance/bbf-xpongemtcont-gemport-pm-mounted:intervals-15min"
+      + "/bbf-xpongemtcont-gemport-pm-mounted:history/bbf-xpongemtcont-gemport-pm-mounted:ani-side" {
+      description "augment bbf-xpongemtcont-gemport-pm-mounted:ani-side";
+      uses gemport-packets-pm;
+      /* container ethernet-pm-data {
+          description
+
+             "Data nodes for the Ethernet frame performance counters with GEM port as monitoring point";
+          uses bbf-if-pm-mounted:interface-performance-counters;
+          uses nokia-interfaces-performance-management-mounted:ethernet-frame-performance-counters;
+      }*/
+  }
+
+  augment "/onu:onus/onu:onu/onu:root/bbf-xpongemtcont-mounted:xpongemtcont"
+      + "/bbf-xpongemtcont-mounted:gemports/bbf-xpongemtcont-mounted:gemport/bbf-xpongemtcont-gemport-pm-mounted:performance" {
+         description
+           "Data nodes for threshold crossing alert configuration parameters";
+
+         leaf tca-gemport-err-profile {
+             type leafref {
+                path "../../../../../nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-gemport-pm-tca-prof-mounted:gemport-tca-profile/nokia-gemport-pm-tca-prof-mounted:name";
+             }
+             description
+               "Reference to the gemport performance monitroing error TCA profile. TCA is disabled when no profile is referenced";
+         }
+      }
+
+  augment "/onu:onus/onu:onu/onu:root/bbf-xpongemtcont-mounted:xpongemtcont-state"
+      + "/bbf-xpongemtcont-mounted:gemports/bbf-xpongemtcont-mounted:gemport"
+      + "/bbf-xpongemtcont-gemport-pm-mounted:performance/bbf-xpongemtcont-gemport-pm-mounted:intervals-15min"
+      + "/bbf-xpongemtcont-gemport-pm-mounted:current" {
+      description "augment bbf-xpongemtcont-gemport-pm-mounted:current";
+          notification threshold-crossing-alert {
+              description
+                  "Notification to indicate that a performance monitoring counter threshold has been crossed
+                  during the current 15-min interval";
+              leaf tca-identity {
+                  type identityref {
+                      base nokia-gemport-pm-tca-prof-mounted:gemport-pm-tca-alert;
+                  }
+                  mandatory true;
+                  description
+                      "Indicating which TCA element has reached the threshold value";
+              }
+              leaf notification-text {
+                  type string;
+                  description
+                     "The description string used to inform the operators about the notification event";
+              }
+          }
+      }
+}

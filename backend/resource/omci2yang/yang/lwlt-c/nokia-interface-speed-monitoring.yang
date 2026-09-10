@@ -1,0 +1,601 @@
+module nokia-interface-speed-monitoring {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+          + "nokia-interface-speed-monitoring";
+
+  prefix nokia-itf-tm;
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import bbf-yang-types {
+    prefix bbf-yang;
+  }
+
+  import bbf-interfaces-performance-management  {
+    prefix bbf-if-pm;
+  }
+
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be 
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG definitions for 
+     supporting Nokia specific requirements as applicable to its 
+     access network equipment.
+     
+     Specifically, this module augments the interface model with data
+     that supports monitoring interfaces in client monitored 
+     intervals.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia 
+     reserves the right to revise this document for any reason, 
+     including but not limited to conformity with standards 
+     promulgated by various agencies, utilisation of advances in the 
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or 
+     referred to herein.
+
+     The product specifications and other technical or performance 
+     information contained herein are subject to change without 
+     notice. Updates of this document will be issued under the above 
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any 
+     information or opinion contained herein. Nokia expressly advises 
+     that any use of for any purpose or reliance upon this technical 
+     reference is at the risk of the user and that Nokia shall not be 
+     liable for any damage or injury incurred by any person arising 
+     out of the sufficiency, accuracy, or utility of any information 
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any 
+     manufacturer to modify or change any of its products, nor does 
+     this document represent any commitment by Nokia to sell or 
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license 
+     or right under any patent, whether or not the use of any 
+     information herein necessarily employs an invention of any 
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2017, Nokia. All Rights Reserved.";
+
+  revision 2026-03-03 {
+    description
+      "Add peak transmit and receive data rate and data rate utilization.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2024-11-07 {
+    description
+      "Add transmit and receive data rate utilization.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2023-08-27 {
+    description
+      "Add top five list ont for transmit and receive
+       data rate.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2021-09-16 {
+    description
+      "Add Ethernet broadcast, multicast and unicast frame speed
+       monitoring. Extend the monitoring period.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2018-05-14 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific"; 
+  }
+
+  feature speed-monitoring-history {
+    description
+      "Indicates that a history is maintained of the speed-monitoring 
+       data.";
+  }
+
+  feature ethernet-dest-mac-based-data-rate {
+    description
+      "Indicates that speed monitoring per Ethernet destination MAC 
+       address (broadcast / multicast / unicast) is supported.";
+  }
+
+  feature system-level-speed-monitoring-config {
+    description
+      "Indicates that configuration of the speed monitoring is 
+       supported at system level.";
+  }
+
+  feature top-utilization {
+    description
+      "Indicates the top utilization by child interfaces
+       corresponding to the parent interface";
+  }
+
+  feature datarate-utilization {
+    description
+      "Indicates the data rate utilization of corresponding 
+       interfaces";
+  }
+
+  feature peak-utilization {
+    description
+      "Indicates the peak utilization by child interfaces
+       corresponding to the parent interface";
+  }
+
+  typedef data-rate-megabit {
+    type decimal64 {
+      fraction-digits 3;
+      range "0..max";
+    }
+    units "megabit/second";
+    description
+      "A type which represents the rate at which data is being 
+       transferred.";
+  }
+
+  typedef data-rate-megabit-or-undetermined {
+    type union {
+      type bbf-yang:undetermined;
+      type data-rate-megabit;
+    }
+    units "megabit/second";
+    description
+      "A type which represents the rate at which data is being 
+       transferred. A special value, 'undetermined', is used to
+       indicate the data rate is undetermined.
+       
+       The data rate is calculated from the octet/byte counter of the 
+       object to be monitored as follows:
+       [(the number of octets/bytes transferred in the period) * 8] 
+        / (the length of the period in seconds) / 1000000).
+        
+        Conceptually the number of transferred octets = the value at 
+        the end minus the value at the start of the period, but 
+        calculation shall consider that the octet counter is a cyclic 
+        counter.
+        
+        If during the measured period there is a condition that 
+        prohibited counting, for example the line went out of service,
+        then the data rate is 'undetermined'.";
+  }
+
+  typedef monitoring-period {
+    type enumeration {
+      enum 5-seconds {
+        description
+          "A period of 5 seconds.";
+      }
+      enum 1-minute {
+        description
+          "A period of 1 minute.";
+      }
+      enum 10-minutes {
+        description
+          "A period of 10 minutes.";
+      }
+      enum 30-seconds {
+        description
+          "A period of 30 seconds.";
+      }
+      enum 5-minutes {
+        description
+          "A period of 5 minutes.";
+      }
+      enum 15-minutes {
+        description
+          "A period of 15 minutes.";
+      }
+    }
+    description
+      "Defines the monitoring period over which statistics or history
+       performance data will be collected.";
+  }
+
+  typedef monitoring-interval {
+    type uint16 {
+      range "0..max"; 
+      // restricting the maximum to 1 results in a compile error for 
+      // the next type where the range then becomes from 1..1  
+      // being read only data it is also not strictly needed to
+      // restrict the value.    
+    }
+    description
+      "Defines the range of time monitoring intervals.";
+  }
+
+  typedef speed-monitoring-history-interval {
+    type monitoring-interval {
+      range "1..max";
+    }
+    description
+      "Defines the range of 15 minutes intervals and defines the
+       position of the interval relative to the current interval
+       where 1 is the most recent completed interval.";
+  }
+
+
+  grouping interface-speed-monitoring-data {
+    description
+      "Data to be monitored during time intervals.";
+
+    leaf receive-datarate {
+      type data-rate-megabit-or-undetermined;
+      description
+        "The data rate of Ethernet frames received on the 
+         interface per second. When the period is larger than 1
+         second then the data rate provides the avarage over the time
+         period.";
+    }
+
+    leaf transmit-datarate {
+      type data-rate-megabit-or-undetermined;
+      description
+        "The data rate of Ethernet frames transmitted on the
+         interface per second. When the period is larger than 1
+         second then the data rate provides the avarage over the time
+         period.";
+    }
+
+    leaf transmit-broadcast-datarate {
+      if-feature "ethernet-dest-mac-based-data-rate";
+      type data-rate-megabit-or-undetermined;
+      description
+        "The data rate of Ethernet frames with as destination MAC 
+         address the Ethernet broadcast address that are transmitted 
+         on the interface. When the period is larger than 1 second 
+         then the data rate provides the avarage over the time
+         period.";
+    }
+
+    leaf transmit-multicast-datarate {
+      if-feature "ethernet-dest-mac-based-data-rate";
+      type data-rate-megabit-or-undetermined;
+      description
+        "The data rate of Ethernet frames with as destination MAC 
+         address a multicast MAC address that are transmitted on the 
+         interface. When the period is larger than 1 second then the 
+         data rate provides the avarage over the time period.";
+    }
+
+    leaf transmit-unicast-datarate {
+      if-feature "ethernet-dest-mac-based-data-rate";
+      type data-rate-megabit-or-undetermined;
+      description
+        "The data rate of Ethernet frames with as destination MAC 
+         address a unicast MAC address that are transmitted on the 
+         interface. When the period is larger than 1 second then the 
+         data rate provides the avarage over the time period.";
+    }
+
+    leaf receive-datarate-utilization {
+      if-feature "datarate-utilization";
+      type bbf-yang:percent;
+      description
+        "The utilized data rate percentage of Ethernet frames received 
+         on the interface over the interval.";
+    }
+
+    leaf transmit-datarate-utilization {
+      if-feature "datarate-utilization";
+      type bbf-yang:percent;
+      description
+        "The utilized data rate percentage of Ethernet frames transmitted 
+         on the interface over the interval.";
+    }
+
+    leaf receive-peak-datarate {
+      type data-rate-megabit-or-undetermined;
+      description
+        "The peak data rate of Ethernet frames received on the
+         interface over the configured period length.";
+    }
+
+    leaf transmit-peak-datarate {
+      type data-rate-megabit-or-undetermined;
+      description
+        "The peak data rate of Ethernet frames transmitted on the
+         interface over the configured period length.";
+    }
+
+    leaf receive-peak-datarate-utilization {
+      type decimal64
+      {
+        fraction-digits 2;
+        range "0..100";
+      }
+      description
+        "The utilized peak data rate percentage of Ethernet frames received
+         on the interface over the interval.";
+    }
+
+    leaf transmit-peak-datarate-utilization {
+      type decimal64
+      {
+        fraction-digits 2;
+        range "0..100";
+      }
+      description
+        "The utilized peak data rate percentage of Ethernet frames transmitted
+         on the interface over the interval.";
+
+    }
+  }
+
+  augment '/if:interfaces/if:interface' {
+    description
+      "This augment provides configuration data for speed-monitoring 
+       per interface.";
+
+    container speed-monitoring {
+      presence
+        "Presence indicates the speed monitoring function is supported
+         unless the 'enable' leaf is set 'false'.";
+      description
+        "Time monitoring data.";
+
+      leaf enable {
+        type boolean;
+        default "false";
+        description
+          "If true, enables speed monitoring for the interface for the
+           supported periods. Supported periods are determined from 
+           the configuration in the container 'interface-speed-
+           monitoring'. If false then no speed monitoring of the
+           interface is performed.";
+      }
+    }
+  }
+
+  augment '/if:interfaces-state/if:interface' {
+    description
+      "This augment defines data for speed-monitoring per interface.";
+
+    container speed-monitoring {
+      description
+        "Speed monitoring data.";
+
+      list data {
+        key "monitoring-period-length";
+        description
+          "A list for each monitored period.";
+
+        leaf monitoring-period-length {
+          type monitoring-period;
+          description
+            "The period over which the data is collected.";
+        }
+
+        container current {
+          description
+            "Contains the data as currently accumulated for the 
+             ongoing period.";
+
+          uses interface-speed-monitoring-data;
+        }
+
+        leaf number-of-intervals {
+          type monitoring-interval;
+          description
+            "The total number of speed-monitoring-history intervals 
+             for which data was collected. It contains the number of 
+             non-valid intervals.";
+        }
+
+        leaf non-valid-intervals {
+          type monitoring-interval;
+          description
+            "The number of speed-monitoring-history intervals for which
+             the data is considered to be invalid or incomplete.";
+         }
+
+
+        list history {
+          if-feature "speed-monitoring-history";
+          key "interval-number";
+          max-elements 1;
+          description
+            "A history of time monitoring intervals.";
+
+          leaf interval-number {
+            type speed-monitoring-history-interval;
+            description
+              "The position of a completed interval relative to the
+               current interval. Value '1' corresponds to the last 
+               interval completed";
+          }
+
+          uses bbf-if-pm:performance-history-24hr-interval-parameters;
+          uses interface-speed-monitoring-data;
+          container top-utilized-child-interfaces {
+            if-feature "top-utilization";
+            description
+              "Top utilizing child interfaces data.";
+            list in {
+              key "top";
+              max-elements 5;
+              description
+                "Top utilized child interfaces in upstream
+                 direction.";
+              leaf top {
+                type uint8
+                {
+                  range 1..5;
+                }
+                description "top";
+              }
+              leaf child-interface-name {
+                type if:interface-state-ref;
+                description
+                  "The name of the child interface, of the parent
+                   interface in the /interfaces-state/interface
+                   list that contains this data node, that is
+                   top contributors in transmitting data traffic
+                   over this interface";
+              }
+              leaf in-data-rate {
+                type data-rate-megabit-or-undetermined;
+                description
+                  "The data rate of Ethernet frames received on
+                   the interface per second.";
+              }
+            }
+            list out {
+              key "top";
+              max-elements 5;
+              description
+                "Top utilized child interfaces in downstream
+                 direction.";  
+              leaf top {
+                type uint8 {
+                  range 1..5;
+                }
+                description "top";
+              }
+              leaf child-interface-name {
+                type if:interface-state-ref;
+                description
+                  "The name of the child interface, of the parent
+                   interface in the /interfaces-state/interface
+                   list that contains this data node, that is
+                   top contributors in transmitting data traffic
+                   over this interface";
+              }
+              leaf out-data-rate {
+                type data-rate-megabit-or-undetermined;
+                description
+                  "The data rate of Ethernet frames transmitted
+                   on the interface per second.";
+              }
+            }
+          }
+          container peak-utilized-child-interfaces {
+            if-feature "peak-utilization";
+            description
+              "Peak utilizing child interfaces data.";
+            list in {
+              key "top-peak";
+              max-elements 5;
+              description
+                "Peak utilized child interfaces in upstream
+                 direction.";
+              leaf top-peak {
+                type uint8
+                {
+                  range 1..5;
+                }
+                description "peak";
+              }
+              leaf child-interface-name {
+                type string;
+                description
+                  "The name of the child interface, of the parent
+                   interface in the /interfaces-state/interface
+                   list that contains this data node, that is
+                   peak contributors in transmitting data traffic
+                   over this interface";
+              }
+              leaf peak-in-data-rate {
+                 type data-rate-megabit-or-undetermined;
+                 description
+                   "The peak data rate of Ethernet frames received on
+                    the interface during the monitoring interval.";
+              }
+              leaf peak-in-datarate-utilization {
+                 type decimal64
+                 {
+                    fraction-digits 2;
+                    range "0..100";
+                 }
+                 description
+                   "The utilized peak data rate percentage of Ethernet frames received
+                    on the interface over the interval.";
+              }
+            }
+            list out {
+              key "top-peak";
+              max-elements 5;
+              description
+                "Peak utilized child interfaces in downstream
+                 direction.";
+              leaf top-peak {
+                type uint8 {
+                  range 1..5;
+                }
+                description "peak";
+              }
+              leaf child-interface-name {
+                type string;
+                description
+                  "The name of the child interface, of the parent
+                   interface in the /interfaces-state/interface
+                   list that contains this data node, that is
+                   peak contributors in transmitting data traffic
+                   over this interface";
+              }
+              leaf peak-out-data-rate {
+                 type data-rate-megabit-or-undetermined;
+                 description
+                   "The peak data rate of Ethernet frames transmitted on
+                    the interface during the monitoring interval.";
+              }
+              leaf peak-out-datarate-utilization {
+                 type decimal64
+                 {
+                    fraction-digits 2;
+                    range "0..100";
+                 }
+                 description
+                   "The utilized peak data rate percentage of Ethernet frames transmitted
+                    on the interface over the interval.";
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  container interface-speed-monitoring {
+    if-feature "system-level-speed-monitoring-config";
+    presence
+      "Presence indicates the client takes control over the periods 
+       for which speed monitoring will be collected. A non-existing 
+       container allows the server to select itself the period(s) over
+       which it will collect speed monitoring data. This includes the 
+       choice not to collect speed monitoring data.";
+    description
+      "Contains system level interface speed monitoring configuration 
+       data.";
+    leaf-list period-length {
+      type monitoring-period;
+      min-elements 1;
+      description
+        "This is specifing the monitoring period over which the data 
+         will be collected for all the interfaces with speed 
+         monitoring enabled.";
+    }
+  }    
+}

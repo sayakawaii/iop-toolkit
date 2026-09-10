@@ -1,0 +1,389 @@
+module nokia-802-dot1x-notifications{
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+          + "nokia-802-dot1x-notifications";
+   
+  prefix nokia-dot1x-ntf;
+  
+  import ietf-yang-types {
+    prefix "yang";
+  }
+  
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be 
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG definitions for 
+     supporting Nokia specific requirements as applicable to its 
+     access network equipment.
+     
+     Specifically, this module augments the notifications for pae
+     authentication status and threshold determination. 
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia 
+     reserves the right to revise this document for any reason, 
+     including but not limited to conformity with standards 
+     promulgated by various agencies, utilisation of advances in the 
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or 
+     referred to herein.
+
+     The product specifications and other technical or performance 
+     information contained herein are subject to change without 
+     notice. Updates of this document will be issued under the above 
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any 
+     information or opinion contained herein. Nokia expressly advises 
+     that any use of for any purpose or reliance upon this technical 
+     reference is at the risk of the user and that Nokia shall not be 
+     liable for any damage or injury incurred by any person arising 
+     out of the sufficiency, accuracy, or utility of any information 
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any 
+     manufacturer to modify or change any of its products, nor does 
+     this document represent any commitment by Nokia to sell or 
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license 
+     or right under any patent, whether or not the use of any 
+     information herein necessarily employs an invention of any 
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2017, Nokia. All Rights Reserved.";  
+
+  revision 2026-07-03 {
+    description
+      "Included session timeout to pae termination causes";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2022-05-22 {
+    description
+      "Included port and mab authentication notifications";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2022-02-09 {
+    description
+      "Included mac conflict to pae termination causes";
+    reference
+      "Nokia specific";
+  }
+  revision 2020-03-31 {
+    description
+      "Included some of the termination causes by RADIUS";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2017-12-01 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific"; 
+  }
+  
+  typedef pae-terminate-cause {
+    type enumeration {
+      enum supplicant-logoff {
+        description 
+          "The system received an eap-logoff frame from the 
+           supplicant.";
+      }
+      enum port-failure {
+        description
+          "The session is terminated due to loss of physical 
+           connectivity for reasons other than roaming between 
+           Access Points." ;
+      }
+      enum supplicant-restart {
+        description
+          "Re-initialization of the supplicant state machines.";
+      }
+      enum reauthentication-failed {
+        description
+          "A previously authenticated supplicant has failed to 
+           re-authenticate successfully following expiry of the 
+           re-authentication timer or explicit re-authentication
+           request by management action.";
+      }
+      enum forced-unauthenticated {
+        description
+          "The port has been administratively forced into the 
+           unauthorized state.";
+      }
+      enum port-reinitialized {
+        description
+          "The port's MAC has been reinitialized.";
+      }
+      enum port-administrative-disabled {
+        description
+          "The port has been administratively disabled.";
+      }
+      enum not-terminated-yet {
+        description
+          "The session is not termination yet.";
+      }
+      enum user-id-mismatch {
+        description
+          "The cause of authentication failure is user-id 
+           mismatch.";
+      }
+      enum password-mismatch {
+        description
+          "The cause of authentication failure is password 
+           mismatch.";
+      }
+      enum mac-mismatch {
+        description
+          "The cause of authentication failure is mac mismatch.";
+      }
+      enum radius-access-reject {
+        description
+          "The RADIUS server rejects the user for authentication.";
+      }
+      enum radius-server-not-reachable {
+        description
+          "The RADIUS server is not reachable for the user to authenticate.";
+      }
+      enum incorrect-domain-name {
+        description
+          "The user sends with incorrect domain name for authentication.";
+      }
+      enum mac-conflict {
+        description
+          "The cause of authentication failure when already the same
+           MAC address is authenticated in the board.";
+      }
+      enum others {
+        description
+          "Authentication failed.";
+      }
+      enum session-timeout {
+        description
+          "The session is terminated due to expiry of the Session-Timeout
+          attribute provided in the RADIUS Access-Accept.";
+      }
+      enum server-logoff {
+        description
+          "The session is terminated due to RADIUS server Discconect Message.";
+      }
+    }
+    description
+      "The reason for the session termination.";
+  }
+  
+  typedef pae-authentication-state {
+    type enumeration {
+      enum success {
+        description
+          "The authentication of supplicant is success.";
+      }
+      enum failure {
+        description
+          "The authentication of supplicant is failure.";
+      }
+    }
+    description
+      "Contains the status for the authentication of this 
+       user.";   
+  }
+ 
+  grouping authentication-state-data {
+    description "grouping authentication-state-data";
+    leaf authentication-start-timestamp {
+      type yang:date-and-time;
+      description
+        "The date and time of the start of this authentication
+         attempt.";
+    }
+    leaf authentication-state {
+      type pae-authentication-state;
+      description
+        "Contains the status for the authentication of this
+         user.";
+    }
+    leaf terminate-cause {
+      type pae-terminate-cause;
+      description
+        "The reason for the session termination.";
+    }
+  }
+ 
+  notification mac-authentication-failed {
+    description
+      "This notification applies when the system performs MAC address 
+       based authentication, i.e. when the system is configured with 
+       authentication mode 'mac-based'. Then the system counts 
+       authentication failures per MAC address per interface.
+
+       The notification is sent at the first occurence of an 
+       authentication failure for the reported MAC address on the 
+       reported interface.
+
+       After that the system counts succeeding authentication failures
+       which can result in an additional port threshold exceed 
+       notification.
+
+       At the occurence of a successful authentication the counter is 
+       reset to zero and possible future authentication failures will 
+       be reported again with a port authentication failed 
+       notification.";
+      
+    leaf interface {
+      type string;
+      description
+        "The name of the interface for which the event is reported.";
+    }
+    
+    leaf mac-address {
+      type yang:mac-address;
+      description
+        "The source MAC address of the supplicant for which the  
+         event is reported.";
+    }
+
+    uses authentication-state-data;  
+  }
+  
+  notification mac-authentication-success {
+    description
+      "This notification applies when the system performs MAC address 
+       based authentication, i.e. when the system is configured with 
+       authentication mode 'mac-based'. Then the system counts 
+       authentication success per MAC address per interface.
+
+       The notification is sent at the first occurence of an 
+       authentication success for the reported MAC address on the 
+       reported interface.";
+      
+    leaf interface {
+      type string;
+      description
+        "The name of the interface for which the event is reported.";
+    }
+    
+    leaf mac-address {
+      type yang:mac-address;
+      description
+        "The source MAC address of the supplicant for which the  
+         event is reported.";
+    }
+
+    uses authentication-state-data;    
+  }
+
+  notification port-authentication-failed {
+    description
+      "This notification applies when the system performs PORT
+       based authentication, i.e. when the system is configured with
+       authentication mode 'port'. Then the system counts
+       authentication failures per interface.
+       The notification is sent at the first occurence of an
+       authentication failure on the reported interface.
+       After that the system counts succeeding authentication failures
+       which can result in an additional port threshold exceed
+       notification.
+       At the occurence of a successful authentication the counter is
+       reset to zero and possible future authentication failures will
+       be reported.";
+
+    leaf interface {
+      type string;
+      description
+        "The name of the interface for which the event is reported.";
+    }
+
+    uses authentication-state-data;
+  }
+
+  notification port-authentication-success {
+    description
+      "This notification applies when the system performs PORT
+       based authentication, i.e. when the system is configured with
+       authentication mode 'port'. Then the system counts
+       authentication success per interface.
+       The notification is sent at the first occurence of an
+       authentication success on the reported interface.";
+
+    leaf interface {
+      type string;
+      description
+        "The name of the interface for which the event is reported.";
+    }
+
+    uses authentication-state-data;
+  }
+
+  notification mab-authentication-failed {
+    description
+      "This notification applies when the system performs MAB
+       based authentication, i.e. when the system is configured with
+       authentication mode 'mab-based'. Then the system counts
+       authentication failures per interface.
+       The notification is sent at the first occurence of an
+       authentication failure for the reported MAC address on the
+       reported interface.
+       After that the system counts succeeding authentication failures
+       which can result in an additional port threshold exceed
+       notification.
+       At the occurence of a successful authentication the counter is
+       reset to zero and possible future authentication failures will
+       be reported again with a port authentication failed
+       notification.";
+
+    leaf interface {
+      type string;
+      description
+        "The name of the interface for which the event is reported.";
+    }
+
+    leaf mac-address {
+      type yang:mac-address;
+      description
+        "The source MAC address of the supplicant for which the
+         event is reported.";
+    }
+
+    uses authentication-state-data;
+  }
+
+  notification mab-authentication-success {
+    description
+      "This notification applies when the system performs MAB
+       based authentication, i.e. when the system is configured with
+       authentication mode 'mab-based'. Then the system counts
+       authentication success per interface.
+       The notification is sent at the first occurence of an
+       authentication success for the reported MAC address on the
+       reported interface.";
+
+    leaf interface {
+      type string;
+      description
+        "The name of the interface for which the event is reported.";
+    }
+
+    leaf mac-address {
+      type yang:mac-address;
+      description
+        "The source MAC address of the supplicant for which the
+         event is reported.";
+    }
+
+    uses authentication-state-data;
+  }
+}

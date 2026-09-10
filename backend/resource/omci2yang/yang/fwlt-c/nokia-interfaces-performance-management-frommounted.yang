@@ -1,0 +1,459 @@
+module nokia-interfaces-performance-management-frommounted {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-interfaces-performance-management-frommounted";
+
+  prefix  nokia-interfaces-performance-management-frommounted;
+
+  import ietf-interfaces-frommounted {
+    prefix if-frommounted;
+  }
+
+  import bbf-interfaces-performance-management-frommounted {
+    prefix bbf-if-pm-frommounted;
+  }
+  import nokia-sdan-interfaces-frommounted {
+    prefix nokia-sdan-if-frommounted;
+  }
+  import bbf-fiber-onu-emulated-mount {
+     prefix onu;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG definitions for
+     supporting Nokia specific requirements as applicable to its
+     access network equipment.
+
+     Specifically, this module augments the bbf-xponcommon-performance-management
+     model with additional Nokia specific PM counters.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2018, Nokia. All Rights Reserved.";
+
+  revision 2025-07-23 {
+    description
+      "PM counter group support for MoCA UNI PM";
+    reference
+      "BBN-297635";
+  }
+
+  revision 2025-06-10 {
+    description
+      "TCA augment added for Moca UNI PM";
+    reference
+      "BBN-202352";
+ 
+  }
+
+  revision 2025-06-04 {
+    description
+      "PM counter group support for ANI and UNI interface";
+    reference
+      "Nokia specific for EPIC BBN-107831";
+  }
+
+  revision 2025-04-21 {
+    description
+      "Description change for pm-counter-size";
+    reference
+
+      "BBN-207889";
+  }
+
+  revision 2025-02-14 {
+    description
+      "Added 64bit counter support for ANI performance monitoring counters,
+       Added conditions for checking ANI pm TCA threshold values.";
+    reference
+      "BBN-207889";
+  }
+
+  revision 2024-09-11 {
+    description
+      "remove operational data related when statement";
+    reference
+      "BBN-107706";
+  }
+
+  revision 2023-11-30 {
+    description
+      "Added conditions for checking Ethernet pm TCA threshold values";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2023-04-02 {
+    description
+      "Aggregated UNI counters support and 64bit counter support for
+       Ethernet performance monitoring counters";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2023-03-13 {
+    description
+      "Support for Ethernet physical layer performance monitoring TCA profiles configurtaion and TCA notification.";
+    reference
+      "Nokia specific";
+ 
+  }
+
+  revision 2023-01-30 {
+    description
+      "Ethernet PM counters x-path change";
+    reference
+      "Nokia specific";   
+ 
+  }
+
+  revision 2022-10-06 {
+    description
+      "Augments interface performance with ethernet error TCA profiles.";
+    reference
+      "Nokia specific. ";
+  }
+
+  revision 2022-08-09 {
+      description
+         "Added physical Ethernet performance counters"
+         + "Added pm-counter-group support for Ethernet performance counters";
+      reference
+         "Nokia specific";
+
+  }
+
+  revision 2022-06-11 {
+    description
+      "Added feature performance-24hr for respective container";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2022-06-02 {
+      description
+        "Config option for PM continuous accumulation and counter groups";
+      reference
+        "Nokia specific";
+  }
+
+  revision 2020-07-14 {
+    description
+      "Initial revision";
+    reference
+      "Nokia specific";
+  }
+
+
+  typedef ethernet-interface-pm-group-type {
+      type enumeration {
+	  enum "ethernet-us-pm" {
+              description
+                 "This enables the performance monitoring of Ethernet frame counters
+                  in upstream direction for an Ethernet interface - UNI. When this PM
+                  counter group is enabled, the current and history performance data
+                  in below xpaths are enabled.
+                      - interfaces-state/interface/performance/intervals-15min/current
+                      - interfaces-state/interface/performance/intervals-15min/history";
+          }
+          enum "ethernet-ds-pm" {
+              description
+                 "This enables the performance monitoring of Ethernet frame counters
+                 in downstream direction for an Ethernet interface - UNI. When this PM
+                 counter group is enabled, the current and history performance data
+                 in below xpaths are enabled.
+                      - interfaces-state/interface/performance/intervals-15min/current
+                      - interfaces-state/interface/performance/intervals-15min/history";
+          }
+          enum "ethernet-phy-pm" {
+              description
+                "This enables the performance monitoring for physical Ethernet interface - UNI. When this PM counter
+                 group is enabled, the current and history performance data in below xpaths are enabled.
+		      - interfaces-state/interface/performance/intervals-15min/current/ethernet
+                      - interfaces-state/interface/performance/intervals-15min/history/ethernet";
+          }
+	}
+      description
+	"ethernet pm group";
+    }
+    typedef ani-interface-pm-group-type {
+      type enumeration {
+          enum "fec-pm" {
+              description
+                "This enables the performance monitoring for xPON downstream forward error correction (FEC) counters in ANI.
+                When this PM counter group is enabled, the current and history performance data for FEC counters
+                in below xpaths are enabled.
+                    - interfaces-state/performance/intervals-15min/current/xpon/phy
+                    - interfaces-state/performance/intervals-15min/history/xpon/phy";
+          }
+          enum "bip-pm" {
+              description
+                "This enables the performance monitoring for xPON downstream bit interleaved parity (BIP) counters in ANI.
+                When this PM counter group is enabled, the current and history performance data for BIP counters
+	        in below xpaths are enabled:
+                    - interfaces-state/performance/intervals-15min/current/xpon/phy
+                    - interfaces-state/performance/intervals-15min/history/xpon/phy";
+          }
+          enum "xgpon-tc-pm" {
+              description
+                "This enables the performance monitoring for XG-PON transmission convergency layer (TC) counters
+                on the ANI in downstream direction.When this PM counter group is enabled, the current and history
+                performance data for below xpaths are enabled
+                    - interfaces-state/performance/intervals-15min/current/xpon/lods,
+                    - interfaces-state/performance/intervals-15min/current/xpon/utilization,
+                    - interfaces-state/performance/intervals-15min/current/xpon/gemport,
+                    - interfaces-state/performance/intervals-15min/history/xpon/lods,
+                    - interfaces-state/performance/intervals-15min/history/xpon/utilization,
+                    - interfaces-state/performance/intervals-15min/history/xpon/gemport";
+          }
+          enum "xgpon-ds-pm" {
+              description
+                "This enables the performance monitoring for XG-PON downstream PLOAM and OMCI message counters in ANI.
+                When this PM counter group is enabled, the current and history performance data for below xpaths
+                are enabled
+                    - interfaces-state/performance/intervals-15min/current/xpon/ploam/downstream-messages
+                    - interfaces-state/performance/intervals-15min/current/xpon/omci
+                    - interfaces-state/performance/intervals-15min/history/xpon/ploam/downstream-messages
+                    - interfaces-state/performance/intervals-15min/history/xpon/omci";
+          }
+          enum "xgpon-us-pm" {
+              description
+                "This enables the performance monitoring for xPON upstream PLOAM counters in ANI.
+                When this PM counter group is enabled, the current and history performance data for below xpaths
+                    - interfaces-state/performance/intervals-15min/current/xpon/ploam/upstream-messages
+                    - interfaces-state/performance/intervals-15min/history/xpon/ploam/upstream-messages";
+          }
+	  enum "aggr-gem-pm" {
+              description
+                "This enables the performance monitoring for aggregate GEM frame counters in ANI.
+                When this PM counter group is enabled, the current and history performance data for below xpaths
+                    - interfaces-state/performance/intervals-15min/current/xpon/gemport
+                    - interfaces-state/performance/intervals-15min/history/xpon/gemport";
+          }
+      }
+      description
+	"ani pm group";
+    }
+    typedef moca-interface-pm-group-type {
+      type enumeration {
+          enum "moca-interface-pm" {
+              description
+                 "This enables the performance monitoring of MoCA interface PM counters
+                  When this PM counter group is enabled, the current
+                  performance data in below xpaths are enabled for MoCA UNI.
+                      - interfaces-state/interface/performance/intervals-15min/current/moca/phy";
+          }
+          enum "moca-ethernet-pm" {
+              description
+                 "This enables the performance monitoring for the ethernet performance
+                  of a MoCA interface that is of service type access.
+                  When this PM counter group is enabled, the current and history
+                  performance data in below xpaths are enabled for MoCA UNI.
+                      - interfaces-state/interface/performance/intervals-15min/current
+                      - interfaces-state/interface/performance/intervals-15min/history";
+          }
+        }
+      description
+        "moca access pm group";
+    }
+
+  augment '/onu:onus/onu:onu/onu:fromroot/if-frommounted:interfaces/if-frommounted:interface/bbf-if-pm-frommounted:performance' {
+    description "pm-group";
+    container ethernet {
+      presence "ethernet";
+      description
+	"The interfaces applicable for ethernet PM group related parameters.";
+      leaf-list ethernet-pm-group {
+	type ethernet-interface-pm-group-type;
+	description
+	  "Performance monitoring group type to enable or disable
+	  specific performance monitoring counters on an ethernet interface";
+     }
+    }
+    container ani {
+      presence "ani";
+      description
+	"The interfaces applicable for ani PM group related parameters.";
+      leaf-list ani-pm-group {
+	type ani-interface-pm-group-type;
+	description
+	  "Performance monitoring group type to enable or disable
+	  specific performance monitoring counters on ani interface";
+      }
+    }
+  container moca {
+    presence "moca";
+    description
+      "The interfaces applicable for MoCA PM group related parameters.";
+    leaf-list moca-pm-group {
+      type moca-interface-pm-group-type;
+      description
+        "Performance monitoring group type to enable or disable
+        specific performance monitoring counters on an MoCA access interface";
+    }
+  }
+ }
+
+  augment '/onu:onus/onu:onu/onu:fromroot/if-frommounted:interfaces/if-frommounted:interface/bbf-if-pm-frommounted:performance' {
+    description
+      "Data nodes for the threshold crossing alert configuration parameters.";
+
+    leaf tca-eth-frame-err-us-profile {
+      type string;
+
+      description
+        "Reference to a ethernet frame error TCA profile for upstream traffic. TCA is disabled when no profile is referenced";
+
+    }
+
+    leaf tca-eth-frame-err-ds-profile {
+       type string;
+     description
+        "Reference to a ethernet frame error TCA profile for downstream traffic. TCA is disabled when no profile is referenced";
+
+    }
+
+    leaf tca-eth-physical-err-profile {
+      type string;
+      description
+        "Reference to a Ethernet physical layer error TCA profile. TCA is disabled when no profile is referenced";
+    }
+
+    leaf tca-eth-frame-err-extended-profile {
+      type string;
+      description
+        "Reference to a Ethernet upstream/downstream error TCA profile. TCA is disabled when no profile is referenced";
+    }
+  }
+
+
+  augment '/onu:onus/onu:onu/onu:fromroot/if-frommounted:interfaces/if-frommounted:interface/bbf-if-pm-frommounted:performance' {
+      description
+        "Data nodes for threshold crossing alert configuration parameters";
+
+      leaf tca-xpon-fec-err-profile {
+          type string;
+          description
+
+            "Reference to the XPON ANI FEC error TCA profile. TCA is disabled when no profile is referenced";
+      }
+      leaf tca-xgpon-xgs-tc-err-profile {
+         type string;
+          description
+            "Reference to the XPON ANI TC error TCA profile. TCA is disabled when no profile is referenced";
+      }
+      leaf tca-xgpon-xgs-ds-err-profile {
+          type string;
+          description
+            "Reference to the XGPON ANI downstream error counter TCA profile. TCA is disabled when no profile is referenced";
+      }
+      leaf tca-gem-frame-err-profile {
+          type string;
+          description
+            "Reference to the GEM frame error counter TCA profile. TCA is disabled when no profile is referenced";
+
+      }
+
+    }
+
+  augment '/onu:onus/onu:onu/onu:fromroot/if-frommounted:interfaces/if-frommounted:interface/bbf-if-pm-frommounted:performance'
+  {
+      description
+          "Physical moca frame performance monitoring counters threshold crossing alert configuration parameters";
+      leaf tca-moca-ethernet-frame-profile{
+          type string;
+          description
+              "Reference to the MOCA frame TCA profile. TCA is disabled when no profile is referenced";
+      }
+      leaf tca-moca-interface-profile{
+          type string;
+          description
+              "Reference to the MOCA frame TCA profile. TCA is disabled when no profile is referenced";
+      }
+  }
+
+  augment "/onu:onus/onu:onu/onu:fromroot/if-frommounted:interfaces/nokia-sdan-if-frommounted:all-unis/nokia-sdan-if-frommounted:ethernet" {
+    description "augment interface with performance parameters";
+    container performance {
+      
+      presence "If container is not present, performance monitoring is disabled.
+                If container is present performance monitoring is disabled or enabled
+                depending on the value of 'enable' leaf.";
+      description
+        "Performance parameters.";
+      leaf enable {
+        type boolean;
+        description
+          "If true, enables aggrigated Ethernet performance counters.
+
+           The performance counters will be available under
+           '/onu:onus/onu:onu/onu:fromroot/if-frommounted:interfaces-state
+           /nokia-sdan-if-frommounted:all-unis/nokia-sdan-if-frommounted:ethernet/nokia-interfaces-performance
+           -management-frommounted:performance/' for 15 minute and,
+           if supported, 24 hour current and historic intervals.
+
+           If false, then there are no performance counters available
+           on this interface.";
+      }
+    }
+  }
+
+  augment '/onu:onus/onu:onu/onu:fromroot/if-frommounted:interfaces/if-frommounted:interface/bbf-if-pm-frommounted:performance' {
+ 
+      description "augment interface performance";
+      leaf pm-counter-size {
+         type enumeration {
+            enum 32bit-performance-monitoring { 
+              description "32bit performance monitoring";
+              }
+            enum 64bit-performance-monitoring {
+              description "64bit performance monitoring";
+              }
+         }
+         description
+           "The size of the performance monitoring counters for the ONU interface (Supported only for the ANI and Ethernet interface).By default 32-bit performance monitoring counters will be enabled in ONU interface. If pm-counter-size is set to 64bit-performance-monitoring, 64-bit performance counters are enabled and 32-bit performance monitoring counters are disabled.";
+      }        
+  }
+}
+

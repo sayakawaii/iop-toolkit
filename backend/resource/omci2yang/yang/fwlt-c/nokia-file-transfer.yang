@@ -1,0 +1,1670 @@
+module nokia-file-transfer {
+  yang-version 1.1;
+    namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+          + "nokia-file-transfer";
+
+  prefix nokia-ft;
+
+  import ietf-inet-types {
+    prefix inet;
+  }
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  import ietf-tls-client {
+    prefix tlsc;
+  }
+
+  import ietf-netconf-acm {
+    prefix nacm;
+  }
+
+  import nokia-sdan-est-client {
+    prefix estc;
+  }
+
+  import nokia-sdan-keystore-types {
+    prefix nokia-ks;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains new nodes according to Nokia specific
+     requirements for file transfer applicable to its access
+     network equipment.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not  to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2019, Nokia. All Rights Reserved.";
+
+  revision 2026-06-05 {
+    description
+      "lsr2609
+      2026-06-06 More elaborate url check.
+      2026-07-14 Obsolete ssh-dss (DSA) SSH authentication key type.";
+    reference
+      "Nokia Specific";
+  }
+
+  revision 2026-05-08 {
+    description
+      "lsr2606
+      2026-05-08 Minor correction in description.";
+    reference
+      "Nokia Specific";
+  }
+
+  revision 2026-02-17 {
+    description
+      "lsr2603
+      2026-02-17 convert end-entity-certificate-group to augmentation.
+      2026-01-23 Add mtls support.";
+    reference
+      "Nokia Specific";
+  }
+
+  revision 2025-04-30 {
+    description
+      "lsr2509
+      2025-04-30 Add EST certificate support.";
+    reference
+      "Nokia Specific";
+  }
+
+  revision 2024-06-10 {
+    description
+      "lsr2409
+      2024-06-10 Add tls-client-parameters.";
+    reference
+      "Nokia Specific";
+  }
+
+  revision 2024-03-07 {
+    description
+      "2024-03-07 Add encrypted compression.";
+    reference
+      "Nokia Specific";
+  }
+
+  revision 2023-12-19 {
+    description
+      "Simplify credentials in upload and download actions.";
+    reference
+      "Nokia Specific";
+  }
+
+
+  revision 2023-11-09 {
+    description
+      "Add extra check in must clause for username.";
+    reference
+      "Nokia Specific";
+  }
+
+  revision 2023-05-31 {
+    description
+      "fix YANG lint errors.";
+    reference
+      "Nokia Specific";
+  }
+
+  revision 2023-05-29 {
+    description
+    "Support uploading of ihub syslog and config files";
+    reference
+    "BBN-31079";
+  }
+
+  revision 2023-04-21 {
+    description
+    "YANG error fixes";
+    reference
+    "Nokia specific";
+  }
+
+  revision 2023-01-09 {
+    description
+    "Support sztp-certificate download";
+    reference
+    "";
+  }
+
+  revision 2022-12-08 {
+    description
+      "Update descriptions in the module.";
+    reference
+    "";
+  }
+
+  revision 2022-11-08 {
+    description
+    "Add packet-capture category.";
+    reference
+    "";
+  }
+
+  revision 2022-06-23 {
+    description
+    "Remove migrated-db category";
+    reference
+    "";
+  }
+
+  revision 2022-06-13 {
+    description
+    "Restrict non secure protocols for ztp-certificate download";
+    reference
+    "";
+  }
+
+  revision 2022-06-01 {
+    description
+    "Support ztp-certificate download";
+    reference
+    "";
+  }
+
+  revision 2021-08-02 {
+    description
+    "Added missing descriptions";
+    reference
+    "";
+  }
+
+  revision 2020-10-23 {
+    description
+    "RBAC split functionality for operator and nokia tech support";
+    reference
+    "";
+  }
+
+  revision 2020-04-29 {
+    description
+    "Initial version";
+    reference
+    "";
+  }
+
+  /* Features */
+  feature syslog-support {
+    description
+      "Indicates support for syslog category.";
+  }
+
+  feature reboot-logs-support {
+    description
+      "Indicates support for reboot-log category.";
+  }
+
+  feature trace-logs-support {
+    description
+      "Indicates support for trace-logs category.";
+  }
+
+  feature ztp-certificate-support {
+    description
+      "Indicates support for ztp-certificate category.";
+  }
+  feature sztp-certificate-support {
+    description
+      "Indicates support for sztp-certificate category.";
+  }
+  feature packet-capture-support {
+    description
+      "Indicates support for packet-capture category.";
+  }
+  feature ihub-syslog-support {
+    description
+      "Indicates support for ihub syslog category.";
+  }
+  feature ihub-config-support {
+    description
+      "Indicates support for ihub config category.";
+  }
+
+  /* typedefs */
+  typedef file-transfer-request-index {
+    type uint8;
+    description "File transfer request index.";
+  }
+
+  typedef percent {
+    type uint8 {
+      range "0 .. 100";
+    }
+    description "Percentage.";
+  }
+
+  typedef file-category-type {
+    type identityref {
+      base "file-category";
+    }
+    description "File category type.";
+  }
+
+  typedef upload-file-category-techsupport-type {
+    type identityref {
+      base "upload-file-category-techsupport";
+    }
+    description "Upload file category techsupport type.";
+  }
+
+  typedef upload-file-category-type {
+    type identityref {
+      base "upload-file-category";
+    }
+    description "Upload file category type.";
+  }
+
+  typedef download-file-category-techsupport-type {
+    type identityref {
+      base "download-file-category-techsupport";
+    }
+    description "Download file category techsupport type.";
+  }
+
+  typedef download-file-category-type {
+    type identityref {
+      base "download-file-category";
+    }
+    description "Download file category type.";
+  }
+
+  typedef ssh-auth-key-type {
+    type identityref {
+      base "ssh-auth-type";
+    }
+    description "SSH Authentcation key type.";
+  }
+
+  identity file-transfer-protocol {
+    description
+      "Base identity for file-transfer-protocol.";
+  }
+
+  identity scp {
+    base file-transfer-protocol;
+    description
+      "SCP Protocol.";
+  }
+
+  identity ftp {
+    base file-transfer-protocol;
+    description
+      "FTP Protocol.";
+  }
+
+  identity http {
+    base file-transfer-protocol;
+    description
+      "HTTP Protocol.";
+  }
+
+  identity sftp {
+    base file-transfer-protocol;
+    description
+      "SFTP Protocol.";
+  }
+
+  identity tftp {
+    base file-transfer-protocol;
+    description
+      "TFTP Protocol.";
+  }
+
+  identity file-transfer-status {
+    description
+      "Base identity for file transfer status.";
+  }
+
+  identity file-transfer-planned {
+    base file-transfer-status;
+    description
+      "Identity to notify file transfer has been planned or scheduled.";
+  }
+
+  identity file-transfer-success {
+    base file-transfer-status;
+    description
+      "Identity to notify file transfer has completed.";
+  }
+
+  identity file-transfer-failure {
+    base file-transfer-status;
+    description
+      "Identity to notify file transfer has failed.";
+  }
+
+  identity file-transfer-aborted {
+    base file-transfer-status;
+    description
+      "Identity to notify file transfer has aborted.";
+   }
+
+  identity file-transfer-inprogress {
+    base file-transfer-status;
+    description
+      "Identity to notify file transfer is ongoing.";
+   }
+
+  identity  file-category {
+    description
+      "Base identity to specify file category.";
+   }
+
+  identity upload-file-category-techsupport {
+    base file-category;
+    description
+      "Identity to specify upload categories.";
+  }
+
+  identity upload-file-category {
+    base file-category;
+    description
+      "Identity to specify upload categories for techsupport user.";
+  }
+
+  identity download-file-category-techsupport {
+    base file-category;
+    description
+      "Identity to specify download categories for techsupport user.";
+  }
+
+  identity download-file-category {
+    base file-category;
+    description
+      "Identity to specify download categories.";
+  }
+
+  identity trace-logs {
+    if-feature "trace-logs-support";
+    base upload-file-category-techsupport;
+    description
+      "Identity to specify trace log category.";
+  }
+
+  identity reboot-logs {
+    if-feature "reboot-logs-support";
+    base upload-file-category-techsupport;
+    description
+      "Identity to specify reboot category.";
+  }
+
+  identity syslog {
+    if-feature "syslog-support";
+    base upload-file-category;
+    base upload-file-category-techsupport;
+    description
+      "Identity to specify syslog category.";
+  }
+
+  identity  ztp-certificate {
+    if-feature "ztp-certificate-support";
+    base download-file-category;
+    base download-file-category-techsupport;
+    description
+      "Identity to specify ztp-certificate category.";
+  }
+  identity  sztp-certificate {
+    if-feature "sztp-certificate-support";
+    base download-file-category-techsupport;
+    description
+      "Identity to specify sztp-certificate category";
+  }
+
+  identity  packet-capture {
+    if-feature "packet-capture-support";
+    base upload-file-category;
+    base upload-file-category-techsupport;
+    description
+      "Identity to specify packet-capture category.";
+  }
+
+  identity ihub-syslog {
+    if-feature "ihub-syslog-support";
+    base upload-file-category;
+    base upload-file-category-techsupport;
+    description
+      "Identity to specify ihub-syslog category.";
+  }
+
+  identity ihub-config {
+    if-feature "ihub-config-support";
+    base upload-file-category;
+    base upload-file-category-techsupport;
+    description
+      "Identity to specify ihub-config category.";
+  }
+
+  identity ssh-auth-type {
+    description
+      "Identity to specify ssh authentication key type category.";
+  }
+
+  identity ssh-rsa {
+    base ssh-auth-type;
+    description
+      "Identity to specify ssh authentication RSA
+          key type category.";
+  }
+
+  identity ssh-dss {
+    base ssh-auth-type;
+    status obsolete;
+    description "DSA key type is obsolete. Use ECDSA instead.";
+  }
+
+  identity ecdsa-sha2-nistp256 {
+    base ssh-auth-type;
+    description
+      "Identity to specify ssh authentication ECDSA
+          key type category.";
+  }
+
+  grouping file-transfer-common-input-params{
+    description "File transfer common input parameters.";
+    leaf url {
+      type inet:uri;
+
+      must "( ((starts-with(., 'ftp')) and ../username and ../password) or not(starts-with(., 'ftp')) )" {
+        error-message "In case of FTP, Username and Password information is required for authentication.";
+        description "URL containing the information required to download or upload the specified files. In case of FTP, Username and Password information is required for authentication";
+      }
+
+      must "( ((starts-with(., 'sftp')) and ../username and (../password or ../ssh-auth)) or not(starts-with(., 'sftp')) )" {
+        error-message "In case of SFTP, Username and either Password or SSH Key information is required for authentication.";
+        description "URL containing the information required to download or upload the specified files. In case of SFTP, Username and either Password or SSH Key information is required for authentication.";
+      }
+
+      must "( ((starts-with(., 'scp')) and ../username and (../password or ../ssh-auth)) or not(starts-with(., 'scp')) )" {
+        error-message "In case of SCP, Username and either Password or SSH Key information is required for authentication.";
+        description "URL containing the information required to download or upload the specified files. In case of SCP, Username and either Password or SSH Key information is required for authentication.";
+      }
+
+      must "( ((starts-with(., 'https')) and ../server-auth) or not(starts-with(., 'https')) )" {
+        error-message "In case of HTTPS, CA certificates information is required for authentication.";
+        description "URL containing the information required to download or upload the specified files. In case of HTTPS, CA certificates information is required for authentication.";
+      }
+
+      /*  add generic expression that checks url note that this grouping can be reused by other yangs so don't make it to restrictive*/
+      /*  allows any schema like http:// or mailto, allows authorization part in front and hospart should be ipv4, ipv6, labels followed by port */
+      must "re-match(., '[A-Za-z][A-Za-z0-9+.-]*:(//)?([A-Za-z0-9._~!$&()*+,;=:%-]+(:[A-Za-z0-9._~!$&()*+,;=:%-]+)?@)?(([0-9]{1,3}(\\.[0-9]{1,3}){3})|(\\[[0-9A-Fa-f:]+\\])|([A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?(\\.[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?)*))(:[0-9]{1,5})?([/?#].*)?')" {
+        error-message "Invalid URL syntax";
+      }
+
+      mandatory true;
+
+      description
+        "URL of the remote server containing the information required to
+         upload the specified file included protocol, IP address(:port) and remote-directory-path.
+         Note that a URL that does not end with a forward slash '/' will modify the name of the
+         final compressed file that is to be uploaded.
+         For instance a trace-log upload with URL such as 'scp://10.80.89.32/home/bob/' will upload the final file
+         to the '/home/bob' directory on the server, with the name 'trace-logs-20231026-102822789.tar.gz.'
+         On the other hand, a URL like 'scp://10.80.89.32/home/bob' will upload the final file
+         to the '/home' directory on the server, with the name 'bob-20231026-102822789.tar.gz.'";
+    }
+
+    choice credentials {
+      when "not(starts-with(./url, 'tftp'))" {
+        description "Credential information is not applicable for TFTP protocol.";
+      }
+      description "Credentials.";
+      case password {
+        when "(starts-with(./url, 'ftp')) or (starts-with(./url, 'scp')) or (starts-with(./url, 'sftp'))" {
+          description "Password Based authentication is applicable only for FTP, SCP and SFTP protocols.";
+        }
+          leaf password {
+            type string;
+            must "( (starts-with(../url, 'ftp') and ( string-length(current()) >= 0 )) or
+                    (not(starts-with(../url, 'ftp')) and ( string-length(current()) > 0 )) )" {
+              error-message "Password cannot be empty in case of SFTP/SCP.";
+              description "FTP supports empty password for anonymous login. In case of SFTP/SCP,
+                           password shall not be empty";
+            }
+            mandatory true;
+            description "Password";
+          }
+      }
+      case certificate {
+        when "(starts-with(./url, 'https'))" {
+          description "Certificate Based authentication is applicable only for HTTPS protocol.";
+        }
+        uses tlsc:server-auth-grouping {
+          refine server-auth {
+            presence "certificate credentials";
+          }
+        }
+        //uses end-entity-certificate-group;
+      }
+      case ssh-key {
+        when "(starts-with(./url, 'sftp')) or (starts-with(./url, 'scp'))" {
+          description "SSH Key Based authentication is applicable only for SFTP and SCP protocols.";
+        }
+          leaf ssh-auth {
+            type ssh-auth-key-type;
+            mandatory true;
+            description
+              "Ssh client authentication using ssh key.";
+          }
+      }
+    }
+
+    leaf username {
+      when "../url and not( (starts-with(../url, 'tftp')) or (starts-with(../url, 'http')) ) " {
+        description "Credential information is not applicable for TFTP/HTTP/HTTPS protocol.";
+      }
+      type string {
+        length "1..max" {
+          error-message "Username cannot be empty";
+        }
+      }
+      description
+       "File transfer protocols credential username input.";
+    }
+
+  }
+
+  grouping file-transfer-common-output-params{
+    description "File transfer common output parameters.";
+    leaf index {
+      type file-transfer-request-index;
+      mandatory true;
+      description
+        "When the server receives the RPC request of
+         'transfer', if the transferring process starts
+         successfully, the server MUST assign an index
+         to that process and reply it to the client as
+         an output parameter.";
+    }
+  }
+
+  grouping upload-file-techsupport-input-params{
+    uses file-transfer-common-input-params{
+      refine "url" {
+        description
+        "URL of the remote server containing the information required to
+         upload the specified file included protocol, IP address(:port) and remote-directory-path.
+         Note that a URL that does not end with a forward slash '/'
+         will modify the name of the final compressed file that is to be uploaded.
+         For instance a trace-log upload with URL such as 'scp://10.80.89.32/home/bob/' will upload the final file
+         to the '/home/bob' directory on the server, with the name 'trace-logs-20231026-102822789.tar.gz.'
+         On the other hand, a URL like 'scp://10.80.89.32/home/bob' will upload the final file
+         to the '/home' directory on the server, with the name 'bob-20231026-102822789.tar.gz.'";
+      }
+    }
+
+    uses upload-file-category-techsupport-group;
+
+    leaf compression-format {
+      type enumeration {
+        enum gzip{
+          description "gzip format.";
+        }
+        enum lzop{
+          description "lzop format.";
+        }
+        enum encrypted-gzip{
+          description "gzip file in encrypted format.";
+        }
+        enum encrypted-lzop{
+          description "lzop file in encrypted format.";
+        }
+      }
+      default "gzip";
+      description
+        "Compress files upon upload request based on the format
+         specified.";
+    }
+    description "Upload file techsupport input parameters.";
+  }
+
+  grouping upload-file-input-params{
+    uses file-transfer-common-input-params{
+      refine "url" {
+        description
+        "URL of the remote server containing the information required to
+         upload the specified file included protocol, IP address(:port) and remote-directory-path.
+         Note that a URL that does not end with a forward slash '/'
+         will modify the name of the final compressed file that is to be uploaded.
+         For instance a trace-log upload with URL such as 'scp://10.80.89.32/home/bob/' will upload the final file
+         to the '/home/bob' directory on the server, with the name 'trace-logs-20231026-102822789.tar.gz.'
+         On the other hand, a URL like 'scp://10.80.89.32/home/bob' will upload the final file
+         to the '/home' directory on the server, with the name 'bob-20231026-102822789.tar.gz.'";
+      }
+    }
+
+    uses upload-file-category-group;
+
+    leaf compression-format {
+      type enumeration {
+        enum gzip{
+          description "gzip format.";
+        }
+        enum lzop{
+          description "lzop format.";
+        }
+      }
+      default "gzip";
+      description
+        "compress files upon upload request based on the format
+         specified.";
+    }
+    description "Upload file input parameters.";
+  }
+
+  grouping download-file-techsupport-input-params{
+    description "Download file techsupport input parameters.";
+    uses file-transfer-common-input-params {
+      description
+        "URL of the remote server containing the information required to
+         download the specified files included
+         protocol, IP address, file-path, etc..";
+
+      refine "url" {
+
+        must "((starts-with(., 'http')) and ((starts-with(., 'https')) or not(derived-from-or-self (../category/category-type, 'ztp-certificate')))) or not(starts-with(., 'http'))" {
+          error-message "Only secure protocols are permitted for ztp-certificate download.";
+          description "URL containing the information required to download or upload the specified files. For ztp-certificate the http protocol is not permitted.";
+        }
+
+        must "((starts-with(., 'tftp')) and not(derived-from-or-self (../category/category-type, 'ztp-certificate'))) or not(starts-with(., 'tftp'))" {
+          error-message "Only secure protocols are permitted for ztp-certificate download.";
+          description "URL containing the information required to download or upload the specified files. For ztp-certificate the tftp protocol is not permitted.";
+        }
+
+        must "((starts-with(., 'ftp')) and not(derived-from-or-self (../category/category-type, 'ztp-certificate'))) or not(starts-with(., 'ftp'))" {
+          error-message "Only secure protocols are permitted for ztp-certificate download.";
+          description "URL containing the information required to download or upload the specified files. For ztp-certificate the ftp protocol is not permitted.";
+        }
+        description
+            "URL of the remote server containing the information required to
+             download the specified files included
+             protocol, IP address, file-path, etc..";
+      }
+    }
+
+    uses download-file-category-techsupport-group;
+  }
+
+  grouping download-file-input-params{
+    description "Download file input parameters.";
+    uses file-transfer-common-input-params {
+      description
+        "URL of the remote server containing the information required to
+         download the specified files included
+         protocol, IP address, file-path, etc..";
+
+      refine "url" {
+
+        must "((starts-with(., 'http')) and ((starts-with(., 'https')) or not(derived-from-or-self (../category/category-type, 'ztp-certificate')))) or not(starts-with(., 'http'))" {
+          error-message "Only secure protocols are permitted for ztp-certificate download.";
+          description "URL containing the information required to download or upload the specified files. For ztp-certificate the http protocol is not permitted.";
+        }
+
+        must "((starts-with(., 'tftp')) and not(derived-from-or-self (../category/category-type, 'ztp-certificate'))) or not(starts-with(., 'tftp'))" {
+          error-message "Only secure protocols are permitted for ztp-certificate download.";
+          description "URL containing the information required to download or upload the specified files. For ztp-certificate the tftp protocol is not permitted.";
+        }
+
+        must "((starts-with(., 'ftp')) and not(derived-from-or-self (../category/category-type, 'ztp-certificate'))) or not(starts-with(., 'ftp'))" {
+          error-message "Only secure protocols are permitted for ztp-certificate download.";
+          description "URL containing the information required to download or upload the specified files. For ztp-certificate the ftp protocol is not permitted.";
+        }
+      }
+    }
+
+    uses download-file-category-group;
+  }
+
+  grouping file-category-common-techsupport-params {
+    description "File category common techsupport parameters.";
+    choice mode {
+      description "Mode.";
+      case directory {
+        when "(derived-from-or-self (category-type, 'reboot-logs')) or
+              (derived-from-or-self (category-type, 'trace-logs'))" {
+          description "Applicable only for reboot-logs and trace-logs category.";
+        }
+        list directory {
+          key name;
+          description "list of directory names";
+          leaf name {
+            type string;
+            description "Directory name.";
+          }
+
+          leaf-list files {
+            when "(derived-from-or-self (../../category-type, 'trace-logs'))" {
+              description "Applicable only for trace-logs category.";
+            }
+            type string;
+            description "List of files.";
+          }
+        }
+      }
+      case file-names {
+        when "(derived-from-or-self (category-type, 'syslog')) or
+              (derived-from-or-self (category-type, 'ihub-syslog')) or
+              (derived-from-or-self (category-type, 'ihub-config')) or
+              (derived-from-or-self (category-type, 'ztp-certificate')) or
+              (derived-from-or-self (category-type, 'packet-capture'))" {
+          description "Applicable only for syslog, ztp-certificate, ihub-syslog,"
+                    +" ihub-config and packet-capture category.";
+        }
+        leaf-list files {
+          type string;
+          description "List of files.";
+        }
+      }
+    }
+  }
+
+  grouping file-category-common-params {
+    description "File category common parameters.";
+    choice mode {
+      description "Mode.";
+      case file-names {
+        when "(derived-from-or-self (category-type, 'syslog')) or
+              (derived-from-or-self (category-type, 'ihub-syslog')) or
+              (derived-from-or-self (category-type, 'ihub-config')) or
+              (derived-from-or-self (category-type, 'ztp-certificate')) or
+              (derived-from-or-self (category-type, 'packet-capture'))" {
+          description "Applicable only for syslog, ztp-certificate, ihub-syslog,"
+                     +" ihub-config and packet-capture category.";
+        }
+        leaf-list files {
+          type string;
+          description "List of files.";
+        }
+      }
+    }
+  }
+
+  grouping file-category-state-directories-params {
+    description "File category state directories parameters.";
+    choice mode {
+      description "Mode.";
+      case directory {
+        when "(derived-from-or-self (category-type, 'reboot-logs')) or
+              (derived-from-or-self (category-type, 'trace-logs'))" {
+          description "Applicable only for reboot-logs and trace-logs category.";
+        }
+
+        list directory {
+          key directory-name;
+          description "list of directory names";
+          leaf directory-name {
+            type string;
+            description "Directory name.";
+          }
+
+          list files {
+            when "(derived-from-or-self (../../category-type, 'trace-logs'))" {
+              description "Applicable only for trace-logs category.";
+            }
+
+            key file-name;
+            description "list of file names";
+            leaf file-name {
+              type string;
+              description "File name.";
+            }
+
+            leaf size {
+              type uint32;
+              units "bytes";
+              description
+                "The size of the file in bytes.";
+            }
+          }
+        }
+      }
+      case file-names {
+        when "(derived-from-or-self (category-type, 'syslog')) or
+              (derived-from-or-self (category-type, 'ihub-syslog')) or
+              (derived-from-or-self (category-type, 'ihub-config')) or
+              (derived-from-or-self (category-type, 'ztp-certificate')) or
+              (derived-from-or-self (category-type, 'packet-capture'))" {
+          description "Applicable only for syslog, ztp-certificate, ihub-syslog,"
+                     +" ihub-config and packet-capture category.";
+        }
+        list files {
+           key name;
+           description "File list.";
+
+           leaf name {
+            type string;
+            description "File name.";
+           }
+
+           leaf size {
+            type uint32;
+            units "bytes";
+            description
+              "The size of the file in bytes.";
+          }
+        }
+      }
+    }
+  }
+
+  grouping file-category-state-params {
+    description "File category state params.";
+    choice mode {
+      description "Mode.";
+      case file-names {
+        when "(derived-from-or-self (category-type, 'syslog')) or
+              (derived-from-or-self (category-type, 'ihub-syslog')) or
+              (derived-from-or-self (category-type, 'ihub-config')) or
+              (derived-from-or-self (category-type, 'ztp-certificate')) or
+              (derived-from-or-self (category-type, 'packet-capture'))" {
+          description "Applicable only for syslog, ztp-certificate, ihub-syslog,"
+                     +" ihub-config and packet-capture category.";
+        }
+        list files {
+           key name;
+           description "File list.";
+
+           leaf name {
+            type string;
+            description "File name.";
+           }
+
+           leaf size {
+            type uint32;
+            units "bytes";
+            description
+              "The size of the file in bytes.";
+          }
+        }
+      }
+    }
+  }
+
+  grouping upload-file-category-techsupport-group {
+    description "Upload file category techsupport group.";
+    list category {
+      key category-type;
+      min-elements 1;
+      max-elements 1;
+      description "Category list.";
+
+      leaf category-type {
+        type upload-file-category-techsupport-type;
+        description "Category type.";
+      }
+
+      uses file-category-common-techsupport-params ;
+
+    }
+  }
+
+  grouping upload-file-category-group {
+    description "Upload file category group.";
+    list category {
+      key category-type;
+      min-elements 1;
+      max-elements 1;
+      description "Category list.";
+
+      leaf category-type {
+        type upload-file-category-type;
+        description "Category type.";
+      }
+
+      uses file-category-common-params ;
+
+    }
+  }
+
+  grouping remove-file-category-techsupport-group {
+  description "Remove file category techsupport group";
+    list category {
+      key category-type;
+      min-elements 1;
+      max-elements 1;
+      description "Category list.";
+
+      leaf category-type {
+        type download-file-category-techsupport-type;
+        description "Category type.";
+      }
+
+      uses file-category-common-params ;
+    }
+  }
+
+  grouping remove-file-category-group {
+    description "Remove file category group.";
+    list category {
+      key category-type;
+      min-elements 1;
+      max-elements 1;
+      description "Category list.";
+
+      leaf category-type {
+        type download-file-category-type;
+        description "Category type.";
+      }
+
+      uses file-category-common-params ;
+    }
+  }
+
+  grouping download-file-category-techsupport-group {
+    description "Download file category techsupport group.";
+    list category {
+      key category-type;
+      min-elements 1;
+      max-elements 1;
+      description "Category list";
+
+      leaf category-type {
+        type download-file-category-techsupport-type;
+        description "Category type.";
+      }
+    }
+  }
+
+  grouping download-file-category-group {
+    description "Download file category group.";
+    list category {
+      key category-type;
+      min-elements 1;
+      max-elements 1;
+      description "Category List";
+
+      leaf category-type {
+        type download-file-category-type;
+        description "Category type.";
+      }
+    }
+  }
+
+  grouping file-category-techsupport-group {
+    description "File category techsupport group";
+    list category {
+      key category-type;
+      min-elements 1;
+      max-elements 1;
+      description "Category list.";
+
+      leaf category-type {
+        type file-category-type;
+        description "Category type.";
+      }
+
+      uses file-category-common-techsupport-params;
+    }
+  }
+
+  grouping file-category-group {
+    description "File category group.";
+    list category {
+      key category-type;
+      min-elements 1;
+      max-elements 1;
+      description "Category list.";
+
+      leaf category-type {
+        type file-category-type;
+        description "Category type.";
+      }
+
+      uses file-category-common-params;
+
+    }
+  }
+
+  grouping end-entity-certificate-group {
+    description
+      "A grouping that defines the configuration options for end-entity certificates.
+      This grouping provides a flexible approach to certificate management by allowing
+      the selection between different certificate provisioning methods through a choice
+      construct. The certificate can be either a reference to an existing certificate
+      from the central keystore or an EST (Enrollment over Secure Transport) certificate
+      profile for automatic certificate enrollment and management.";
+
+    choice certificate-reference-choice {
+      description
+        "Choice between different certificate reference methods. This choice allows
+        the configuration to specify how the certificate should be obtained and
+        managed. The available options provide flexibility in certificate lifecycle
+        management, supporting both pre-provisioned certificates stored in a central
+        keystore and dynamically enrolled certificates through EST protocols.";
+
+      case central-keystore-reference {
+        description
+          "Case for referencing a certificate from the central keystore. This option
+          is suitable when certificates are pre-provisioned and stored in a centralized
+          certificate management system. It provides direct access to existing
+          certificate-key pairs that have been previously imported.";
+
+        container central-keystore-reference {
+          uses nokia-ks:asymmetric-key-certificate-ref-grouping;
+          description
+            "A reference to a specific certificate associated with an asymmetric key
+            stored in the central keystore. This container utilizes the Nokia keystore
+            reference grouping to establish a link to a pre-existing certificate and
+            its corresponding private key.";
+        }
+      }
+
+      case est-certificate-profile-reference {
+        description
+        "Case for referencing an EST certificate profile. This option enables
+          automatic certificate enrollment and management through the EST protocol.
+          It is particularly useful for dynamic environments where certificates
+          need to be automatically enrolled, renewed.";
+
+        container est-certificate-profile-reference {
+          uses estc:est-certificate-profile-ref-grouping;
+          description
+          "Reference to an EST certificate profile for TLS identity configuration.
+            This container utilizes the EST certificate profile reference grouping
+            to enable automatic certificate lifecycle management. The EST profile
+            defines the parameters and policies for certificate enrollment, including
+            certificate authority information, enrollment credentials, and renewal
+            policies.";
+        }
+      }
+    }
+  }
+
+  container file-transfer {
+    description
+      "File transfer configuration parameters.";
+
+    container file-transfer-control {
+      description
+        "Specifies the list of file transfer protocols to be enabled in the system.
+         By default, HTTPS protocol is always supported. Other File Transfer protocols
+         can be enabled on demand.";
+      leaf-list enable-protocol {
+        type identityref{
+          base file-transfer-protocol;
+        }
+
+        description
+          "Enable the file transfer protocol.";
+      }
+    }
+
+    container tls-client-parameters {
+      description "TLS client parameters.";
+      uses tlsc:hello-params-grouping;
+    }
+
+    container client-identity {
+      description
+        "The credentials used by the client to authenticate to
+         the SSH server.";
+      leaf-list ssh-generate-auth-key {
+        type ssh-auth-key-type;
+        description
+          "A locally-defined or referenced asymmetric key
+           pair to be used for client identification.";
+
+      }
+    }
+
+    action upload {
+      nacm:default-deny-all;
+      description
+        "Specify the upload action. The server sends
+         the file identified by the local-file-path
+         to the URI identified by the remote-file-path.";
+
+      input {
+        uses upload-file-input-params;
+      }
+
+      output {
+        uses file-transfer-common-output-params;
+      }
+    }
+
+    action download {
+      nacm:default-deny-all;
+      description
+        "Specify the download action. The server retrieves
+        the file identified by the url remote file path
+        to the local file path.";
+
+      input {
+        uses download-file-input-params;
+      }
+
+      output {
+        uses file-transfer-common-output-params;
+      }
+    }
+
+    action abort-file-transfer {
+      nacm:default-deny-all;
+      description
+        "Abort the file transfer process.";
+      input {
+        leaf index {
+          type file-transfer-request-index;
+		  mandatory true;
+          description
+            "Abort the file transfer with index reference.";
+        }
+      }
+    }
+
+    action remove-files {
+      nacm:default-deny-all;
+      description
+        "Remove downloaded files from target entity.";
+      input {
+        uses remove-file-category-group;
+      }
+    }
+
+    notification file-transfer-status {
+      description
+        "Indicates that the specified file transfer status.";
+
+      leaf index {
+        type file-transfer-request-index;
+        description
+          "Abort the file transfer with index reference.";
+      }
+
+      leaf url {
+        type inet:uri;
+        mandatory true;
+        description
+          "URL of the remote server containing the information required to
+           download or upload the specified files included
+           protocol, IP address, file-path, etc..";
+      }
+
+      uses file-category-group;
+
+      leaf status {
+        type identityref{
+          base file-transfer-status;
+        }
+   	    mandatory true;
+        description
+          "Status of the file transfer.";
+      }
+
+      leaf failure-reason {
+        when "(derived-from-or-self (../status, 'file-transfer-failure'))" {
+          description "Applicable only for trace-logs category.";
+        }
+        type string;
+        description
+          "Additional information in case of failures.";
+      }
+    }
+
+    container techsupport {
+      description
+        "Actions authorized only to techsupport user.";
+      action upload {
+        nacm:default-deny-all;
+        description
+          "Specify the upload action. The server sends
+          the file identified by the local-file-path
+          to the URI identified by the remote-file-path.";
+
+        input {
+          uses upload-file-techsupport-input-params;
+        }
+
+        output {
+          uses file-transfer-common-output-params;
+        }
+      }
+
+      action download {
+        nacm:default-deny-all;
+        description
+          "Specify the download action. The server retrieves
+          the file identified by the url remote file path
+          to the local file path.";
+
+        input {
+          uses download-file-techsupport-input-params;
+        }
+
+        output {
+          uses file-transfer-common-output-params;
+        }
+      }
+
+      action abort-file-transfer {
+        nacm:default-deny-all;
+        description
+          "Abort the file transfer process.";
+        input {
+          leaf index {
+            type file-transfer-request-index;
+        mandatory true;
+            description
+              "Abort the file transfer with index reference.";
+          }
+        }
+      }
+
+      action remove-files {
+        nacm:default-deny-all;
+        description
+          "Remove downloaded files from target entity.";
+        input {
+          uses remove-file-category-techsupport-group;
+        }
+      }
+    }
+  }
+
+  container file-transfer-state {
+    config false;
+    description
+      "Data nodes for the state of file-transfer.";
+    list file-transferred {
+
+      key index;
+
+      leaf index {
+        type file-transfer-request-index;
+        mandatory true;
+        description "Index.";
+      }
+
+      leaf url {
+        type inet:uri;
+        mandatory true;
+        description
+          "URL of the remote server containing the information required to
+           download or upload the specified files included
+           protocol, IP address, file-path, etc..";
+      }
+
+      uses file-category-group;
+
+      leaf credential-method {
+        type enumeration {
+          enum password{
+            description "Password credential method.";
+          }
+          enum certificate{
+            description "Certificate credential method.";
+          }
+          enum ssh-key{
+            description "SSH-key credential method.";
+          }
+        }
+        description "Credential method";
+      }
+
+      container "transfer-status" {
+
+        config false;
+        description "Transfer status.";
+
+        leaf transfer-status {
+          type identityref{
+            base file-transfer-status;
+          }
+          mandatory true;
+          description "Transfer status.";
+        }
+
+        leaf failure-reason {
+          when "(derived-from-or-self (../transfer-status, 'file-transfer-failure'))" {
+            description "Applicable only in case of file-transfer-failure.";
+          }
+          type string;
+          description
+            "Additional information in case of failures.";
+        }
+
+        leaf progress {
+          when "(derived-from-or-self (../transfer-status, 'file-transfer-inprogress')) and " +
+               "not(starts-with(../../url, 'tftp'))" {
+            description "Applicable only in case of file-transfer is ongoing and the protocol is not tftp";
+          }
+          type percent;
+          mandatory true;
+          description "Transfer progress.";
+        }
+
+        leaf timestamp {
+          when "(derived-from-or-self (../transfer-status, 'file-transfer-success'))" {
+            description "Applicable only in case of Upload file-transfer success.";
+          }
+          type yang:date-and-time;
+          description
+            "The time and date when the file was uploaded/downloaded.";
+        }
+
+        leaf compressed-file-name {
+          when "(derived-from-or-self (../transfer-status, 'file-transfer-success')) and " +
+               "not(derived-from-or-self (../../category/category-type, 'ztp-certificate'))" {
+            description "Applicable only in case of file-transfer success.";
+          }
+          type string;
+          description
+            "By default compression is enabled during upload.  This leaf
+             specifies the name of the compressed file.  If not specified
+             as part of the URL, the file name shall be auto-generated by
+             the system.
+             This leaf is applicable only in case of upload requests.
+             For Download requests, the value of this leaf shall be empty. ";
+        }
+
+        leaf md5-checksum {
+          when "(derived-from-or-self (../transfer-status, 'file-transfer-success'))" {
+            description "Applicable only in case of file-transfer success.";
+          }
+          type string;
+          description
+            "MD5 Checksum Value of the compressed file in case of upload or
+             the downloaded file in case of download.";
+        }
+      }
+      description "File transferred list.";
+    }
+
+    container available {
+      description "Available.";
+
+      container upload-files {
+
+        config false;
+        description "Upload files.";
+
+        list category {
+          key category-type;
+          description "Category list.";
+
+          leaf category-type {
+            type upload-file-category-type;
+            description "Category type.";
+          }
+
+          uses file-category-state-params ;
+        }
+      }
+
+      container download-files {
+
+        config false;
+        description "Download files.";
+
+        list category {
+          key category-type;
+          description "Category list.";
+
+          leaf category-type {
+            type download-file-category-type;
+            description "Category type";
+          }
+
+          uses file-category-state-params;
+        }
+      }
+    }
+
+    container ssh-auth-publickey {
+      description "SSH Authentication public keys.";
+      list ssh-public-keys {
+        key key-type;
+        description "SSH public key list.";
+
+        leaf key-type {
+          type ssh-auth-key-type;
+          description
+            "A locally-defined or referenced asymmetric key
+             pair to be used for client identification.";
+        }
+        leaf public-key {
+          type binary;
+          description
+            "A locally generated authentication key
+             pair in the system in openSSL format.";
+        }
+      }
+    }
+
+    container techsupport {
+      config false;
+      description "Techsupport.";
+
+      list file-transferred {
+
+        key index;
+        description "File Transferred list.";
+
+        leaf index {
+          type file-transfer-request-index;
+          mandatory true;
+          description "Index.";
+        }
+
+        leaf url {
+          type inet:uri;
+          mandatory true;
+          description
+            "URL of the remote server containing the information required to
+            download or upload the specified files included
+            protocol, IP address, file-path, etc..";
+        }
+
+        uses file-category-techsupport-group;
+
+        leaf credential-method {
+          type enumeration {
+            enum password{
+              description "Password credential method.";
+            }
+            enum certificate{
+              description "Certificate credential method.";
+            }
+            enum ssh-key{
+              description "SSH-key credential method.";
+            }
+          }
+          description "Credential method.";
+        }
+
+        container "transfer-status" {
+          config false;
+          description "Transfer Status.";
+
+          leaf transfer-status {
+            type identityref{
+              base file-transfer-status;
+            }
+            mandatory true;
+            description "Transfer Status.";
+          }
+
+          leaf failure-reason {
+            when "(derived-from-or-self (../transfer-status, 'file-transfer-failure'))" {
+              description "Applicable only in case of file-transfer-failure.";
+            }
+            type string;
+            description
+              "Additional information in case of failures.";
+          }
+
+          leaf progress {
+            when "(derived-from-or-self (../transfer-status, 'file-transfer-inprogress')) and " +
+                "not(starts-with(../../url, 'tftp'))" {
+              description "Applicable only in case of file-transfer is ongoing and the protocol is not tftp";
+            }
+            type percent;
+            mandatory true;
+            description "Transfer progress.";
+          }
+
+          leaf timestamp {
+            when "(derived-from-or-self (../transfer-status, 'file-transfer-success'))" {
+              description "Applicable only in case of Upload file-transfer success.";
+            }
+            type yang:date-and-time;
+            description
+              "The time and date when the file was uploaded/downloaded.";
+          }
+
+          leaf compressed-file-name {
+            when "(derived-from-or-self (../transfer-status, 'file-transfer-success'))" {
+              description "Applicable only in case of file-transfer success.";
+            }
+            type string;
+            description
+              "By default compression is enabled during upload.  This leaf
+              specifies the name of the compressed file.  If not specified
+              as part of the URL, the file name shall be auto-generated by
+              the system.
+              This leaf is applicable only in case of upload requests.
+              For Download requests, the value of this leaf shall be empty. ";
+          }
+
+          leaf md5-checksum {
+            when "(derived-from-or-self (../transfer-status, 'file-transfer-success'))" {
+              description "Applicable only in case of file-transfer success.";
+            }
+            type string;
+            description
+              "MD5 Checksum Value of the compressed file in case of upload or
+              the downloaded file in case of download.";
+          }
+        }
+      }
+
+      container available {
+        description "Available.";
+
+        container upload-files {
+          config false;
+          description "Upload files.";
+
+          list category {
+            key category-type;
+            description "Category list.";
+
+            leaf category-type {
+              type upload-file-category-techsupport-type;
+              description "Category type.";
+            }
+
+            uses file-category-state-directories-params ;
+          }
+        }
+
+        container download-files {
+          config false;
+          description "Download files.";
+
+          list category {
+            key category-type;
+            description "Category list.";
+
+            leaf category-type {
+              type download-file-category-techsupport-type;
+              description "Category type.";
+            }
+
+            uses file-category-state-params;
+          }
+        }
+      }
+    }
+  }
+
+  augment "/nokia-ft:file-transfer/nokia-ft:download/nokia-ft:input/nokia-ft:credentials/nokia-ft:certificate/nokia-ft:server-auth" {
+    description "Augments CA certificate configuration with a reference to an EST CA certificate profile";
+    uses estc:est-ca-certificate-profile-ref-grouping;
+  }
+
+  augment "/nokia-ft:file-transfer/nokia-ft:upload/nokia-ft:input/nokia-ft:credentials/nokia-ft:certificate/nokia-ft:server-auth" {
+    description "Augments CA certificate configuration with a reference to an EST CA certificate profile";
+    uses estc:est-ca-certificate-profile-ref-grouping;
+  }
+
+  augment "/nokia-ft:file-transfer/nokia-ft:techsupport/nokia-ft:download/nokia-ft:input/nokia-ft:credentials/nokia-ft:certificate/nokia-ft:server-auth" {
+    description "Augments CA certificate configuration with a reference to an EST CA certificate profile";
+    uses estc:est-ca-certificate-profile-ref-grouping;
+  }
+
+  augment "/nokia-ft:file-transfer/nokia-ft:techsupport/nokia-ft:upload/nokia-ft:input/nokia-ft:credentials/nokia-ft:certificate/nokia-ft:server-auth" {
+    description "Augments CA certificate configuration with a reference to an EST CA certificate profile";
+    uses estc:est-ca-certificate-profile-ref-grouping;
+  }
+
+  augment "/nokia-ft:file-transfer/nokia-ft:download/nokia-ft:input/nokia-ft:credentials/nokia-ft:certificate" {
+    description "Augments CA certificate configuration with a reference to an EST CA certificate profile";
+    uses end-entity-certificate-group;
+  }
+
+
+  augment "/nokia-ft:file-transfer/nokia-ft:upload/nokia-ft:input/nokia-ft:credentials/nokia-ft:certificate" {
+    description "Augments CA certificate configuration with a reference to an EST CA certificate profile";
+    uses end-entity-certificate-group;
+  }
+
+
+  augment "/nokia-ft:file-transfer/nokia-ft:techsupport/nokia-ft:download/nokia-ft:input/nokia-ft:credentials/nokia-ft:certificate" {
+    description "Augments CA certificate configuration with a reference to an EST CA certificate profile";
+    uses end-entity-certificate-group;
+  }
+
+
+  augment "/nokia-ft:file-transfer/nokia-ft:techsupport/nokia-ft:upload/nokia-ft:input/nokia-ft:credentials/nokia-ft:certificate" {
+    description "Augments CA certificate configuration with a reference to an EST CA certificate profile";
+    uses end-entity-certificate-group;
+  }
+
+}

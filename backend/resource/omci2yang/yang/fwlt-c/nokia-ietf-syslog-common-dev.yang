@@ -1,0 +1,606 @@
+module nokia-ietf-syslog-common-dev {
+
+    yang-version 1.1;
+
+    namespace
+        "http://www.nokia.com/Fixed-Networks/BBA/yang/nokia-ietf-syslog-common-dev";
+
+    prefix nokia-ietf-syslog-common-dev;
+
+    import ietf-inet-types {
+        prefix inet;
+    }
+
+    import ietf-syslog {
+        prefix "syslog";
+    }
+
+    import iana-tls-cipher-suite-algs {
+        prefix "tlscsa";
+    }
+
+    organization
+        "Nokia";
+
+    contact
+      "Comments or questions about this Nokia YANG module should be
+       directed to <mailto:isam.yang@nokia.com>.";
+
+    description
+      "This module contains a collection of YANG definitions for
+       supporting Nokia specific requirements as applicable to its
+       access network equipment.
+
+       Specifically, this module identifies data that potentially
+       contains private data. Note that this classification is product
+       independent while the support of this data is product dependent.
+       I.e. it might be that data that is identified as private is not
+       supported in a particular product variant.
+
+       This specification is published by Nokia under Non-Disclosure
+       Agreement(s) (NDA) with specific parties and has to be considered
+       as Confidential Information as defined in such NDA. Nokia
+       reserves the right to revise this document for any reason,
+       including but not limited to conformity with standards
+       promulgated by various agencies, utilisation of advances in the
+       state of the technical areas, or the reflection of changes in the
+       design of any equipment, techniques, or procedures described or
+       referred to herein.
+
+       The product specifications and other technical or performance
+       information contained herein are subject to change without
+       notice. Updates of this document will be issued under the above
+       NDA's.
+
+       Nokia makes no representation or warranty, expressed or implied,
+       with respect to the sufficiency, accuracy, or utility of any
+       information or opinion contained herein. Nokia expressly advises
+       that any use of for any purpose or reliance upon this technical
+       reference is at the risk of the user and that Nokia shall not be
+       liable for any damage or injury incurred by any person arising
+       out of the sufficiency, accuracy, or utility of any information
+       or opinion contained herein.
+
+       This document is not to be construed as a suggestion to any
+       manufacturer to modify or change any of its products, nor does
+       this document represent any commitment by Nokia to sell or
+       purchase any product. Nothing contained herein shall be construed
+       as conferring by implication, estoppel, or otherwise any license
+       or right under any patent, whether or not the use of any
+       information herein necessarily employs an invention of any
+       existing or later issued patent.
+
+       Nokia reserves the right not to offer any or all of these
+       products and to withdraw any or all of them at any future time.
+
+       Copyright (C) 2018, Nokia. All Rights Reserved.";
+
+    revision 2026-05-19 {
+        description "Syslog support for 6 destinations";
+        reference "Nokia specific";
+    }
+
+    revision 2026-01-23 {
+        description
+           "Introduce time-format and increase max remote destinations
+            Add deviation for supported ciphers";
+        reference "Nokia specific";
+    }
+
+    revision 2025-05-27 {
+        description
+        "Add description for trusted certificate authority (CA) certificates";
+        reference
+        "Nokia specific";
+    }
+
+    revision 2024-07-23 {
+        description
+        "Restrict keystore reference and cipher deviation for hello-params";
+        reference
+        "Nokia specific";
+    }
+
+    revision 2023-04-13 {
+        description
+        "Addition of descriptions for all deviations";
+        reference
+        "Nokia specific";
+    }
+
+    revision 2021-07-17 {
+     description
+      "Adding proper descriptions and error messages to deviations.";
+     reference
+      "Nokia specific";
+    }
+
+    revision 2021-07-11 {
+     description
+      "Dummy deviation for facility list default values.";
+     reference
+       "Nokia specific";
+    }
+
+    revision 2021-06-29 {
+     description
+      "Restrict operator file facility and severity
+      and add descriptions";
+     reference
+       "Nokia specific";
+    }
+
+    revision 2021-01-28 {
+     description
+      "Suppress certificate-expiration and certificate-keystore parameters";
+     reference
+       "Nokia specific";
+    }
+
+    revision 2021-01-15 {
+     description
+      "Suppress facility-override parameter";
+     reference
+       "Nokia specific";
+    }
+
+    revision 2020-08-05 {
+     description
+      "Suppress non support TLS parameters";
+     reference
+       "Nokia specific";
+    }
+
+    revision 2020-01-29 {
+        description
+                "Destination name length change";
+        reference
+       "Nokia specific";
+    }
+
+    revision 2019-09-27 {
+        description
+                "Restrict destination name for remote collector";
+        reference
+       "Nokia specific";
+    }
+
+    revision 2019-08-21 {
+        description
+                "Restrict pattern-match in syslog file not to be * or ?";
+        reference
+       "Nokia specific";
+    }
+
+    revision 2019-04-26 {
+        description
+                "Move to syslog category.";
+        reference
+                "Nokia internal.";
+    }
+
+    revision "2018-12-19" {
+        description
+                "Change of the legth of remote/file name.";
+        reference
+       "Nokia specific";
+    }
+
+    revision "2018-11-22" {
+        description
+                "Take the 127.255.255.255. as hostname and not be rejected as ip.
+                Also Take the 0.0.0.255. as hostname and not be rejected as ip.";
+        reference
+       "Nokia specific";
+    }
+
+    revision "2018-10-24" {
+        description
+                "Take the 255.255.255.255. as hostname and not be rejected as ip";
+        reference
+       "Nokia specific";
+    }
+
+    revision "2018-10-16" {
+        description
+                "Change of file path. Removal of deafult values
+                of retention, rollover. Restriction for port 0";
+        reference
+       "Nokia specific";
+    }
+
+    revision "2018-10-15" {
+        description
+                "add yang version1.1 and update ip checks wit re-match";
+        reference
+       "Nokia specific";
+    }
+
+    revision "2018-08-01" {
+        description
+                "NOKIA deviations for (a) restricting characters in log-file name
+                 (b) restrict loopback address";
+        reference
+       "Nokia specific";
+    }
+
+    revision "2017-09-10" {
+        description
+                "NOKIA deviations for ietf-syslog module as defined
+                by revision 2017-06-07 (draft version 16).";
+        reference
+       "Nokia specific";
+    }
+
+
+    deviation "/syslog:syslog/syslog:actions/syslog:remote/syslog:destination" {
+        description "This list describes a collection of remote logging destinations. The max allowed destinations are six'";
+        deviate add {
+            max-elements 6;
+        }
+    }
+
+    deviation "/syslog:syslog/syslog:actions/syslog:remote/syslog:destination/syslog:name" {
+        description "Destination name can be up to 31 characters. Special characters are not allowed";
+        deviate replace {
+            type string {
+                length "1..31";
+                pattern "[!#&-Z^-z|~]*";
+            }
+        }
+    }
+
+    deviation "/syslog:syslog/syslog:actions/syslog:remote/syslog:destination/syslog:pattern-match" {
+        deviate replace {
+            type string {
+                length "1 .. 128";
+            }
+        }
+        deviate add {
+            must "((current() != '*') or (current() != '?'))"{
+                error-message "You cannot use the * or ? literally in the pattern";
+                description "Pattern match restriction. Characters * and ? cannot be used in the pattern.";
+            }
+        }
+    }
+
+    deviation "/syslog:syslog/syslog:actions/syslog:remote/syslog:destination/syslog:facility-filter/syslog:facility-list" {
+        description "This list describes a collection of syslog facilities and severities. This list can have up to 5 elements";
+        deviate add {
+            max-elements 5;
+        }
+    }
+
+    deviation "/syslog:syslog/syslog:actions/syslog:remote/syslog:destination/syslog:transport/syslog:udp/syslog:udp/syslog:port" {
+        deviate add {
+           must " ( . > 0 ) " {
+                  error-message "0 is not a valid port number";
+                  description "This leaf specifies the port number used to deliver messages to the remote server. 0 is not a valid port number";
+          }
+        }
+    }
+
+
+    deviation "/syslog:syslog/syslog:actions/syslog:remote/syslog:destination/syslog:transport/syslog:udp/syslog:udp/syslog:address" {
+         /* multicast and broadcast address is not valid address  */
+       deviate add {
+            must "(not(translate(.,'0123456789','') = '...' and (substring-before(.,'.') >= 224) and (substring-before(.,'.') <= 255) and not(substring(., string-length(.) - string-length('.') +1) = '.')))"{
+                error-message "224.0.0.0~255.255.255.255 are not valid";
+                description "Restriction of the allowed addresses of remote host. 224.0.0.0~255.255.255.255 are not valid addresses.";
+            }
+        }
+
+       /* self address is not valid address  */
+        deviate add {
+            must "(not((substring-before(.,'.') = 127) and translate(.,'0123456789','') = '...' and not(substring(., string-length(.) - string-length('.') +1) = '.')))" {
+                error-message "Self address address is not valid";
+                description "Restriction of the allowed addresses of remote host. Self address is not a valid address.";
+            }
+        }
+
+        /* 0.0.0.[0-255] is not valid address */
+        deviate add {
+            must "not(starts-with(.,'0.0.0.') and translate(.,'0123456789','') = '...' and not(substring(., string-length(.) - string-length('.') +1) = '.'))" {
+                error-message "0.0.0.[0-255] are not valid addresses";
+                description "Restriction of the allowed addresses of remote host. 0.0.0.[0-255] are not valid addresses.";
+            }
+        }
+
+        /* Multicast address is not valid address  */
+        deviate add {
+            must "not(starts-with(.,'ff'))"{
+                error-message "Multicast is a not valid address";
+                description "Restriction of the allowed addresses of remote host. Multicast is a not valid address.";
+            }
+        }
+
+        /* Site-local address is not valid address  */
+        deviate add {
+            must "(substring-before(.,':') != 'fec0')"{
+                error-message "Site-local is a not valid address";
+                description "Restriction of the allowed addresses of remote host. Site-local is a not valid address.";
+            }
+        }
+
+        /* Loopback address is not valid address  */
+        deviate add {
+            must "(current() != '::1')"{
+                error-message "Loopack is not a valid address";
+                description "Restriction of the allowed addresses of remote host. Loopback is a not valid address.";
+            }
+        }
+        /* Unspecified address  */
+        deviate add {
+            must "(current() != '::')"{
+                error-message "Unspecified address";
+                description "Restriction of the allowed addresses of remote host. Unspecified address is not allowed.";
+            }
+        }
+    }
+
+    deviation "/syslog:syslog/syslog:actions/syslog:remote/syslog:destination/syslog:transport/syslog:tls/syslog:tls/syslog:address" {
+         /* multicast and broadcast address is not valid address  */
+       deviate add {
+            must "(not(translate(.,'0123456789','') = '...' and (substring-before(.,'.') >= 224) and (substring-before(.,'.') <= 255) and not(substring(., string-length(.) - string-length('.') +1) = '.')))"{
+                error-message "224.0.0.0~255.255.255.255 are not valid";
+                description "Restriction of the allowed addresses of remote host. 224.0.0.0~255.255.255.255 are not valid addresses.";
+            }
+        }
+
+       /* self address is not valid address  */
+        deviate add {
+            must "(not((substring-before(.,'.') = 127) and translate(.,'0123456789','') = '...' and not(substring(., string-length(.) - string-length('.') +1) = '.')))" {
+                error-message "Self address is not valid";
+                description "Restriction of the allowed addresses of remote host. Self address is not a valid address.";
+            }
+        }
+
+        /* 0.0.0.[0-255] is not valid address */
+        deviate add {
+            must "not(starts-with(.,'0.0.0.') and translate(.,'0123456789','') = '...' and not(substring(., string-length(.) - string-length('.') +1) = '.'))" {
+                error-message "0.0.0.[0-255] is not valid address";
+                description "Restriction of the allowed addresses of remote host. 0.0.0.[0-255] are not valid addresses.";
+            }
+        }
+
+        /* Multicast address is not valid address  */
+        deviate add {
+            must "not(starts-with(.,'ff'))"{
+                error-message "Multicast address is a not valid address";
+                description "Restriction of the allowed addresses of remote host. Multicast is a not valid address.";
+            }
+        }
+
+        /* Site-local address is not valid address  */
+        deviate add {
+            must "(substring-before(.,':') != 'fec0')"{
+                error-message "Site-local address is a not valid address";
+                description "Restriction of the allowed addresses of remote host. Site-local is a not valid address.";
+            }
+        }
+
+        /* Loopback address is not valid address  */
+        deviate add {
+            must "(current() != '::1')"{
+                error-message "Loopack address is not a valid address";
+                description "Restriction of the allowed addresses of remote host. Loopback is a not valid address.";
+            }
+        }
+        /* Unspecified address  */
+        deviate add {
+            must "(current() != '::')"{
+                error-message "Unspecified address";
+                description "Restriction of the allowed addresses of remote host. Unspecified address is not allowed.";
+            }
+        }
+    }
+
+    deviation "/syslog:syslog/syslog:actions/syslog:file/syslog:log-file" {
+        description "This list describes a collection of local logging files and it can have only one element.";
+        deviate add {
+            max-elements 1;
+        }
+    }
+
+    deviation "/syslog:syslog/syslog:actions/syslog:remote/syslog:destination" {
+        description "This list describes a collection of remote logging destinations. A pair of address/port must be unique";
+        deviate add {
+            unique "syslog:transport/syslog:udp/syslog:udp/syslog:address syslog:transport/syslog:udp/syslog:udp/syslog:port";
+        }
+        deviate add {
+            unique "syslog:transport/syslog:tls/syslog:tls/syslog:address syslog:transport/syslog:tls/syslog:tls/syslog:port";
+        }
+    }
+
+    deviation "/syslog:syslog/syslog:actions/syslog:file/syslog:log-file/syslog:name" {
+        description "This leaf specifies the filename of local log-file that will be stored in the system. The log file is stored in /var/log/syslog directory. Special characters are not allowed for specifing the file name. e.g'user.log'";
+        deviate replace {
+            type inet:uri {
+                length "1 .. 31";
+                pattern '[0-9a-zA-Z\-_]+(\.)?[0-9a-zA-Z\-_]*';
+            }
+        }
+    }
+
+    deviation "/syslog:syslog/syslog:actions/syslog:file/syslog:log-file/syslog:facility-filter/syslog:facility-list"{
+        description "This list describes a collection of syslog facilities and severities. This list can have up to 5 elements. If facility and severity were not configured by the user then their default value would be facility USER and severity INFO.";
+        deviate add {    }
+    }
+
+    deviation "/syslog:syslog/syslog:actions/syslog:file/syslog:log-file/syslog:facility-filter/syslog:facility-list" {
+        description "This list describes a collection of syslog facilities and severities. This list can have up to 5 elements";
+        deviate add {
+            max-elements 5;
+        }
+    }
+
+    deviation "/syslog:syslog/syslog:actions/syslog:file/syslog:log-file/syslog:facility-filter/syslog:facility-list/syslog:facility" {
+        deviate add {
+            must "((current() = 'syslog:user') or (current() = 'syslog:syslog') or (current() = 'syslog:ftp') or (current() = 'syslog:ntp') or (current() = 'all'))"{
+                error-message "Only facilities user, syslog, ftp, ntp, all are supported";
+                description "The leaf uniquely identifies a syslog facility. Only facilities user, syslog, ftp, ntp, all are supported";
+            }
+        }
+    }
+
+    deviation "/syslog:syslog/syslog:actions/syslog:remote/syslog:destination/syslog:facility-filter/syslog:facility-list"{
+        description "This list describes a collection of syslog facilities and severities. This list can have up to 5 elements. If facility and severity were not configured by the user then their default value would be facility USER and severity INFO.";
+        deviate add {    }
+    }
+
+    deviation "/syslog:syslog/syslog:actions/syslog:remote/syslog:destination/syslog:facility-filter/syslog:facility-list/syslog:facility" {
+        deviate add {
+            must "((current() = 'syslog:user') or (current() = 'syslog:syslog') or (current() = 'syslog:ftp') or (current() = 'syslog:ntp') or (current() = 'all'))"{
+                error-message "Only facilities user, syslog, ftp, ntp, all are supported";
+                description "The leaf uniquely identifies a syslog facility. Only facilities user, syslog, ftp, ntp, all are supported";
+            }
+        }
+    }
+
+    deviation "/syslog:syslog/syslog:actions/syslog:file/syslog:log-file/syslog:pattern-match" {
+        deviate replace {
+            type string {
+                length "1 .. 128";
+            }
+        }
+        deviate add {
+            must "((current() != '*') or (current() != '?'))"{
+                error-message "You cannot use the * or ? literally in the pattern";
+                description "Pattern match restriction. Characters * and ? cannot be used in the pattern.";
+            }
+        }
+    }
+
+    deviation "/syslog:syslog/syslog:actions/syslog:file/syslog:log-file/syslog:file-rotation/syslog:number-of-files" {
+        description "This leaf specifies the maximum number of log files retained. Specify 1 for implementations that only support one log file. There can be up to 10 log files";
+        deviate replace {
+            type uint32 {
+                range "0..10";
+            }
+        }
+    }
+
+    deviation "/syslog:syslog/syslog:actions/syslog:file/syslog:log-file/syslog:file-rotation/syslog:number-of-files" {
+        description "This leaf specifies the maximum number of log files retained. Specify 1 for implementations that only support one log file. If not configured then there will be one log file.";
+        deviate replace {
+            default 1;
+        }
+    }
+
+    deviation "/syslog:syslog/syslog:actions/syslog:file/syslog:log-file/syslog:file-rotation/syslog:rollover" {
+        description "This leaf specifies the length of time that log events should be written to a specific log file. Log events that arrive after the rollover period cause the current log file to be closed and a new log file to be opened. Values must be in minutes and could be either 60(hourly), 1440(daily), 10.080(weekly).";
+        deviate replace {
+            type uint32 {
+                range "60 | 1440 | 10080";
+            }
+        }
+    }
+
+    deviation "/syslog:syslog/syslog:actions/syslog:file/syslog:log-file/syslog:file-rotation/syslog:retention" {
+        description "This leaf specifies the length of time that completed/closed log event files should be stored in the file system before they are deleted. Values must be in hours and could be either 24 (daily), 168 (7*24 weekly), 720 (30*24 monthly)";
+        deviate replace {
+            units "hours";
+        }
+        deviate replace {
+            type uint32 {
+                range "24 | 168 | 720";
+            }
+        }
+    }
+
+    deviation "/syslog:syslog/syslog:actions/syslog:remote/syslog:destination/syslog:transport/syslog:tls/syslog:tls/syslog:port" {
+        deviate add {
+            must " ( . > 0 ) " {
+                error-message "0 is not a valid port number";
+                description "This leaf specifies the port number used to deliver messages to the remote server. 0 is not a valid port number";
+            }
+        }
+    }
+
+    deviation "/syslog:syslog/syslog:actions/syslog:remote/syslog:destination/syslog:transport/"
+             +"syslog:tls/syslog:tls/syslog:server-auth"{
+        deviate delete { must 'pinned-ca-certs or pinned-server-certs';}
+    }
+
+    deviation "/syslog:syslog/syslog:actions/syslog:remote/syslog:destination/syslog:transport/"
+             +"syslog:tls/syslog:tls/syslog:server-auth/syslog:pinned-server-certs"{
+     deviate not-supported;
+    }
+
+    deviation "/syslog:syslog/syslog:actions/syslog:remote/syslog:destination/syslog:transport/syslog:tls/syslog:tls/syslog:server-auth" {
+        description "Trusted certificate authority (CA) certificates should exist.";
+        deviate add {}
+    }
+
+    deviation "/syslog:syslog/syslog:actions/syslog:remote/syslog:destination/syslog:transport/"
+              +"syslog:tls/syslog:tls/syslog:client-identity/syslog:auth-type/syslog:certificate/syslog:certificate/"
+              +"syslog:local-or-keystore/syslog:local/syslog:local-definition/syslog:generate-hidden-key" {
+     deviate not-supported;
+    }
+
+    deviation "/syslog:syslog/syslog:actions/syslog:remote/syslog:destination/syslog:transport/"
+              +"syslog:tls/syslog:tls/syslog:client-identity/syslog:auth-type/syslog:certificate/syslog:certificate/"
+              +"syslog:local-or-keystore/syslog:local/syslog:local-definition/syslog:install-hidden-key/"
+              +"syslog:input/syslog:algorithm" {
+     deviate not-supported;
+    }
+
+    deviation "/syslog:syslog/syslog:actions/syslog:remote/syslog:destination/syslog:transport/"
+              +"syslog:tls/syslog:tls/syslog:client-identity/syslog:auth-type/syslog:certificate/"
+              +"syslog:certificate/syslog:local-or-keystore/syslog:local/syslog:local-definition/"
+              +"syslog:install-hidden-key/syslog:input/syslog:public-key" {
+     deviate not-supported;
+    }
+
+    deviation "/syslog:syslog/syslog:actions/syslog:remote/syslog:destination/syslog:transport/"
+              +"syslog:tls/syslog:tls/syslog:client-identity/syslog:auth-type/syslog:certificate/syslog:certificate/"
+              +"syslog:local-or-keystore/syslog:local/syslog:local-definition/syslog:public-key" {
+     deviate not-supported;
+    }
+
+    deviation "/syslog:syslog/syslog:actions/syslog:remote/syslog:destination/syslog:transport/"
+              +"syslog:tls/syslog:tls/syslog:client-identity/syslog:auth-type/syslog:certificate/syslog:certificate/"
+              +"syslog:local-or-keystore/syslog:local/syslog:local-definition/syslog:private-key" {
+     deviate not-supported;
+    }
+
+    deviation "/syslog:syslog/syslog:actions/syslog:remote/syslog:destination/syslog:transport/"
+              +"syslog:tls/syslog:tls/syslog:client-identity/syslog:auth-type/syslog:certificate/syslog:certificate/"
+              +"syslog:local-or-keystore/syslog:local/syslog:local-definition/syslog:algorithm" {
+     deviate not-supported;
+    }
+
+    deviation "/syslog:syslog/syslog:actions/syslog:remote/syslog:destination/syslog:facility-override" {
+        deviate not-supported;
+    }
+
+    deviation "/syslog:syslog/syslog:actions/syslog:remote/syslog:destination/syslog:transport/"
+              +"syslog:tls/syslog:tls/syslog:client-identity/syslog:auth-type/syslog:certificate/syslog:certificate/"
+              +"syslog:local-or-keystore/syslog:local/syslog:local-definition/syslog:certificate-expiration" {
+	deviate not-supported;
+    }
+
+    deviation "/syslog:syslog/syslog:actions/syslog:remote/syslog:destination/syslog:transport/"
+              +"syslog:tls/syslog:tls/syslog:client-identity/syslog:auth-type/syslog:certificate/syslog:certificate/"
+              +"syslog:local-or-keystore/syslog:keystore/syslog:reference" {
+	  deviate not-supported;
+    }
+
+    deviation "/syslog:syslog/syslog:actions/syslog:remote/syslog:destination/syslog:transport/"
+              +"syslog:tls/syslog:tls/syslog:hello-params/syslog:cipher-suites/syslog:cipher-suite" {
+      description "The YANG identifiers of the supported ciphers ordered by descending preference";
+      deviate add {
+        must "(current() = 'tlscsa:tls-aes-256-gcm-sha384' or current() = 'tlscsa:tls-chacha20-poly1305-sha256'"+
+           "or current() = 'tlscsa:tls-aes-128-gcm-sha256' or current() = 'tlscsa:tls-ecdhe-rsa-with-aes-256-gcm-sha384'"+
+           "or current() = 'tlscsa:tls-ecdhe-rsa-with-chacha20-poly1305-sha256' or current() = 'tlscsa:tls-ecdhe-rsa-with-aes-128-gcm-sha256'"+
+           "or current() = 'tlscsa:tls-ecdhe-rsa-with-aes-256-cbc-sha384' or current() = 'tlscsa:tls-ecdhe-rsa-with-aes-256-cbc-sha'"+
+           "or current() = 'tlscsa:tls-rsa-with-aes-256-gcm-sha384' or current() = 'tlscsa:tls-rsa-with-aes-256-cbc-sha256'"+
+           "or current() = 'tlscsa:tls-rsa-with-aes-256-cbc-sha' or current() = 'tlscsa:tls-ecdhe-rsa-with-aes-128-cbc-sha256'"+
+           "or current() = 'tlscsa:tls-ecdhe-rsa-with-aes-128-cbc-sha' or current() = 'tlscsa:tls-rsa-with-aes-128-gcm-sha256'"+
+           "or current() = 'tlscsa:tls-rsa-with-aes-128-cbc-sha256' or current() = 'tlscsa:tls-rsa-with-aes-128-cbc-sha')"{
+            error-message "this cipher is not supported";
+            description "The YANG identifiers of the supported ciphers ordered by descending preference";
+        }
+      }
+    }
+}

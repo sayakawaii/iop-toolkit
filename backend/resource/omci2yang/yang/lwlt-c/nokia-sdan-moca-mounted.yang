@@ -1,0 +1,715 @@
+module nokia-sdan-moca-mounted {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+             + "nokia-sdan-moca-mounted";
+  prefix nokia-moca-mounted;
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  import nokia-interface-identities-mounted {
+    prefix nokia-if-id-mounted;
+  }
+
+  import ietf-interfaces-mounted {
+    prefix if-mounted;
+  }
+
+  import tailf-common {
+    prefix tailf;
+  }
+
+  import bbf-fiber-onu-emulated-mount {
+     prefix onu;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Broadband Forum YANG module
+     should be directed to <mailto:isam.yang@nokia.com>.";
+
+
+  description
+    "This module contains a collection of YANG definitions for
+     Physical path termination point MoCA UNI.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2022, Nokia. All Rights Reserved.";
+
+
+  revision 2024-04-25 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific EPIC BBN-729";
+  }
+ 
+  typedef moca-channel-type {
+    type enumeration {
+      enum "moca-ch-freq-unknown" {
+        description "Unknown MoCA channel,means no connectivity or link is having connectivity problems.";
+      }
+      enum "moca-ch-freq-450-mhz" {
+        description "MoCA channel with center frequency at 450 MHz";
+      }
+      enum "moca-ch-freq-475-mhz" {
+        description "MoCA channel with center frequency at 475 MHz";
+      }
+      enum "moca-ch-freq-500-mhz" {
+        description "MoCA channel with center frequency at 500 MHz";
+      }
+      enum "moca-ch-freq-525-mhz" {
+        description "MoCA channel with center frequency at 525 MHz";
+      }
+      enum "moca-ch-freq-550-mhz" {
+        description "MoCA channel with center frequency at 550 MHz";
+      }
+      enum "moca-ch-freq-575-mhz" {
+        description "MoCA channel with center frequency at 575 MHz";
+      }
+      enum "moca-ch-freq-600-mhz" {
+        description "MoCA channel with center frequency at 600 MHz";
+      }
+      enum "moca-ch-freq-625-mhz" {
+        description "MoCA channel with center frequency at 625 MHz";
+      }
+      enum "moca-ch-freq-650-mhz" {
+        description "MoCA channel with center frequency at 650 MHz";
+      }
+      enum "moca-ch-freq-675-mhz" {
+        description "MoCA channel with center frequency at 675 MHz";
+      }
+      enum "moca-ch-freq-700-mhz" {
+        description "MoCA channel with center frequency at 700 MHz";
+      }
+      enum "moca-ch-freq-725-mhz" {
+        description "MoCA channel with center frequency at 725 MHz";
+      }
+      enum "moca-ch-freq-750-mhz" {
+        description "MoCA channel with center frequency at 750 MHz";
+      }
+      enum "moca-ch-freq-775-mhz" {
+        description "MoCA channel with center frequency at 775 MHz";
+      }
+      enum "moca-ch-freq-800-mhz" {
+        description "MoCA channel with center frequency at 800 MHz";
+      }
+      enum "moca-ch-freq-825-mhz" {
+        description "MoCA channel with center frequency at 825 MHz";
+      }
+      enum "moca-ch-freq-850-mhz" {
+        description "MoCA channel with center frequency at 850 MHz";
+      }
+      enum "moca-ch-freq-875-mhz" {
+        description "MoCA channel with center frequency at 875 MHz";
+      }
+      enum "moca-ch-freq-900-mhz" {
+        description "MoCA channel with center frequency at 900 MHz";
+      }
+      enum "moca-ch-freq-925-mhz" {
+        description "MoCA channel with center frequency at 925 MHz";
+      }
+      enum "moca-ch-freq-950-mhz" {
+        description "MoCA channel with center frequency at 950 MHz";
+      }
+      enum "moca-ch-freq-975-mhz" {
+        description "MoCA channel with center frequency at 975 MHz";
+      }
+      enum "moca-ch-freq-1000-mhz" {
+        description "MoCA channel with center frequency at 1000 MHz";
+      }
+      enum "moca-ch-freq-1025-mhz" {
+        description "MoCA channel with center frequency at 1025 MHz";
+      }
+      enum "moca-ch-freq-1050-mhz" {
+        description "MoCA channel with center frequency at 1050 MHz";
+      }
+      enum "moca-ch-freq-1075-mhz" {
+        description "MoCA channel with center frequency at 1075 MHz";
+      }
+      enum "moca-ch-freq-1100-mhz" {
+        description "MoCA channel with center frequency at 1100 MHz";
+      }
+      enum "moca-ch-freq-1125-mhz" {
+        description "MoCA channel with center frequency at 1125 MHz";
+      }
+      enum "moca-ch-freq-1150-mhz" {
+        description "MoCA channel with center frequency at 1150 MHz";
+      }
+      enum "moca-ch-freq-1175-mhz" {
+        description "MoCA channel with center frequency at 1175 MHz";
+      }
+      enum "moca-ch-freq-1200-mhz" {
+        description "MoCA channel with center frequency at 1200 MHz";
+      }
+      enum "moca-ch-freq-1225-mhz" {
+        description "MoCA channel with center frequency at 1225 MHz";
+      }
+      enum "moca-ch-freq-1250-mhz" {
+        description "MoCA channel with center frequency at 1250 MHz";
+      }
+      enum "moca-ch-freq-1275-mhz" {
+        description "MoCA channel with center frequency at 1275 MHz";
+      }
+      enum "moca-ch-freq-1300-mhz" {
+        description "MoCA channel with center frequency at 1300 MHz";
+      }
+      enum "moca-ch-freq-1325-mhz" {
+        description "MoCA channel with center frequency at 1325 MHz";
+      }
+      enum "moca-ch-freq-1350-mhz" {
+        description "MoCA channel with center frequency at 1350 MHz";
+      }
+      enum "moca-ch-freq-1375-mhz" {
+        description "MoCA channel with center frequency at 1375 MHz";
+      }
+      enum "moca-ch-freq-1400-mhz" {
+        description "MoCA channel with center frequency at 1400 MHz";
+      }
+      enum "moca-ch-freq-1425-mhz" {
+        description "MoCA channel with center frequency at 1425 MHz";
+      }
+      enum "moca-ch-freq-1450-mhz" {
+        description "MoCA channel with center frequency at 1450 MHz";
+      }
+      enum "moca-ch-freq-1475-mhz" {
+        description "MoCA channel with center frequency at 1475 MHz";
+      }
+      enum "moca-ch-freq-1500-mhz" {
+        description "MoCA channel with center frequency at 1500 MHz";
+      }
+      enum "moca-ch-freq-1525-mhz" {
+        description "MoCA channel with center frequency at 1525 MHz";
+      }
+      enum "moca-ch-freq-1550-mhz" {
+        description "MoCA channel with center frequency at 1550 MHz";
+      }
+      enum "moca-ch-freq-1575-mhz" {
+        description "MoCA channel with center frequency at 1575 MHz";
+      }
+      enum "moca-ch-freq-1600-mhz" {
+        description "MoCA channel with center frequency at 1600 MHz";
+      }
+      enum "moca-ch-freq-1625-mhz" {
+        description "MoCA channel with center frequency at 1625 MHz";
+      }
+    }
+    description
+      "Radio center frequencies of MoCA channels.";
+    reference
+      "MoCA MAC/PHY Specification v2.5 clause 15";
+  }
+
+  grouping base-moca-parameters {
+    description "grouping base-moca-parameters";
+    leaf password {
+      type tailf:aes-cfb-128-encrypted-string;
+      description
+        "This attribute provides the MoCA Encryption Key. It is a
+         17 ASCII coded decimal digit string.";
+      reference
+        "ITU-T G.988 9.10.1 Physical path termination point
+         MoCA UNI: Password.";
+      }
+
+      leaf privacy-enabled {
+        type enumeration {
+          enum "deactivated" {
+            value 0;
+            description
+              "deactivate link-layer security.";
+          }
+          enum "activated" {
+            value 1;
+            description
+              "activate link-layer security.";
+          }
+        }
+        default deactivated;
+        description
+          "This attribute indicates if the link-layer security is
+           deactivated (disabled) or activated (enabled).";
+        reference
+          "ITU-T G.988 9.10.1 Physical path termination point
+           MoCA UNI: Privacy enabled.";
+      }
+
+      leaf min-bw-alarm-threshold {
+        type union {
+          type enumeration {
+            enum disabled {
+              description
+                "disabled means 'disable the threshold'.";
+            }
+          }
+          type uint16 {range "57 .. 3200";}
+        }
+        units "Mbps";
+        default 180;
+        description
+          "This attribute indicates the minimum desired PHY link bandwidth between
+           two nodes. If less, an alarm is raised indicating the failure.
+           Valid values are 0, 57 to 3200 Mbps. The default value is 180Mbps,
+           with a value zero used to disable the threshold.";
+        reference
+          "ITU-T G.988 9.10.1 Physical path termination point
+           MoCA UNI: Minimum bandwidth alarm threshold.";
+      }  
+      
+      leaf max-frame-size {
+        type enumeration {
+          enum frame-size-1518 {
+            value 1518;
+            description
+              "Set the max-frame-size value to IEEE 802.3 basic frame size of 1518";
+          }
+          enum frame-size-1522 {
+            value 1522;
+            description
+              "Set the max-frame-size value to IEEE 802.3 Q-tagged frame size of 1522";
+          }
+          enum frame-size-2000 {
+            value 2000;
+            description
+              "Set the max-frame-size value to IEEE 802.3 multi-tagged envelope frame size of 2000";
+          }
+          enum frame-size-9216 {
+            value 9216;
+            description
+              "Set the max-frame-size value to Jumbo frame size of 9216";
+          }
+          enum system-default {
+            description
+              "System defaults the 'max-frame-size' value to 2000 (to support multi-tagged envelope frames)
+               for GPON system(G.984.3) and to 9216 for subsequent ITU-T PON systems";
+          }
+       }
+       units "bytes";
+       default system-default;
+       description
+         "This leaf defines the maximum frame size to be allowed across this MoCA interface";
+     }
+  }
+  
+  grouping base-moca-state-parameters {
+    description "grouping base-moca-state-parameters";  
+    leaf network-status {
+        type enumeration {
+          enum "not-join" {
+            value 0;
+            description
+              "The interface has not joined an MoCA network.";
+          }
+          enum "join" {
+            value 1;
+            description
+              "The interface has joined an MoCA network.";
+          }
+          enum "join-nc" {
+            value 2;
+            description
+              "The interface has joined an MoCA network and is currently the network coordinator.";
+          }
+        }
+        description
+          "This attribute indicates the networking state of the MoCA interface.";
+        reference
+           "ITU-T G.988 9.10.1 Physical path termination point MoCA UNI:Network status.";
+      }
+
+      leaf rf-channel {
+        type moca-channel-type;
+        description
+          "This attribute reports the RF frequency to which the MoCA
+           interface is currently tuned, in MHz.";           
+        reference
+          "ITU-T G.988 9.10.1 Physical path termination point MoCA UNI:RF channel.";
+      }
+
+      leaf last-operational-freq {
+        type moca-channel-type;
+        description
+          "This attribute reports the RF frequency to which the MoCA
+           interface was tuned when last operational, in MHz.";
+        reference
+          "ITU-T G.988 9.10.1 Physical path termination point MoCA UNI:Last operational frequency.";
+      }
+ 
+      leaf link-status {
+        type enumeration {
+          enum "no-carrier" {
+            value 0;
+            description
+              "No carrier detected.";
+          }
+          enum "carrier-detected" {
+            value 1;
+            description
+              "Carrier detected.";
+          }
+          enum "carrier-low-bw" {
+            value 2;
+            description
+              "Carrier detected with low bandwidth.";
+          }
+        }
+        default no-carrier;
+        description
+          "This attribute is used to indicate the link status of the MoCA
+           interface port between itself and MoCA devices on its network.
+
+           The agent determines this status from the LOL (Loss of Link)
+           and LL (Limited Link) alarms associated with the PPTP MoCA
+           UNI OMCI ME.
+           The OMCI MoCA PPTP ME will report the following alarm numbers:
+           0 = MoCA-Loss of Link (Loss of link of the MoCA interface)
+           1 = MoCA-Limited Link (Bandwidth of link between between 2
+               nodes on the MoCA network is less than specified value.).";
+        reference
+           "ITU-T G.988 9.10.1 Physical path termination point MoCA UNI.";
+      }
+
+      leaf operating-mode {
+        type enumeration {
+          enum "unknown" {
+            value 0;
+            description
+              "DEFAULT for ONTs capable of auto-negotiation, but which currently have no link to attempt negotiation.";
+          }
+          enum "MoCA-1.0" {
+            value 1;
+            description
+              "MoCA version 1.0.";
+          }
+          enum "MoCA-1.1" {
+            value 2;
+            description
+              "MoCA version 1.1.";
+          }
+          enum "MoCA-2.0" {
+            value 3;
+            description
+              "MoCA version 2.0.";
+          }
+          enum "MoCA-2.5" {
+            value 4;
+            description
+              "MoCA version 2.5.";
+          }
+          enum "MoCA-3.0" {
+            value 5;
+            description
+              "MoCA version 3.0.";
+          }
+        }
+        default unknown;
+        description
+          "This attribute indicates the mode of operation of the MoCA UNI interface.";
+        reference
+           "3HH-11114-FIAA-PBZZA-01P05-ISAM6_8 OMCI Interface Specification
+           3.1.117 MoCA UNI Supplemental 1:Operating Mode or 
+           3.1.176 MoCA UNI Supplemental 2:MoCA UNI Operating Mode.
+
+           Refer to https://mocalliance.org/index.php for more details on operating mode";
+      }
+  }
+
+  augment "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface" {
+    when "derived-from-or-self(if-mounted:type,
+          'nokia-if-id-mounted:moca-uni')";
+    description
+      "Augments config nodes for MoCA UNI.";
+
+    choice moca-service {
+      description
+        "Provides the choices to configure MoCA1.1/MoCA2.0/MoCA2.5 capable ONT or 
+         MoCA2.5-Access capable ONT.";
+      case moca-home { 
+        container moca-home {
+          description
+            "The config node for MoCA1.1/MoCA2.0/MoCA2.5 capable ONT.";
+          reference
+            "Refer to https://mocalliance.org/index.php for more details on MoCA modes.
+             ITU-T G.988 9.10.1 Physical path termination point MoCA UNI and 
+             3HH-11114-FIAA-PBZZA-01P05-ISAM6_8 OMCI Interface Specification
+             3.1.117 MoCA UNI Supplemental 1.";
+          uses base-moca-parameters;
+          leaf target-transmit-power {
+            type int8 {range "-31 .. 0";}
+            units "dBm";
+            default -14;
+            description
+              "This attribute indicates what the target transmitter power
+               level is to be set. Automatic Power Control (APC) supported
+               by the MoCA interface will attempt to reach this level.";        
+            reference
+              "3HH-11114-FIAA-PBZZA-01P05-ISAM6_8 OMCI Interface Specification
+               3.1.117 MoCA UNI Supplemental 1:Target Transmit Power.";
+          }
+
+          leaf network-coordinator-control {
+            type enumeration {
+              enum "negotiate" {
+                value 1;
+                description
+                  "Negotiate to be the Network Coordinator.";
+              }
+              enum "always" {
+                value 2;
+                description
+                  "Always be the Network Coordinator.";
+              }
+              enum "never" {
+                value 3;
+                description
+                  "Never be the Network Coordinator.";
+              }
+            }
+            default "negotiate";
+            description
+              "This attribute indicates whether the MoCA interface should
+               negotiate with the other MoCA nodes on its network for the
+               role of Network Coordinator (NC), or always be the network
+               coordinator on its network or never be the network coordinator
+               on its network.";
+            reference
+              "3HH-11114-FIAA-PBZZA-01P05-ISAM6_8 OMCI Interface Specification
+               3.1.117 MoCA UNI Supplemental 1:Network Coordinator Control.";
+            }
+
+          leaf snr-margin {
+            type int8 {range "-3 .. 3";}
+            units "dBm";
+            default 2;
+            description
+              "This attribute determines how much margin to use above the measured
+               Rx noise floor to accommodate variations due to return loss.";
+            reference
+              "3HH-11114-FIAA-PBZZA-01P05-ISAM6_8 OMCI Interface Specification
+               3.1.117 MoCA UNI Supplemental 1:SNR Margin.";
+          }
+
+          leaf automatic-power-control {
+            type enumeration {
+              enum "disabled" {
+                value 0;
+                description
+                  "disable APC.";
+              }
+              enum "enabled" {
+                value 1;
+                description
+                  "enable APC.";
+              }
+            }
+            default enabled;
+            description
+              "When APC is enabled, automatic power control (APC) is activated
+               and the transmit power level is adjusted to a setting that will
+               achieve the target PHY bitrate of 235Mbits/s. The adjusted setting
+               will be less than or equal to TXPOWER.
+
+               When APC is disabled, automatic power control (APC) is deactivated
+               and the transmit power level is set to TXPOWER
+               deactivated (disabled) or activated (enabled).";
+            reference
+              "3HH-11114-FIAA-PBZZA-01P05-ISAM6_8 OMCI Interface Specification
+               3.1.117 MoCA UNI Supplemental 1:APC.";
+            }      
+        }
+     }
+     case moca-access { 
+       container moca-access {
+         description
+           "The config node for moca-access capable ONT.";
+         reference
+           "Refer to https://mocalliance.org/index.php for more details on MoCA-Access modes.
+            ITU-T G.988 9.10.1 Physical path termination point MoCA UNI and 
+            3HH-11114-FIAA-PBZZA-01P05-ISAM6_8 OMCI Interface Specification
+            3.1.176 MoCA UNI Supplemental 2.";
+         uses base-moca-parameters;         
+         leaf moca-far-end-node-mac-address {
+           type yang:mac-address;
+           description
+             "A unique identifier (IEEE 48-bit Extended Unique Identifier)
+              of a MoCA device (or node) on the MoCA network. This is
+              the MAC address of the far end MoCA CPE device, that
+              the ONT MoCA-Access port shall serve or establish a link to.
+              Default = 00:00:00:00:00:00.";
+           reference
+             "3HH-11114-FIAA-PBZZA-01P05-ISAM6_8 OMCI Interface Specification
+              3.1.176 MoCA UNI Supplemental 2:MAC address of far end MoCA node.";
+         }
+
+         leaf moca-client-ds-rate {
+           type yang:gauge32 {range "1 .. 2500";}
+           units "Mbps";
+           default 1;
+           description
+             "This attribute indicates MoCA PHY unicast transmit rate 
+              from ONT MoCA interface to the far end MoCA device.";  
+           reference
+             "3HH-11114-FIAA-PBZZA-01P05-ISAM6_8 OMCI Interface Specification
+              3.1.176 MoCA UNI Supplemental 2:Physical TX Rate.";
+         }
+
+         leaf moca-client-us-rate {
+           type yang:gauge32 {range "1 .. 2500";}
+           units "Mbps";
+           default 1;
+           description
+             "This attribute indicates MoCA PHY unicast receive rate 
+              from ONT MoCA interface to the far end MoCA device.";
+           reference
+             "3HH-11114-FIAA-PBZZA-01P05-ISAM6_8 OMCI Interface Specification
+              3.1.176 MoCA UNI Supplemental 2:Physical RX Rate.";
+         }
+       }  
+     }
+   }
+  }
+  augment "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface" {
+    when "derived-from-or-self(if-mounted:type,
+          'nokia-if-id-mounted:moca-uni')";
+    description
+      "Augments operational state nodes for MoCA UNI.";
+
+    container moca-home {
+      description
+        "The status node for MoCA1.1/MoCA2.0/MoCA2.5 capable ONT.";
+      reference
+        "ITU-T G.988 9.10.1 Physical path termination point MoCA UNI and 
+         3HH-11114-FIAA-PBZZA-01P05-ISAM6_8 OMCI Interface Specification
+         3.1.117 MoCA UNI Supplemental 2.";
+      uses base-moca-state-parameters;
+      leaf actual-tx-power {
+        type int8 {range "-31 .. 0";}
+        units "dBm";
+        description
+          "This attribute indicates what the transmitter power
+                 level is actually set.";
+        reference
+          "3HH-11114-FIAA-PBZZA-01P05-ISAM6_8 OMCI Interface Specification
+           3.1.117 MoCA UNI Supplemental 1:Actual Transmit Power.";
+      }
+      
+      leaf far-end-node-mac-address {
+        type yang:mac-address;
+        description
+          "A unique identifier (IEEE 48-bit Extended Unique Identifier)
+           of a MoCA device (or node) on the MoCA network. This is
+           the MAC address of the far end MoCA device (BHR, RGW)
+           which the ONT MoCA UNI has established a link.";
+        reference
+          "3HH-11114-FIAA-PBZZA-01P05-ISAM6_8 OMCI Interface Specification
+           3.1.117 MoCA UNI Supplemental 1:MoCA UNI Far-End MAC Address.";
+      }
+ 
+      leaf actual-moca-phy-tx-rate {
+        type yang:gauge32 {range "0 .. 4095";}
+        units "Mbps";
+        description
+          "This attribute indicates the actual MoCA PHY unicast transmit rate
+           from ONT MoCA interface to to Residential Gateway.";
+        reference
+          "3HH-11114-FIAA-PBZZA-01P05-ISAM6_8 OMCI Interface Specification
+           3.1.117 MoCA UNI Supplemental 1:PHY TX Rate.";
+      }
+
+      leaf actual-moca-phy-rx-rate {
+        type yang:gauge32 {range "0 .. 4095";}
+        units "Mbps";
+        description
+          "This attribute indicates the actual MoCA PHY unicast receive rate
+           from ONT MoCA interface to to Residential Gateway.";
+        reference
+          "3HH-11114-FIAA-PBZZA-01P05-ISAM6_8 OMCI Interface Specification
+           3.1.117 MoCA UNI Supplemental 1:PHY RX Rate.";
+      }
+      
+      leaf low-power-state {
+        type enumeration {
+          enum "unknown" {
+            value 0;
+            description
+              "state is unknown.";
+          }
+          enum "normal" {
+            value 1;
+            description
+              "state is normal.";
+          }
+          enum "idle" {
+            value 2;
+            description
+              "state is idle.";
+          }
+          enum "standby" {
+            value 3;
+            description
+              "state is standby.";
+          }
+          enum "sleep" {
+            value 4;
+            description
+              "state is sleep.";
+          }
+        }
+        default unknown;
+        description
+          "This attribute indicates the power state if MoCA entered low power states.";
+        reference
+           "3HH-11114-FIAA-PBZZA-01P05-ISAM6_8 OMCI Interface Specification
+            3.1.117 MoCA UNI Supplemental 1:Low Power State.";
+      } 
+    }
+  
+    container moca-access {
+      description
+        "The status node for moca-access capable ONT.";
+      reference
+        "ITU-T G.988 9.10.1 Physical path termination point MoCA UNI and 
+         3HH-11114-FIAA-PBZZA-01P05-ISAM6_8 OMCI Interface Specification
+         3.1.117 MoCA UNI Supplemental 2.";
+      uses base-moca-state-parameters;
+    }
+  }
+}

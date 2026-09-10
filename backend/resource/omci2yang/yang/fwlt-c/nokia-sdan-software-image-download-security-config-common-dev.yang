@@ -1,0 +1,52 @@
+module nokia-sdan-software-image-download-security-config-common-dev {
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+          + "nokia-sdan-software-image-download-security-config-common-dev";
+
+  prefix  nokia-sdan-software-image-download-security-config-common-dev;
+
+  import nokia-sdan-software-image-download-security-config {
+      prefix nokia-software;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+  description
+    "This Deviation module for nokia-sdan-software-image-download-security-config.yang enforcing that either server-publick-key or est-ca
+     must exist before keystore-reference or est-profile-reference can be configured.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2025, Nokia. All Rights Reserved.";
+
+  revision 2025-11-28 {
+    description
+      "Initial Revision";
+    reference
+      "Nokia specific";
+  }
+  deviation "/nokia-software:software-certificates" {
+    deviate add {
+      must
+        'not(
+            /nokia-software:software-certificates/nokia-software:central-keystore-reference or
+            /nokia-software:software-certificates/nokia-software:est-certificate-profile-reference
+         )
+         or
+         (
+            /nokia-software:software-certificates/nokia-software:server-public-key or
+            /nokia-software:software-certificates/nokia-software:est-ca-certificate-profile-reference
+         )' {
+        error-message
+          "must configure either 'server-public-key' or 'est-ca-certificate-profile-reference' before configuring any client certificate-reference parameters.";
+        description
+          "For HTTPS software download to proceed, at least one server parameter either server-public-key or est-ca-certificate-profile-reference  must be configured. These server parameters can be configured either before or together with the client parameters.";
+      }
+    }
+  }
+}
+

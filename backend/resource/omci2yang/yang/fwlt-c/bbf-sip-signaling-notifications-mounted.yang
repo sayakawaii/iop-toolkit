@@ -1,0 +1,1095 @@
+submodule bbf-sip-signaling-notifications-mounted {
+  yang-version 1.1;
+  belongs-to bbf-sip-voip-mounted  {
+    prefix bbf-sip-voip-mounted;  
+  }
+		
+  import bbf-yang-types {
+    prefix bbf-yang;
+  }
+  
+  import ietf-inet-types {
+	prefix inet;
+	reference
+      "RFC 6991: Common YANG Data Types.";
+  }
+  
+  include bbf-sip-voip-base-mounted;
+  
+  
+  organization
+    "Broadband Forum <https://www.broadband-forum.org>
+     Common YANG Work Area";
+
+  contact
+    "Comments or questions about this Broadband Forum YANG module
+     should be directed to <mailto:help@broadband-forum.org>.
+     Editor:      Frank Desseyn, Nokia
+     Editor:      Nadine Staelens, Nokia
+     PS Leader:   Joey Boyd, ADTRAN
+     PS Leader:   Ken Kerpez, ASSIA
+     WA Director: Joey Boyd, ADTRAN
+     WA Director: Sven Ooghe, Nokia";
+
+  description
+    "This module contains a collection of YANG 
+	 definitions for the SIP VoIP alarm/inform notifcations.
+	 
+	 ==> draft-ietf-ccamp-alarm-module-06 :
+	 
+	 An alarm signifies an undesirable state in a resource
+	 that requires corrective action.
+	 
+   	 There are two main things to remember from this 
+	 definition:
+	 
+	 1.  the definition focuses on leaving out events
+	 and logging information in general.  Alarms should 
+	 only be used for undesired states that require action.
+	 
+	 2.  the definition also focus on alarms as a state on
+	 a resource, not the notifications that report the 
+	 state changes.
+	 
+	 ==> Relevant definitions of the term 'alarm' in other 
+	 alarm standards.
+	 
+	 X.733 : 
+	 error: A deviation of a system from normal operation.
+	 fault: The physical or algorithmic cause of a malfunction. 
+	 Faults manifest themselves as errors. 
+	 Alarm: A notification, of the form defined by this
+	 function, of a specific event. An alarm may or may not 
+	 represent an error. 
+	 
+	 G.7710 :
+	 Alarms are indications that are automatically generated 
+	 by an NE as a result of the declaration of a failure.  
+	 
+	 RFC 3877 :
+	 Error : A deviation of a system from normal operation.
+	 Fault : Lasting error or warning condition.
+	 Event : Something that happens which may be of interest.
+	 	A fault, a change in status, crossing a threshold,
+	 	or an external input to the system, for example.
+	 Notification : Unsolicited transmission of management
+	 	information.
+	 Alarm : Persistent indication of a fault. 
+	 
+	 ISA182 :
+	 Alarm: An audible and/or visible means of indicating to
+	 the operator an equipment malfunction, process deviation
+	 or abnormal condition requiring a response.
+	 
+	 EEMUA :
+	 An alarm is an event to which an operator must knowingly
+	 react,respond, and acknowledge - not simply acknowledge 
+	 and ignore.
+	 
+	 3GPP Alarm IRP : 
+	 3GPP v15: 
+	 An alarm signifies an undesired condition of a resource
+	 (e.g. network element, link) for which an operator action
+	 is required. It emphasizes a key requirement that 
+	 operators [...] should not be informed about an undesired
+	 condition unless it requires operator action.
+	 3GPP v12: 
+	 alarm: abnormal network entity condition, which categorizes
+	 an event as a fault.  
+	 fault: a deviation of a system from normal operation, 
+	 which may result in the loss of operational capabilities
+	 [...] .
+	 Copyright (c) 2017-2018, Broadband Forum
+     Redistribution and use in source and binary forms, with or
+     without modification, are permitted provided that the following
+     conditions are met:
+     1. Redistributions of source code must retain the above copyright
+        notice, this list of conditions and the following disclaimer.
+     2. Redistributions in binary form must reproduce the above
+        copyright notice, this list of conditions and the following
+        disclaimer in the documentation and/or other materials
+        provided with the distribution.
+     3. Neither the name of the copyright holder nor the names of its
+        contributors may be used to endorse or promote products
+        derived from this software without specific prior written
+        permission.
+     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
+     CONTRIBUTORS \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+     INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+     DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+     CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+     SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+     NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+     CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+     STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+     ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+     ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     The above license is used as a license under copyright only.
+     Please reference the Forum IPR Policy for patent licensing terms
+     <https://www.broadband-forum.org/ipr-policy>.
+     Any moral rights which are necessary to exercise under the above
+     license grant are also deemed granted under this license.
+     This version of this YANG module is part of TR-383; see
+     the TR itself for full legal notices.";
+
+  revision 2020-03-06 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: 2020-03-06.";
+    reference
+      " ";
+  }
+  
+   identity sip-voip-vag-alarm-notification {
+	description
+	  "Base identity for the per-vag related SIP voip alarm 
+	   notifications.
+	   This identity is abstract and is not to be used for any 
+	   SIP VoIP alarm notification.";
+  }
+
+  identity sip-voip-vag-inform-notification {
+	description
+	  "Base identity for the per-vag related SIP voip 
+	   inform notifications.
+	   // This identity is abstract and is not to be used for any 
+	   SIP VoIP inform notification.";
+  }
+  
+  identity sip-vag-ssp-file-not-found {
+	base sip-voip-vag-alarm-notification;
+	description
+	  "A pre-config file with the configured name and/or version
+	   is not found.";
+  }
+  
+  
+  identity sip-voip-vsg-alarm-notification {
+	description
+	  "Base identity for the per-vsg related SIP voip alarm 
+	   notifications.
+	   This identity is abstract and is not be used for any 
+	   SIP VoIP alarm notification.";
+  }
+
+  identity sip-voip-vsg-inform-notification {
+	description
+	  "Base identity for the per-vsg related SIP voip 
+	   inform notifications.
+	   This identity is abstract and is not to be used for any 
+	   SIP VoIP inform notification.";
+  }
+
+  identity sip-voip-vsp-alarm-notification {
+	description
+	  "Base identity for the per-vsp related SIP voip alarm 
+	   notifications.
+	   This identity is abstract and is not to be used for any 
+	   SIP VoIP alarm notification.";
+  }
+
+  identity sip-voip-vsp-inform-notification {
+	description
+	  "Base identity for the per-vsp related SIP voip 
+	   inform notifications.
+	   This identity is abstract and is not to be used for any 
+	   SIP VoIP inform notification.";
+  }
+  
+  identity sip-termination-alarm-notification {
+	description
+	  "Base identity for the sip termination related alarm
+	   notifications.
+	   This identity is abstract and is not to be used for any 
+	   alarm notification.";
+  }
+
+  identity sip-termination-inform-notification {
+	description
+	  "Base identity for the sip termination related 
+	   inform notifications.
+	   This identity is abstract and is not to be used for any 
+	   alarm notification.";
+  }
+  
+  identity sip-ua-alarm-notification {
+	description
+	  "Base identity for the SIP user-agent related alarm
+	   notifications.
+	   This identity is abstract and is not to be used for any 
+	   alarm notification.";
+  }
+
+  identity sip-ua-inform-notification {
+	description
+	  "Base identity for the SIP user-agent related 
+	   inform notifications.
+	   This identity is abstract and is not to be used for any 
+	   alarm notification.";
+  }
+  
+ 
+  identity sip-ua-no-reply-from-dhcpv4-server {
+	base sip-ua-alarm-notification;
+	description
+		"None of the DHCP servers reply.";
+	}
+	
+/*
+  identity sip-vsp-invalid-or-no-first-hop-sip-server-in-dhcp-reply {
+	base sip-voip-vsp-alarm-notification;
+	description
+		"The DHCPv4 server did not return a first hop SIP server
+		address as a response to the requested option 120 or the
+		DHCPv4 server returned an invalid first hop SIP server 
+		address as a response to the requested option 120.";
+	}
+
+  identity sip-vsp-missing-first-hop-sip-server-configuration {
+	base sip-voip-vsp-alarm-notification;
+	description
+		"No first hop SIP server found in the configuration data.";
+	}
+
+  identity sip-vsp-no-reply-from-first-hop-sip-server {
+	base sip-voip-vsp-alarm-notification;
+	description
+		"None of the first hop SIP servers reply to a request.";
+	}
+
+  identity sip-vsp-no-first-hop-sip-server-reachable {
+	base sip-voip-vsp-alarm-notification;
+	description
+		"None of the first hop SIP servers are reachable.";
+	}
+*/
+
+  identity sip-vsp-bad-digitmap {
+	base sip-voip-vsp-alarm-notification;
+	description
+		"The configured digitmap is not fully correct and is 
+		 therefore not usable.";
+	}
+
+  identity sip-vag-missing-first-hop-sip-server-configuration {
+	base sip-voip-vag-alarm-notification;
+	description
+	  "No first hop SIP server found in the configuration data.";
+  }
+
+  identity sip-vag-no-reply-from-first-hop-sip-server {
+	base sip-voip-vag-alarm-notification;
+	description
+	  "None of the first hop SIP servers reply to a request.";
+  }
+
+  identity sip-vag-no-first-hop-sip-server-reachable {
+	base sip-voip-vag-alarm-notification;
+	description
+      "None of the first hop SIP servers are reachable.";
+  }
+
+  identity sip-vag-transport-protocol-mismatch {
+	base sip-voip-vag-alarm-notification;
+	description
+	  "There is a transport protocol mismatch between the transport
+	   protocols supported by the SIP Forwarder (User Agent) and the
+	   transport protocols supported by the first hop SIP server.";
+  } 
+
+  identity sip-vag-first-hop-sip-server-failover {
+	base sip-voip-vag-alarm-notification;
+	description
+	  "A first hop SIP server fail-over happened, from the primary
+	   first hop SIP server to a secondary first hop SIP server or
+	   from a secondary first hop SIP server to another secondary 
+	   first hop SIP server.";
+  }
+
+  identity sip-vag-first-hop-sip-server-failback {
+	base sip-voip-vag-alarm-notification;
+	description
+	  "A first hop SIP server fail-back happened, from a secondary 
+	   first hop SIP server to the primary first hop SIP server.";
+  }
+
+  identity sip-vag-primary-first-hop-sip-server-substitution {
+	base sip-voip-vag-alarm-notification;
+	description
+	  "A new primary first hop SIP server was identified. A fail-over
+   	   happened from the previously addressed primary first hop SIP 
+	   server to the newly identified primary first hop SIP server.";
+	}
+
+  identity sip-termination-register-unresolved-dn {
+	base sip-termination-alarm-notification;
+	description
+	  "The SIP register request has failed because of a domain 
+	   name that could not be resolved.";
+	}
+
+  identity sip-termination-register-authorisation-failure {
+	base sip-termination-alarm-notification;
+	description
+	  "The SIP register request has failed because of an  
+	   authorisation failure.";
+  }
+
+  identity sip-termination-register-request-timeout {
+	base sip-termination-alarm-notification;
+	description
+	  "The SIP register request has failed because of a SIP
+	   request timeout.";
+	}
+
+  identity sip-termination-register-error-response {
+	base sip-termination-alarm-notification;
+	description
+	  "The SIP register request has been replied by the 
+	   SIP register server with an error response.";
+  }
+
+  identity sip-termination-invite-unresolved-dn {
+	base sip-termination-alarm-notification;
+	description
+	  "The SIP invite request has failed because of a domain 
+	   name that could not be resolved.";
+  }
+
+  identity sip-termination-invite-authorisation-failure {
+	base sip-termination-alarm-notification;
+	description
+	  "The SIP invite request has failed because of an  
+	   authorisation failure.";
+  }
+
+  identity sip-termination-invite-request-timeout {
+	base sip-termination-alarm-notification;
+	description
+	  "The SIP invite request has failed because of a SIP
+	   request timeout.";
+  }
+
+  identity sip-termination-invite-error-response {
+	base sip-termination-alarm-notification;
+	description
+	  "The SIP invite request has been replied by the 
+	   first hop SIP server with an error response.";
+  }
+
+  identity sip-termination-subscribe-unresolved-dn {
+	base sip-termination-alarm-notification;
+	description
+	  "The SIP subscribe request has failed because of a domain 
+	   name that could not be resolved.";
+  }
+
+  identity sip-termination-subscribe-authorisation-failure {
+	base sip-termination-alarm-notification;
+	description
+	  "The SIP subscribe request has failed because of an  
+	   authorisation failure.";
+	}
+
+  identity sip-termination-subscribe-request-timeout {
+	base sip-termination-alarm-notification;
+	description
+	  "The SIP subscribe request has failed because of a SIP
+	   request timeout.";
+  }
+
+  identity sip-termination-subscribe-error-response {
+	base sip-termination-alarm-notification;
+	description
+	  "The SIP subscribe request has been replied by the 
+	   application SIP server with an error response.";
+  }
+
+  identity sip-termination-subscribe-refresh-timeout {
+	base sip-termination-alarm-notification;
+	description
+	  "The SIP subscribe refresh request has failed because
+	   of a SIP request timeout.";
+  }
+
+  identity sip-termination-emergency-call-ongoing {
+	base sip-termination-inform-notification;
+	description
+	  "The SIP termination is actually involved in an emergency
+	   call.";
+  }
+
+  grouping sip-ua-notifications {
+      notification sip-ua-no-reply-from-dhcpv4-server {
+          if-feature specific-notifications;
+	  description
+	    "No reply received to the DHCP Discover request.";
+// BBOG: redundant with notification name unless more identities will be defined
+//       with this base.
+//       If there will be only 1 identity then this leaf is redundant with the
+//       notification name and can be removed
+	  leaf sip-ua-alarm-identity {
+	    type identityref {
+	      base sip-ua-no-reply-from-dhcpv4-server;
+	    }
+	    mandatory true;
+	    description
+	      "A unique identity associated with this notification.";
+	  }
+          leaf network-element-name {
+              type bbf-yang:string-ascii64;
+              description
+                  "The name of the network element (LT board) at
+	           which the SIP user agent is hosted.";
+          }
+      }
+      notification sip-ua-notification {
+          if-feature generic-notification;
+	  description
+	    "Generic SIP User Agent notification to inform about an
+             occured event";
+	  leaf sip-ua-alarm-identity {
+	    type identityref {
+	      base sip-ua-alarm-notification;
+	    }
+	    mandatory true;
+	    description
+	      "A unique identity associated with the event occurence";
+	  }
+          leaf network-element-name {
+              type bbf-yang:string-ascii64;
+              description
+                  "The name of the network element (LT board) at
+	           which the SIP user agent is hosted.";
+          }
+      }
+  }
+
+  grouping sip-vsp-notifications {
+    notification sip-vsp-bad-digitmap {
+          if-feature specific-notifications;
+	  description
+	    "The configured digitmap is not fully correct and is 
+		 therefore not usable.";
+// BBOG: redundant with notification name unless more identities will be defined
+//       with this base.
+//       If there will be only 1 identity then this leaf is redundant with the
+//       notification name and can be removed
+	  leaf vsp-alarm-identity {
+	    type identityref {
+	      base sip-vsp-bad-digitmap;
+	    }
+	    mandatory true;
+	    description
+	      "A unique identity associated with this notification.";
+	  }
+    }
+
+    notification sip-vsp-notification {
+          if-feature generic-notification;
+	  description
+	    "Generic SIP VSP notification to inform about an
+             occured event";
+	  leaf sip-vsp-alarm-identity {
+	    type identityref {
+	      base sip-voip-vsp-alarm-notification;
+	    }
+	    mandatory true;
+	    description
+	      "A unique identity associated with the event occurence";
+	  }
+      }
+  }
+  
+  grouping sip-vag-notifications {
+    notification sip-vag-ssp-file-not-found {
+      description
+	    "The configured sip service pre-config file is not found.";
+// BBOG: redundant with notification name unless more identities will be defined
+//       with this base.
+//       If there will be only 1 identity then this leaf is redundant with the
+//       notification name and can be removed
+      leaf vag-alarm-identity {
+	    type identityref {
+	      base sip-vag-ssp-file-not-found;
+	    }
+	    mandatory true;
+	    description
+	      "A unique identity associated with this notification.";
+      }
+      leaf call-flow-file-id { 
+        type bbf-yang:string-ascii64;
+        description
+          "The identity of the sip service profile configuration 
+	      file to be used for this VAG.";
+      }
+      leaf call-flow-file-version {	       
+        type string {length "1..32";}
+        description
+          "The version of the sip service profile configuration
+           file.";
+      }	
+    }	
+
+    notification sip-vag-transport-protocol-mismatch {
+	  description
+	    "There is a transport protocol mismatch between the transport
+	     protocols supported by the SIP Forwarder (User Agent) and the
+	     transport protocols supported by the first hop SIP server.";
+// BBOG: redundant with notification name unless more identities will be defined
+//       with this base.
+//       If there will be only 1 identity then this leaf is redundant with the
+//       notification name and can be removed
+	  leaf vag-alarm-identity {
+	    type identityref {
+	      base sip-vag-transport-protocol-mismatch;
+	    }
+	    mandatory true;
+	    description
+	      "A unique identity associated with this notification.";
+	  }
+    }
+
+    notification sip-vag-first-hop-sip-server-failover {
+	  description
+	  "A first hop SIP server fail-over happened.";
+// BBOG: redundant with notification name unless more identities will be defined
+//       with this base.
+//       If there will be only 1 identity then this leaf is redundant with the
+//       notification name and can be removed
+	  leaf vag-inform-identity {
+	    type identityref {
+	      base sip-vag-first-hop-sip-server-failover;
+	    }
+	    mandatory true;
+	    description
+	      "A unique identity associated with this inform 
+		   notification.";
+	  }
+	  leaf failed-first-hop-sip-server-name {
+	    type bbf-yang:string-ascii64;
+	    mandatory true;
+	    description
+	      "The name of the failed first hop SIP server.";
+	  }
+	  leaf failed-first-hop-sip-server-address {
+	    type inet:host;
+	    mandatory true;
+            description
+        	"The address of the failed first hop SIP server.";
+	  }
+	  leaf selected-first-hop-sip-server-name {
+	    type bbf-yang:string-ascii64;
+	    mandatory true;
+	    description
+	      "The name of the newly selected first hop SIP server.";
+	  }
+	  leaf selected-first-hop-sip-server-address {
+	    type inet:host;
+	    mandatory true;
+            description
+        	"The address of the newly selected first hop SIP server.";
+	  }
+    }
+  
+    notification sip-vag-first-hop-sip-server-failback {
+	  description
+	  "A first hop SIP server fail-back happened.";
+// BBOG: redundant with notification name unless more identities will be defined
+//       with this base.
+//       If there will be only 1 identity then this leaf is redundant with the
+//       notification name and can be removed
+	  leaf vag-inform-identity {
+	    type identityref {
+	      base sip-vag-first-hop-sip-server-failback;
+	    }
+	    mandatory true;
+	    description
+	      "A unique identity associated with this inform 
+		   notification.";
+	  }	   	
+	  leaf secondary-first-hop-sip-server-name {
+	    type bbf-yang:string-ascii64;
+	    mandatory true;
+	    description
+	      "The name of the secondary first hop SIP server that has 
+	       been left behind.";
+	  }
+	  leaf secondary-first-hop-sip-server-address {
+	    type inet:host;
+	    mandatory true;
+            description
+        	"The address of the secondary first hop SIP server that has
+	       been left behind.";
+	  }
+	  leaf primary-first-hop-sip-server-name {
+	    type bbf-yang:string-ascii64;
+	    mandatory true;
+	    description
+	      "The name of the primary first hop SIP server.";
+	  }
+	  leaf primary-first-hop-sip-server-address {
+	    type inet:host;
+	    mandatory true;
+            description
+        	"The address of the primary first hop SIP server.";
+	  }
+    }
+
+    notification sip-vag-primary-first-hop-sip-server-substitution {
+	  description
+	    "A primary first hop SIP server substitution happened.";
+// BBOG: redundant with notification name unless more identities will be defined
+//       with this base.
+//       If there will be only 1 identity then this leaf is redundant with the
+//       notification name and can be removed
+	  leaf vag-inform-identity {
+	    type identityref {
+	      base sip-vag-primary-first-hop-sip-server-substitution;
+	    }
+	    mandatory true;
+	    description
+	      "A unique identity associated with this inform 
+	  	 notification.";
+	  }	  
+	  leaf old-primary-first-hop-sip-server {
+	    type bbf-yang:string-ascii64;
+	    mandatory true;
+	    description
+	      "The name of the former primary first hop SIP server.";
+	  }
+	  leaf old-primary-first-hop-sip-server-address {
+	    type inet:host;
+	    mandatory true;
+            description
+      	        "The address of the former primary first hop SIP server.";
+	  }    
+	  leaf new-primary-first-hop-sip-server-name {
+	    type bbf-yang:string-ascii64;
+	    mandatory true;
+	    description
+	      "The name of the new primary first hop SIP server.";
+	  }
+	  leaf new-primary-first-hop-sip-server-address {
+	    type inet:host;
+	    mandatory true;
+            description
+        	"The address of the new primary first hop SIP server.";
+	  }
+    }
+  }	
+
+  grouping sip-termination-notifications {
+    notification sip-termination-register-unresolved-dn {
+        if-feature specific-notifications;
+	description
+	  "The SIP register request has failed because of a domain 
+	   name that could not be resolved.";
+// BBOG: redundant with notification name unless more identities will be defined
+//       with this base.
+//       If there will be only 1 identity then this leaf is redundant with the
+//       notification name and can be removed
+	leaf sip-termination-alarm-identity {
+	  type identityref {
+	    base sip-termination-register-unresolved-dn;
+	  }
+	  mandatory true;
+	  description
+	    "A unique identity associated with this notification.";
+	}
+// BBOG: not needed in this case (defined on the SIP termination)
+//	leaf sip-user-name {
+//	  type bbf-yang:string-ascii64;
+//	  mandatory true;
+//	  description
+//	  	"A SIP user name that uniquely identifies the sip 
+//		 termination profile.";
+//    }
+    }
+
+    notification sip-termination-register-authorisation-failure {
+        if-feature specific-notifications;
+	description
+	  "The SIP register request has failed because of an  
+	   authorisation failure.";
+// BBOG: redundant with notification name unless more identities will be defined
+//       with this base.
+//       If there will be only 1 identity then this leaf is redundant with the
+//       notification name and can be removed
+	leaf sip-termination-alarm-identity {
+	  type identityref {
+	    base sip-termination-register-authorisation-failure;
+	  }
+	  mandatory true;
+	  description
+	    "A unique identity associated with this notification.";
+	}
+// BBOG: not needed in this case (defined on the SIP termination)
+//	leaf sip-user-name {
+//	  type bbf-yang:string-ascii64;
+//	  mandatory true;
+//	  description
+//	  	"A SIP user name that uniquely identifies the sip 
+//		 termination profile.";
+//    }
+    }
+
+    notification sip-termination-register-request-timeout {
+        if-feature specific-notifications;
+	description
+	  "The SIP register request has failed because of a SIP
+	   request timeout.";
+// BBOG: redundant with notification name unless more identities will be defined
+//       with this base.
+//       If there will be only 1 identity then this leaf is redundant with the
+//       notification name and can be removed
+	leaf sip-termination-alarm-identity {
+	  type identityref {
+	    base sip-termination-register-request-timeout;
+	  }
+	  mandatory true;
+	  description
+	    "A unique identity associated with this notification.";
+	}
+// BBOG: not needed in this case (defined on the SIP termination)
+//	leaf sip-user-name {
+//	  type bbf-yang:string-ascii64;
+//	  mandatory true;
+//	  description
+//	  	"A SIP user name that uniquely identifies the sip 
+//		 termination profile.";
+//    }
+    }
+   
+    notification sip-termination-register-error-response {
+        if-feature specific-notifications;
+	description
+	   "The SIP register request has been replied by the 
+	    SIP register server with an error response.";
+// BBOG: redundant with notification name unless more identities will be defined
+//       with this base.
+//       If there will be only 1 identity then this leaf is redundant with the
+//       notification name and can be removed
+	leaf sip-termination-alarm-identity {
+	  type identityref {
+	    base sip-termination-register-error-response;
+	  }
+	  mandatory true;
+	  description
+	    "A unique identity associated with this notification.";
+	}
+// BBOG: not needed in this case (defined on the SIP termination)
+//	leaf sip-user-name {
+//	  type bbf-yang:string-ascii64;
+//	  mandatory true;
+//	  description
+//	  	"A SIP user name that uniquely identifies the sip 
+//		 termination.";
+//    }
+    }
+
+    notification sip-termination-invite-unresolved-dn {
+        if-feature specific-notifications;
+	description
+	   "The SIP invite request has failed because of a domain 
+	    name that could not be resolved.";
+// BBOG: redundant with notification name unless more identities will be defined
+//       with this base.
+//       If there will be only 1 identity then this leaf is redundant with the
+//       notification name and can be removed
+	leaf sip-termination-alarm-identity {
+	  type identityref {
+	    base sip-termination-invite-unresolved-dn;
+	  }
+	  mandatory true;
+	  description
+	    "A unique identity associated with this notification.";
+	}
+// BBOG: not needed in this case (defined on the SIP termination)
+//	leaf sip-user-name {
+//	  type bbf-yang:string-ascii64;
+//	  mandatory true;
+//	  description
+//	  	"A SIP user name that uniquely identifies the sip 
+//		 termination profile.";
+//    }
+    }
+  
+    notification sip-termination-invite-request-timeout {
+        if-feature specific-notifications;
+	description
+	   "The SIP invite request has failed because of a SIP
+	    request timeout.";
+// BBOG: redundant with notification name unless more identities will be defined
+//       with this base.
+//       If there will be only 1 identity then this leaf is redundant with the
+//       notification name and can be removed
+	leaf sip-termination-alarm-identity {
+	  type identityref {
+	    base sip-termination-invite-request-timeout;
+	  }
+	  mandatory true;
+	  description
+	    "A unique identity associated with this notification.";
+	}
+// BBOG: not needed in this case (defined on the SIP termination)
+//	leaf sip-user-name {
+//	  type bbf-yang:string-ascii64;
+//	  mandatory true;
+//	  description
+//	  	"A SIP user name that uniquely identifies the sip 
+//		 termination profile.";
+//    }
+    }
+  
+    notification sip-termination-invite-authorisation-failure {
+        if-feature specific-notifications;
+	description
+	   "The SIP invite request has failed because of an  
+	    authorisation failure.";
+// BBOG: redundant with notification name unless more identities will be defined
+//       with this base.
+//       If there will be only 1 identity then this leaf is redundant with the
+//       notification name and can be removed
+	leaf sip-termination-alarm-identity {
+	  type identityref {
+	    base sip-termination-invite-authorisation-failure;
+	  }
+	  mandatory true;
+	  description
+	    "A unique identity associated with this notification.";
+	}
+// BBOG: not needed in this case (defined on the SIP termination)
+//	leaf sip-user-name {
+//	  type bbf-yang:string-ascii64;
+//	  mandatory true;
+//	  description
+//	  	"A SIP user name that uniquely identifies the sip 
+//		 termination profile.";
+//    }
+    }
+   
+    notification sip-termination-invite-error-response {
+        if-feature specific-notifications;
+	description
+	   "The SIP invite request has been replied by the 
+	    first hop SIP server with an error response.";
+// BBOG: redundant with notification name unless more identities will be defined
+//       with this base.
+//       If there will be only 1 identity then this leaf is redundant with the
+//       notification name and can be removed
+	leaf sip-termination-alarm-identity {
+	  type identityref {
+	    base sip-termination-invite-request-timeout;
+	  }
+	  mandatory true;
+	  description
+	    "A unique identity associated with this notification.";
+	}
+// BBOG: not needed in this case (defined on the SIP termination)
+//	leaf sip-user-name {
+//	  type bbf-yang:string-ascii64;
+//	  mandatory true;
+//	  description
+//	  	"A SIP user name that uniquely identifies the sip 
+//		 termination profile.";
+//    }
+    }
+  
+    notification sip-termination-subscribe-unresolved-dn {
+        if-feature specific-notifications;
+	description
+	   "The SIP subscribe request has failed because of a domain 
+	    name that could not be resolved.";
+// BBOG: redundant with notification name unless more identities will be defined
+//       with this base.
+//       If there will be only 1 identity then this leaf is redundant with the
+//       notification name and can be removed
+	leaf sip-termination-alarm-identity {
+	  type identityref {
+	    base sip-termination-subscribe-unresolved-dn;
+	  }
+	  mandatory true;
+	  description
+	    "A unique identity associated with this notification.";
+	}
+// BBOG: not needed in this case (defined on the SIP termination)
+//	leaf sip-user-name {
+//	  type bbf-yang:string-ascii64;
+//	  mandatory true;
+//	  description
+//	  	"A SIP user name that uniquely identifies the sip 
+//		 termination profile.";
+//    }
+    }
+   
+    notification sip-termination-subscribe-authorisation-failure {
+        if-feature specific-notifications;
+	description
+	   "The SIP subscribe request has failed because of an  
+	    authorisation failure.";
+// BBOG: redundant with notification name unless more identities will be defined
+//       with this base.
+//       If there will be only 1 identity then this leaf is redundant with the
+//       notification name and can be removed
+	leaf sip-termination-alarm-identity {
+	  type identityref {
+	    base sip-termination-subscribe-authorisation-failure;
+	  }
+	  mandatory true;
+	  description
+	    "A unique identity associated with this notification.";
+	}
+// BBOG: not needed in this case (defined on the SIP termination)
+//	leaf sip-user-name {
+//	  type bbf-yang:string-ascii64;
+//	  mandatory true;
+//	  description
+//	  	"A SIP user name that uniquely identifies the sip 
+//		 termination profile.";
+//    }
+    }
+
+    notification sip-termination-subscribe-request-timeout {
+        if-feature specific-notifications;
+	description
+	   "The SIP subscribe request has failed because of a SIP
+	    request timeout.";
+// BBOG: redundant with notification name unless more identities will be defined
+//       with this base.
+//       If there will be only 1 identity then this leaf is redundant with the
+//       notification name and can be removed
+	leaf sip-termination-alarm-identity {
+	  type identityref {
+	    base sip-termination-subscribe-request-timeout;
+	  }
+	  mandatory true;
+	  description
+	    "A unique identity associated with this notification.";
+	}
+// BBOG: not needed in this case (defined on the SIP termination)
+//	leaf sip-user-name {
+//	  type bbf-yang:string-ascii64;
+//	  mandatory true;
+//	  description
+//	  	"A SIP user name that uniquely identifies the sip 
+//		 termination profile.";
+//    }
+    }
+  
+    notification sip-termination-subscribe-error-response {
+        if-feature specific-notifications;
+	description
+	   "The SIP subscribe request has been replied by the 
+	    application SIP server with an error response.";
+// BBOG: redundant with notification name unless more identities will be defined
+//       with this base.
+//       If there will be only 1 identity then this leaf is redundant with the
+//       notification name and can be removed
+	leaf sip-termination-alarm-identity {
+	  type identityref {
+	    base sip-termination-subscribe-error-response;
+	  }
+	  mandatory true;
+	  description
+	    "A unique identity associated with this notification.";
+	}
+// BBOG: not needed in this case (defined on the SIP termination)
+//	leaf sip-user-name {
+//	  type bbf-yang:string-ascii64;
+//	  mandatory true;
+//	  description
+//	  	"A SIP user name that uniquely identifies the sip 
+//		 termination profile.";
+//    }
+    }
+ 
+    notification sip-termination-subscribe-refresh-timeout {
+        if-feature specific-notifications;
+	description
+	   "The SIP subscribe refresh request has failed because
+	    of a SIP request timeout.";
+// BBOG: redundant with notification name unless more identities will be defined
+//       with this base.
+//       If there will be only 1 identity then this leaf is redundant with the
+//       notification name and can be removed
+	leaf sip-termination-alarm-identity {
+	  type identityref {
+	    base sip-termination-subscribe-refresh-timeout;
+	  }
+	  mandatory true;
+	  description
+	    "A unique identity associated with this notification.";
+	}
+// BBOG: not needed in this case (defined on the SIP termination)
+//	leaf sip-user-name {
+//	  type bbf-yang:string-ascii64;
+//	  mandatory true;
+//	  description
+//	  	"A SIP user name that uniquely identifies the sip 
+//		 termination profile.";
+//    }
+    }
+  
+    notification sip-termination-emergency-call-ongoing {
+        if-feature specific-notifications;
+	description
+	   "The SIP termination is actually involved in an emergency
+	    call.";
+// BBOG: redundant with notification name unless more identities will be defined
+//       with this base.
+//       If there will be only 1 identity then this leaf is redundant with the
+//       notification name and can be removed
+	leaf sip-termination-inform-identity {
+	  type identityref {
+	    base sip-termination-emergency-call-ongoing;
+	  }
+	  mandatory true;
+	  description
+	    "A unique identity associated with this inform 
+		 notification.";
+	}
+// BBOG: not needed in this case (defined on the SIP termination)
+//	leaf sip-user-name {
+//	  type bbf-yang:string-ascii64;
+//	  mandatory true;
+//	  description
+//	  	"A SIP user name that uniquely identifies the sip 
+//		 termination profile.";
+//    }
+    }
+
+    notification sip-termination-alarm-notification {
+        if-feature generic-notification;
+	description
+	  "The SIP register request has failed because of a domain 
+	   name that could not be resolved.";
+	leaf sip-termination-alarm-identity {
+	  type identityref {
+	    base sip-termination-alarm-notification;
+	  }
+	  mandatory true;
+	  description
+	    "A unique identity associated with this notification.";
+	}
+    }
+
+    notification sip-termination-inform-notification {
+        if-feature generic-notification;
+	description
+	  "The SIP register request has failed because of a domain 
+	   name that could not be resolved.";
+	leaf sip-termination-alarm-identity {
+	  type identityref {
+	    base sip-termination-inform-notification;
+	  }
+	  mandatory true;
+	  description
+	    "A unique identity associated with this notification.";
+	}
+    }
+  }
+} 

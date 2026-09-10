@@ -1,0 +1,122 @@
+module nokia-bbf-l2-forwarding-l2fwd-fiber-non-u2u-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/" +
+            "nokia-bbf-l2-forwarding-l2fwd-fiber-non-u2u-dev";
+
+  prefix nokia-bbf-l2-forwarding-l2fwd-fiber-non-u2u-dev;
+
+  import bbf-l2-forwarding {
+    prefix bbf-l2-fwd;
+  }
+
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "This module contains a collection of YANG deviations on top 
+     of standard for supporting BBF YANG module.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia 
+     reserves the right to revise this document for any reason, 
+     including but not limited to conformity with standards 
+     promulgated by various agencies, utilisation of advances in the 
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or 
+     referred to herein.
+
+     The product specifications and other technical or performance 
+     information contained herein are subject to change without 
+     notice. Updates of this document will be issued under the above 
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any 
+     information or opinion contained herein. Nokia expressly advises 
+     that any use of for any purpose or reliance upon this technical 
+     reference is at the risk of the user and that Nokia shall not be 
+     liable for any damage or injury incurred by any person arising 
+     out of the sufficiency, accuracy, or utility of any information 
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any 
+     manufacturer to modify or change any of its products, nor does 
+     this document represent any commitment by Nokia to sell or 
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license 
+     or right under any patent, whether or not the use of any 
+     information herein necessarily employs an invention of any 
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2017-2018, Nokia. All Rights Reserved.";
+
+  revision 2022-08-26 {
+    description
+      "Move to l2fwd-fiber-single-uplink";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2022-08-01 {
+    description
+      "Reject empty profile.";
+    reference
+      "Nokia specific"; 
+  }
+
+  revision 2016-11-28 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific"; 
+  }
+
+  deviation '/bbf-l2-fwd:forwarding/bbf-l2-fwd:split-horizon-profiles'
+           +'/bbf-l2-fwd:split-horizon-profile/bbf-l2-fwd:'
+           +'split-horizon' {
+    description
+      "The split-horizon-profile allows to overrule the default
+       which is that traffic is allowed between all ports.
+       Various split-horizon-profiles can be defined. A typical
+       split horizon profile in Access Nodes is to forbid traffic
+       between users.
+
+       In the product with this deviation it is the target to allow
+       only a profile that forbids traffic between users.
+
+       Users can be directly connected to the node or users can be
+       connected through a subtending node. In this way the target
+       is to forbid traffic between user-ports, between
+       subtended-node-ports, and between user- and
+       subtended-node-ports. Traffic between a user- or
+       subtended-node-port and a network-port is allowed. Traffic
+       between network-ports, if multiple (anf if they participate
+       in the same forwarder), is also allowed.
+
+       The deviation min-elements assures there are a minimum set of
+       rules.
+
+       The modification of the in-interfaces-usage only allows rules
+       for interfaces of a specific interface-usages. The
+       in-interface-usage is the key. If the number the min-elements
+       value is equal to the number of of values that is allowed by
+       the type, then this automatically results in the need to have
+       a rule for each of them, and to forbid rules for other
+       values. As a result this deviation assures there is a rule
+       for user-ports and a rule for subtended-node-ports(if NNI is
+       supported) and forbids other rules.";
+
+    deviate add {
+      min-elements 1;
+    }
+  }
+
+}

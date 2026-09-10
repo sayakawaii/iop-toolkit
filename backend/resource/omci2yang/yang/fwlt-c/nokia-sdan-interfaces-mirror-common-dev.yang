@@ -1,0 +1,530 @@
+module nokia-sdan-interfaces-mirror-common-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+            + "nokia-sdan-interfaces-mirror-common-dev";
+
+  prefix nokia-sdan-if-mir-dev;
+
+  import nokia-sdan-interfaces-mirror {
+      prefix nokia-sdan-if-mir;
+  }
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import bbf-if-type {
+    prefix bbfift;
+  }
+
+  import bbf-interface-usage {
+    prefix bbf-if-usg;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG deviations on top
+     of nokia-sdan-interfaces-mirror.yang module.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2023, Nokia. All Rights Reserved.";
+
+  revision 2023-09-15 {
+    description
+      "";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2023-08-11 {
+    description
+      "";
+    reference
+      "Nokia specific";
+  }
+
+  deviation "/if:interfaces/if:interface/nokia-sdan-if-mir:mirror" {
+    description
+      "To restrict mirror enable only on vlan-sub-interface.";
+    deviate add {
+      must "(current()/../if:type = 'bbfift:vlan-sub-interface')" {
+        error-message "Mirroring is supported only on vlan-sub-interface type";
+      description
+        "Mirroring is supported only on vlan-sub-interface type.";
+      }
+    }
+  }
+ 
+  deviation "/if:interfaces/if:interface/nokia-sdan-if-mir:mirror"
+            +"/nokia-sdan-if-mir:ingress/nokia-sdan-if-mir:output"
+            +"/nokia-sdan-if-mir:interface"
+            +"/nokia-sdan-if-mir:l2-termination-interface"
+  {
+    description
+      "l2-termination-interface is not supported as output VSI.";
+    deviate not-supported;
+  }
+ 
+  deviation "/if:interfaces/if:interface/nokia-sdan-if-mir:mirror"
+            +"/nokia-sdan-if-mir:egress/nokia-sdan-if-mir:output"
+            +"/nokia-sdan-if-mir:interface"
+            +"/nokia-sdan-if-mir:l2-termination-interface"
+  {
+    description
+      "l2-termination-interface is not supported as output VSI.";
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces/if:interface/nokia-sdan-if-mir:mirror"
+            +"/nokia-sdan-if-mir:ingress/nokia-sdan-if-mir:output" {
+
+    deviate add {
+      must "not(current()/nokia-sdan-if-mir:vlan-sub-interface "
+           +"= current()/../../../if:name)" {
+        error-message "Input and Output VSI should not be same";
+      description
+        "Same Input and Output mirror VSI is not allowed";
+      }
+    }
+  }
+
+  deviation "/if:interfaces/if:interface/nokia-sdan-if-mir:mirror"
+            +"/nokia-sdan-if-mir:ingress/nokia-sdan-if-mir:output"
+            +"/nokia-sdan-if-mir:interface/nokia-sdan-if-mir:vlan-sub-interface"
+            +"/nokia-sdan-if-mir:vlan-sub-interface" {
+
+    deviate add {
+      must "(/if:interfaces/if:interface[if:name = "
+           +" current()]/"
+           +" bbf-if-usg:interface-usage/bbf-if-usg:interface-usage = "
+           +"'network-port')" {
+        error-message "Mirror output interface should be network VSI.";
+      description
+        "Output VSI should be network port.";
+      }
+    }
+  }
+
+  deviation "/if:interfaces/if:interface/nokia-sdan-if-mir:mirror"
+            +"/nokia-sdan-if-mir:egress/nokia-sdan-if-mir:output" {
+
+    deviate add {
+      must "(current()/nokia-sdan-if-mir:vlan-sub-interface)" {
+        error-message "l2-termination-interface is not supported as output interface";
+      description
+        "l2-termination-interface is not supported as output VSI.";
+      }
+    }
+
+    deviate add {
+      must "not(current()/nokia-sdan-if-mir:vlan-sub-interface "
+           +"= current()/../../../if:name)" {
+        error-message "Input and Output VSI should not be same";
+      description
+        "Same Input and Output mirror VSI is not allowed";
+      }
+    }
+  }
+
+  deviation "/if:interfaces/if:interface/nokia-sdan-if-mir:mirror"
+            +"/nokia-sdan-if-mir:egress/nokia-sdan-if-mir:output"
+            +"/nokia-sdan-if-mir:interface/nokia-sdan-if-mir:vlan-sub-interface"
+            +"/nokia-sdan-if-mir:vlan-sub-interface" {
+
+    deviate add {
+      must "(/if:interfaces/if:interface[if:name = "
+           +" current()]/"
+           +" bbf-if-usg:interface-usage/bbf-if-usg:interface-usage = "
+           +"'network-port')" {
+        error-message "Mirror output interface should be network VSI.";
+      description
+        "Output VSI should be network port.";
+      }
+    }
+  }
+ 
+  deviation "/nokia-sdan-if-mir:mirror-filter-profiles"
+           +"/nokia-sdan-if-mir:mirror-filter-profile" {
+    description
+      "Max 32 Mirror-Filter-Profile supported only.";
+    deviate add {
+      max-elements 32;
+    }
+  }
+
+  /* Not supported deviation of mirror filter profile */
+  deviation "/nokia-sdan-if-mir:mirror-filter-profiles"
+           +"/nokia-sdan-if-mir:mirror-filter-profile"
+           +"/nokia-sdan-if-mir:filter/nokia-sdan-if-mir:filter-method"
+           +"/nokia-sdan-if-mir:inline/nokia-sdan-if-mir:pbit-marking-list" {
+    description
+      "This deviation assures that filter-method as pbit-marking-list
+       is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/nokia-sdan-if-mir:mirror-filter-profiles"
+           +"/nokia-sdan-if-mir:mirror-filter-profile"
+           +"/nokia-sdan-if-mir:filter/nokia-sdan-if-mir:filter-method"
+           +"/nokia-sdan-if-mir:inline/nokia-sdan-if-mir:dei-marking-list" {
+    description
+      "This deviation assures that filter-method as dei-marking-list
+       is not supported.";
+    deviate not-supported;
+  }
+
+  /* operator deviation in transport */
+  deviation "/nokia-sdan-if-mir:mirror-filter-profiles"
+           +"/nokia-sdan-if-mir:mirror-filter-profile"
+           +"/nokia-sdan-if-mir:filter/nokia-sdan-if-mir:filter-method"
+           +"/nokia-sdan-if-mir:inline/nokia-sdan-if-mir:transport"
+           +"/nokia-sdan-if-mir:source-port-range"
+           +"/nokia-sdan-if-mir:port-range-or-operator"
+           +"/nokia-sdan-if-mir:operator/nokia-sdan-if-mir:operator" {
+    description
+      "This deviation assures that source-port-range filter-method
+       based on operator is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/nokia-sdan-if-mir:mirror-filter-profiles"
+           +"/nokia-sdan-if-mir:mirror-filter-profile"
+           +"/nokia-sdan-if-mir:filter/nokia-sdan-if-mir:filter-method"
+           +"/nokia-sdan-if-mir:inline/nokia-sdan-if-mir:transport"
+           +"/nokia-sdan-if-mir:destination-port-range"
+           +"/nokia-sdan-if-mir:port-range-or-operator"
+           +"/nokia-sdan-if-mir:operator/nokia-sdan-if-mir:operator" {
+    description
+      "This deviation assures that destination-port-range filter-method
+       based on operator is not supported.";
+    deviate not-supported;
+  }
+
+  /* Filter method ip-common param deviations */
+  deviation "/nokia-sdan-if-mir:mirror-filter-profiles"
+           +"/nokia-sdan-if-mir:mirror-filter-profile"
+           +"/nokia-sdan-if-mir:filter/nokia-sdan-if-mir:filter-method"
+           +"/nokia-sdan-if-mir:inline/nokia-sdan-if-mir:ip-common"
+           +"/nokia-sdan-if-mir:ecn" {
+    description
+      "This deviation assures that ip-common filter-method based on ecn
+       is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/nokia-sdan-if-mir:mirror-filter-profiles"
+           +"/nokia-sdan-if-mir:mirror-filter-profile"
+           +"/nokia-sdan-if-mir:filter/nokia-sdan-if-mir:filter-method"
+           +"/nokia-sdan-if-mir:inline/nokia-sdan-if-mir:ip-common"
+           +"/nokia-sdan-if-mir:length" {
+    description
+      "This deviation assures that ip-common filter-method based on length
+       is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/nokia-sdan-if-mir:mirror-filter-profiles"
+           +"/nokia-sdan-if-mir:mirror-filter-profile"
+           +"/nokia-sdan-if-mir:filter/nokia-sdan-if-mir:filter-method"
+           +"/nokia-sdan-if-mir:inline/nokia-sdan-if-mir:ip-common"
+           +"/nokia-sdan-if-mir:ttl" {
+    description
+      "This deviation assures that ip-common filter-method based on ttl
+       is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/nokia-sdan-if-mir:mirror-filter-profiles"
+           +"/nokia-sdan-if-mir:mirror-filter-profile"
+           +"/nokia-sdan-if-mir:filter/nokia-sdan-if-mir:filter-method"
+           +"/nokia-sdan-if-mir:inline/nokia-sdan-if-mir:ip-common"
+           +"/nokia-sdan-if-mir:dscp" {
+    description
+      "This deviation assures that ip-common filter-method based on dscp
+       is not supported.";
+    deviate not-supported;
+  }
+
+  /* Filter-method ipv4 deviations */
+  deviation "/nokia-sdan-if-mir:mirror-filter-profiles"
+           +"/nokia-sdan-if-mir:mirror-filter-profile"
+           +"/nokia-sdan-if-mir:filter/nokia-sdan-if-mir:filter-method"
+           +"/nokia-sdan-if-mir:inline/nokia-sdan-if-mir:ipv4"
+           +"/nokia-sdan-if-mir:ihl" {
+    description
+      "This deviation assures that ipv4 filter-method based on ihl
+       is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/nokia-sdan-if-mir:mirror-filter-profiles"
+           +"/nokia-sdan-if-mir:mirror-filter-profile"
+           +"/nokia-sdan-if-mir:filter/nokia-sdan-if-mir:filter-method"
+           +"/nokia-sdan-if-mir:inline/nokia-sdan-if-mir:ipv4"
+           +"/nokia-sdan-if-mir:flags" {
+    description
+      "This deviation assures that ipv4 filter-method based on flags
+       is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/nokia-sdan-if-mir:mirror-filter-profiles"
+           +"/nokia-sdan-if-mir:mirror-filter-profile"
+           +"/nokia-sdan-if-mir:filter/nokia-sdan-if-mir:filter-method"
+           +"/nokia-sdan-if-mir:inline/nokia-sdan-if-mir:ipv4"
+           +"/nokia-sdan-if-mir:offset" {
+    description
+      "This deviation assures that ipv4 filter-method based on offset
+       is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/nokia-sdan-if-mir:mirror-filter-profiles"
+           +"/nokia-sdan-if-mir:mirror-filter-profile"
+           +"/nokia-sdan-if-mir:filter/nokia-sdan-if-mir:filter-method"
+           +"/nokia-sdan-if-mir:inline/nokia-sdan-if-mir:ipv4"
+           +"/nokia-sdan-if-mir:identification" {
+    description
+      "This deviation assures that ipv4 filter-method based on identification
+       is not supported.";
+    deviate not-supported;
+  }
+
+  /* Filter-method ipv6 param deviation */
+  deviation "/nokia-sdan-if-mir:mirror-filter-profiles"
+           +"/nokia-sdan-if-mir:mirror-filter-profile"
+           +"/nokia-sdan-if-mir:filter/nokia-sdan-if-mir:filter-method"
+           +"/nokia-sdan-if-mir:inline/nokia-sdan-if-mir:ipv6"
+           +"/nokia-sdan-if-mir:flow-label" {
+    description
+      "This deviation assures that ipv6 filter-method based on flow-label
+       is not supported.";
+    deviate not-supported;
+  }
+
+  /* Filter-method flow color deviation */
+  deviation "/nokia-sdan-if-mir:mirror-filter-profiles"
+           +"/nokia-sdan-if-mir:mirror-filter-profile"
+           +"/nokia-sdan-if-mir:filter/nokia-sdan-if-mir:filter-method"
+           +"/nokia-sdan-if-mir:inline/nokia-sdan-if-mir:flow-color" {
+    description
+      "This deviation assures that filter-method as flow-color
+       is not supported.";
+    deviate not-supported;
+  }
+
+  /* Filter-method vlan untagged deviation */
+  deviation "/nokia-sdan-if-mir:mirror-filter-profiles"
+           +"/nokia-sdan-if-mir:mirror-filter-profile"
+           +"/nokia-sdan-if-mir:filter/nokia-sdan-if-mir:filter-method"
+           +"/nokia-sdan-if-mir:inline/nokia-sdan-if-mir:vlans"
+           +"/nokia-sdan-if-mir:vlan-match/nokia-sdan-if-mir:match-untagged" {
+    description
+      "This deviation assures that vlan filter-method as match-untagged
+       is not supported.";
+    deviate not-supported;
+  }
+
+  /* Filter-method source mac filter-match deviation */
+  deviation "/nokia-sdan-if-mir:mirror-filter-profiles"
+      +"/nokia-sdan-if-mir:mirror-filter-profile"
+      +"/nokia-sdan-if-mir:filter/nokia-sdan-if-mir:filter-method"
+      +"/nokia-sdan-if-mir:inline/nokia-sdan-if-mir:source-mac-address"
+      +"/nokia-sdan-if-mir:filter-match" {
+    description
+      "This deviation assures that source-mac-address filter based on filter-match
+       is not supported.";
+    deviate not-supported;
+  }
+
+  /* Filter-method dest mac filter-match deviation */
+  deviation "/nokia-sdan-if-mir:mirror-filter-profiles"
+      +"/nokia-sdan-if-mir:mirror-filter-profile"
+      +"/nokia-sdan-if-mir:filter/nokia-sdan-if-mir:filter-method"
+      +"/nokia-sdan-if-mir:inline/nokia-sdan-if-mir:destination-mac-address"
+      +"/nokia-sdan-if-mir:filter-match" {
+    description
+      "This deviation assures that dest-mac-address filter based on filter-match
+       is not supported";
+    deviate not-supported;
+  }
+
+  /* Filter-method ethernet-frame-type deviation */
+  deviation "/nokia-sdan-if-mir:mirror-filter-profiles"
+           +"/nokia-sdan-if-mir:mirror-filter-profile"
+           +"/nokia-sdan-if-mir:filter/nokia-sdan-if-mir:filter-method"
+           +"/nokia-sdan-if-mir:inline/nokia-sdan-if-mir:ethernet-frame-type" {
+    deviate add {
+      must "not(current() = 'any')" {
+        error-message "ethernet-frame-type as 'any' is not supported";
+      }
+    }
+  }
+
+  deviation "/nokia-sdan-if-mir:mirror-filter-profiles"
+           +"/nokia-sdan-if-mir:mirror-filter-profile"
+           +"/nokia-sdan-if-mir:filter/nokia-sdan-if-mir:filter-method"
+           +"/nokia-sdan-if-mir:inline/nokia-sdan-if-mir:ethernet-frame-type" {
+           deviate add {
+              max-elements 1;
+           }
+  }
+
+  /* mirror profile reference same as its parent not allowed deviation */
+  deviation "/nokia-sdan-if-mir:mirror-filter-profiles"
+           +"/nokia-sdan-if-mir:mirror-filter-profile"
+           +"/nokia-sdan-if-mir:filter/nokia-sdan-if-mir:filter-method"
+           +"/nokia-sdan-if-mir:by-reference"
+           +"/nokia-sdan-if-mir:mirror-filter-profile-name" {
+    deviate add {
+      must "not(current() = current()/../../nokia-sdan-if-mir:name)" {
+        error-message "mirror-filter-profile-name reference should not be same as its parent mirror profile";
+      description
+        "mirror-filter-profile-name reference same as its parent mirror profile
+         is not supported";
+      }
+    }
+  }
+
+  /* mirror user note */
+  deviation "/if:interfaces/if:interface/nokia-sdan-if-mir:mirror"{
+   
+    description
+      "note: for mirror output vlan-sub-interface, user should configure egress-rewrite pbit as example CLI: pbit-marking-index 0 dei-
+marking-index 0, mirror function always process it by default pbit 0 in data plane.";
+    deviate add {
+      }
+  }
+
+  /* mirror profile: dscprange/port must configured with ipv4 or ipv6 filter */
+  deviation "/nokia-sdan-if-mir:mirror-filter-profiles"
+           +"/nokia-sdan-if-mir:mirror-filter-profile"
+           +"/nokia-sdan-if-mir:filter/nokia-sdan-if-mir:filter-method"
+           +"/nokia-sdan-if-mir:inline/nokia-sdan-if-mir:ip-common" {
+    deviate add {
+      must "(../nokia-sdan-if-mir:ipv4/nokia-sdan-if-mir:source-ipv4-network) or (../nokia-sdan-if-mir:ipv4/nokia-sdan-if-mir:destination-ipv4-network) or (../nokia-sdan-if-mir:ipv6/nokia-sdan-if-mir:source-ipv6-network) or (../nokia-sdan-if-mir:ipv6/nokia-sdan-if-mir:destination-ipv6-network)" {
+        error-message "When filter is common-dscprange or common-protocol or port, there must be a ipv4 or ipv6 filter";
+      description
+         "dscprange/port must configured with ipv4 or ipv6 filter";
+      }
+    }
+  }
+
+  deviation "/nokia-sdan-if-mir:mirror-filter-profiles"
+           +"/nokia-sdan-if-mir:mirror-filter-profile"
+           +"/nokia-sdan-if-mir:filter/nokia-sdan-if-mir:filter-method"
+           +"/nokia-sdan-if-mir:inline/nokia-sdan-if-mir:transport" {
+    deviate add {
+      must "(../nokia-sdan-if-mir:ipv4/nokia-sdan-if-mir:source-ipv4-network) or (../nokia-sdan-if-mir:ipv4/nokia-sdan-if-mir:destination-ipv4-network) or (../nokia-sdan-if-mir:ipv6/nokia-sdan-if-mir:source-ipv6-network) or (../nokia-sdan-if-mir:ipv6/nokia-sdan-if-mir:destination-ipv6-network)" {
+        error-message "When filter is common-dscprange or common-protocol or port, there must be a ipv4 or ipv6 filter";
+      description
+         "dscprange/port must configured with ipv4 or ipv6 filter";
+      }
+    }
+  }
+
+  /* mirror profile: dscp-range did not support 'any' */
+  deviation "/nokia-sdan-if-mir:mirror-filter-profiles"
+           +"/nokia-sdan-if-mir:mirror-filter-profile"
+           +"/nokia-sdan-if-mir:filter/nokia-sdan-if-mir:filter-method"
+           +"/nokia-sdan-if-mir:inline/nokia-sdan-if-mir:ip-common"
+           +"/nokia-sdan-if-mir:dscp-range" {
+    deviate add {
+      must "not(current() = 'any')" {
+        error-message "For CCL type policy, 'any' in dscp-range are not supported";
+      description
+         "dscp-range did not support 'any'";
+      }
+    }
+  }
+
+  /* Refuse filters containg certain combinations of fields.
+     pbit-marking-list and dei-marking-list are not used here
+     because they are marked as not-supported by other deviations.
+  */
+  deviation "/nokia-sdan-if-mir:mirror-filter-profiles"
+           +"/nokia-sdan-if-mir:mirror-filter-profile"
+           +"/nokia-sdan-if-mir:filter" {
+    deviate add {
+      must "not((nokia-sdan-if-mir:source-mac-address or "
+          +"nokia-sdan-if-mir:destination-mac-address or "
+          +"nokia-sdan-if-mir:ethernet-frame-type or "
+          +"nokia-sdan-if-mir:vlans or "
+          +"nokia-sdan-if-mir:protocol = 'arp' or "
+          +"nokia-sdan-if-mir:protocol = 'cfm' or "
+          +"nokia-sdan-if-mir:protocol = 'pppoe-discovery' or "
+          +"nokia-sdan-if-mir:protocol = 'dot1x' or "
+          +"nokia-sdan-if-mir:protocol = 'lacp')"
+          +" and "
+          +"(nokia-sdan-if-mir:ipv4 or "
+          +"nokia-sdan-if-mir:ipv6 or "
+          +"nokia-sdan-if-mir:ip-common or "
+          +"nokia-sdan-if-mir:transport or "
+          +"nokia-sdan-if-mir:protocol = 'igmp' or "
+          +"nokia-sdan-if-mir:protocol = 'mld' or "
+          +"nokia-sdan-if-mir:protocol = 'icmpv6' or "
+          +"nokia-sdan-if-mir:protocol = 'nd' or "
+          +"nokia-sdan-if-mir:protocol = 'dhcpv4' or "
+          +"nokia-sdan-if-mir:protocol = 'dhcpv6'))" {
+        error-message "MAC-ACL and IP-ACL cannot be used together";
+      description
+         "Filters that combine MAC-ACL and IP-ACL are not supported.";
+      }
+    }
+  }
+
+  /* dummy deviations */	
+  deviation "/if:interfaces/if:interface/nokia-sdan-if-mir:mirror" {
+    deviate add {}
+  }
+
+  deviation "/nokia-sdan-if-mir:mirror-filter-profiles"
+           +"/nokia-sdan-if-mir:mirror-filter-profile" {
+    deviate add {
+      must "( count(current()/nokia-sdan-if-mir:filter) >=1 )" {
+        error-message "At least one mirror-filter should be configured";
+      }
+    }
+  }
+}

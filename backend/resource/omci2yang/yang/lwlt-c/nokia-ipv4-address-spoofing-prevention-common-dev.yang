@@ -1,0 +1,180 @@
+module nokia-ipv4-address-spoofing-prevention-common-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+          + "nokia-ipv4-address-spoofing-prevention-common-dev";
+
+  prefix nokia-ipv4-address-spoofing-prevention-common-dev;
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import nokia-ipv4-address-spoofing-prevention {
+    prefix nokia-ipv4-sppr;
+  }
+
+  import bbf-l2-forwarding {
+    prefix bbf-l2-fwd;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG definitions for
+     supporting Nokia specific requirements as applicable to its
+     access network equipment.
+
+     Specifically, this module provides restrictions (=deviations) for
+     the implementation in the ISAM ?????.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2018, Nokia. All Rights Reserved.";
+
+  revision 2025-04-24 {
+    description
+      "Add deviation for static ipv4-address.";
+    reference
+      "Nokia specific.";
+  }
+
+  revision 2019-04-30 {
+    description
+      "Move to ipv4-antispoofing category.";
+    reference
+      "Nokia specific.";
+  }
+
+  revision 2018-10-26 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific";
+  }
+
+  deviation "/if:interfaces/if:interface/nokia-ipv4-sppr:ipv4-security"
+           +"/nokia-ipv4-sppr:address/nokia-ipv4-sppr:ip"  {
+
+    /* Is ALL 0s IPv4 address ? */
+    deviate add {
+       must "current() != '0.0.0.0'" {
+             error-message "0.0.0.0 is not a valid static IPv4 address";
+             description "0.0.0.0 is invalid to configure as static IPv4 address";
+      }
+    }
+    /* Is broadcast address.IS_ALL 1s ? */
+    /*deviate add {
+       must "current() != '255.255.255.255'" {
+             error-message "255.255.255.255 is not valid";
+             description "IPv4 address range from 224.0.0.0 to 255.255.255.255  are invalid to configure as static IPv4 address ";
+      }
+    }*/
+  }
+
+  deviation "/if:interfaces/if:interface/nokia-ipv4-sppr:ipv4-security"
+           +"/nokia-ipv4-sppr:address/nokia-ipv4-sppr:ip"  {
+    /* Is IPv4 address Starts with 0 */
+    deviate add {
+       must "(substring-before(.,'.') != 0)" {
+             error-message "IPv4 address starting with 0 is invalid static IPv4 address";
+             description "IPv4 address starting with 0 is invalid to configure as static IPv4 address ";
+      }
+    }
+
+    /* Is Loopback IPv4 address(127.0.0.0 - 127.255.255.255) */
+    deviate add {
+       must "(substring-before(.,'.') != 127)" {
+             error-message "Loopback IPv4 address is invalid for static IPv4 address";
+             description "Loopback IPv4 address is invalid to configure as static IPv4 address";
+      }
+    }
+    /* IS_CLASSD (224.0.0.0 to 239.255.255.255), IS_CLASSE (240.0.0.0 to 255.255.255.255) ?  */
+    deviate add {
+       must "not((substring-before(.,'.') >= 224)
+             and (substring-before(.,'.') <= 255))" {
+             error-message "224.0.0.0 - 255.255.255.255 are not valid";
+             description "IPv4 address range from 224.0.0.0 to 255.255.255.255  are invalid to configure as static IPv4 address ";
+      }
+    }
+  }
+
+  deviation "/if:interfaces/if:interface/nokia-ipv4-sppr:ipv4-security"
+           +"/nokia-ipv4-sppr:address/nokia-ipv4-sppr:ip"  {
+   description "ipv4-security: Static IPv4 address should be unique within a forwarder to avoid malicious user. The error-message: Static IPv4 address shall not conflict within a forwarder";
+   deviate add{}
+  }
+
+  deviation "/if:interfaces/if:interface/nokia-ipv4-sppr:ipv4-security"
+        +"/nokia-ipv4-sppr:address" {
+   description "ipv4-security: There is a dimension based on the system resource, so that the number of static IPv4 address shall be configured within the dimension. The error-message: System maximum dimensioning limit is reached to configure static IPv4 address";
+   deviate add{}
+  }
+
+  deviation "/if:interfaces/if:interface/nokia-ipv4-sppr:ipv4-security"
+             +"/nokia-ipv4-sppr:address"{
+     deviate add{
+       must "((count(current()))<= (current()/../nokia-ipv4-sppr:max-address))"{
+         error-message "Number of static IPv4 address exceeds the value of max-address in a vlan-sub-interface";
+         description "ipv4-security: The number of static IPv4 address shall be configured within the max-address value. Dependent xpath where this rule applies : /if:interfaces/if:interface/nokia-ipv4-sppr:ipv4-security/nokia-ipv4-sppr:max-address";
+      }
+    }
+  }
+
+  deviation "/if:interfaces/if:interface/nokia-ipv4-sppr:ipv4-security"
+           +"/nokia-ipv4-sppr:address" {
+    deviate add {
+      must " (boolean(/bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarders/bbf-l2-fwd:forwarder/bbf-l2-fwd:ports/bbf-l2-fwd:port[bbf-l2-fwd:sub-interface = current()/../../if:name]))" {
+   error-message "Before configuring address for ipv4-security, the vlan-sub-interface should be attached to a forwarder";
+   description  "ipv4-security: To configure ip-address for ipv4-antispoofing, the user vlan-sub-interface should have attached to a forwarder. Dependent xpath where this rule applies: /bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarders/bbf-l2-fwd:forwarder/bbf-l2-fwd:ports/bbf-l2-fwd:port";
+
+      }
+    }
+  }
+
+  deviation "/if:interfaces/if:interface/nokia-ipv4-sppr:ipv4-security"
+        +"/nokia-ipv4-sppr:address" {
+   description "ipv4-security: Static ipv4 address cannot be modified";
+   deviate add{}
+  }
+
+}
+

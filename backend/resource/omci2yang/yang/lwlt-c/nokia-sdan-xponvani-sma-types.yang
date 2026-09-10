@@ -1,0 +1,195 @@
+module nokia-sdan-xponvani-sma-types {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+          + "nokia-sdan-xponvani-sma-types";
+
+  prefix nokia-sdan-xponvani-sma-types;
+
+  import bbf-xpon-onu-types {
+    prefix bbf-xpon-onu-types;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+    directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This specification is published by Nokia under Non-Disclosure
+    Agreement(s) (NDA) with specific parties and has to be considered
+    as Confidential Information as defined in such NDA. Nokia reserves
+    the right to revise this document for any reason, including but
+    not limited to conformity with standards promulgated by various
+    agencies, utilization of advances in the state of the technical
+    areas, or the reflection of changes in the design of any
+    equipment, techniques, or procedures described or referred to
+    herein.
+
+    The product specifications and other technical or performance
+    information contained herein are subject to change without notice.
+    Updates of this document will be issued under the above NDA's.
+
+    Nokia makes no representation or warranty, expressed or implied,
+    with respect to the sufficiency, accuracy, or utility of any
+    information or opinion contained herein. Nokia expressly advises
+    that any use of for any purpose or reliance upon this technical
+    reference is at the risk of the user and that Nokia shall not be
+    liable for any damage or injury incurred by any person arising out
+    of the sufficiency, accuracy, or utility of any information or
+    opinion contained herein.
+
+    This document is not to be construed as a suggestion to any
+    manufacturer to modify or change any of its products, nor does
+    this document represent any commitment by Nokia to sell or
+    purchase any product. Nothing contained herein shall be construed
+    as conferring by implication, estoppel, or otherwise any license
+    or right under any patent, whether or not the use of any
+    information herein necessarily employs an invention of any
+    existing or later issued patent.
+
+    Nokia reserves the right not to offer any or all of these products
+    and to withdraw any or all of them at any future time.
+
+    Copyright (C) 2022, Nokia. All Rights Reserved.";
+
+  revision 2026-08-20 {
+    description
+      "Initial revision.";
+    reference
+      "TBD";
+  }
+
+  identity cryptographic-capability-base {
+    description
+      "This identity is used to denote the cryptographic capability
+      used in OMCI Secure Mutual Authentication (SMA).";
+  }
+
+  identity aes-cmac-128 {
+    base cryptographic-capability-base;
+    description
+      "The cryptographic capability defined in ITU-T G.988 section 9.13.11.";
+  }
+
+  identity hmac-sha-256 {
+    base cryptographic-capability-base;
+      description
+        "The cryptographic capability defined in ITU-T G.988 section 9.13.11.";
+  }
+
+  identity sma-state-base {
+      description
+        "This identity is used to denote the state of the vANI OMCI Secure
+        Mutual Authentication (SMA).";
+  }
+
+  identity sma-success {
+    base sma-state-base;
+    description
+      "OMCI Secure Mutual Authentication (SMA) has succeeded. The vANI is
+      allowed for use.";
+  }
+
+  identity sma-failed {
+    base sma-state-base;
+      description
+        "OMCI Secure Mutual Authentication (SMA) has failed. The service is
+        not allowed for this tentative vANI, because OMCI SMA failed.";
+  }
+
+  identity sma-ongoing {
+    base sma-state-base;
+      description
+        "An ONU is present and the tentative vANI is currently undergoing
+        OMCI Secure Mutual Authentication (SMA) verification.";
+  }
+
+  identity sma-not-start-psk-fetching {
+    base sma-state-base;
+      description
+        "An ONU is present corresponding to the vANI required OMCI Secure
+        Mutual Authentication (SMA). The PreShared Key (PSK) is fetching
+        before OMCI SMA to be run.";
+  }
+
+  identity no-sma {
+    base sma-state-base;
+      description
+        "An ONU is present corresponding to this vANI but vANI does not
+        require OMCI Secure Mutual Authentication (SMA) to be run.";
+  }
+
+  identity sma-failure-reason-base {
+      description
+        "This identity is used to denote the reason of the OMCI Secure
+        Mutual Authentication (SMA) failure.";
+  }
+
+  identity no-valid-psk {
+    base sma-failure-reason-base;
+      description
+        "OMCI Secure Mutual Authentication (SMA) failed because of no
+        valid PreShared Key (PSK).";
+  }
+
+  identity sma-not-supported-by-onu {
+    base sma-failure-reason-base;
+      description
+        "OMCI Secure Mutual Authentication (SMA) failed because of
+        OMCI SMA not supported by ONU. The condition is ONU sends
+        UnknownManagedEntity response.";
+  }
+
+  identity olt-authenticates-onu-failed {
+    base sma-failure-reason-base;
+      description
+        "OMCI Secure Mutual Authentication (SMA) failed because of
+        OLT authenticates ONU failed. The condition is OLT cannot
+        receive ONU authentication result or the OLT computed ONU
+        authentication result doesn't match with the ONU computed
+        ONU authentication result.";
+  }
+
+  identity onu-authenticates-olt-failed {
+    base sma-failure-reason-base;
+      description
+        "OMCI Secure Mutual Authentication (SMA) failed because of
+        ONU authenticates OLT failed. The condition is OLT cannot
+        receive ONU authentication status or the ONU computed OLT
+        authentication result doesn't match with the OLT computed
+        OLT authentication result.";
+  }
+
+  identity onu-responds-error {
+    base sma-failure-reason-base;
+      description
+        "OMCI Secure Mutual Authentication (SMA) failed because of
+        ONU responds error to OLT. The condition is ONU responds
+        error for any of the SET/GET/GETNEXT operations.";
+  }
+
+ identity onu-present-with-tentative-v-ani {
+    base bbf-xpon-onu-types:onu-present;
+    description
+      "This identity applies to an Optical Network Unit (ONU) which
+        - is present on a channel termination local to this Optical
+          Line Termination (OLT),(Refer to 'inside-olt') and
+        - has reached ONU Transmission Convergence (TC) state O5 and
+        - tentatively corresponds to a locally configured virtual
+          Access Network Interface (vANI) that still needs to be
+          authenticated by Secure Mutual Authentication (SMA).";
+  }
+
+  identity onu-present-with-tentative-v-ani-but-sma-failed {
+    base onu-present-with-tentative-v-ani;
+    description
+      "This identity applies to an Optical Network Unit (ONU) which is
+       present on a channel termination local to this Optical Line
+       Termination (OLT) (Refer to 'inside-olt') and  for which a
+       corresponding virtual Access Network Interface (vANI) could be
+       tentatively identified but the Secure Mutual Authentication
+       (SMA) failed.";
+  }
+}

@@ -1,0 +1,972 @@
+module nokia-debug {
+    yang-version 1.1;
+
+    namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/nokia-debug";
+
+    prefix "nokia-debug";
+
+    import ietf-netconf-acm {
+        prefix "nacm";
+    }
+
+    import ietf-inet-types {
+        prefix "inet";
+    }
+
+    import nokia-file-transfer {
+        prefix "nokia-ft";
+    }
+
+    import ietf-crypto-types {
+        prefix "ct";
+    }
+    
+    import ietf-keystore {
+       prefix "ks";
+    }
+    
+    import ietf-tls-client { 
+        prefix tlsc; 
+    }
+     
+    import nokia-sdan-keystore-types {
+        prefix nokia-ks;
+    }
+    
+    import nokia-sdan-est-client { 
+       prefix estc; 
+    }
+    
+
+    import ietf-tcp-common {
+       prefix tcpcmn;
+    }
+
+    organization "Nokia";
+
+    contact "isam.yang@nokia.com";
+
+    description
+     "This submodule contains a collection of YANG definitions for
+     debugging the system over netconf yang
+
+     Copyright (c) 2022, Broadband Forum
+     All rights reserved.
+
+     Redistribution and use in source and binary forms, with or
+     without modification, are permitted provided that the following
+     conditions are met:
+
+     1. Redistributions of source code must retain the above copyright
+        notice, this list of conditions and the following disclaimer.
+
+     2. Redistributions in binary form must reproduce the above
+        copyright notice, this list of conditions and the following
+        disclaimer in the documentation and/or other materials
+        provided with the distribution.
+
+     3. Neither the name of the copyright holder nor the names of its
+        contributors may be used to endorse or promote products
+        derived from this software without specific prior written
+        permission.
+
+     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
+     CONTRIBUTORS \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+     INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+     DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+     CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+     SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+     NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+     CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+     STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+     ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+     ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+     The above license is used as a license under copyright only.
+     Please  reference the Forum IPR Policy for patent licensing terms
+     <https://www.broadband-forum.org/ipr-policy>.
+
+     Any moral rights which are necessary to exercise under the above
+     license grant are also deemed granted under this license";
+
+    
+    revision 2026-06-10 {
+      description "Add constraints to session-prefix and serial number";
+      reference "";
+    }
+    
+    revision 2026-02-10 {
+      description "Add config data for TLS support";
+      reference "";
+    }
+
+    revision 2024-10-01 {
+      description "Update for techsupport and extra security";
+      reference "";
+    }
+
+    revision 2023-06-05 {
+      description "Update description field when missing";
+      reference "";
+    }
+
+
+    revision 2022-12-15 {
+      description "Update description field when missing";
+      reference "";
+    }
+
+    revision 2022-03-28 {
+      description
+      "Introduction of following features:
+        * encrypted commands
+        * immediate mode (command output returned in RPC response)
+        * decoupling of filetransfer categories from collectable loggings
+        * storage of logs for retrieval in at a later moment
+        * deletion of locally stored logs
+        * fetching a list of all locally stored logs";
+      reference "";
+    }
+
+    revision 2022-01-06 {
+      description "make change of password a feature, as not always applicable";
+      reference "";
+    }
+
+    revision 2021-11-15 {
+      description "Updating password length";
+      reference "";
+    }
+
+    revision 2021-10-08 {
+      description "Removing references to tailf prefix";
+      reference "";
+    }
+
+    revision 2021-07-27 {
+        description "Import nokia-file-transfer with standard prefix";
+        reference "";
+    }
+
+    revision 2021-02-16 {
+        description "Second Draft";
+        reference "";
+    }
+
+    feature password {
+      description
+        "Indicates support to change the trace and debug password.";
+    }
+
+  // copy some groupings as the problem is that we wnat to use it within an action, and uses has also an action
+  grouping local-or-keystore-end-entity-cert-with-key-grouping {
+    description
+      "A grouping that expands to allow an end-entity certificate
+       (and its associated private key) to be either stored locally,
+       within the using data model, or be a reference to a specific
+       certificate in the keystore.";
+    choice local-or-keystore {
+      mandatory true;
+      case keystore {
+        /* if-feature "keystore-supported";*/
+        leaf reference {
+          type ks:asymmetric-key-certificate-ref;
+          description
+            "A reference to a specific certificate, and its
+             associated private key, stored in the keystore.";
+        }
+      }
+      description
+        "A choice between an inlined definition and a definition
+         that exists in the keystore.";
+    }
+  }
+  grouping client-identity-grouping {
+    description
+      "A reusable grouping for configuring a TLS client identity.";
+    container client-identity {
+      description
+        "The credentials used by the client to authenticate to
+         the TLS server.";
+
+      choice auth-type {
+        description
+          "The authentication type.";
+        container certificate {
+          uses nokia-debug:local-or-keystore-end-entity-cert-with-key-grouping;
+          description
+            "A locally-defined or referenced certificate
+             to be used for client authentication.";
+          reference
+            "RFC ZZZZ: YANG Data Model for a 'Keystore' Mechanism";
+        }
+      }
+    } // end client-identity
+  } // end client-identity-grouping
+  
+    
+    container nokia-debug {
+    
+        description "Debugging commands only accessible by NOKIA.";
+        
+        action setup-tls {
+            description "This command request the system to setup a TLS connection to DC.";
+
+            nacm:default-deny-all;
+
+            input {
+              container transport {
+        
+                   description "Transport parameters.";
+                 
+                   leaf address {
+                       type inet:host;
+                       description "The IP address or hostname of the Debug Client.";
+                    }
+                    leaf port {
+                       type inet:port-number;
+                       description "The port number of the Debug Client.";
+                    }
+                    leaf persist {
+                        type enumeration {
+                            enum none {
+                                description "After any reset the TLS connection will not be re-established";
+                            }
+                            enum reset {
+                                description "After a reset the TLS connection should be re-established";
+                            }
+                            enum power-reset {
+                                description "After a power on reset the TLS connection should be re-established";
+                            }
+                        }
+                        description "Persistency of the TLS connection";
+                    }
+                   
+                    uses tcpcmn:tcp-common-grouping;
+                    
+                    container tls {
+                       description "TLS parameters.";
+                        uses nokia-debug:client-identity-grouping;
+                        uses tlsc:server-auth-grouping;
+                        uses tlsc:hello-params-grouping;
+                    }
+                }
+            }
+            
+            output {
+              leaf status {
+                    type enumeration {
+                        enum ok {
+                            description "Command OK";
+                        }
+                        enum failed {
+                            description "Command NOK";
+                        }
+                    }
+                    mandatory true;
+                    description "status";
+                }
+                 leaf error-info {
+                    type string;
+                    description "Details about the error if any.";
+                }
+            }
+        }
+        
+        action stop-tls {
+            description "This command request the system to stop TLS connection.";
+            nacm:default-deny-all;
+        }
+        
+        action status-tls {
+            description "This command request info about the TLS connection.";
+            nacm:default-deny-all;
+            output {
+              leaf status {
+                    type enumeration {
+                        enum established {
+                            description "The TLS tunnel is established";
+                        }
+                        enum certlib_issues {
+                            description "The setup parameters give issues with certlib";
+                        }
+                        enum setup_issues {
+                            description "The TLS tunnel setup is failing";
+                        }
+                        enum in_progress {
+                            description "The TLS tunnel setup is in progress";
+                        }
+                        enum no_setup_requested {
+                            description "There was no request to setup a TLS tunnel";
+                        }
+                    }
+                    mandatory true;
+                    description "status";
+                }
+                leaf error-info {
+                    type string;
+                    description "Details about the error if any.";
+                }
+              }
+            }
+             
+        
+        action change-password {
+            if-feature nokia-debug:password;
+            status deprecated;
+            description "Modify the debug password, by providing the serial number, old password, new password, salt and hash-type.
+                       By providing the serial number one can address different boards on a shelf based system.
+                       Only when a board is found with matching serial number and matchin old password the action will proceed";
+
+            nacm:default-deny-all;
+
+            input {
+                leaf serial-num {
+                    type string{
+                      length "1..16";
+                      pattern '[0-9a-zA-Z]*';
+                    }
+                    mandatory true;
+                    description "The serial string of the board";
+                }
+                leaf old-password {
+                    type string {
+                        length "5..24";
+                    }
+                    mandatory true;
+                    description "Current linux password to be changed.";
+                }
+                leaf new-password {
+                    type string {
+                        length "5..24";
+                        pattern "[a-zA-Z0-9@$#()_+=\\[{}|,./?!:-]+";
+                    }
+                    mandatory true;
+                    description "The new password to use i.s.o. the old one.";
+                }
+                leaf new-salt {
+                    type string {
+                        length "16";
+                        pattern '[a-zA-Z0-9\./]+';
+                    }
+                    mandatory true;
+                    description "The salt code used to encrypt the verification message.";
+                }
+                leaf hash-type {
+                    type ct:hash-algorithm-ref;
+                    mandatory true;
+                    description "The hash algorithm used in the password generation.";
+                }
+                leaf verification-msg {
+                    type binary {
+                        length "512";
+                    }
+                    mandatory true;
+                    description "An encrypted verification msg used to authenticate the rpc origin.";
+                }
+            }
+
+            output {
+                leaf status {
+                    type enumeration {
+                        enum ok {
+                            description "Password updated successfully";
+                        }
+                        enum failed {
+                            description "Password update failed, mostly because errors in the parameters passed to the rpc";
+                        }
+                    }
+                    mandatory true;
+                    description "status";
+                }
+            }
+        }
+
+        action verify-password {
+            if-feature nokia-debug:password;
+            status deprecated;
+            description "Verify the debug password, by providing the serial number, new password,
+                         the salt that was used to generate it, the verification message that was generated for it and the hash-type.";
+
+            nacm:default-deny-all;
+
+            input {
+                leaf serial-num {
+                    type string {
+                      length "1..16";
+                      pattern '[0-9a-zA-Z]*';
+                    }
+                    mandatory true;
+                    description "The serial string of the board";
+                }
+                leaf new-password {
+                    type string {
+                        length "5..24";
+                        pattern "[a-zA-Z0-9@$#()_+=\\[{}|,./?!:-]+";
+                    }
+                    mandatory true;
+                    description "The new password to be verified.";
+                }
+                leaf hash-type {
+                    type ct:hash-algorithm-ref;
+                    mandatory true;
+                    description "The hash algorithm used in the password generation.";
+                }
+                leaf verification-msg {
+                    type binary {
+                        length "512";
+                    }
+                    mandatory true;
+                    description "An encrypted verification msg used to authenticate the rpc origin.";
+                }
+            }
+
+            output {
+                leaf status {
+                    type enumeration {
+                        enum ok {
+                            description "The provided Password is currently configured on the system.";
+                        }
+                        enum failed {
+                            description "The provided Password is not currently configured on the system.";
+                        }
+                    }
+                    mandatory true;
+                    description "status";
+                }
+            }
+        }
+
+       action change-data {
+            if-feature nokia-debug:password;
+            description "Modify the debug password and or techsupport name by providing the serial number";
+
+            nacm:default-deny-all;
+
+            input {
+                leaf serial-num {
+                    type string {
+                      length "1..16";
+                      pattern '[0-9a-zA-Z]*';
+                    }
+                    mandatory true;
+                    description "The serial string of the board";
+                }
+                leaf message {
+                    type binary;
+                    mandatory true;
+                    description "The data that is changed. Data is a string composed out of nonce, password, serial, username.
+                                 The data is encrypted with the secret.  ";
+                }
+                leaf sign {
+                    type binary;
+                    mandatory true;
+                    description "The sign of message data with private key of NCY client";
+                }
+                leaf secret {
+                    type binary;
+                    mandatory true;
+                    description "The secret used to encrypt the data. The secret is encrypted with public key of NCY server ";
+                }
+            }
+
+            output {
+                leaf status {
+                    type enumeration {
+                        enum ok {
+                            description "Action done successfully";
+                        }
+                        enum failed_authorization {
+                            description "Change Action failed not authorized";
+                        }
+                        enum failed_serial {
+                            description "Change Action failed wrong serial";
+                        }
+                        enum failed_connect {
+                            description "Change Action failed cannot connect to peer NT";
+                        }
+                        enum failed_invalid_message {
+                            description "Change Action failed as data in message incorrect";
+                        }
+                        enum failed_other {
+                            description "Change Action failed any other failure";
+                        }
+                    }
+                    mandatory true;
+                    description "status";
+                }
+            }
+        }
+
+        action verify-data {
+            if-feature nokia-debug:password;
+            description "Verify the debug password and or techsupport name by providing the serial number";
+
+            nacm:default-deny-all;
+
+            input {
+                leaf serial-num {
+                    type string {
+                      length "1..16";
+                      pattern '[0-9a-zA-Z]*';
+                    }
+                    mandatory true;
+                    description "The serial string of the board";
+                }
+                leaf message {
+                    type binary;
+                    mandatory true;
+                    description "The data that is verified. Data is a string composed out of nonce, password, serial, username
+                                 The data is encrypted with the secret.  ";
+                }
+                leaf sign {
+                    type binary;
+                    mandatory true;
+                    description "The sign of message data with private key of NCY client";
+                }
+                leaf secret {
+                    type binary;
+                    mandatory true;
+                    description "The secret used to encrypt the data. The secret is encrypted with public key of NCY server ";
+                }
+            }
+
+            output {
+                leaf status {
+                    type enumeration {
+                        enum ok {
+                            description "Verify Action done successfully";
+                        }
+                        enum failed_authorization {
+                            description "Verify Action failed not authorized";
+                        }
+                        enum failed_serial {
+                            description "Verify Action failed wrong serial";
+                        }
+                        enum failed_connect {
+                            description "Verify Action failed cannot connect to peer NT";
+                        }
+                        enum failed_invalid_message {
+                            description "Verify Action failed as data not matching";
+                        }
+                        enum failed_other {
+                            description "Verify Action failed any other failure";
+                        }
+                    }
+                    mandatory true;
+                    description "status";
+                }
+            }
+        }
+        
+        action generate-encrypted-pwd {
+            if-feature nokia-debug:password;
+            
+            description "instructs the system to generate a temporray password and return it in encrypted form";
+
+            nacm:default-deny-all;
+
+              input {
+                leaf lifetime {
+                    type uint8 {
+                      range "0..30";
+                 }
+                 units "1 minute";
+                 default "5";
+                 description
+                 "This parameter allows the operator to define the lifetime of the generated password.
+                   Setting to 0, means revert to original password unconditionally ";
+                }
+              }
+                
+            output {
+              leaf status {
+                    type enumeration {
+                        enum ok {
+                            description "Password generated successfully";
+                        }
+                        enum failed {
+                            description "Password generation failed";
+                        }
+                    }
+                    mandatory true;
+                    description "status";
+                } 
+                leaf encrypted_pwd {
+                        type binary;
+                        description " the encrypted password";
+                }
+            }
+        }
+
+
+        action run {
+            description "Run a sequence of T&D commands and download a set of log files";
+
+            nacm:default-deny-all;
+
+            input {
+                leaf key {
+                    type binary;
+                    description "The symetric key used to encrypt the commands field below. Encrypted and base64 encoded.";
+                }
+
+                leaf commands {
+                    type binary;
+                    description "The set of commands and clean-up commands to execute, formatted in json text and encrypted as a single block using the publick key above.";
+                }
+
+                leaf sign {
+                    type binary;
+                    /* mandatory true; for backwards compatibility */
+                    description "The sign of command data and nonce with private key of NCY client";
+                }
+
+                leaf continue-on-error {
+                    type boolean;
+                    default "true";
+                    description "Continue running subsequent commands if one of the commands fail";
+                }
+
+                container log-collection {
+                    description "log collection options";
+                    container conditions {
+                        description "Conditions to trigger the log collection.
+                                     If no condition is provided, immediate collection is done.";
+
+                        leaf file-size {
+                             type uint32 {
+                                 range "0..30000";
+                             }
+                             units "KB";
+                             default 30000;
+                             description "Collect log files when their size together reaches
+                                          this value";
+                        }
+
+                        leaf delay {
+                             type uint32;
+                             units "seconds";
+                             default 0;
+                             description "Collect log files after delay seconds have passed";
+                        }
+
+                        leaf immediate {
+                            type boolean;
+                            default "false";
+                            description "Immediately return the output of the commands without any delay and without collection of apps logs.";
+                        }
+                    }
+
+                    leaf size-check-speed {
+                        type enumeration {
+                            enum normal {
+                                description "Once each 1s";
+                            }
+                            enum fast {
+                                description "Once each 300ms";
+                            }
+                            enum slow {
+                                description "Once each 6s";
+                            }
+                        }
+                        default "normal";
+                        description "How often the log file size will be checked !";
+                    }
+
+                    leaf file-pattern {
+                        type string;
+                        description "Pattern describing the files to be collected";
+                    }
+                }
+
+                leaf session-id-prefix {
+                    type string {
+                      length "1..64";
+                      pattern '[0-9a-zA-Z_-]*';   
+                    }
+                    description "A prefix to the auto-generated rpc session id.";
+                }
+
+                leaf auto-clean-trigger {
+                    type uint32;
+                    units "seconds";
+                    default 7200;
+                    description "Duration, in seconds, after which locally saved logs of this session are cleaned-up";
+                }
+
+                uses nokia-ft:file-transfer-common-input-params {
+                    refine url {
+                        mandatory false;
+                    }
+                }
+            }
+
+            output {
+                leaf status {
+                    type enumeration {
+                        enum started {
+                            description "Command sequence started.";
+                        }
+                        enum finished-successfully {
+                            description "Commands completed. Will only be returned in immediate mode.";
+                        }
+                        enum failed {
+                            description "Failed to run the command sequence and upload the log file.
+                                         The most probable reason is because another debug RPC is
+                                         being processed";
+                        }
+                    }
+                    mandatory true;
+                    description "The status of the debug request";
+                }
+
+                leaf session-id {
+                    type string;
+                    description "A unique ID assigned to this debug RPC session !";
+                }
+
+                leaf error-info {
+                    type string;
+                    description "Details about the error if any.
+                                 If file size is too big for the system to handle, a hint will be given in this error-info";
+                }
+
+                leaf log-file-url {
+                    type inet:uri;
+                    mandatory true;
+                    description "Name of the log file to be uploaded.
+                                 This is just a way to make sure we identify this particular RPC,
+                                 especially if no filename is provided in the url.";
+                }
+
+                leaf logs {
+                    type binary;
+                    description "Immediate output of given commends !";
+                }
+            }
+        }
+
+        action retrieve-logs-session-ids {
+            description "Fetch list of session ids whose logs are currently available on the system.";
+
+            nacm:default-deny-all;
+
+            output {
+                list sessions {
+                    description "List of session ids.";
+                    leaf id {
+                        type string;
+                        description "id of session";
+                    }
+                    leaf expiry-time {
+                        type uint32;
+                        units "seconds";
+                        description "expiry time";
+                    }
+                }
+            }
+        }
+
+        action delete-logs {
+            description "Delete a store debug-yang session log.";
+            nacm:default-deny-all;
+            input {
+                leaf session-id {
+                    type string {
+                      length "1..128";
+                      pattern '[0-9a-zA-Z_-]*'; 
+                    }
+                    mandatory true;
+                    description "ID of the session to delete.";
+                }
+            }
+            output {
+                leaf status {
+                    type enumeration {
+                        enum ok {
+                            description "Session logs are deleted";
+                        }
+                        enum failed {
+                            description "Failure deleting the session logs.";
+                        }
+                    }
+                    mandatory true;
+                    description "status";
+                }
+            }
+        }
+
+        action retrieve-logs {
+            description "Retrieve the logs of the given debug-yang session, if the session is finished.";
+
+            nacm:default-deny-all;
+
+            input {
+                leaf session-id {
+                    type string {
+                      length "1..128";
+                      pattern '[0-9a-zA-Z_-]*'; 
+                    }
+                    mandatory true;
+                    description "ID of the session to retrieve.";
+                }
+            }
+
+            output {
+                leaf status {
+                    type enumeration {
+                        enum ok {
+                            description "Session-ID is valid and logs are sent completely";
+                        }
+                        enum continue {
+                            description "Session-ID is valid and logs are partly send, proceed with next retrieve-logs";
+                        }
+                        enum failed {
+                            description "No logs for such debug ses
+                                         running, this is also considered as a failure.";
+                        }
+                    }
+                    mandatory true;
+                    description "status";
+                }
+
+                leaf logs {
+                    type binary;
+                    description "The encrypted logs of the given debug session.";
+                }
+            }
+        }
+
+        action check-status {
+            description "Check if a nokia-debug session is currently running !";
+
+            nacm:default-deny-all;
+
+            output {
+                leaf status {
+                    type enumeration {
+                        enum busy {
+                            description "A debug session is currently running";
+                        }
+                        enum finished-successfully {
+                            description "No debug session is currently running.
+                                         Last session finished successfully !";
+                        }
+                        enum failed-to-finish {
+                            description "No debug session is currently running.
+                                         Last session finished with a failure !";
+                        }
+                    }
+                    mandatory true;
+                    description "status";
+                }
+
+                leaf session-id {
+                    type string;
+                    description "ID assigned to the current/last debug RPC session !";
+                }
+
+                leaf error-info {
+                    type string;
+                    description "Details about the last-session failure.";
+                }
+
+            }
+        }
+
+        action abort {
+            description "Abort the currently running debug RPC request";
+
+            nacm:default-deny-all;
+
+            output {
+                leaf status {
+                    type enumeration {
+                        enum ok {
+                            description "Currently running session is aborted correctly";
+                        }
+                        enum failed {
+                            description "There was a problem aborting the currently running
+                                         debug RPC.
+                                         If no RPC is running, this is also considered as a failure.";
+                        }
+                    }
+                    mandatory true;
+                    description "status";
+                }
+
+                leaf info {
+                    type string;
+                    description "Details about the failure of the abort request.";
+                }
+            }
+        }
+
+        action retrieve-public-key {
+            status deprecated;
+            description "Fetch the public key pair of the private key currently used by the application to decrypt recevied commands.";
+
+            nacm:default-deny-all;
+
+            output {
+                leaf key {
+                    type binary;
+                    description "The public key.";
+
+                }
+            }
+        }
+
+        action retrieve-public-key-and-nonce {
+            description "Fetch the public key pair of the private key currently used by the application to decrypt recevied commands.";
+
+            nacm:default-deny-all;
+
+            output {
+                leaf key {
+                    type binary;
+                    description "The public key.";
+
+                }
+                leaf nonce {
+                    type string;
+                    description "A nonce";
+
+                }
+            }
+        }
+        
+    }
+    
+    augment '/nokia-debug:nokia-debug/nokia-debug:setup-tls/nokia-debug:input/nokia-debug:transport/nokia-debug:tls/nokia-debug:server-auth' {
+    description "Augments CA certificate configuration with a reference to an EST CA certificate profile";
+    uses estc:est-ca-certificate-profile-ref-grouping;
+    
+    }
+    
+    augment '/nokia-debug:nokia-debug/nokia-debug:setup-tls/nokia-debug:input/nokia-debug:transport/nokia-debug:tls/nokia-debug:client-identity'
+    + '/nokia-debug:auth-type/nokia-debug:certificate/nokia-debug:certificate/nokia-debug:local-or-keystore/nokia-debug:keystore' {
+    description "Augments certificate configuration with a choice between central keystore reference and EST certificate profile";
+
+     choice certificate-reference-choice {
+      description "Choice between a central keystore reference and an EST certificate profile";
+
+      case central-keystore-reference {
+        container central-keystore-reference {
+          uses nokia-ks:asymmetric-key-certificate-ref-grouping;
+          description "A reference to a specific certificate associated with an asymmetric key stored in the central keystore.";
+        }
+      }
+      case est-certificate-profile-reference {
+        container est-certificate-profile-reference {
+          uses estc:est-certificate-profile-ref-grouping;
+          description "Reference to an EST certificate profile for TLS identity configuration.";
+        }
+      }
+     }
+    }
+    
+}

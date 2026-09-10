@@ -1,0 +1,86 @@
+module nokia-bbf-interfaces-performance-management-mounted-eonu-dev {
+
+  namespace
+    "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+  + "nokia-bbf-interfaces-performance-management-mounted-eonu-dev";
+
+  prefix nokia-bbf-interfaces-performance-management-mounted-eonu-dev;
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import ietf-interfaces-mounted {
+    prefix if-mounted;
+  }
+
+  import bbf-interfaces-performance-management-mounted {
+    prefix bbf-if-pm-mounted;
+  }
+
+  import bbf-if-type-mounted {
+    prefix bbfift-mounted;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA BBF YANG module supporting
+     deviations on top of standard.";
+
+  revision 2025-07-15 {
+    description
+      "Removed deviations";
+    reference
+      "Nokia specific";
+  }
+ 
+  revision 2023-05-22 {
+    description
+      "Removed deviations";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2023-01-06 {
+    description
+      "Deviations for the supported leaves are removed.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2022-11-16 {
+    description
+      "Included Yang Deviations";
+    reference
+      "TBD";
+  }
+
+  revision 2021-04-09 {
+    description
+      "Initial revision.";
+    reference
+      "TBD";
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-if-pm-mounted:performance/bbf-if-pm-mounted:enable" {
+    deviate add{
+      must "(current()/../../if-mounted:type != 'bbfift-mounted:vlan-sub-interface'
+            or
+            current() = 'false')" {
+        error-message "Enable PM counter on vlan-sub-interface not supported";
+      }
+    }
+  }
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:current/bbf-if-pm-mounted:in-unknown-protos" {
+    deviate not-supported;
+  }
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:history/bbf-if-pm-mounted:in-unknown-protos" {
+    deviate not-supported;
+ 
+  }
+}

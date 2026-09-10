@@ -1,0 +1,268 @@
+module nokia-sdan-ethernet-pm-threshold-profiles-mounted-eonu-dev {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+  + "nokia-sdan-ethernet-pm-threshold-profiles-mounted-eonu-dev";
+  prefix nokia-eth-pm-tca-prof-mounted-eonu-dev;
+  
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import nokia-hardware-profiles-mounted {
+    prefix nokia-hw-prof-mounted;
+  }
+
+  import nokia-sdan-hardware-pm-threshold-profiles-mounted {
+    prefix nokia-hw-pm-threshold-prof-mounted;
+  }
+
+  import nokia-sdan-ethernet-pm-threshold-profiles-mounted {
+    prefix nokia-eth-pm-tca-prof-mounted;
+  }
+
+  organization
+    "Nokia";
+  contact
+    "Nokia";
+  description
+    "This module contains a collection of YANG deviations on top of NOKIA specific ethernet PM TCA profile yang module";
+
+  revision 2023-06-14 {
+    description
+      "Limits the values of the threshold between 1 and (2^32)-2.";
+    reference "Nokia specific";
+  }
+
+  revision 2023-03-11 {
+    description
+      "Adding deviations for restricting number of ethernet-physical-layer-error-profile 
+      and removed deviations for supporting threshold value configuration";
+    reference "Nokia specific";
+  }
+  
+  revision 2022-10-13 {
+    description
+      "Adding deviations for restricting unsupported thresholding values configuration";
+    reference "Nokia specific";
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-eth-pm-tca-prof-mounted:ethernet-frame-error-profile" {
+    deviate add {
+      must "count(current()/../nokia-eth-pm-tca-prof-mounted:ethernet-frame-error-profile) <= 10" {
+      error-message "Exceeds maximum number of ethernet-frame-error-profile supported in the system.";
+      description
+        "This deviation limits the number of ethernet-frame-error-profile configured per system to 10.";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-eth-pm-tca-prof-mounted:ethernet-frame-error-profile/nokia-eth-pm-tca-prof-mounted:drop-events-threshold" {
+    description
+      "This deviation limits the values of the threshold between 1 and (2^64)-2.";
+    deviate replace {
+      type uint64 {
+        range "1..18446744073709551614";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-eth-pm-tca-prof-mounted:ethernet-frame-error-profile/nokia-eth-pm-tca-prof-mounted:crc-err-pkts-threshold" {
+    description
+      "This deviation limits the values of the threshold between 1 and (2^64)-2.";
+    deviate replace {
+      type uint64 {
+        range "1..18446744073709551614";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-eth-pm-tca-prof-mounted:ethernet-frame-error-profile/nokia-eth-pm-tca-prof-mounted:undersize-pkts-threshold" {
+    description
+      "This deviation limits the values of the threshold between 1 and (2^64)-2.";
+    deviate replace {
+      type uint64 {
+        range "1..18446744073709551614";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-eth-pm-tca-prof-mounted:ethernet-frame-error-profile/nokia-eth-pm-tca-prof-mounted:oversize-pkts-threshold" {
+    description
+      "This deviation limits the values of the threshold between 1 and (2^64)-2.";
+    deviate replace {
+      type uint64 {
+        range "1..18446744073709551614";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-eth-pm-tca-prof-mounted:ethernet-physical-layer-error-profile" {
+    deviate add {
+      must "count(current()/../nokia-eth-pm-tca-prof-mounted:ethernet-physical-layer-error-profile) <= 10" {
+      error-message "Exceeds maximum number of ethernet-physical-layer-error-profile supported in the system.";
+      description
+        "This deviation limits the number of ethernet-physical-layer-error-profile configured per system to 10.";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-eth-pm-tca-prof-mounted:ethernet-physical-layer-error-profile/nokia-eth-pm-tca-prof-mounted:excessive-collision-threshold" {
+    description
+      "This deviation limits the values of the threshold between 1 and (2^32)-2.";
+    deviate replace {
+      type uint32 {
+        range "1..4294967294";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-eth-pm-tca-prof-mounted:ethernet-physical-layer-error-profile/nokia-eth-pm-tca-prof-mounted:late-collision-threshold" {
+    description
+      "This deviation limits the values of the threshold between 1 and (2^32)-2.";
+    deviate replace {
+      type uint32 {
+        range "1..4294967294";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-eth-pm-tca-prof-mounted:ethernet-physical-layer-error-profile/nokia-eth-pm-tca-prof-mounted:rx-buffer-overflow-threshold" {
+    description
+      "This deviation limits the values of the threshold between 1 and (2^32)-2.";
+    deviate replace {
+      type uint32 {
+        range "1..4294967294";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-eth-pm-tca-prof-mounted:ethernet-physical-layer-error-profile/nokia-eth-pm-tca-prof-mounted:tx-buffer-overflow-threshold" {
+    description
+      "This deviation limits the values of the threshold between 1 and (2^32)-2.";
+    deviate replace {
+      type uint32 {
+        range "1..4294967294";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-eth-pm-tca-prof-mounted:ethernet-physical-layer-error-profile/nokia-eth-pm-tca-prof-mounted:single-collision-threshold" {
+    description
+      "This deviation limits the values of the threshold between 1 and (2^32)-2.";
+    deviate replace {
+      type uint32 {
+        range "1..4294967294";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-eth-pm-tca-prof-mounted:ethernet-physical-layer-error-profile/nokia-eth-pm-tca-prof-mounted:multiple-collision-threshold" {
+    description
+      "This deviation limits the values of the threshold between 1 and (2^32)-2.";
+    deviate replace {
+      type uint32 {
+        range "1..4294967294";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-eth-pm-tca-prof-mounted:ethernet-physical-layer-error-profile/nokia-eth-pm-tca-prof-mounted:sqe-counter-threshold" {
+    description
+      "This deviation limits the values of the threshold between 1 and (2^32)-2.";
+    deviate replace {
+      type uint32 {
+        range "1..4294967294";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-eth-pm-tca-prof-mounted:ethernet-physical-layer-error-profile/nokia-eth-pm-tca-prof-mounted:deferred-tx-threshold" {
+    description
+      "This deviation limits the values of the threshold between 1 and (2^32)-2.";
+    deviate replace {
+      type uint32 {
+        range "1..4294967294";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-eth-pm-tca-prof-mounted:ethernet-physical-layer-error-profile/nokia-eth-pm-tca-prof-mounted:internal-mac-tx-error-threshold" {
+    description
+      "This deviation limits the values of the threshold between 1 and (2^32)-2.";
+    deviate replace {
+      type uint32 {
+        range "1..4294967294";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-eth-pm-tca-prof-mounted:ethernet-physical-layer-error-profile/nokia-eth-pm-tca-prof-mounted:carrier-sense-error-threshold" {
+    description
+      "This deviation limits the values of the threshold between 1 and (2^32)-2.";
+    deviate replace {
+      type uint32 {
+        range "1..4294967294";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-eth-pm-tca-prof-mounted:ethernet-physical-layer-error-profile/nokia-eth-pm-tca-prof-mounted:alignment-error-threshold" {
+    description
+      "This deviation limits the values of the threshold between 1 and (2^32)-2.";
+    deviate replace {
+      type uint32 {
+        range "1..4294967294";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-eth-pm-tca-prof-mounted:ethernet-physical-layer-error-profile/nokia-eth-pm-tca-prof-mounted:internal-mac-rx-error-threshold" {
+    description
+      "This deviation limits the values of the threshold between 1 and (2^32)-2.";
+    deviate replace {
+      type uint32 {
+        range "1..4294967294";
+      }
+    }
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-eth-pm-tca-prof-mounted:ethernet-frame-error-extended-profile" {
+    deviate add {
+      must "count(current()/../nokia-eth-pm-tca-prof-mounted:ethernet-frame-error-extended-profile) <= 10" {
+      error-message "Exceeds maximum number of ethernet-frame-error-extended-profile supported in the system.";
+      description
+        "This deviation limits the number of ethernet-frame-error-extended-profile configured per system to 10.";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-eth-pm-tca-prof-mounted:ethernet-frame-error-extended-profile/nokia-eth-pm-tca-prof-mounted:in-drop-frames-threshold" {
+    description
+      "This deviation limits the values of the threshold between 1 and (2^32)-2.";
+    deviate replace {
+      type uint32 {
+        range "1..4294967294";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-eth-pm-tca-prof-mounted:ethernet-frame-error-extended-profile/nokia-eth-pm-tca-prof-mounted:out-drop-frames-threshold" {
+    description
+      "This deviation limits the values of the threshold between 1 and (2^32)-2.";
+    deviate replace {
+      type uint32 {
+        range "1..4294967294";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-eth-pm-tca-prof-mounted:ethernet-frame-error-extended-profile/nokia-eth-pm-tca-prof-mounted:in-drop-octets-threshold" {
+    description
+      "This deviation limits the values of the threshold between 1 and (2^32)-2.";
+    deviate replace {
+      type uint32 {
+        range "1..4294967294";
+      }
+    }
+  }
+}

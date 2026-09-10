@@ -1,0 +1,53 @@
+module nokia-ietf-interfaces-mounted-eonu-only-dev {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-ietf-interfaces-mounted-eonu-only-dev";
+
+  prefix nokia-ietf-interfaces-mounted-eonu-only-dev;
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import ietf-interfaces-mounted {
+    prefix if-mounted;
+  }
+
+  import bbf-if-type-mounted {
+    prefix bbfift-mounted;
+   }
+
+  import nokia-template-common {
+    prefix template-common;
+  }
+
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA IETF/System YANG module supporting
+     deviations on top of standard.";
+
+  revision 2023-06-21 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia Specific.";
+  }
+
+    deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/if-mounted:enabled" {
+    deviate add {
+       must "not(derived-from-or-self(../../../../onu:usage, 'template-common:node-actual-usage'))
+             or current()/../if-mounted:type != 'bbfift-mounted:vlan-sub-interface'
+             or (current()/../if-mounted:type = 'bbfift-mounted:vlan-sub-interface' and current() = 'true')"
+           {
+                 error-message "for vlan-sub-interface only enabled is allowed";
+           }
+    }
+  }
+
+}

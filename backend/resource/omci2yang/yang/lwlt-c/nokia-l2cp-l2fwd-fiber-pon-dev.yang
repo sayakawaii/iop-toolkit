@@ -1,0 +1,137 @@
+module nokia-l2cp-l2fwd-fiber-pon-dev {
+  
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/" +
+            "nokia-l2cp-l2fwd-fiber-pon-dev";
+
+  prefix nokia-l2cp-l2fwd-fiber-pon-dev;
+  
+  import nokia-l2cp {
+    prefix nokia-l2cp;
+  }
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import bbf-if-type {
+    prefix bbfift;
+  }
+  
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "This module contains a collection of YANG deviations on top
+     of standard for supporting l2fwd YANG module.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2017-2018, Nokia. All Rights Reserved.";
+
+  revision 2021-01-06 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific";
+  }
+
+  deviation '/if:interfaces/if:interface'
+           +'/nokia-l2cp:l2cp/nokia-l2cp:l2cp-address-service' {
+    deviate replace {
+      type enumeration {
+        enum "block-l2cp" {
+          value 0; // explicitly values it as 0
+          description
+            "This value corresponds with the IEEE default behavior
+             being: the interface will not pass frames with a 
+             destination MAC address being in the range:
+             - 01-80-C2-00-00-00 to 01-80-C2-00-00-2F.
+             
+             I.e. frames with a destination address in that range
+             are either peered, or are discarded.";
+          reference
+            "MEF 45.1, chapter 8.1";             
+        }
+        enum "l2cp-pass-00-02to0f-10-2x" {
+          value 3; // explicitly values it as 3
+          description
+            "This value is relevant only when the interface is 
+             C-VLAN tag blind (i.e. a single higher layer VLAN 
+             sub-interface is created to match all frames), and 
+             the interface is involved in a point-to-point 
+             port-based service that supports the EPL Option 2 
+             L2CP processing.
+
+             This configuration matches the L2CP Address Set 
+             Service Attribute set to value C-VLAN tag blind 
+             option 2 (CTB-2).
+
+             When set, the interface will not pass frames with a 
+             destination MAC address being:
+             - 01-80-C2-00-00-01.
+             It will pass frames with a destination MAC address 
+             being one of
+             - 01-80-C2-00-00-00.
+             - 01-80-C2-00-00-02 to 01-80-C2-00-00-0F.
+             
+             Frames with destination MAC address 01-80-C2-00-00-10
+             will be passed.
+             
+             Frame processing for frames with a destination MAC in
+             the range 01-80-C2-00-00-20 to 01-80-C2-00-00-2F are 
+             passed unless it is a destination address that 
+             corresponds with a L2CP protocol that is peered.";
+          reference
+            "MEF 45, chapter 8.1";
+        }
+      }
+    }
+  }
+
+  deviation '/if:interfaces/if:interface/nokia-l2cp:l2cp/nokia-l2cp:l2cp-address-service'{
+    deviate add {
+      must "not(boolean(current()) and (current()/../../if:type != 'bbfift:vlan-sub-interface'))"{
+        error-message "L2CP control only supported on interface type of vlan-sub-interface";
+      }
+    }
+  }
+}
+

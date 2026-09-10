@@ -1,0 +1,139 @@
+submodule bbf-voip-service-gateway-mounted {
+  yang-version 1.1;
+  belongs-to bbf-sip-voip-mounted  {
+    prefix bbf-sip-voip-mounted;
+  }
+
+  import bbf-yang-types {
+    prefix bbf-yang;
+  } 
+ 
+  import bbf-fiber-onu-emulated-mount {
+     prefix onu;
+  }
+
+  include bbf-sip-voip-base-mounted;
+  include bbf-voip-service-gateway-characteristics-mounted;
+  include bbf-sip-terminations-mounted;
+  include bbf-voip-access-gateways-mounted;
+  include bbf-media-forwarder-mounted;
+  include bbf-media-base-mounted;
+  
+  organization
+    "Broadband Forum <https://www.broadband-forum.org>
+     Common YANG Work Area";
+
+  contact
+    "Comments or questions about this Broadband Forum YANG module
+     should be directed to <mailto:help@broadband-forum.org>.
+     Editor:      Frank Desseyn, Nokia
+     Editor:      Nadine Staelens, Nokia
+     PS Leader:   Joey Boyd, ADTRAN
+     PS Leader:   Ken Kerpez, ASSIA
+     WA Director: Joey Boyd, ADTRAN
+     WA Director: Sven Ooghe, Nokia";
+
+  description
+    "This submodule contains the Yang definitions for the Voip
+	 Service Gateway (VSG).
+     Copyright (c) 2017-2018, Broadband Forum
+     Redistribution and use in source and binary forms, with or
+     without modification, are permitted provided that the following
+     conditions are met:
+     1. Redistributions of source code must retain the above copyright
+        notice, this list of conditions and the following disclaimer.
+     2. Redistributions in binary form must reproduce the above
+        copyright notice, this list of conditions and the following
+        disclaimer in the documentation and/or other materials
+        provided with the distribution.
+     3. Neither the name of the copyright holder nor the names of its
+        contributors may be used to endorse or promote products
+        derived from this software without specific prior written
+        permission.
+     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
+     CONTRIBUTORS \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+     INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+     DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+     CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+     SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+     NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+     CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+     STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+     ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+     ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     The above license is used as a license under copyright only.
+     Please reference the Forum IPR Policy for patent licensing terms
+     <https://www.broadband-forum.org/ipr-policy>.
+     Any moral rights which are necessary to exercise under the above
+     license grant are also deemed granted under this license.
+     This version of this YANG module is part of TR-383; see
+     the TR itself for full legal notices.";
+
+  revision 2020-03-06 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: 2020-03-06.";
+    reference
+      " ";
+  }
+
+  /* typedef voip-service-gateway-ref {
+    type leafref {
+       path "/bbf-sip-voip-mounted:sip-signaling"
+          + "/bbf-sip-voip-mounted:voip-service-gateways"
+          + "/bbf-sip-voip-mounted:voip-service-gateway"
+          + "/bbf-sip-voip-mounted:name";
+    }
+  } */
+  
+  augment "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling"
+        + "/bbf-sip-voip-mounted:voip-service-gateways" {
+    list voip-service-gateway {
+        key name;
+	description
+	  "The Yang model for the Voice Service Gateway.";
+	leaf name {
+            type bbf-yang:string-ascii64;    
+	    description
+       	      "Uniquely identifies the Voip Service Gateway profile.";
+        }
+	leaf-list sip-terminations {
+       /*   type bbf-sip-voip-mounted:sip-termination-ref; */
+	  type leafref {
+        path "../../../../bbf-sip-voip-mounted:sip-signaling"
+           + "/bbf-sip-voip-mounted:sip-terminations"
+	       + "/bbf-sip-voip-mounted:sip-termination"
+	       + "/bbf-sip-voip-mounted:sip-user-name";
+	  }
+	  description
+	    "References SIP terminations.";	  
+	}
+	leaf media-forwarder {
+	  type leafref {
+	    path "../../../../bbf-sip-voip-mounted:media-forwarders"
+		   + "/bbf-sip-voip-mounted:media-forwarder"
+		   + "/bbf-sip-voip-mounted:name";
+	  }
+	  description
+	    "Refers to the media forwarder.";
+	  mandatory true;
+	}
+	leaf-list voip-access-gateways {
+     /*     type bbf-sip-voip-mounted:voip-access-gateway-ref; */
+	  type leafref {
+          path "../../../../bbf-sip-voip-mounted:sip-signaling"
+                + "/bbf-sip-voip-mounted:voip-access-gateways"
+                + "/bbf-sip-voip-mounted:voip-access-gateway"
+	        + "/bbf-sip-voip-mounted:name";
+	  }
+	  description
+	    "References Voip Access Gateways belonging to this Voip 
+		 Service Gateway.";
+	}
+	uses voip-service-gateway-characteristics;
+    }
+  } 
+} 

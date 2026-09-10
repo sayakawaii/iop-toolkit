@@ -1,0 +1,130 @@
+module nokia-sdan-ethernet-mounted {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/nokia-sdan-ethernet-mounted";
+
+  prefix "nokia-sdan-eth-mounted";
+
+  import ietf-interfaces-mounted {
+    prefix if-mounted;
+  }
+
+  import bbf-fiber-onu-emulated-mount {
+     prefix onu;
+  }
+
+  import ethernet-mounted {
+     prefix eth-mounted;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG definitions for
+    supporting Nokia specific requirements as applicable to its
+    access network equipment.
+
+    Specifically, this module augments the interface model with data
+    that supports to configure/status of interface date at system level.
+
+    This specification is published by Nokia under Non-Disclosure
+    Agreement(s) (NDA) with specific parties and has to be considered
+    as Confidential Information as defined in such NDA. Nokia
+    reserves the right to revise this document for any reason,
+    including but not limited to conformity with standards
+    promulgated by various agencies, utilisation of advances in the
+    state of the technical areas, or the reflection of changes in the
+    design of any equipment, techniques, or procedures described or
+    referred to herein.
+
+    The product specifications and other technical or performance
+    information contained herein are subject to change without
+    notice. Updates of this document will be issued under the above
+    NDA's.
+
+    Nokia makes no representation or warranty, expressed or implied,
+    with respect to the sufficiency, accuracy, or utility of any
+    information or opinion contained herein. Nokia expressly advises
+    that any use of for any purpose or reliance upon this technical
+    reference is at the risk of the user and that Nokia shall not be
+    liable for any damage or injury incurred by any person arising
+    out of the sufficiency, accuracy, or utility of any information
+    or opinion contained herein.
+
+    This document is not to be construed as a suggestion to any
+    manufacturer to modify or change any of its products, nor does
+    this document represent any commitment by Nokia to sell or
+    purchase any product. Nothing contained herein shall be construed
+    as conferring by implication, estoppel, or otherwise any license
+    or right under any patent, whether or not the use of any
+    information herein necessarily employs an invention of any
+    existing or later issued patent.
+
+    Nokia reserves the right not to offer any or all of these
+    products and to withdraw any or all of them at any future time.
+
+    Copyright (C) 2023, Nokia. All Rights Reserved.";
+
+  revision 2024-01-29 {
+    description
+      "Defined max-frame-size config and state parameter for ONU Ethernet UNI interface";
+    reference
+      "Nokia specific";
+  }
+ 
+  augment "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/eth-mounted:ethernet" {
+    description
+      "Define max-frame-size in bytes for Ethernet interface";
+    
+	leaf max-frame-size {
+		type enumeration {
+			enum frame-size-1518 {
+				value 1518;
+				description
+					"Set the max-frame-size value to IEEE 802.3 basic frame size of 1518";
+			}
+			enum frame-size-1522 {
+				value 1522;
+				description
+					"Set the max-frame-size value to IEEE 802.3 Q-tagged frame size of 1522";
+			}
+			enum frame-size-2000 {
+				value 2000;
+				description
+					"Set the max-frame-size value to IEEE 802.3 multi-tagged envelope frame size of 2000";
+			}
+			enum frame-size-9216 {
+				value 9216;
+				description
+					"Set the max-frame-size value to Jumbo frame size of 9216";
+			}
+			enum system-default {
+				description
+					"System defaults the 'max-frame-size' value to 2000 (to support multi-tagged envelope frames)
+					for GPON system(G.984.3) and to 9216 for subsequent ITU-T PON systems";
+			}
+		}
+		units "bytes";
+        default system-default;
+        description
+          "This leaf defines the maximum frame size to be allowed across this Ethernet interface";
+	}
+
+  }
+  
+  augment "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/eth-mounted:Ethernet" {
+    description
+      "This node represents the state parameter for max-frame-size in bytes set in the Ethernet interface";
+    
+    leaf max-frame-size { 
+       type uint32 ;
+       units "bytes";
+       description
+         "This leaf defines the maximum frame size allowed across this Ethernet interface";
+    }          
+  }
+}

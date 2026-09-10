@@ -1,0 +1,93 @@
+module nokia-bbf-xpon-onu-authentication-common-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/nokia-bbf-xpon-onu-authentication-common-dev";
+
+  prefix nokia-bbf-xpon-authentication-common-dev;
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import bbf-xpon{
+    prefix bbf-xpon;
+  }
+  
+  import bbf-xpon-onu-state {
+    prefix bbf-xpon-onu-s;
+  }
+
+  import bbf-xpon-onu-authentication {
+      prefix bbf-xpon-onu-auth;
+  }
+  
+  /*
+  import nokia-yang-types {
+    prefix nok-typ;
+  }
+  */
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA IETF/System YANG module supporting
+     deviations on top of standard.";
+
+  revision 2024-03-06 {
+    description
+      "enlarge from 64 to 100 bytes.";
+    reference
+      "Nokia Specific.";
+  }
+  
+  
+  revision 2023-11-13 {
+    description
+      "Move deviate not-supported rules to new position.";
+    reference
+      "Nokia Specific.";
+  }
+  
+  deviation "/if:interfaces-state/if:interface/bbf-xpon:channel-termination/bbf-xpon-onu-s:onus-present-on-local-channel-termination/bbf-xpon-onu-s:onu/bbf-xpon-onu-auth:determined-onu-management-mode" {
+      description
+         "This deviation assures that bbf-xpon-onu-auth:determined-onu-management-mode leaf is not supported.";
+      deviate not-supported;
+  }
+  
+  deviation "/if:interfaces-state/if:interface/bbf-xpon:channel-termination/bbf-xpon-onu-s:onus-present-on-local-channel-termination/bbf-xpon-onu-s:onu/bbf-xpon-onu-auth:onu-name-from-management-plane" {
+      description
+         "This deviation assures that bbf-xpon-onu-auth:onu-name-from-management-plane leaf is not supported.";
+      deviate not-supported;
+  }
+  
+  deviation "/if:interfaces-state/if:interface/bbf-xpon:channel-termination/bbf-xpon-onu-s:onus-present-on-local-channel-termination/bbf-xpon-onu-s:onu/bbf-xpon-onu-auth:detected-vendor-id" {
+      description
+         "This deviation assures that bbf-xpon-onu-auth:detected-vendor-id leaf is not supported.";
+      deviate not-supported;
+  }
+  
+  deviation "/if:interfaces-state/if:interface/bbf-xpon:channel-termination/bbf-xpon-onu-s:onu-presence-state-change/bbf-xpon-onu-auth:determined-onu-management-mode" {
+      description
+         "This deviation assures that bbf-xpon-onu-auth:determined-onu-management-mode leaf is not supported.";
+      deviate not-supported;
+  }
+
+  deviation "/if:interfaces-state/if:interface/bbf-xpon:channel-termination/bbf-xpon-onu-s:onu-presence-state-change/bbf-xpon-onu-auth:detected-vendor-id" {
+      description
+         "This deviation assures that bbf-xpon-onu-auth:detected-vendor-ide leaf is not supported.";
+      deviate not-supported;
+  }
+ 
+   /*
+  deviation "/if:interfaces-state/if:interface/bbf-xpon:channel-termination/bbf-xpon-onu-s:onus-present-on-local-channel-termination/bbf-xpon-onu-s:onu/bbf-xpon-onu-auth:onu-name-from-management-plane" {
+    deviate replace {
+      type nok-typ:nokia-string-ascii100;
+    }
+  }
+  */
+  
+
+}

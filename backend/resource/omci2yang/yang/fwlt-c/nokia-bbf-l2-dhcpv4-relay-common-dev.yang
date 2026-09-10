@@ -1,0 +1,85 @@
+module nokia-bbf-l2-dhcpv4-relay-common-dev {
+
+  namespace
+     "urn:bbf:yang:nokia-bbf-l2-dhcpv4-relay-common-dev";
+
+  prefix  dhcpv4-relay-dev;
+
+  import bbf-l2-dhcpv4-relay {
+      prefix bbf-l2-d4r;
+  }
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import nokia-yang-types {
+    prefix nok-typ;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA BBF/bbf-l2-dhcpv4-relay YANG module supporting
+     deviations on top of standard.";
+
+  /* revision */
+
+  revision 2020-12-09 {
+    description
+      "move user port check to usage-user-port";
+    reference
+      "Nokia internal.";
+  }
+  
+  revision 2019-06-18 {
+    description
+      "Removed the nok-type replace deviation for default circuid id/remote id syntax.";
+    reference
+      "Nokia internal.";
+  } 
+
+  revision 2019-04-25 {
+    description
+      "Move to category dhcp-relay.";
+    reference
+      "TBD";
+  }
+
+  /* allow only interface l2-dhcpv4-relay enable true and trusted-port is false */
+  deviation "/if:interfaces/if:interface/bbf-l2-d4r:l2-dhcpv4-relay" {
+    deviate add{
+      must "current()/bbf-l2-d4r:enable" {
+        error-message "interface l2-dhcpv4-relay enable leaf is mandatory";
+        description "l2-dhcpv4-relay enable leaf is mandatory to enable dhcpv4 relay feature";
+	  }
+      must "current()/bbf-l2-d4r:trusted-port" {
+        error-message "trusted-port leaf is mandatory";
+        description "trusted-port leaf is mandatory to configure";
+      }
+      must "current()/bbf-l2-d4r:enable = 'true' and "
+         + "current()/bbf-l2-d4r:trusted-port = 'false'"{
+        error-message "interface l2-dhcpv4-relay enable false or trusted-port true not supported";
+        description "l2-dhcpv4-relay enable false or trusted-port true not supported";
+      }
+    }
+  }
+
+  /* restrict special characters in l2-dhcpv4-relay profile other than nokia-string-ascii64 */
+  deviation "/bbf-l2-d4r:l2-dhcpv4-relay-profiles/bbf-l2-d4r:l2-dhcpv4-relay-profile/bbf-l2-d4r:name"{
+    deviate replace{
+      type nok-typ:nokia-string-ascii64;
+    }
+  }
+
+  /* Max 16 profiles only allowed */
+  deviation "/bbf-l2-d4r:l2-dhcpv4-relay-profiles/bbf-l2-d4r:l2-dhcpv4-relay-profile" {
+    deviate add {
+      max-elements 16;
+    }
+  }
+}

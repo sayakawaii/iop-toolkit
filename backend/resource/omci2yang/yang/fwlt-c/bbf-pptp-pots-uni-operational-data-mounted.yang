@@ -1,0 +1,315 @@
+submodule bbf-pptp-pots-uni-operational-data-mounted {
+  yang-version 1.1;
+  belongs-to bbf-sip-voip-mounted  {
+    prefix bbf-sip-voip-mounted;
+  }
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+  organization
+    "Broadband Forum <https://www.broadband-forum.org>
+     Common YANG Work Area";
+
+  contact
+    "Comments or questions about this Broadband Forum YANG module
+     should be directed to <mailto:help@broadband-forum.org>.
+     Editor:      Frank Desseyn, Nokia
+     Editor:      Nadine Staelens, Nokia
+     PS Leader:   Joey Boyd, ADTRAN
+     PS Leader:   Ken Kerpez, ASSIA
+     WA Director: Joey Boyd, ADTRAN
+     WA Director: Sven Ooghe, Nokia";
+
+  description
+    "This submodule contains the operational data profile of the
+	 pptp pots uni.
+     Copyright (c) 2017-2018, Broadband Forum
+     Redistribution and use in source and binary forms, with or
+     without modification, are permitted provided that the following
+     conditions are met:
+     1. Redistributions of source code must retain the above copyright
+        notice, this list of conditions and the following disclaimer.
+     2. Redistributions in binary form must reproduce the above
+        copyright notice, this list of conditions and the following
+        disclaimer in the documentation and/or other materials
+        provided with the distribution.
+     3. Neither the name of the copyright holder nor the names of its
+        contributors may be used to endorse or promote products
+        derived from this software without specific prior written
+        permission.
+     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
+     CONTRIBUTORS \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+     INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+     DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+     CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+     SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+     NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+     CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+     STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+     ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+     ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     The above license is used as a license under copyright only.
+     Please reference the Forum IPR Policy for patent licensing terms
+     <https://www.broadband-forum.org/ipr-policy>.
+     Any moral rights which are necessary to exercise under the above
+     license grant are also deemed granted under this license.
+     This version of this YANG module is part of TR-383; see
+     the TR itself for full legal notices.";
+
+  revision 2021-09-27 {
+    description
+      "Add call-statistics list.";
+    reference
+      " ";
+  }
+  revision 2020-03-06 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: 2020-03-06.";
+    reference
+      " ";
+  }
+
+  feature statistics {
+    description
+      "Indicates the support of statistics.";
+  }
+  grouping pptp-pots-uni-operational-data {
+//  Grouping is used inside container augmenting interfaces-state
+//  In case this would become NMDA-style then the container becomes config false;
+//  BBOG an interface has operational state
+//	leaf oper-state {
+//      config false;
+//  	  type enumeration {
+//        enum in-service {
+//      	  value 1;
+//      	  description
+//      	    "The pptp POTS uni is in-service.";
+//        }
+//        enum out-of-service {
+//          value 2;
+//      	  description
+//      	    "The pptp POTS uni is out-of-service.";
+//        }
+//      }
+//      description
+//        "The operational state of the pptp POTS uni.";
+//    }
+      leaf hook-state {
+	    type enumeration {
+	      enum on-hook {
+		    value 0;
+		    description
+		      "The subscriber loop is in on-hook state.";
+		}
+		enum off-hook {
+		  value 1;
+		  description
+		    "The subscriber loop is in off-hook state.";
+		}
+          }
+//	  config false;
+        description
+          "The hook state of the subscriber loop.";
+      }
+      leaf test-state {
+	  type enumeration {
+	  	enum no-nblt-mesurement-ongoing {
+	  	  value 0;
+	  	  description
+	  	  	"There is no NBLT measurement
+	  	  	ongoing at the subscriber loop.";
+	  	}
+	  	enum nblt-measurement-ongoing {
+	  	  value 1;
+	  	  description
+	  	  	"There is a NBLT measurement
+	  	  	ongoing at the subscriber loop.";
+	  	}
+	  	enum pit-ongoing {
+	  	  value 2;
+	  	  description
+	  	  	"There is a pair identification
+	  	  	tone generation ongoing.";
+	  	}
+	  }
+//	  config false;
+	  description
+	  	"The integrated NBLT state of the subscriber loop.";
+      }
+      leaf port-off-hook-timer {
+          type uint16;
+//	  config false;
+          description
+                "Records the longest period of a single off-hook detected
+		 on the analogue port. Time is measured in milliseconds";
+      }
+      leaf nbr-port-releases {
+        type uint16;
+//	  config false;
+        description
+          "Indicates the number of analog port releases without
+           dialing detected.";
+    }
+    container statistics {
+      //if-feature "statistics";
+      description
+        "A collection of pptp-pots-uni-related statistics objects.";
+      list call-history {
+        key index;
+        description
+          "The list contains information and statistics for up to 32
+           calls.";
+        leaf index {
+          type uint8 {
+            range "1..32";
+  }
+          description
+            "The sequence number of the history of calls.";
+        }
+        leaf date {
+          type string {
+            pattern '\d{4}-\d{2}-\d{2}';
+          }
+          description
+            "Date when the call was initiated.";
+        }
+        leaf time {
+          type string {
+            pattern '\d{2}:\d{2}:\d{2}';
+          }
+          description
+            "Time when the call was initiated.";
+        }
+        leaf call-duration{
+          type yang:counter64;
+          units seconds;
+          description
+            "Duration of call.";
+        }
+        leaf called-number{
+          type string{
+            length "1..25";
+          }
+          description
+            "Called number.";
+        }
+        leaf calling-number{
+          type string{
+            length "1..25";
+          }
+          description
+            "Calling number.";
+        }
+        leaf out-rtp-packets{
+          type yang:counter64;
+          description
+            "Number of RTP packets sent.";
+        }
+        leaf in-rtp-packets{
+          type yang:counter64;
+          description
+            "Number of RTP packets received.";
+        }
+        leaf in-rtp-packets-lost{
+          type yang:counter64;
+          description
+            "Number of RTP packets that were not received.";
+        }
+        leaf rtp-packets-discarded{
+          type yang:counter64;
+          description
+            "Number of RTP packets discarded due to errors.";
+        }
+        leaf rtp-over-runs{
+          type yang:counter64;
+          description
+            "Number of jitter buffer over-runs.";
+        }
+        leaf rtp-under-runs{
+          type yang:counter64;
+          description
+            "Number of jitter buffer under-runs.";
+        }
+        leaf average-jitter{
+          type yang:counter64;
+          units milliseconds;
+          description
+            "Average jitter in the received RTP stream.";
+        }
+        leaf rtcp-participation{
+          type enumeration {
+            enum NO {
+              description
+                "The far end didn't participate in RTCP.";
+            }
+            enum YES {
+              description
+                "The far end participated in RTCP.";
+            }
+            enum UNSUPPORTED {
+              description
+                "The leaf node is not supported.";
+            }
+          }
+          description
+            "Whether or not the far end participated in RTCP.";
+        }
+        leaf peak-jitter{
+          type yang:counter64;
+          units milliseconds;
+          description
+            "Peak jitter in the received RTP stream";
+        }
+        leaf average-jitter-buffer-depth{
+          type yang:counter64;
+          units milliseconds;
+          description
+            "Average jitter buffer depth during the call.";
+        }
+        leaf rtcp-xr-participation{
+          type enumeration {
+            enum NO {
+              description
+                "The far end didn't participate in RTCP-XR.";
+            }
+            enum YES {
+              description
+                "The far end participated in RTCP-XR.";
+            }
+            enum UNSUPPORTED {
+              description
+                "The leaf node is not supported.";
+            }
+          }
+          description
+            "Whether or not the far end participated in RTCP-XR.";
+        }
+        leaf average-mos{
+          type  int32{
+            range "0..50";
+          }
+          units tenths;
+          description
+            "Average Mean Opinion Score (MOS).";
+        }
+        leaf peak-round-trip-delay{
+          type yang:counter64;
+          units milliseconds;
+          description
+            "Peak round trip delay.";
+        }
+        leaf average-round-trip-delay{
+          type yang:counter64;
+          units milliseconds;
+          description
+            "Average round trip delay.";
+        }
+      }
+    }
+  }
+}

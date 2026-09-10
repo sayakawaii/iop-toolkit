@@ -1,0 +1,381 @@
+module nokia-ip-aug-mounted {
+  yang-version 1.1;
+
+  namespace "urn:ietf:params:xml:ns:yang:nokia-ip-aug-mounted"; 
+
+  prefix ip-aug-mounted;
+    
+  import iana-if-type-mounted {
+    prefix ianaift-mounted;
+  }
+  
+  import ietf-interfaces-mounted {
+    prefix if-mounted;
+  }
+  
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+  
+  import ietf-ip-mounted {
+    prefix ip-mounted;
+  }  
+  
+  import ietf-inet-types {
+   prefix inet;
+  } 
+  
+  import ietf-yang-types {
+   prefix yang;
+  }
+
+
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be 
+     directed to <mailto:isam.mibsupport@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG definitions for 
+     supporting Nokia specific requirements as applicable to its 
+     access network equipment.
+     
+     Specifically, this module augments ???????.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia 
+     reserves the right to revise this document for any reason, 
+     including but not limited to conformity with standards 
+     promulgated by various agencies, utilisation of advances in the 
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or 
+     referred to herein.
+
+     The product specifications and other technical or performance 
+     information contained herein are subject to change without 
+     notice. Updates of this document will be issued under the above 
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any 
+     information or opinion contained herein. Nokia expressly advises 
+     that any use of for any purpose or reliance upon this technical 
+     reference is at the risk of the user and that Nokia shall not be 
+     liable for any damage or injury incurred by any person arising 
+     out of the sufficiency, accuracy, or utility of any information 
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any 
+     manufacturer to modify or change any of its products, nor does 
+     this document represent any commitment by Nokia to sell or 
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license 
+     or right under any patent, whether or not the use of any 
+     information herein necessarily employs an invention of any 
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these 
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2017, Nokia. All Rights Reserved.";
+
+  revision 2026-07-27 {
+    description
+      "Add IPv6 support for ip-host interface: IPv6 address acquisition
+       method, DHCPv6 client and IPv6 network parameters.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2024-05-27 {
+    description
+      "robust configure DSCP value and sip-uni-suppl-services-profile";
+    reference
+      "Sub-task BBN-214388";
+  }
+
+  revision 2024-01-16 {
+    description
+      "Remove IPV4 node from non-iphost interface";
+    reference
+      "Sub-task BBN-181720";
+  }
+
+  revision 2021-07-06 {
+    description
+      "Change feature name from 'onu-ip-host' to 'ip-host'";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2020-04-21 {
+    description
+      "Add ip-if-identification container and ip-diagnose-control container under
+      interfaces/interface. Add ip-address-acquisition-method container under
+      interfaces/interface/ipv4/address. Add ip-other-network-parameters
+      container under interfaces-state/interface/ipv4/address";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2019-11-18 {
+    description
+      "Moved ipif-lower-layer container out of ipv4 container to make it
+       common to both ipv4 and ipv6 and added a leaf tag-ip-intf to
+       tag inband interface";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2017-08-01 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: yyyy-mm-dd.";
+    reference
+      "Nokia specific";
+  }
+
+  feature ip-host{
+    description
+      "This feature means that the server supports onu ip host";
+  }
+
+  augment "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface" {
+    when "if-mounted:type = 'ianaift-mounted:ipForward'" {
+      description
+        "Port type is ipForward.";
+    }
+    description "augmnet interface ip forward with lower layer";
+    container ipif-lower-layer {
+      presence
+        "This leaves provides the lower layer within the interface stack";
+
+      description
+        "Link ip interface to a lower layer network-port sub-interface";
+
+      leaf sub-interface {
+	        type leafref {
+	            path "../../../../if-mounted:interfaces/if-mounted:interface/if-mounted:name";
+	        }
+	        mandatory true;
+          description
+            "References the lower layer interface";
+      }
+    }
+
+    container tag-ip-intf {
+      presence "Enables tagging of an IP interface to specific functionality";
+      description "Enables tagging of an IP interface to specific functionality";
+        leaf tag-ip-intf {
+          type bits {
+            bit inband-mgnt {
+              position 0;
+              description
+                "This bit is used to tag this IP interface for generic
+                 inband management. The same inband interface is used
+                 for Call-home connection and also persisted in NOR";
+            }
+          }
+          description
+            "This IP interface can't be tagged for any specific functionality
+             if the leaf is empty";
+        }
+      }
+
+      container ip-if-identification {
+      if-feature "ip-host";
+	    presence "Describe the identification information of the interface on the device";
+	    description "Describe the identification information of the interface on the device";
+		leaf ip-if-identifier {
+				type string;
+				description
+			     "If set to a non-null value, this string can be used instead of 
+			      the MAC address in retrieving DHCP parameters";		
+		}	
+      }
+	  
+      container ip-diagnose-control{
+      if-feature "ip-host";
+	    presence "Ip diagnose control";
+	    description "Ip diagnose control";
+		leaf respond-to-pings {
+					type boolean;
+					description
+				     "If the leaf is set to ture, the interface will respond to pings";
+		}
+		leaf respond-to-traceroute-messages {
+					type boolean;
+					description
+				     "If the leaf is set to ture, the interface will respond to traceroute messages";
+		}			        
+     }
+  }
+
+  augment "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/ip-mounted:ipv4" {
+    when "../if-mounted:type = 'ianaift-mounted:ipForward'" {
+      description
+        "Port type is ipForward.";
+    }
+    description
+      "Augment ipv4 with ipForwarding";
+
+    container ip-address-acquisition-method{
+      if-feature "ip-host";
+      presence "Ip address acquisition method";
+      description "Ip address acquisition method";
+      leaf origin {
+        type ip-mounted:ip-address-origin;
+        description
+          "The leaf is used to set the ip address acquisition
+           method for the interface";
+      }
+    }
+
+    container dhcp {
+      must "../ip-aug-mounted:ip-address-acquisition-method/ip-aug-mounted:origin = 'dhcp'" {
+        error-message "Only applicable when origin is DHCP";
+      }
+      presence "This leaves provides dhcp client specific data";
+      description "This leaves provides dhcp client specific data";
+      leaf dscp-mark {
+        type inet:dscp;
+        default 24;
+        description
+          "The differentiated service code point for outgoing DHCP message.";
+      }
+    }
+  }
+
+  /* Operational state data nodes */
+  augment "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface" {
+    description
+      "Augment interfaces-state for ipif-lower-layer";
+
+    container ipif-lower-layer {
+      presence
+        "This leaves provides the lower layer within the interface stack";
+      description
+        "Link ip interface to a lower layer network-port sub-interface";
+        leaf sub-interface {
+          type string;
+          description
+            "References the lower layer interface";
+        }
+    }
+  }
+    
+  augment "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/ip-mounted:ipv4/ip-mounted:address" {
+    description "ip address";
+	container ip-other-network-parameters {
+      if-feature "ip-host";
+	  presence "These leaves display the network parameters 
+	  currently used by the interface, which may be statically 
+	  configured or obtained by DHCP";
+      description "These leaves display the network parameters 
+	  currently used by the interface, which may be statically 
+	  configured or obtained by DHCP";
+		leaf gateway {
+			type inet:ip-address;
+			description
+			"Current gateway used by the interface ";
+		}	
+		leaf current-primary-DNS {
+			type inet:ip-address;
+			description
+			"Current primary DNS  used by the interface ";
+		}	
+		leaf current-secondary-DNS {
+			type inet:ip-address;
+			description
+			"Current secondary DNS used by the interface ";
+		}	
+		leaf host-name {
+			type string;
+			description
+		   "DHCP indicates a host name, it is presented here";
+		}
+		leaf domain-name {
+			type string;
+			description
+		   "DHCP indicates a domain name, it is presented here";
+		}
+		leaf mac-address {
+				  type yang:mac-address;
+				  description
+				  "The MAC address used by the IP interface ";
+		}	
+	}
+  }   
+    augment "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/ip-mounted:ipv6" {
+        when "../if-mounted:type = 'ianaift-mounted:ipForward'" {
+          description
+            "Port type is ipForward.";
+        }
+    description
+      "Augment ipv6 with ipForwarding";
+ 
+    container ip-address-acquisition-method {
+      if-feature "ip-host";
+      presence "Ip address acquisition method";
+      description "Ip address acquisition method";
+      leaf origin {
+        type ip-mounted:ip-address-origin;
+        description
+          "The leaf is used to set the ip address acquisition
+           method for the interface";
+      }
+    }
+ 
+    container dhcpv6 {
+      must "../ip-aug-mounted:ip-address-acquisition-method/ip-aug-mounted:origin = 'dhcp'" {
+        error-message "Only applicable when origin is DHCP";
+      }
+      presence "This leaves provides DHCPv6 client specific data";
+      description "This leaves provides DHCPv6 client specific data";
+      leaf dscp-mark {
+        type inet:dscp;
+        default 24;
+        description
+          "The differentiated service code point for outgoing DHCPv6 message.";
+      }
+    }
+  }
+ 
+  augment "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/ip-mounted:ipv6/ip-mounted:address" {
+    description "ipv6 address";
+    container ip-other-network-parameters {
+      if-feature "ip-host";
+      presence "These leaves display the network parameters
+      currently used by the interface, which may be statically
+      configured or obtained by DHCPv6";
+      description "These leaves display the network parameters
+      currently used by the interface, which may be statically
+      configured or obtained by DHCPv6";
+      leaf  default-router {
+        type inet:ipv6-address;
+        description
+          "Current IPv6 default router used by the interface";
+      }
+      leaf current-DNS {
+        type inet:ipv6-address;
+        description
+          "Current DNS used by the interface";
+      }
+      leaf link-local-address {
+        type inet:ipv6-address;
+        description
+          "link-local address of the IP interface";
+      }
+      leaf mac-address {
+        type yang:mac-address;
+        description
+          "The MAC address used by the IP interface";
+      }
+    }
+  }
+}

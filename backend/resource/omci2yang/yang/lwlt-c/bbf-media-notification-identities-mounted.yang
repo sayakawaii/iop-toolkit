@@ -1,0 +1,148 @@
+submodule bbf-media-notification-identities-mounted {
+  yang-version 1.1;
+  belongs-to bbf-sip-voip-mounted  {
+    prefix bbf-sip-voip-mounted;  
+  }
+
+  organization
+    "Broadband Forum <https://www.broadband-forum.org>
+     Common YANG Work Area";
+
+  contact
+    "Comments or questions about this Broadband Forum YANG module
+     should be directed to <mailto:help@broadband-forum.org>.
+     Editor:      Frank Desseyn, Nokia
+     Editor:      Nadine Staelens, Nokia
+     PS Leader:   Joey Boyd, ADTRAN
+     PS Leader:   Ken Kerpez, ASSIA
+     WA Director: Joey Boyd, ADTRAN
+     WA Director: Sven Ooghe, Nokia";
+
+  description
+    "This module contains a collection of YANG 
+	 definitions for the SIP VoIP alarm/inform notifications.
+	 
+	 ==> draft-ietf-ccamp-alarm-module-06 :
+	 
+	 An alarm signifies an undesirable state in a resource
+	 that requires corrective action.
+	 
+   	 There are two main things to remember from this 
+	 definition:
+	 
+	 1.  the definition focuses on leaving out events
+	 and logging information in general.  Alarms should 
+	 only be used for undesired states that require action.
+	 
+	 2.  the definition also focus on alarms as a state on
+	 a resource, not the notifications that report the 
+	 state changes.
+	 
+	 ==> Relevant definitions of the term 'alarm' in other 
+	 alarm standards.
+	 
+	 X.733 : 
+	 error: A deviation of a system from normal operation.
+	 fault: The physical or algorithmic cause of a malfunction. 
+	 Faults manifest themselves as errors. 
+	 Alarm: A notification, of the form defined by this
+	 function, of a specific event. An alarm may or may not 
+	 represent an error. 
+	 
+	 G.7710 :
+	 Alarms are indications that are automatically generated 
+	 by an NE as a result of the declaration of a failure.  
+	 
+	 RFC 3877 :
+	 Error : A deviation of a system from normal operation.
+	 Fault : Lasting error or warning condition.
+	 Event : Something that happens which may be of interest.
+	 	A fault, a change in status, crossing a threshold,
+	 	or an external input to the system, for example.
+	 Notification : Unsolicited transmission of management
+	 	information.
+	 Alarm : Persistent indication of a fault. 
+	 
+	 ISA182 :
+	 Alarm: An audible and/or visible means of indicating to
+	 the operator an equipment malfunction, process deviation
+	 or abnormal condition requiring a response.
+	 
+	 EEMUA :
+	 An alarm is an event to which an operator must knowingly
+	 react,respond, and acknowledge - not simply acknowledge 
+	 and ignore.
+	 
+	 3GPP Alarm IRP : 
+	 3GPP v15: 
+	 An alarm signifies an undesired condition of a resource
+	 (e.g. network element, link) for which an operator action
+	 is required. It emphasizes a key requirement that 
+	 operators [...] should not be informed about an undesired
+	 condition unless it requires operator action.
+	 3GPP v12: 
+	 alarm: abnormal network entity condition, which categorizes
+	 an event as a fault.  
+	 fault: a deviation of a system from normal operation, 
+	 which may result in the loss of operational capabilities
+	 [...] .
+	 Copyright (c) 2017-2018, Broadband Forum
+     Redistribution and use in source and binary forms, with or
+     without modification, are permitted provided that the following
+     conditions are met:
+     1. Redistributions of source code must retain the above copyright
+        notice, this list of conditions and the following disclaimer.
+     2. Redistributions in binary form must reproduce the above
+        copyright notice, this list of conditions and the following
+        disclaimer in the documentation and/or other materials
+        provided with the distribution.
+     3. Neither the name of the copyright holder nor the names of its
+        contributors may be used to endorse or promote products
+        derived from this software without specific prior written
+        permission.
+     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
+     CONTRIBUTORS \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+     INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+     DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+     CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+     SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+     NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+     CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+     STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+     ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+     ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     The above license is used as a license under copyright only.
+     Please reference the Forum IPR Policy for patent licensing terms
+     <https://www.broadband-forum.org/ipr-policy>.
+     Any moral rights which are necessary to exercise under the above
+     license grant are also deemed granted under this license.
+     This version of this YANG module is part of TR-383; see
+     the TR itself for full legal notices.";
+
+  revision 2020-03-06 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: 2020-03-06.";
+    reference
+      " ";
+  }
+
+  identity media-itf-alarm-notification {
+	description
+	  "Base identity for the Voip media interface related
+	   alarm notifications.
+	   This identity is abstract and is not to be used for any 
+	   alarm notification.";
+  }
+
+  identity media-itf-inform-notification {
+	description
+	  "Base identity for the Voip media interface related
+	   alarm notifications.
+	   This identity is abstract and is not to be used for any 
+	   alarm notification.";
+  }
+}

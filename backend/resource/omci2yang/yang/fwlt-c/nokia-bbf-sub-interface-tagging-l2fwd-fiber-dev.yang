@@ -1,0 +1,257 @@
+module nokia-bbf-sub-interface-tagging-l2fwd-fiber-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/" +
+            "nokia-bbf-sub-interface-tagging-l2fwd-fiber-dev";
+
+  prefix nokia-bbf-sub-interface-tagging-l2fwd-fiber-dev;
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import bbf-sub-interface-tagging{
+    prefix bbf-subif-tag;
+  }
+
+  import bbf-sub-interfaces{
+    prefix bbf-subif;
+  }
+  
+  import bbf-if-type {
+    prefix bbfift;
+  }
+
+  import bbf-interface-usage {
+    prefix bbf-if-usg;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "This module contains a collection of YANG deviations on top 
+     of standard for supporting BBF YANG module.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia 
+     reserves the right to revise this document for any reason, 
+     including but not limited to conformity with standards 
+     promulgated by various agencies, utilisation of advances in the 
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or 
+     referred to herein.
+
+     The product specifications and other technical or performance 
+     information contained herein are subject to change without 
+     notice. Updates of this document will be issued under the above 
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any 
+     information or opinion contained herein. Nokia expressly advises 
+     that any use of for any purpose or reliance upon this technical 
+     reference is at the risk of the user and that Nokia shall not be 
+     liable for any damage or injury incurred by any person arising 
+     out of the sufficiency, accuracy, or utility of any information 
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any 
+     manufacturer to modify or change any of its products, nor does 
+     this document represent any commitment by Nokia to sell or 
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license 
+     or right under any patent, whether or not the use of any 
+     information herein necessarily employs an invention of any 
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2017-2018, Nokia. All Rights Reserved.";
+
+  revision 2022-11-24 {
+    description
+      "Remove unsupported yang node.";
+    reference
+      "Nokia specific";
+  }
+  
+  revision 2016-11-28 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific"; 
+  }
+
+  /*Match pbit value other than "any" will be rejected*/
+  deviation "/if:interfaces/if:interface/bbf-subif:frame-processing/bbf-subif:inline-frame-processing/bbf-subif:inline-frame-processing/bbf-subif:ingress-rule/bbf-subif:rule/bbf-subif:flexible-match/bbf-subif-tag:match-criteria/bbf-subif-tag:vlan-tag-match-type/bbf-subif-tag:vlan-tagged/bbf-subif-tag:tag/bbf-subif-tag:dot1q-tag/bbf-subif-tag:pbit" {
+    deviate add{
+      must "current() = 'any'"{
+        error-message "Match pbit of vlan-sub-interface tagged rule value other than 'any' will be rejected";
+      }
+    }
+  }
+
+  /*Match dei value other than "any" will be rejected*/
+  deviation "/if:interfaces/if:interface/bbf-subif:frame-processing/bbf-subif:inline-frame-processing/bbf-subif:inline-frame-processing/bbf-subif:ingress-rule/bbf-subif:rule/bbf-subif:flexible-match/bbf-subif-tag:match-criteria/bbf-subif-tag:vlan-tag-match-type/bbf-subif-tag:vlan-tagged/bbf-subif-tag:tag/bbf-subif-tag:dot1q-tag/bbf-subif-tag:dei" {
+    deviate add{
+      must "current() = 'any'"{
+        error-message "Match dei of vlan-sub-interface tagged rule value other than 'any' will be rejected";
+      }
+    }
+  }
+
+  /* The VLAN tag in match criteria with range or "any VLAN-ID" will be rejected */
+  deviation "/if:interfaces/if:interface/bbf-subif:frame-processing/bbf-subif:inline-frame-processing/bbf-subif:inline-frame-processing/bbf-subif:ingress-rule/bbf-subif:rule/bbf-subif:flexible-match/bbf-subif-tag:match-criteria" {
+    deviate add{
+      must "(contains(current()/bbf-subif-tag:tag/bbf-subif-tag:dot1q-tag/bbf-subif-tag:vlan-id,'priority-tagged'))
+            or
+            (not(contains(current()/bbf-subif-tag:tag/bbf-subif-tag:dot1q-tag/bbf-subif-tag:vlan-id,'-'))
+            and not(contains(current()/bbf-subif-tag:tag/bbf-subif-tag:dot1q-tag/bbf-subif-tag:vlan-id,','))
+            and not(contains(current()/bbf-subif-tag:tag/bbf-subif-tag:dot1q-tag/bbf-subif-tag:vlan-id,'any'))) "{
+        error-message "The vlan-sub-interface VLAN tag in match criteria with range or 'any VLAN-ID' will be rejected";
+      }
+    }
+  }
+
+  /* user port vlan sub-interface only support one tag in User Interface. */
+  /* deviation "/if:interfaces/if:interface/bbf-subif:frame-processing/bbf-subif:inline-frame-processing/bbf-subif:inline-frame-processing/bbf-subif:ingress-rule/bbf-subif:rule/bbf-subif:flexible-match/bbf-subif-tag:match-criteria"{      
+    deviate add{
+      must "(current()/../../../../../if:type != 'bbfift:vlan-sub-interface' or current()/../../../../../bbf-if-usg:interface-usage/bbf-if-usg:interface-usage != 'user-port') or 
+            ((count(current()/bbf-subif-tag:tag) = 0) or 
+            (count(current()/bbf-subif-tag:tag) = 1 and current()/bbf-subif-tag:tag/bbf-subif-tag:index=0 and current()/bbf-subif-tag:tag/bbf-subif-tag:dot1q-tag/bbf-subif-tag:tag-type='bbf-dot1qt:c-vlan'))"
+	  {
+        error-message "user port vlan sub-interface only support one tag in User Interface";
+      }	 
+    }
+  }*/
+
+  /* The ingress-rewrite pop-tag number must equal or less than matching criteria tag number.  */
+  deviation "/if:interfaces/if:interface/bbf-subif:frame-processing/bbf-subif:inline-frame-processing/bbf-subif:inline-frame-processing/bbf-subif:ingress-rule/bbf-subif:rule/bbf-subif:ingress-rewrite/bbf-subif-tag:pop-tags" {
+    deviate add {
+      must "(current()/../../../../../if:type != 'bbfift:vlan-sub-interface') or  
+            (current() <= count(current()/../../bbf-subif:flexible-match/bbf-subif-tag:match-criteria/bbf-subif-tag:tag))" 
+      {
+        error-message "The ingress-rewrite pop-tag number must equal or less than matching criteria tag number.";
+      }
+    }
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-subif:frame-processing/bbf-subif:inline-frame-processing/bbf-subif:inline-frame-processing/bbf-subif:egress-rewrite/bbf-subif-tag:push-tag/bbf-subif-tag:dot1q-tag"{      
+    deviate add{
+      must "(current()/../../../bbf-subif:ingress-rule/bbf-subif:rule/bbf-subif:flexible-match/bbf-subif-tag:match-criteria/bbf-subif-tag:tag[bbf-subif-tag:index = current()/../bbf-subif-tag:index]/bbf-subif-tag:dot1q-tag/bbf-subif-tag:tag-type = current()/bbf-subif-tag:tag-type or not (boolean(current()/../../../bbf-subif:ingress-rule/bbf-subif:rule/bbf-subif:flexible-match/bbf-subif-tag:match-criteria/bbf-subif-tag:tag)))"
+	  {
+        error-message "The tag-type of match-criteria and egress-rewrite on VSI should be same";
+      }	 
+    }
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-subif:frame-processing/bbf-subif:inline-frame-processing/bbf-subif:inline-frame-processing/bbf-subif:ingress-rule/bbf-subif:rule/bbf-subif:flexible-match/bbf-subif-tag:match-criteria" {
+     deviate add {
+     must "(current()/../../../../../bbf-if-usg:interface-usage/bbf-if-usg:interface-usage != 'user-port'"  
+     + " or( not (boolean(current()/../../../../bbf-subif:ingress-rule/bbf-subif:rule/bbf-subif:flexible-match/bbf-subif-tag:match-criteria/bbf-subif-tag:untagged) "
+     + " and boolean(current()/../../../../bbf-subif:ingress-rule/bbf-subif:rule/bbf-subif:flexible-match/bbf-subif-tag:match-criteria/bbf-subif-tag:tag/bbf-subif-tag:dot1q-tag/bbf-subif-tag:vlan-id)" 
+     + " and current()/../../../../bbf-subif:ingress-rule/bbf-subif:rule/bbf-subif:flexible-match/bbf-subif-tag:match-criteria/bbf-subif-tag:tag/bbf-subif-tag:dot1q-tag/bbf-subif-tag:vlan-id != 'priority-tagged')" 
+     + "or current()/../../../../bbf-subif:ingress-rule/bbf-subif:rule[bbf-subif:flexible-match/bbf-subif-tag:match-criteria/bbf-subif-tag:tag/bbf-subif-tag:dot1q-tag/bbf-subif-tag:vlan-id != 'priority-tagged']/bbf-subif:ingress-rewrite/bbf-subif-tag:pop-tags = 1))"
+     {
+        error-message "If user VSI has an ingress rule to match priority-tag, then this rule must have ingress-rewrite pop 1; If user VSI has an ingress rule to match untag and another ingress rule to match normal tag at the same time, then the ingress rule to match normal tag must have ingress-rewrite pop 1";
+     }
+    }
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-subif:frame-processing/bbf-subif:inline-frame-processing/bbf-subif:inline-frame-processing/bbf-subif:ingress-rule/bbf-subif:rule/bbf-subif:flexible-match/bbf-subif-tag:match-criteria/bbf-subif-tag:ethernet-frame-type"
+  {
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-subif:frame-processing/bbf-subif:inline-frame-processing/bbf-subif:inline-frame-processing/bbf-subif:ingress-rule/bbf-subif:rule/bbf-subif:flexible-match/bbf-subif-tag:match-criteria/bbf-subif-tag:protocols"
+  {
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-subif:frame-processing/bbf-subif:inline-frame-processing/bbf-subif:inline-frame-processing/bbf-subif:ingress-rule/bbf-subif:rule/bbf-subif:flexible-match/bbf-subif-tag:exclude-criteria"
+  {
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-subif:frame-processing/bbf-subif:inline-frame-processing/bbf-subif:inline-frame-processing/bbf-subif:ingress-rule/bbf-subif:rule/bbf-subif:ingress-rewrite/bbf-subif-tag:push-tag/bbf-subif-tag:dot1q-tag/bbf-subif-tag:tag-type"
+  {
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-subif:frame-processing/bbf-subif:inline-frame-processing/bbf-subif:inline-frame-processing/bbf-subif:ingress-rule/bbf-subif:rule/bbf-subif:ingress-rewrite/bbf-subif-tag:push-tag/bbf-subif-tag:dot1q-tag/bbf-subif-tag:vlan-id"
+  {
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-subif:frame-processing/bbf-subif:inline-frame-processing/bbf-subif:inline-frame-processing/bbf-subif:ingress-rule/bbf-subif:rule/bbf-subif:ingress-rewrite/bbf-subif-tag:push-tag/bbf-subif-tag:dot1q-tag/bbf-subif-tag:vlan-id-from-tag-index-or-discard"
+  {
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-subif:frame-processing/bbf-subif:inline-frame-processing/bbf-subif:inline-frame-processing/bbf-subif:ingress-rule/bbf-subif:rule/bbf-subif:ingress-rewrite/bbf-subif-tag:push-tag/bbf-subif-tag:dot1q-tag/bbf-subif-tag:pbit/bbf-subif-tag:write-pbit-0/bbf-subif-tag:write-pbit-0"
+  {
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-subif:frame-processing/bbf-subif:inline-frame-processing/bbf-subif:inline-frame-processing/bbf-subif:ingress-rule/bbf-subif:rule/bbf-subif:ingress-rewrite/bbf-subif-tag:push-tag/bbf-subif-tag:dot1q-tag/bbf-subif-tag:pbit/bbf-subif-tag:copy-pbit-from-input-or-0/bbf-subif-tag:pbit-from-tag-index"
+  {
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-subif:frame-processing/bbf-subif:inline-frame-processing/bbf-subif:inline-frame-processing/bbf-subif:ingress-rule/bbf-subif:rule/bbf-subif:ingress-rewrite/bbf-subif-tag:push-tag/bbf-subif-tag:dot1q-tag/bbf-subif-tag:pbit/bbf-subif-tag:write-pbit-value/bbf-subif-tag:write-pbit"
+  {
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-subif:frame-processing/bbf-subif:inline-frame-processing/bbf-subif:inline-frame-processing/bbf-subif:ingress-rule/bbf-subif:rule/bbf-subif:ingress-rewrite/bbf-subif-tag:push-tag/bbf-subif-tag:dot1q-tag/bbf-subif-tag:dei/bbf-subif-tag:write-dei-0/bbf-subif-tag:write-dei-0"
+  {
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-subif:frame-processing/bbf-subif:inline-frame-processing/bbf-subif:inline-frame-processing/bbf-subif:ingress-rule/bbf-subif:rule/bbf-subif:ingress-rewrite/bbf-subif-tag:push-tag/bbf-subif-tag:dot1q-tag/bbf-subif-tag:dei/bbf-subif-tag:copy-dei-from-input-or-0/bbf-subif-tag:dei-from-tag-index"
+  {
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-subif:frame-processing/bbf-subif:inline-frame-processing/bbf-subif:inline-frame-processing/bbf-subif:ingress-rule/bbf-subif:rule/bbf-subif:ingress-rewrite/bbf-subif-tag:push-tag/bbf-subif-tag:dot1q-tag/bbf-subif-tag:dei/bbf-subif-tag:write-dei-1/bbf-subif-tag:write-dei-1"
+  {
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-subif:frame-processing/bbf-subif:inline-frame-processing/bbf-subif:inline-frame-processing/bbf-subif:egress-rewrite/bbf-subif-tag:push-tag/bbf-subif-tag:dot1q-tag/bbf-subif-tag:vlan-id-from-tag-index-or-discard"
+  {
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-subif:frame-processing/bbf-subif:inline-frame-processing/bbf-subif:inline-frame-processing/bbf-subif:egress-rewrite/bbf-subif-tag:push-tag/bbf-subif-tag:dot1q-tag/bbf-subif-tag:pbit/bbf-subif-tag:write-pbit-0"
+  {
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-subif:frame-processing/bbf-subif:inline-frame-processing/bbf-subif:inline-frame-processing/bbf-subif:egress-rewrite/bbf-subif-tag:push-tag/bbf-subif-tag:dot1q-tag/bbf-subif-tag:pbit/bbf-subif-tag:write-pbit-value"
+  {
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-subif:frame-processing/bbf-subif:inline-frame-processing/bbf-subif:inline-frame-processing/bbf-subif:egress-rewrite/bbf-subif-tag:push-tag/bbf-subif-tag:dot1q-tag/bbf-subif-tag:dei/bbf-subif-tag:write-dei-0"
+  {
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-subif:frame-processing/bbf-subif:inline-frame-processing/bbf-subif:inline-frame-processing/bbf-subif:egress-rewrite/bbf-subif-tag:push-tag/bbf-subif-tag:dot1q-tag/bbf-subif-tag:dei/bbf-subif-tag:write-dei-1"
+  {
+    deviate not-supported;
+  }
+  
+  deviation "/if:interfaces/if:interface/bbf-subif:frame-processing/bbf-subif:inline-frame-processing/bbf-subif:inline-frame-processing/bbf-subif:egress-rewrite/bbf-subif-tag:pop-tags"
+  {
+    deviate not-supported;
+  }
+}
+
+

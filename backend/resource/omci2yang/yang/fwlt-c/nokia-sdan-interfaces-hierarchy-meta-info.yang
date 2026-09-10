@@ -1,0 +1,37 @@
+module nokia-sdan-interfaces-hierarchy-meta-info {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/nokia-sdan-interfaces-hierarchy-meta-info";
+
+  prefix nokia-if-hierarchy-meta-info;
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  organization "Nokia";
+
+  contact "isam.yang@nokia.com";
+
+  description
+    "This module contains a collection of YANG definitions for
+     the hierarchy meta info data.
+
+     Copyright (C) 2024, Nokia. All Rights Reserved.";
+
+  revision 2024-11-06 {
+    description "Initial revision.";
+    reference "Nokia specific.";
+  }
+
+  augment "/if:interfaces/if:interface" {
+    description "Augment interface with the hierarchy meta info data.";
+
+    leaf hierarchy-meta-info {
+      type string {
+        length "0..128";
+      }
+
+      description "Hierarchy meta info data.";
+    }
+  }
+}

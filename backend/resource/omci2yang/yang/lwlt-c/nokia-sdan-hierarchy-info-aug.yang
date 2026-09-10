@@ -1,0 +1,41 @@
+module nokia-sdan-hierarchy-info-aug {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/nokia-sdan-hierarchy-info-aug";
+
+  prefix nokia-hierarchy-info;
+
+  import ietf-system {
+    prefix sys;
+  }
+
+  organization "Nokia";
+
+  contact "isam.yang@nokia.com";
+
+  description
+    "This module contains a collection of YANG definitions for
+     hierarchy info feature enabled flag.
+
+    Copyright (C) 2024, Nokia. All Rights Reserved.";
+
+  revision 2024-11-06 {
+    description "Initial revision.";
+    reference "Nokia specific.";
+  }
+
+  feature hierarchy-info-feature {
+    description
+      "This feature indicates that the system supports hierarchy-info feature.";
+  }
+
+  augment "/sys:system" {
+    description "Augment of system hierarchy-info specific configuration";
+
+    leaf hierarchy-info-enabled {
+      if-feature "hierarchy-info-feature";
+      type boolean;
+      default false;
+      description "This field specifies if hierarchy-info will be included on alarms and IPFIX notifications.";
+    }
+  }
+}

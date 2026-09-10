@@ -1,0 +1,211 @@
+module nokia-sdan-dba-congestion-monitoring {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+          + "nokia-sdan-dba-congestion-monitoring";
+
+  prefix nokia-dba-congn-mon;
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import bbf-xpon-if-type {
+    prefix bbf-xponift;
+  }
+
+  import bbf-yang-types {
+    prefix bbf-yang;
+  }
+
+  import bbf-interfaces-performance-management {
+    prefix bbf-if-pm;
+  }
+
+  import nokia-interface-speed-monitoring {
+    prefix nokia-itf-tm;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG definitions for
+     supporting Nokia specific requirements as applicable to its
+     access network equipment.
+
+     Specifically, this module augments the interface model with data
+     that supports monitoring DBA congestion on interfaces in client
+     monitored intervals.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2022, Nokia. All Rights Reserved.";
+
+
+  revision 2022-07-28 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific";
+  }
+
+  feature dba-congestion-monitoring-history {
+    description
+      "Indicates that a history is maintained for the DBA congestion
+       monitoring data.";
+  }
+
+
+  augment '/if:interfaces/if:interface/bbf-if-pm:performance' {
+        when " derived-from-or-self(../if:type, "
+            + "'bbf-xponift:channel-termination')";
+    description
+      "This augment provides configuration data for DBA congestion-monitoring
+       specific to xPon.";
+
+    container dba-congestion-monitoring {
+      presence
+        "Presence indicates the DBA congestion monitoring function is supported
+         unless the 'enable' leaf is set 'false'.";
+      description
+        "DBA congestion monitoring data.";
+
+      leaf enable {
+        type boolean;
+        default "false";
+        description
+          "If true, enables DBA congestion monitoring for the interface for the
+           supported periods. Supported periods are determined from
+           the configuration in the container 'nokia-itf-tm:interface-speed-
+           monitoring'. If false then no DBA congestion  monitoring of the
+           interface is performed.";
+      }
+
+      leaf threshold {
+        type bbf-yang:percent;
+        default 90;
+        description
+          "It specifies the thershold value in percentage within a DBA grant window
+           wherein the system declare it as a congested window when the bandwidth
+           allocation exceeds this thershold value";
+      }
+    }
+  }
+
+  augment '/if:interfaces-state/if:interface/bbf-if-pm:performance' {
+    description
+      "This augment defines performance data nodes for short monitoring intervals";
+
+    list shorter-monitoring-period {
+      key "monitoring-period-length";
+      description
+        "Performance monitoring is supported for configurable short monitoring period.
+         This is list of performance monitoring data for each configured monitored period";
+
+      leaf monitoring-period-length {
+        type nokia-itf-tm:monitoring-period;
+        description
+          "This leaf specifies the short monitoring period for which the performance data
+           is collected.";
+      }
+
+      container dba-congestion-monitoring {
+        when " derived-from-or-self(../../../if:type, "
+            + "'bbf-xponift:channel-termination')";
+        description
+          "DBA congestion monitoring data specific to xPON.";
+
+        container current {
+          description
+            "Contains the data as currently accumulated for the
+             ongoing period.";
+
+          leaf dba-congestion-ratio {
+            type bbf-yang:percent;
+            description
+              "It is the percentage of the elapsed interval during which the
+               bandwidth assigned by DBA exceeded the configured threshold value";
+          }
+        }
+
+        leaf number-of-intervals {
+          type nokia-itf-tm:monitoring-interval;
+          description
+            "The total number of monitoring-intervals for which
+             data was collected.";
+        }
+
+        leaf non-valid-intervals {
+          type nokia-itf-tm:monitoring-interval;
+          description
+            "The number of monitoring-intervals for which
+             the data is considered to be invalid or incomplete.";
+         }
+
+        list history {
+          if-feature "dba-congestion-monitoring-history";
+          key "interval-number";
+          max-elements 1;
+          description
+            "A history of time monitoring intervals.";
+
+          leaf interval-number {
+            type nokia-itf-tm:speed-monitoring-history-interval;
+            description
+              "The position of a completed interval relative to the
+               current interval. Value '1' corresponds to the last
+               interval completed";
+          }
+
+          uses bbf-if-pm:performance-history-measured-time;
+          uses bbf-if-pm:performance-history-interval-parameters;
+
+          leaf dba-congestion-ratio {
+            type bbf-yang:percent;
+            description
+              "It is the percentage of the elapsed interval during which the
+               bandwidth assigned by DBA exceeded the configured threshold value";
+          }
+        }
+      }
+    }
+  }
+}

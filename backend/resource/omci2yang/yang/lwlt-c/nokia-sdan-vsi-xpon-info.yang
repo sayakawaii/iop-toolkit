@@ -1,0 +1,141 @@
+module nokia-sdan-vsi-xpon-info {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+          + "nokia-sdan-vsi-xpon-info";
+
+  prefix nokia-vsi-xpon;
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import bbf-if-type {
+    prefix bbfift;
+  }
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  import bbf-yang-types {
+    prefix bbf-yang;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG definitions for
+     xpon info of a VLAN sub-interface.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2022, Nokia. All Rights Reserved.";
+
+
+  revision 2022-02-16 {
+    description
+      "Initial revision. xpon info of vsi required for IPDR.";
+    reference
+      "Nokia specific";
+  }
+
+  typedef rack-shelf-slot-port-identifier-type {
+    type string {
+      pattern 'R1.S1.LT([1-9]|1[0-6]).PON([1-9]|1[0-9]|2[0-9]|3[0-2])';
+    }
+    description
+      "A type meant for channel termination interface identified in Rx.Sx.LTx.PONx 
+       format. Where 'x' denotes values of Rack, Shelf, Slot and port.
+       Rack and Shelf values are fixed to 1.
+       Slot value range is from 1 to 16.
+       Port value range is from 1 to 32.
+       Example String: R1.S1.LT3.PON12";
+  }
+
+
+  augment "/if:interfaces-state/if:interface" {
+    when "derived-from-or-self(if:type,'bbfift:vlan-sub-interface')";
+    description
+      "Augment xpon interface info onto VLAN sub-interface .";
+    container vsi-ipfix-xpon-info {
+      presence
+        "This container is present when the ONU which is corresponding to lower 
+         layer vANI of this VLAN sub-interface is present on a channel termination
+         in the sense of the 'onu-present' identity defined in bbf-xpon-onu-types.";
+      description
+        "Contains data of a VLAN sub-interface and its lower layer xPON interfaces
+         that are reflected within the  VLAN sub-interface. Attributes of this
+         container will be used for IPDR formation when exported by ipfix";
+
+      leaf channel-termination-identifier {
+        type rack-shelf-slot-port-identifier-type;
+        description
+          "The identifier of the channel termination currently used by the ONU
+           which is corresponding to lower layer vANI of this VLAN sub-interface";
+      }
+
+      leaf channel-termination-ifindex {
+        type uint32;
+        description
+          "IfIndex of channel termination currently used by the ONU
+           which corresponds to lower layer vANI of this VLAN sub-interface";
+      }
+
+      leaf onu-last-up {
+        type yang:date-and-time;
+        description
+          "The time that the ONU corresponding to the lower layer vANI of this 
+           VLAN sub-interface has been in operation since the last time it was
+           connected to the OLT and authenticated.";
+      }
+
+      leaf remote-id {
+        type bbf-yang:string-ascii63-or-empty;
+        default "";
+        description
+          "Remote-id value configured in a subscriber-profile, which is
+           applied to this interface.";
+      }
+    }
+  }
+}
+

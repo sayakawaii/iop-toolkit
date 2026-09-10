@@ -1,0 +1,328 @@
+module nokia-ietf-ip-common-dev {
+
+  yang-version 1.1;
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+            + "nokia-ietf-ip-common-dev";
+
+  prefix nokia-ietf-ip-common-dev;
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import ietf-ip {
+    prefix ip;
+  }
+
+  import iana-if-type {
+    prefix ianaift;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG deviations on top
+     of the standard ietf-ip.yang module.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2017-2018, Nokia. All Rights Reserved.";
+
+  revision 2023-05-02 {
+    description "Solve yang errors and fix canonical order according to RFC 6020.";
+    reference "Nokia specific.";
+  }
+
+  revision 2021-09-30 {
+    description
+      "Not supported deviations added";
+    reference "Nokia specific.";
+  }
+
+  revision 2016-11-16 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific";
+  }
+
+  /**********************************************/
+  /* definitions which should always be present */
+  /**********************************************/
+
+  /********************************************************/
+  /* multicast/broadcast address is not valid address     */
+  /* The inband and outband ip address can not be same.   */
+  /* IPv4 addess defined in ietf-ip.yang                  */
+  /********************************************************/
+
+  deviation "/if:interfaces/if:interface/ip:ipv4"  {
+
+    /* IP interface type can not be modified */
+    deviate add {
+      must "(../if:type = 'ianaift:ipForward')" {
+        error-message "IP interface type should be ipForward.";
+        description "An ip address can be only configured in an ipForward interface";
+      }
+    }
+  }
+
+  deviation "/if:interfaces/if:interface/ip:ipv4/ip:address/ip:ip"  {
+
+   /* multicast address is not valid address  */
+    deviate add {
+      must "not((substring-before(.,'.') >= 224)
+            and (substring-before(.,'.') < 240))" {
+        error-message "224.0.0.0~239.255.255.255 are not valid";
+        description "A multicast address cannot not be configured in an ipForward interface";
+      }
+    }
+
+    /* multicast/broadcast address is not valid address  */
+    deviate add {
+      must "((current() != '255.255.255.255') and (current() != '0.0.0.0'))" {
+        error-message "255.255.255.255 or 0.0.0.0 is not valid";
+        description "A broadcast address cannot be configured in an ipForward interface";
+      }
+    }
+
+    /* Loopback address is not valid address  */
+    deviate add {
+      must "(current() != '127.0.0.1')" {
+        error-message "127.0.0.1 is not valid";
+        description "The loopback address cannot be configured in an ipForward interface";
+      }
+    }
+
+    /*IP address can not be same*/
+    deviate add {
+      must "not(count(/if:interfaces/if:interface/ip:ipv4/ip:address[ip:ip = current()]) >=2)" {
+        error-message "IP address can not be same";
+        description "An ip address already configured in an ipForward interface cannot be configured in another one";
+      }
+    }
+  }
+
+  deviation "/if:interfaces/if:interface/ip:ipv6"  {
+
+    /* IP interface type can not be modified */
+    deviate add {
+      must "(../if:type = 'ianaift:ipForward')" {
+        error-message "IP interface type should be ipForward.";
+        description "An ip address can be only configured in an ipForward interface";
+      }
+    }
+  }
+
+  deviation "/if:interfaces/if:interface/ip:ipv6/ip:address/ip:ip"  {
+
+     /* Link-local address is not valid address  */
+     deviate add {
+       must "(substring-before(.,':') != 'fe80')"{
+              error-message "Invalid IP. Link-local address is not a valid address";
+              description "A link-local address cannot be configured in ipForward interface";
+       }
+     }
+
+     /* Multicast address is not valid address  */
+     deviate add {
+       must "not(starts-with(.,'ff'))"{
+              error-message "Invalid IP. Multicast address is a not valid address";
+              description "A multicast address cannot be configured in an ipForward interface";
+       }
+     }
+
+     /* Site-local address is not valid address  */
+     deviate add {
+       must "(substring-before(.,':') != 'fec0')"{
+              error-message "Invalid IP. Site-local address is a not valid address";
+              description "A site-local address cannot be configured in an ipForward interface";
+       }
+     }
+
+     /* Loopback address is not valid address  */
+     deviate add {
+       must "(current() != '::1')"{
+             error-message "Invalid IP. Loopack address is not a valid address";
+             description "The loopback address cannot be configured in an ipForward interface";
+       }
+     }
+
+     /* Unspecified address  */
+     deviate add {
+       must "(current() != '::')"{
+             error-message "Invalid IP. Unspecified address";
+             description "The unspecified address cannot be configured in an ipForward interface";
+       }
+     }
+
+    /*IP address can not be same*/
+    deviate add {
+      must "not(count(/if:interfaces/if:interface/ip:ipv6/ip:address[ip:ip = current()]) >=2)" {
+        error-message "IP address can not be same";
+        description "An ip address already configured in an ipForward interface cannot be configured in another one";
+      }
+    }
+  }
+
+  deviation "/if:interfaces/if:interface/ip:ipv4/ip:address" {
+    /* Atmost one IP address can be configured */
+    description "Only 1 ipv4 address can be configured in an ipForward interface";
+    deviate add {
+      max-elements 1;
+    }
+    
+  }
+
+
+  deviation "/if:interfaces/if:interface/ip:ipv6/ip:address"  {
+     /* Atmost one IP address can be configured */
+     description "Only 1 ipv6 address can be configured in an ipForward interface";
+     deviate add {
+       max-elements 1;
+     }
+     
+  }
+
+  deviation "/if:interfaces/if:interface/ip:ipv4/ip:forwarding"  {
+     description "Leaf not supported";
+     deviate not-supported;
+     
+  }
+
+  deviation "/if:interfaces/if:interface/ip:ipv4/ip:mtu"  {
+     description "Leaf not supported";
+     deviate not-supported;
+     
+  }
+
+  deviation "/if:interfaces/if:interface/ip:ipv4/ip:neighbor"  {
+     description "Leaf not supported";
+     deviate not-supported;
+     
+  }
+
+  deviation "/if:interfaces/if:interface/ip:ipv6/ip:forwarding"  {
+     description "Leaf not supported";
+     deviate not-supported;
+     
+  }
+
+  deviation "/if:interfaces/if:interface/ip:ipv6/ip:mtu"  {
+     description "Leaf not supported";
+     deviate not-supported;
+     
+  }
+
+  deviation "/if:interfaces/if:interface/ip:ipv6/ip:neighbor"  {
+     description "Leaf not supported";
+     deviate not-supported;
+     
+  }
+
+  deviation "/if:interfaces/if:interface/ip:ipv6/ip:autoconf"  {
+     description "Leaf not supported";
+     deviate not-supported;
+     
+  }
+
+  deviation "/if:interfaces/if:interface/ip:ipv6/ip:dup-addr-detect-transmits"  {
+     description "Leaf not supported";
+     deviate not-supported;
+     
+  }
+
+  deviation "/if:interfaces-state/if:interface/ip:ipv4/ip:forwarding"  {
+     description "Leaf not supported";
+     deviate not-supported;
+     
+  }
+
+  deviation "/if:interfaces-state/if:interface/ip:ipv4/ip:mtu"  {
+     description "Leaf not supported";
+     deviate not-supported;
+     
+  }
+
+  deviation "/if:interfaces-state/if:interface/ip:ipv4/ip:neighbor"  {
+     description "Leaf not supported";
+     deviate not-supported;
+     
+  }
+
+  deviation "/if:interfaces-state/if:interface/ip:ipv6/ip:forwarding"  {
+     description "Leaf not supported";
+     deviate not-supported;
+     
+  }
+
+  deviation "/if:interfaces-state/if:interface/ip:ipv6/ip:mtu"  {
+     description "Leaf not supported";
+     deviate not-supported;
+     
+  }
+
+  deviation "/if:interfaces-state/if:interface/ip:ipv6/ip:neighbor"  {
+     description "Leaf not supported";
+     deviate not-supported;
+     
+  }
+
+  /* dummy deviations */
+  deviation "/if:interfaces/if:interface/ip:ipv4/ip:address" {
+    description "Subnet overlapping is not allowed between the ipv4 addresses of diffenent ipForward interfaces. The error message 'subnet mismatch detected' will be displayed when the constraint is violated";
+    deviate add {}
+    
+  }
+
+  deviation "/if:interfaces/if:interface/ip:ipv4/ip:address" {
+    description "An ipv4 address cannot be removed if an ipv4 route still exists. The error message 'cannot remove ipv4 address as ipv4 route still exists' will be displayed when the constraint is violated";
+    deviate add {}  
+  }
+
+  deviation "/if:interfaces/if:interface/ip:ipv6/ip:address" {
+    description "An ipv6 address cannot be removed if an ipv6 route still exists. The error message 'cannot remove ipv6 address as ipv6 route still exists' will be displayed when the constraint is violated";
+    deviate add {}
+  }
+  
+}

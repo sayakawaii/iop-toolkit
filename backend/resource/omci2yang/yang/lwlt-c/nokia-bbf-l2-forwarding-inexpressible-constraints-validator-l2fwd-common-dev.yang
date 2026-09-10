@@ -1,0 +1,107 @@
+module nokia-bbf-l2-forwarding-inexpressible-constraints-validator-l2fwd-common-dev {
+
+  yang-version "1.1";
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+            + "nokia-bbf-l2-forwarding-inexpressible-constraints-validator-l2fwd-common-dev";
+
+  prefix nokia-bbf-l2-forwarding-inexpressible-constraints-validator-l2fwd-common-dev;
+
+  import bbf-l2-forwarding {
+    prefix bbf-l2-fwd;
+  }
+  
+  organization
+    "NOKIA";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "The NOKIA common/nokia-bbf-l2-forwarding-inexpressible-constraints-validator-l2fwd-common-dev
+     YANG module supporting deviations on top of ietf-ssh-server standard.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2019, Nokia. All Rights Reserved.";
+
+  revision 2017-04-24 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific"; 
+  }
+
+  deviation "/bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarders/bbf-l2-fwd:forwarder" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarding-databases/bbf-l2-fwd:forwarding-database'
+       The error message 'Only one forwarding-database can be attached to a forwarder.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarders/bbf-l2-fwd:forwarder" {
+    description
+      "The error message 'Same VSI cannot be attached with more than one forwarder port' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarders/bbf-l2-fwd:forwarder" {
+    description
+      "The error message 'Number of Static MACs per vlan-sub-interface exceeds max-number-mac-addresses of the vlan-sub-interface.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarding-databases/bbf-l2-fwd:forwarding-database" {
+    description
+      "The error message 'Number of Static MACs per vlan-sub-interface exceeds max-number-mac-addresses of the vlan-sub-interface.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarding-databases/bbf-l2-fwd:forwarding-database" {
+    description
+      "The error message 'Number of static MAC in forwarding-database must be less than or equal to max-number-mac-addresses configured per forwarding-database.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarding-databases/bbf-l2-fwd:forwarding-database" {
+    description
+      "The error message 'Number of Static MACs in the system exceeds maximum MAC supported by the system.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+}

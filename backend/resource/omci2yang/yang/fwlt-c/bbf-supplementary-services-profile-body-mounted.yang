@@ -1,0 +1,853 @@
+submodule bbf-supplementary-services-profile-body-mounted {
+  yang-version 1.1;
+  belongs-to bbf-sip-voip-mounted  {
+    prefix bbf-sip-voip-mounted;  
+  }
+		
+  import ietf-inet-types {
+	prefix inet;
+	reference
+      "RFC 6991: Common YANG Data Types.";  		
+  }
+  
+  organization
+    "Broadband Forum <https://www.broadband-forum.org>
+     Common YANG Work Area";
+
+  contact
+    "Comments or questions about this Broadband Forum YANG module
+     should be directed to <mailto:help@broadband-forum.org>.
+     Editor:      Frank Desseyn, Nokia
+     Editor:      Nadine Staelens, Nokia
+     PS Leader:   Joey Boyd, ADTRAN
+     PS Leader:   Ken Kerpez, ASSIA
+     WA Director: Joey Boyd, ADTRAN
+     WA Director: Sven Ooghe, Nokia";
+
+  description
+    "This submodule contains a collection of YANG definitions for
+     managing the supplementary services profiles.
+     Copyright (c) 2017-2018, Broadband Forum
+     Redistribution and use in source and binary forms, with or
+     without modification, are permitted provided that the following
+     conditions are met:
+     1. Redistributions of source code must retain the above copyright
+        notice, this list of conditions and the following disclaimer.
+     2. Redistributions in binary form must reproduce the above
+        copyright notice, this list of conditions and the following
+        disclaimer in the documentation and/or other materials
+        provided with the distribution.
+     3. Neither the name of the copyright holder nor the names of its
+        contributors may be used to endorse or promote products
+        derived from this software without specific prior written
+        permission.
+     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
+     CONTRIBUTORS \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+     INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+     DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+     CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+     SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+     NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+     CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+     STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+     ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+     ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     The above license is used as a license under copyright only.
+     Please reference the Forum IPR Policy for patent licensing terms
+     <https://www.broadband-forum.org/ipr-policy>.
+     Any moral rights which are necessary to exercise under the above
+     license grant are also deemed granted under this license.
+     This version of this YANG module is part of TR-383; see
+     the TR itself for full legal notices.";
+
+  revision 2023-01-06 {
+    description
+      "update description";
+  }
+
+  revision 2021-09-27 {
+    description
+      "Add do-not-disturb,flash-on-emergency-call,
+       emergency-call-originating-hold and six-party-conference
+       service.";
+    reference
+      " ";
+  }
+  revision 2020-03-06 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: 2020-03-06.";
+    reference
+      " ";
+  }
+
+
+  grouping supplementary-services-profile-body {
+    container direct-connect-service {
+	  presence
+	    "If present, indicates that the POTS termination has 
+		 the direct conect service.";
+	  leaf control {
+	    type enumeration {
+		  enum disable {
+		    value 0;
+			description
+			  "The direct connect service is disabled.";
+		  } 
+		  enum operator {
+		    value 1;
+			description
+			  "The direct connect service is enabled and controlled
+		       by the operator.";
+		  }
+		  enum subscription {
+		    value 2;
+			description
+			  "The direct connect service is controlled
+		       by the NGN core, IMS core or an application server.
+			   Via subscription the core network will send 
+			   notifications whenever the direct connect service is
+			   activated or deactivated.
+			   The direct connect service is 
+			   enabled/disabled by the operator through
+			   the IMS core configuration.";
+		  }
+		  enum user {
+		    value 3;
+			description
+			  "The direct connect service is controlled
+		       by the subscriber by dialing feature access codes.
+			   However the subscriber can not activate the 
+			   immediate direct connect service, only the delayed 
+			   direct connect service. In case no delay timer is 
+			   configured a default delay timer of 4 seconds is
+			   taken.";
+		  }	      
+		}
+		default disable;
+        description 
+          "The supplementary service can be controlled in the 
+		   network, by the operator or by the subscriber.";		  
+	  }
+	  leaf connect-type {
+	    type enumeration {
+		  enum immediate {
+		    value 1;
+			description
+			  "The hotline service.";
+		  }
+		  enum delayed {
+		    value 2;
+			description
+			  "The warmline service.";
+		  }
+		}
+		default delayed;
+        description 
+          "The connect-type of supplementary service can be 
+           hotline service or warmline service.";	
+	  }
+	  leaf delay-timer {
+	  when "../bbf-sip-voip-mounted:connect-type ='delayed'";
+	    type uint8 {range "1..60";}
+	    units "1 second";
+		default 4;
+		description
+		  "The Warmline Service delay timer 
+		   starts upon off-hook detection.
+		   In case the timer expires before any
+		   digits are dialed, the Warmline
+		   Service gets applied. This timer 
+		   should not be larger than the 
+		   pre-dialing timer";		
+	  }	
+	  leaf connect-uri {
+		type inet:uri;
+		description
+		  "The direct connect service URI.";
+	  }
+	}
+	container call-waiting {
+	  presence
+	    "If present, indicates that the POTS termination has 
+		 the call waiting service.";
+      description
+        "The multi party call waiting service informs the
+		 sip user when someone else is calling you when 
+		 already involved in an ongoing call.
+ 		 A beep tone will be put at the subscriber line, the 
+		 call waiting tone; 
+		 The calling party hears only normal ringing.
+		 When one hears the call waiting tone one can accept 
+ 		 or reject this waiting call. When the waiting call is
+		 accepted, one can put the ongoing call on hold or one can
+		 simple end the ongoing call. 
+		 How to accept or reject the waiting call depends from 
+		 configured user experience, it can be with a Hook Flash 
+		 or a hook flash and a SOC (switch Order command). 
+		 When the first call was put on hold and the waiting call
+		 is accepted, there is also the possiblity to switch 
+		 between both calls as often as one wants.
+		 In case the call waiting service state is set to 
+		 'enabled' or 'by-subscription', the further 
+		 proceeding and processing (e.g. implicit subscription /
+		 explicit subscription) is a proprietary implementation.
+		 and may be driven by proprietary settings in the access
+		 node.";
+	  leaf control {
+	    type enumeration {
+		  enum disable {
+		    value 0;
+			description
+			  "The call waiting service is disabled.";
+		  } 
+		  enum operator {
+		    value 1;
+			description
+			  "The call waiting service is enabled and controlled
+		       by the operator.";
+		  }
+		  enum subscription {
+		    value 2;
+			description
+			  "The call waiting service is controlled
+		       by the NGN core, IMS core or an application server.
+			   Via subscription the core network will send 
+			   notifications.
+			   whenever the call waiting service is activated or
+			   deactivated.
+			   The call waiting service is 
+			   enabled/disabled by the operator through
+			   the IMS core configuration.";
+		  }
+		  enum user {
+		    value 3;
+			description
+			  "The call waiting service is controlled
+		       by the subscriber by dialing feature access codes.";
+		  }
+	    }
+		default disable;
+        description 
+          "The supplementary service can be controlled in the 
+		   network, by the operator or by the subscriber.";		  
+	  }
+	  leaf cw-timer {
+		type uint16 {range "0..65535";}
+		units "1 second";
+		default 120;
+		description
+		  "The call waiting timer should be larger
+		   than the call waiting timer set in the
+		   core network. 
+		   This timer prevents pending waiting calls.";
+	  }		
+	  leaf reject-response {
+	    type uint16 {range "400..700";}			
+	    default 603;
+	    description
+	    	"The waiting call can be rejected by the
+	    	 subscriber or by the expiry of the call
+	    	 waiting timer. 
+	    	 In such case, the call will be rejected
+	    	 with the configured response code.";
+	  }
+	  leaf cancel-cw-sasc {
+	    type string;
+	    description
+	      "The Cancel Call Waiting Service activation
+	       service code.
+	       Allows to suspend the Call Waiting signal
+	       for the duration of one call.
+	       Once the user went on-hook, the call waiting
+	       feature is reactivated.
+	       BEFORE MAKING A CALL:
+	       Listen for dial tone and press the cancel
+	       call waiting service code.
+	       Wait for dial tone, then dial the number one
+	       wishes to call.
+	       DURING A CALL:
+	       Place your call on 'hold' by pressing the
+	       switchhook (or FLASH button).
+	       Listen for regular dial tone and press the
+	       cancel call waiting service code.
+	       One will hear a 'beep-beep' confirmation 
+	       tone and be returned to your call.
+	       To activate Cancel Call Waiting while being
+	       involved in a call, the Three-Way Calling
+	       service must be enabled, in addition to the
+	       Cancel Call Waiting service.";
+	  }
+      leaf cw-caller-id-announcement{
+	    type enumeration {
+		  enum disable {
+		    value 0;
+			description
+			  "The call waiting caller id announcement service is disabled.";
+		  }
+		  enum operator {
+		    value 1;
+			description
+			  "The call waiting caller id announcement service is enabled and controlled
+		       by the operator.";
+		  }
+        }
+		default disable;
+        description
+          "The call waiting caller id announcement allows to display the identity of
+           second calling party";
+      }
+    } 
+	container attended-call-transfer {
+	  presence
+	    "If present, indicates that the POTS termination has 
+		 the attended call transfer service.";
+	  description
+		"The call transfer can be attended, also called explicit 
+		 call transfer.";
+	  leaf control {
+	    type enumeration {
+		  enum disable {
+		    value 0;
+			description
+			  "The  call transfer service is disabled.";
+		  } 
+		  enum operator {
+		    value 1;
+			description
+			  "The call transfer service is enabled and controlled
+		       by the operator.";
+		  }
+		  enum subscription {
+		    value 2;
+			description
+			  "The call transfer service is controlled
+		       by the NGN core, IMS core or an application server.
+			   Via subscription the core network will send 
+			   notifications
+			   whenever the call transfer is activated or 
+			   deactivated.
+			   The call transfer service is 
+			   enabled/disabled by the operator through
+			   the IMS core configuration.";
+		  }
+		  enum user {
+		    value 3;
+			description
+			  "The call transfer service is controlled
+		       by the subscriber by dialing feature access codes.";
+		  }
+        }
+		default disable;
+        description 
+          "The supplementary service can be controlled in the network, by 
+           the operator or by the subscriber.";		  
+	  }
+	}
+	container unattended-call-transfer {
+	  presence
+	    "If present, indicates that the POTS termination has 
+		 the unattended or blind call transfer service.";
+	  description
+		"The unattended call transfer characteristics. 
+		 or unattended (blind).";
+	  leaf control {
+	    type enumeration {
+		  enum disable {
+		    value 0;
+			description
+			  "The  call transfer service is disabled.";
+		  } 
+		  enum operator {
+		    value 1;
+			description
+			  "The call transfer service is enabled and controlled
+		       by the operator.";
+		  }
+		  enum subscription {
+		    value 2;
+			description
+			  "The call transfer service is controlled
+		       by the NGN core, IMS core or an application server.
+			   Via subscription the core network will send notifications
+			   whenever the call transfer is activated or deactivated.
+			   The call transfer service is 
+			   enabled/disabled by the operator through
+			   the IMS core configuration.";
+		  }
+		  enum user {
+		    value 3;
+			description
+			  "The call transfer service is controlled
+		       by the subscriber by dialing feature access codes.";
+		  }
+		}
+		default disable;
+		description 
+          "The supplementary service can be controlled in the network, by 
+           the operator or by the subscriber.";		
+	  }	
+	}
+    container Three-party-conference {
+	  presence
+	    "If present, indicates that the POTS termination has 
+		 the three party call conference service.";
+	  description
+	    "The 3 party call conference service.";
+	  leaf control {
+	    type enumeration {
+		  enum disable {
+		    value 0;
+			description
+			  "The 3 party call conference service is disabled.";
+		  } 
+		  enum operator {
+		    value 1;
+			description
+			  "The 3 party call conference service is enabled and controlled
+		       by the operator.";
+		  }
+		  enum subscription {
+		    value 2;
+			description
+			  "The 3 party call conference service is controlled
+		       by the NGN core, IMS core or an application server.
+			   Via subscription the core network will send notifications
+			   whenever the call transfer is activated or deactivated.
+			   The 3-party call conference service is 
+			   enabled/disabled by the operator through
+			   the IMS core configuration.";
+		  }
+	    }
+		default disable;
+        description 
+          "The supplementary service can be controlled in the network, by 
+           the operator or by the subscriber.";		  
+	  }
+	  leaf conference-uri {
+	  when "../bbf-sip-voip-mounted:control ='operator'";
+		type inet:uri;
+		description
+			"The 3-party call conference service
+			 URI.";
+	  }
+	} 
+	container call-hold {
+	  presence
+	    "If present, indicates that the POTS termination has 
+		 the call hold service.";
+	  description
+	    "The call hold service.";
+	  leaf control {
+	    type enumeration {
+		  enum disable {
+		    value 0;
+			description
+			  "The  call hold service is disabled.";
+		  } 
+		  enum operator {
+		    value 1;
+			description
+			  "The call hold service is enabled and controlled
+		       by the operator.";
+		  }
+		  enum subscription {
+		    value 2;
+			description
+			  "The call hold service is controlled
+		       by the NGN core, IMS core or an application server.
+			   Via subscription the core network will send notifications
+			   whenever the call hold is activated or deactivated.
+			   The call hold service is 
+			   enabled/disabled by the operator through the 
+			   IMS core configuration.";
+		  }
+		  enum user {
+		    value 3;
+			description
+			  "The call hold service is controlled
+		       by the subscriber by dialing feature access codes.";
+		  }
+		}
+		default disable;
+		description 
+          "The supplementary service can be controlled in the network, by 
+           the operator or by the subscriber.";		
+	  }	
+	  leaf SDP-setting {
+	    type enumeration {
+	      enum SendOnly {
+	        value 1;
+	        description
+	          "The a-line in the SDP of the call
+	           hold request is set to SendOnly.";
+	      }		  
+	      enum Inactive {
+	        value 2;
+	        description
+	          "The a-line in the SDP of the call
+	          hold request is set to Inactive.";
+	      }		  
+	      enum InactiveAndSendOnly {
+	        value 3;
+	        description
+	          "The a-line in the SDP of the call
+	           hold request is set to SendOnly
+	           in case the media stream is 
+	           Sendrecv.
+	           The a-line in the SDP of the call
+	           hold request is set to Inactive
+	           in case the media stream is
+	           Recvonly.";
+	      }
+	    }
+	    default SendOnly;
+	    description
+	  	"The setting of the a-line in the
+	  	 SDP of the call hold request.";
+	  } 		
+	  leaf hold-resume-method {
+	    type enumeration {		  
+	      enum reInvite {
+	         value 1;
+	         description
+	           "The SIP RE-INVITE method is used to
+	            hold or resume a call.";
+	      }		  
+	      enum update {
+	        value 2;
+	        description
+	        "The SIP UPDATE method is used to
+	         hold or resume a call.";
+	      }
+	    }
+		default reInvite;
+        description
+		  "The call hold and call resume can be
+		   requested by sending a SIP INVITE or
+		   a SIP UPDATE.";
+	  }	
+	  leaf ch-timer {
+	  when "../bbf-sip-voip-mounted:control='subscription'";
+	    type uint16 {range "0..65535";}
+	    units "1 second";
+	    default 120;
+	    description
+	  	  "The call hold waiting
+	  	   timer should be larger than the 3-party 
+	  	   conference call waiting timer set 
+	  	   in the core network. 
+	   	   This timer prevents pending 3-party
+	  	   conference calls.";
+	  }		
+	  leaf reject-response {
+	  when "../bbf-sip-voip-mounted:control='subscription'";
+	    type uint16 {range "400..700";}			
+	    default 603;
+	    description
+	    	"The call hold can be 
+	    	 rejected by the subscriber or by the
+	    	 expiry of the 3-party conference call
+	    	 waiting timer. 
+	    	 In such case, the call will be rejected
+	    	 with the configured response code.";
+	  }
+    } 
+	container call-park {
+	  presence
+	    "If present, indicates that the POTS termination has 
+		 the call parking service.";
+	  description
+		"The call parking service.";
+	  leaf control {
+	    type enumeration {
+		  enum disable {
+		    value 0;
+			description
+			  "The call parking service is disabled.";
+		  } 
+		  enum operator {
+		    value 1;
+			description
+			  "The call parking service is enabled and
+			   controlled by the operator.";
+		  }
+		}
+		default disable;
+        description
+          "To enable or disable call parking service.";
+	  }
+	}
+	container calling-name {
+	  presence
+	    "If present, indicates that the POTS termination has 
+		 the calling name service.";
+	  description
+		"The calling name service.";
+	  leaf control {
+	    type enumeration {
+		  enum disable {
+		    value 0;
+			description
+			  "The calling name service is disabled.";
+		  } 
+		  enum operator {
+		    value 1;
+			description
+			  "The calling name service is enabled and
+			   controlled by the operator.";
+		  }
+		}
+		default disable;
+        description
+          "To enable or disable calling name service.";
+	  }
+	}
+	container calling-number {
+	  presence
+	    "If present, indicates that the POTS termination has 
+		 the calling number service.";
+	  description
+		"The calling number service.";
+	  leaf control {
+	    type enumeration {
+		  enum disable {
+		    value 0;
+			description
+			  "The calling number service is disabled.";
+		  } 
+		  enum operator {
+		    value 1;
+			description
+			  "The calling number service is enabled and
+			   controlled by the operator.";
+		  }
+		}
+		default disable;
+        description
+          "To enable or disable calling number service.";
+	  }
+	}
+	container callerid {
+	  presence
+	    "If present, indicates that the POTS termination has 
+		 the caller-id number service.";
+	  description
+	    "The caller-id number service.";
+	  leaf control {
+	    type enumeration {
+		  enum disable {
+		    value 0;
+			description
+			  "The caller-id number service is disabled.";
+		  } 
+		  enum operator {
+		    value 1;
+			description
+			  "The caller-id number service is enabled and
+			   controlled by the operator.";
+		  }
+		}
+		default disable;
+        description
+          "To enable or disable caller-id number service.";
+	  }
+	  leaf status {
+	  when "../bbf-sip-voip-mounted:control='operator'";
+		type enumeration {
+		  enum public {
+		    value 0;
+		  }
+		  enum private {
+		    value 1;
+		  }
+		}
+        default public;
+        description
+          "To indicate the status of caller-id number service 
+           is public or private.";
+	  }
+	}
+	container callerid-name {
+	  presence
+	    "If present, indicates that the POTS termination has 
+		 the caller-id name service.";
+	  description
+		"The caller-id name service.";
+	  leaf control {
+	    type enumeration {
+		  enum disable {
+		    value 0;
+			description
+			  "The caller-id name service is disabled.";
+		  } 
+		  enum operator {
+		    value 1;
+			description
+			  "The caller-id name service is enabled and
+			   controlled by the operator.";
+		  }
+		}
+		default disable;
+        description
+          "To enable or disable caller-id name service.";
+	  }
+	  leaf status {
+	  when "../bbf-sip-voip-mounted:control='operator'";
+		type enumeration {
+		  enum public {
+		    value 0;
+		  }
+		  enum private {
+		    value 1;
+		  }
+		}
+        default public;
+        description
+          "To indicate the status of caller-id name service 
+           is public or private.";
+	  }
+	}
+	container call-forwarding-ind {
+	  presence
+	    "If present, indicates that the POTS termination has 
+		 the call forwarding indication service.";
+	  description
+	    "The call forwarding indication.";
+	  leaf control {
+	    type enumeration {
+		  enum disable {
+		    value 0;
+			description
+			  "The call forwarding indication service is disabled.";
+		  } 
+		  enum operator {
+		    value 1;
+			description
+			  "The call forwarding indication service is enabled
+			   and controlled by the operator.";
+		  }
+		}
+		default disable;
+        description
+          "To enable or disable call forwarding indication service.";
+	  }
+	}
+    container do-not-disturb {
+      presence
+        "If present, indicates that the POTS termination has 
+         the DND (Do Not Disturb) service.";
+      description
+        "The DND (Do Not Disturb) service.";
+      leaf control {
+        type enumeration {
+          enum disable {
+            value 0;
+            description
+              "The DND (Do Not Disturb) service is disabled.";
+          } 
+          enum enable {
+            value 1;
+            description
+              "The DND (Do Not Disturb) service is enabled.";
+          }
+          enum user {
+            value 2;
+            description
+              "The DND (Do Not Disturb) service is controlled
+               by the subscriber by DND feature access codes.";
+          }
+        }
+        default disable;
+        description
+          "The supplementary service can be controlled in the network
+           by the operator.";
+      }
+    }
+    container flash-on-emergency-call {
+      presence
+        "If present, indicates that the POTS termination has 
+         the flash on emergency call service.";
+      description
+        "Flash is to be processed during an emergency service call.";
+      leaf control {
+        type enumeration {
+          enum disable {
+            value 0;
+            description
+              "The flash on emergency call service is disabled.";
+          } 
+          enum enable {
+            value 1;
+            description
+              "The flash on emergency call service is enabled.";
+          }
+        }
+        default disable;
+        description
+          "The supplementary service can be controlled in the network
+           by the operator.";
+      }
+    }
+    container emergency-call-originating-hold {
+      presence
+        "If present, indicates that the POTS termination has 
+         the emergency call originating hold service.";
+      description
+        "The Yang container determines whether call clearing is to be
+         performed on on-hook during an emergency service call.";
+      leaf control {
+        type enumeration {
+          enum disable {
+            value 0;
+            description
+              "The emergency call originating hold service is disabled.";
+          } 
+          enum enable {
+            value 1;
+            description
+              "The emergency call originating hold service is enabled.";
+          }
+        }
+        default disable;
+        description
+          "The supplementary service can be controlled in the network
+           by the operator.";
+      }
+    }
+    container six-party-conference {
+      presence
+        "If present, indicates that the POTS termination has 
+         the Six party call conference service.";
+      description
+        "The 6 party call conference service.";
+      leaf control {
+        type enumeration {
+          enum disable {
+            value 0;
+            description
+              "The 6 party call conference service is disabled.";
+          } 
+          enum enable {
+            value 1;
+            description
+              "The 6 party call conference service is enabled.";
+          }
+        }
+        default disable;
+        description 
+          "The supplementary service can be controlled in the network
+           by the operator.";
+      }
+      leaf conference-uri {
+      when "../bbf-sip-voip-mounted:control ='operator'";
+        type inet:uri;
+        description
+          "The 6-party call conference service URI.";
+      }
+    }
+  } 
+}

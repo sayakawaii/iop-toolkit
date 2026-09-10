@@ -1,0 +1,515 @@
+module ieee802-dot1q-cfm-frommounted {
+  yang-version 1.1;
+
+  namespace "urn:ieee:std:802.1Q:yang:ieee802-dot1q-cfm-frommounted";
+  prefix "dot1q-cfm-frommounted";
+
+  import bbf-fiber-onu-emulated-mount {
+     prefix onu;
+  }
+
+
+  import ieee802-dot1q-cfm-types { prefix "cfm-types"; }
+  import ieee802-dot1q-types { prefix "dot1q-types"; }
+  import ieee802-types { prefix "ieee"; }
+  import ietf-yang-types { prefix "yang"; }
+  import ietf-inet-types { prefix "inet"; }
+
+  organization
+    "IEEE 802.1 Working Group";
+
+  contact
+    "WG-URL: http://www.ieee802.org/1/
+    WG-EMail: stds-802-1-L@ieee.org
+
+    Contact: IEEE 802.1 Working Group Chair
+    Postal: C/O IEEE 802.1 Working Group
+            IEEE Standards Association
+            445 Hoes Lane
+            Piscataway
+            NJ 08854
+            USA
+
+    E-mail: STDS-802-1-L@IEEE.ORG";
+
+  description
+    "Connectivity Fault Management (CFM) comprises capabilities
+    for detecting, verifying, and isolating connectivity failures
+    in Virtual Bridged Local Area Networks. These capabilities
+    can be used in networks operated by multiple independent
+    organizations, each with restricted management access to each
+    other's equipment.";
+
+  revision 2022-01-19 {
+    description
+      "Addtion of ICC based option under MA Name leaf";
+  }
+
+  revision 2019-09-30 {
+    description
+      "Creation for Working Group review.";
+    reference
+      "IEEE Std 802.1Q-2018, Bridges and Bridged Networks.";
+  }
+
+  /* -------------------------------------------------
+   * Grouping definitions used by 802.1Qcx YANG module
+   * -------------------------------------------------
+   */
+
+  grouping mac-address-and-uint-type-grouping {
+    description
+      "The MAC address and uint type grouping.";
+    container mac-address-and-uint-type {
+      presence "mac-address-and-uint-type";
+      description
+        "The MAC address and uint type definition.";
+      leaf address {
+        type ieee:mac-address;
+        description
+          "The MAC address.";
+      }
+      leaf int {
+        type uint16;
+        description
+          "The additional 2-octet (unsigned) integer.";
+      }
+    }
+  }
+
+  grouping md-name-choice-grouping {
+    description
+      "The Maintenance Domain name and name format choice.";
+    choice md-name {
+      description
+        "The Maintenance Domain name type.";
+      case none {
+        leaf none {
+          type empty;
+          description
+            "No format specified, usually because there is not a
+            Maintenance Domain Name. The Maintenance Domain name
+            inserted in CFM protocol messages will be a zero
+            length OCTET string.";
+        }
+      }
+      case dns-like-name {
+        leaf dns-like-name {
+          type string {
+            length "1..43";
+          }
+          description
+            "Domain name like string, globally unique text string
+            derived from a DNS name.";
+        }
+      }
+      case mac-address-and-uint {
+          uses mac-address-and-uint-type-grouping;
+          description
+            "MAC address plus 2-octet (unsigned) integer.";
+      }
+      case char-string {
+        leaf char-string {
+          type string {
+            length "1..43";
+            pattern '[ -~]*';
+          }
+          description
+            "RFC2579 DisplayString, except that the character
+            codes 0-31 (decimal) are not used.";
+        }
+      }
+    }
+  }
+
+  grouping ma-name-choice-grouping {
+    description
+      "The Maintenance Association name and name format choice.";
+    choice ma-name {
+      description
+        "The Maintenance Association name type.";
+      case primary-vid {
+        leaf primary-vid {
+          type dot1q-types:vlanid;
+          description
+            "Primary VLAN ID. 12 bits represented in a 2-octet integer.";
+        }
+      }
+      case char-string {
+        leaf char-string {
+          type string {
+            length "1..45";
+            pattern '[ -~]*';
+          }
+          description
+            "RFC2579 DisplayString, except that the character codes
+            0-31 (decimal) are not used.";
+        }
+      }
+      case unsigned-int16 {
+        leaf unsigned-int16 {
+          type uint16;
+          description
+            "2-octet integer.";
+        }
+      }
+      case rfc2865-vpn-id {
+        container vpn-id {
+          presence "vpn-id";
+          description
+            "RFC2685 VPN ID. 3 octet VPN authority Organizationally
+            Unique Identifier followed by 4 octet VPN index identifying
+            VPN according to the OUI.";
+          leaf vpn-oui {
+            type uint32 {
+              range "0..16777215";
+            }
+            description
+              "3 octet VPN authority Organizationally Unique
+              Identifier.";
+          }
+          leaf vpn-index {
+            type uint32;
+            description
+              "4 octet VPN index identifying VPN according to OUI.";
+          }
+        }
+      }
+      case icc-based {
+        leaf icc-based {
+          type string {
+            length 13;
+            pattern '([a-zA-Z]+[0-9]*[ -~]*)';
+          }
+          description
+            "ICC-Based format with 13 characters as per ITU-T Rec. T.50. with two subfields: the ITU carrier code (ICC)
+            followed by a unique MEG ID code (UMC).The ITU Carrier Code consists of 1-6 left-justified characters,
+            alphabetic, or leading alphabetic with trailing numeric. The UMC code immediately follows the ICC
+            and shall consist of 7-12 characters, with trailing NULLs, completing the 13-character MEG ID Value.
+            The UMC shall be a matter for the organization to which the ICC has been assigned, provided that
+            uniqueness is guaranteed.";
+        }
+      }
+    }
+  }
+
+  grouping management-address-grouping {
+    description
+      "Defines the Management Address.";
+    reference
+      "21.5.3.5 of IEEE Std 802.1Q-2018";
+
+    leaf domain {
+      type yang:object-identifier-128;
+      description
+        "The domain type.";
+    }
+
+    choice management-address {
+      description
+        "Selects the management address";
+
+      case ip {
+        description
+          "Represents an IP TCP, UDP, or SCTP transport
+          address consisting of an IPv4/v6 address, and a port
+          number, associated with the domain type defined by the
+          domain leaf node.";
+
+        leaf ip-address {
+          type inet:ip-address;
+          description
+            "IPv4 or IPv6 address.";
+        }
+        leaf ip-port {
+          type inet:port-number;
+          description
+            "IP port.";
+        }
+      }
+
+      case local {
+        leaf local-address {
+          type string {
+            length '1..255';
+          }
+          description
+            "Represents a POSIX Local IPC transport address,
+            associated with the domain type defined by the
+            domain leaf node.";
+        }
+      }
+
+      case dns {
+        leaf dns-address {
+          type string {
+            length "1..255";
+          }
+          description
+            "The transport domain using fully qualified domain
+            names, associated with the domain type defined by the
+            domain leaf node. Represents a DNS domain name followed
+            by a colon ':' (ASCII character 0x3A) and a port number
+            in ASCII. The name SHOULD be fully qualified whenever
+            possible.";
+        }
+      }
+
+      case other {
+        leaf unknown-address {
+          type binary {
+            length "1..255";
+          }
+          description
+            "This represents an undefined address, for the case when
+            the domain type provided is an unrecognizable value.";
+        }
+      }
+    }
+  }
+
+
+
+  /* ---------------------------------------------------
+   * Configuration objects used by 802.1Qcx YANG module
+   * ---------------------------------------------------
+   */
+
+augment '/onu:onus/onu:onu/onu:fromroot' {
+   container cfm {
+     presence "cfm";
+   }
+}
+augment '/onu:onus/onu:onu/onu:fromroot/dot1q-cfm-frommounted:cfm' {
+    description
+      "Connectivity Fault Management configuration and operational
+      information.";
+
+    list maintenance-domain {
+      key "md-id";
+      description
+        "Contains the Maintenance Domain configuration and
+        operational data. A Maintenance Domain is the network or the
+        part of the network for which faults in connectivity can be
+        managed. The boundary of a Maintenance Domain is defined by
+        a set of Domain Service Access Points (DoSAPs), each of
+        which can become a point of connectivity to a service
+        instance.";
+      leaf md-id {
+        type cfm-types:name-key-type;
+        description
+          "The index to the Maintenance Domain list.";
+      }
+      uses md-name-choice-grouping;
+      leaf md-level {
+        type cfm-types:md-level-type;
+        description
+          "The Maintenance Domain level.";
+        reference
+          "3.122, 12.14.5.1.3b of IEEE Std 802.1Q-2018";
+      }
+      leaf mhf-creation {
+        type cfm-types:mhf-creation-type;
+        description
+          "Value indicating whether the management entity can
+          create MHFs (MIP Half Function) for this Maintenance
+          Domain. Since there is no encompassing Maintenance
+          Domain, the value mhf-defer is not allowed.";
+        reference
+          "3.122, 12.14.5.1.3c of IEEE Std 802.1Q-2018";
+      }
+      leaf id-permission {
+        type cfm-types:sender-id-permission-type;
+        description
+          "Value indicating what, if anything, is to be included in
+          the Sender ID TLV transmitted by Maintenance Points
+          configured in this Maintenance Domain. Since there is no
+          encompassing Maintenance Domain, the value send-id-defer
+          is not allowed.";
+        reference
+          "3.122, 12.14.5.1.3d of IEEE Std 802.1Q-2018";
+      }
+      list maintenance-association {
+        key "ma-id";
+        description
+          "Provides configuration and operational data for the
+          Maintenance Associations. A Maintenance Association is a
+          set of MEPs, each configured with the same MAID and MD
+          level, established to verify the integrity of a single
+          service instance. A Maintenance Association can be thought
+          of as a full mesh of Maintenance Entities among a set of
+          MEPs so configured.";
+        leaf ma-id {
+          type cfm-types:name-key-type;
+          description
+            "Key of the Maintenance Association list of entries.";
+        }
+        uses ma-name-choice-grouping;
+        leaf ccm-interval {
+          type cfm-types:ccm-interval-type;
+          description
+            "The interval between CCM transmissions to be used by all
+            MEPs in the Maintenance Association.";
+          reference
+            "12.14.6.1.3e of IEEE Std 802.1Q-2018";
+        }
+        leaf ma-vlan-id {
+          type dot1q-types:vlanid;
+          description
+            "VLAN ID under MA for Auto created MIPS. 12 bits represented in a 2-octet integer.";
+        }
+        leaf mhf-creation {
+          type cfm-types:mhf-creation-type;
+          description
+            "Value indicating whether the management entity can
+            create MHFs (MIP Half Function) for this Maintenance
+            Association.";
+          reference
+            "3.122, 12.14.5.1.3c of IEEE Std 802.1Q-2018";
+        }
+        leaf id-permission {
+          type cfm-types:sender-id-permission-type;
+          description
+            "Enumerated value indicating what, if anything, is to
+            be included in the Sender ID TLV (21.5.3) transmitted
+            by MPs configured in this MA.";
+          reference
+            "12.14.3.1.3d of IEEE Std 802.1Q-2018";
+        }
+
+        list maintenance-association-mep {
+          key mep-id;
+          description
+            "The list of all MEPs that belong to this Maintenance
+            Association.";
+          leaf mep-id {
+            type cfm-types:mep-id-type;
+            description
+              "Integer that is unique among all the MEPs in the
+              same Maintenance Association.";
+            reference
+              "12.14.6.1.3g of IEEE Std 802.1Q-2018";
+          }
+        } // maintenance-association-mep-list
+      } // maintenance-association
+    } // maintenance-domain
+
+    list maintenance-group {
+      key "maintenance-group-id";
+      description
+        "The list of maintenance association groups, which are
+        uniquely associated with a maintenance domain, maintenance
+        association, for which the MEPs belong.";
+      leaf maintenance-group-id {
+        type cfm-types:name-key-type;
+        description
+          "The maintenance group provides a handle
+          for the MD and MA combination.";
+      }
+      leaf md-id {
+        type string;
+        description
+          "A reference to the maintenance domain that this
+          maintenance group is associated with.";
+      }
+      leaf ma-id {
+        type string;
+        description
+          "A reference to the maintenance association in the
+          specified maintenance domain, that this maintenance group
+          is associated with.";
+      }
+
+      list mep {
+        key "mep-id";
+        description
+          "A list of local Maintenance association End Points (MEPs).
+          A MEP is an actively managed CFM entity, associated with
+          a specific DoSAP of a service instance, which can
+          generate and receive CFM PDUs and track any responses.
+          It is an end point of a single Maintenance Association
+          (MA) and is an end point of a separate Maintenance
+          Entity for each of the other MEPs in the same MA.";
+        leaf mep-id {
+          type string;
+          description
+            "Integer that is unique among all the MEPs in the
+            same Maintenance Association.";
+          reference
+            "3.114, 12.14.7, 19.2 of IEEE Std 802.1Q-2018";
+        }
+        leaf direction {
+          type cfm-types:mp-direction-type;
+          description
+            "The direction in which the MEP faces on the Bridge
+            Port. Example, up or down.";
+          reference
+            "12.14.7.1.3c, 19.2 of IEEE Std 802.1Q-2018";
+        }
+        leaf enabled {
+          type boolean;
+          description
+            "The administrative state of the MEP. TRUE indicates
+            that the MEP is to functional normally, and FALSE
+            indicates that it is to cease functioning.";
+          reference
+            "12.14.7.1.3e, 20.9.1 of IEEE Std 802.1Q-2018";
+        }
+        leaf ccm-ltm-priority {
+          type dot1q-types:priority-type;
+          description
+            "The priority value for CCMs and LTMs transmitted by
+            the MEP. The default value is the highest priority
+            allowed to pass through the Bridge Port for any of
+            the MEPs VID(s).";
+          reference
+            "12.14.7.1.3h of IEEE Std 802.1Q-2018";
+        }
+        container continuity-check {
+          presence "continuity-check";
+          description
+            "Continuity check protocol";
+          leaf ccm-enabled {
+            type boolean;
+            description
+              "Indicates whether the MEP can generate CCMs. If
+              TRUE, the MEP will generate CCM PDUs.";
+            reference
+              "12.14.7.1.3g, 20.10.1 of IEEE Std 802.1Q-2018";
+          }
+          leaf lowest-priority-defect {
+            type cfm-types:lowest-alarm-priority-type;
+            description
+              "The lowest priority defect that is allowed to
+              generate fault alarms.";
+            reference
+              "12.14.7.1.3k, 20.9.5 of IEEE Std 802.1Q-2018";
+          }
+          leaf fng-alarm-time {
+            type uint16 {
+              range "2500..10000";
+            }
+            units milliseconds;
+            description
+              "The time that defect must be present before a Fault
+              Alarm is issued.";
+            reference
+              "12.14.7.1.3l, 20.35.3 of IEEE Std 802.1Q-2018";
+          }
+          leaf fng-reset-time {
+            type uint16 {
+              range "2500..10000";
+            }
+            units milliseconds;
+            description
+              "The time that defects must be absent before
+              resetting a Fault Alarm.";
+            reference
+              "12.14.7.1.3m, 20.35.4 of IEEE Std 802.1Q-2018";
+          }
+         } // continuity-check
+
+      } // mep
+    } // maintenance-group
+  }
+} // ieee802-dot1q-cfm

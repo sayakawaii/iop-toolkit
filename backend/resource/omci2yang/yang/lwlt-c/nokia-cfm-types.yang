@@ -1,0 +1,376 @@
+module nokia-cfm-types {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+          + "nokia-cfm-types";
+
+  prefix nokia-cfm-types;
+
+  import ieee802-dot1q-cfm-types {
+    prefix cfm-types;
+  }
+
+  import ieee802-dot1q-types {
+    prefix "dot1q-types";
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG definitions for
+     supporting Nokia specific requirements as applicable to its
+     access network equipment.
+
+     Specifically, this module augments the ieee802-dot1q-cfm oam
+     model,specific for providing support nokia specific requirements.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2021, Nokia. All Rights Reserved.";
+
+  revision 2025-08-13 {
+    description
+      "New YANG type for nokia specific requirements.
+      -reason sub-identity mep-interface-role-changed-to-standby
+      ";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2024-08-28 {
+    description
+      "New YANG types for nokia specific requirements.
+      -test-session-status.
+      -reason identity with sub-identities.
+      -grouping : destination, ratio, measured-time.
+      ";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2021-06-28 {
+    description
+      "Yang types for nokia specific requirements.";
+    reference
+      "Nokia specific";
+  }
+
+  identity reason {
+    description
+      "Base identity for reason.";
+  }
+  identity mep-admin-state-disabled {
+    base reason;
+    description
+      "Identity for MEP admin state disable.";
+  }
+  identity mep-interface-changed {
+    base reason;
+    description
+      "Identity for MEP interface change.";
+  }
+  identity test-configuration-changed {
+    base reason;
+    description
+      "Identity for test configuration change.";
+  }
+  identity md-level-changed {
+    base reason;
+    description
+      "Identity for MD level change.";
+  }
+  identity test-session-explicitly-aborted {
+    base reason;
+    description
+      "Identity for explicit test session abort.";
+  }
+  identity test-sl-configuration-changed {
+    base test-configuration-changed;
+    description
+      "Identity for SL test configuration change.
+      Following are the possible configuration
+      modification scenarios.
+      -inner/outer priority.
+      -period.
+      -measurement-inteval.
+      -destination address.
+      -test-id.
+      -data-tlv-length.
+     ";
+  }
+  identity mep-interface-role-changed-to-standby {
+    base reason;
+    description
+      "Identity for MEP interface role change from active to standby.";
+  }
+
+  identity status {
+    description
+      "Base identity for test status.";
+  }
+  identity idle {
+    base status;
+    description
+      "Identity for test status idle.";
+  }
+  identity active {
+    base status;
+    description
+      "Identity for test status active.";
+  }
+  identity completed {
+    base status;
+    description
+      "Identity for test status completed.";
+  }
+  identity aborted {
+    base status;
+    description
+      "Identity for test status aborted.";
+  }
+  identity failed {
+    base status;
+    description
+      "Identity for test status failed.";
+  }
+
+  grouping test-session-status {
+    description
+      "Test session status.";
+
+    leaf status {
+      type identityref {
+        base nokia-cfm-types:status;
+      }
+      config false;
+      description
+        "Indicates the status of the test session.
+        'idle' indicates that no test session is triggered.
+        'active' indicates that a test session is currently active.
+        'completed' indicates that last triggered test session
+        successfully completed.
+        'failed' indicates that last triggered test session
+        has failed.
+        'aborted' indicates that last triggered test session
+        has aborted.";
+    }
+    leaf reason {
+      type identityref {
+        base nokia-cfm-types:reason;
+      }
+      config false;
+      description
+        "Test session abort reason.";
+    }
+  }
+
+  typedef ratio {
+    type decimal64 {
+      fraction-digits 4;
+      range "0..100.0000";
+    }
+    units "percent";
+    description
+      "Type for the ratio";
+  }
+
+  grouping measured-time {
+    description
+      "The measured time.";
+
+    leaf measured-time {
+      type uint32;
+      units "seconds";
+      config false;
+      description
+        "The amount of time that statistics have been counted for
+        the PM interval.";
+    }
+  }
+
+  typedef ondemand-test-result-reason {
+    type string;
+    description
+      "Additional information in case of the on-demand test is
+       aborted due to local events that are not under control
+       of the on-demand test.
+       Example events are :
+       -md-level modification.
+       -Maintenance Group md-id modification.
+       -MEP direction modification.
+       -MEP interface modification.
+       -MEP MAC address change.ie.. LBM/LTM packet source
+        mac-address change.
+      ";
+  }
+
+  grouping vlan-dei {
+    description
+      "VLAN Tag drop-eligible";
+
+    leaf outer-tag-drop-eligible {
+      type boolean;
+      description
+        "Specifies the value of the Drop Eligible Indicator (DEI)
+         to be used in the outer tag, if present in the transmitted
+         CFM packets.
+         If true, a DEI bit value of 1 will be used indicating that
+         the CFM packets are eligible to be dropped in the presence of
+         congestion, if false a DEI bit value of 0 will be used.";
+      reference "IEEE 802.1ag clause 12.14.7.3.2:e";
+    }
+
+    leaf inner-tag-drop-eligible {
+      type boolean;
+      description
+        "Specifies the value of the Drop Eligible Indicator (DEI)
+         to be used in the inner tag, if present in the transmitted
+         CFM packets.
+         If true, a DEI bit value of 1 will be used indicating that
+         the CFM packets are eligible to be dropped in the presence of
+         congestion, if false a DEI bit value of 0 will be used.";
+      reference "IEEE 802.1ag clause 12.14.7.3.2:e";
+    }
+  }
+
+  grouping outer-tag-priority {
+    description
+      "Outer VLAN Tag priority";
+
+    leaf outer-tag-priority {
+      type dot1q-types:priority-type;
+      description
+        "Priority. 3 bit value to be used in the outer tag,
+         if present in the transmitted frame.";
+      reference
+        "12.14.7.3.2e of IEEE Std 802.1Q-2018";
+    }
+  }
+
+  grouping inner-tag-priority {
+    description
+      "Inner VLAN Tag priority";
+
+    leaf inner-tag-priority {
+      type dot1q-types:priority-type;
+      description
+        "Priority. 3 bit value to be used in the inner tag,
+         if present in the transmitted frame.";
+      reference
+        "12.14.7.3.2e of IEEE Std 802.1Q-2018";
+    }
+  }
+
+  grouping vlan-priority {
+    description
+      "VLAN Tag priority";
+
+    uses nokia-cfm-types:outer-tag-priority;
+    uses nokia-cfm-types:inner-tag-priority;
+  }
+
+  grouping vlan-tag-info {
+    description "grouping vlan tag info";
+    container vlan-tag-info {
+      description
+        "VLAN tag information.";
+
+      uses vlan-priority;
+      uses vlan-dei;
+    }
+  }
+
+  grouping destination {
+    description
+      "Defines the parameters needed to configure a destination
+      of an OAM frame.";
+
+    choice destination-type {
+      description
+        "Selects the destination MAC address type";
+
+      case dest-ucast-mac-address {
+        description
+          "Unicast destination MAC Address.";
+        leaf dest-ucast-mac-address {
+          type cfm-types:unicast-mac-address-type;
+          description
+            "The unicast MAC address of the target MEP.";
+          reference
+            "ITU-T G.8013 v6.1 (01/2024): clause 10.";
+        }
+      }
+      case dest-mcast-class1-mac-address {
+        leaf dest-mcast-class1-mac-address {
+          type empty;
+          description
+            "The destination is to use the appropriate multicast
+            class1 MAC address.01-80-c2-00-00-3x where x is
+            MD level of the configured local MEP.";
+          reference
+            "ITU-T Y.1731 clauses 7.2.2";
+        }
+      }
+    }
+  }
+
+  typedef destination-address-type {
+    type union {
+      type cfm-types:unicast-mac-address-type;
+      type enumeration {
+        enum multicast-class1-mac-address {
+          value 1;
+          description
+            "System generates destination MAC address as
+            multicast class 1 MAC address based on the MEG level
+            of the MEP.It takes the form of 01-80-C2-00-00-3x,
+            where x represents the MEG level, with x being a value
+            in the range of 0..7";
+          reference
+            "ITU-T Y.1731 clauses 7.2.2";
+        }
+      }
+    }
+    description
+      "Type for destination address.";
+  }
+
+} // nokia-cfm-types.

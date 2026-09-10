@@ -1,0 +1,341 @@
+module nokia-aaa-common-dev {
+  yang-version "1.1";
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+            + "nokia-aaa-common-dev";
+  prefix nokia-aaa-common-dev;
+
+  import nokia-aaa {
+    prefix nokia-aaa;
+  }
+
+  organization "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "The NOKIA common/nokia-aaa-common-dev YANG module supporting
+     deviations on top of ietf-ssh-server standard.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2019, Nokia. All Rights Reserved.";
+
+  revision 2026-08-05 {
+    description
+      "BBN-192047 LS26.12
+       Add ecdsa-sha2-nistp384 host key: host-key min/max-elements 2 -> 3,
+       add rsa3072, rsa4096 and ecdsa384 algorithm enums, remove rsa1024 from
+       generate-hidden-key input, and pin explicit enum values.";
+    reference
+      "Nokia specific";
+    }
+
+  revision 2024-10-24 {
+    description
+      "LS25.3
+      Remove techsupport user deviations";
+    reference
+      "Nokia specific";
+    }
+
+  revision 2024-09-10 {
+    description
+      "LS2412
+       Ensure at least one local user should belong to both the 'admin-group' and the 'techsupport-group.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2023-04-13 {
+    description
+      "Addition of descriptions for all deviations";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2021-07-19 {
+    description
+      "Addition of descriptions for all deviations";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2019-11-01 {
+    description
+      "Addition of user's public key.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2019-09-10 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: yyyy-mm-dd.";
+    reference
+      "Nokia specific";
+  }
+
+
+  deviation "/nokia-aaa:system-security/nokia-aaa:client-authentication/nokia-aaa:supported-authentication-methods" {
+    deviate add{
+      must "publickey" {
+        error-message "Publickey authentication is mandatory";
+        description "Public key authentication cannot be disabled.";
+      }
+    }
+  }
+
+  /*  deviate replace statements  */
+
+  deviation "/nokia-aaa:system-security/nokia-aaa:server-identity/nokia-aaa:host-key" {
+    description "Installed host keys should always be 3.";
+    deviate add {
+      max-elements 3;
+    }
+	deviate replace {
+	  min-elements 3;
+    }
+  }
+
+  deviation "/nokia-aaa:system-security/nokia-aaa:server-identity/nokia-aaa:host-key/nokia-aaa:host-key-type/nokia-aaa:public-key/nokia-aaa:public-key/nokia-aaa:local-or-keystore/nokia-aaa:local/nokia-aaa:local-definition/nokia-aaa:public-key" {
+    description "Public keys are not configuration elements.";
+    deviate replace { // yanglint: change replace into add  https://github.com/sysrepo/sysrepo/issues/2259
+        config false;
+    }
+  }
+
+  deviation "/nokia-aaa:system-security/nokia-aaa:server-identity/nokia-aaa:host-key/nokia-aaa:host-key-type/nokia-aaa:public-key/nokia-aaa:public-key/nokia-aaa:local-or-keystore/nokia-aaa:local/nokia-aaa:local-definition/nokia-aaa:algorithm" {
+    description "Type of public key algorithm should be an enumeration value instead of a string value.";
+    deviate replace { // yanglint: change replace into add  https://github.com/sysrepo/sysrepo/issues/2259
+        config false;
+    }
+    deviate replace {
+        type enumeration {
+          enum rsa1024 {
+            value 0;
+            description "The ssh-rsa method in 1024 bits";
+          }
+          enum rsa2048 {
+            value 1;
+            description "The ssh-rsa method in 2048 bits";
+          }
+          enum dsa1024 {
+            value 2;
+            description "The ssh-dsa method in 1024 bits";
+          }
+          enum rsa3072 {
+            value 3;
+            description "The ssh-rsa method in 3072 bits";
+          }
+          enum rsa4096 {
+            value 4;
+            description "The ssh-rsa method in 4096 bits";
+          }
+          enum ecdsa384 {
+            value 5;
+            description "The ecdsa-sha2-nistp384 method using the NIST P-384 curve";
+          }
+        }
+    }
+  }
+
+  deviation "/nokia-aaa:system-security/nokia-aaa:server-identity/nokia-aaa:host-key/nokia-aaa:host-key-type/nokia-aaa:public-key/nokia-aaa:public-key/nokia-aaa:local-or-keystore/nokia-aaa:local/nokia-aaa:local-definition/nokia-aaa:generate-hidden-key/nokia-aaa:input/nokia-aaa:algorithm" {
+    description "Hidden key generation action algorithm input should be of enumeration type.";
+    deviate replace {
+        type enumeration {
+          enum rsa2048 {
+            value 1;
+            description "The ssh-rsa method in 2048 bits";
+          }
+          enum dsa1024 {
+            value 2;
+            description "The ssh-dsa method in 1024 bits";
+          }
+          enum rsa3072 {
+            value 3;
+            description "The ssh-rsa method in 3072 bits";
+          }
+          enum rsa4096 {
+            value 4;
+            description "The ssh-rsa method in 4096 bits";
+          }
+          enum ecdsa384 {
+            value 5;
+            description "The ecdsa-sha2-nistp384 method using the NIST P-384 curve";
+          }
+        }
+    }
+  }
+
+ /*  not-supported statemenets  */
+ deviation "/nokia-aaa:system-security/nokia-aaa:keepalives" {
+    description "Keep alive for sessions is not supported by this module.";
+    deviate not-supported;
+  }
+
+deviation "/nokia-aaa:system-security/nokia-aaa:transport-params" {
+    description "Transport parameters is not supported by this module.";
+    deviate not-supported;
+  }
+
+ deviation "/nokia-aaa:system-security/nokia-aaa:client-authentication/nokia-aaa:local-or-external" {
+    description "Client authentication local-or-external is not supported by this module.";
+    deviate not-supported;
+  }
+
+ deviation "/nokia-aaa:system-security/nokia-aaa:client-authentication/nokia-aaa:supported-authentication-methods/nokia-aaa:hostbased" {
+    description "Client authentication hostbased is not supported by this module.";
+    deviate not-supported;
+  }
+
+ deviation "/nokia-aaa:system-security/nokia-aaa:client-authentication/nokia-aaa:supported-authentication-methods/nokia-aaa:none" {
+    description "Client authentication none is not supported by this module.";
+    deviate not-supported;
+  }
+
+ deviation "/nokia-aaa:system-security/nokia-aaa:client-authentication/nokia-aaa:supported-authentication-methods/nokia-aaa:other" {
+    description "Client authentication other is not supported by this module.";
+    deviate not-supported;
+  }
+
+  deviation "/nokia-aaa:system-security/nokia-aaa:server-identity/nokia-aaa:host-key/nokia-aaa:host-key-type/nokia-aaa:public-key/nokia-aaa:public-key/nokia-aaa:local-or-keystore/nokia-aaa:local/nokia-aaa:local-definition/nokia-aaa:install-hidden-key" {
+    description "Installing a hidden key in the ssh server is not supported by this module.";
+    deviate not-supported;
+  }
+
+  deviation "/nokia-aaa:system-security/nokia-aaa:server-identity/nokia-aaa:host-key/nokia-aaa:host-key-type/nokia-aaa:public-key/nokia-aaa:public-key/nokia-aaa:local-or-keystore/nokia-aaa:local/nokia-aaa:local-definition/nokia-aaa:private-key" {
+    description "Configuring a private key is not supported by this module.";
+    deviate not-supported;
+  }
+
+  deviation "/nokia-aaa:system-security/nokia-aaa:server-identity/nokia-aaa:host-key/nokia-aaa:host-key-type/nokia-aaa:public-key/nokia-aaa:public-key/nokia-aaa:local-or-keystore/nokia-aaa:keystore" {
+    description "The keystore for this ssh server is not supported by this module.";
+    deviate not-supported;
+  }
+
+  deviation "/nokia-aaa:system-security/nokia-aaa:server-identity/nokia-aaa:host-key/nokia-aaa:host-key-type/nokia-aaa:certificate" {
+    description "Configuring a certificate for this ssh server is not supported by this module.";
+    deviate not-supported;
+  }
+
+    /* Deviations for client/users */
+    deviation "/nokia-aaa:users/nokia-aaa:user/nokia-aaa:authentication/nokia-aaa:authorized-key/nokia-aaa:algorithm" {
+        description "Type of user's public key algorithm should be an enumeration value instead of a string value.";
+        deviate replace {
+            type enumeration {
+                enum ssh-rsa {
+                    description "The ssh-rsa method in 1024 bits";
+                }
+                enum ssh-dss {
+                    description "The ssh-dss method in 2048 bits";
+                }
+            }
+        }
+    }
+
+  deviation "/nokia-aaa:users/nokia-aaa:user/nokia-aaa:name" {
+    description "Usernames starting with 'techsupport' are prohibited";
+    deviate add {
+        must "not(starts-with(current(), 'techsupport'))" {
+            error-message "Usernames cannot start with 'techsupport'";
+            description "Usernames starting with 'techsupport' are prohibited";
+        }
+    }
+  }
+
+  deviation "/nokia-aaa:users/nokia-aaa:user/nokia-aaa:authentication/nokia-aaa:change-password/nokia-aaa:input/nokia-aaa:old-password" {
+    description "Validation of old password happens against the password of a user stored in database.";
+    deviate add{}
+  }
+
+  deviation "/nokia-aaa:users/nokia-aaa:user/nokia-aaa:authentication/nokia-aaa:change-password/nokia-aaa:input/nokia-aaa:new-password" {
+    description "Validation of new password happens against the previous configured passwords of a user stored in database."+
+    "The amount of previous passwords part of this validation are based on the configuration leaf of password-history-policy.";
+    deviate add{}
+  }
+
+  deviation "/nokia-aaa:users/nokia-aaa:user/nokia-aaa:authentication/nokia-aaa:change-password/nokia-aaa:input/nokia-aaa:confirm-password" {
+    description "Validation of confirm password happens against the new password leaf in this action.";
+    deviate add{}
+  }
+
+  deviation "/nokia-aaa:users/nokia-aaa:user/nokia-aaa:login/nokia-aaa:disable" {
+    description "Users should not enable or disable themselves.
+                 admin-group users can be deleted or disabled if at least another one local and not disabled user
+                 who belongs to both the 'admin-group' and the 'techsupport-group' exists in the system";
+    deviate add{}
+  }
+
+  deviation "/nokia-aaa:users/nokia-aaa:user/nokia-aaa:login/nokia-aaa:password-expiry" {
+    description "The admin user should not have password expiry enabled";
+    deviate add{}
+  }
+
+  deviation "/nokia-aaa:users/nokia-aaa:user/nokia-aaa:login/nokia-aaa:password-expiry-notification" {
+    description "The admin user should not have password expiry notification enabled";
+    deviate add{}
+  }
+
+  deviation "/nokia-aaa:system-security/nokia-aaa:password-policy/nokia-aaa:min-length" {
+    description "Minimum length should not be less than 8 characters. It should also not be more than the configured maximum characters";
+    deviate add{}
+  }
+
+  deviation "/nokia-aaa:system-security/nokia-aaa:password-policy/nokia-aaa:max-length" {
+    description "Maximum length should not be more than 32 characters. It should also not be less than the configured minimum characters";
+    deviate add{}
+  }
+
+  deviation "/nokia-aaa:system-security/nokia-aaa:password-policy/nokia-aaa:min-num-numeric-char" {
+    description "Minimum numeric characters should not be more than maximum characters - 2.";
+    deviate add{}
+  }
+
+  deviation "/nokia-aaa:system-security/nokia-aaa:password-policy/nokia-aaa:min-num-special-char" {
+    description "Minimum special characters should be no less than 1 and should not be more than maximum characters - 1.";
+    deviate add{}
+  }
+
+  deviation "/nokia-aaa:system-security/nokia-aaa:password-policy/nokia-aaa:mixed-case" {
+    description "Minimum password length should suffice for the mixed case condition to be applied."+
+    "This is in relation to minimum numeric and special characters.";
+    deviate add{}
+  }
+}

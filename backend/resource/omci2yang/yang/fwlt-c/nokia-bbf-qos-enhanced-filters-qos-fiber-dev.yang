@@ -1,0 +1,329 @@
+module nokia-bbf-qos-enhanced-filters-qos-fiber-dev {
+  namespace
+    "http://www.nokia.com/Fixed-Networks/BBA/yang/nokia-bbf-qos-enhanced-filters-qos-fiber-dev";
+
+  prefix  nokia-bbf-qos-enhanced-filters-qos-fiber-dev;
+  
+  import bbf-qos-classifiers {
+    prefix bbf-qos-cls;
+  }
+    
+  import bbf-qos-filters {
+    prefix bbf-qos-filt;
+  }
+
+  import bbf-qos-enhanced-filters {
+    prefix bbf-qos-enhfilt;
+  }
+      
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "This module contains a collection of YANG deviations on top 
+     of standard for supporting BBF/bbf-qos-enhanced-filters YANG module.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia 
+     reserves the right to revise this document for any reason, 
+     including but not limited to conformity with standards 
+     promulgated by various agencies, utilisation of advances in the 
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or 
+     referred to herein.
+
+     The product specifications and other technical or performance 
+     information contained herein are subject to change without 
+     notice. Updates of this document will be issued under the above 
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any 
+     information or opinion contained herein. Nokia expressly advises 
+     that any use of for any purpose or reliance upon this technical 
+     reference is at the risk of the user and that Nokia shall not be 
+     liable for any damage or injury incurred by any person arising 
+     out of the sufficiency, accuracy, or utility of any information 
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any 
+     manufacturer to modify or change any of its products, nor does 
+     this document represent any commitment by Nokia to sell or 
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license 
+     or right under any patent, whether or not the use of any 
+     information herein necessarily employs an invention of any 
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2017-2018, Nokia. All Rights Reserved.";
+
+  /* revision */
+  revision 2026-04-28 {
+    description
+      "remove mld not supported limited.";
+    reference
+      "Nokia specific";
+  }
+  revision 2025-02-01 {
+    description
+      "[BBN-9324 LLLT-A]: clear obseleted classify types so remove the unsupported node";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2022-12-12 {
+    description
+      "Added identification leaf as not-supported.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2022-11-29 {
+    description
+      "Enhanced filter doesn't support unicast and any-multicast.";
+    reference
+      "Nokia specific"; 
+  }
+    
+  revision 2022-06-08 {
+    description
+      "enhanced filter supports to match unicast and any-multicast.";
+    reference
+      "Nokia specific"; 
+  }
+  
+  revision 2016-11-28 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific"; 
+  }
+
+  deviation "/bbf-qos-filt:filters/bbf-qos-enhfilt:enhanced-filter/bbf-qos-enhfilt:filter/bbf-qos-enhfilt:filter-method/bbf-qos-enhfilt:inline/bbf-qos-enhfilt:vlans/bbf-qos-enhfilt:vlan-match/bbf-qos-enhfilt:match-untagged/bbf-qos-enhfilt:untagged" {
+    deviate not-supported;
+  }
+
+  deviation "/bbf-qos-filt:filters/bbf-qos-enhfilt:enhanced-filter" {
+    deviate add {
+      max-elements 512;
+    }
+  }
+
+  deviation "/bbf-qos-filt:filters/bbf-qos-enhfilt:enhanced-filter/bbf-qos-enhfilt:filter/bbf-qos-enhfilt:filter-method/bbf-qos-enhfilt:inline/bbf-qos-enhfilt:transport/bbf-qos-enhfilt:source-port-range/bbf-qos-enhfilt:port-range-or-operator/bbf-qos-enhfilt:operator"
+  {
+    deviate not-supported;
+  }
+
+  deviation "/bbf-qos-filt:filters/bbf-qos-enhfilt:enhanced-filter/bbf-qos-enhfilt:filter/bbf-qos-enhfilt:filter-method/bbf-qos-enhfilt:inline/bbf-qos-enhfilt:transport/bbf-qos-enhfilt:destination-port-range/bbf-qos-enhfilt:port-range-or-operator/bbf-qos-enhfilt:operator"
+  {
+    deviate not-supported;
+  }
+  
+
+  deviation "/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry/bbf-qos-cls:filter-method/bbf-qos-enhfilt:enhanced-classifier/bbf-qos-enhfilt:ip-common/bbf-qos-enhfilt:ecn"
+  {
+    deviate not-supported;
+  }
+
+  deviation "/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry/bbf-qos-cls:filter-method/bbf-qos-enhfilt:enhanced-classifier/bbf-qos-enhfilt:ip-common/bbf-qos-enhfilt:length"
+  {
+    deviate not-supported;
+  }  
+
+  deviation "/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry/bbf-qos-cls:filter-method/bbf-qos-enhfilt:enhanced-classifier/bbf-qos-enhfilt:ip-common/bbf-qos-enhfilt:ttl"
+  {
+    deviate not-supported;
+  }
+    
+  deviation "/bbf-qos-filt:filters/bbf-qos-enhfilt:enhanced-filter/bbf-qos-enhfilt:filter/bbf-qos-enhfilt:filter-method/bbf-qos-enhfilt:inline/bbf-qos-enhfilt:ip-common/bbf-qos-enhfilt:ecn"
+  {
+    deviate not-supported;
+  }
+
+  deviation "/bbf-qos-filt:filters/bbf-qos-enhfilt:enhanced-filter/bbf-qos-enhfilt:filter/bbf-qos-enhfilt:filter-method/bbf-qos-enhfilt:inline/bbf-qos-enhfilt:ip-common/bbf-qos-enhfilt:length"
+  {
+    deviate not-supported;
+  }  
+
+  deviation "/bbf-qos-filt:filters/bbf-qos-enhfilt:enhanced-filter/bbf-qos-enhfilt:filter/bbf-qos-enhfilt:filter-method/bbf-qos-enhfilt:inline/bbf-qos-enhfilt:ip-common/bbf-qos-enhfilt:ttl"
+  {
+    deviate not-supported;
+  }
+  
+  deviation "/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry/bbf-qos-cls:filter-method/bbf-qos-enhfilt:enhanced-classifier/bbf-qos-enhfilt:ip-common/bbf-qos-enhfilt:dscp-range" {
+    deviate add {
+      must "not(current() = 'any')" {
+        error-message "For CCL type policy, 'any' in dscp-range are not supported in enhanced filter or enhanced classifier";
+      } 
+	}  
+  }  
+ 
+  deviation "/bbf-qos-filt:filters/bbf-qos-enhfilt:enhanced-filter/bbf-qos-enhfilt:filter/bbf-qos-enhfilt:filter-method/bbf-qos-enhfilt:inline/bbf-qos-enhfilt:ip-common/bbf-qos-enhfilt:dscp-range" {
+    deviate add {
+      must "not(current() = 'any')" {
+        error-message "For CCL type policy, 'any' in dscp-range are not supported in enhanced filter or enhanced classifier";
+      } 
+    } 
+  }
+
+  deviation "/bbf-qos-filt:filters/bbf-qos-enhfilt:enhanced-filter/bbf-qos-enhfilt:filter/bbf-qos-enhfilt:filter-method/bbf-qos-enhfilt:inline/bbf-qos-enhfilt:ip-common" {
+    deviate add {
+      must "(../bbf-qos-enhfilt:ipv4/bbf-qos-enhfilt:source-ipv4-network) or (../bbf-qos-enhfilt:ipv4/bbf-qos-enhfilt:destination-ipv4-network) or (../bbf-qos-enhfilt:ipv6/bbf-qos-enhfilt:source-ipv6-network) or (../bbf-qos-enhfilt:ipv6/bbf-qos-enhfilt:destination-ipv6-network)" {
+        error-message "When filter is common-dscprange or common-dscp or common-protocol or port, there must be a ipv4 or ipv6 filter";
+      }        
+    }      
+  }
+
+  deviation "/bbf-qos-filt:filters/bbf-qos-enhfilt:enhanced-filter/bbf-qos-enhfilt:filter/bbf-qos-enhfilt:filter-method/bbf-qos-enhfilt:inline/bbf-qos-enhfilt:transport" {
+    deviate add {
+      must "(../bbf-qos-enhfilt:ipv4/bbf-qos-enhfilt:source-ipv4-network) or (../bbf-qos-enhfilt:ipv4/bbf-qos-enhfilt:destination-ipv4-network) or (../bbf-qos-enhfilt:ipv6/bbf-qos-enhfilt:source-ipv6-network) or (../bbf-qos-enhfilt:ipv6/bbf-qos-enhfilt:destination-ipv6-network)" {
+        error-message "When filter is common-dscprange or common-dscp or common-protocol or port, there must be a ipv4 or ipv6 filter";
+      }             
+    } 
+  }
+  
+  deviation "/bbf-qos-filt:filters/bbf-qos-enhfilt:enhanced-filter/bbf-qos-enhfilt:filter/bbf-qos-enhfilt:filter-method/bbf-qos-enhfilt:inline/bbf-qos-enhfilt:ipv4" {
+    deviate add {
+      must "not (../bbf-qos-enhfilt:ipv6)" {
+        error-message "IPv4 and IPv6 filters can not be configured in same time";
+      }
+    }
+  }
+
+  deviation "/bbf-qos-filt:filters/bbf-qos-enhfilt:enhanced-filter/bbf-qos-enhfilt:filter/bbf-qos-enhfilt:filter-method/bbf-qos-enhfilt:inline/bbf-qos-enhfilt:ipv6" {
+    deviate add {
+      must "not (../bbf-qos-enhfilt:ipv4)" {
+        error-message "IPv4 and IPv6 filters can not be configured in same time";
+      }
+    }
+  }  
+
+  deviation "/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry/bbf-qos-cls:filter-method/bbf-qos-enhfilt:enhanced-classifier/bbf-qos-enhfilt:source-mac-address/bbf-qos-enhfilt:filter-match" {
+    deviate add {
+      must "current() = 'true'" {
+        error-message "For CCL type policy, the 'filter-match' in MAC should always be 'true'";
+      }
+    }
+  } 
+
+  deviation "/bbf-qos-filt:filters/bbf-qos-enhfilt:enhanced-filter/bbf-qos-enhfilt:filter/bbf-qos-enhfilt:filter-method/bbf-qos-enhfilt:inline/bbf-qos-enhfilt:source-mac-address/bbf-qos-enhfilt:filter-match" {
+    deviate add {
+      must "current() = 'true'" {
+        error-message "For CCL type policy, the 'filter-match' in MAC should always be 'true'";
+      }
+    }
+  } 
+
+  deviation "/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry/bbf-qos-cls:filter-method/bbf-qos-enhfilt:enhanced-classifier/bbf-qos-enhfilt:destination-mac-address/bbf-qos-enhfilt:filter-match" {
+    deviate add {
+      must "current() = 'true'" {
+        error-message "For CCL type policy, the 'filter-match' in MAC should always be 'true'";
+      }
+    }
+  } 
+
+  deviation "/bbf-qos-filt:filters/bbf-qos-enhfilt:enhanced-filter/bbf-qos-enhfilt:filter/bbf-qos-enhfilt:filter-method/bbf-qos-enhfilt:inline/bbf-qos-enhfilt:destination-mac-address/bbf-qos-enhfilt:filter-match" {
+    deviate add {
+      must "current() = 'true'" {
+        error-message "For CCL type policy, the 'filter-match' in MAC should always be 'true'";
+      }
+    }
+  }
+
+  deviation "/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry/bbf-qos-cls:filter-method/bbf-qos-enhfilt:enhanced-classifier/bbf-qos-enhfilt:source-mac-address/bbf-qos-enhfilt:mac-address/bbf-qos-enhfilt:any-multicast-mac-address" {
+    deviate not-supported;
+  } 
+
+  deviation "/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry/bbf-qos-cls:filter-method/bbf-qos-enhfilt:enhanced-classifier/bbf-qos-enhfilt:destination-mac-address/bbf-qos-enhfilt:mac-address/bbf-qos-enhfilt:any-multicast-mac-address" {
+    deviate not-supported;
+  } 
+
+  deviation "/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry/bbf-qos-cls:filter-method/bbf-qos-enhfilt:enhanced-classifier/bbf-qos-enhfilt:source-mac-address/bbf-qos-enhfilt:mac-address/bbf-qos-enhfilt:unicast-address" {
+    deviate not-supported;
+  } 
+
+  deviation "/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry/bbf-qos-cls:filter-method/bbf-qos-enhfilt:enhanced-classifier/bbf-qos-enhfilt:destination-mac-address/bbf-qos-enhfilt:mac-address/bbf-qos-enhfilt:unicast-address" {
+    deviate not-supported;
+  } 
+
+
+  deviation "/bbf-qos-filt:filters/bbf-qos-enhfilt:enhanced-filter/bbf-qos-enhfilt:filter/bbf-qos-enhfilt:filter-method/bbf-qos-enhfilt:inline/bbf-qos-enhfilt:ipv4/bbf-qos-enhfilt:ihl" {
+    deviate not-supported;
+  }
+
+
+  deviation "/bbf-qos-filt:filters/bbf-qos-enhfilt:enhanced-filter/bbf-qos-enhfilt:filter/bbf-qos-enhfilt:filter-method/bbf-qos-enhfilt:inline/bbf-qos-enhfilt:ipv4/bbf-qos-enhfilt:flags" {
+    deviate not-supported;
+  }
+
+
+  deviation "/bbf-qos-filt:filters/bbf-qos-enhfilt:enhanced-filter/bbf-qos-enhfilt:filter/bbf-qos-enhfilt:filter-method/bbf-qos-enhfilt:inline/bbf-qos-enhfilt:ipv4/bbf-qos-enhfilt:offset" {
+    deviate not-supported;
+  }   
+
+
+  deviation "/bbf-qos-filt:filters/bbf-qos-enhfilt:enhanced-filter/bbf-qos-enhfilt:filter/bbf-qos-enhfilt:filter-method/bbf-qos-enhfilt:inline/bbf-qos-enhfilt:ipv6/bbf-qos-enhfilt:flow-label" {
+    deviate not-supported;
+  }
+
+  deviation "/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry/bbf-qos-cls:filter-method/bbf-qos-enhfilt:enhanced-classifier/bbf-qos-enhfilt:vlans/bbf-qos-enhfilt:vlan-match/bbf-qos-enhfilt:match-untagged/bbf-qos-enhfilt:untagged" {
+    deviate add {
+       must "not (current()/../../bbf-qos-enhfilt:ip-common or current()/../../bbf-qos-enhfilt:protocol or current()/../../bbf-qos-enhfilt:pbit-marking-list or current()/../../bbf-qos-enhfilt:dei-marking-list)"
+       {
+            error-message "If a classifier matches untagged, it can't have other matching conditions.";
+       }
+    }
+  }
+
+
+  deviation "/bbf-qos-filt:filters/bbf-qos-enhfilt:enhanced-filter/bbf-qos-enhfilt:filter/bbf-qos-enhfilt:filter-method/bbf-qos-enhfilt:inline/bbf-qos-enhfilt:ipv4/bbf-qos-enhfilt:identification" {
+    deviate not-supported;
+  }
+
+   deviation "/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry/bbf-qos-cls:filter-method/bbf-qos-enhfilt:enhanced-classifier/bbf-qos-enhfilt:source-mac-address"
+   {
+     deviate not-supported;
+   }
+
+   deviation "/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry/bbf-qos-cls:filter-method/bbf-qos-enhfilt:enhanced-classifier/bbf-qos-enhfilt:destination-mac-address"
+   {
+     deviate not-supported;
+   }
+
+   deviation "/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry/bbf-qos-cls:filter-method/bbf-qos-enhfilt:enhanced-classifier/bbf-qos-enhfilt:ethernet-frame-type"
+   {
+     deviate not-supported;
+   }
+
+   deviation "/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry/bbf-qos-cls:filter-method/bbf-qos-enhfilt:enhanced-classifier/bbf-qos-enhfilt:ipv4"
+   {
+     deviate not-supported;
+   }
+
+   deviation "/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry/bbf-qos-cls:filter-method/bbf-qos-enhfilt:enhanced-classifier/bbf-qos-enhfilt:ipv6"
+   {
+     deviate not-supported;
+   }
+
+   deviation "/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry/bbf-qos-cls:filter-method/bbf-qos-enhfilt:enhanced-classifier/bbf-qos-enhfilt:transport"
+   {
+     deviate not-supported;
+   }
+
+   deviation "/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry/bbf-qos-cls:filter-method/bbf-qos-enhfilt:enhanced-classifier/bbf-qos-enhfilt:flow-color"
+   {
+     deviate not-supported;
+   }
+   
+   deviation "/bbf-qos-filt:filters/bbf-qos-enhfilt:enhanced-filter/bbf-qos-enhfilt:filter/bbf-qos-enhfilt:filter-method/bbf-qos-enhfilt:inline/bbf-qos-enhfilt:flow-color"
+   {
+     deviate not-supported;
+   }
+}

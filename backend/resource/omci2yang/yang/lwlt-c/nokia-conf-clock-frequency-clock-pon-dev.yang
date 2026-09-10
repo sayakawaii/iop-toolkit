@@ -1,0 +1,127 @@
+module nokia-conf-clock-frequency-clock-pon-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+          + "nokia-conf-clock-frequency-clock-pon-dev";
+
+  prefix  nokia-conf-clock-frequency-clock-pon-dev;
+
+  import ietf-interfaces {
+      prefix if;
+  }
+
+  import nokia-conf-clock-frequency {
+    prefix clock-frequency;
+  }
+
+
+  import ietf-system {
+    prefix sys;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA ethernet YANG module supporting
+     deviations on top of standard.";
+
+  revision 2022-08-23 {
+    description
+      "remove unused channel-termination rule";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2022-06-06 {
+    description
+      "Add new rule for interface BP_Eth.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2020-08-25 {
+    description
+      "Initial revision.";
+    reference
+      "TBD";
+  }
+
+  deviation "/if:interfaces/if:interface/clock-frequency:ssm-out-profile-ref" {
+    deviate add {
+      must "(count(/if:interfaces/if:interface[clock-frequency:ssm-out-profile-ref != current()]) < 1) "  {
+        error-message "Only one profile supported";
+      }
+    }
+  }
+
+  deviation "/if:interfaces/if:interface/clock-frequency:ssm-out/clock-frequency:ssm-out-enable" {
+    deviate add {
+      must "(current() = 'false') or ((current() = 'true') and (current()/../../if:name != 'BP_Eth'))" {
+        error-message "SSM-out under BP_Eth could not be configured";
+      }
+    }
+
+    deviate add {
+      must "(current() = 'false')
+       or ((current() = 'true')
+       and (boolean(current()/../../clock-frequency:ssm-out-profile-ref)))"  {
+        error-message "profile must be configured when ssm-out enabled";
+      }
+    }
+
+    deviate add {
+      must "(current() = 'false')
+       or ((current() = 'true')
+       and (/if:interfaces/if:interface[if:name='BP_Eth']/clock-frequency:ssm-in/clock-frequency:ssm-in-enable = 'true'))"  {
+        error-message "ssm-in under BP_Eth interface must be configured when ssm-out enabled";
+      }
+    }
+  }
+
+  deviation "/clock-frequency:clock-ssm-out-vlan-profiles/clock-frequency:clock-ssm-out-vlan-profile/clock-frequency:ssm-out-vlan-id" {
+    deviate add {
+      must "(count(/clock-frequency:clock-ssm-out-vlan-profiles/clock-frequency:clock-ssm-out-vlan-profile[clock-frequency:ssm-out-vlan-id = current()]) = 1) "  {
+        error-message "Different profiles should use different vlan-id";
+      }
+    }
+  }
+
+
+  deviation "/sys:system-state/sys:clock/clock-frequency:freq-status" {
+    description "freq-status not supportd";
+    deviate not-supported;
+  }
+
+  deviation "/sys:system/sys:clock/clock-frequency:frequency/clock-frequency:revert" {
+    description "revert not support";
+    deviate not-supported;
+  }
+
+  deviation "/sys:system/sys:clock/clock-frequency:frequency/clock-frequency:force-local-reference" {
+    description "force-local-reference not support";
+    deviate not-supported;
+  }
+
+  deviation "/sys:system/sys:clock/clock-frequency:frequency/clock-frequency:wait-to-restore" {
+    description "wait-to-restore not support";
+    deviate not-supported;
+  }
+
+  deviation "/sys:system/sys:clock/clock-frequency:frequency/clock-frequency:output-ql-thresh" {
+    description "output-ql-thresh not support";
+    deviate not-supported;
+  }
+
+  deviation "/sys:system/sys:clock/clock-frequency:frequency/clock-frequency:ssmout-ceiling" {
+    description "ssmout-ceiling not support";
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces/if:interface/clock-frequency:clock-freq-port" {
+    description "clock-freq-port not support";
+    deviate not-supported;
+  }
+}

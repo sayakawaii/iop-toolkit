@@ -1,0 +1,432 @@
+module nokia-ietf-ipfix-psamp-common-dev {
+
+  namespace
+     "http://www.nokia.com/Fixed-Networks/BBA/yang:nokia-ietf-ipfix-psamp-common-dev";
+
+  prefix nokia-ietf-ipfix-psamp-common-dev;
+
+  import ietf-ipfix-psamp {
+    prefix ipfix;
+  }
+
+  import nokia-yang-types {
+    prefix nok-typ;
+  }
+
+  import ietf-inet-types {
+    prefix inet;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA IPFIX YANG module supporting
+     deviations on top of standard.";
+
+/* revision */
+
+  revision 2026-02-25 {
+    description
+      "Update description of exportInterval to indicate that it is not applicable for on-demand caches.";
+    reference
+      "Nokia internal.";
+  }
+
+  revision 2025-12-10 {
+    description
+      "Modified cache restriction from 100 to 120";
+    reference
+      "Nokia internal.";
+  }
+
+  revision 2023-10-26 {
+    description
+      "Modified destinationIPAddress to non-mandatory and to inet:host under transportSession. Adding dummy deviations";
+    reference
+      "Nokia internal.";
+  }
+
+  revision 2023-05-31 {
+    description "Resolve yang errors about caonical order and missing references.";
+    reference "Nokia internal.";
+  }
+  revision 2023-05-25 {
+    description
+      "Modified the description of exportInterval to indicate that the leaf only applies for periodic caches.";
+    reference "Nokia internal.";
+  }
+
+  revision 2023-02-20 {
+    description
+      "Modified max exporting processes from 1 to 4
+       and enabled declaring the list of exporting
+       processes which the caches may use to push
+       their data out to the collector.";
+    reference "Nokia internal.";
+  }
+
+  revision 2022-07-01 {
+    description
+      "Modified cache restriction from 40 to 100";
+    reference
+      "Nokia internal.";
+  }
+
+  revision 2022-06-16 {
+      description "Removing restriction of configuring the exportInterval with minutes granularity";
+      reference "Nokia internal.";
+  }
+
+  revision 2022-03-11 {
+      description "Adding not-supported ipfix cache fields";
+      reference "Nokia internal.";
+  }
+
+  revision 2022-01-13 {
+      description "Removing observationDomainId field from transportSession/template operational data";
+      reference "Nokia internal.";
+  }
+
+  revision 2021-10-01 {
+      description "add prefix ipfix to fallback ";
+      reference "Nokia internal.";
+  }
+
+  revision 2021-09-15 {
+      description "Marking all unused nodes as not-supported";
+      reference "Nokia internal.";
+  }
+
+  revision 2021-07-22 {
+      description "Adding description in all must clauses for Yang data constraints information";
+      reference "Nokia internal.";
+  }
+
+  revision 2020-04-01 {
+    description
+      "Modified cache restriction from 20 to 40";
+    reference
+      "Nokia internal.";
+  }
+
+  revision 2019-10-30 {
+    description
+      "Update type of name to nokia-string-ascii64 (with range 1...64) for exportingProcess, destination, cache and cacheField";
+    reference
+      "Nokia internal.";
+  }
+
+  revision 2019-05-03 {
+    description
+      "Move to category ipfix.";
+    reference
+      "Nokia internal.";
+  }
+
+  revision 2019-03-13 {
+    description
+      "Modified cache restriction from 8 to 20";
+    reference
+      "TBD";
+  }
+
+  revision 2019-01-10 {
+    description
+      "Added destination restriction to 5";
+    reference
+      "TBD";
+  }
+
+  revision 2018-10-22 {
+    description
+      "Added length restriction to exportingProcess,destination,
+       cache,cacheField key names and modified maximum configurable value for
+       exportInterval";
+    reference
+      "TBD";
+  }
+
+  revision 2017-01-02 {
+    description
+      "Initial revision.";
+         reference
+      "TBD";
+  }
+
+  deviation "/ipfix:ipfix/ipfix:exportingProcess/ipfix:name" {
+    deviate replace {
+      type nok-typ:nokia-string-ascii64;
+    }
+  }
+
+  deviation "/ipfix:ipfix/ipfix:exportingProcess/ipfix:destination" {
+    deviate add {
+       max-elements 5;
+    }
+  }
+
+  deviation "/ipfix:ipfix/ipfix:exportingProcess/ipfix:destination/ipfix:name" {
+    deviate replace {
+      type nok-typ:nokia-string-ascii64;
+    }
+  }
+
+  deviation "/ipfix:ipfix/ipfix:cache/ipfix:name" {
+    deviate replace {
+      type nok-typ:nokia-string-ascii64;
+    }
+  }
+
+  deviation "/ipfix:ipfix/ipfix:cache/ipfix:CacheType/ipfix:permanentCache"
+      +"/ipfix:permanentCache/ipfix:cacheLayout/ipfix:cacheField/ipfix:name" {
+    deviate replace {
+      type nok-typ:nokia-string-ascii64;
+    }
+  }
+
+  deviation "/ipfix:ipfix/ipfix:cache" {
+    deviate add {
+       max-elements 120;
+    }
+  }
+
+  deviation "/ipfix:ipfix/ipfix:exportingProcess" {
+    deviate add {
+       max-elements 4;
+    }
+  }
+
+  deviation "/ipfix:ipfix/ipfix:exportingProcess/ipfix:exportMode" {
+   deviate replace {
+        default 'ipfix:fallback';
+    }
+    deviate add {
+      must ". = 'ipfix:fallback'" {
+          error-message "Only fallback mode is supported";
+          description "Defines the exporting mode. Only fallback mode is currently supported";
+      }
+    }
+  }
+
+  deviation "/ipfix:ipfix/ipfix:cache/ipfix:CacheType/ipfix:permanentCache/ipfix:permanentCache/ipfix:cacheLayout/ipfix:cacheField/ipfix:ieEnterpriseNumber" {
+    deviate replace {
+        default 3729;
+    }
+    deviate add {
+      must ". = 3729" {
+          error-message "Only enterprise number 3729 is supported";
+          description "Defines the enterprise number. Only value 3729 is supported";
+      }
+    }
+  }
+
+  deviation "/ipfix:ipfix/ipfix:exportingProcess/ipfix:destination/ipfix:DestinationParameters/ipfix:tcpExporter/ipfix:tcpExporter/ipfix:ipfixVersion" {
+   deviate replace {
+        default 10;
+    }
+    deviate add {
+      must ". = 10" {
+          error-message "Only ipfix version 10 is supported";
+          description "Defines the IpFix protocol version. Only version 10 is currently supported";
+      }
+    }
+  }
+
+  deviation "/ipfix:ipfix/ipfix:exportingProcess/ipfix:destination/ipfix:DestinationParameters/ipfix:tcpExporter/ipfix:tcpExporter/ipfix:destinationPort" {
+    deviate add {
+      default 4739;
+    }
+  }
+
+  deviation "/ipfix:ipfix/ipfix:exportingProcess/ipfix:destination/ipfix:DestinationParameters/ipfix:tcpExporter/ipfix:tcpExporter/ipfix:transportSession/ipfix:destinationAddress" {
+    deviate replace {
+      type inet:host;
+    }
+  }
+
+  deviation "/ipfix:ipfix/ipfix:exportingProcess/ipfix:destination/ipfix:DestinationParameters/ipfix:tcpExporter/ipfix:tcpExporter/ipfix:destinationIPAddress" {
+    deviate replace {
+      mandatory false;
+    }
+  }
+
+  deviation "/ipfix:ipfix/ipfix:cache/ipfix:CacheType/ipfix:permanentCache/ipfix:permanentCache/ipfix:exportInterval" {
+    description "Exporting interval can be a multiple of 60
+                  (value is in seconds, hence the exporting granularity is set in minutes)
+                  or for specific xpaths be set to sub-minute value.
+                  This value is only relevant for caches that are not configured as on-change or on-demand";
+    deviate add {
+      default 900;
+        //must ". mod 60 = 0" {
+        //  error-message "Export Interval should be in multiple of 60";
+        //  description "Exporting interval can only be a multiple of 60 (value is in seconds, hence the exporting granularity is set in minutes)";
+        //}
+    }
+    deviate replace {
+      type uint32 {
+        range "1..86400";
+      }
+    }
+  }
+
+  deviation "/ipfix:ipfix/ipfix:observationPoint" { // container
+    deviate not-supported;
+  }
+
+  deviation "/ipfix:ipfix/ipfix:selectionProcess" { // container
+    deviate not-supported;
+  }
+
+  deviation "/ipfix:ipfix/ipfix:cache/ipfix:meteringProcessId" { // RO leaf
+    deviate not-supported;
+  }
+
+  deviation "/ipfix:ipfix/ipfix:cache/ipfix:CacheType/ipfix:permanentCache/ipfix:permanentCache/ipfix:activeFlows" { // RO leaf
+    deviate not-supported;
+  }
+
+  deviation "/ipfix:ipfix/ipfix:cache/ipfix:CacheType/ipfix:permanentCache/ipfix:permanentCache/ipfix:maxFlows" { // RW leaf
+    deviate not-supported;
+  }
+
+  deviation "/ipfix:ipfix/ipfix:cache/ipfix:CacheType/ipfix:permanentCache/ipfix:permanentCache/ipfix:activeTimeout" { // RW leaf
+    deviate not-supported;
+  }
+
+  deviation "/ipfix:ipfix/ipfix:cache/ipfix:CacheType/ipfix:permanentCache/ipfix:permanentCache/ipfix:idleTimeout" { // RW leaf
+    deviate not-supported;
+  }
+
+  deviation "/ipfix:ipfix/ipfix:cache/ipfix:CacheType/ipfix:permanentCache/ipfix:permanentCache/ipfix:unusedCacheEntries" { // RO leaf
+    deviate not-supported;
+  }
+
+  deviation "/ipfix:ipfix/ipfix:cache/ipfix:CacheType/ipfix:permanentCache/ipfix:permanentCache/ipfix:cacheLayout/ipfix:cacheField/ipfix:nameOrId/ipfix:ieId" { // RW leaf
+    deviate not-supported;
+  }
+
+  deviation "/ipfix:ipfix/ipfix:cache/ipfix:CacheType/ipfix:permanentCache/ipfix:permanentCache/ipfix:cacheLayout/ipfix:cacheField/ipfix:ieLength" { // RW leaf
+    deviate not-supported;
+  }
+
+//  deviation "/ipfix:ipfix/ipfix:cache/ipfix:CacheType/ipfix:permanentCache/ipfix:permanentCache/ipfix:cacheLayout/ipfix:cacheField/ipfix:ieEnterpriseNumber" { // RW leaf
+//    deviate not-supported;
+//  }
+
+  deviation "/ipfix:ipfix/ipfix:cache/ipfix:CacheType/ipfix:permanentCache/ipfix:permanentCache/ipfix:cacheLayout/ipfix:cacheField/ipfix:isFlowKey" { // RW leaf
+    deviate not-supported;
+  }
+
+  deviation "/ipfix:ipfix/ipfix:cache/ipfix:exportingProcess" {
+    deviate add {
+       max-elements 1;
+    }
+  }
+
+  deviation "/ipfix:ipfix/ipfix:exportingProcess/ipfix:exportingProcessId" { // RO leaf
+    deviate not-supported;
+  }
+/*
+  deviation "/ipfix:ipfix/ipfix:exportingProcess/ipfix:exportMode" { // RW leaf
+    deviate not-supported;
+  }
+*/
+  deviation "/ipfix:ipfix/ipfix:exportingProcess/ipfix:destination/ipfix:DestinationParameters/ipfix:sctpExporter" { // container
+    deviate not-supported;
+  }
+
+/*
+  deviation "/ipfix:ipfix/ipfix:exportingProcess/ipfix:destination/ipfix:DestinationParameters/ipfix:tcpExporter/ipfix:tcpExporter/ipfix:ipfixVersion" { // RW leaf
+    deviate not-supported;
+  }
+*/
+
+  deviation "/ipfix:ipfix/ipfix:exportingProcess/ipfix:destination/ipfix:DestinationParameters/ipfix:tcpExporter/ipfix:tcpExporter/ipfix:indexOrName" { // RW container
+    deviate not-supported;
+  }
+
+  deviation "/ipfix:ipfix/ipfix:exportingProcess/ipfix:destination/ipfix:DestinationParameters/ipfix:tcpExporter/ipfix:tcpExporter/ipfix:sendBufferSize" { // RW leaf
+    deviate not-supported;
+  }
+
+  deviation "/ipfix:ipfix/ipfix:exportingProcess/ipfix:destination/ipfix:DestinationParameters/ipfix:tcpExporter/ipfix:tcpExporter/ipfix:rateLimit" { // RW leaf
+    deviate not-supported;
+  }
+
+  deviation "/ipfix:ipfix/ipfix:exportingProcess/ipfix:destination/ipfix:DestinationParameters/ipfix:tcpExporter/ipfix:tcpExporter/ipfix:transportLayerSecurity/ipfix:localCertificationAuthorityDN" { // RW leaf
+    deviate not-supported;
+  }
+
+  deviation "/ipfix:ipfix/ipfix:exportingProcess/ipfix:destination/ipfix:DestinationParameters/ipfix:tcpExporter/ipfix:tcpExporter/ipfix:transportLayerSecurity/ipfix:localSubjectDN" { // RW leaf
+    deviate not-supported;
+  }
+
+  deviation "/ipfix:ipfix/ipfix:exportingProcess/ipfix:destination/ipfix:DestinationParameters/ipfix:tcpExporter/ipfix:tcpExporter/ipfix:transportLayerSecurity/ipfix:localSubjectFQDN" { // RW leaf
+    deviate not-supported;
+  }
+
+  deviation "/ipfix:ipfix/ipfix:exportingProcess/ipfix:destination/ipfix:DestinationParameters/ipfix:tcpExporter/ipfix:tcpExporter/ipfix:transportLayerSecurity/ipfix:remoteCertificationAuthorityDN" { // RW leaf
+    deviate not-supported;
+  }
+
+  deviation "/ipfix:ipfix/ipfix:exportingProcess/ipfix:destination/ipfix:DestinationParameters/ipfix:tcpExporter/ipfix:tcpExporter/ipfix:transportLayerSecurity/ipfix:remoteSubjectDN" { // RW leaf
+    deviate not-supported;
+  }
+
+  deviation "/ipfix:ipfix/ipfix:exportingProcess/ipfix:destination/ipfix:DestinationParameters/ipfix:tcpExporter/ipfix:tcpExporter/ipfix:transportLayerSecurity/ipfix:remoteSubjectFQDN" { // RW leaf
+    deviate not-supported;
+  }
+
+  deviation "/ipfix:ipfix/ipfix:exportingProcess/ipfix:destination/ipfix:DestinationParameters/ipfix:tcpExporter/ipfix:tcpExporter/ipfix:sourceIPAddress" { // RW leaf
+    deviate not-supported;
+  }
+
+  //#ipfix_transportSession_sourceAddress
+  deviation "/ipfix:ipfix/ipfix:exportingProcess/ipfix:destination/ipfix:DestinationParameters/ipfix:tcpExporter/ipfix:tcpExporter/ipfix:transportSession/ipfix:sourceAddress" { // RO leaf
+    deviate not-supported;
+  }
+
+  deviation "/ipfix:ipfix/ipfix:exportingProcess/ipfix:destination/ipfix:DestinationParameters/ipfix:tcpExporter/ipfix:tcpExporter/ipfix:transportSession/ipfix:sourcePort" { // RO leaf
+    deviate not-supported;
+  }
+
+  deviation "/ipfix:ipfix/ipfix:exportingProcess/ipfix:destination/ipfix:DestinationParameters/ipfix:tcpExporter/ipfix:tcpExporter/ipfix:transportSession/ipfix:sctpAssocId" { // RO leaf
+    deviate not-supported;
+  }
+
+  deviation "/ipfix:ipfix/ipfix:exportingProcess/ipfix:destination/ipfix:DestinationParameters/ipfix:tcpExporter/ipfix:tcpExporter/ipfix:transportSession/ipfix:rate" { // RO leaf
+    deviate not-supported;
+  }
+
+  deviation "/ipfix:ipfix/ipfix:exportingProcess/ipfix:destination/ipfix:DestinationParameters/ipfix:tcpExporter/ipfix:tcpExporter/ipfix:transportSession/ipfix:template/ipfix:observationDomainId" { // RO leaf
+    deviate not-supported;
+  }
+
+  deviation "/ipfix:ipfix/ipfix:exportingProcess/ipfix:destination/ipfix:DestinationParameters/ipfix:tcpExporter/ipfix:tcpExporter/ipfix:transportSession/ipfix:template/ipfix:setId" { // RO leaf
+    deviate not-supported;
+  }
+
+  deviation "/ipfix:ipfix/ipfix:exportingProcess/ipfix:destination/ipfix:DestinationParameters/ipfix:tcpExporter/ipfix:tcpExporter/ipfix:transportSession/ipfix:template/ipfix:field" { // keyless list
+    deviate not-supported;
+  }
+
+  deviation "/ipfix:ipfix/ipfix:exportingProcess/ipfix:options" { // RW container
+    deviate not-supported;
+  }
+
+  /* dummy deviations */
+  deviation "/ipfix:ipfix/ipfix:exportingProcess/ipfix:destination/ipfix:DestinationParameters/ipfix:tcpExporter/ipfix:tcpExporter" {
+    description "Configuration of both an IP and an FQDN is not allowed in a destination. The error message 'Cannot have both IP and FQDN configured in a destination' will be displayed when the constraint is violated";
+    deviate add {}
+  }
+
+  deviation "/ipfix:ipfix/ipfix:exportingProcess/ipfix:destination/ipfix:DestinationParameters/ipfix:tcpExporter/ipfix:tcpExporter" {
+    description "Configuration of either an IP or an FQDN is mandatory in a destination. The error message 'Either IP or FQDN should be configured in a destination' will be displayed when the constraint is violated";
+    deviate add {}
+  }
+
+}

@@ -1,0 +1,354 @@
+submodule bbf-pots-uni-characteristics-mounted {
+  yang-version 1.1;
+  belongs-to bbf-sip-voip-mounted  {
+    prefix bbf-sip-voip-mounted;
+  }
+
+  import bbf-yang-types {
+    prefix bbf-yang;
+  }
+
+  import bbf-fiber-onu-emulated-mount {
+     prefix onu;
+  }
+  
+  include bbf-pptp-pots-uni-base-mounted;
+
+  organization
+    "Broadband Forum <https://www.broadband-forum.org>
+     Common YANG Work Area";
+
+  contact
+    "Comments or questions about this Broadband Forum YANG module
+     should be directed to <mailto:help@broadband-forum.org>.
+     Editor:      Frank Desseyn, Nokia
+     Editor:      Nadine Staelens, Nokia
+     PS Leader:   Joey Boyd, ADTRAN
+     PS Leader:   Ken Kerpez, ASSIA
+     WA Director: Joey Boyd, ADTRAN
+     WA Director: Sven Ooghe, Nokia";
+
+  description
+    "This submodule contains the configuration profile of the 
+	 pptp pots uni.
+     Copyright (c) 2017-2018, Broadband Forum
+     Redistribution and use in source and binary forms, with or
+     without modification, are permitted provided that the following
+     conditions are met:
+     1. Redistributions of source code must retain the above copyright
+        notice, this list of conditions and the following disclaimer.
+     2. Redistributions in binary form must reproduce the above
+        copyright notice, this list of conditions and the following
+        disclaimer in the documentation and/or other materials
+        provided with the distribution.
+     3. Neither the name of the copyright holder nor the names of its
+        contributors may be used to endorse or promote products
+        derived from this software without specific prior written
+        permission.
+     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
+     CONTRIBUTORS \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+     INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+     DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+     CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+     SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+     NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+     CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+     STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+     ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+     ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     The above license is used as a license under copyright only.
+     Please reference the Forum IPR Policy for patent licensing terms
+     <https://www.broadband-forum.org/ipr-policy>.
+     Any moral rights which are necessary to exercise under the above
+     license grant are also deemed granted under this license.
+     This version of this YANG module is part of TR-383; see
+     the TR itself for full legal notices.";
+
+  revision 2020-03-06 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: 2020-03-06.";
+    reference
+      " ";
+  }
+ 
+  /* typedef pots-uni-characteristics-ref {
+    type leafref {
+      path "/bbf-sip-voip-mounted:pots-profiles"
+	     + "/bbf-sip-voip-mounted:pots-uni-characteristics-profiles"
+             + "/bbf-sip-voip-mounted:pots-uni-characteristics-profile"
+	     + "/bbf-sip-voip-mounted:name";
+    }
+    description
+      "Used to reference the POTS uni characteristics";
+  } */
+  
+  augment "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-profiles"
+        + "/bbf-sip-voip-mounted:pots-uni-characteristics-profiles" {
+    list pots-uni-characteristics-profile {
+	key name;
+        leaf name {
+          type bbf-yang:name-string;		
+ 	  description
+            "Uniquely identifies the pots characteristics.";
+        }	
+	leaf feeding-current {
+	  type uint8;
+	  units "1 mA";
+	  default 25;
+	  description
+	    "The nominal feed DC current of the subscriber loop.";
+  	}
+	leaf feeding-voltage {
+	  type union {
+	    type enumeration {
+	      enum no-support;
+           }			
+	    type uint8{range "0..255";}
+	  }
+	  units "1 Volt";
+	  description
+	    "The nominal feed DC voltage of the subscriber loop in
+ 	     Volt";
+	}
+	leaf impedance {
+	  type string;
+           description
+	    "The subscriber loop impedance, usually set to 'default'.";
+        }
+	leaf rx-gain {
+	  type int16 {range "-140..60";}
+	  units "0.1 dB";
+	  default 0;
+	  description
+	  	"The subscriber loop receive gain.";
+	}
+	leaf tx-gain {
+	  type int16 {range "-140..60";}
+	  units "0.1 dB";
+	  default 0;
+	  description
+	    "The subscriber loop transmit gain.";
+	}	  
+	container alarm-control {
+	  if-feature alarm-control;
+	  description
+	    "Alarm control function in compliamce with ITU-T M.3100.";
+	
+	  leaf alarm-reporting-control {
+	    type boolean;
+	    default false;
+	    description
+		  "This parameter allows the activation of ARC for
+	 	   this subscriber loop. The attribute must be associated with
+		   the ARC interval parameter. The value false disables the 
+		   alarm reporting control, while the value true enables it.
+		   When set to false, the subscriber loop is in the ITU-T M.3100
+		   state, in which alarms are reported normally. 
+		   When set to true, the subscriber loop is in the ITU-T M.3100
+		   NALM-QI state, in which alarm reporting is suppressed.
+		   The subscriber loop moves from the ALM state to the NALM-QI
+		   state when this parmeter is changed to true.
+		   The subscriber loop moves from the NALM-QI state to the ALM 
+		   state when either the subscriber loop is trouble-free and the
+		   ARC interval timer expires or this parameter is set to false. 
+ 		   Continuation or recurrence of a fault resets the timer. 
+		   If the ARC interval timer expires, the ARC parameter is 
+		   autonomously be disabled, and a Parameter-Value-Change
+		   message is sent.
+		   The ARC interval parameter can assume normal timing values of
+		   0 to 254 min. The value 0 implies that a subscriber loop in the
+		   NALM-QI state goes immediately to the ALM state upon detection
+		   of a problem-free state. An ARC interval value of 255 has the
+		   special meaning that the timer never expires. The subscriber 
+		   loop remains in the NALM-QI state until the ARC parameter is
+		   set to disabled. This behaviour is equivalent to the NALM state,
+		   which is another generic behaviour of the ARC function in
+		   ITU-T M.3100.";
+	    reference
+		  "ITU-T M.3100";
+	  }
+	  leaf alarm-reporting-control-interval {
+	    type uint8;
+	    default 0;
+	    description
+		  "This parameter defines the interval to be used with the ARC
+		  function for this subscriber loop. The values 0 to 254 give the
+		  duration in minutes for the NALM-QI timer of ITU-T M.3100. 
+		  The special value 255 means that the timer never expires.";
+	    reference
+		  "ITU-T M.3100";
+	  }
+	}
+        leaf transmission-path {
+	    type enumeration {
+	      enum full-time-on-hook {
+		value 0;
+		description
+		  "full-time on-hook transmission.";
+	      }
+	      enum part-time-on-hook {
+		value 1;
+		description
+		  "part-time on-hook transmission.";
+	      }
+	    }
+	    default full-time-on-hook;
+	    description
+	          "This parameter allows setting the subscriber loop either to
+	           full-time on-hook transmission or part-time on-hook 
+	           transmission.";
+	}
+	leaf hold-over-time {
+	  type uint8;
+	  units "1 sec";
+	  default 0;
+	  description
+	    "This parameter determines the time during which the 
+	     subscriber loop voltage is held up when a LOS or 
+	     softswitch connectivity is detected. After the specified
+	     time elapses, the subscriber loop voltage is dropped, and
+	     may thereby cause premises intrusion alarm or fire panel 
+	     circuits to go active. When the softswitch connectivity is
+	     restored, the subscriber loop voltage is immediately 
+	     restored and the timer resets to zero. 
+	     The default value 0 selects the vendor's factory policy.		   
+	     hold-over-time = 0
+	     loss-of-softswitch = don't care
+	     behaviour : Vendor-specific		   
+	     hold-over-time > 0
+	     loss-of-softswitch = false
+	     behaviour : T/R will be brought down on expiration of the 
+	     holdover timer. 
+	     The holdover timer is started upon detection of LOS. 
+	     T/R is restored immediately upon ONU ranging.		   
+	     hold-over-time > 0
+	     loss-of-softswitch = true
+	     behaviour : T/R will be brought down on expiration of the 
+	     holdover timer. 
+	     The holdover timer is started on detection of softswitch 
+	     connectivity keep alive signal. 
+	     T/R is restored immediately upon softswitch 
+	     connectivity.";
+	}
+	leaf loss-of-softswitch {
+	  type boolean;
+	  default false;
+	  description
+	    "This parameter controls the T/R holdover initiation 
+	     criteria. False disables loss of softswitch connectivity
+	     detection as criteria for initiating the holdover timer. 
+	     True enables loss of softswitch connectivity detection as 
+	     criteria for initiating the holdover timer.";
+  	} 	
+	leaf automatic-gain-control-enabled {
+	  type boolean;
+	  default false;
+	  description
+	    "The subscriber loop receive and transmit 
+	    automatic gain control.";
+  	}
+	leaf off-hook-announcement-type {
+	  type enumeration {
+	    enum not-applicable {
+	        value 0;
+		description
+		  "Not applicable, not configurable.";
+	    }
+	    enum silence {
+	        value 1;
+		description
+		  "Silence.";
+	    }
+	    enum reorder-tone {
+	        value 2;
+		description
+		  "Reorder tone.";
+	    }
+	    enum fast-busy {
+	        value 3;
+		description
+		  "Fast busy.";
+	    }
+	    enum voice {
+	        value 4;
+		description
+		  "Voice.";
+	    }
+	  }
+	  description
+	    "Tone to be generated when the subcriber goes off hook but 
+	     makes no attempt to start a call.";
+	}
+	leaf jitter-target {
+	  type int16;
+	  units "1 millisecond";
+	  description
+	    "Target value of jitter buffer.";	  
+	}
+	leaf max-jitter-buffer {
+	  type int16;
+	  units "1 millisecond";
+	  description
+	    "Maximum buffer value of jitter buffer.";	  
+	}
+	leaf echo-cancel-enabled {
+	  type enumeration {
+	    enum enabled {
+	      value 1;
+		  description
+		    "Echo cancellation is enabled.";
+	      }
+	    enum disabled {
+	      value 2;
+		  description
+		    "Echo cancellation is disabled.";
+	      }
+	  }
+	  description
+	    "This attribute controls whether echo cancellation
+	     is enabled or disabled.";
+	}
+	leaf pstn-protocol-variant {
+	  type uint8;
+	  description
+	    "Country code for the POTS line.";	  
+	}
+	leaf hook-flash-min {
+	  type uint16;
+	  units "1 millisecond";
+	  description
+	    "Minimum duration to determine a hook flash event.";
+	}
+	leaf hook-flash-max {
+	  type uint16;
+	  units "1 millisecond";
+	  description
+	    "Maximum duration to determine a hook flash event.";
+	}
+	leaf dtmf-digit-levels {
+	  type int16 {range "-25..0";}
+	  description
+	    "The power level of DTMF digits that may be generated
+	     towards the subscriber set.";
+	}
+	leaf dtmf-digit-duration {
+	  type uint16;
+	  description
+	    "the duration of DTMF digits that may be generated  
+		 towards the subscriber set.";
+	}
+	container analog-subscriber-characteristics {
+	  leaf file-name {
+	    type string;
+	    description
+	      "Path and file name of file containing HW 
+		   settings, Z-interface settings.";
+	  }
+	}
+    }
+  }   	  
+}

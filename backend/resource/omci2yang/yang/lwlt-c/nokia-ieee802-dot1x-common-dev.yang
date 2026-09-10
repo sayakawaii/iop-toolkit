@@ -1,0 +1,332 @@
+module nokia-ieee802-dot1x-common-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-ieee802-dot1x-common-dev";
+
+  prefix  dot1x-ieee802-dot1x-dev;
+
+  import ietf-interfaces {
+    prefix "if";
+  }
+
+  import ieee802-dot1x {
+    prefix "dot1x";
+  }
+
+  import ietf-system {
+    prefix "sys";
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "The NOKIA IETF/IP YANG module supporting
+     deviations on top of standard.";
+
+  revision 2026-05-21 {
+    description
+      "Added a range deviation for retry-max.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2023-06-30 {
+    description
+      "Added constraints un-supported yang leaf";
+    reference
+      "Nokia reference";
+  }
+
+  revision 2023-06-23 {
+    description
+      "Added constraints un-supported yang leaves.";
+    reference
+      "Nokia reference";
+  }
+
+  revision 2022-07-30 {
+    description
+      "Added constraints to not support un-supported yang leaves.";
+    reference
+      "Nokia reference";
+  }
+
+  revision 2022-07-20 {
+    description
+      "Added constraints to not support un-supported yang counters.";
+    reference
+      "Nokia reference";
+  }
+
+  revision 2022-05-02 {
+    description
+      "Added constraints to not support state
+       data for pae authenticator.";
+    reference
+      "Nokia reference";
+  }
+
+  revision 2022-04-28 {
+    description
+      "Removed constraints for reauth-period and retry-max.";
+    reference
+      "Nokia reference";
+  }
+
+  revision 2022-04-26 {
+    description
+      "Removed constraint for interface-usage of interface with
+       port-capability auth.";
+    reference
+      "Nokia reference";
+  }
+
+  revision 2022-02-22 {
+    description
+      "Add common deviations for unsupported nodes.";
+    reference
+      "Nokia reference";
+  }
+
+  revision 2019-04-09 {
+    description
+      "Split deviations in appropriate files";
+    reference
+      "Nokia reference";
+  }
+
+  deviation "/if:interfaces/if:interface/dot1x:pae/"
+          + "dot1x:port-capabilities/"
+          + "dot1x:mka" {
+    description "802.1X port-capabilities mka not suported";
+    deviate not-supported;
+  }
+  deviation "/if:interfaces/if:interface/dot1x:pae/"
+          + "dot1x:port-capabilities/"
+          + "dot1x:macsec" {
+    description "802.1X port-capabilities macsec not suported";
+    deviate not-supported;
+  }
+  deviation "/if:interfaces/if:interface/dot1x:pae/"
+          + "dot1x:port-capabilities/"
+          + "dot1x:announcements" {
+    description "802.1X port-capabilities announcements not suported";
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces/if:interface/dot1x:pae/"
+          + "dot1x:port-capabilities/"
+          + "dot1x:listener" {
+    description "802.1X port-capabilities listener not suported";
+    deviate not-supported;
+  }
+  deviation "/if:interfaces/if:interface/dot1x:pae/"
+          + "dot1x:port-capabilities/"
+          + "dot1x:in-service-upgrades" {
+    description "802.1X port-capabilities in-service-upgrades not suported";
+    deviate not-supported;
+  }
+  deviation "/if:interfaces/if:interface/dot1x:pae/"
+          + "dot1x:vp-enable" {
+    description "802.1X pae vp-enable is not suported";
+    deviate not-supported;
+  }
+  deviation "/if:interfaces/if:interface/dot1x:pae/"
+          + "dot1x:supplicant" {
+    description "802.1X pae supplicant is not suported";
+    deviate not-supported;
+  }
+  deviation "/if:interfaces/if:interface/dot1x:pae/"
+          + "dot1x:kay" {
+    description "802.1X pae kay is not suported";
+    deviate not-supported;
+  }
+  deviation "/if:interfaces/if:interface/dot1x:pae/"
+          + "dot1x:logon-nid" {
+    description "802.1X pae logon-nid is not suported";
+    deviate not-supported;
+  }
+  deviation "/if:interfaces/if:interface/dot1x:pae/"
+          + "dot1x:announcer" {
+    description "802.1X pae announcer is not suported";
+    deviate not-supported;
+  }
+  deviation "/if:interfaces/if:interface/dot1x:pae/"
+          + "dot1x:listener" {
+    description "802.1X pae listener is not suported";
+    deviate not-supported;
+  }
+  deviation "/if:interfaces/if:interface/dot1x:pae/"
+          + "dot1x:logon-process" {
+    description "802.1X pae logon-process is not suported";
+    deviate not-supported;
+  }
+  deviation "/sys:system/dot1x:pae-system/dot1x:system-announcements" {
+    description "dot1x pae-system system-announcements not supported";
+    deviate not-supported;
+  }
+  deviation "/if:interfaces/if:interface/dot1x:pae/"
+          + "dot1x:port-capabilities/"
+          + "dot1x:supp" {
+    description "802.1X port-capabilities PACP EAP Supplicant is
+                 not suported";
+    deviate not-supported;
+  }
+  deviation "/if:interfaces/if:interface/dot1x:pae/dot1x:authenticator/dot1x:enabled" {
+    description "Not supported in current feature scope.";
+    deviate not-supported;
+  }
+  deviation "/if:interfaces/if:interface/dot1x:pae/dot1x:authenticator/dot1x:authenticate" {
+    description "Not supported in current feature scope.";
+    deviate not-supported;
+  }
+  deviation "/if:interfaces/if:interface/dot1x:pae/dot1x:authenticator/dot1x:authenticated" {
+    description "Not supported in current feature scope.";
+    deviate not-supported;
+  }
+  deviation "/if:interfaces/if:interface/dot1x:pae/dot1x:authenticator/dot1x:failed" {
+    description "Not supported in current feature scope.";
+    deviate not-supported;
+  }
+deviation "/if:interfaces/if:interface/dot1x:pae/dot1x:eapol-statistics/dot1x:eapol-announcements-rx"{
+    description "dot1x eapol-statistics eapol-announcements-rx not supported";
+    deviate not-supported;
+  }
+  deviation "/if:interfaces/if:interface/dot1x:pae/dot1x:eapol-statistics/dot1x:eapol-announce-reqs-rx"{
+    description "dot1x eapol-statistics eapol-announce-reqs-rx not supported";
+    deviate not-supported;
+  }
+ deviation "/if:interfaces/if:interface/dot1x:pae/dot1x:eapol-statistics/dot1x:eapol-port-unavailable" {
+     description "dot1x eapol-statistics eapol-port-unavailable not supported";
+     deviate not-supported;
+  }
+  deviation "/if:interfaces/if:interface/dot1x:pae/dot1x:eapol-statistics/dot1x:eapol-mk-invalid-frames-rx" {
+     description "dot1x eapol-statistics eapol-mk-invalid-frames-rx not supported";
+     deviate not-supported;
+  }
+    deviation "/if:interfaces/if:interface/dot1x:pae/dot1x:eapol-statistics/dot1x:eapol-supp-eap-frames-tx" {
+     description "dot1x eapol-statistics eapol-supp-eap-frames-tx not supported";
+     deviate not-supported;
+  }
+    deviation "/if:interfaces/if:interface/dot1x:pae/dot1x:eapol-statistics/dot1x:eapol-logoff-frames-tx" {
+     description "dot1x eapol-statistics eapol-logoff-frames-tx not supported";
+     deviate not-supported;
+  }
+    deviation "/if:interfaces/if:interface/dot1x:pae/dot1x:eapol-statistics/dot1x:eapol-mk-no-cfn" {
+     description "dot1x eapol-statistics eapol-mk-no-cfn not supported";
+     deviate not-supported;
+  }
+    deviation "/if:interfaces/if:interface/dot1x:pae/dot1x:eapol-statistics/dot1x:eapol-mka-frames-tx" {
+     description "dot1x eapol-statistics eapol-mka-frames-tx not supported";
+     deviate not-supported;
+  }
+
+    deviation "/if:interfaces/if:interface/dot1x:pae/dot1x:eapol-statistics/dot1x:eapol-announcements-tx"{
+    description "dot1x eapol-statistics eapol-announcements-tx not supported";
+    deviate not-supported;
+  }
+    deviation "/if:interfaces/if:interface/dot1x:pae/dot1x:eapol-statistics/dot1x:eapol-announce-reqs-tx"{
+    description "dot1x eapol-statistics eapol-announce-reqs-tx not supported";
+    deviate not-supported;
+  }
+    deviation "/if:interfaces/if:interface/dot1x:pae/dot1x:eapol-statistics/dot1x:eapol-start-frames-tx" {
+     description "dot1x eapol-statistics eapol-start-frames-tx not supported";
+     deviate not-supported;
+  }
+   deviation "/dot1x:nid-group/dot1x:pae-nid-group/dot1x:kmd"{
+    description "dot1x pae-nid-group kmd not supported";
+    deviate not-supported;
+  }
+   deviation "/if:interfaces/if:interface/dot1x:pae/dot1x:port-name"{
+    description "dot1x pae port-name not supported";
+    deviate not-supported;
+  }
+   deviation "/if:interfaces/if:interface/dot1x:pae/dot1x:port-number"{
+    description "dot1x pae port-number not supported";
+    deviate not-supported;
+  }
+  deviation "/if:interfaces/if:interface/dot1x:pae/dot1x:controlled-port-name"{
+    description "dot1x pae controlled-port-namenot supported";
+    deviate not-supported;
+  }
+  deviation "/if:interfaces/if:interface/dot1x:pae/dot1x:controlled-port-number"{
+    description "dot1x pae controlled-port-number not supported";
+    deviate not-supported;
+  }
+  deviation "/if:interfaces/if:interface/dot1x:pae/dot1x:uncontrolled-port-name"{
+    description "dot1x pae uncontrolled-port-name not supported";
+    deviate not-supported;
+  }
+  deviation "/if:interfaces/if:interface/dot1x:pae/dot1x:uncontrolled-port-number"{
+    description "dot1x pae uncontrolled-port-number not supported";
+    deviate not-supported;
+  }
+  deviation "/if:interfaces/if:interface/dot1x:pae/dot1x:common-port-name"{
+    description "dot1x pae common-port-name not supported";
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces/if:interface/dot1x:pae/dot1x:common-port-number"{
+    description "dot1x  pae common-port-numbernot supported";
+    deviate not-supported;
+  } 
+  deviation "/if:interfaces/if:interface/dot1x:pae/dot1x:virtual-port/dot1x:max"{
+    description "dot1x pae virtual-port/dot1x:max not supported";
+    deviate not-supported;
+  } 
+  deviation "/if:interfaces/if:interface/dot1x:pae/dot1x:virtual-port/dot1x:current"{
+    description "dot1x pae virtual-port current not supported";
+    deviate not-supported;
+  } 
+  deviation "/if:interfaces/if:interface/dot1x:pae/dot1x:virtual-port/dot1x:start"{
+    description "dot1x pae virtual-port start not supported";
+    deviate not-supported;
+  } 
+  deviation "/if:interfaces/if:interface/dot1x:pae/dot1x:virtual-port/dot1x:peer-address"{
+    description "dot1x pae virtual-port peer-address not supported";
+    deviate not-supported;
+  } 
+  deviation "/sys:system/dot1x:pae-system/dot1x:mka-version"{
+    description "dot1x pae-system mka-version not supported";
+    deviate not-supported;
+  } 
+  deviation "/sys:system/dot1x:pae-system/dot1x:pae"{
+    description "dot1x pae-system pae not supported";
+    deviate not-supported;
+  } 
+  deviation "/dot1x:nid-group/dot1x:pae-nid-group"{
+    description "dot1x pae-nid-group not supported";
+    deviate not-supported;
+  }
+  deviation "/sys:system/dot1x:pae-system/dot1x:eapol-protocol-version"{
+    description "dot1x pae-system eapol-protocol-version not supported";
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces/if:interface/dot1x:pae/dot1x:port-type"{
+    description "dot1x port-type not supported";
+    deviate not-supported;
+  }
+  deviation "/if:interfaces/if:interface/dot1x:pae/dot1x:port-capabilities/dot1x:virtual-ports"{
+    description "dot1x virtual-ports not supported";
+    deviate not-supported;
+  }
+  deviation "/if:interfaces/if:interface/dot1x:pae/dot1x:virtual-port"{
+    description "dot1x virtual-port not supported";
+    deviate not-supported;
+  }
+  deviation "/if:interfaces/if:interface/dot1x:pae/"
+          + "dot1x:authenticator/dot1x:retry-max" {
+    deviate replace {
+      type uint32 {
+        range "1..10";
+      }
+    }
+  }
+
+}

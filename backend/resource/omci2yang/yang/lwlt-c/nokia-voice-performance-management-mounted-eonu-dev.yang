@@ -1,0 +1,62 @@
+module nokia-voice-performance-management-mounted-eonu-dev {
+
+  namespace
+    "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+  + "nokia-voice-performance-management-mounted-eonu-dev";
+
+  prefix nokia-voice-pm-mounted-eonu-dev;
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import bbf-sip-voip-mounted {
+      prefix bbf-sip-voip-mounted;
+  }
+
+  import nokia-voice-performance-management-mounted {
+      prefix nokia-voice-pm-mounted;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA YANG module supporting
+     deviations on top of standard.";
+
+  revision 2022-07-19 {
+    description
+      "Initial revision.";
+    reference
+      "TBD";
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-interworking-nodes-state/bbf-sip-voip-mounted:pots-interworking/nokia-voice-pm-mounted:performance/nokia-voice-pm-mounted:intervals-15min/nokia-voice-pm-mounted:current/nokia-voice-pm-mounted:out-rtp-packets" {
+      description
+         "This deviation assures that nokia-voice-pm-mounted:out-rtp-packets leaf is not supported.";
+      deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-interworking-nodes-state/bbf-sip-voip-mounted:pots-interworking/nokia-voice-pm-mounted:performance/nokia-voice-pm-mounted:intervals-15min/nokia-voice-pm-mounted:current/nokia-voice-pm-mounted:in-rtp-packets" {
+      description
+         "This deviation assures that nokia-voice-pm-mounted:in-rtp-packets leaf is not supported.";
+      deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-interworking-nodes-state/bbf-sip-voip-mounted:pots-interworking/nokia-voice-pm-mounted:performance/nokia-voice-pm-mounted:intervals-15min/nokia-voice-pm-mounted:history/nokia-voice-pm-mounted:out-rtp-packets" {
+      description
+         "This deviation assures that nokia-voice-pm-mounted:out-rtp-packets leaf is not supported.";
+      deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-interworking-nodes-state/bbf-sip-voip-mounted:pots-interworking/nokia-voice-pm-mounted:performance/nokia-voice-pm-mounted:intervals-15min/nokia-voice-pm-mounted:history/nokia-voice-pm-mounted:in-rtp-packets" {
+      description
+         "This deviation assures that nokia-voice-pm-mounted:in-rtp-packets leaf is not supported.";
+      deviate not-supported;
+  }
+
+}

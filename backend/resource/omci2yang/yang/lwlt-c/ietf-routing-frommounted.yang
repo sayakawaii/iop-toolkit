@@ -1,0 +1,275 @@
+module ietf-routing-frommounted {
+
+  yang-version "1.1";
+
+  namespace "urn:ietf:params:xml:ns:yang:ietf-routing-frommounted";
+
+  prefix "rt-frommounted";
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+
+  import bbf-fiber-onu-emulated-mount {
+     prefix onu;
+  }
+
+
+  organization
+    "IETF NETMOD (NETCONF Data Modeling Language) Working Group";
+
+  contact
+    "WG Web:   <https://datatracker.ietf.org/wg/netmod/>
+     WG List:  <mailto:netmod@ietf.org>
+
+     WG Chair: Lou Berger
+               <mailto:lberger@labn.net>
+
+     WG Chair: Kent Watsen
+               <mailto:kwatsen@juniper.net>
+
+     Editor:   Ladislav Lhotka
+               <mailto:lhotka@nic.cz>
+
+     Editor:   Acee Lindem
+               <mailto:acee@cisco.com>";
+
+  description
+    "This YANG module defines essential components for the management
+     of a routing subsystem.
+
+     Copyright (c) 2016 IETF Trust and the persons identified as
+     authors of the code.  All rights reserved.
+
+     Redistribution and use in source and binary forms, with or
+     without modification, is permitted pursuant to, and subject to
+     the license terms contained in, the Simplified BSD License set
+     forth in Section 4.c of the IETF Trust's Legal Provisions
+     Relating to IETF Documents
+     (http://trustee.ietf.org/license-info).
+
+     The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL
+     NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'MAY', and
+     'OPTIONAL' in the module text are to be interpreted as described
+     in RFC 2119.
+
+     This version of this YANG module is part of RFC 8022;
+     see the RFC itself for full legal notices.";
+
+  revision 2016-11-04 {
+    description
+      "Initial revision.";
+    reference
+      "RFC 8022: A YANG Data Model for Routing Management";
+  }
+
+
+  /* Identities */
+
+  identity address-family {
+    description
+      "Base identity from which identities describing address
+       families are derived.";
+  }
+
+  identity ipv4 {
+    base address-family;
+    description
+      "This identity represents IPv4 address family.";
+  }
+
+  identity ipv6 {
+    base address-family;
+    description
+      "This identity represents IPv6 address family.";
+  }
+
+  identity control-plane-protocol {
+    description
+      "Base identity from which control-plane protocol identities are
+       derived.";
+  }
+
+  identity routing-protocol {
+    base control-plane-protocol;
+    description
+      "Identity from which Layer 3 routing protocol identities are
+       derived.";
+  }
+
+  identity direct {
+    base routing-protocol;
+    description
+      "Routing pseudo-protocol that provides routes to directly
+       connected networks.";
+  }
+
+  identity static {
+    base routing-protocol;
+    description
+      "Static routing pseudo-protocol.";
+  }
+
+  /* Type Definitions */
+
+  typedef route-preference {
+    type uint32;
+    description
+      "This type is used for route preferences.";
+  }
+
+  /* Groupings */
+
+  grouping router-id {
+    description
+      "This grouping provides router ID.";
+    leaf router-id {
+      type yang:dotted-quad;
+      description
+        "A 32-bit number in the form of a dotted quad that is used by
+         some routing protocols identifying a router.";
+      reference
+        "RFC 2328: OSPF Version 2.";
+    }
+  }
+
+  grouping special-next-hop {
+    description
+      "Grouping for special next hops.";
+    leaf special-next-hop {
+      type enumeration {
+        enum blackhole {
+          description
+            "Silently discard the packet.";
+        }
+        enum unreachable {
+          description
+            "Discard the packet and notify the sender with an error
+             message indicating that the destination host is
+             unreachable.";
+        }
+        enum prohibit {
+          description
+            "Discard the packet and notify the sender with an error
+             message indicating that the communication is
+             administratively prohibited.";
+        }
+        enum receive {
+          description
+            "The packet will be received by the local system.";
+        }
+      }
+      description
+        "Options for special next hops.";
+    }
+  }
+
+  grouping next-hop-content {
+    description
+      "Generic parameters of next hops in static routes.";
+    choice next-hop-options {
+      mandatory "true";
+      description
+        "Options for next hops in static routes.
+
+         It is expected that further cases will be added through
+         augments from other modules.";
+      case simple-next-hop {
+        description
+          "This case represents a simple next hop consisting of the
+           next-hop address and/or outgoing interface.
+
+           Modules for address families MUST augment this case with a
+           leaf containing a next-hop address of that address
+           family.";
+        leaf outgoing-interface {
+          type string;
+          description
+            "Name of the outgoing interface.";
+        }
+      }
+      case special-next-hop {
+        uses special-next-hop;
+      }
+      case next-hop-list {
+        container next-hop-list {
+          description
+            "Container for multiple next-hops.";
+          list next-hop {
+            key "index";
+            description
+              "An entry of a next-hop list.
+
+               Modules for address families MUST augment this list
+               with a leaf containing a next-hop address of that
+               address family.";
+            leaf index {
+              type string;
+              description
+                "A user-specified identifier utilized to uniquely
+                 reference the next-hop entry in the next-hop list.
+                 The value of this index has no semantic meaning
+                 other than for referencing the entry.";
+            }
+            leaf outgoing-interface {
+              type string;
+              description
+                "Name of the outgoing interface.";
+            }
+          }
+        }
+      }
+    }
+  }
+
+
+  /* Configuration Data */
+
+augment '/onu:onus/onu:onu/onu:fromroot' {
+  container routing {
+    presence "routing";
+    description
+      "Configuration parameters for the routing subsystem.";
+    uses router-id {
+      description
+        "Configuration of the global router ID.  Routing protocols
+         that use router ID can use this parameter or override it
+         with another value.";
+    }
+    container control-plane-protocols {
+      presence "control-plane-protocols";
+      description
+        "Configuration of control-plane protocol instances.";
+      list control-plane-protocol {
+        key "type name";
+        description
+          "Each entry contains configuration of a control-plane
+           protocol instance.";
+        leaf type {
+          type identityref {
+            base control-plane-protocol;
+          }
+          description
+            "Type of the control-plane protocol - an identity derived
+             from the 'control-plane-protocol' base identity.";
+        }
+        leaf name {
+          type string;
+          description
+            "An arbitrary name of the control-plane protocol
+             instance.";
+        }
+        container static-routes {
+          presence "static-routes";
+          description
+            "Configuration of the 'static' pseudo-protocol.
+
+             Address-family-specific modules augment this node with
+             their lists of routes.";
+        }
+      }
+    }
+  }
+ }
+}

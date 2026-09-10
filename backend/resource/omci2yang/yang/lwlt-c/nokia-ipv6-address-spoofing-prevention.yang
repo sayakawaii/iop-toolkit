@@ -1,0 +1,666 @@
+module nokia-ipv6-address-spoofing-prevention {
+  yang-version 1.1;
+  namespace "uri:http://www.nokia.com/Fixed-Networks/BBA/yang/"
+          + "nokia-ipv6-address-spoofing-prevention";
+
+  prefix nokia-ipv6-sppr;
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import ietf-inet-types {
+    prefix inet;
+  }
+
+  import ietf-ip {
+    prefix ip;
+  }
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  import bbf-if-type {
+    prefix bbfift;
+  }
+
+  import ietf-netconf-acm {
+    prefix nacm;
+  }
+  import bbf-l2-forwarding {
+    prefix bbf-l2-fwd;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG definitions for
+     supporting Nokia specific requirements as applicable to its
+     access network equipment.
+
+     Specifically, this module augments the interface model with data
+     specific for IPv6 address spoofing prevention.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2018, Nokia. All Rights Reserved.";
+
+  revision 2024-02-02 {
+    description
+      "updated units for lease-time";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2023-01-12 {
+    description
+      "updated prefix-length description";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2021-10-14 {
+    description
+      "remove the usage check on VLAN sub-interface";
+    reference
+      "Nokia specific";
+  }
+  
+  revision 2021-08-03 {
+    description
+      "the word ND is replaced with nd and srcmac is changed to source-mac in the leafs";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2019-10-23 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: yyyy-mm-dd.";
+    reference
+      "TR-383: Common YANG Modules
+               <https://www.broadband-forum.org/technical/download/
+                        TR-383.pdf>";
+  }
+
+  feature static-ipv6-addresses {
+    description
+      "Supports configuration of static IPv6 global unicast
+       addresses from the IPv6 stateless.";
+  }
+
+  feature learn-addresses-from-icmpv6 {
+    description
+      "Learn IPv6 global unicast addresses from the IPv6 stateless
+       Neighbour Discovery protocol, Router Advertisment messages.";
+  }
+
+  container ipv6-antispoof-prefix-mode {
+    description
+        "Determines the prefix length for IPv6 address that should be used
+         across all the VSI's";
+
+   leaf prefix-mode {
+        type enumeration {
+            enum "allow-prefix-length-64" {
+                description
+                   "User should configure only IPv6 addresses with prefix-length /64.
+                    If prefix-length more than 64 is configured, prefix length /64
+                    will be considered by default in this mode. This condition applies
+                    for dynamically learnt IPv6 Sessions from DHCPv6 Relay.";
+            }
+
+            enum "allow-prefix-length-128" {
+                description
+                   "User can configure IPv6 Addresses with prefix-length upto /128.";
+            }
+        }
+        default "allow-prefix-length-64";
+        description
+            "Identifies the mode in which IPv6 addresses should be configured in the System.";
+    }
+  }
+
+  augment '/if:interfaces/if:interface' {
+    when 'derived-from-or-self(if:type, "bbfift:vlan-sub-interface")' {
+      description
+        "Applies only to VLAN sub-interfaces.";
+    }
+    description
+      "This augments configuration data for VLAN sub-interfaces.";
+
+    container ipv6-security {
+      presence
+        "Presence of this container indicates IPv6 anti-spoofing is supported on
+         this interface.";
+
+      description
+        "This container provides configuration data that assures there
+         is knowledge on the interface on the IPv6 addresses used by
+         the device connected to the interface.";
+
+      leaf prevent-ipv6-address-spoofing {
+        type boolean;
+        default "false";
+        description
+          "When 'true', the system will perform IPv6 address security
+           checks on the VLAN sub-interface. This means that checks
+           are performed on packets received or to be send on a VLAN
+           sub-interface. To do these checks it needs to know which
+           IPv6 addresses are assigned to the VLAN sub-interface. How
+           addresses get assigned is subject to configration defined
+           in the container ipv6-addresses.
+
+           The security checks performed are:
+           - applicable to all IPv6 packets that contain a global
+             unicast address as source IP address.
+           - not applicable to IPv6 packets that
+             contain a link-local address as source IP address, i.e.
+             not applicable to the source IP address of ICMPv6 and
+             DHCPv6 packets.
+           - Only accept incoming IPv6 packets when the global unicast
+             source address is assigned to the interface.
+           Packets with an IPv6 address not passing the test are
+           discarded.
+
+           When 'false', no checks on the IPv6 address are
+           performed.";
+
+        reference
+          "TR-177i1 - R22";
+      }
+
+      leaf learn-addresses-from-dhcpv6 {
+        type empty;
+        must '../nokia-ipv6-sppr:prevent-ipv6-address-spoofing = '
+            +'"true"' {
+          error-message "Before enable learn-addresses-from-dhcp,prevent-ipv6-address-spoofing should be enabled;
+                      Before disable prevent-ipv6-address-spoofing ,learn-addresses-from-dhcp should be disabled";
+        }
+
+        description
+          "When set, the system will learn IPv6 addresses from the
+           DHCPv6 messages passing the VLAN sub-interface, and assign
+           them to the VLAN sub-interface.";
+
+        reference
+          "TR-177i1 - R121";
+      }
+
+      leaf learn-addresses-from-icmpv6 {
+        if-feature learn-addresses-from-icmpv6;
+        type empty;
+        must '../nokia-ipv6-sppr:prevent-ipv6-address-spoofing = '
+            +'"true"' {
+          error-message "Before enable learn-addresses-from-icmpv6,prevent-ipv6-address-spoofing should be enabled;
+                      Before disable prevent-ipv6-address-spoofing ,learn-addresses-from-icmpv6 should be disabled";
+        }
+        description
+          "When set, the system will learn IPv6 addresses from the
+           IPv6 stateless Neighbour Discovery protocol, Router
+           Advertisment messages passing the VLAN sub-interface.";
+
+        reference
+          "TR-177i1 - R121";
+      }
+
+      list static-ipv6-address {
+        if-feature static-ipv6-addresses;
+        key "ip";
+        description
+          "The list of IPv6 addresses statically configured on the
+           VLAN sub-interface.";
+        reference
+          "TR-178i1 - R158";
+
+        leaf ip {
+          type inet:ipv6-address-no-zone;
+          description
+            "An IPv6 address assigned to the interface.";
+        }	
+        		
+        leaf prefix-length {
+          type uint8 {
+            range "49..128";
+          }
+	      must "(((/nokia-ipv6-sppr:ipv6-antispoof-prefix-mode/prefix-mode = 'allow-prefix-length-64') and ((. >= 49) and (. <= 64)))
+		  or ((/nokia-ipv6-sppr:ipv6-antispoof-prefix-mode/prefix-mode = 'allow-prefix-length-128') and (. <= 128)))" {
+	        error-message "Configure prefix-length based on the prefix-mode";
+          }
+          mandatory true;
+          
+          description
+            "The length of the prefix identifying the subnet.
+
+             When a prefix-length is configured then the spoofing
+             prevention applies to all the IP addresses identified by
+             the IP address identified by the leaf ip, combined with
+             the prefix-length.When prefix-mode is allow-prefix-length-64,
+	     allowed prefix-length range is 49..64 and when prefix-mode is
+	     allow-prefix-length-128, allowed prefix-length range is 49..128.";
+        }
+      }
+      leaf max-address {
+        type union {
+          type enumeration {
+            enum "no-limit" {
+              description
+                "Used to indicate that all profiles are allowed.";
+            }
+          }
+          type uint32;
+        }
+        
+        must 'current() = "no-limit"'
+            + 'or ../nokia-ipv6-sppr:prevent-ipv6-address-spoofing = '
+            +'"true"' {
+          error-message "Before create max-address,prevent-ipv6-address-spoofing should be enabled;
+                        Before disable prevent-ipv6-address-spoofing, max-address should be deleted";
+        }
+        default "no-limit";
+        description
+          "Specifies the maximum number of IPv6 address (static and dynamic)
+           allowed for VLAN sub-interfaces where the default value no-limit
+           refers that there is no restriction";
+      }
+    }
+  }
+
+  augment '/if:interfaces' {
+    description
+      "This augment adds IPv6 spoofing prevention configuration
+       data.";
+
+    container ipv6-security-statistics {
+      presence
+        "Presence of this container indicates IPv6 anti-spoofing statisitics is supported on
+         this interface.";
+      description
+         "This container provides the configuration data/yang for
+          the IPv6 address security statistics.";
+
+      list interface {
+        key "name";
+
+        description
+          "The list of interfaces on the device for which IPv6
+           security check statistics are collected.";
+
+        leaf name {
+          type if:interface-ref;
+
+          description
+            "The name of a VLAN sub-interface where prevent IPv6
+             address antispoofing is enabled.";
+        }
+
+      }
+    }
+  }
+
+  augment '/if:interfaces-state/if:interface' {
+    when
+      'derived-from-or-self(if:type, "bbfift:vlan-sub-interface")' {
+      description
+        "Applies only to VLAN sub-interfaces.";
+    }
+
+    description
+      "This augment adds IPv6 spoofing prevention state data for VLAN
+       sub-interfaces.";
+
+    container ipv6-security {
+
+      description
+        "This container provides state data for IPv6 address assigned
+         to VLAN sub-interfaces. Addresses can be assigned
+         dynamically, by learning dynamically from protocl messages,
+         or they can be statically configured.";
+
+      list address {
+        key "ip";
+        description
+          "The list of IPv6 addresses assigned to the interface.";
+
+        leaf ip {
+          type inet:ipv6-address-no-zone;
+          description
+            "An IPv6 address assigned to the interface.";
+        }
+
+        leaf prefix-length {
+          type uint8 {
+            range "49..128";
+          }
+          description
+            "The length of the prefix identifying the subnet.";
+        }
+
+        leaf ipv6-address-origin {
+          type ip:ip-address-origin;
+          description
+            "The origin of this address.";
+        }
+
+        leaf lease-time {
+          when '../ipv6-address-origin = "dhcp" or '
+             + '../ipv6-address-origin = "link-layer"' {
+            description
+              "Applies when the origin of the IP address is DHCPv6 or
+               the IPv6 stateless Neighbour discovery protocol. In
+               other cases the IP address does not expire.";
+          }
+          type uint32;
+          units seconds;
+          description
+            "Reports the latest lease time, that is assigned to the IP
+             address.";
+        }
+
+        leaf ipv6-address-expiry-time {
+          when '../ipv6-address-origin = "dhcp" or '
+             + '../ipv6-address-origin = "link-layer"' {
+            description
+              "Applies when the origin of the IP address is DHCP or
+               the IPv6 stateless Neighbour Discovery protocol. In
+               other cases the IP address does not expire.";
+          }
+          type yang:date-and-time;
+          description
+            "The time the IP address will expire.";
+        }
+
+        leaf link-layer-address {
+          when '../ipv6-address-origin = "dhcp"' {
+            description
+              "Applies when the origin of the IPv6 address is DHCPv6.";
+          }
+          type yang:mac-address;
+          description
+            "Provides the link-layer-address (i.e. MAC address) used to request
+             this IPv6 address.";
+        }
+      }	
+
+      action remove-dhcpv6-learned-ip-addresses {
+        nacm:default-deny-all;
+        description
+          "When the action is received, the system will remove all the
+           IPv6 addresses learned dynamically from DHCPv6 on this
+           interface.
+           IPv6 addresses or prefix statically assigned to a particular
+           interface must be removed by deleting the static
+           configuration.";
+      }
+
+      action remove-icmpv6-learned-ip-addresses {
+        if-feature learn-addresses-from-icmpv6;
+        nacm:default-deny-all;
+        description
+          "When the action is received, the system will remove all the
+          IPv6 addresses learned dynamically from ICMPv6 on this
+          interface.";
+      }
+
+      notification dhcpv6-address-assignment-inconsistency {
+        description
+          "A notification that there is an inconsistency with the IPv6
+           addresses learned via DHCPv6.";
+
+        leaf ip {
+          type inet:ipv6-address-no-zone;
+          mandatory true;
+          description
+            "An IPv6 address that is assigned through DHCPv6, but that
+             is not learned because this address assignment is
+             inconsistent with other address assignements. E.g. is
+             inconsistent with the configuration of a static address
+             / prefix.";
+        }
+        leaf forwarder {
+          type leafref {
+             path '/bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarders'
+                  +'/bbf-l2-fwd:forwarder/bbf-l2-fwd:name';
+          }
+          mandatory true;
+          description
+            "The forwarder for which the event is reported.";
+        }
+        leaf reason {
+          type string;
+          mandatory true;
+
+          description
+           "The reason for dhcpv6-address-assignment inconsistency.
+            Scenarios :
+            -IPv6 address allocated by the DHCPv6 server for a new user
+             conflicts with one of the existing DHCPv6 user IPv6 address.
+            -IPv6 address allocated by the DHCPv6 server for a new user
+             not learnt by the system due to system max dimensioning
+             limit is reached.
+            -IPv6 address allocated by the DHCP server for a new user
+             conflicts with one of the configured static user IPv6
+             addresses/prefixes.
+            -IPv6 prefix advertised by the RA PIO for a new user
+             conflicts with one of the configured static user IPv6
+             addresses/prefixes
+            -IPv6 address/prefix configured for a static user conflicts
+             with one or more existing DHCPv6 user IPv6 addresses.
+            -IPv6 address/prefix configured for a static user conflicts
+             with one or more existing RA IPv6 prefixes
+            -The dynamic IPv6 addresses/prefixes which are learnt already
+             preempted to make room for the new static IPv6 address/prefix
+             configuration.
+            -The number of IPv6 addresses/prefixes has reached the value of
+             configured max-address for that VSI.";
+        }
+      }
+    }
+  }
+
+  augment '/if:interfaces-state' {
+    description
+      "This augment adds IPv6 spoofing prevention state data.";
+
+    container ipv6-security-statistics {
+      description
+         "This container provides the state data
+          for the IPv6 address security statistics.";
+
+      list interface {
+        key "name";
+
+        description
+          "The list of interfaces on the device for which IPv6
+           security check statistics are collected.";
+
+        leaf name {
+          type if:interface-ref;
+
+          must
+            "derived-from-or-self(
+             /if:interfaces/if:interface[if:name = current()]
+             /if:type,'bbfift:vlan-sub-interface') ";
+
+          description
+            "The name of a VLAN sub-interface.";
+        }
+
+        action reset {
+           nacm:default-deny-all; // To be confirmed.
+           description
+             "Resets the IPv6 address security statistics.";
+           reference
+             "None.";
+        }
+
+        container ipv6-statistics {
+          description
+             "This container provides the state data
+              for the IPv6 address security statistics.";
+
+          leaf in-ipv6-packet-discards {
+            type uint64;
+            description
+              "The number of IPv6 packets received on the interface that
+               are discarded because of the source IP address of the
+               incoming packet is not assigned to the interface.
+
+               Discontinuities in the value of this counter can occur
+               at re-initialization of the management system, and at
+               other times as indicated by the value of 
+               'interfaces-state/interfaces/statistics/
+               discontinuity-time'.";
+          }
+	  
+	  leaf in-nd-source-mac-source-link-layer-address-mismatch-discards {
+	    type uint64;
+	    description
+	      "The number of ND packets received on the interface that are 
+	       discarded because the MAC address in the Source Link-Layer 
+	       Address option is not the same as Ethernet source MAC address.
+
+	       Discontinuities in the value of this counter can occur
+	       at re-initialization of the management system, and at
+	       other times as indicated by the value of
+	       'interfaces-state/interfaces/statistics/
+	       discontinuity-time'.";
+	  }
+
+	  leaf in-nd-source-mac-target-link-layer-address-mismatch-discards {
+	    type uint64;
+	    description
+	      "The number of ND packets received in the interface that are discarded 
+	       because the MAC address in the Target Link-Layer Address option is
+	       not the same as Ethernet source MAC address.
+
+	       Discontinuities in the value of this counter can occur
+	       at re-initialization of the management system, and at
+	       other times as indicated by the value of
+	       'interfaces-state/interfaces/statistics/
+	       discontinuity-time'.";
+	  }
+	  leaf in-nd-mac-mismatch-discards {
+	    type uint64;
+	    description
+	      "The number of ND packets received on the interface that are
+	      discarded because the MAC address in the Source Link-layer Address
+	      option or Target Link-layer Address option does not match any MAC
+	      address learned on this VSI.
+
+              Discontinuities in the value of this counter can occur
+              at re-initialization of the management system, and at
+              other times as indicated by the value of
+              'interfaces-state/interfaces/statistics/
+              discontinuity-time'.";
+	  }
+
+	  leaf in-nd-target-address-discards {
+	    type uint64;
+	    description
+	      "The number of ND packets received on the interface that are
+	      discarded because the IPv6 address in the Target Address field is
+	      not statically configured or dynamically learnt on the VSI.
+
+              Discontinuities in the value of this counter can occur
+              at re-initialization of the management system, and at
+              other times as indicated by the value of
+              'interfaces-state/interfaces/statistics/
+              discontinuity-time'.";
+	  }
+
+	  leaf out-neighbor-solicit-packet-forwards {
+	    type uint64;
+	    description
+	      "The number of downstream multicast and unicast Neighbor Solicit packets that
+	      are sent out of this interface after selecting the interface using
+	      the Neighbor Discovery relay function.
+
+              Discontinuities in the value of this counter can occur
+              at re-initialization of the management system, and at
+              other times as indicated by the value of
+              'interfaces-state/interfaces/statistics/
+              discontinuity-time'.";
+	  }
+        }
+      }
+    }
+  }
+
+  container ipv6-antispoofing-system {
+    presence
+     "Presence of this container indicates the support of IPv6 feature handling objects";
+    description
+      "Supports IPv6 Antispoofing feature handling objects.";
+
+    leaf clear-dhcp-learned-ipv6-addresses-on-operdown {
+      type boolean;
+      default "false";
+      description
+        "Enable the removal of dynamic learned IPv6 addresses on a VLAN sub-interface,
+         when its corresponding lower layer interface is operational down.";
+    }
+
+    leaf clear-dhcp-learned-ipv6-addresses-on-admindown {
+      type boolean;
+      default "true";
+      description
+        "Enable the removal of dynamic learned IPv6 addresses on a VLAN sub-interface,
+        when the VLAN sub-interface or its corresponding lower layer interface is admin down.";
+    }
+
+    leaf tca-in-ipv6-packet-discards {
+      type uint32 {
+        range "0..1000";
+      }
+      default 10;
+      description
+        "Specifies a threshold value of in-ipv6-packet-discards. When packets
+         with illegal source IP and/or source MAC address exceed the threshold
+         value within certain interval, a TCA alarm will be raised";
+
+    }
+  }
+}
+

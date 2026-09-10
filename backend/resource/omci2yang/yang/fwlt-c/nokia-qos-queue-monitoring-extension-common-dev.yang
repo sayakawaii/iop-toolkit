@@ -1,0 +1,89 @@
+module nokia-qos-queue-monitoring-extension-common-dev {
+
+  namespace
+     "urn:bbf:yang:nokia-qos-queue-monitoring-extension-common-dev";
+
+  prefix nokia-qos-qu-mon-ext-qos-adv-sched-dev;
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import bbf-qos-traffic-mngt {
+    prefix bbf-qos-tm;
+  }
+
+  import bbf-qos-enhanced-scheduling {
+    prefix bbf-qos-sched;
+  }
+
+  import nokia-qos-queue-monitoring-extension {
+    prefix nokia-queue-mon-ext;
+  }
+
+  import nokia-qos-queue-monitoring{
+    prefix nokia-queue-mon;
+  }
+
+  import nokia-yang-types {
+    prefix "nok-typ";
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA NOKIA/nokia-qos-queue-monitoring-extension YANG module
+     supporting deviations on top of standard.";
+
+  /* revision */
+
+  revision 2024-03-22 {
+    description
+      "";
+    reference
+      "TBD";
+  }
+
+
+  revision 2022-12-12 {
+    description
+      "Not supported deviation is added for discontinuity-time leaf.";
+    reference
+      "TBD";
+  }
+
+  revision 2019-04-10 {
+    description
+      "Move to category qos-advanced-scheduler.";
+    reference
+      "TBD";
+  }
+
+  /************************************************************/
+  /*  */
+  /************************************************************/
+  /* keep enable-performance and enable-statistics same value */
+  deviation "/if:interfaces/if:interface/bbf-qos-tm:tm-root/"
+       + "bbf-qos-tm:children-type/bbf-qos-sched:scheduler-node/bbf-qos-sched:scheduler-node/nokia-queue-mon-ext:queue-monitoring" {
+    deviate add{
+      must "current()/nokia-queue-mon-ext:enable-performance = "
+       + "current()/nokia-queue-mon-ext:enable-statistics" {
+        error-message "enable-performance must be same with enable-statistics";
+      }
+    }
+  }  
+
+  deviation "/if:interfaces-state/if:interface/nokia-queue-mon:tm-root/nokia-queue-mon:children-type/nokia-queue-mon-ext:scheduler-node/nokia-queue-mon-ext:scheduler-node/nokia-queue-mon-ext:discontinuity-time" {
+    deviate not-supported;
+  }
+  
+  deviation "/if:interfaces-state/if:interface/nokia-queue-mon:tm-root/nokia-queue-mon:children-type/nokia-queue-mon-ext:scheduler-node/nokia-queue-mon-ext:scheduler-node/nokia-queue-mon-ext:name" {
+      deviate replace {
+      type nok-typ:nokia-string-ascii100;
+    }
+  }
+}

@@ -1,0 +1,339 @@
+module nokia-sdan-onu-xpon-interfaces-common-mounted {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/nokia-sdan-onu-xpon-interfaces-common-mounted";
+  prefix nokia-sdan-onuxpon-ifc-mounted;
+
+  organization
+    "Nokia";
+  contact
+    "Comments or questions about this Nokia YANG module should be
+    directed to <mailto:isam.yang@nokia.com>.";
+  description
+    "This module contains a collection of YANG definitions for
+    supporting Nokia specific requirements as applicable to its
+    access network equipment.
+
+    Specifically, this module contains a collection of YANG definitions
+    to provide sufficient troubleshooting information for the configuration
+    errors occurred during configuration transactions.
+
+    This specification is published by Nokia under Non-Disclosure
+    Agreement(s) (NDA) with specific parties and has to be considered
+    as Confidential Information as defined in such NDA. Nokia
+    reserves the right to revise this document for any reason,
+    including but not limited to conformity with standards
+    promulgated by various agencies, utilisation of advances in the
+    state of the technical areas, or the reflection of changes in the
+    design of any equipment, techniques, or procedures described or
+    referred to herein.
+
+    The product specifications and other technical or performance
+    information contained herein are subject to change without
+    notice. Updates of this document will be issued under the above
+    NDA's.
+
+    Nokia makes no representation or warranty, expressed or implied,
+    with respect to the sufficiency, accuracy, or utility of any
+    information or opinion contained herein. Nokia expressly advises
+    that any use of for any purpose or reliance upon this technical
+    reference is at the risk of the user and that Nokia shall not be
+    liable for any damage or injury incurred by any person arising
+    out of the sufficiency, accuracy, or utility of any information
+    or opinion contained herein.
+
+    This document is not to be construed as a suggestion to any
+    manufacturer to modify or change any of its products, nor does
+    this document represent any commitment by Nokia to sell or
+    purchase any product. Nothing contained herein shall be construed
+    as conferring by implication, estoppel, or otherwise any license
+    or right under any patent, whether or not the use of any
+    information herein necessarily employs an invention of any
+    existing or later issued patent.
+
+    Nokia reserves the right not to offer any or all of these
+    products and to withdraw any or all of them at any future time.
+
+    Copyright (C) 2022, Nokia. All Rights Reserved.";
+
+  
+  revision 2026-06-22 {
+    description
+      "Add new group onu-ani-line-rate-buffering-capabilities and onu-ani-watchdog-capabilities.";
+    reference
+      "Nokia specific EPIC BBN-326129";
+  }
+
+  revision 2024-12-10 {
+    description
+      "Add new group 'onu-phy-resources-capacities'.";
+    reference "Nokia specific";
+  }
+  
+  revision 2024-04-12 {
+    description
+      "Initial revision.";
+    reference "Nokia specific";
+  }
+
+  grouping onu-queue-status-report {
+    description
+      "xPON state data from the Optical Network Unit (ONU)
+      physical device. This data is fetched from the ONU physical
+      device, when present.";
+    leaf onu-queue-status-report {
+      type boolean;
+      description
+        "This Boolean attribute indicates the ONU's capability to
+        report its queue status for DBA, by means of OMCI 'SR
+        indication' attribute in ANI-G ME (ref. G.988 Clause
+        9.2.1). The value true means that status reporting is
+        available for all T-CONTs that are associated with the
+        ANI.";
+    reference
+        "G.988: 9.2.1 ANI-G.";
+    }
+  }
+
+  identity encryption-mode-base {
+    description
+      "This identity is used to denote different encryption modes.";
+  }
+
+  identity encryption-mode-unrecognized {
+    base encryption-mode-base;
+    description
+      "This identity is used to denote an encryption mode that
+      is not recognized by the OLT.";
+  }
+
+  identity encryption-mode-aes-128 {
+    base encryption-mode-base;
+    description
+      "This identity is used to denote the encryption mode is AES-128.";
+  }
+
+  identity encryption-mode-aes-256 {
+    base encryption-mode-base;
+    description
+      "This identity is used to denote the encryption mode is AES-256.";
+  }
+
+  identity encryption-mode-camellia-128 {
+    base encryption-mode-base;
+    description
+      "This identity is used to denote the encryption mode is camellia-128.";
+  }
+
+  identity encryption-mode-camellia-256 {
+    base encryption-mode-base;
+    description
+      "This identity is used to denote the encryption mode is camellia-256.";
+  }
+
+  identity encryption-mode-sm4 {
+    base encryption-mode-base;
+    description
+      "This identity is used to denote the encryption mode is SM4.";
+  }
+  grouping onu-security-report {
+    description
+      "xPON state data from the Optical Network Unit (ONU)
+      physical device. This data includes security capability which is
+      fetched from the ONU physical device, and also the security mode
+      which is set by Onu Engine and used by OLT&ONU.";
+
+    leaf-list onu-encryption-capability {
+      type identityref {
+        base encryption-mode-base;
+      }
+      description
+        "The encryption mode(s) that the ONU is capable
+        to apply. Ref. ITU-T G.988, Clause 9.1.2,
+        ONU2-G ME, 'security capability' attribute.";
+      reference
+        "ITU-T G.988 clause 9.1.2 ONU2-G - Security capability attribute";
+    }
+
+    leaf actual-onu-encryption-mode {
+      type identityref {
+        base encryption-mode-base;
+      }
+      description
+        "The actual encryption mode selected for the ONU.
+        Ref. ITU-T G.988, Clause 9.1.2, ONU2-G ME,
+        'security mode' attribute. All secure GEM ports
+        in an ONU must use the same security mode at any
+        given time. Note however that this data node does
+        not imply that all channels (e.g. GEM ports or OMCI
+        channel) are encrypted; that process is negotiated
+        per GEM port at the PLOAM layer. It only signifies
+        the security mode to be used on the GEM ports that
+        the OLT may choose to encrypt. ";
+      reference
+        "ITU-T G.988 clause ONU2-G - Security mode attribute";
+    }
+  }
+
+  grouping onu-phy-resources-capacities {
+    description
+      "Report physical resources capacities from the Optical Network Unit (ONU)
+      physical device. This data is fetched from the ONU physical
+      device, when present.";
+    leaf total-t-cont-number-capacity {
+      type uint16;
+      description
+        "This attribute indicates the total number of T-CONTs
+        that can be supported on this ANI, by means of OMCI 'Total
+        T-CONT number' attribute in ANI-G ME (ref. G.988 Clause
+        9.2.1).";
+      reference
+        "G.988: 9.2.1 ANI-G.";
+    }
+
+    leaf total-gem-port-id-number-capacity {
+      type uint16;
+      description
+        "This attribute reports the total number of GEM port-IDs
+        supported by the ONU, by means of OMCI 'Total GEM port-ID number
+        number' attribute in ONU2-G ME (ref. G.988 Clause
+        9.1.2).";
+      reference
+        "G.988: 9.1.2 ONU2-G.";
+    }
+  }
+
+  grouping onu-ani-line-rate-buffering-capabilities {
+    description
+      "Report Ani line rate buffering capabilities from the Optical Network Unit (ONU)
+      physical device. It defines the sustained MAC client interface rate and the rate
+      adaptation buffer (RAB) size that the ONU supports.";
+    leaf sustained-downstream-mac-client-rate {
+      type uint16;
+      description
+        "This attribute specifies the sustained downstream MAC client rate this ONU is
+        capable to receive, in 10 Mbit/s units.";
+      reference
+        "G.988: 9.1.19 ONU4-G.";
+    }
+
+    leaf downstream-rab-size {
+      type uint16;
+      description
+        "This attribute indicates the size of the downstream rate adaption buffer,
+        expressed in 1024-byte block. A minimum size of 128 blocks is recommended.";
+      reference
+        "G.988: 9.1.19 ONU4-G.";
+    }
+
+    leaf sustained-upstream-mac-client-rate {
+      type uint16;
+      description
+        "This attribute specifies the sustained upstream MAC client rate this 
+        ONU is capable to transmit, in 10 Mbit/s units.";
+      reference
+        "G.988: 9.1.19 ONU4-G.";
+    }
+
+    leaf upstream-rab-size {
+      type uint16;
+      description
+        "This attribute indicates the size of the upstream rate adaptation buffer, 
+        expressed in 1024-byte blocks. A minimum size of 128 blocks is recommended.";
+      reference
+        "G.988: 9.1.19 ONU4-G.";
+    }
+  }
+ 
+  grouping onu-ani-watchdog-capabilities {
+    description
+      "Watchdog configuration data managed entity state.
+       Communicates the ONU's watchdog capabilities applicable
+       for rogue behavior prevention. Autonomously instantiated
+       by the ONU upon instantiation of ANI-G ME.";
+    reference
+      "Verizon OpenOMCI V2.4, section 7.1.4";
+
+    leaf upstream-transmission-timing-drift-capability {
+      type uint32;
+      description
+        "Upstream transmission timing drift self-monitoring
+           capability. Refers to the timing drift of the upstream
+           transmission, expressed as an absolute value measured in
+           bit periods with respect to the nominal upstream line rate
+           of 2.48832 Gbit/s, regardless of the actual upstream line
+           rate of the ONU. The first two bytes contain the minimum
+           monitored value (zero); the second two bytes contain the
+           maximum monitored value. The value of 0xFFFFFFFF indicates
+           that the self-monitoring capability is not supported.";
+     }
+
+     leaf upstream-transmission-wavelength-drift-capability {
+       type uint32;
+       description
+          "Upstream transmission wavelength drift self-monitoring
+           capability. Refers to the frequency drift of the upstream
+           transmission, expressed as an absolute value measured in
+           units of 1 GHz. The first two bytes contain the minimum
+           monitored value (zero); the second two bytes contain the
+           maximum monitored value. The value of 0xFFFFFFFF indicates
+           that the self-monitoring capability is not supported.";
+      }
+
+      leaf mean-in-channel-optical-power-capability {
+        type uint32;
+        description
+          "Mean in-channel optical power self-monitoring capability.
+           Refers to the mean launch optical power of burst-mode
+           transmitter in the operating upstream wavelength channel,
+           expressed as 2's complement in units of 0.1 dBm. The first
+           two bytes contain the minimum monitored value; the second
+           two bytes contain the maximum monitored value. The value of
+           0xFFFFFFFF indicates that the self-monitoring capability is
+           not supported.";
+       }
+
+       leaf mean-out-of-channel-optical-power-spectral-density-capability {
+         type uint32;
+         description
+          "Mean out-of-channel optical power spectral density (OOC-PSD)
+           self-monitoring capability. Refers to the OOC-PSD with
+           respect to the current operating upstream wavelength channel
+           and the spectral averaging interval of 15 GHz, expressed as
+           a positive value in units of 0.1 dBm. The first two bytes
+           contain the minimum monitored value; the second two bytes
+           contain the maximum monitored value. The value of 0xFFFFFFFF
+           indicates that the self-monitoring capability is not
+           supported.";
+       }
+
+       leaf mean-optical-power-spectral-density-when-not-enabled-capability {
+         type uint32;
+         description
+           "Mean optical power spectral density 'when not enabled'
+           (WNE-PSD) self-monitoring capability. Refers to the optical
+           power spectral density when not enabled with respect to the
+           spectral averaging interval of 15 GHz, expressed as a
+           positive value in units of 0.1 dBm. The first two bytes
+           contain the minimum monitored value; the second two bytes
+           contain the maximum monitored value. The value of 0xFFFFFFFF
+           indicates that the self-monitoring capability is not
+           supported.";
+      }
+
+      leaf dying-gasp-enabled {
+        type boolean;
+        description
+          "Indicates whether the ONU currently supports the Dying Gasp
+           function. A stand-alone ONU supporting Dying Gasp by design
+           statically sets this to true. A stand-alone ONU unable to
+           support Dying Gasp by design statically sets this to false.
+           A pluggable ONU determines whether the host supports the
+           Dying Gasp function and conveys an indication using this
+           attribute. Upon instantiation, an SFP+ ONU initially sets
+           this to false, then changes to true once voltage is detected
+           on pin 7 of the host interface.";
+        reference
+          "Verizon OpenOMCI V2.4, section 7.1.4";
+      }
+  }
+}

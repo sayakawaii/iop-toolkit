@@ -1,0 +1,595 @@
+//This module corresponds to Nokia AAA management
+module nokia-aaa {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-aaa";
+
+  prefix nokia-aaa;
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  import ietf-inet-types {
+    prefix inet;
+  }
+
+  import iana-crypt-hash {
+    prefix ianach;
+  }
+
+  import ietf-crypto-types {
+    prefix ct;
+    reference
+      "RFC CCCC: Common YANG Data Types for Cryptography";
+  }
+
+  import ietf-ssh-server {
+    prefix sshs;
+    reference "";
+  }
+
+  import nokia-sdan-ext-aaa-aug {
+    prefix nokia-ext-aaa;
+  }
+
+  import ietf-system {
+    prefix sys;
+  }
+
+  organization
+    "AAAE process - Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+    directed to <mailto:isam.yang@nokia.com>.";
+
+
+
+  description
+    "This module is the new exposed yang for the hidden tailf-aaa module
+    contains new nodes according to Nokia specific requirements for
+    management of AAA applicable to its access network equipment.
+
+    This specification is published by Nokia under Non-Disclosure
+    Agreement(s) (NDA) with specific parties and has to be considered
+    as Confidential Information as defined in such NDA. Nokia
+    reserves the right to revise this document for any reason,
+    including but not limited to conformity with standards
+    promulgated by various agencies, utilisation of advances in the
+    state of the technical areas, or the reflection of changes in the
+    design of any equipment, techniques, or procedures described or
+    referred to herein.
+
+    The product specifications and other technical or performance
+    information contained herein are subject to change without
+    notice. Updates of this document will be issued under the above
+    NDA's.
+
+    Nokia makes no representation or warranty, expressed or implied,
+    with respect to the sufficiency, accuracy, or utility of any
+    information or opinion contained herein. Nokia expressly advises
+    that any use of for any purpose or reliance upon this technical
+    reference is at the risk of the user and that Nokia shall not be
+    liable for any damage or injury incurred by any person arising
+    out of the sufficiency, accuracy, or utility of any information
+    or opinion contained herein.
+
+    This document is not to be construed as a suggestion to any
+    manufacturer to modify or change any of its products, nor does
+    this document represent any commitment by Nokia to sell or
+    purchase any product. Nothing contained herein shall be construed
+    as conferring by implication, estoppel, or otherwise any license
+    or right under any patent, whether or not the use of any
+    information herein necessarily employs an invention of any
+    existing or later issued patent.
+
+    Nokia reserves the right not  to offer any or all of these
+    products and to withdraw any or all of them at any future time.
+
+    Copyright (C) 2020, Nokia. All Rights Reserved.";
+
+  revision 2025-01-12 {
+    description
+      "LS251.12
+      Add units and improve descriptions for remaining-lockout-duration,
+      global-remaining-lockout-duration leaves";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2024-11-21 {
+    description
+      "LS25.3
+      Remove techsupport user changes";
+    reference
+      "Nokia specific";
+  }
+
+
+  revision 2023-11-28 {
+    description
+    "Fix path for accessing locked out users and ip adresses";
+    reference
+    "Nokia specific.";
+  }
+
+  revision 2023-04-21 {
+    description
+    "YANG error fixes";
+    reference
+    "Nokia specific.";
+  }
+
+  revision 2023-04-06 {
+    description "Removed the feature from the ext-auth-enabled";
+    reference "BBN-39109";
+  }
+
+  revision 2023-03-20 {
+    description "Update descriptions";
+    reference "BBN-39109";
+  }
+  revision 2023-03-14 {
+    description "Add new leaf ext-auth-enabled";
+    reference "BBN-39109";
+  }
+
+  revision 2023-03-13 {
+    description "Update lockout-duration description";
+    reference "";
+  }
+
+  revision 2023-01-18 {
+    description "Add/modify descriptions to the module";
+    reference "";
+  }
+
+  revision 2022-06-01 {
+    description "Add 'must' restriction for homedir";
+    reference "";
+  }
+
+  revision 2021-10-08 {
+    description "Removing references to tailf prefix";
+    reference "";
+  }
+
+  revision 2021-08-02 {
+    description "Added missing descriptions";
+    reference "";
+  }
+
+  revision 2021-07-27 {
+    description "Import ssh-server with standard prefix";
+    reference "";
+  }
+
+  revision 2021-07-20 {
+    description "Add description for must statement";
+    reference "";
+  }
+
+  revision 2020-10-27 {
+    description "Add new leaf new-password-at-login";
+    reference "";
+  }
+
+  revision 2020-06-02 {
+    description "Replace transformed password-policy with normal password-policy";
+    reference "";
+  }
+
+  revision 2020-05-20 {
+    description "Set maximum-elements for users to 11";
+    reference "";
+  }
+
+  revision 2019-11-01 {
+    description "Additions for user's public keys based on
+                 public-key-grouping from ietf-crypto-types.yang";
+    reference "";
+  }
+
+  revision 2019-09-10 {
+    description "Additions for SSH server model, based on
+                 server-identity-grouping from ietf-ssh-server.yang";
+    reference "";
+  }
+
+  revision 2019-06-11 {
+    description
+      "Fourth version:phase4";
+    reference
+     "";
+  }
+
+  revision 2019-02-22 {
+    description
+     "Third version:phase3";
+    reference
+     "";
+  }
+  revision 2019-02-12 {
+    description
+     "Third version:delete password_again";
+    reference
+     "";
+  }
+
+  revision 2019-02-04 {
+    description
+     "Second version:delete importing ietf-yang-types";
+    reference
+     "";
+  }
+
+  revision 2018-10-01 {
+    description
+     "Initial version";
+    reference
+     "";
+  }
+
+  typedef passwdHash {
+    type ianach:crypt-hash;
+    description
+      "The used crypt-hash type for storing passwords.";
+  }
+
+  typedef ageing {
+    type uint32 {
+      range "0..365" {
+        error-message "password-expiry shall be equal or greater than 0 and not exceed max value 365.";
+      }
+    }
+    units "days";
+    description
+      "An integer number identifying the time in days that
+      is defined for a password to expire.";
+  }
+
+  typedef ageingnotif {
+    type uint32 {
+      range "0..30" {
+        error-message "password-expiry-notification shall be equal or greater than 0 and not exceed max value 30.";
+      }
+    }
+    units "days";
+    description
+      "An integer number identifying the time in days that
+      operator will receive notification prior to password ageing.";
+  }
+
+  typedef loginCounters {
+    type uint32;
+    description
+      "An integer number that counts the failed
+       and successful user logins.";
+  }
+
+  typedef lockout {
+    type enumeration {
+      enum ip-addr {
+        description
+          "Defines the capability of the system to lockout ip address when failed login attempts reach max-retry-attempts.";
+      }
+      enum user {
+        description
+          "Defines the capability of the system to lockout users when failed login attempts reach max-retry-attempts.";
+      }
+    }
+    description
+     "Defines the supported types for lockout.";
+  }
+
+  container users {
+    description
+      "User management related parameters.";
+    list user {
+      key name;
+      min-elements 1;
+      max-elements 12;
+      description "List of users.";
+      leaf name {
+        type string {
+            length "1..11"; /* On snmp platforms username cannot be more than 11 characters */
+            pattern "[_+0-9a-zA-Z]*";
+        }
+        must "current() != 'root'" {
+            error-message "You can't create user root";
+            description "User root is prohibited as a username";
+        }
+        description "Name of user.";
+      }
+      container authentication {
+        description
+          "User's authentication parameters.";
+        leaf password {
+          type string;
+          mandatory true;
+          description "User's password";
+        }
+        leaf ext-auth-enabled {
+          when "boolean(/sys:system/nokia-ext-aaa:external-user-authentication/"
+            +"nokia-ext-aaa:radius/nokia-ext-aaa:cli/nokia-ext-aaa:auth-enabled)";
+          type boolean;
+          default "false";
+          description
+            "Enables external authentication, authorization of users";
+        }
+        leaf homedir {
+          type string;
+          must "current() = '/isam/logs/syslog'" {
+            error-message "Only accepted value for homedir is '/isam/logs/syslog'.";
+            description "Only accepted value for homedir is '/isam/logs/syslog'.
+              homedir usability is applied only for users who belongs to admin-group,
+              or admin-read-only-group or log domain groups in order to access syslog file from Confd CLI.";
+          }
+          default "/isam/logs/syslog";
+          description "User's home directory.";
+        }
+        container authorized-key {
+          must "(public-key and algorithm) or (not(public-key) and not(algorithm))" {
+            error-message "You need to configure both an algorithm value and " +
+                          "a public key or neither of them";
+            description "Both algorithm value and public key must be configured. Otherwise neither of them.";
+          }
+          uses ct:public-key-grouping;
+          description "User's authorized key.";
+        }
+        action change-password {
+          description
+            "Action to change user's password.";
+          input {
+            leaf old-password {
+              type string;
+              mandatory true;
+              description "User's old password.";
+            }
+            leaf new-password {
+              type string;
+              mandatory true;
+              description "User's new password.";
+            }
+            leaf confirm-password {
+              type string;
+              mandatory true;
+              description
+                "User's new password confirmed.";
+            }
+          }
+        }
+      }
+      container login {
+        description
+          "User management information related to login.";
+        leaf last-login {
+          type yang:date-and-time;
+          config false;
+          description "Defines the last login time of a user.";
+        }
+
+        leaf last-failed {
+          type yang:date-and-time;
+          config false;
+          description
+            "Defines the last unsuccessfull login attempt of a user.";
+        }
+        leaf failed-login {
+          type loginCounters;
+          config false;
+          description
+            "Counts the failed logins done by user.";
+        }
+        leaf last-password-changed {
+          type yang:date-and-time;
+          config false;
+          description
+            "The date and time where password was changed.";
+        }
+        leaf password-expiry {
+          type ageing;
+          default 0;
+          description
+            "Password ageing time, the time in days within which the
+            password expiration happens. If its value is zero
+            password will not age.";
+        }
+        leaf password-expiry-notification {
+          type ageingnotif;
+          default 0;
+          description
+            "This parameter will set the days prior to pasword ageing.";
+        }
+        leaf password-history-policy {
+          type uint32 {
+            range "0..15" {
+              error-message "password-history-policy shall be equal or greater than 0 and not exceed max value 15.";
+            }
+          }
+          default 3;
+          description
+            "Password history length, the number of recently used password.";
+        }
+        leaf disable {
+          type boolean;
+          default "false";
+          description
+            "Defines the capability of the system to disable a user account.";
+        }
+        leaf new-password-at-login {
+          type boolean;
+          default "true";
+          description "Enable/Disable prompting a user to change password at next CLI login.";
+        }
+      }
+    }
+  }
+
+  container system-security {
+    description
+      "System security parameters and information.";
+
+    uses sshs:ssh-server-grouping;
+
+    container password-policy{
+      description "Configuration of password policy for users";
+      leaf min-length {
+        type uint32;
+        default 8;
+        description
+          "The minimum length of the password.";
+      }
+      leaf max-length {
+        type uint32;
+        default 20;
+        description
+          "The maximum length of the password.";
+      }
+      leaf min-num-numeric-char {
+        type uint32;
+        default 1;
+        description
+          "The minimum number of numerical characters.";
+      }
+      leaf min-num-special-char {
+        type uint32;
+        default 1;
+        description
+          "The minimum number of special character.";
+      }
+      leaf mixed-case {
+        type boolean;
+        default "true";
+        description
+          "Both lower and upper case  alphabet characters are mandatory.";
+      }
+    }
+    leaf lockout-duration {
+      type uint32 {
+        range "0 .. 90";
+      }
+      units "minutes";
+      default 0;
+      description
+        "The time duration of lockout. During this period, access is not allowed.
+         Lockout duration can be configured either as dynamic or fixed. Default
+         value '0' enables dynamic lockout type. Initial value of dynamic lockout
+         duration is 2 minutes and every subsequent failure increase the
+         lockout-duration for 2 minutes. Maximum lockout duration is restricted
+         to 15 minutes.";
+    }
+    leaf max-retry-attempts {
+      type uint32 {
+        range "3 .. 10";
+      }
+      default 3;
+      description
+        "The cumulative number of failed login attempts happen to trigger a lockout.
+         Once a failed login attempt happens, the remaining failed attempts should happen
+         within lockout-duration to trigger a lockout. If failed login attempt, until max-retry-attempt
+         happen after the lockout-duration, then the whole procedure is reset and no lockout happens.";
+    }
+
+    leaf lockout-type {
+      type lockout;
+      default "ip-addr";
+      description
+        "Defines the capability of the system to lockout ip address or users when failed login attempts
+         is reached.";
+    }
+
+    container lockout {
+      config false;
+      description
+        "State information related to lockout.";
+      list user {
+        key name;
+        description
+          "List of users under lockout.";
+        leaf name {
+          type string;
+          description
+            "User name under lockout.";
+        }
+        leaf remaining-lockout-duration{
+          type uint32;
+          units "minutes";
+          default 0;
+          description
+            "The remaining time duration in minutes until the user lockout expires and access is allowed again.";
+        }
+      }
+      list ip-addr {
+        key address;
+        description
+          "List of ip addresses under lockout.";
+        leaf address {
+          type inet:ip-address;
+          description
+            "Ip address under lockout.";
+        }
+        leaf remaining-lockout-duration{
+          type uint32;
+          units "minutes";
+          default 0;
+          description
+            "The remaining time duration in minutes until the ip lockout expires and access is allowed again.";
+        }
+      }
+
+      leaf global-lockout-type {
+        type boolean;
+        default "false";
+        description
+          "Defines the capability of the system to be set in global lock out.";
+      }
+
+      leaf global-remaining-lockout-duration {
+        type uint32;
+        units "minutes";
+        default 0;
+        description
+          "The remaining time duration in minutes until the global lockout expires and access is allowed again.";
+      }
+
+      leaf global-lockout-reason {
+        type string;
+        description "The reason for system entering global lockout.";
+      }
+    }
+    action remove-lockout {
+      description
+        "Action to remove a user or IP address from being locked out.";
+      input {
+        choice how {
+          description
+            "Indicates which type of lock out is going to be removed.";
+          case user {
+            leaf-list user {
+              type leafref{
+                path "/system-security/lockout/user/name";
+              }
+              description "User to be removed from lockout.";
+            }
+          }
+          case ip-addr {
+            leaf-list ip-addr {
+              type leafref{
+                path "/system-security/lockout/ip-addr/address";
+              }
+              description "IP address to be removed from lockout.";
+            }
+          }
+          case global{
+            leaf global {
+              type empty;
+              description "Global lockout removal.";
+            }
+          }
+        }
+      }
+    }
+  }
+}//module nokia-aaa

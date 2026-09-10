@@ -1,0 +1,57 @@
+module nokia-software-image-management-extension-swm-offline-migration-support-dev {
+
+  namespace
+     "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+   + "nokia-software-image-management-extension-swm-offline-migration-support-dev";
+
+  prefix "swm-offlinemigration-dev";
+
+  import bbf-software-image-management-one-dot-one {
+      prefix bbf-sim;
+  }
+
+  import ietf-hardware {
+    prefix hw;
+  }
+
+  import nokia-software-image-management-extension {
+    prefix "nokia-swm-ext";
+  }
+  organization
+    "BBF/NOKIA";
+
+  contact
+    "@nokia.com";
+
+  description
+    "ConfD Callpoints added with an annotation";
+
+  revision 2020-07-15 {
+     description
+       "added new actions and statedata for swm offline migration support in 
+        nokia-software-image-management-extension.yang";
+     reference
+      "Nokia specific"; 
+  }
+
+  revision 2019-04-23 {
+    description
+      "Move to swm category.";
+    reference
+      "TBD";
+  }
+  
+  /* deviations for length of the URL */
+  /* -----------------------------*/
+  /* url is one of the input parameters for */
+  /* action: config download */
+  /* length of url is restricted to 255 characters */
+
+  deviation "/hw:hardware-state/hw:component/bbf-sim:software/bbf-sim:software/bbf-sim:revisions/bbf-sim:revision/nokia-swm-ext:download/nokia-swm-ext:config-download/nokia-swm-ext:input/nokia-swm-ext:download-method/nokia-swm-ext:url/nokia-swm-ext:url" {
+     deviate replace {
+       type string {
+           length "1..255";
+       }
+    }
+  }
+}

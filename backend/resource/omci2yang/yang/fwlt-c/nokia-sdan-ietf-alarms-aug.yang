@@ -1,0 +1,286 @@
+module nokia-sdan-ietf-alarms-aug {
+  yang-version "1.1";
+  namespace
+    "http://www.nokia.com/Fixed-Networks/BBA/yang/nokia-sdan-ietf-alarms-aug";
+
+  prefix nokia-al;
+
+  import ietf-alarms {
+    prefix al;
+  }
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA IETF/System YANG module supporting
+     deviations on top of standard.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2024, Nokia. All Rights Reserved.";
+
+  revision 2026-02-20 {
+    description "Add leafs for suppresion feature";
+    reference "Nokia specific";
+  }
+
+  revision 2025-02-24 {
+    description "Add leafs for delay handler feature";
+    reference "Nokia specific";
+  }
+
+  revision 2024-11-25 {
+    description "Add leaf for hierarchy meta data";
+    reference "Nokia specific";
+  }
+
+  feature hierarchy-meta-data {
+      description "This feature enables the provision
+      of hierarchy meta data on alarms";
+  }
+
+  augment "/al:alarms/al:alarm-list/al:alarm" {
+    description
+      "The list of alarms.  Each entry in the list holds one alarm
+       for a given alarm type and resource.";
+    leaf hierarchy-meta-info {
+      if-feature "hierarchy-meta-data";
+      type string;
+      description
+        "This leaf provides information on the interface type
+         or hardware class, along with the configured
+         interface/hardware component metadata.";
+    }
+  }
+
+  typedef filtering-event {
+    type enumeration {
+      enum shelved {
+        value 1;
+        description
+          "The alarm has been temporarily suppressed and moved to the
+           shelved alarms list due to administrative configuration of
+           alarm shelving control or change of severity level.";
+      }
+      enum un-shelved {
+        value 2;
+        description
+          "A previously suppressed alarm has been restored to active
+           status and returned to the alarm-list following modification
+           of alarm shelving configuration or severity level.";
+      }
+    }
+    description
+      "Defines the types of filtering events that can occur during alarm
+       processing within the alarm management system. These events represent
+       state transitions or administrative actions that affect alarm visibility,
+       notification behavior, and reporting status to northbound interfaces.";
+  }
+
+  augment "/al:alarm-notification" {
+    description
+      "Extends the standard alarm notification with additional metadata
+       to support enhanced alarm filtering and lifecycle tracking capabilities.
+       This augmentation provides information about alarm creation
+       and categorizes the type of filtering event that triggered the
+       notification.";
+    leaf hierarchy-meta-info {
+      if-feature "hierarchy-meta-data";
+      type string;
+      description
+        "This leaf provides information on the interface type
+         or hardware class, along with the configured
+         interface/hardware component metadata.";
+    }
+    // add time-created
+    leaf time-created {
+      type yang:date-and-time;
+      description
+        "The timestamp when this alarm entry was created.  This
+         represents the first time the alarm appeared;
+         Further state changes of the same alarm do not change
+         this leaf; these changes will update the 'time'
+         leaf.";
+    }
+    // add indication for state-change due to suppression, suspension event
+    leaf event-type {
+      type filtering-event;
+      description
+        "Identifies the specific type of filtering event that triggered
+         this alarm notification. This field categorizes the nature of
+         the alarm state change, indicating whether the notification
+         resulted from shelving operations (shelved/un-shelved), This
+         information enables northbound systems to understand the
+         context and reason for the alarm notification, facilitating
+         appropriate processing.";
+    }
+  }
+
+  augment "/al:alarms/al:control"
+  {
+    description "Controls alarms clearance event.";
+    container alarms-delay-profile {
+      description
+        "Controls the delay of an alarm instance clearance on system
+         level or per alarm-type-id. The clearance of an alarm instance
+         is delayed for a timeframe equal to the configured clearance
+         delay time. If during of such an observation timeframe toggling
+         between cleared and active is detected the clearance of the
+         affected alarm instance is postponed (lifetime is expanded) and
+         a new observation phase will start upon the occurrence of next
+         alarm clearance event.";
+      leaf system-clearance-delay {
+        type uint8 {
+          range "1..180";
+        }
+        units "seconds";
+        description
+          "Define the minimum time without toggling from cleared to
+           active state for an alarm. Whenever such a transition is
+           detected, the clearance of the alarm will be postponed.
+           This leaf have system wide impact (affects all the alarm
+           type ids), in case that it is not configured it is 
+           considered as disabled on system level. In case that an
+           alarm-type-id should be excluded or a different value 
+           should be applied then a dedicated profile must be created 
+           in the alarm-type-profile list.";
+      }
+      list alarm-type-profile {
+        key "alarm-type-id";
+        description
+          "This list controls alarms clearance delay per alarm-type-id and
+           have priority compared to the configuration on system level.";
+        leaf alarm-type-id {
+          type al:alarm-type-id;
+          description
+            "Identifies an alarm type. Only identities of concrete alarm types
+            (present in the alarm inventory) can be configured. Usage of
+            an abstract alarm type will be rejected. An abstract alarm type is
+            used as a base for other alarm type ids and not as a value for an alarm.";
+        }
+        choice delay-mode {
+          mandatory true;
+          description
+            "Determine the value of clearance delay time or if a
+             configured on system level delay time is not applicable
+             for the specific alarm-type-id.";
+          case exclude-system-alarm-type-id {
+            leaf clearance-delay-disabled {
+              type empty;
+              description
+                "Indicate that the clearance delay is not applicable
+                 for the specific alarm-type-id. In case that a
+                 clearance delay timeframe is configured on system
+                 level, the specific alarm-type-id will be excluded.";
+            }
+          }
+          case include-alarm-type-id {
+            leaf clearance-delay {
+              type uint8 {
+                range "1..180";
+              }
+              units "seconds";
+              description
+                "Define the minimum timeframe without toggling from
+                 cleared to active state for an alarm. Whenever such
+                 a transition is detected, the clearance of the alarm
+                 will be postponed. This leaf controls the delay of
+                 alarms clearance for a specific alarm-type. This leaf
+                 overrule the clearance delay configuration on system level.";
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Augmentation: Enhanced shelf configuration
+  augment "/al:alarms/al:control/al:alarm-shelving/al:shelf" {
+    description
+      "Nokia-specific enhancements to alarm shelving functionality.";
+
+    leaf log-suppressed-alarms {
+      type boolean;
+      default false;
+      description
+        "Enables logging of suppressed alarm notifications. When true,
+         suppressed notifications are logged for audit purposes.
+         Default is false to minimize system overhead.";
+    }
+    leaf severity-level {
+      type al:severity;
+      description
+        "The system will report notifications to the NBI and display
+         them in the alarm list only if their severity level is higher
+         than the configured threshold (severity > severity-level).
+         Alarms that do not exceed this threshold are maintained in
+         the shelved-alarm list for visibility.";
+    }
+  }
+ 
+  // Augmentation: Enhanced shelved-alarms list
+  augment "/al:alarms/al:shelved-alarms/al:shelved-alarm" {
+    description
+      "Nokia-specific enhancements to alarm shelving functionality.";
+    leaf time-created {
+      type yang:date-and-time;
+      description
+        "The timestamp when this alarm entry was created.  This
+         represents the first time the alarm appeared;
+         Further state changes of the same alarm do not change
+         this leaf; these changes will update the 'time'
+         leaf.";
+    }
+    leaf hierarchy-meta-info {
+      if-feature "hierarchy-meta-data";
+      type string;
+      description
+        "This leaf provides information on the interface type
+         or hardware class, along with the configured
+         interface/hardware component metadata.";
+    }
+  }
+
+} // module

@@ -1,0 +1,517 @@
+module nokia-sdan-port-loop-detection-test {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+             + "nokia-sdan-port-loop-detection-test";
+
+  prefix nokia-port-loop;
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import bbf-dot1q-types {
+    prefix bbf-dot1qt;
+  }
+
+  import bbf-l2-forwarding {
+    prefix bbf-l2-fwd;
+  }
+
+  import bbf-interface-usage {
+    prefix bbf-if-usg;
+  }
+
+  import bbf-frame-classification {
+    prefix bbf-classif;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG definitions for
+     supporting Nokia specific requirements as applicable to its
+     access network equipment.
+
+     Specifically, this module defines configuration and operational
+     state data for ONU UNI interfaces loop detection from the LT side.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2026, Nokia. All Rights Reserved.";
+
+  revision 2026-06-12 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific.";
+  }
+
+  identity loop-detect-action-type {
+    description
+      "Base identity to represent the action to take when
+       a loop is detected.";
+  }
+
+  identity block {
+    base loop-detect-action-type;
+    description
+      "Block the port when loop is detected.";
+  }
+
+  identity no-action {
+    base loop-detect-action-type;
+    description
+      "No action on the port.";
+  }
+
+  identity port-state-change-type {
+    description
+      "Base identity to represent current port state based on loop detection.";
+  }
+
+  identity un-block {
+    base port-state-change-type;
+    description
+      "No traffic impact.";
+  }
+
+  identity blocked {
+    base port-state-change-type;
+    description
+      "Traffic has been blocked.";
+  }
+
+  container port-loop-detection-test {
+    presence
+      "Presence of this container enables filtering of loop detection
+       packets on all its ethernet-like interfaces.";
+    description
+      "Defines the configuration and operational data for loop
+       detection tests on ethernet-like interfaces.";
+
+    leaf test-device-id {
+      type uint8;
+      default 255;
+      description
+        "A unique id that's used to identify the originating device
+         of a loop detection test. A device must add its configured
+         device id to the payload of every loop detection test packet
+         generated from that device. A device receiving a loop detection
+         test packet can extract the device id from the payload and
+         display it as a means to identify the originator of the detected
+         loop.";
+    }
+
+    list loop-test {
+      key "test-name";
+      description
+        "list of loop tests.";
+
+      leaf test-name {
+        type string;
+        description
+          "name of the test.";
+      }
+
+      leaf loop-detection-action {
+        type identityref {
+          base loop-detect-action-type;
+        }
+        default block;
+        description
+          "Action to be taken on the ethernet-like ports when a loop is
+           detected.";
+      }
+
+      leaf test-interval {
+        type uint16 {
+          range "1..300";
+        }
+        units "seconds";
+        default 10;
+        description
+          "Specifies the time duration in seconds between generating periodic loop
+           detection packets on all the test-injection-points configured
+           for this test. Valid range is 1 second to 5 minutes (300 seconds).
+           The default is 10 seconds.";
+      }
+
+      leaf auto-recovery-time {
+        type uint16 {
+          range "60..3600";
+        }
+        units "seconds";
+        description
+          "Specifies the time duration in seconds after which a loop-detected
+           interface clears alarm automatically. This leaf is only applicable
+           when loop-detection-action is set to no-action. When
+           loop-detection-action is block, this value is ignored. If not
+           configured, the application default is 300 seconds (5 minutes).";
+      }
+
+      choice test-injection-point {
+
+        case at-forwarder-scope {
+
+          list forwarders-under-test {
+            key "forwarder-name";
+
+            description
+              "list of forwarders on which the loop detection test is
+               executed";
+
+            leaf forwarder-name {
+              type bbf-l2-fwd:forwarder-ref;
+              description
+                "Reference to the forwarder on which periodic
+                 'loop detection' packets will be generated.
+                 By default, this means the test packet will be
+                 sent on all the attached VSIs of this forwarder.
+                 The scope can be limited by configuring the
+                 applicable-interfaces list for interfaces with
+                 specific interface usages and interface types
+                 for e.g., do test only on user VSIs of a olt-v-enet.";
+            }
+
+            leaf test-injection-id {
+              type uint16;
+              description
+                "The test injection id to be added in the loop test packet
+                 payload. If not conifgured, adds 0";
+            }
+
+            leaf enable {
+              type boolean;
+              default "true";
+              description
+                "Enable loop detection on this forwarder.";
+            }
+
+            leaf pbit {
+              type bbf-dot1qt:pbit;
+              default "0";
+              description
+                "The PBIT used in the generated loop detection packet.";
+            }
+
+            list applicable-interfaces {
+              key "matching-interface-usage";
+              description
+                "list of interface types on which the test to be run.";
+
+              leaf matching-interface-usage {
+                type bbf-if-usg:interface-usage;
+                description
+                  "Matches only the vlan sub interfaces with specific
+                   interface usage with in the forwarder towards which
+                   the loop packets need to be generated.";
+              }
+
+              leaf-list lowerlayer-interface-type {
+                type identityref {
+                  base if:interface-type;
+                }
+                description
+                  "Identifies specific list of interface types with the
+                   interface usage matching-interface-usage.";
+              }
+            }
+          }
+          description
+            "inject at forwarder scope.";
+        }
+
+        case at-eth-itf-scope {
+
+          list interfaces {
+            key "name";
+            description "List of physical Ethernet interfaces for loop detection.";
+
+            leaf name {
+              type if:interface-ref;
+              description "Reference to an Ethernet physical network port interface.";
+            }
+
+            list vlan-list {
+              key "name";
+              description "List of VLAN's configured for each interface.";
+
+              leaf name {
+                type string;
+                description "Name of VLAN list.";
+              }
+
+              list vlan-tag {
+                key "index";
+                min-elements 1;
+                max-elements 2;
+                description
+                  "The tags to match, with the outermost tag to match
+                   assigned index 0.";
+
+                leaf index {
+                  type bbf-classif:tag-index;
+                  must "count(../../vlan-tag[index = 0]) > 0" {
+                    error-message
+                      "An inner tag can only be matched on when also
+                       matching on an outer tag.";
+
+                    description
+                      "Only allow matching on an inner tag, if also
+                       matching on the outer tags at the same time.";
+                  }
+                  description
+                    "The index into the tag stack, index '0' for outer
+                     tag, index '1' for inner tag.";
+                }
+
+                leaf vlan-id {
+                  type bbf-dot1qt:vlan-id;
+                  mandatory true;
+                  description
+                    "Allowed VLAN-IDs.";
+                }
+
+                leaf pbit {
+                  type union {
+                    type bbf-dot1qt:pbit-list;
+                    type enumeration {
+                      enum "any" {
+                        description
+                          "Matches any pbit value in the range of 0 to 7.";
+                      }
+                    }
+                  }
+                  default "any";
+                  description
+                    "Allowed PBIT values.";
+                }
+
+                leaf dei {
+                  type union {
+                    type bbf-dot1qt:dei;
+                    type enumeration {
+                      enum "any" {
+                        description
+                          "Matches any Drop Eligible Inidicator (DEI)
+                           value, i.e. value 0 or 1.";
+                      }
+                    }
+                  }
+                  default "any";
+                  description
+                    "Allowed DEI values.";
+                }
+              }
+            }
+          }
+          description
+            "inject at eth-itf scope.";
+        }
+
+        description
+          "Level at which the test packets are inserted in the pipeline.";
+      }
+
+      container statistics {
+        config false;
+        description
+          "Loop detection packet statistics for this loop-test.";
+
+        list forwarders-under-test {
+          key "forwarder-name";
+          description
+            "Per-forwarder loop detection statistics for forwarders configured
+             under at-forwarder-scope.";
+
+          leaf forwarder-name {
+            type bbf-l2-fwd:forwarder-ref;
+            description
+              "Reference to a forwarder configured for this loop test.";
+          }
+
+          leaf sent-packets {
+            type yang:counter64;
+            description
+              "A count of all loop detection packets transmitted in the
+               forwarder.";
+          }
+
+          leaf dropped-packets {
+            type yang:counter64;
+            description
+              "A count of all loop detection packets dropped in the
+               forwarder.";
+          }
+
+          action reset-statistics {
+            description
+              "When this action is invoked, the loop detection counters
+               are cleared.";
+          }
+        }
+
+        list interfaces {
+          key "name";
+          description
+            "Per-interface loop detection statistics for interfaces configured
+             under at-eth-itf-scope.";
+
+          leaf name {
+            type if:interface-state-ref;
+            description
+              "Reference to the ethernet physical network port interface
+               configured under at-eth-itf-scope.";
+          }
+
+          leaf port-traffic-state {
+            type identityref {
+              base port-state-change-type;
+            }
+            description
+              "Current port state based on loop detection.";
+          }
+
+          leaf total-sent-frames {
+            type yang:counter64;
+            description
+              "A count of all frames transmitted through the port.";
+          }
+
+          leaf total-received-frames {
+            type yang:counter64;
+            description
+              "A count of all frames received through the port.";
+          }
+
+          leaf total-dropped-frames {
+            type yang:counter64;
+            description
+              "A count of all frames dropped through the port.";
+          }
+        }
+      }
+    }
+
+    container loop-detection-state {
+      config false;
+      description
+        "Data nodes for managing loops detected on this device.";
+
+      list loop-detected-on {
+        key "name";
+
+        description
+          "List of interfaces on which a loop is detected.";
+
+        leaf name {
+          type if:interface-state-ref;
+          description
+            "The interface on which a loop is detected. For at-forwarder-scope
+             tests this is the olt-v-enet interface name resolved from the
+             received VSI. For at-eth-itf-scope tests this is the configured
+             ethernet physical network port interface name.";
+        }
+
+        leaf vsi-name {
+          type if:interface-state-ref;
+          description
+            "The VSI on which the loop detection keepalive was received.
+             Populated for at-forwarder-scope tests when a loop is detected.";
+        }
+
+        leaf traffic-state {
+          type identityref {
+            base port-state-change-type;
+          }
+          description
+            "reflect the current state of the port based on loop detection. ";
+        }
+
+        list loop-origin {
+          key "device-id";
+          description
+            "list of origin points for this loop.";
+
+          leaf device-id {
+            type uint8;
+            description
+              "The origin device id for this loop.";
+          }
+
+          leaf-list injection-ids {
+            type uint16;
+            description
+              "List of test injection points with in the
+               originating device from where a loop is detected.";
+          }
+        }
+
+        container unblock {
+          when "../traffic-state='blocked'" {
+          description
+            "Port unblock action is applicable only when the port
+             is in blocked state.";
+          }
+          description
+            "Defines datanodes for unblocking a port.";
+
+          action unblock {
+            description
+              "Action to unblock the port where a loop is detected and
+               is put in blocked state.";
+          }
+        }
+      }
+
+      action unblock-all {
+        description
+          "Unblock all ports which are currently put in blocked state
+           by loop detection.";
+      }
+    }
+  }
+}

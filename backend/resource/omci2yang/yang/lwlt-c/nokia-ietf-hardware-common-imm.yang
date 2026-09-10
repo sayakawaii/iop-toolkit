@@ -1,0 +1,112 @@
+module nokia-ietf-hardware-common-imm {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-ietf-hardware-common-imm";
+
+  prefix nokia-ietf-hardware-common-imm;
+
+  import ietf-hardware {
+    prefix hw;
+  }
+
+  import nokia-hardware-identities {
+    prefix nokia-hwi;
+  }
+
+  import bbf-hardware-types {
+    prefix bbf-hwt;
+  }
+
+  import ietf-immutable {
+    prefix im;
+  }
+
+  import nokia-sdan-ietf-immutable {
+     prefix nokia-im;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG deviations on top
+     of the standard module.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2023, Nokia. All Rights Reserved.";
+
+  revision 2023-01-31 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia Specific.";
+  }
+
+  deviation "/hw:hardware/hw:component/hw:parent"
+  {
+     description
+       "The hw:parent node can not be modified!";
+     deviate add {
+            im:immutable "create delete";
+    }
+  }
+
+  deviation "/hw:hardware/hw:component/hw:class"
+  {
+     description
+       "The hw:class node can not be modified!";
+     deviate add {
+            im:immutable "create delete";
+    }
+  }
+  
+  deviation "/hw:hardware/hw:component"
+  {
+     description
+       "Configuration changes to the components with class chassis/slot/slot/slot-nt/slot-lt/slot-acu/slot-psu/board/cage is not allowed.
+        Deletion of non-pluggable components with class chassis/slot/slot/slot-nt/slot-lt/slot-acu/slot-psu/board/cage is not allowed.";
+     deviate add {
+            im:immutable "create";
+            nokia-im:condition "(./hw:class = 'ianahw:chassis') | (./hw:class = 'bbf-hwt:slot') | (./hw:class = 'bbf-hwt:board') | (./hw:class = 'bbf-hwt:cage') | (./hw:class = 'nokia-hwi:slot-nt') | (./hw:class = 'nokia-hwi:slot-ntio') | (./hw:class = 'nokia-hwi:slot-fan') | (./hw:class = 'nokia-hwi:slot-psu') | (./hw:class = 'nokia-hwi:slot-acu') | (./hw:class = 'nokia-hwi:slot-lt')";
+    }
+  }
+}

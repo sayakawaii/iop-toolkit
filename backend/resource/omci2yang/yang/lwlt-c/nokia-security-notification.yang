@@ -1,0 +1,147 @@
+module nokia-security-notification {  
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/nokia-security-notification";   
+  prefix security-notification;
+
+   organization
+      "AAAE process - Nokia"; 
+
+   contact
+      "Comments or questions about this Nokia YANG module should be  
+       directed to <mailto:isam.yang@nokia.com>.";
+
+   description
+     "This module contains the definition of the content of the
+      notification when login maxretry is reached during cli session
+      start/stop. Its new nodes are defined according to Nokia
+      specific requirements for management of AAA applicable to
+      its access network equipment.
+
+      This specification is published by Nokia under Non-Disclosure
+      Agreement(s) (NDA) with specific parties and has to be considered
+      as Confidential Information as defined in such NDA. Nokia
+      reserves the right to revise this document for any reason,
+      including but not limited to conformity with standards
+      promulgated by various agencies, utilisation of advances in the
+      state of the technical areas, or the reflection of changes in the
+      design of any equipment, techniques, or procedures described or
+      referred to herein.
+
+      The product specifications and other technical or performance
+      information contained herein are subject to change without
+      notice. Updates of this document will be issued under the above
+      NDA's.
+
+      Nokia makes no representation or warranty, expressed or implied,
+      with respect to the sufficiency, accuracy, or utility of any
+      information or opinion contained herein. Nokia expressly advises
+      that any use of for any purpose or reliance upon this technical
+      reference is at the risk of the user and that Nokia shall not be
+      liable for any damage or injury incurred by any person arising
+      out of the sufficiency, accuracy, or utility of any information
+      or opinion contained herein.
+
+      This document is not to be construed as a suggestion to any
+      manufacturer to modify or change any of its products, nor does
+      this document represent any commitment by Nokia to sell or
+      purchase any product. Nothing contained herein shall be construed
+      as conferring by implication, estoppel, or otherwise any license
+      or right under any patent, whether or not the use of any
+      information herein necessarily employs an invention of any
+      existing or later issued patent.
+
+      Nokia reserves the right not  to offer any or all of these
+      products and to withdraw any or all of them at any future time.
+
+      Copyright (C) 2021, Nokia. All Rights Reserved.";
+
+
+  revision 2023-04-21 {
+    description
+    "YANG error fixes";
+    reference
+    "Nokia specific";
+  }
+
+  revision 2021-10-08 {
+     description
+     "Add descriptions and update the notification names";
+     reference
+     "Nokia internal.";
+   }
+
+  revision 2019-06-01 {
+     description
+     "Rename to nokia-security-notification.yang";
+     reference
+     "Nokia internal.";
+   }
+
+  notification login-failure {
+    description "A notification is sent in cases that lockout is enabled for a user/IP or entire system(global lockout), or user password has expired and tries to login in the system.";
+    leaf reason {
+      type string;
+	description "String describing the details of a login failure.";
+    }
+  }
+
+  notification wrong-password-policy {
+     description "A notification is sent in case of a wrong password policy is inserted by a user.";
+     leaf reason {
+       type string;
+	description "String describing that a wrong password policy is inserted.";
+     }
+  }
+
+  notification password-expiry {   
+     description "A notification is sent when the password is going to expire in X days for a user.";
+     leaf expiry-message {
+        type string;
+	description "String Notifying of a password expiration.";
+     }
+  }
+  
+  notification disabled-user {
+     description "A notification is sent when a user is disabled/enabled by an admin-group's user.";
+     leaf status-message {
+       type string;
+	description "String Notification sent when an admin-group's user changes the state of a user";
+     }
+  }
+
+  notification cli-session-start {
+    description "A notification is sent when a cli session is started.";
+    leaf username  {
+      type string;
+      description "String containing the username.";
+    }
+    leaf session-id {
+      type int32;
+      description "int containing the session-id.";
+    }
+    leaf source-host {
+      type string;
+      description "String containing the source-host.";
+    }
+  }
+
+  notification cli-session-end {
+    description "A notification is sent when a cli session is terminated.";
+    leaf username  {
+      type string;
+      description "String containing the username.";
+    }
+    leaf session-id {
+      type int32;
+      description "int containing the session-id.";
+    }
+    leaf source-host {
+      type string;
+      description "String containing the source-host.";
+    }
+    leaf termination-reason {
+      type string;
+      description "String containing the reason of termination.";
+    }
+  }
+}
+

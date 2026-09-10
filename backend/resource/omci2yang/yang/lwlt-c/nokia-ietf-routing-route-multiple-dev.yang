@@ -1,0 +1,79 @@
+module nokia-ietf-routing-route-multiple-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-ietf-routing-route-multiple-dev";
+
+  prefix nokia-ietf-routing-route-multiple-dev;
+
+  import ietf-routing {
+    prefix rt;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA IETF/Route YANG module supporting
+     deviations on top of standard.";
+
+  revision 2024-11-07 {
+    description "Typeb x-shelf changes.";
+    reference "Nokia specific";
+  }
+  revision 2023-05-02 {
+    description "Solve yang errors and resolve canonical order according to RFC 6020.";
+    reference "Nokia specific.";
+  }
+
+  revision 2022-06-02 {
+    description
+      "adding dummy deviations";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2022-03-24 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific";
+  }
+
+  deviation  "/rt:routing/rt:control-plane-protocols/rt:control-plane-protocol"{
+    
+    deviate add {
+      max-elements 2;
+    }
+    
+  }
+
+
+  deviation "/rt:routing/rt:control-plane-protocols/rt:control-plane-protocol" {
+    description "A default route should be set to an inband interface. The error message 'Default Route goes only to an inband interface' will be displayed when the constraint is violated";
+    deviate add {}
+  }
+
+  deviation "/rt:routing/rt:control-plane-protocols/rt:control-plane-protocol" {
+    description "A non-default route should be set to an non inband interface. The error message 'Non Default Route goes only to a non inband interface' will be displayed when the constraint is violated";
+    deviate add {}
+  }
+
+  deviation "/rt:routing/rt:control-plane-protocols/rt:control-plane-protocol" {
+    description "At least one route should be default when configuring multiple routes. The error message 'At least one route should be default' will be displayed when the constraint is violated";
+    deviate add {}
+  }
+
+  deviation "/rt:routing/rt:control-plane-protocols/rt:control-plane-protocol" {
+    description "Only one route should be default when configuring multiple routes. The error message 'Only one route can be default' will be displayed when the constraint is violated";
+    deviate add {}
+  }
+
+  deviation "/rt:routing/rt:control-plane-protocols/rt:control-plane-protocol" {
+    description "Default route should also be swapped along with tag and control protocol name when swapping primary and secondary inband interface. The error message 'Default route should also be swapped' will be displayed when the constraint is violated";
+    deviate add {}
+  }
+
+}

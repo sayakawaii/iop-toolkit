@@ -1,0 +1,139 @@
+module nokia-ietf-routing-common-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-ietf-routing-common-dev";
+
+  prefix nokia-ietf-routing-common-dev;
+
+  import ietf-routing {
+    prefix rt;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA IETF/Route YANG module supporting
+     deviations on top of standard.";
+
+/* revision */
+
+  revision 2025-07-16 {
+    description "Remove unused paths";
+    reference "BBN-289524";
+  }
+
+  revision 2023-05-02 {
+    description "Solve yang errors and resolve canonical order according to RFC 6020.";
+    reference "Nokia specific.";
+  }
+  revision 2023-02-06 {
+    description
+      "Set Control Plane Protocol name length up to 64 characters";
+    reference "Nokia specific.";
+  }
+
+  revision 2021-09-30 {
+    description
+      "Not supported deviations added";
+    reference "Nokia specific.";
+  }
+
+  revision 2019-05-07 {
+    description
+      "Move to common category.";
+    reference
+      "TBD";
+  }
+
+  revision 2016-11-16 {
+    description
+      "Initial revision.";
+    reference
+      "TBD";
+  }
+
+  deviation "/rt:routing/rt:ribs" {
+    description "Leaf not supported";
+    deviate not-supported;
+    
+  }
+
+  deviation  "/rt:routing/rt:control-plane-protocols/rt:control-plane-protocol"{
+    description "Unique control protocol name";
+    deviate add {
+      unique "rt:name";
+    }
+    
+  }
+
+  deviation '/rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/rt:name' {
+    description "Control Plane Protocol name can be up to 64 characters";
+    deviate replace {
+      type string {
+        length "1..64";
+      }
+    }
+    
+  }
+
+  deviation "/rt:routing-state/rt:ribs/rt:rib/rt:routes/rt:route/rt:next-hop/rt:next-hop-options/rt:simple-next-hop/rt:outgoing-interface" {
+    description "Leaf not supported";
+    deviate not-supported;
+    
+  }
+
+  deviation "/rt:routing-state/rt:ribs/rt:rib/rt:routes/rt:route/rt:next-hop/rt:next-hop-options/rt:special-next-hop" {
+    description "Leaf not supported";
+    deviate not-supported;
+    
+  }
+
+  deviation "/rt:routing-state/rt:ribs/rt:rib/rt:routes/rt:route/rt:next-hop/rt:next-hop-options/rt:next-hop-list" {
+    description "Leaf not supported";
+    deviate not-supported;
+    
+  }
+
+  deviation "/rt:routing-state/rt:ribs/rt:rib/rt:routes/rt:route/rt:source-protocol" {
+    description "Leaf not supported";
+    deviate not-supported;
+    
+  }
+
+  deviation "/rt:routing-state/rt:ribs/rt:rib/rt:routes/rt:route/rt:active" {
+    description "Leaf not supported";
+    deviate not-supported;
+    
+  }
+
+  deviation "/rt:routing-state/rt:ribs/rt:rib/rt:routes/rt:route/rt:last-updated" {
+    description "Leaf not supported";
+    deviate not-supported;
+    
+  }
+
+  deviation "/rt:routing-state/rt:ribs/rt:rib/rt:active-route" {
+    description "Leaf not supported";
+    deviate not-supported;
+    
+  }
+
+  deviation "/rt:routing-state/rt:interfaces" {
+    description "Container not supported";
+    deviate not-supported;
+  }
+
+  deviation "/rt:routing-state/rt:ribs/rt:rib/rt:routes/rt:route/rt:route-preference" {
+    description "Leaf not supported";
+    deviate not-supported;
+  }
+
+  deviation "/rt:routing-state/rt:router-id" {
+    description "Leaf not supported";
+    deviate not-supported;
+  }
+}

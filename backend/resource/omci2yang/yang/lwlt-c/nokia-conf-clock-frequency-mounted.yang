@@ -1,0 +1,371 @@
+module nokia-conf-clock-frequency-mounted {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"+
+            "nokia-conf-clock-frequency-mounted";
+
+  prefix clock-frequency-mounted;
+
+  import ietf-interfaces-mounted {
+    prefix if-mounted;
+  }
+
+  import iana-if-type-mounted {
+    prefix ianaift-mounted;
+  }
+
+  import bbf-fiber-onu-emulated-mount {
+     prefix onu;
+  }
+
+  import nokia-template-common {
+    prefix template-common;
+  }
+
+  organization "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "This module contains extension of YANG definitions for 
+    the overall structure of clock frequency on physical 
+    entities.
+
+    Nokia reserves the right not to offer any or all of these
+    products and to withdraw any or all of them at any future time.
+
+    Copyright (C) 2018, Nokia. All Rights Reserved.";
+
+  revision 2026-02-27 {
+    description
+      "Update for BBN-340083";
+    reference
+      "Nokia specific";
+  }
+  revision 2025-09-01 {
+    description
+      "Update for BBN-132900";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2020-08-19 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: 2020-08-19.";
+    reference
+      "Nokia specific";
+  }
+
+  feature clock-freq {
+    description
+      "Indicates support for Clock freqency function.";
+  }
+  feature ssm-in {
+    description
+      "Indicates support for SSM input function";
+  }
+  feature ssm-out {
+    description
+      "Indicates support for SSM output function";
+  }
+
+  typedef ql-state {
+    type enumeration {
+      enum "QL-PRC" {
+        value 0;
+        description "Primary Reference Clock.";
+      }
+      enum "QL-SSU-A" {
+        value 1;
+        description "Traced to Sync Supply Unit-A .";
+      }
+      enum "QL-SSU-B" {
+        value 2;
+        description "Traced to Sync Supply Unit-B.";
+      }
+      enum "QL-EEC1" {
+        value 3;
+        description "Ethernet Equipment Clock 1.";
+      }
+      enum "QL-DNU" {
+        value 4;
+        description "Signal should not be used for sync.";
+      }
+      enum "QL-STU" {
+        value 5;
+        description "Synchronized-Traceability Unknown.";
+      }
+      enum "QL-PRS" {
+        value 6;
+        description "Primary Reference Clock.";
+      }
+      enum "QL-TNC" {
+        value 7;
+        description "Traced to Transmit Node Clock .";
+      }
+      enum "QL-ST2" {
+        value 8;
+        description "Traceable to Stratum 2.";
+      }
+      enum "QL-ST3" {
+        value 9;
+        description "Traceable to Stratum 3/Ethernet Equipment Clock 2.";
+      }
+      enum "QL-ST3E" {
+        value 10;
+        description "Traceable to Stratum 3E.";
+      }
+      enum "QL-PROV" {
+        value 11;
+        description "Operator Provisioned.";
+      }
+      enum "QL-DUS" {
+        value 12;
+        description "Signal should not be used for sync.";
+      }
+      enum "QL-PRTC" {
+        value 13;
+        description "Primary Reference Time Clock.";
+      }
+      enum "QL-ePRTC" {
+        value 14;
+        description "Enhanced Primary Reference Time Clock.";
+      }
+      enum "QL-eEEC" {
+        value 15;
+        description "Enhanced Ethernet Equipment Clock.";
+      }
+      enum "QL-ePRC" {
+        value 16;
+        description "Enhanced Primary Reference Clock.";
+      }
+    }
+    description
+      "The ITU-T G.8264 QL State.";
+    reference
+      "ITU-T G.8264 11.3.2.2 QL reception";
+  }
+
+  grouping ssm-out {
+    description "grouping ssm-out";
+    container ssm-out{
+      if-feature "ssm-out";
+      presence "Present if SSM is enabled on this interface";
+      description "ssm-out";
+      leaf ssm-out-enable {
+       type boolean;
+        default "false";
+        description
+          "Enable or disable SSM out function at the interface.";
+     }
+    }         
+  }
+/*
+  augment "/onu:onus/onu:onu/onu:root" {
+     description "augment onu root for ssm out";
+     container clock-ssm-out-vlan-profiles {
+      if-feature "clock-freq";
+     status obsolete;
+      description
+        "SSM OUT vlan profiles.";
+        list clock-ssm-out-vlan-profile{
+          key "name";
+	  status obsolete;
+          description
+            "List containing the parameters for a vlan should be shared by all ssm-out ports.";
+          leaf name {
+            type string;
+	  status obsolete;
+            description
+              "Name of the profile.";
+          }
+          leaf ssm-out-vlan-id {
+            type uint32 {
+            range "1..4095";
+          }
+          default "4088";
+	  status obsolete;
+          description "optional.The ethernet vlan id.If you want to configure this parameter, please make sure the ssm-out-enable is false.";
+        }
+      }
+    }    
+  }
+*/
+  augment "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface" {
+    when
+      "derived-from-or-self(if-mounted:type, 'ianaift-mounted:ethernetCsmacd')" {
+        description
+        "Enable SSM out function on the interfaces.";
+    }
+    uses ssm-out;
+    description "Indicate to enable/disable SSM out on an interface.";
+  }
+  /*
+  augment "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface"  {
+    when
+      "derived-from-or-self(if-mounted:type, 'ianaift-mounted:ethernetCsmacd')" {
+      description
+        "SSM Vlan, applicable on PON interface.";
+    }
+    description "augment ethernet interface for ssm";
+    leaf ssm-out-profile-ref {
+      if-feature "clock-freq";
+      type leafref {
+        path '../../../clock-frequency-mounted:clock-ssm-out-vlan-profiles/clock-frequency-mounted:clock-ssm-out-vlan-profile/clock-frequency-mounted:name';
+      }
+  //    mandatory true;
+    status obsolete;
+      description
+        "Reference to the ssm-out vlan-id profile. If you want to configure this parameter, please make sure the ssm-out-enable is false.";
+    }    
+  }
+*/
+  grouping ssm-in {
+    description "grouping ssm-in";
+    container ssm-in {
+      if-feature "ssm-in";
+      description "ssm-in";
+      leaf ssm-in-enable {
+       type boolean;
+        default "false";
+        description
+          "Enable or disable SSM in function at the interface.";
+     }
+    }       
+  }
+  
+  augment "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface" {
+    when
+      "derived-from-or-self(if-mounted:type, 'ianaift-mounted:ethernetCsmacd')"
+    {
+      description
+        "Enable SSM In function on the interfaces.";
+    }
+    description "augment ethernet interface for SSM in ";
+    uses ssm-in;
+  }
+
+  augment "/onu:onus/onu:onu/onu:root" {
+    when "derived-from-or-self(../onu:usage, 'template-common:node-actual-usage') or "
+         + "derived-from-or-self(../onu:usage, 'template-common:node-template-usage')" {
+       description
+         "it should be a node-actual-usage or node-template-usage ONU";
+    }
+    description "augment onu root with SyncE";
+    container synce-ssm {
+      if-feature clock-freq;
+      presence "Present if SyncE is configured";
+      description "SyncE configuration";
+      leaf admin-state {
+        type enumeration {
+          enum lock {
+            value 0;
+            description
+              "The SyncE/SSM function is lock.";
+          }
+          enum unlock {
+            value 1;
+            description
+              "The SyncE/SSM function is unlock.";
+          }
+        }
+        default lock;
+        description
+          "The administrative state of the SyncE function.";
+        reference
+          "ITU-T G.988 9.12.21 Synchronous Ethernet operation";
+      }
+      leaf QL-options {
+        type enumeration{
+          enum EEC-option-1 {
+            value 0;
+            description
+              "ITU-T G.8264 EEC option 1 network.";
+          }
+          enum EEC-option-2 {
+            value 1;
+            description
+              "ITU-T G.8264 EEC option 2 network.";
+          }
+          enum eEEC-option-1 {
+            value 2;
+            description
+              "ITU-T G.8262.1 eEEC option 1 network.";
+          }
+          enum eEEC-option-2 {
+            value 3;
+            description
+              "ITU-T G.8262.1 eEEC option 2 network.";
+          }
+        }
+        default EEC-option-1;
+        description
+          "specifies the expected network QL states";
+        reference
+          "ITU-T G.988 9.12.21 Synchronous Ethernet operation";
+      }
+      leaf ESMC-vlan-id {
+        type union {
+          type enumeration {
+            enum untag {
+              value 65535;
+              description
+                "Indicates that no VLAN association for ESMC messages";
+            }
+          }
+          type uint32 {range "0..4095";}
+        }
+        default 4088;
+        description
+          "Specifies the VLAN associated with ESMC messages.";
+        reference
+          "ITU-T G.988 9.12.21 Synchronous Ethernet operation";
+      }
+    }
+  }
+
+  augment "/onu:onus/onu:onu/onu:root" {
+    when "derived-from-or-self(../onu:usage, 'template-common:node-actual-usage') or "
+         + "derived-from-or-self(../onu:usage, 'template-common:node-from-template-usage')" {
+        description
+          "it should be a node-actual-usage or node-from-template-usage ONU";
+    }
+    description "augment onu root with SyncE state";
+    container synce-ssm-state {
+      if-feature clock-freq;
+      config false;
+      description "SyncE state";
+      leaf ESMC-QL-state {
+          type ql-state;
+          description "specifies received ONU SSM and enhanced SSM code";
+      }
+      leaf ESMC-QL-generation {
+          type ql-state;
+          description "specifies the current generated ONU ESMC quality level";
+      }
+      leaf tx-ESMC-informational-PDUs {
+          type uint32;
+          description "specifies the ESMC Informational PDU which is sent by the ONU";
+      }
+      leaf rx-ESMC-informational-PDUs {
+          type uint32;
+          description "specifies the ESMC Informational PDU which is received by the ONU";
+      }
+      leaf tx-ESMC-event-PDUs {
+          type uint32;
+          description "specifies the ESMC event PDU which is sent by the ONU";
+      }
+      leaf rx-ESMC-event-PDUs {
+          type uint32;
+          description "specifies the ESMC event PDU which is received by the ONU";
+      }
+      leaf QL-DNU-event-counter {
+          type uint32;
+          description "specifies the counter of QL state transitions to DNU from a non-DNU state";
+      }
+    }
+  }
+
+}

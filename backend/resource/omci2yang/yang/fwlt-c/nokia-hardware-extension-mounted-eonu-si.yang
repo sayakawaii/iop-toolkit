@@ -1,0 +1,78 @@
+module nokia-hardware-extension-mounted-eonu-si {
+
+  namespace
+     "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+   + "nokia-hardware-extension-mounted-eonu-si";
+
+  prefix nokia-hw-ext-mounted-eonu-si;
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import ietf-hardware-mounted {
+    prefix hw-mounted;
+  }
+    
+  import nokia-hardware-extension-mounted {
+    prefix nokia-hw-ext-mounted;
+  }
+
+  import nokia-sdan-service-impact {
+    prefix nokia-si;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "indicate that modifying a data node of nokia-hardware-extension
+     module would cause a service impact.";
+
+  revision 2024-06-01 {
+    description
+      "Add planned-module-type alert for BBN-107806.";
+    reference
+      "Nokia Specific.";
+  }
+ 
+  revision 2023-07-07 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia Specific.";
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware/hw-mounted:component/nokia-hw-ext-mounted:omci-identifier-helper/nokia-hw-ext-mounted:virtual-board-number" {
+    description
+     "Modifying virtual-board-number of a component would cause eqpt service impact";
+    deviate add {
+      nokia-si:service-impact;
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware/hw-mounted:component/nokia-hw-ext-mounted:omci-identifier-helper/nokia-hw-ext-mounted:port-id" {
+
+    description
+     "Modifying port-id of a component would cause eqpt service impact";
+    deviate add {
+      nokia-si:service-impact;
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware/hw-mounted:component/nokia-hw-ext-mounted:planned-module-type" {
+    description
+     "Modifying planned-module-type of a component would cause eqpt service impact";
+    deviate add {
+      nokia-si:service-impact;
+    }
+  }
+}
+
+
+
+

@@ -1,0 +1,309 @@
+submodule bbf-ringing-pattern-profile-body-mounted {
+  yang-version 1.1;
+  belongs-to bbf-sip-voip-mounted  {
+	prefix bbf-sip-voip-mounted;
+  }
+
+  import bbf-yang-types {
+    prefix bbf-yang;
+  }
+  
+  
+  organization
+    "Broadband Forum <https://www.broadband-forum.org>
+     FTTdp (Fiber to the Distribution Point) Work Area";
+
+  contact
+    "Comments or questions about this Broadband Forum YANG module
+     should be directed to <mailto:help@broadband-forum.org>.
+     Editor:      Frank Desseyn, Nokia
+     Editor:      Nadine Staelens, Nokia
+     WA Director: Christopher Croot, BT plc
+                  <mailto:chris.croot@bt.com>
+     WA Director: Sven Ooghe, Nokia
+                  <mailto:sven.ooghe@nokia.com>";
+
+  description
+    "This module contains a ringing pattern profile.
+     Copyright (c) 2016, 2017 Broadband Forum
+     Redistribution and use in source and binary forms, with or
+     without modification, are permitted provided that the following
+     conditions are met:
+     1. Redistributions of source code must retain the above copyright
+        notice, this list of conditions and the following disclaimer.
+     2. Redistributions in binary form must reproduce the above
+        copyright notice, this list of conditions and the following
+        disclaimer in the documentation and/or other materials
+        provided with the distribution.
+     3. Neither the name of the copyright holder nor the names of its
+        contributors may be used to endorse or promote products
+        derived from this software without specific prior written
+        permission.
+     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
+     CONTRIBUTORS \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+     INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+     DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+     CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+     SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+     NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+     CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+     STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+     ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+     ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     The above license is used as a license under copyright only.
+     Please reference the Forum IPR Policy for patent licensing terms
+     <https://www.broadband-forum.org/ipr-policy>.
+     Any moral rights which are necessary to exercise under the above
+     license grant are also deemed granted under this license.
+     This version of this YANG module is part of TR-355c1; see
+     the TR itself for full legal notices.";
+
+  revision 2020-03-06 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: 2020-03-06.";
+    reference
+      " ";
+  }
+  
+  grouping ringing-pattern-profile-body {
+	description
+	  "Defines the ring pattern profile.";
+    list ringing-events {	  
+	  description
+		"The events for which a ringing is defined. 
+		 If the ringing can be synthesized by a sequence of
+		 complex rings and silence, the event refers to
+		 a ringing pattern profile. Otherwise, the event 
+		 refers to a file name.";
+	  key "event";
+	  leaf event {
+	    type enumeration {
+	 	  enum default-ring {
+	 	    value 1;
+	 	    description
+	 		  "The default ringing event.";
+	 	  }
+	 	  enum stutter-ring {
+	 	    value 2;
+	 	    description
+	 	  	"The stutter ring event.";
+	 	  }
+	 	  enum short-ring {
+	 	    value 3;
+	 	    description
+	 		  "The short ring event, can be used as ring ping for 
+	 		   call forwarding services.";
+	 	  }
+		  enum reminder-ring {
+		    value 4;
+		    description
+		  	  "A special ringing, reminding the subscriber of an 
+		  	   activated supplementary service on his line.";
+		  }
+		  enum dist-ring-1 {
+		    value 5;
+		    description
+		  	  "The distinctive ringing option 1 event.";
+		  }
+		  enum dist-ring-2 {
+		    value 6;
+		    description
+		  	  "The distinctive ringing option 2 event.";
+		  }
+		  enum dist-ring-3 {
+		    value 7;
+		    description
+		  	  "The distinctive ringing option 3 event.";
+		  }
+		  enum dist-ring-4 {
+		    value 8;
+		    description
+		  	  "The distinctive ringing option 4 event.";
+		  }
+		  enum dist-ring-5 {
+		    value 9;
+		    description
+		  	  "The distinctive ringing option 5 event.";
+		  }
+		  enum dist-ring-6 {
+		    value 10;
+		    description
+		  	  "The distinctive ringing option 6 event.";
+		  }
+		  enum dist-ring-7 {
+		    value 11;
+		    description
+		  	  "The distinctive ringing option 7 event.";
+		  }
+		  enum dist-ring-8 {
+		    value 12;
+		    description
+		  	  "The distinctive ringing option 8 event.";
+		  }
+		  enum dist-ring-9 {
+		    value 13;
+		    description
+		  	  "The distinctive ringing option 9 event.";
+		  }
+		  enum dist-ring-10 {
+		    value 14;
+		    description
+		  	  "The distinctive ringing option 10 event.";
+		  }
+		  enum dist-ring-11 {
+		    value 15;
+		    description
+			  "The distinctive ringing option 11 event.";
+		  }
+		  enum dist-ring-12 {
+		    value 16;
+		   description
+		  	"The distinctive ringing option 12 event.";
+		  }
+		  enum default-call-waiting {
+		    value 17;
+		    description
+		      "The default call waiting event.";
+		  }
+		  enum dist-cw-1 {
+		    value 18;
+		    description
+			  "The distinctive cw option 1 event.";
+		  }
+		  enum dist-cw-2 {
+		    value 19;
+		    description
+			  "The distinctive cw option 2 event.";
+		  }
+		  enum dist-cw-3 {
+		    value 20;
+		    description
+		  	  "The distinctive cw option 3 event.";
+		  }
+		  enum dist-cw-4 {
+		    value 21;
+		    description
+		  	  "The distinctive cw option 4 event.";
+		  }
+		  enum dist-cw-5 {
+		    value 22;
+		    description
+		  	  "The distinctive cw option 5 event.";
+		  }
+		  enum dist-cw-6 {
+		    value 23;
+		    description
+		  	  "The distinctive cw option 6 event.";
+		  }
+		  enum dist-cw-7 {
+		    value 24;
+		    description
+		  	  "The distinctive cw option 7 event.";
+		  }
+		  enum dist-cw-8 {
+		    value 25;
+		    description
+		  	  "The distinctive cw option 8 event.";
+		  }
+		  enum dist-cw-9 {
+		    value 26;
+		    description
+		  	  "The distinctive cw option 9 event.";
+		  }
+		  enum call-completion {
+		    value 27;
+		    description
+		  	  "The call completion ring event.";
+		  }
+		}
+		description
+		  "An event for which a ring is defined.";
+	  }
+	  choice ringing-pattern-definition {
+	    description
+		  "The ring may be manually configured or 
+		   defined by means of an executable ring
+		   file.";
+
+	    case ringing-pattern-file {
+		  description
+		    "The ringing definition is received in an executable 
+		     ring file.";
+		  leaf ringing-file {
+		    type empty;
+		    description
+			  "ring defined by means of executable ring file.";
+		  }
+		  leaf ringing-file-name {
+			type bbf-yang:name-string;
+			description
+			  "References an executable ring file.";
+		  }	
+		  leaf ringing-file-repetition {
+		    type uint8;
+		    description
+			  "The number of times the ring file is to be repeated.
+			   The value 0 means that the file is to be repeated 
+			   indefinitely until terminated by some external
+			   event.";
+		  }
+	    } 
+	    case ringing-pattern-definition {
+	 	  description
+	 	    "The ringing definition is received by means of manual
+	 	    configuration input.";
+	 	  leaf ringing-config {
+	 	   type empty;
+	 	    description
+	 	  	  "Ringing defined by means of manual configuration 
+	 	  	   input.";
+	 	  }
+	 	  list ringing-pattern {
+	 	    key "ringing-pattern-name ringing-pattern-sequence-nbr";
+	 	    description
+	 		  "Allows to specify a complex ringing (or
+	 		   silence) and a duration. 
+	 		   By linking rings and silence together,
+	 		   possibly cyclically, continuous, varying
+	 		   or interrupted ring sequences, repetitive
+	 		   or not, may be defined. A ring sequence 
+	 		   is initiated by pointing to the first 
+	 		   ring pattern entry that defines its
+	 		   parameters.";
+			leaf ringing-pattern-name {
+			  type bbf-yang:name-string;
+			  description
+			    "The name of the rings and ringing pattern.";
+			}
+			leaf ringing-pattern-sequence-nbr {
+			  type uint8 {range "1..255";}
+			  description
+			    "The sequence of this list entry in the entire ring
+			     sequence.";
+			}
+			leaf ringing-pattern-enabled {
+			  type boolean;
+			  default false;
+			  description
+			    "This attribute controls whether the ring is on 
+			     (true) or off(false).";
+			}			  
+			leaf phase-duration {
+			  type uint16;
+			  units "1 msec";
+			  description
+			    "The duration of the phase.
+			     The value 0 specifies that the phase endures
+			     indefinitely, i.e., until terminated by other 
+			     events.";
+			}  
+		  } 
+	    }
+	  } 
+    }
+  } 
+} 

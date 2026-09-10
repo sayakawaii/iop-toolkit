@@ -1,0 +1,75 @@
+module nokia-bbf-hardware-extension-gpon-hw-25gspon-dev {
+
+  namespace
+     "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+   + "nokia-bbf-hardware-extension-gpon-hw-25gspon-dev";
+
+  prefix nokia-bbf-hardware-extension-gpon-hw-25gspon-dev;
+
+  import ietf-hardware {
+    prefix hw;
+  }
+
+  import bbf-hardware-extension {
+    prefix bbf-hw-ext;
+  }
+
+  import bbf-hardware-types {
+    prefix bbf-hwt;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "The NOKIA BBF/hardware YANG module supporting
+     deviations on top of standard.";
+
+  revision 2021-09-29 {
+    description
+      "Initial version.";
+    reference
+      "Nokia specific";
+  }
+
+  deviation "/hw:hardware/hw:component/bbf-hw-ext:model-name" {
+    deviate add {
+      must "
+      (current()/../hw:class != 'bbf-hwt:transceiver')
+      or
+      (not(starts-with(current()/../hw:parent, 'C')))
+      or
+      (
+        current()/../hw:class = 'bbf-hwt:transceiver' and
+        starts-with(current()/../hw:parent, 'C') and
+        (
+          (
+            (number(substring-after(current()/../hw:parent, 'C')) mod 2) = 1 and
+            not(current() = 'NOKIA_25GSPON' or current() = 'NON_NOKIA_25GSPON' or substring(current(), 1, 8) = '3FE48259' or substring(current(), 1, 8) = '3FE49650') and
+            (not(/hw:hardware/hw:component[hw:parent = concat('C', string(number(substring-after(current()/../hw:parent, 'C')) + 1))]/bbf-hw-ext:model-name = 'NOKIA_25GSPON') or
+            not(/hw:hardware/hw:component[hw:parent = concat('C', string(number(substring-after(current()/../hw:parent, 'C')) + 1))]/bbf-hw-ext:model-name = 'NON_NOKIA_25GSPON') or
+            not(substring(/hw:hardware/hw:component[hw:parent = concat('C', string(number(substring-after(current()/../hw:parent, 'C')) + 1))]/bbf-hw-ext:model-name, 1, 8) = '3FE48259') or
+            not(substring(/hw:hardware/hw:component[hw:parent = concat('C', string(number(substring-after(current()/../hw:parent, 'C')) + 1))]/bbf-hw-ext:model-name, 1, 8) = '3FE49650'))
+          )
+          or
+          (
+            (number(substring-after(current()/../hw:parent, 'C')) mod 2) = 0 and
+            not(boolean(/hw:hardware/hw:component[hw:parent = concat('C', string(number(substring-after(current()/../hw:parent, 'C')) - 1))]/bbf-hw-ext:model-name))
+          )
+          or
+          (
+            (number(substring-after(current()/../hw:parent, 'C')) mod 2) = 0 and
+            not(current() = 'NOKIA_25GSPON' or current() = 'NON_NOKIA_25GSPON' or substring(current(), 1, 8) = '3FE48259' or substring(current(), 1, 8) = '3FE49650')
+          )
+        )
+      )"
+      {
+        error-message "Transceiver type not allowed in this cage. Possibly due to conflict with configuration in neighbouring cage.";
+      }
+    }
+  }
+}

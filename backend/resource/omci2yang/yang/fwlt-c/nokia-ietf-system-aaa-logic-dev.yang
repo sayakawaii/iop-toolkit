@@ -1,0 +1,79 @@
+module nokia-ietf-system-aaa-logic-dev {
+
+  yang-version 1.1;
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-ietf-system-aaa-logic-dev";
+
+  prefix  nokia-ietf-system-aaa-logic-dev;
+
+  import ietf-system {
+    prefix sys;
+  }
+
+  import tailf-common {
+    prefix "tailf";
+  }
+
+  import ietf-inet-types {
+    prefix inet;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA IETF/System YANG module supporting
+     deviations on top of standard.";
+
+
+
+/* revision */
+  
+  revision 2023-04-30 {
+    description
+      "Restrict the domain name config for udp address";
+    reference
+      "TBD";
+  }
+
+  revision 2022-06-27 {
+    description
+      "Corrected the error description for shared-secret.";
+    reference
+      "TBD";
+  } 
+
+  revision 2020-08-28 {
+    description
+      "Initial revision.";
+    reference
+      "TBD";
+  }
+
+/**********************************************/
+/* definitions which should always be present */
+/**********************************************/
+
+  deviation "/sys:system/sys:radius/sys:server/sys:transport/sys:udp/sys:udp/sys:shared-secret" {
+    deviate replace {
+      type tailf:aes-cfb-128-encrypted-string {
+        length "1..128"{
+          error-message "shared-secret string allowed range is min 1 to max 63 characters";
+          description "802.1X RADIUS Parameter: The shared-secret will accept with minimum of 1 and maximum of 63 characters";
+        }
+      }
+    }
+  }
+
+
+  deviation "/sys:system/sys:radius/sys:server/sys:transport/sys:udp/sys:udp/sys:address" {
+    deviate replace {
+      type inet:ip-address{
+      }
+    }
+  }
+}

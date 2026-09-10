@@ -1,0 +1,52 @@
+module nokia-sdan-rf-video-uni-mounted-eonu-dev {
+
+  namespace
+     "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+   + "nokia-sdan-rf-video-uni-mounted-eonu-dev";
+
+  prefix nokia-rf-video-uni-mounted-eonu-dev;
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import ietf-interfaces-mounted {
+     prefix if-mounted;
+  }
+
+  import nokia-sdan-rf-video-uni-mounted {
+    prefix nokia-rf-uni-mounted;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "The NOKIA BBF/hardware YANG module supporting
+     deviations on top of standard.";
+
+  revision 2023-09-26 {
+    description
+      "Remove unused import nokia-interface-identities.";
+    reference
+      "Nokia specific EPIC BBN-27738";
+  }
+
+  revision 2023-08-31 {
+    description
+      "Add deviation that rf-video-uni does not support power-control.";
+    reference
+      "Nokia specific EPIC BBN-27738";
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/nokia-rf-uni-mounted:rf-video-uni/nokia-rf-uni-mounted:power-control" {
+    description
+       "This deviation assures that rf-video-uni does not support power-control.";
+    deviate not-supported;
+  }
+
+}

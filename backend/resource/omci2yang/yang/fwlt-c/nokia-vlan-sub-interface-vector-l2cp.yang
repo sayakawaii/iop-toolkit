@@ -1,0 +1,208 @@
+module nokia-vlan-sub-interface-vector-l2cp {
+  yang-version 1.1;
+  namespace "uri:http://www.nokia.com/Fixed-Networks/BBA/yang/"
+          + "nokia-vlan-sub-interface-vector-l2cp";
+  prefix nokia-vsi-vctr-l2cp;
+
+  import bbf-vlan-sub-interface-vector {
+    prefix bbf-vsi-vctr;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+    directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG definitions for
+     supporting the Broadband Forum requirements on the management of
+     sub-interfaces as applicable to access network equipment. As
+     such, this module is specific to access network equipment (e.g.,
+     BBF-specified Access Nodes and FTTdp DPUs).
+
+     Specifically, this module extends the VLAN sub-interface vector 
+     profile concept with l2cp data nodes.
+
+        This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+ 
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+ 
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+ 
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+ 
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2021, Nokia. All Rights Reserved.";
+
+  revision 2023-02-04 {
+    description
+      "Addition of description for l2cp-address-service";
+    reference
+      "";
+  }
+
+  revision 2021-08-18 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: 20xx-xx-xx.";
+    reference
+      "TR-383: Common YANG Modules
+               <https://www.broadband-forum.org/technical/download/
+                        TR-383.pdf>";
+  }
+
+  augment "/bbf-vsi-vctr:vsi-vector-profiles"
+        + "/bbf-vsi-vctr:vsi-vector-profile" {
+    description
+      "Augments the vector profile with DHCPv4 data nodes.";
+
+    container l2cp {
+      presence
+        "L2CP frames are frames with a destination MAC address in the 
+         range 01-80-C2-00-00-00 to 01-80-C2-00-00-0F, destination
+         MAC address 01-80-C2-00-00-10, or with a destination MAC 
+         address in the range 01-80-C2-00-00-20 to 01-80-C2-00-00-2F.
+         
+         A set of protocols is defined at Ethernet link layer. In 
+         normal cases it is implicit that the related protocol frames 
+         are either processed (peered) or are discarded. However, some
+         services such as the MEF defined Ethernet Private Line (EPL) 
+         require a third option: some frames might have to be 
+         transported to a remote peer.
+         
+         Frame processing requires to apply first the filters to peer 
+         protocols (that are enabled via other configuration).
+         
+         This container defines the data to control L2CP frame 
+         discarding versus frame passing, at the condition these 
+         frames are not identified through a first check resulting 
+         from other configuration that demanded protocols to be 
+         peered.";
+      description
+        "L2CP frames are frames with a destination MAC address in the 
+         range 01-80-C2-00-00-00 to 01-80-C2-00-00-0F, destination
+         MAC address 01-80-C2-00-00-10, or with a destination MAC 
+         address in the range 01-80-C2-00-00-20 to 01-80-C2-00-00-2F.
+         
+         A set of protocols is defined at Ethernet link layer. In 
+         normal cases it is implicit that the related protocol frames 
+         are either processed (peered) or are discarded. However, some
+         services such as the MEF defined Ethernet Private Line (EPL) 
+         require a third option: some frames might have to be 
+         transported to a remote peer.
+         
+         Frame processing requires to apply first the filters to peer 
+         protocols (that are enabled via other configuration).
+         
+         This container defines the data to control L2CP frame 
+         discarding versus frame passing, at the condition these 
+         frames are not identified through a first check resulting 
+         from other configuration that demanded protocols to be 
+         peered.";
+         
+      leaf l2cp-address-service {
+        type union {
+          type enumeration {
+            enum "block-l2cp" {
+              value 0; // explicitly values it as 0
+              description
+                "This value corresponds with the IEEE default behavior
+                 being: the interface will not pass frames with a 
+                 destination MAC address being in the range:
+                 - 01-80-C2-00-00-00 to 01-80-C2-00-00-2F.
+                 
+                 I.e. frames with a destination address in that range
+                 are either peered, or are discarded.";
+              reference
+                "MEF 45.1, chapter 8.1";             
+            }
+            enum "l2cp-pass-00-02to0f-10-2x" {
+              value 3; // explicitly values it as 3
+              description
+                "This value is relevant only when the interface is 
+                 C-VLAN tag blind (i.e. a single higher layer VLAN 
+                 sub-interface is created to match all frames), and 
+                 the interface is involved in a point-to-point 
+                 port-based service that supports the EPL Option 2 
+                 L2CP processing.
+
+                 This configuration matches the L2CP Address Set 
+                 Service Attribute set to value C-VLAN tag blind 
+                 option 2 (CTB-2).
+
+                 When set, the interface will not pass frames with a 
+                 destination MAC address being:
+                 - 01-80-C2-00-00-01.
+                 It will pass frames with a destination MAC address 
+                 being one of
+                 - 01-80-C2-00-00-00.
+                 - 01-80-C2-00-00-02 to 01-80-C2-00-00-0F.
+                 
+                 Frames with destination MAC address 01-80-C2-00-00-10
+                 will be passed.
+                 
+                 Frame processing for frames with a destination MAC in
+                 the range 01-80-C2-00-00-20 to 01-80-C2-00-00-2F are 
+                 passed unless it is a destination address that 
+                 corresponds with a L2CP protocol that is peered.";
+              reference
+                "MEF 45, chapter 8.1";
+            }
+          }
+        }
+        description
+          "Defines the L2CP frames that shall be filtered versus the
+           L2CP frames that shall be passed. The type is defined as a
+           union. Filtered frames are discarded unless they are
+           protocol frames for which configuration demands the
+           protocol to be peered.
+
+           The enumeration type values allow to configure a value that
+           is defined in MEF or in BBF and defines which frames shall
+           be passed / discarded.
+
+           In case one of the enumeration situations is configured,
+           then the transparency for L2CP multicast addresses in the
+           range from 01-80-C2-00-00-20 to 01-80-C2-00-00-2F is as
+           follows: in case one of the protocols using one of such
+           addresses is peered, then frames with this destination MAC
+           address will not pass. In case none of the protocols using
+           an address in this range is peered, then all the frames
+           with a destination MAC address in this range are passed.
+           Possible peering of protocols is configured per protocol.";
+        reference
+          "MEF 45.1, section 8.1";
+      }  
+    }
+  }  
+}

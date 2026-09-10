@@ -1,0 +1,50 @@
+module nokia-ethernet-common-imm {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-ethernet-common-imm";
+
+  prefix nokia-eth-com-imm;
+
+  import ietf-immutable{
+    prefix im;
+  }
+
+  import nokia-sdan-ietf-immutable{
+     prefix nokia-im;
+  }
+
+  import ietf-interfaces {
+    prefix if;
+  }
+  
+  import ethernet {
+      prefix eth;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA Ethernet YANG module supporting
+     deviations on top of standard.";
+
+  revision 2023-01-03 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia Specific.";
+  }
+
+  deviation '/if:interfaces/if:interface/eth:ethernet' {
+      description
+      "The ethernet yang attrubutes are cannot be modified when interface name is LEMIITF or BP_Eth.
+       The client can delete or remove the interface and subsequently create the interface again.";
+      deviate add {
+        im:immutable "create delete";
+        nokia-im:condition "../if:name='LEMIITF' | ../if:name='BP_Eth'";
+      }
+  }
+}

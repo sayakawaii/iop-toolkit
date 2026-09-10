@@ -1,0 +1,142 @@
+module nokia-sdan-ssh-server-mounted {
+  yang-version 1.1;
+ 
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+           + "nokia-sdan-ssh-server-mounted";
+ 
+  prefix nokia-sdan-ssh-server-mounted;
+ 
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+  import nokia-template-common {
+    prefix template-common;
+  }
+ 
+  organization
+    "Nokia";
+ 
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.mibsupport@nokia.com>.";
+ 
+  description
+    "This module contains a collection of YANG definitions for
+     managing the SSH server on an ONU.
+ 
+     Specifically, this module defines the configuration (the
+     'enabled' leaf), operational state, and the restart action for
+     the ONU SSH server.
+ 
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+ 
+     Copyright (C) 2026, Nokia. All Rights Reserved.";
+ 
+  revision 2026-04-28 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific";
+  }
+ 
+  identity ssh-server-status {
+    description
+      "Base identity for SSH server operational status.";
+  }
+ 
+  identity running {
+    base ssh-server-status;
+    description
+      "The SSH server is running.";
+  }
+ 
+  identity stopped {
+    base ssh-server-status;
+    description
+      "The SSH server is stopped.";
+  }
+ 
+  identity error {
+    base ssh-server-status;
+    description
+      "The SSH server is in an error state.";
+  }
+ 
+  augment '/onu:onus/onu:onu/onu:root' {
+  when "derived-from-or-self(../onu:usage, 'template-common:node-actual-usage') or "
+       + "derived-from-or-self(../onu:usage, 'template-common:node-template-usage')" {
+      description
+        "Only applicable to node-actual-usage or node-from-template-usage ONU.";
+    }
+    description
+      "Augment ONU root with SSH server management.";
+ 
+    list ssh-server {
+      key "name";
+      max-elements 1;
+      description
+        "List of SSH server instances on the ONU.";
+ 
+      leaf name {
+        type string;
+        description
+          "The name of the SSH server instance.";
+      }
+      leaf enabled {
+        type boolean;
+        default "false";
+        description
+          "Enables or disables the SSH server service. Setting this to
+           'true' starts the server; setting it to 'false' stops it.";
+      }
+    }
+  }
+  
+  augment '/onu:onus/onu:onu/onu:root' {
+    description
+      "Augment ONU root with SSH server state.";
+    list ssh-server-state {
+      key "name";
+      config false;
+      max-elements 1;
+      description
+        "List of SSH server instances on the ONU.";
+ 
+      leaf name {
+        type string;
+        description
+          "The name of the SSH server instance.";
+      }
+      container state {
+        description
+          "Operational state of the SSH server.";
+ 
+        leaf status {
+          type identityref {
+            base ssh-server-status;
+          }
+          description
+            "The current operational status of the SSH server.";
+        }
+      }
+
+      action restart {
+        description
+          "Restart the SSH server on the ONU.
+ 
+           This is equivalent to performing a stop followed by a start.
+           All active SSH sessions will be terminated during the
+           restart. The server will begin accepting new connections
+           once the restart is complete.";
+      }
+    }
+  }
+}

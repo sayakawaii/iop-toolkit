@@ -1,0 +1,376 @@
+module nokia-bbf-l2-forwarding-l2fwd-fiber-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/" +
+            "nokia-bbf-l2-forwarding-l2fwd-fiber-dev";
+
+  prefix nokia-bbf-l2-forwarding-l2fwd-fiber-dev;
+
+  import bbf-l2-forwarding {
+    prefix bbf-l2-fwd;
+  }
+
+  import bbf-interface-usage {
+	prefix bbf-if-usg;
+  }
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  /*import bbf-if-type {
+    prefix bbfift;
+  }*/
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "This module contains a collection of YANG deviations on top 
+     of standard for supporting BBF/bbf-qos-policies YANG module.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia 
+     reserves the right to revise this document for any reason, 
+     including but not limited to conformity with standards 
+     promulgated by various agencies, utilisation of advances in the 
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or 
+     referred to herein.
+
+     The product specifications and other technical or performance 
+     information contained herein are subject to change without 
+     notice. Updates of this document will be issued under the above 
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any 
+     information or opinion contained herein. Nokia expressly advises 
+     that any use of for any purpose or reliance upon this technical 
+     reference is at the risk of the user and that Nokia shall not be 
+     liable for any damage or injury incurred by any person arising 
+     out of the sufficiency, accuracy, or utility of any information 
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any 
+     manufacturer to modify or change any of its products, nor does 
+     this document represent any commitment by Nokia to sell or 
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license 
+     or right under any patent, whether or not the use of any 
+     information herein necessarily employs an invention of any 
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2017-2018, Nokia. All Rights Reserved.";
+
+  revision 2022-11-24 {
+    description
+      "Remove unsupported yang node.";
+    reference
+      "Nokia specific";
+  }
+  
+  revision 2022-09-27 {
+    description
+      "only one interface-usage can be added to in-interface-usage of flooding-policy.";
+    reference
+      "";
+  }
+
+  revision 2022-06-06 {
+    description
+      "check if static mac is full 0 mac, multicast mac and broadcast mac.";
+    reference
+      "802.3";
+  }
+
+  revision 2016-11-28 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific"; 
+  }
+
+  deviation "/bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarders/bbf-l2-fwd:forwarder/bbf-l2-fwd:ports/bbf-l2-fwd:port/bbf-l2-fwd:sub-interface" {
+    deviate add {
+      must "not(/if:interfaces/if:interface[if:name=current()]/if:enabled = 'false' and "
+           + "/if:interfaces/if:interface[if:name=current()]/bbf-if-usg:interface-usage/bbf-if-usg:interface-usage = 'network-port')" {
+        error-message
+          "A forwarder port with usage network-port must not be disabled.";
+      }
+    }
+  }
+ 
+  deviation "/bbf-l2-fwd:forwarding/bbf-l2-fwd:split-horizon-profiles/bbf-l2-fwd:split-horizon-profile"{
+    deviate add {
+      max-elements 4;
+    }
+  }
+
+  /*Must configure flooding policy profile and split-horizon profile for N:1 fowarding(More than 2 vlan-subinterfaces in one forwarder). */
+/* COMMENTED FOR PERFORMANCE
+  deviation "/bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarders/bbf-l2-fwd:forwarder/bbf-l2-fwd:ports/bbf-l2-fwd:port/bbf-l2-fwd:name" {
+    deviate add{
+      must "(( (../../../bbf-l2-fwd:flooding-policies/bbf-l2-fwd:flooding-policies-profile !='') and (../../../bbf-l2-fwd:split-horizon-profiles/bbf-l2-fwd:split-horizon-profile!='')) or (count(../../port[name!=''])<3))"{
+        error-message
+          "N:1 forwarder must configure default flooding policy profile 'drop_all' and a split horizon profile.";
+      }
+    } 
+  }
+*/
+
+  /* Max allow configurated forwarder number is 32768.  */
+/* Move to l2fwd-fiber-single-uplink
+  deviation "/bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarders/bbf-l2-fwd:forwarder" {
+   description
+      "From requirements perspective we need 2 types of forwarders:
+       1:1 (crossconnect) VLANs:
+       - maximum 1 user port or maximum 1 subtended-node port
+       - support MAC learning is optional (as a network security feature to limit the number of user MACs)
+         in YANG: an FDB and a MAC learning control profile is optional
+       - no split horizon profile
+       - no flooding profile
+       N:1 (Bridge) VLANs:
+       - allow multiple users and forwarding to the right user is based on the destination MAC address
+       - this makes a forwarding-database that contains these MAC addresses mandatory
+         in YANG: an FDB and a MAC learning control profile is mandatory
+       - this reveals the issue on how to forward downstream frames: for security: to the right user only
+         In YANG: controlled using a flooding profile.
+         The absence of a profile has a well defined behavior (flood everything, but support of this is not 
+         required, hence a flooding profile is made mandatory)
+       - for security: do not allow user to user communication. 
+         In YANG: a split horizon profile is mandatory.";
+		 
+    deviate add {
+      must "(count(current()/bbf-l2-fwd:ports/bbf-l2-fwd:port ) <= 2) "
+         + " or "
+         + "(boolean(./bbf-l2-fwd:split-horizon-profiles"
+         +           "/bbf-l2-fwd:split-horizon-profile) and "
+         +  "boolean(./bbf-l2-fwd:flooding-policies"
+         +           "/bbf-l2-fwd:flooding-policies-profile) and "
+         +  "boolean(./bbf-l2-fwd:mac-learning"
+         +           "/bbf-l2-fwd:forwarding-database))" {
+        error-message
+          "Forwarder configuration is not consistent:"
+        + "- either have maximum 2 ports -or- "
+        + "- attach a split horizon and a flooding profile and a forwarding-database to the forwarder";
+
+        description
+          "As in the error message. Note that this deviation allows more than required.
+           E.g. it also allows a forwarder with 2 user-ports without profiles attached.";          
+      }
+    }
+  }
+*/
+
+  /* number-committed-mac-addresses must less than or equal to max-number-mac-addresses */
+  /* number-committed-mac-addresses is not supported on fiber boards */
+  /*deviation "/if:interfaces/if:interface/bbf-l2-fwd:mac-learning"{
+    deviate add{
+      must "current()/bbf-l2-fwd:number-committed-mac-addresses <= current()/bbf-l2-fwd:max-number-mac-addresses"
+      {
+        error-message "number-committed-mac-addresses must less than or equal to max-number-mac-addresses";
+      }
+    }
+  }*/
+
+  deviation "/bbf-l2-fwd:forwarding/bbf-l2-fwd:flooding-policies-profiles/bbf-l2-fwd:flooding-policies-profile/bbf-l2-fwd:flooding-policy/bbf-l2-fwd:in-interface-usages/bbf-l2-fwd:interface-usages"{
+    deviate add {
+      max-elements 1;
+    }
+  }
+
+  /*
+   * Flooding Profile policies are ONLY supported for below cases:
+   * Downstream:
+   *   in-interface-usages interface-usages network-port
+   *   destination-address any_frame frame-forwarding discard or out-interface-usages user-port
+   *   destination-address mac-address-match any-multicast-mac-address frame-forwarding discard or out-interface-usages user-port
+   *   destination-address mac-address-match unicast-address frame-forwarding discard or out-interface-usages user-port 
+   *   destination-address mac-address-match broadcast-address frame-forwarding discard or out-interface-usages user-port 
+   *   destination-address mac-address-match ipv4-multicast-address frame-forwarding discard or out-interface-usages user-port 
+   *   destination-address mac-address-match ipv6-multicast-address frame-forwarding discard or out-interface-usages user-port 
+   *   destination-address ipv4-address-match rip-multicast-address frame-forwarding discard or out-interface-usages user-port 
+   *   destination-address ipv4-address-match ntp-multicast-address frame-forwarding discard or out-interface-usages user-port
+   * Upstream:
+   *   in-interface-usages interface-usages user-port
+   *   destination-address mac-address-match any-multicast-mac-address frame-forwarding discard or out-interface-usages network-port 
+   *   destination-address mac-address-match ipv4-multicast-address frame-forwarding discard or out-interface-usages network-port
+   *   destination-address mac-address-match ipv6-multicast-address frame-forwarding discard or out-interface-usages network-port
+   *   destination-address ipv4-address-match rip-multicast-address frame-forwarding discard or out-interface-usages network-port
+   *   destination-address ipv4-address-match ntp-multicast-address frame-forwarding discard or out-interface-usages network-port
+ */
+
+  deviation "/bbf-l2-fwd:forwarding/bbf-l2-fwd:flooding-policies-profiles/bbf-l2-fwd:flooding-policies-profile/bbf-l2-fwd:flooding-policy"{
+/* Move to l2fwd-fiber-single-uplink
+    deviate add{
+      must "(boolean(current()/bbf-l2-fwd:in-interface-usages/bbf-l2-fwd:interface-usages)) and
+            not((boolean(current()/bbf-l2-fwd:in-interface-usages/bbf-l2-fwd:interface-usages = current()/bbf-l2-fwd:out-interface-usages/bbf-l2-fwd:interface-usages)))"
+        {
+          error-message "in-interface-usage can't be null and can't be the same as out-interface-usages";
+        }
+    }
+*/
+    deviate add{
+      must "(not(boolean(current()/bbf-l2-fwd:in-interface-usages/bbf-l2-fwd:interface-usages = 'user-port') and
+             ((boolean(current()/bbf-l2-fwd:destination-address/bbf-l2-fwd:any-frame)) or
+              (boolean(current()/bbf-l2-fwd:destination-address/bbf-l2-fwd:unicast-address)) or
+              (boolean(current()/bbf-l2-fwd:destination-address/bbf-l2-fwd:broadcast-address)))))"
+        {
+          error-message "In upstream, not support any-frame, unicast-address and broadcast-address flooding control!";
+        }
+    }
+  }
+
+  deviation '/bbf-l2-fwd:forwarding'
+        +'/bbf-l2-fwd:flooding-policies-profiles'
+        +'/bbf-l2-fwd:flooding-policies-profile'
+        +'/bbf-l2-fwd:flooding-policy'
+        +'/bbf-l2-fwd:destination-address/bbf-l2-fwd:frame-filter'
+        +'/bbf-l2-fwd:destination-mac-address/bbf-l2-fwd:mac-address'
+        +'/bbf-l2-fwd:cfm-multicast-address' {
+      deviate not-supported;
+    }
+  
+  deviation '/bbf-l2-fwd:forwarding'
+        +'/bbf-l2-fwd:flooding-policies-profiles'
+        +'/bbf-l2-fwd:flooding-policies-profile'
+        +'/bbf-l2-fwd:flooding-policy'
+        +'/bbf-l2-fwd:destination-address/bbf-l2-fwd:frame-filter'
+        +'/bbf-l2-fwd:destination-mac-address/bbf-l2-fwd:mac-address'
+        +'/bbf-l2-fwd:mac-address-filter' {
+      deviate not-supported;
+    }
+  
+  deviation '/bbf-l2-fwd:forwarding'
+        +'/bbf-l2-fwd:flooding-policies-profiles'
+        +'/bbf-l2-fwd:flooding-policies-profile'
+        +'/bbf-l2-fwd:flooding-policy'
+        +'/bbf-l2-fwd:destination-address/bbf-l2-fwd:frame-filter'
+        +'/bbf-l2-fwd:destination-ipv4-address/bbf-l2-fwd:ipv4-address'
+        +'/bbf-l2-fwd:any-multicast-ipv4-address' {
+      deviate not-supported;
+    }
+  
+  deviation '/bbf-l2-fwd:forwarding'
+        +'/bbf-l2-fwd:flooding-policies-profiles'
+        +'/bbf-l2-fwd:flooding-policies-profile'
+        +'/bbf-l2-fwd:flooding-policy'
+        +'/bbf-l2-fwd:destination-address/bbf-l2-fwd:frame-filter'
+        +'/bbf-l2-fwd:destination-ipv4-address/bbf-l2-fwd:ipv4-address'
+        +'/bbf-l2-fwd:all-hosts-multicast-address' {
+      deviate not-supported;
+    }
+  
+  deviation '/bbf-l2-fwd:forwarding'
+        +'/bbf-l2-fwd:flooding-policies-profiles'
+        +'/bbf-l2-fwd:flooding-policies-profile'
+        +'/bbf-l2-fwd:flooding-policy'
+        +'/bbf-l2-fwd:destination-address/bbf-l2-fwd:frame-filter'
+        +'/bbf-l2-fwd:destination-ipv6-address' {
+      deviate not-supported;
+    }
+
+  /*
+   * The Max number of flooding profiles is 16
+  */
+  deviation '/bbf-l2-fwd:forwarding'
+        +'/bbf-l2-fwd:flooding-policies-profiles'
+        +'/bbf-l2-fwd:flooding-policies-profile' {
+      deviate add {
+        max-elements 16;
+      }
+    }
+
+  /*
+   * The Max number of policies in a profile is 16
+  */
+  deviation "/bbf-l2-fwd:forwarding/bbf-l2-fwd:flooding-policies-profiles"
+        +"/bbf-l2-fwd:flooding-policies-profile/bbf-l2-fwd:flooding-policy"{
+      deviate add{
+        max-elements 16;
+      }
+    }
+
+  /* forbid setting static mac address as multicast address, broadcast address and full 0 mac. */
+  deviation "/bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarding-databases/bbf-l2-fwd:forwarding-database/bbf-l2-fwd:static-mac-address/bbf-l2-fwd:mac-address" {
+     deviate add {
+     must "current() != '00:00:00:00:00:00'" {
+          error-message "Can't configure 00:00:00:00:00:00 as static mac address";
+         }
+     }
+
+    deviate add {
+     must "not(starts-with(.,'ff')) and not(starts-with(.,'01')) and not(starts-with(.,'33'))"{
+            error-message "Can't configure mutli-cast address or broadcast address as static mac address";
+         }
+      }
+  }
+
+  /*Sum of static MAC in VSI must be less than or equal to max-mac per VSI.*/
+  /*deviation "/bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarding-databases/bbf-l2-fwd:forwarding-database/bbf-l2-fwd:static-mac-address"
+          +"/bbf-l2-fwd:learning-constraint/bbf-l2-fwd:install-in-fdb-on/bbf-l2-fwd:install-on/bbf-l2-fwd:static-port"
+          +"/bbf-l2-fwd:static-forwarder-port-ref/bbf-l2-fwd:port" {
+    deviate add{
+      must "count(/bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarding-databases/bbf-l2-fwd:forwarding-database"
+           +"/bbf-l2-fwd:static-mac-address[bbf-l2-fwd:static-forwarder-port-ref/bbf-l2-fwd:port = current()])"
+           +"<= /if:interfaces/if:interface[if:type = 'bbfift:vlan-sub-interface' and"
+           +" if:name = /bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarders"
+           +"/bbf-l2-fwd:forwarder/bbf-l2-fwd:ports/bbf-l2-fwd:port[bbf-l2-fwd:name=current()]/bbf-l2-fwd:sub-interface]"
+           +"/bbf-l2-fwd:mac-learning/max-number-mac-addresses"
+      {
+        error-message "Sum of Static MACs per vlan-sub-interface exceeds max-number-mac-addresses of the vlan-sub-interface";
+      }
+    }
+  }*/
+
+  /*Sum of static MAC in System must be less than or equal to max-mac per System.*/
+  deviation "/bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarding-databases/bbf-l2-fwd:forwarding-database/bbf-l2-fwd:static-mac-address" {
+    deviate add{
+      must "count(/bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarding-databases/bbf-l2-fwd:forwarding-database"
+           +"/bbf-l2-fwd:static-mac-address) <= 10"
+      {
+        error-message "Sum of Static MACs in the system exceeds maximum MAC supported by the system";
+        description
+           "This constraint limits the maximum static mac configuration in the 
+            system/board to be lesser than or equal to maximum MAC 
+            supported by the system/board";
+      }
+    }
+  }
+
+    /*Sum of static MAC in FDB must be less than or equal to max-mac per FDB */
+  deviation "/bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarding-databases/bbf-l2-fwd:forwarding-database/bbf-l2-fwd:static-mac-address"
+          +"/bbf-l2-fwd:learning-constraint/bbf-l2-fwd:install-in-fdb-on/bbf-l2-fwd:install-on/bbf-l2-fwd:static-port"
+          +"/bbf-l2-fwd:static-forwarder-port-ref/bbf-l2-fwd:forwarder" {
+    deviate add{
+      must "count(/bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarding-databases/bbf-l2-fwd:forwarding-database"
+          +"/bbf-l2-fwd:static-mac-address[bbf-l2-fwd:static-forwarder-port-ref/bbf-l2-fwd:forwarder = current()]) <= "
+          +"/bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarding-databases/bbf-l2-fwd:forwarding-database/bbf-l2-fwd:max-number-mac-addresses"
+      {
+        error-message "Sum of static MAC in forwarding-database must be less than or equal to max-number-mac-addresses  configured per forwarding-database";
+
+        description
+           "This constraint limits the maximum static mac configuration in 
+            a forwarding-database to be lesser than or equal to max-number-mac-addresses 
+            configured per forwarding-database";
+      }
+    }
+  }
+
+  deviation "/bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarding-databases/bbf-l2-fwd:forwarding-database/bbf-l2-fwd:static-mac-address/bbf-l2-fwd:learning-constraint/bbf-l2-fwd:allowed-to-learn-on/bbf-l2-fwd:allow-to-learn-on/bbf-l2-fwd:forwarder-port"
+  {
+    deviate not-supported;
+  }
+  
+  deviation "/if:interfaces/if:interface/bbf-l2-fwd:mac-learning/bbf-l2-fwd:number-committed-mac-addresses"
+  {
+    deviate not-supported;
+  }
+}

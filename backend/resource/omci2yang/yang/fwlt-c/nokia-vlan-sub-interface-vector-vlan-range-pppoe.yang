@@ -1,0 +1,108 @@
+module nokia-vlan-sub-interface-vector-vlan-range-pppoe {
+  yang-version 1.1;
+  namespace "uri:http://www.nokia.com/Fixed-Networks/BBA/yang/"
+          + "nokia-vlan-sub-interface-vector-vlan-range-pppoe";
+  prefix nokia-vsi-vctr-vlan-range-pppoe;
+
+  import bbf-vlan-sub-interface-vector {
+    prefix bbf-vsi-vctr;
+  }
+  
+  import bbf-vlan-sub-interface-vector-pppoe {
+    prefix bbf-vsi-vctr-pppoe;
+  }
+
+  import nokia-vlan-range {
+    prefix nokia-vlan-range;
+  }   
+      
+  
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+    directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG definitions for
+     supporting the Broadband Forum requirements on the management of
+     sub-interfaces as applicable to access network equipment. As
+     such, this module is specific to access network equipment (e.g.,
+     BBF-specified Access Nodes and FTTdp DPUs).
+
+     Specifically, this module extends the VLAN sub-interface vector 
+     profile concept with pppoe data nodes.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+ 
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+ 
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+ 
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+ 
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+ 
+     Copyright (C) 2021, Nokia. All Rights Reserved.";
+
+  revision 2021-08-18 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: 20xx-xx-xx.";
+    reference
+      "TR-383: Common YANG Modules
+               <https://www.broadband-forum.org/technical/download/
+                        TR-383.pdf>";
+  }
+
+
+  augment "/bbf-vsi-vctr:vsi-vector-profiles"
+        + "/bbf-vsi-vctr:vsi-vector-profile" 
+        + "/bbf-vsi-vctr-pppoe:pppoe" {  
+    description
+      "Addition of protocol range profile for pppoe protocol.";
+    
+    leaf vlan-range-profile-ref {
+      when "../bbf-vsi-vctr-pppoe:enable = 'true'" {
+        description
+          "Applicable only when PPPoE intermediate Agent functionality
+           is enabled.";
+      }
+      type nokia-vlan-range:vlan-range-profile-name;
+    description
+      "Reference to protocol vlan-range profile.";
+    }
+  }
+
+
+}
+
+

@@ -1,0 +1,55 @@
+module nokia-bbf-l2-dhcpv4-relay-forwarding-no-dhcp-ds-flood-dev {
+
+  namespace
+     "urn:bbf:yang:nokia-bbf-l2-dhcpv4-relay-forwarding-no-dhcp-ds-flood-dev";
+
+  prefix bbf-l2-dhcpv4-relay-forwarding-no-dhcp-ds-flood-dev;
+
+  import bbf-l2-forwarding {
+    prefix bbf-l2-fwd;
+  }
+  
+  import bbf-l2-dhcpv4-relay-forwarding {
+    prefix bbf-l2-d4r-fwd;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA BBF/bbf-l2-dhcpv4-relay-forwarding YANG module 
+     supporting deviations on top of standard.";
+
+  /* revision */
+
+  revision 2021-07-27 {
+    description 
+      "Change prefix to avoid conflict";
+    reference
+      "TBD";
+  }
+
+  revision 2019-04-25 {
+    description
+      "Move to no-dhcp-ds-flood category.";
+    reference
+      "TBD";
+  }
+
+  /************************************************************/
+  /*  */
+  /************************************************************/
+  /* not support DHCP downstream broadcast flooding */
+  deviation "/bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarders/bbf-l2-fwd:"
+        + "forwarder/bbf-l2-d4r-fwd:l2-dhcpv4-relay" {
+    deviate add{
+      must "current()/bbf-l2-d4r-fwd:downstream-broadcast-flooding = 'false'"{
+        error-message "Only option false is supported for downstream-broadcast-flooding in l2-dhcpv4-relay";
+        description "Only option false is supported for downstream-broadcast-flooding in l2-dhcpv4-relay";
+      }
+    }
+  }
+}

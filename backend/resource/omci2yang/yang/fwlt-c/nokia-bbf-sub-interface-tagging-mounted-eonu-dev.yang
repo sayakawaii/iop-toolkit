@@ -1,0 +1,559 @@
+module nokia-bbf-sub-interface-tagging-mounted-eonu-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/" 
+           + "nokia-bbf-sub-interface-tagging-mounted-eonu-dev";
+
+  prefix nokia-bbf-sub-interface-tagging-mounted-eonu-dev;
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import ietf-interfaces-mounted {
+    prefix if-mounted;
+  }
+
+  import bbf-sub-interface-tagging-mounted {
+    prefix bbf-subif-tag-mounted;
+  }
+
+  import bbf-sub-interfaces-mounted {
+    prefix bbf-subif-mounted;
+  }
+
+  import bbf-dot1q-types {
+    prefix bbf-dot1qt;
+  }
+ 
+  import iana-if-type-mounted {
+    prefix ianaift-mounted;
+  }
+
+  import bbf-xpon-if-type-mounted {
+    prefix bbf-xponift-mounted;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "This module contains a collection of YANG deviations on top 
+     of standard for supporting BBF/bbf-sub-interfaces-tagging YANG module.
+     Copyright (C) 2017-2018, Nokia. All Rights Reserved.";
+
+  revision 2025-11-25 {
+    description
+      "add match-criteria ethernet-frame-type check";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2024-04-01 {
+    description
+      "add ingress-rewrite pbit/dei from-tag-index check";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2023-11-03 {
+    description
+      "remove egress-rewrite check";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2023-03-10 {
+    description
+      "update for egress-rewrite check.";
+    reference
+      "Nokia specific";
+  }
+ 
+  revision 2021-03-10 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific"; 
+  }
+
+ 
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing"
+           +"/bbf-subif-mounted:ingress-rule/bbf-subif-mounted:rule/bbf-subif-mounted:flexible-match/bbf-subif-tag-mounted:match-criteria"
+           +"/bbf-subif-tag-mounted:frame-filter/bbf-subif-tag-mounted:destination-mac-address"{
+    description
+       "This deviaton assures that no inline-frame-processing can be configured for destination-mac-address.";
+    deviate not-supported;
+ }
+
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing"
+           +"/bbf-subif-mounted:ingress-rule/bbf-subif-mounted:rule/bbf-subif-mounted:flexible-match/bbf-subif-tag-mounted:match-criteria"
+           +"/bbf-subif-tag-mounted:frame-filter/bbf-subif-tag-mounted:destination-ipv4-address"{
+    description
+       "This deviaton assures that no inline-frame-processing can be configured for destination-ipv4-address.";
+    deviate not-supported;
+ }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing"
+           +"/bbf-subif-mounted:ingress-rule/bbf-subif-mounted:rule/bbf-subif-mounted:flexible-match/bbf-subif-tag-mounted:match-criteria"
+           +"/bbf-subif-tag-mounted:frame-filter/bbf-subif-tag-mounted:destination-ipv6-address"{
+    description
+       "This deviaton assures that no inline-frame-processing can be configured for destination-ipv6-address.";
+    deviate not-supported;
+ }
+
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing"
+           +"/bbf-subif-mounted:ingress-rule/bbf-subif-mounted:rule/bbf-subif-mounted:flexible-match/bbf-subif-tag-mounted:match-criteria"
+           +"/bbf-subif-tag-mounted:vlan-tag-match-type/bbf-subif-tag-mounted:match-all"{
+    description
+       "This deviaton assures that no inline-frame-processing can be configured for match-all.";
+    deviate not-supported;
+ }
+ 
+ deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing"
+           +"/bbf-subif-mounted:ingress-rule/bbf-subif-mounted:rule/bbf-subif-mounted:flexible-match/bbf-subif-tag-mounted:match-criteria"
+           +"/bbf-subif-tag-mounted:ethernet-frame-type"{
+     description
+       "This deviaton replace type of ethernet-frame-type to only support enumeration and hex.";
+     deviate replace {
+          type union {
+            type enumeration {
+              enum any {
+                description
+                  "Matches any Ethertype value.";
+              }
+              enum ipv4 {
+                description
+                  "Matches the Ethertype value 0x0800 or 0x0806 or
+                  0x8035.";
+              }
+              enum pppoe {
+                description
+                  "Matches the Ethertype value 0x8863 or 0x8864.";
+              }
+              enum ipv6 {
+                description
+                  "Matches the Ethertype value 0x86DD.";
+              }
+          }
+          type bbf-dot1qt:ether-type-hex;
+        }
+    }
+  }
+
+ deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+            +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing"
+            +"/bbf-subif-mounted:ingress-rule/bbf-subif-mounted:rule/bbf-subif-mounted:flexible-match/bbf-subif-tag-mounted:match-criteria"
+            +"/bbf-subif-tag-mounted:ethernet-frame-type"{
+     deviate add {
+            must "(current() = 'any')"
+            +"or ((boolean(current()/../bbf-subif-tag-mounted:untagged))"
+            +"and ((current()/../../../../../../../if-mounted:interface[if-mounted:name = current()/../../../../../../bbf-subif-mounted:subif-lower-layer/bbf-subif-mounted:interface]"
+            +"/if-mounted:type = 'bbf-xponift-mounted:onu-v-vrefpoint')"
+            +"or  (current()/../../../../../../../if-mounted:interface[if-mounted:name = current()/../../../../../../bbf-subif-mounted:subif-lower-layer/bbf-subif-mounted:interface]"
+            +"/if-mounted:type = 'ianaift-mounted:ethernetCsmacd')))" {
+                    error-message "Filtering with ethernet frame type can only be used on untagged VSI and its lower-layer interface can only be onu-v-vrefpoint or ethernetCsmacd.";
+        }
+      }
+ }
+
+ deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing"
+           +"/bbf-subif-mounted:ingress-rule/bbf-subif-mounted:rule/bbf-subif-mounted:flexible-match/bbf-subif-tag-mounted:exclude-criteria"
+           +"/bbf-subif-tag-mounted:ethernet-frame-type"{
+      deviate add {
+            must "(not(boolean(current()/../../bbf-subif-tag-mounted:match-criteria"
+            +"/bbf-subif-tag-mounted:any-frame)))"
+            +"and (current() = '0x8100')" {
+                    error-message "The ethernet frame type only supports 0x8100 to identify the tag number, and can not be configured in the s-tunnel mode.";
+        }
+      }
+ }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing"
+           +"/bbf-subif-mounted:ingress-rule/bbf-subif-mounted:rule/bbf-subif-mounted:flexible-match/bbf-subif-tag-mounted:match-criteria"
+           +"/bbf-subif-tag-mounted:protocols"{
+     description
+       "This deviaton assures that no inline-frame-processing can be configured for protocols.";
+     deviate not-supported;
+ }
+ 
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing"
+           +"/bbf-subif-mounted:ingress-rule/bbf-subif-mounted:rule/bbf-subif-mounted:ingress-rewrite"
+           +"/bbf-subif-tag-mounted:push-tag/bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:vlan-id-from-tag-index-or-discard"{
+     description
+       "This deviaton assures not support ingress-rewrite vlan-id-from-tag-index-or-discard.";
+     deviate not-supported;     
+ }
+
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing"
+           +"/bbf-subif-mounted:ingress-rule/bbf-subif-mounted:rule/bbf-subif-mounted:ingress-rewrite"
+           +"/bbf-subif-tag-mounted:push-tag/bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:dei"
+           +"/bbf-subif-tag-mounted:write-dei-1" {
+     description
+       "This deviaton assures not support ingress-rewrite write-dei-1.";
+     deviate not-supported;
+
+ }
+
+ deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing"
+           +"/bbf-subif-mounted:ingress-rule/bbf-subif-mounted:rule/bbf-subif-mounted:ingress-rewrite"
+           +"/bbf-subif-tag-mounted:push-tag/bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:pbit"
+           +"/bbf-subif-tag-mounted:write-pbit-0" {
+     description
+       "This deviaton assures not support ingress-rewrite write-pbit-0.";
+     deviate not-supported;
+ }
+
+ deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing"
+           +"/bbf-subif-mounted:ingress-rule/bbf-subif-mounted:rule/bbf-subif-mounted:ingress-rewrite"
+           +"/bbf-subif-tag-mounted:push-tag/bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:pbit"
+           +"/bbf-subif-tag-mounted:write-pbit-value" {
+     description
+       "This deviaton assures not support ingress-rewrite write-pbit.";
+     deviate not-supported;
+ }
+ 
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:egress-rewrite"
+           +"/bbf-subif-tag-mounted:push-tag/bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:vlan-id-from-tag-index-or-discard"{
+     description
+       "This deviaton assures not support vlan-id-from-tag-index-or-discard.";
+     deviate not-supported;
+
+ }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:egress-rewrite"
+           +"/bbf-subif-tag-mounted:push-tag/bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:pbit"           
+           +"/bbf-subif-tag-mounted:write-pbit-0" {
+    description
+       "This deviaton assures egress-rewrite  not support write-pbit-0.";
+     deviate not-supported;
+ }
+ 
+ deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:egress-rewrite"
+           +"/bbf-subif-tag-mounted:push-tag/bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:pbit"           
+           +"/bbf-subif-tag-mounted:write-pbit-value" {
+    description
+       "This deviaton assures egress-rewrite not support write-pbit.";
+     deviate not-supported;
+ }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:egress-rewrite"
+           +"/bbf-subif-tag-mounted:push-tag/bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:dei"           
+           +"/bbf-subif-tag-mounted:write-dei-0" {
+    description
+       "This deviaton assures egress-rewrite not support write-dei-0.";
+     deviate not-supported;
+ }
+   
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:egress-rewrite"
+           +"/bbf-subif-tag-mounted:push-tag/bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:dei"           
+           +"/bbf-subif-tag-mounted:write-dei-1" {
+    description
+       "This deviaton assures egress-rewrite not support write-dei-1.";
+     deviate not-supported;
+  }
+
+ 
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing"
+           +"/bbf-subif-mounted:ingress-rule/bbf-subif-mounted:rule/bbf-subif-mounted:flexible-match/bbf-subif-tag-mounted:match-criteria"
+           +"/bbf-subif-tag-mounted:vlan-tag-match-type/bbf-subif-tag-mounted:vlan-tagged"
+           +"/bbf-subif-tag-mounted:tag/bbf-subif-tag-mounted:index"{
+      deviate add {
+        must "current() = 0"{
+               error-message "The index of the VLAN tag only support tag 0. ";
+        }
+     }
+ }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing"
+           +"/bbf-subif-mounted:ingress-rule/bbf-subif-mounted:rule/bbf-subif-mounted:flexible-match/bbf-subif-tag-mounted:match-criteria"
+           +"/bbf-subif-tag-mounted:vlan-tag-match-type/bbf-subif-tag-mounted:vlan-tagged"
+           +"/bbf-subif-tag-mounted:tag/bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:tag-type"{
+      deviate add {
+            must "current() = 'bbf-dot1qt:c-vlan'"{
+                    error-message "The match-criteria tag type must be c-vlan.";
+        }
+    }
+ }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing"
+           +"/bbf-subif-mounted:ingress-rule/bbf-subif-mounted:rule/bbf-subif-mounted:flexible-match/bbf-subif-tag-mounted:match-criteria"
+           +"/bbf-subif-tag-mounted:vlan-tag-match-type/bbf-subif-tag-mounted:vlan-tagged"
+           +"/bbf-subif-tag-mounted:tag/bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:pbit"{
+      deviate add {
+            must "current() = 'any'"{
+                    error-message "Match pbit of vlan-sub-interface tagged rule value other than 'any' will be rejected.";
+            }
+          }
+ }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing"
+           +"/bbf-subif-mounted:ingress-rule/bbf-subif-mounted:rule/bbf-subif-mounted:flexible-match/bbf-subif-tag-mounted:match-criteria"
+           +"/bbf-subif-tag-mounted:vlan-tag-match-type/bbf-subif-tag-mounted:vlan-tagged"
+           +"/bbf-subif-tag-mounted:tag/bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:dei"{
+      deviate add {
+            must "current() = 'any'"{
+                    error-message "Match dei of vlan-sub-interface tagged rule value other than 'any' will be rejected.";
+            }
+          }
+ }
+
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing"
+           +"/bbf-subif-mounted:ingress-rule/bbf-subif-mounted:rule/bbf-subif-mounted:ingress-rewrite"
+           +"/bbf-subif-tag-mounted:push-tag"{
+      deviate replace {
+        max-elements 1;
+    }
+
+ }
+
+   deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing"
+           +"/bbf-subif-mounted:ingress-rule/bbf-subif-mounted:rule/bbf-subif-mounted:ingress-rewrite"
+           +"/bbf-subif-tag-mounted:push-tag/bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:tag-type"{
+     deviate add {
+            must "current() = 'bbf-dot1qt:c-vlan'"{
+                    error-message "The ingress-rewrite dot1q-tag tag type must be c-vlan.";
+            }
+          }
+
+ }
+
+
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:egress-rewrite"
+           +"/bbf-subif-tag-mounted:push-tag"{
+      deviate replace {
+        max-elements 1;
+    }
+
+ }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:egress-rewrite"
+           +"/bbf-subif-tag-mounted:push-tag/bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:tag-type"{
+     deviate add {
+            must "current() = 'bbf-dot1qt:c-vlan'"{
+                    error-message "The egress-rewrite dot1q-tag tag type must be c-vlan.";
+            }
+          }
+
+ } 
+
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:egress-rewrite"
+           +"/bbf-subif-tag-mounted:push-tag/bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:pbit"           
+           +"/bbf-subif-tag-mounted:copy-pbit-from-input-or-0/bbf-subif-tag-mounted:pbit-from-tag-index" {
+    deviate add {
+        must "current() = 0"{
+               error-message "pbit-from-tag-index only support value 0. ";
+        }
+     }
+   
+ }
+
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:egress-rewrite"
+           +"/bbf-subif-tag-mounted:push-tag/bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:dei"           
+           +"/bbf-subif-tag-mounted:copy-dei-from-input-or-0/bbf-subif-tag-mounted:dei-from-tag-index" {
+    deviate add {
+        must "current() = 0"{
+               error-message "dei-from-tag-index only support value 0.";
+        }
+     }
+
+ }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing"
+           +"/bbf-subif-mounted:ingress-rule/bbf-subif-mounted:rule/bbf-subif-mounted:ingress-rewrite"
+           +"/bbf-subif-tag-mounted:push-tag/bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:pbit"
+           +"/bbf-subif-tag-mounted:copy-pbit-from-input-or-0/bbf-subif-tag-mounted:pbit-from-tag-index" {
+    deviate add {
+        must "current() = 0"{
+               error-message "pbit-from-tag-index only support value 0.";
+        }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing"
+           +"/bbf-subif-mounted:ingress-rule/bbf-subif-mounted:rule/bbf-subif-mounted:ingress-rewrite"
+           +"/bbf-subif-tag-mounted:push-tag/bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:dei"
+           +"/bbf-subif-tag-mounted:copy-dei-from-input-or-0/bbf-subif-tag-mounted:dei-from-tag-index" {
+    deviate add {
+        must "current() = 0"{
+               error-message "dei-from-tag-index only support value 0.";
+        }
+    }
+  }
+
+  /*deviation "/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:egress-rewrite"
+           +"/bbf-subif-tag-mounted:push-tag/bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:vlan-id" {
+    deviate add {
+       must "(current()/../../../../bbf-subif-mounted:ingress-rule/bbf-subif-mounted:rule/bbf-subif-mounted:flexible-match"
+           +"/bbf-subif-tag-mounted:match-criteria/bbf-subif-tag-mounted:tag/bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:vlan-id = current()) or"
+           +"((current()/../../../../bbf-subif-mounted:ingress-rule/bbf-subif-mounted:rule/bbf-subif-mounted:flexible-match"
+           +"/bbf-subif-tag-mounted:match-criteria/bbf-subif-tag-mounted:tag/bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:vlan-id = 'priority-tagged') and " 
+           +"((current() = 0)))"{
+
+           error-message " The match field of VLAN tags (except untag) in ingress direction NOT equal to VLAN tags pushed in egress direction  will be rejected.";
+
+      }
+   }
+ }*/
+
+ 
+   deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing"
+           +"/bbf-subif-mounted:ingress-rule/bbf-subif-mounted:rule/bbf-subif-mounted:ingress-rewrite/bbf-subif-tag-mounted:pop-tags" {
+    deviate add {
+      must "(((boolean(current()/../../bbf-subif-mounted:flexible-match/bbf-subif-tag-mounted:match-criteria"
+           +"/bbf-subif-tag-mounted:untagged)) or (current()/../../bbf-subif-mounted:flexible-match"
+           +"/bbf-subif-tag-mounted:match-criteria/bbf-subif-tag-mounted:tag/bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:vlan-id = 'any') or "
+           +"(boolean(current()/../../bbf-subif-mounted:flexible-match/bbf-subif-tag-mounted:match-criteria"
+           +"/bbf-subif-tag-mounted:any-frame))) and (current() = 0)) or "
+           +"((current()/../../bbf-subif-mounted:flexible-match"
+           +"/bbf-subif-tag-mounted:match-criteria/bbf-subif-tag-mounted:tag/bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:vlan-id != 'any') and (current() < 2))"{
+
+          error-message " If match criteria is 'untag' or 'any' or 'any-frame', the ingress rewrite must pop 0 tag. If match criteria is ptag or single tag, ingress rewrite pop-tags less than 2";
+      }
+   }
+ }
+ 
+deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:ingress-rule"
+           +"/bbf-subif-mounted:rule/bbf-subif-mounted:ingress-rewrite/bbf-subif-tag-mounted:push-tag/bbf-subif-tag-mounted:index" {
+    deviate add {
+       must "current() = 0 " {
+            error-message " ingress push tag value should be 0 ";
+     }
+   }
+ }
+
+deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:egress-rewrite"
+           +"/bbf-subif-tag-mounted:push-tag/bbf-subif-tag-mounted:index" {
+    deviate add {
+       must "current() = 0 " {
+            error-message " egress push tag value should be 0 if egress push tag exist.";
+      }
+    }
+ }
+
+deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:ingress-rule"
+           +"/bbf-subif-mounted:rule/bbf-subif-mounted:flexible-match/bbf-subif-tag-mounted:match-criteria"
+           +"/bbf-subif-tag-mounted:frame-filter/bbf-subif-tag-mounted:any-frame/bbf-subif-tag-mounted:any-frame" {
+    deviate add {
+       must "(not(boolean(current()/../bbf-subif-tag-mounted:untagged))) and (not(boolean(current()/../bbf-subif-tag-mounted:tag)))" {
+             error-message "In one rule, match-criteria untag and tag not be allowed when any-frame has been configured.";
+    }
+  }
+ }
+
+ deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing"
+           +"/bbf-subif-mounted:ingress-rule/bbf-subif-mounted:rule/bbf-subif-mounted:ingress-rewrite"
+           +"/bbf-subif-tag-mounted:push-tag/bbf-subif-tag-mounted:dot1q-tag" {
+
+    deviate add {
+
+          must "((boolean(current()/../../../bbf-subif-mounted:flexible-match/bbf-subif-tag-mounted:match-criteria"
+              + "/bbf-subif-tag-mounted:tag[bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:vlan-id != 'any']))"
+              + "and (boolean(current()/bbf-subif-tag-mounted:dei-from-tag-index))"
+              + "or (boolean(current()/../../../bbf-subif-mounted:flexible-match/bbf-subif-tag-mounted:match-criteria"
+              + "/bbf-subif-tag-mounted:untagged))"
+              + "and (boolean(current()/bbf-subif-tag-mounted:write-dei-0))"
+              + "or (current()/../../../bbf-subif-mounted:flexible-match/bbf-subif-tag-mounted:match-criteria"
+              + "/bbf-subif-tag-mounted:tag/bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:vlan-id = 'any')"
+              + "or (boolean(current()/../../../bbf-subif-mounted:flexible-match/bbf-subif-tag-mounted:match-criteria"
+              + "/bbf-subif-tag-mounted:any-frame))"
+              + "and (boolean(current()/bbf-subif-tag-mounted:dei-from-tag-index))"
+              +")"
+          {
+            error-message "single-tag and priority-tag and any-frame ingress should use dei-from-tag-index, and untag should use write-dei-0.";
+          }
+
+    }
+  }
+
+   deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing"
+           +"/bbf-subif-mounted:ingress-rule/bbf-subif-mounted:rule/bbf-subif-mounted:flexible-match"
+           +"/bbf-subif-tag-mounted:match-criteria/bbf-subif-tag-mounted:vlan-tag-match-type"
+           +"/bbf-subif-tag-mounted:vlan-tagged/bbf-subif-tag-mounted:tag/bbf-subif-tag-mounted:dot1q-tag"
+           +"/bbf-subif-tag-mounted:vlan-id" {
+    deviate add{
+       must "(contains(current(),'priority-tagged'))
+            or
+            (contains(current(),'any'))
+            or
+            (not(contains(current(),'-'))
+            and not(contains(current(),','))) "{
+        error-message "The VSI VLAN tag vlan-id in match criteria with range or list will be rejected";
+      }
+    }
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing"
+           +"/bbf-subif-mounted:ingress-rule/bbf-subif-mounted:rule/bbf-subif-mounted:flexible-match/bbf-subif-tag-mounted:match-criteria"
+           +"/bbf-subif-tag-mounted:vlan-tag-match-type/bbf-subif-tag-mounted:untagged/bbf-subif-tag-mounted:untagged" {
+      deviate add {
+             must "(not(boolean((current()/../../../bbf-subif-mounted:ingress-rewrite/bbf-subif-tag-mounted:push-tag"
+                + "/bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:pbit-from-tag-index))))"
+            {
+              error-message "If a VSI match criteria has match 'untagged', its ingress-rewrite should use pbit-marking-index.";
+            }
+  }
+ }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing/bbf-subif-mounted:inline-frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:egress-rewrite"
+           +"/bbf-subif-tag-mounted:pop-tags" {
+    deviate add {
+       must "current() > 0"
+          + " or (current() = 0 and not(boolean(current()/../bbf-subif-tag-mounted:push-tag)))"
+        {
+            error-message "If egress-rewrite pop 0 tag, it should no push.";
+        }
+    }
+  }
+
+
+
+}
+
+  
+

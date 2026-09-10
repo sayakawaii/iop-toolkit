@@ -1,0 +1,232 @@
+submodule bbf-media-voice-call-profile-body-mounted {
+  yang-version 1.1;
+  belongs-to bbf-sip-voip-mounted  {
+    prefix bbf-sip-voip-mounted;
+  }
+
+  import bbf-yang-types {
+    prefix bbf-yang;
+  }
+
+  import bbf-fiber-onu-emulated-mount {
+     prefix onu;
+  }
+
+  include bbf-media-base-mounted;
+  include bbf-media-codec-profile-body-mounted;
+  include bbf-media-transport-profile-body-mounted;
+
+  organization
+    "Broadband Forum <https://www.broadband-forum.org>
+     Common YANG Work Area";
+
+  contact
+    "Comments or questions about this Broadband Forum YANG module
+     should be directed to <mailto:help@broadband-forum.org>.
+     Editor:      Frank Desseyn, Nokia
+     Editor:      Nadine Staelens, Nokia
+     PS Leader:   Joey Boyd, ADTRAN
+     PS Leader:   Ken Kerpez, ASSIA
+     WA Director: Joey Boyd, ADTRAN
+     WA Director: Sven Ooghe, Nokia";
+
+  description
+    "This submodule contains a collection of YANG definitions for
+     managing a voice call profile.
+     Copyright (c) 2017-2018, Broadband Forum
+     Redistribution and use in source and binary forms, with or
+     without modification, are permitted provided that the following
+     conditions are met:
+     1. Redistributions of source code must retain the above copyright
+        notice, this list of conditions and the following disclaimer.
+     2. Redistributions in binary form must reproduce the above
+        copyright notice, this list of conditions and the following
+        disclaimer in the documentation and/or other materials
+        provided with the distribution.
+     3. Neither the name of the copyright holder nor the names of its
+        contributors may be used to endorse or promote products
+        derived from this software without specific prior written
+        permission.
+     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
+     CONTRIBUTORS \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+     INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+     DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+     CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+     SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+     NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+     CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+     STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+     ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+     ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     The above license is used as a license under copyright only.
+     Please reference the Forum IPR Policy for patent licensing terms
+     <https://www.broadband-forum.org/ipr-policy>.
+     Any moral rights which are necessary to exercise under the above
+     license grant are also deemed granted under this license.
+     This version of this YANG module is part of TR-383; see
+     the TR itself for full legal notices.";
+
+  revision 2020-03-06 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: 2020-03-06.";
+    reference
+      " ";
+  }
+
+  /* typedef voice-call-profile-ref {
+    type leafref {
+      path "/bbf-sip-voip-mounted:media-profiles"
+         + "/bbf-sip-voip-mounted:media-voice-call-profiles"
+		 + "/bbf-sip-voip-mounted:media-voice-call-profile"
+		 + "/bbf-sip-voip-mounted:name";
+    }
+    description
+       "References a media voice call profile";
+  } */
+  
+  grouping voice-call-characteristics {
+    description
+      "Voice call data parameters.";
+    leaf initial-call-jitter-buffer {
+	  type uint8 {range "0..200";}
+	  units milli-seconds;
+	  default 50;		
+	  description
+		"The Initial data jitter buffer for voice calls working
+		 in RTP mode.";
+	}
+    leaf minimum-call-jitter-buffer {
+	  type uint8 {range "0..200";}
+	  units milli-seconds;
+	  default 20;		
+	  description
+		"The minimum data jitter buffer for voice calls working
+		 in RTP mode.";
+	}	 
+    leaf maximum-call-jitter-buffer {
+	  type uint8 {range "0..200";}
+	  units milli-seconds;
+	  default 100;		
+	  description
+		"The maximum data jitter buffer for voice calls working
+		 in RTP mode.";
+	}	
+    leaf voice-call-activity-detection {	
+	  type enumeration {
+		enum on {
+		  value 1;		  
+		  description
+			"voice call activity detection enabled.";
+		}
+		enum off {
+		  value 2;		  
+		  description
+			"voice call activity detection disabled.";
+		}
+	  }
+	  default off;		
+	  description
+		"Allows to detect whether voice packets are generated
+		 or not. If not i.e. during 'silent' periods, comfort
+		 noise packets are generated.";
+	}	
+    leaf asymmetrical-rtp-rtcp {
+	  type enumeration {
+		enum enabled {
+		  value 1;		  
+		  description
+			"Regardless of whether the source UDP port and/or IP
+			 address of the received RTP/RTCP packets match or 
+			 does not match the destination UDP port and/or IP 
+			 address of the transmitted RTP/RTCP packets, the
+			 RTP/RTCP packets are accepted. In addition, RTP and 
+			 RTCP packets received from the same UDP Port
+			 and IP address will be accepted.";
+	    }
+		enum disabled {
+		  value 2;		  
+		  description
+			"The received RTP/RTCP packets whose source UDP port 
+			 and/or source IP address does not match the 
+			 destination UDP port and/or IP	address of the 
+			 transmitted RTP/RTCP packets will be discarded.";
+		}
+	  }
+	  default disabled;
+	  description
+		"The validation of the received RTP/RTCP packets.";
+	} 
+	leaf voice-to-t38-switch-same-port {
+	  type enumeration {
+		enum enabled {
+		  value 1;		  
+		  description
+			"The same UDP port can be allocated for the voice
+			and	T.38 stream.";
+		}
+		enum disabled {
+		  value 2;		  
+		  description
+			"A different UDP port is to	be allocated for voice
+			and	T.38 stream.";
+		}
+	  }
+	  default disabled;		
+	  description
+		"The allocation of the UDP port for the voice 
+		 and T.38 stream.";
+	}
+  }
+  
+  grouping voice-call-profile-body {
+    description
+      "Defines the parameters included in the voice call data 
+	   profile.";
+ 	leaf voice-call-codec-profile {
+      /* type bbf-sip-voip-mounted:codec-profile-ref; */
+      type leafref {
+        path "../../../../bbf-sip-voip-mounted:media-profiles"
+           + "/bbf-sip-voip-mounted:media-codec-profiles"
+	       + "/bbf-sip-voip-mounted:media-codec-profile"
+	       + "/bbf-sip-voip-mounted:name";
+      }      
+	  description
+		"References the voice call codec profile.";
+	}		
+	leaf media-transport-profile {
+        /*  type bbf-sip-voip-mounted:media-transport-profile-ref;*/
+      type leafref {
+        path "../../../../bbf-sip-voip-mounted:media-profiles"
+           + "/bbf-sip-voip-mounted:media-transport-profiles"
+		   + "/bbf-sip-voip-mounted:media-transport-profile"
+	       + "/bbf-sip-voip-mounted:name";
+      }        
+	  description
+		"References the voice call transport profile.";
+	}	
+	uses voice-call-characteristics;	
+  }
+
+  grouping media-voice-call-conf {
+    list media-voice-call-profile {
+      key "name";
+      description
+        "A list of voice call data profiles.";
+      leaf name {
+        type bbf-yang:name-string;		
+ 	    description
+          "Uniquely identifies the profile.";
+      }
+      uses voice-call-profile-body;
+    }  
+  }
+  
+  augment "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-profiles"
+        + "/bbf-sip-voip-mounted:media-voice-call-profiles" {
+    uses media-voice-call-conf; 
+  } 
+}

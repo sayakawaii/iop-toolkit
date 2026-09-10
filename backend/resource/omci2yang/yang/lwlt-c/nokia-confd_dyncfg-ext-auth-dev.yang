@@ -1,0 +1,113 @@
+module nokia-confd_dyncfg-ext-auth-dev {
+  yang-version 1.1;
+  namespace "http://tail-f.com/ns/confd_dyncfg/1.0:nokia-confd_dyncfg-ext-auth-dev";
+  prefix "nokia-confd-dyncfg-ext-auth-dev";
+
+  import confd_dyncfg {
+    prefix "confd_dyncfg";
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+      "The NOKIA confd_dyncfg YANG module supporting
+      deviations on top of standard.
+
+      This specification is published by Nokia under Non-Disclosure
+      Agreement(s) (NDA) with specific parties and has to be considered
+      as Confidential Information as defined in such NDA. Nokia
+      reserves the right to revise this document for any reason,
+      including but not limited to conformity with standards
+      promulgated by various agencies, utilisation of advances in the
+      state of the technical areas, or the reflection of changes in the
+      design of any equipment, techniques, or procedures described or
+      referred to herein.
+
+      The product specifications and other technical or performance
+      information contained herein are subject to change without
+      notice. Updates of this document will be issued under the above
+      NDA's.
+
+      Nokia makes no representation or warranty, expressed or implied,
+      with respect to the sufficiency, accuracy, or utility of any
+      information or opinion contained herein. Nokia expressly advises
+      that any use of for any purpose or reliance upon this technical
+      reference is at the risk of the user and that Nokia shall not be
+      liable for any damage or injury incurred by any person arising
+      out of the sufficiency, accuracy, or utility of any information
+      or opinion contained herein.
+
+      This document is not to be construed as a suggestion to any
+      manufacturer to modify or change any of its products, nor does
+      this document represent any commitment by Nokia to sell or
+      purchase any product. Nothing contained herein shall be construed
+      as conferring by implication, estoppel, or otherwise any license
+      or right under any patent, whether or not the use of any
+      information herein necessarily employs an invention of any
+      existing or later issued patent.
+
+      Nokia reserves the right not  to offer any or all of these
+      products and to withdraw any or all of them at any future time.
+
+      Copyright (C) 2023, Nokia. All Rights Reserved.";
+
+  revision 2023-01-26 {
+    description
+      "Restrict changes to externalAuthentication and authOrder";
+    reference
+      "";
+  }
+
+  deviation "/confd_dyncfg:confdConfig/confd_dyncfg:aaa/confd_dyncfg:externalAuthentication/confd_dyncfg:enabled"  {
+
+    /* externalAuthentication cannot be set to false can not be modified */
+    /* Needed for SSO and external radius authentication */
+    deviate add {
+      must "(current() = 'true')" {
+       error-message "externalAuthentication not modifiable";
+       description "Permanently enable external authentication";
+      }
+    }
+  }
+
+  deviation "/confd_dyncfg:confdConfig/confd_dyncfg:aaa/confd_dyncfg:externalAuthentication/confd_dyncfg:includeExtra"  {
+
+    /* externalAuthentication includeExtra cannot be set to false can not be modified */
+    /* Needed for SSO and external radius authentication */
+    deviate add {
+      must "(current() = 'true')" {
+       error-message "includeExtra not modifiable";
+       description "Permanently enable extra parameters to be provided by confd in external authentication";
+      }
+    }
+  }
+
+  deviation "/confd_dyncfg:confdConfig/confd_dyncfg:aaa/confd_dyncfg:externalAuthentication/confd_dyncfg:executable"  {
+
+    /* externalAuthentication executable cannot be modified */
+    /* Needed for SSO and external radius authentication */
+    deviate add {
+      must "(current() = '/etc/confd/radius_external_auth_start.sh')" {
+       error-message "executable not modifiable";
+       description "Non modifiable executable for external authentication";
+      }
+    }
+  }
+
+  deviation "/confd_dyncfg:confdConfig/confd_dyncfg:aaa/confd_dyncfg:authOrder"  {
+
+    /* authOrder cannot be be modified */
+    /* Needed for SSO and external radius authentication */
+    deviate add {
+      must "(current() = 'externalAuthentication localAuthentication')" {
+       error-message "authOrder not modifiable";
+       description "Non modifiable authentication order";
+      }
+    }
+  }
+
+}

@@ -1,0 +1,190 @@
+module nokia-ingress-cpu-packets-rate-limit {
+  yang-version 1.1;
+  namespace "urn:bbf:yang:nokia-ingress-cpu-packets-rate-limit";
+
+  prefix nokia-cpu-rate-limit;
+
+  import ietf-interfaces {
+    prefix if;
+  }
+  
+  import iana-if-type {
+    prefix ianaift;
+  }  
+  
+  import bbf-qos-policies {
+    prefix bbf-qos-pol;
+  }
+  
+  import bbf-xpon-if-type {
+    prefix bbf-xponift;
+  }  
+  
+  import bbf-interface-usage {
+    prefix bbf-if-usg;
+  }
+  
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be 
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG definitions for 
+     supporting Nokia specific requirements as applicable to its 
+     access network equipment.     
+
+     Specifically, this module augments the interface model with data
+     specific to limiting the rate of packets handled by the cpu which
+     received on the interfaces, such as protocol packet or management
+     packets ..., to protect it against DOS attacks or against users
+     requesting a too high portion of the CPU processing load.  
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia 
+     reserves the right to revise this document for any reason, 
+     including but not limited to conformity with standards 
+     promulgated by various agencies, utilisation of advances in the 
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or 
+     referred to herein.
+
+     The product specifications and other technical or performance 
+     information contained herein are subject to change without 
+     notice. Updates of this document will be issued under the above 
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any 
+     information or opinion contained herein. Nokia expressly advises 
+     that any use of for any purpose or reliance upon this technical 
+     reference is at the risk of the user and that Nokia shall not be 
+     liable for any damage or injury incurred by any person arising 
+     out of the sufficiency, accuracy, or utility of any information 
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any 
+     manufacturer to modify or change any of its products, nor does 
+     this document represent any commitment by Nokia to sell or 
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license 
+     or right under any patent, whether or not the use of any 
+     information herein necessarily employs an invention of any 
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2019, Nokia. All Rights Reserved.";
+
+  revision 2019-05-22 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: yyyy-mm-dd.";
+    reference
+      "TR-383: Common YANG Modules
+               <https://www.broadband-forum.org/technical/download/
+                        TR-383.pdf>";
+  }
+  
+  typedef rate-limit-policy-ref {    
+    type leafref {
+      path '/bbf-qos-pol:policies/bbf-qos-pol:policy/bbf-qos-pol:'
+           + 'name';
+    }
+    description
+      "The name of the referenced policy.";
+  }
+  
+  container cpu-load-control-cfg{   
+    description
+      "This configuration is to protect the CPU against DOS attacks
+       or against single users requesting a too high portion of the
+       CPU processing load.";
+   
+    list default-ingress-cpu-packets-rate-limit {
+      key "interface-usage";
+      description
+        "A list of default packets to CPU rate limit configurations
+         per interface-usage.
+         Only configuration for user-port, a kind of interface-usage, 
+         will be applied to interfaces (eth, xdsl, olt-v-enet etc.,
+         VSIs are not included). ";
+      
+      leaf interface-usage {
+        type bbf-if-usg:interface-usage;
+        description
+          "The interface-usage type.";
+      }
+      
+      leaf rate-limit-policy-name {
+        type rate-limit-policy-ref;
+        mandatory true;
+        description
+          "The name of referenced policy, which actions in the referenced 
+           classifiers all are rate-limit-frames.";
+      }
+    }
+  }
+  
+  augment '/if:interfaces/if:interface' {    
+    when "derived-from-or-self(if:type, 'bbf-xponift:olt-v-enet')
+          or
+          derived-from-or-self(if:type,'ianaift:ieee8023adLag')
+          or
+          derived-from-or-self(if:type,'ianaift:ptm')
+          or           
+          derived-from-or-self(if:type,'ianaift:ethernetCsmacd') " {
+      description
+        "Interfaces that can support packets rate limit
+         configurations.";
+    }
+
+    description
+      "Add packets rate limit configurations.";
+
+    container ingress-cpu-packets-rate-limit{
+      description
+        "A set of rate limit configurations applied on the packets 
+         to cpu.
+         Limiting the rate of traffic to the CPU is executed at
+         the end of ingress processing. It means the policies
+         defined in the ingress qos policy profile are executed
+         before this one.";
+
+      choice cpu-packets-rate-limit-control {  
+        description
+          "Gives a set of options to configure rate control for 
+           packets extracted from the interface and sent to the 
+           CPU. If not any of these options is configured, then 
+           the device will apply rate control as set at system 
+           level, i.e. it applies the configuration data available 
+           in the list cpu-load-control-cfg/default-ingress-cpu-packets-rate-limit..";
+           
+        case no-rate-limit {
+            leaf no-rate-limit { 
+              type empty; 
+              description
+                "Indicates no rate limit on traffic to CPU received
+                 on this interface.";
+          }
+        } 
+        
+        case policy {
+          leaf rate-limit-policy-name {
+            type rate-limit-policy-ref;
+            description
+              "The name of referenced policy, which actions in the referenced 
+               classifiers all are rate-limit-frames.";
+          } 
+        } 
+      } 
+    }
+  }
+}
+ 
+

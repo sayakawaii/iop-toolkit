@@ -1,0 +1,145 @@
+module nokia-bbf-mgmd-multicast-ipv6-dev {
+
+  yang-version 1.1;
+
+  namespace "urn:broadband-forum-org:yang:" +
+            "nokia-bbf-mgmd-multicast-ipv6-dev";  
+            
+  prefix "nokia-bbf-mgmd-multicast-ipv6-dev";
+
+  /* import 
+  import ietf-interfaces {
+    prefix if;
+  }
+  
+  import bbf-sub-interfaces{
+	prefix bbf-subif;
+  }
+
+  import bbf-sub-interface-tagging{
+	prefix bbf-subif-tag;
+  }
+ */
+ 
+  import bbf-mgmd {
+    prefix "bbf-mgmd";
+  }   
+  
+  organization 
+    "Nokia";
+    
+  contact 
+    "isam.yang@nokia.com";
+    
+  description 
+    "The NOKIA BBF/bbf-mgmd YANG module supporting
+     deviations on top of standard. ";
+  
+  revision 2019-03-25 {
+    description 
+      "Initial revision on 2016-03-16.
+       Update yang on 2019-03-25.
+       Update on 2019-06-27 ";
+    reference
+      "TBD";
+  }
+  
+/**********************************************/
+/* definitions which should always be present */
+/**********************************************/
+deviation "/bbf-mgmd:multicast/bbf-mgmd:mgmd/bbf-mgmd:multicast-vpn/bbf-mgmd:multicast-channel/bbf-mgmd:ipv6/bbf-mgmd:group-ipv6-address"{
+    deviate add{
+      must "(translate(substring(current(), 1, 2), 'f', 'F') = 'FF')"
+      {
+          error-message "group-ipv6-address should be IPv6 multicast address";
+      }
+    }
+    deviate add{
+      /*must "(upper-case(substring-before(current(),':')) != 'FF02')"*/
+      must "(translate(substring-before(current(),':'), 'f', 'F') != 'FF02')"
+      {
+          error-message "group-ipv6-address can not be FF02:: to FF02:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF";
+      }
+    }
+  }
+
+ deviation "/bbf-mgmd:multicast/bbf-mgmd:mgmd/bbf-mgmd:multicast-vpn/bbf-mgmd:multicast-channel/bbf-mgmd:ipv6/bbf-mgmd:group-ipv6-address-end"{
+   deviate add{
+      default "0000:0000:0000:0000:0000:0000:0000:0000";
+   }
+  deviate add{
+      must "current()='::' or (translate(substring(current(), 1, 2), 'f', 'F') = 'FF')"
+      {
+          error-message "group-ipv6-address-end should be IPv6 multicast address";
+      }
+   }
+   deviate add{
+      /*must "(upper-case(substring-before(current(),':')) != 'FF02')"*/
+      must "current()='::' or (translate(substring-before(current(),':'), 'f', 'F') != 'FF02')"
+      {
+          error-message "group-ipv6-address-end can not be FF02:: to FF02:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF";
+      }
+   }
+   
+ }
+
+deviation "/bbf-mgmd:multicast/bbf-mgmd:mgmd/bbf-mgmd:multicast-vpn/bbf-mgmd:multicast-channel/bbf-mgmd:ipv6/bbf-mgmd:group-ipv6-address-end"{
+    description 
+      "The group-ipv6-address-end should be greater than group-ipv6-address. 
+       A error message 'group-ipv6-address-end must be greater than group-ipv6-address'
+       will be displayed when the constraint is voilated.";
+    deviate add {
+    }
+ }
+ 
+ deviation "/bbf-mgmd:multicast/bbf-mgmd:mgmd/bbf-mgmd:multicast-vpn/bbf-mgmd:multicast-channel/bbf-mgmd:ipv6/bbf-mgmd:source-ipv6-address"{
+    deviate add{
+      /*must "(not (starts-with(translate(current(), 'f', 'F'), 'FF')))"*/
+      must "(translate(substring(current(), 1, 2), 'f', 'F') != 'FF')"
+      {
+          error-message "source-ipv6-address can not be  multicast address";
+      }
+    }
+    deviate add{
+      must " (current()!='::1')"
+      {
+          error-message "source-ipv6-address can not be IPv6 loopback address";
+      }
+    }
+ }
+  
+ deviation "/bbf-mgmd:multicast/bbf-mgmd:mgmd/bbf-mgmd:multicast-vpn/bbf-mgmd:ip-to-host/bbf-mgmd:ip-address/bbf-mgmd:ipv6-address"{
+    deviate add{
+      /*must "(not (starts-with(translate(current(), 'f', 'F'), 'FF')))"*/
+      must "(translate(substring(current(), 1, 2), 'f', 'F') != 'FF')"
+      {
+          error-message "ipv6-address of multicast-vpn can not be multicast address";
+      }
+    }
+    deviate add{
+      must " (current()!='::1')"
+      {
+          error-message "ipv6-address of multicast-vpn can not be IPv6 loopback address";
+      }
+    }
+  }
+  
+deviation "/bbf-mgmd:multicast/bbf-mgmd:mgmd/bbf-mgmd:multicast-vpn/bbf-mgmd:multicast-network-interface/bbf-mgmd:ip-layer/bbf-mgmd:ip-address/bbf-mgmd:ipv6-address"{
+    deviate add{
+      /*must "(not (starts-with(translate(current(), 'f', 'F'), 'FF')))"*/
+      must "(translate(substring(current(), 1, 2), 'f', 'F') != 'FF')"
+      {
+          error-message "ipv6-address of network-interface can not be multicast address";
+      }
+    }
+    deviate add{
+      must " (current()!='::1')"
+      {
+          error-message "ipv6-address of network-interface can not be IPv6 loopback address";
+      }
+    }
+ }
+ 
+}
+
+

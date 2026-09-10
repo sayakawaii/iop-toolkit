@@ -1,0 +1,24 @@
+module nokia-ethernet-interface-external-speed-mounted {
+ namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/nokia-ethernet-interface-external-speed-mounted";
+ prefix "nokia-eth-intf-ext-speed-mounted";
+ import ethernet-mounted {
+    prefix eth-mounted;
+  }
+  organization
+    "Nokia";
+  contact
+    "isam.yang@nokia.com";
+  description
+    "This module contains YANG definitions for ethernet interface support speed not available in IEEE stand yang(ethernet.yang)";
+
+  revision 2020-10-12 {
+    description
+      "Initial revision of YANG model for ethernet interface used speed";
+    reference 
+        " ";
+  }
+  identity eth-if-speed-25gb {
+    base eth-mounted:eth-if-speed;
+    description "25 Gb/s";
+  }
+}

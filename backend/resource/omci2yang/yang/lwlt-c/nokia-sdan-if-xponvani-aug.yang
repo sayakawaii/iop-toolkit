@@ -1,0 +1,197 @@
+module nokia-sdan-if-xponvani-aug {
+
+    yang-version 1.1;
+    
+    namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"+
+    "nokia-sdan-if-xponvani-aug";
+
+    prefix nokia-sdan-if-xponvani-aug;
+
+    import ietf-interfaces {
+        prefix if;
+    }
+
+    import bbf-xponvani {
+        prefix bbf-xponvani;
+    }
+
+    import bbf-fiber-onu-emulated-mount {
+        prefix onu;
+    }
+
+    import bbf-xpon-defects {
+        prefix bbf-xpon-def;
+    }
+
+    import bbf-xpon-onu-types {
+        prefix bbf-xpon-onu-types;
+    }
+
+    import nokia-sdan-xpon-onu-types {
+        prefix nokia-sdan-xpon-onu-types;
+    }
+ 
+    organization "Nokia";
+    contact "isam.yang@nokia.com";
+
+    description
+    "This specification is published by Nokia under Non-Disclosure
+    Agreement(s) (NDA) with specific parties and has to be considered
+    as Confidential Information as defined in such NDA. Nokia reserves
+    the right to revise this document for any reason, including but
+    not limited to conformity with standards promulgated by various
+    agencies, utilization of advances in the state of the technical
+    areas, or the reflection of changes in the design of any
+    equipment, techniques, or procedures described or referred to
+    herein.
+
+    The product specifications and other technical or performance
+    information contained herein are subject to change without notice.
+    Updates of this document will be issued under the above NDA's.
+
+    Nokia makes no representation or warranty, expressed or implied,
+    with respect to the sufficiency, accuracy, or utility of any
+    information or opinion contained herein. Nokia expressly advises
+    that any use of for any purpose or reliance upon this technical
+    reference is at the risk of the user and that Nokia shall not be
+    liable for any damage or injury incurred by any person arising out
+    of the sufficiency, accuracy, or utility of any information or
+    opinion contained herein.
+
+    This document is not to be construed as a suggestion to any
+    manufacturer to modify or change any of its products, nor does
+    this document represent any commitment by Nokia to sell or
+    purchase any product. Nothing contained herein shall be construed
+    as conferring by implication, estoppel, or otherwise any license
+    or right under any patent, whether or not the use of any
+    information herein necessarily employs an invention of any
+    existing or later issued patent.
+
+    Nokia reserves the right not to offer any or all of these products
+    and to withdraw any or all of them at any future time.
+
+    Copyright (C) 2022, Nokia. All Rights Reserved";
+
+    revision 2025-09-23 {
+      description
+        "Introduced extended down reason for onu-down";
+      reference
+        "";
+     }
+
+    revision 2024-08-26 {
+      description
+        "Introduced onu DBRu control";
+      reference
+        "";
+     }
+
+     revision 2022-10-10 {
+      description
+        "Introduced onu last down reason";
+      reference
+        "";
+     }
+
+    revision 2022-01-13 {
+        description
+        "Initial revision.";
+        reference
+        "TBD";
+    }
+
+    typedef onu-down {
+        type union {
+            type identityref {
+                base bbf-xpon-def:items-detected-at-olt-for-v-ani;
+            }
+            type identityref {
+                base bbf-xpon-onu-types:onu-presence-state-base;
+            }
+            type identityref {
+                base nokia-sdan-xpon-onu-types:extended-down-reason-for-v-ani;
+            }
+        }
+        description "type onu-down";
+    }
+
+    feature xpon-ancp-uni-admin-downstream-bitrate {
+        description
+            "Indicates support for UNI downstream service bit rate.";
+    }
+
+    augment '/if:interfaces/if:interface/bbf-xponvani:v-ani' {
+        description "Augment interface v-ani.";
+        leaf onu-name {
+            type onu:onu-name-ref;
+            description
+                "Reference to the onu yang instance key 'name'";
+        }
+
+        leaf dbru-control {
+          type enumeration {
+            enum enable-unconditional {
+              description
+                "The OLT must unconditionally apply DBRu for this ONU,
+                 independently of what the ONU indicates as DBRu
+                 capability or if the ONU does not indicate any DBRu
+                 capability at all. This value can be used in case the
+                 ONU is known to support DBRu but is unable to indicate
+                 it or erroneously indicates that it does not support
+                 it.";
+            }
+            enum disable-unconditional {
+              description
+                "The OLT must unconditionally not apply DBRu for this
+                 ONU, independently of what the ONU indicates as DBRu
+                 capability or if the ONU does not indicate any DBRu
+                 capability at all. This value can be used in case the
+                 ONU is known not to support DBRu but is unable to
+                 indicate it or erroneously indicates that it supports
+                 it.";
+            }
+            enum enable-if-supported-by-onu {
+              description
+                "The OLT must apply DBRu for this ONU, if the ONU
+                 indicates that it supports DBRu. The OLT will not
+                 apply DBRu if the ONU indicates that it does not
+                 support DBRu or if the ONU does not indicate any
+                 DBRu capability at all.";
+            }
+          }
+          default "enable-if-supported-by-onu";
+          description
+            "Controls whether the OLT applies DBRu or not for this ONU.";
+          reference
+            "ITU-T G.988 Clause 9.2.1 OMCI 'SR indication' attribute
+             in ANI-G ME.";
+        }
+    }
+
+    augment '/if:interfaces/if:interface/bbf-xponvani:olt-v-enet' {
+        description
+            "ANCP specific configuration for virtual ENET interface.";
+        leaf onu-peak-data-rate-downstream {
+            if-feature xpon-ancp-uni-admin-downstream-bitrate;
+            type uint64;
+            //mandatory true;
+            description
+                "The UNI downstream service bit rate that ANCP will
+                report to the BNG per vENET interface. This bitrate is
+                configured for administrative purpose and is not
+                intended to used by by the OLT for policing or shaping
+                purpose. It may also be communicated in PPPoE, DHCP or
+                DHCPv6 if the OLT is configured to do so.";
+        }
+    }
+
+    augment '/if:interfaces-state/if:interface/bbf-xponvani:v-ani' {
+        description "augment interface state of v-ani with onu last down reason";
+        leaf onu-last-down-reason {
+            type onu-down;
+            description
+                "The reason why ONT went down.This will be updated
+                whenever oper-status goes from up to down.";
+        }
+    }
+}

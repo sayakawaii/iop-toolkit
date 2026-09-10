@@ -1,0 +1,112 @@
+module nokia-ietf-ipv6-unicast-routing-common-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-ietf-ipv6-unicast-routing-common-dev";
+
+  prefix nokia-ietf-ipv6-unicast-routing-common-dev;
+
+  import ietf-ipv6-unicast-routing {
+    prefix v6ur;
+  }
+
+  import ietf-routing {
+    prefix rt;
+  }
+
+  import ietf-ip {
+    prefix ip;
+  }
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA IETF/Route YANG module supporting
+     deviations on top of standard.";
+
+/* revision */
+
+  revision 2023-05-02 {
+    description "Solve yang errors and resolve canonical order according to RFC 6020.";
+    reference "Nokia specific.";
+  }
+  revision 2023-01-23 {
+    description
+      "removed redundant not supported deviation as present in nokia-ietf-routing-common-dev";
+    reference "Nokia specific.";
+  }
+  
+  revision 2021-09-30 {
+    description
+      "Not supported deviations added";
+    reference "Nokia specific.";
+  }
+
+  revision 2020-02-19 {
+    description
+      "Initial revision.";
+    reference
+      "TBD";
+  }
+
+   deviation  "/rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/rt:static-routes/v6ur:ipv6/v6ur:route"{
+       description "Only 1 ipv6 static route can be configured";
+       deviate add {
+           max-elements 1;
+       }
+       
+   }
+
+  deviation "/rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/rt:static-routes/v6ur:ipv6/v6ur:route/v6ur:next-hop/v6ur:next-hop-options/v6ur:simple-next-hop/v6ur:outgoing-interface" {
+    description "Leaf not supported";
+    deviate not-supported;
+    
+  }
+
+  deviation "/rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/rt:static-routes/v6ur:ipv6/v6ur:route/v6ur:next-hop/v6ur:next-hop-options/v6ur:special-next-hop" {
+    description "Leaf not supported";
+    deviate not-supported;
+    
+  }
+
+  deviation "/rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/rt:static-routes/v6ur:ipv6/v6ur:route/v6ur:next-hop/v6ur:next-hop-options/v6ur:next-hop-list" {
+    description "Leaf not supported";
+    deviate not-supported;
+    
+  }
+
+  deviation "/if:interfaces/if:interface/ip:ipv6/v6ur:ipv6-router-advertisements"  {
+     description "Leaf not supported";
+     deviate not-supported;
+     
+  }
+
+  deviation "/if:interfaces-state/if:interface/ip:ipv6/v6ur:ipv6-router-advertisements"  {
+     description "Leaf not supported";
+     deviate not-supported;
+     
+  }
+
+  /* dummy deviations */
+  deviation "/rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/rt:static-routes/v6ur:ipv6/v6ur:route" {
+    description "An ipv6 address must be configured in order to configure an ipv6 route. The error message 'cannot create ipv6 route, create first ipv6 address' will be displayed when the constraint is violated";
+    deviate add {}
+  }
+
+  deviation "/rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/rt:static-routes/v6ur:ipv6/v6ur:route" {
+    description "The next hop address of an ipv6 route must match the subnet of the configured ipv6 address. The error message 'next hop ipv6 address does not match local subnet' will be displayed when the constraint is violated";
+    deviate add {}
+  }
+
+  deviation "/rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/rt:static-routes/v6ur:ipv6/v6ur:route" {
+    description "The next hop address of an ipv6 route cannot be equal to the network address of the configured ipv6 address. The error message 'next hop ipv6 address cannot be equal to network address' will be displayed when the constraint is violated";
+    deviate add {}
+  } 
+}

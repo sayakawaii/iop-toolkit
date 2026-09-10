@@ -1,0 +1,72 @@
+module nokia-bbf-pppoe-intermediate-agent-common-dev {
+
+  namespace
+     "http://www.nokia.com/Fixed-Networks/BBA/yang/nokia-bbf-pppoe-intermediate-agent-common-dev";
+
+  prefix nokia-bbf-pppoe-intermediate-agent-common-dev;
+
+  import bbf-pppoe-intermediate-agent {
+    prefix bbf-pppoe-ia;
+  }
+
+  import nokia-yang-types {
+    prefix nok-typ;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA BBF/bbf-ppoe-intermediate-agent YANG module supporting
+     deviations on top of standard.";
+
+  /* revision */
+
+  revision 2020-12-09 {
+    description
+      "move user port check to usage-user-port";
+    reference
+      "Nokia internal.";
+  }
+  
+  revision 2019-06-18 {
+    description
+      "Removed the nok-type replace deviation for default circuid id/remote id syntax.";
+    reference
+      "Nokia internal.";
+  }
+
+  revision 2019-05-06 {
+    description
+      "Move to common category.";
+    reference
+      "Nokia internal.";
+  }
+
+  revision 2017-02-16 {
+    description
+      "Initial revision.";
+    reference
+      "TBD";
+  }
+
+  /* deviations max-elements */
+  /* ----------------------- */
+  /* add max-elements to limit the number of PPPoE profiles   */
+
+  deviation "/bbf-pppoe-ia:pppoe-profiles/bbf-pppoe-ia:pppoe-profile" {
+    deviate add {
+      max-elements 16;
+    }
+  }
+
+  /* restrict special characters in pppoe-profile other than nokia-string-ascii64 */
+  deviation "/bbf-pppoe-ia:pppoe-profiles/bbf-pppoe-ia:pppoe-profile/bbf-pppoe-ia:name" {
+    deviate replace{
+      type nok-typ:nokia-string-ascii64;
+    }
+  }
+}

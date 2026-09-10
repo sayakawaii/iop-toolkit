@@ -1,0 +1,102 @@
+module nokia-sdan-xpon-power-saving-common-dev {
+
+  namespace
+     "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+   + "nokia-sdan-xpon-power-saving-common-dev";
+
+  prefix nokia-sdan-xpon-power-saving-common-dev;
+
+  import ietf-hardware {
+    prefix hw;
+  }
+
+  import bbf-hardware-types {
+    prefix bbf-hwt;
+  }
+
+  import nokia-sdan-power-saving {
+    prefix nokia-sdan-ps;
+  }
+
+  import nokia-sdan-xpon-power-saving {
+    prefix nokia-sdan-xpon-ps;
+  }
+
+  import nokia-sdan-xpon-power-saving-common {
+    prefix nokia-sdan-xpon-pwr-savc;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "The NOKIA power saving YANG module supporting
+     deviations on top of standard.";
+
+/* revision */
+
+  revision 2025-06-09 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific";
+  }
+
+  deviation "/nokia-sdan-ps:power-saving/nokia-sdan-xpon-ps:xpon-transceiver/nokia-sdan-xpon-ps:wake-up" {
+    description "The configuration of this container is not supported currently";
+    deviate  not-supported;
+  }
+
+  deviation "/hw:hardware/hw:component/nokia-sdan-ps:power-saving/nokia-sdan-xpon-ps:wake-up" {
+    description "The configuration of this container is not supported currently";
+    deviate  not-supported;
+  }
+
+  deviation "/nokia-sdan-ps:power-saving/nokia-sdan-xpon-ps:xpon-transceiver/nokia-sdan-xpon-ps:xpon-transceiver-criteria" {
+   deviate add {
+     must "count(current()/../nokia-sdan-xpon-ps:xpon-transceiver-criteria) <= 1" {
+     error-message "Exceeds maximum number of xpon transceiver criteria supported on system";
+      description
+        "Limits the number of xpon transceiver criteria configured on the system to one.";
+      }
+    }
+  }
+
+  deviation "/hw:hardware/hw:component/nokia-sdan-ps:power-saving/nokia-sdan-xpon-ps:xpon-transceiver-criteria" {
+   deviate add {
+     must "count(current()/../nokia-sdan-xpon-ps:xpon-transceiver-criteria) <= 1" {
+     error-message "Exceeds maximum number of xpon transceiver criteria supported";
+      description
+        "Limits the number of xpon transceiver criteria configured on the hardware component to one.";
+      }
+    }
+  }
+
+  deviation "/nokia-sdan-ps:power-saving/nokia-sdan-xpon-ps:xpon-transceiver/nokia-sdan-xpon-ps:xpon-transceiver-criteria" {
+    deviate add
+    {
+      must "((current() = 'nokia-sdan-xpon-pwr-savc:none') or"
+           +"(current() = 'nokia-sdan-xpon-pwr-savc:if-no-vani-configured'))"
+      {
+        error-message "Given 'xpon-transceiver-criteria' value is not supported on this hardware component and system combination";
+        description "Error occurs when system does not support 'xpon-transceiver-criteria' when given value is 'if-no-onu-present'.";
+      }
+    }
+  }
+
+  deviation "/hw:hardware/hw:component/nokia-sdan-ps:power-saving/nokia-sdan-xpon-ps:xpon-transceiver-criteria" {
+    deviate add
+    {
+      must "((current()/../../hw:class = 'bbf-hwt:transceiver')"
+             +"and ((current() = 'nokia-sdan-xpon-pwr-savc:none') or (current() = 'nokia-sdan-xpon-pwr-savc:if-no-vani-configured')))"
+      {
+        error-message "Given 'xpon-transceiver-criteria' value is not supported on this hardware component and system combination";
+        description "Error occurs when hardware component does not support 'xpon-transceiver-criteria' when given value is 'if-no-onu-present'.";
+      }
+    }
+  }
+}

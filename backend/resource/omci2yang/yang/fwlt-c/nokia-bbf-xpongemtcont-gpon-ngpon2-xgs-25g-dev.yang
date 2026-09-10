@@ -1,0 +1,149 @@
+module nokia-bbf-xpongemtcont-gpon-ngpon2-xgs-25g-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-bbf-xpongemtcont-gpon-ngpon2-xgs-25g-dev";
+
+  prefix nokia-bbf-xpongemtcont-gpon-ngpon2-xgs-25g-dev;
+
+  import  bbf-xpongemtcont {
+    prefix  bbf-xpongemtcont;
+  }
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import bbf-xpon{
+    prefix bbf-xpon;
+  }
+
+  import bbf-xpon-types {
+    prefix bbf-xpon-types;
+  }
+
+  import bbf-xponvani{
+    prefix bbf-xponvani;
+  }
+
+  import bbf-xpon-if-type {
+    prefix bbf-xponift;
+  }
+
+  import bbf-if-type {
+    prefix bbfift;
+  }
+
+  import bbf-sub-interfaces{
+    prefix bbf-subif;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA IETF/System YANG module supporting
+     deviations on top of standard.";
+       
+  revision 2025-12-04 {
+    description
+      "Expand maximum-bandwidth range to 0..50G for all PON tech and move to common";
+    reference
+      "Nokia Specific.";
+  }
+  
+  revision 2024-08-26 {
+    description
+      "Correct the error message";
+    reference
+      "Nokia Specific.";
+  }
+  
+  revision 2024-04-30 {
+    description
+      "RmtDbg gemport range change";
+    reference
+      "Nokia Specific.";
+  }
+
+  revision 2022-07-26 {
+    description
+      "remove bbf-xpongemtcont:upstream-aes-indicator";
+    reference
+      "Nokia Specific.";
+  }
+
+  revision 2022-01-18 {
+    description
+      "Add error msg for 25GSPON";
+    reference
+      "Nokia Specific.";
+  }
+
+  revision 2019-12-26 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia Specific.";
+  }
+
+
+  deviation "/bbf-xpongemtcont:xpongemtcont/bbf-xpongemtcont:tconts/bbf-xpongemtcont:tcont/bbf-xpongemtcont:alloc-id" {
+    deviate add {
+      must "(/if:interfaces/if:interface[if:name = "
+         + "/if:interfaces/if:interface[if:name = current()/../bbf-xpongemtcont:interface-reference]"
+         + "/bbf-xponvani:v-ani/bbf-xponvani:preferred-channel-pair]/bbf-xpon:channel-pair/bbf-xpon:channel-pair-type ='bbf-xpon-types:gpon' and "
+         + "current() >= 256 and current() <= 1023) or "
+         + "(/if:interfaces/if:interface[if:name = "
+         + "/if:interfaces/if:interface[if:name = current()/../bbf-xpongemtcont:interface-reference]"
+         + "/bbf-xponvani:v-ani/bbf-xponvani:preferred-channel-pair]/bbf-xpon:channel-pair/bbf-xpon:channel-pair-type != 'bbf-xpon-types:gpon' and "
+         + "current() >= 1024 and current() <= 16383)" {
+        error-message "The alloc-id is out of range. For GPON: The alloc-id range is 256~1023.
+                       For others: The alloc-id range is 1024~16383.";
+      }
+      mandatory true;
+    }
+  }
+
+  deviation "/bbf-xpongemtcont:xpongemtcont/bbf-xpongemtcont:gemports/bbf-xpongemtcont:gemport/bbf-xpongemtcont:gemport-id" {
+    deviate add {
+      must "(not(boolean(/if:interfaces/if:interface[if:name = current()/../bbf-xpongemtcont:interface]))) or "
+         + "(/if:interfaces/if:interface[if:name = current()/../bbf-xpongemtcont:interface]/if:type = 'bbf-xponift:olt-v-enet' and "
+         + "((/if:interfaces/if:interface[if:name = "
+         + "/if:interfaces/if:interface[if:name = "
+         + "/if:interfaces/if:interface[if:name = current()/../bbf-xpongemtcont:interface]/bbf-xponvani:olt-v-enet/bbf-xponvani:lower-layer-interface]"
+         + "/bbf-xponvani:v-ani/bbf-xponvani:preferred-channel-pair]/bbf-xpon:channel-pair/bbf-xpon:channel-pair-type = 'bbf-xpon-types:gpon' and "
+         + "current() >= 256 and current() <= 1915) or "
+         + "(/if:interfaces/if:interface[if:name = "
+         + "/if:interfaces/if:interface[if:name = "
+         + "/if:interfaces/if:interface[if:name = current()/../bbf-xpongemtcont:interface]/bbf-xponvani:olt-v-enet/bbf-xponvani:lower-layer-interface]"
+         + "/bbf-xponvani:v-ani/bbf-xponvani:preferred-channel-pair]/bbf-xpon:channel-pair/bbf-xpon:channel-pair-type != 'bbf-xpon-types:gpon' and "
+         + "current() >= 1024 and current() <= 6648))) or "
+         + "(/if:interfaces/if:interface[if:name = current()/../bbf-xpongemtcont:interface]/if:type = 'bbfift:vlan-sub-interface' and "
+         + "((/if:interfaces/if:interface[if:name = "
+         + "/if:interfaces/if:interface[if:name = "
+         + "/if:interfaces/if:interface[if:name = "
+         + "/if:interfaces/if:interface[if:name = current()/../bbf-xpongemtcont:interface]/bbf-subif:subif-lower-layer/bbf-subif:interface]"
+         + "/bbf-xponvani:olt-v-enet/bbf-xponvani:lower-layer-interface]"
+         + "/bbf-xponvani:v-ani/bbf-xponvani:preferred-channel-pair]/bbf-xpon:channel-pair/bbf-xpon:channel-pair-type ='bbf-xpon-types:gpon' and "
+         + "((current() >= 256 and current() <= 1915) or "
+         + "(current() >= 1916 and current() <= 2044 and "
+         + "current()/../bbf-xpongemtcont:traffic-class = 0))) or "
+         + "(/if:interfaces/if:interface[if:name = "
+         + "/if:interfaces/if:interface[if:name = "
+         + "/if:interfaces/if:interface[if:name = "
+         + "/if:interfaces/if:interface[if:name = current()/../bbf-xpongemtcont:interface]/bbf-subif:subif-lower-layer/bbf-subif:interface]"
+         + "/bbf-xponvani:olt-v-enet/bbf-xponvani:lower-layer-interface]"
+         + "/bbf-xponvani:v-ani/bbf-xponvani:preferred-channel-pair]/bbf-xpon:channel-pair/bbf-xpon:channel-pair-type !='bbf-xpon-types:gpon' and "
+         + "((current() >= 1024 and current() <= 6648) or "
+         + "(current() >= 64506 and current() <= 65526 and "
+         + "current()/../bbf-xpongemtcont:traffic-class = 0)))))" {
+        error-message "The gemport-id is out of range. For GPON: The gemport-id range is 256~1915. For others: The gemport-id range is 1024~6648.
+                       RMTDBG gemport-id range is 1916~2044 for GPON, and 64506~65526 for others.";
+      }
+      mandatory true;
+    }
+  }
+}

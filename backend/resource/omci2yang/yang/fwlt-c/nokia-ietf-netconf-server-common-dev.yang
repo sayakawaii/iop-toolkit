@@ -1,0 +1,482 @@
+module nokia-ietf-netconf-server-common-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+            + "nokia-ietf-netconf-server-common-dev";
+  prefix nokia-ietf-netconf-server-common-dev;
+
+  import ietf-netconf-server {
+    prefix ncs;
+  }
+
+  import nokia-yang-types {
+    prefix nok-typ;
+  }
+
+  import ietf-x509-cert-to-name {
+    prefix x509c2n;
+  }
+
+  import iana-tls-cipher-suite-algs {
+    prefix "tlscsa";
+  }
+
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "The NOKIA IETF/ietf-netconf-server YANG module supporting
+     deviations on top of standard.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2017, Nokia. All Rights Reserved.";
+
+  revision 2025-11-26 {
+      description "Add deviation for supported ciphers";
+      reference "Nokia specific";
+  }
+
+  revision 2024-12-10 {
+      description
+        "Added keystore and est options";
+      reference
+        "Nokia specific.";
+    }
+
+  revision 2024-11-04 {
+    description "Enable cert-maps:cert-to-name:name deviations about string limitations";
+    reference "Nokia specific.";
+  }
+
+  revision 2024-05-31 {
+    description "Enable cert-maps:cert-to-name";
+    reference "Nokia specific.";
+  }
+
+  revision 2024-03-13 {
+    description "Forbid configuration of TLS handshake paramaters in endpoints other than 'certificate_endpoint'.";
+    reference "BBN-164072";
+  }
+
+  revision 2023-06-06 {
+    description "Config Based Certificate installation as not-supported";
+    reference "Nokia specific.";
+  }
+
+  revision 2023-05-02 {
+    description "Solve yang errors and resolve canonical order according to RFC 6020.";
+    reference "Nokia specific.";
+  }
+  revision 2021-09-24 {
+    description
+      "Introduction of not supported deviations.";
+    reference
+      "Nokia specific.";
+  }
+
+  revision 2021-07-15 {
+    description
+      "Introduction of dummy deviations.";
+    reference
+      "Nokia specific.";
+  }
+
+  revision 2021-05-12 {
+    description
+      "If features supresed";
+    reference
+      "Nokia specific.";
+  }
+
+  revision 2019-05-10 {
+    description
+      "Modified netconf-client name type and endpoint name type to nokia-string-ascii64.";
+    reference
+      "Nokia specific.";
+   }
+
+  revision 2019-05-02 {
+    description
+      "Move to common category.";
+    reference
+      "Nokia specific.";
+  }
+
+  revision 2019-02-26 {
+    description
+      "Deviations are added to validate the enpoint name with
+       respect to private key or certificate configuration and
+       trust-anchor deviation is moved to nokia-trust-anchors-dev.yang";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2018-09-14 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: yyyy-mm-dd.";
+    reference
+      "Nokia specific";
+  }
+
+  /************************************************************/
+  /*            ietf-netconf-server yang deviations           */
+  /************************************************************/
+
+  deviation "/ncs:netconf-server/ncs:call-home/ncs:netconf-client" {
+    deviate add {
+        max-elements 1;
+    }
+    deviate replace {
+        min-elements 0;
+    }
+  }
+
+  deviation "/ncs:netconf-server/ncs:call-home/ncs:netconf-client/ncs:endpoints/ncs:endpoint" {
+    deviate replace {
+        min-elements 0;
+    }
+    deviate add {
+        max-elements 33;
+    }
+  }
+
+  deviation "/ncs:netconf-server/ncs:call-home/ncs:netconf-client/ncs:name" {
+    deviate replace {
+        type nok-typ:nokia-string-ascii64 {
+        }
+    }
+  }
+
+  deviation "/ncs:netconf-server/ncs:call-home/ncs:netconf-client/ncs:endpoints/ncs:endpoint/ncs:name" {
+    deviate replace {
+        type nok-typ:nokia-string-ascii64 {
+        }
+    }
+  }
+
+  deviation "/ncs:netconf-server/ncs:call-home/ncs:netconf-client/ncs:endpoints/ncs:endpoint/ncs:transport" {
+    deviate replace {
+        mandatory false;
+    }
+  }
+
+  deviation "/ncs:netconf-server/ncs:call-home/ncs:netconf-client/ncs:endpoints/ncs:endpoint/ncs:transport/ncs:tls/ncs:tls/ncs:address" {
+    deviate replace {
+        mandatory false;
+    }
+    deviate add {
+      must "current()/../../ncs:name!='certificate_endpoint'"{
+          error-message "address configuration is not allowed for 'certificate_endpoint'";
+          description "address configuration is not allowed for 'certificate_endpoint'";
+      }
+    }
+
+    /* multicast and broadcast address is not valid address  */
+    deviate add {
+      must "(not(translate(.,'0123456789','') = '...' and (substring-before(.,'.') >= 224) and (substring-before(.,'.') <= 255) and not(substring(., string-length(.) - string-length('.') +1) = '.')))"{
+          error-message "Invalid IP. Multicast address cannot be configured";
+          description "Invalid IP. Multicast address cannot be configured";
+
+      }
+    }
+
+    /* self address is not valid address  */
+    deviate add {
+      must "(not((substring-before(.,'.') = 127) and translate(.,'0123456789','') = '...' and not(substring(., string-length(.) - string-length('.') +1) = '.')))" {
+          error-message "Invalid IP. Loopback address cannot be configured";
+          description "Invalid IP. Loopback address cannot be configured";
+
+      }
+    }
+
+    /* 0.0.0.[0-255] is not valid address */
+    deviate add {
+      must "not(starts-with(.,'0.0.0.') and translate(.,'0123456789','') = '...' and not(substring(., string-length(.) - string-length('.') +1) = '.'))" {
+          error-message "Invalid IP. 0.0.0.[0-255] is not valid address";
+          description "Invalid IP. 0.0.0.[0-255] is not valid address";
+
+      }
+    }
+
+    /* Multicast address is not valid address  */
+    deviate add {
+      must "not(starts-with(.,'ff'))"{
+          error-message "Invalid IP. Multicast address cannot be configured";
+          description "Invalid IP. Multicast address cannot be configured";
+
+      }
+    }
+
+    /* Site-local address is not valid address  */
+    deviate add {
+      must "(substring-before(.,':') != 'fec0')"{
+          error-message "Invalid IP. Site-local address is a not valid address";
+          description "Invalid IP. Site-local address is a not valid address";
+
+      }
+    }
+
+    /* Loopback address is not valid address  */
+    deviate add {
+      must "(current() != '::1')"{
+          error-message "Invalid IP. Loopack address is not a valid address";
+          description "Invalid IP. Loopack address is not a valid address";
+
+      }
+    }
+
+    /* Unspecified address  */
+    deviate add {
+      must "(current() != '::')"{
+          error-message "Invalid IP. Unspecified address";
+          description "Invalid IP. Unspecified address";
+
+      }
+    }
+  }
+
+  deviation "/ncs:netconf-server/ncs:call-home/ncs:netconf-client/ncs:endpoints/ncs:endpoint/ncs:transport/ncs:tls/ncs:tls/ncs:port" {
+    deviate add {
+      must "(current()/../../ncs:name='certificate_endpoint') or (current()/../../ncs:name!='certificate_endpoint' and boolean(../address))"
+      {
+        error-message "endpoint address must be configured to change endpoint port";
+        description "endpoint address must be configured to change endpoint port";
+
+      }
+    }
+
+    deviate add {
+      must " ( . > 0 ) " {
+          error-message "0 is no valid port number";
+          description "0 is no valid port number";
+
+      }
+    }
+  }
+
+  deviation "/ncs:netconf-server/ncs:call-home/ncs:netconf-client/ncs:endpoints/ncs:endpoint/ncs:transport/ncs:tls/ncs:tls/ncs:server-identity/ncs:local-or-keystore" {
+    deviate replace {
+        mandatory false;
+    }
+  }
+
+  deviation "/ncs:netconf-server/ncs:call-home/ncs:netconf-client/ncs:endpoints/ncs:endpoint/ncs:transport/ncs:tls/ncs:tls/ncs:client-auth/ncs:pinned-ca-certs" {
+    deviate add {
+      must "current()/../../../ncs:name='certificate_endpoint'"{
+          error-message "pinned certificates can be configured for 'certificate_endpoint' only";
+          description "pinned certificates can be configured for 'certificate_endpoint' only";
+
+      }
+    }
+  }
+
+    deviation "/ncs:netconf-server/ncs:call-home/ncs:netconf-client/ncs:endpoints/ncs:endpoint/ncs:transport/ncs:tls/ncs:tls/ncs:client-auth/ncs:cert-maps/ncs:cert-to-name" {
+    deviate add {
+      must "current()/../../../../ncs:name='certificate_endpoint'"{
+          error-message "cert-to-name can be configured for 'certificate_endpoint' only";
+          description "cert-to-name can be configured for 'certificate_endpoint' only";
+
+      }
+    }
+  }
+
+  deviation "/ncs:netconf-server/ncs:call-home/ncs:netconf-client/ncs:endpoints/ncs:endpoint/ncs:transport/ncs:tls/ncs:tls/ncs:client-auth/ncs:cert-maps/ncs:cert-to-name" {
+    description
+      "Restricts the cert-to-name list to a maximum of 16 entries.";
+    deviate add {
+      max-elements 16;
+    }
+  }
+
+    deviation "/ncs:netconf-server/ncs:call-home/ncs:netconf-client/ncs:endpoints/ncs:endpoint/ncs:transport/ncs:tls/ncs:tls/ncs:client-auth/ncs:cert-maps/ncs:cert-to-name/ncs:map-type" {
+    deviate add {
+      must "current()  = 'x509c2n:san-rfc822-name' or current()  = 'x509c2n:specified'"
+      {
+          error-message "supported map-types are (san-rfc822-name, specified)";
+          description "supported map-types are (san-rfc822-name, specified)";
+
+      }
+    }
+  }
+
+
+  deviation "/ncs:netconf-server/ncs:call-home/ncs:netconf-client/ncs:endpoints/ncs:endpoint/ncs:transport/ncs:tls/ncs:tls/ncs:client-auth/ncs:cert-maps/ncs:cert-to-name/ncs:fingerprint" {
+    deviate add {
+      must "not(starts-with(., '01') or starts-with(., '02') or starts-with(., '03'))" {
+        error-message
+          "Fingerprints for MD5 (01), SHA1 (02), and SHA224 (03) are rejected.";
+      }
+    }
+  }
+
+deviation "/ncs:netconf-server/ncs:call-home/ncs:netconf-client/ncs:endpoints/ncs:endpoint/ncs:transport/ncs:tls/ncs:tls/ncs:client-auth/ncs:cert-maps/ncs:cert-to-name/ncs:name" {
+    deviate replace {
+        type string {
+            length "1..11";
+            pattern "[_+0-9a-zA-Z]*";
+        }
+    }
+}
+
+
+  deviation "/ncs:netconf-server/ncs:call-home/ncs:netconf-client/ncs:endpoints/ncs:endpoint/ncs:transport/ncs:tls/ncs:tls/ncs:server-identity/ncs:local-or-keystore/ncs:local/ncs:local-definition/ncs:install-hidden-key/ncs:input/ncs:private-key" {
+    deviate add {
+      must "current()/../../../../../ncs:name='certificate_endpoint'"{
+          error-message "private key can be configured for 'certificate_endpoint' only";
+          description "private key can be configured for 'certificate_endpoint' only";
+
+      }
+    }
+  }
+
+   deviation "/ncs:netconf-server/ncs:call-home/ncs:netconf-client/ncs:connection-type/ncs:connection-type" {
+    deviate replace {
+        mandatory false;
+    }
+  }
+
+  deviation "/ncs:netconf-server/ncs:call-home/ncs:netconf-client/ncs:endpoints/ncs:endpoint/ncs:transport/ncs:tls/ncs:tls/ncs:hello-params" {
+    deviate add {
+      must " (count(ncs:tls-versions/ncs:tls-version) = 0 and count(ncs:cipher-suites/ncs:cipher-suite) = 0) "
+      +    " or (../../ncs:name = 'certificate_endpoint')" {
+          error-message "configuration of TLS handshake parameters is allowed only for 'certificate_endpoint'";
+          description "Configuration of TLS handshake parameters is allowed only for 'certificate_endpoint'.";
+      }
+    }
+  }
+
+  deviation "/ncs:netconf-server/ncs:call-home/ncs:netconf-client/ncs:endpoints/ncs:endpoint/ncs:transport/ncs:tls/ncs:tls/ncs:server-identity/ncs:local-or-keystore/ncs:local/ncs:local-definition/ncs:algorithm"
+   {
+     deviate not-supported;
+   }
+  deviation "/ncs:netconf-server/ncs:call-home/ncs:netconf-client/ncs:endpoints/ncs:endpoint/ncs:transport/ncs:tls/ncs:tls/ncs:server-identity/ncs:local-or-keystore/ncs:local/ncs:local-definition/ncs:public-key"
+   {
+     deviate not-supported;
+   }
+
+  deviation "/ncs:netconf-server/ncs:call-home/ncs:netconf-client/ncs:endpoints/ncs:endpoint/ncs:transport/ncs:tls/ncs:tls/ncs:server-identity/ncs:local-or-keystore/ncs:local/ncs:local-definition/ncs:private-key"
+   {
+     deviate not-supported;
+   }
+
+   deviation "/ncs:netconf-server/ncs:call-home/ncs:netconf-client/ncs:endpoints/ncs:endpoint/ncs:transport/ncs:tls/ncs:tls/ncs:server-identity/ncs:local-or-keystore/ncs:local/ncs:local-definition/ncs:generate-hidden-key"
+   {
+     deviate not-supported;
+   }
+
+   deviation "/ncs:netconf-server/ncs:call-home/ncs:netconf-client/ncs:endpoints/ncs:endpoint/ncs:transport/ncs:tls/ncs:tls/ncs:server-identity/ncs:local-or-keystore/ncs:local/ncs:local-definition/ncs:install-hidden-key/ncs:input/ncs:algorithm"
+   {
+     deviate not-supported;
+   }
+
+    deviation "/ncs:netconf-server/ncs:call-home/ncs:netconf-client/ncs:endpoints/ncs:endpoint/ncs:transport/ncs:tls/ncs:tls/ncs:server-identity/ncs:local-or-keystore/ncs:local/ncs:local-definition/ncs:install-hidden-key/ncs:input/ncs:public-key"
+   {
+     deviate not-supported;
+   }
+
+  deviation "/ncs:netconf-server/ncs:call-home/ncs:netconf-client/ncs:endpoints/ncs:endpoint/ncs:transport/ncs:tls/ncs:tls/ncs:client-auth/ncs:pinned-client-certs"
+   {
+     deviate not-supported;
+   }
+
+    deviation "/ncs:netconf-server/ncs:call-home/ncs:netconf-client/ncs:connection-type/ncs:connection-type/ncs:periodic-connection"
+    {
+      deviate not-supported;
+    }
+
+    deviation "/ncs:netconf-server/ncs:call-home/ncs:netconf-client/ncs:reconnect-strategy"
+    {
+      deviate not-supported;
+    }
+
+    deviation "/ncs:netconf-server/ncs:call-home/ncs:netconf-client/ncs:endpoints/ncs:endpoint/ncs:transport/ncs:tls/ncs:tls/ncs:server-identity/ncs:local-or-keystore/ncs:local/ncs:local-definition/ncs:certificate-expiration" {
+      deviate not-supported;
+    }
+
+    deviation "/ncs:netconf-server/ncs:call-home/ncs:netconf-client/ncs:connection-type/ncs:connection-type/ncs:persistent-connection/ncs:persistent/ncs:keep-alives" {
+      deviate not-supported;
+    }
+
+    deviation "/ncs:netconf-server/ncs:call-home/ncs:netconf-client/ncs:endpoints/ncs:endpoint/ncs:transport/ncs:tls/ncs:tls/ncs:server-identity/ncs:local-or-keystore/ncs:local/ncs:local-definition/ncs:cert" {
+      deviate not-supported;
+    }
+    deviation "/ncs:netconf-server/ncs:call-home/ncs:netconf-client/ncs:endpoints/ncs:endpoint/ncs:transport/ncs:tls/ncs:tls/ncs:server-identity/ncs:local-or-keystore/ncs:keystore/ncs:reference" {
+      deviate not-supported;
+    }
+
+
+
+  /************************************************************/
+  /*            ietf-netconf-server dummy deviations          */
+  /************************************************************/
+
+  deviation "/ncs:netconf-server/ncs:call-home/ncs:netconf-client/ncs:endpoints/ncs:endpoint/ncs:transport/ncs:tls/ncs:tls/ncs:address" {
+    description "Not valid PMA address";
+    deviate add {}
+
+  }
+
+  deviation "/ncs:netconf-server/ncs:call-home/ncs:netconf-client/ncs:endpoints/ncs:endpoint/ncs:transport/ncs:tls/ncs:tls" {
+    description "Port configuration is not allowed for 'certificate_endpoint'";
+    deviate add {}
+  }
+
+  deviation "/ncs:netconf-server/ncs:call-home/ncs:netconf-client/ncs:endpoints/ncs:endpoint/ncs:transport/ncs:tls/ncs:tls/ncs:hello-params/ncs:cipher-suites/ncs:cipher-suite" {
+    description "The YANG identifiers of the supported ciphers ordered by descending preference";
+    deviate add {
+      must "(current() = 'tlscsa:tls-aes-256-gcm-sha384' or current() = 'tlscsa:tls-chacha20-poly1305-sha256'"+
+        "or current() = 'tlscsa:tls-aes-128-gcm-sha256' or current() = 'tlscsa:tls-ecdhe-rsa-with-aes-256-gcm-sha384'"+
+        "or current() = 'tlscsa:tls-ecdhe-rsa-with-chacha20-poly1305-sha256' or current() = 'tlscsa:tls-ecdhe-rsa-with-aes-128-gcm-sha256'"+
+        "or current() = 'tlscsa:tls-ecdhe-rsa-with-aes-256-cbc-sha384' or current() = 'tlscsa:tls-ecdhe-rsa-with-aes-256-cbc-sha'"+
+        "or current() = 'tlscsa:tls-rsa-with-aes-256-gcm-sha384' or current() = 'tlscsa:tls-rsa-with-aes-256-cbc-sha256'"+
+        "or current() = 'tlscsa:tls-rsa-with-aes-256-cbc-sha' or current() = 'tlscsa:tls-ecdhe-rsa-with-aes-128-cbc-sha256'"+
+        "or current() = 'tlscsa:tls-ecdhe-rsa-with-aes-128-cbc-sha' or current() = 'tlscsa:tls-rsa-with-aes-128-gcm-sha256'"+
+        "or current() = 'tlscsa:tls-rsa-with-aes-128-cbc-sha256' or current() = 'tlscsa:tls-rsa-with-aes-128-cbc-sha')"{
+        error-message "this cipher is not supported";
+        description "The YANG identifiers of the supported ciphers ordered by descending preference";
+      }
+    }
+  }
+
+}

@@ -1,0 +1,165 @@
+module nokia-sdan-radius-dynamic-authorization-server-common-dev {
+
+  yang-version 1.1;
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-sdan-radius-dynamic-authorization-server-common-dev";
+
+  prefix nokia-dyn-auth-serv-common-dev;
+
+  import ietf-inet-types {
+    prefix inet;
+  }
+
+  import tailf-common {
+    prefix "tailf";
+  }
+
+  import nokia-sdan-radius-dynamic-authorization-server {
+    prefix nokia-dyn-auth-server;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG deviations
+     related to Radius Dynamic Authorization Server.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2024, Nokia. All Rights Reserved.";
+
+  revision 2025-04-08 {
+    description
+      "Disconnect message specific deviations removed";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2024-04-04 {
+    description
+      "Initial Revision";
+    reference
+      "Nokia specific";
+  }
+
+  deviation "/nokia-dyn-auth-server:radius-dynamic-authorization-server/nokia-dyn-auth-server:dynamic-auth-clients/nokia-dyn-auth-server:client" {
+    deviate add {
+      max-elements 32;
+    }
+  }
+
+  deviation "/nokia-dyn-auth-server:radius-dynamic-authorization-server/nokia-dyn-auth-server:dynamic-auth-clients/nokia-dyn-auth-server:client/nokia-dyn-auth-server:transport/nokia-dyn-auth-server:udp/nokia-dyn-auth-server:udp/nokia-dyn-auth-server:address" {
+    deviate replace {
+      type inet:ipv4-address {
+      }
+    }
+
+    deviate add {
+      must 'not((substring-before(current(),".") = 127) '
+        +  'or (substring-before(current(),".") = 0) '
+        +  'or (starts-with(current(),"169.154.")) '
+        +  'or (starts-with(current(),"169.254.")) '
+        +  'or (starts-with(current(),"192.0.0.")) '
+        +  'or (starts-with(current(),"192.0.2.")) '
+        +  'or (starts-with(current(),"198.51.100.")) '
+        +  'or (starts-with(current(),"203.0.113.")) '
+        +  'or ((substring-before(current(),".") >= 224) '
+        +  'and (substring-before(current(),".") <= 255)) '
+        +  'or (current() = "::") or (current() = "::1") '
+        +  'or (starts-with(current(),"::ffff")) '
+        +  'or (starts-with(current(),"ff")) '
+        +  'or ((starts-with(current(),"2001")) '
+        +  'and ((contains(substring(substring-after'
+        +  '(current(),"2001"),2,3),"db8")) '
+        +  'or (contains(substring(substring-after'
+        +  '(current(),"2001"),2,3),":")))) '
+        +  'or ((starts-with(current(),"2001")) '
+        +  'and ((contains(substring(substring-after'
+        +  '(current(),"2001"),1,2),":1")) '
+        +  'and (contains(substring(substring-after'
+        +  '(current(),"2001"),3,3),":")))))'
+      {
+        error-message "Invalid NAS IPv4/IPv6 address";
+        description
+          "This deviation ensures to restrict IP
+          address with reference of:
+          1. https://www.iana.org/assignments/iana-ipv4-special-registry/iana-ipv4-special-registry.xhtml
+            127.0.0.0/8         - Loopback
+            0.0.0.0/8           - Host on this network
+            192.0.0.0/24        - IETF Protocol Assignments
+            192.0.2.0/24        - Documentation (TEST-NET-1)
+            198.51.100.0/24     - Documentation (TEST-NET-2)
+            203.0.113.0/24      - Documentation (TEST-NET-3)
+            224.0.0.0/4         - Multicast
+            240.0.0.0/4         - Reserved
+            255.255.255.255/32  - Broadcast;
+          2.https://www.iana.org/assignments/iana-ipv6-special-registry/iana-ipv6-special-registry.xhtml
+            2001::/23       -  IETF Protocol Assignments
+            ::/128          -  Unspecified Address
+            ::1/128         -  Loopback Address
+            ::ffff:0:0/96   -  IPv4-mapped Address
+            ff00::/8        -  Multicast Address
+            2001:db8::/32   -  Documentation";
+      }
+    }
+  }
+
+  deviation "/nokia-dyn-auth-server:radius-dynamic-authorization-server/nokia-dyn-auth-server:dynamic-auth-clients/nokia-dyn-auth-server:client/nokia-dyn-auth-server:transport/nokia-dyn-auth-server:udp/nokia-dyn-auth-server:udp/nokia-dyn-auth-server:shared-secret" {
+    deviate replace {
+      type tailf:aes-cfb-128-encrypted-string {
+        length "1..128"{
+          error-message "shared-secret string allowed range is min 1 to max 63 characters";
+          description "The shared-secret of the Dynamic Authorization Client will accept with minimum of 1 and maximum of 63 characters";
+        }
+      }
+    }
+  }
+
+  deviation "/nokia-dyn-auth-server:radius-dynamic-authorization-server/nokia-dyn-auth-server:listen-ports" {
+    deviate add {
+      must " . = '3799' or . = '1813' or . = '1700' " {
+        error-message "DAS listen currently supported ports are 3799, 1813 and 1700";
+      }
+    }
+  }
+}

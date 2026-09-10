@@ -1,0 +1,80 @@
+module nokia-sdan-power-over-ethernet-control-mounted-eonu-dev {
+
+  namespace
+     "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+   + "nokia-sdan-power-over-ethernet-control-mounted-eonu-dev";
+
+  prefix nokia-poe-ctr-mounted-eonu-dev;
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import ietf-hardware-mounted {
+    prefix hw-mounted;
+  }
+    
+  import nokia-sdan-power-over-ethernet-control-mounted {
+    prefix nokia-poe-ctr-mounted;
+  }
+
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "Create deviation for nokia-sdan-power-over-ethernet-control";
+
+
+  revision 2022-09-28 {
+    description
+      "Adding Deviations for unsupported Yang leaves for epic BBN-88491.";
+    reference
+      "Nokia specific";
+  }
+
+  
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/nokia-poe-ctr-mounted:poe/nokia-poe-ctr-mounted:poe-capabilities" {
+    description
+       "This deviation assures that poe state does not support poe-capabilities.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/nokia-poe-ctr-mounted:poe/nokia-poe-ctr-mounted:power-pair-pinout-control" {
+    description
+       "This deviation assures that poe state does not support power-pair-pinout-control.";
+    deviate not-supported;
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/nokia-poe-ctr-mounted:poe/nokia-poe-ctr-mounted:power-classification-status" {
+    description
+       "This deviation assures that poe state does not support power-classification-status.";
+    deviate not-supported;
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/nokia-poe-ctr-mounted:poe/nokia-poe-ctr-mounted:power-detection-status" {
+    description
+       "This deviation assures that poe state does not support power-detection-status.";
+    deviate not-supported;
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/nokia-poe-ctr-mounted:poe/nokia-poe-ctr-mounted:oper-status" {
+    description
+       "This deviation assures that poe state does not support oper-status.";
+    deviate not-supported;
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/nokia-poe-ctr-mounted:poe/nokia-poe-ctr-mounted:status-counter" {
+    description
+       "This deviation assures that poe state does not support status-counter.";
+    deviate not-supported;
+  }
+}
+
+
+
+

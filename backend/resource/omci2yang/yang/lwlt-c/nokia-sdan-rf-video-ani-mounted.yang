@@ -1,0 +1,434 @@
+module nokia-sdan-rf-video-ani-mounted {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+             + "nokia-sdan-rf-video-ani-mounted";
+  prefix nokia-rf-ani-mounted;
+  
+  import nokia-interface-identities-mounted {
+    prefix nokia-if-id-mounted;
+  }
+
+  import ietf-interfaces-mounted {
+     prefix if-mounted;
+  }
+  
+  import bbf-fiber-onu-emulated-mount {
+     prefix onu;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Broadband Forum YANG module
+     should be directed to <mailto:isam.yang@nokia.com>.";
+
+
+  description
+    "This module contains a collection of YANG definitions for
+     Physical path termination point video ANI.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2022, Nokia. All Rights Reserved.";
+
+
+  revision 2023-04-25 {
+    description
+      "Initial revision.";
+   reference
+      "Nokia specific";
+  }
+  
+  typedef agc-mode {
+    type enumeration {
+      enum "no-agc" {
+        description
+          "No AGC";
+      }
+      enum "broad-band-agc" {
+        description
+          "Broadband RF AGC.";
+      }
+      enum "optical-agc" {
+        description
+          "Optical AGC.";
+      }
+    }
+    description "type agc-mode";
+  }
+  
+  
+  augment "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface" {
+    when "derived-from-or-self(if-mounted:type, 
+          'nokia-if-id-mounted:rf-video-ani')";
+    description
+      "Augments config nodes for RF video ANI.";
+
+    container rf-video-ani {
+      description
+        "The config node of RF video ANI.";
+      reference
+        "ITU-T G.988 9.13.2 Physical path termination point video ANI.";
+      
+      leaf pilot-frequency {
+        type int32;
+        units "Hz";
+        description
+          "This attribute is only applicable when 
+           signal-power-measurement-capability is 
+           'var-freq' or 'optical-var'. 
+           It will be ignored for other values of 
+           signal-power-measurement-capability.";
+        reference
+          "ITU-T G.988 9.13.2 Physical path termination point
+           video ANI: Pilot frequency.";
+      }
+      
+      leaf agc-mode {
+        type agc-mode;
+        default "broad-band-agc";
+        description
+          "This attribute allows the configuration of
+           the ONU's AGC mode.";
+        reference
+          "ITU-T G.988 9.13.2 Physical path termination point
+           video ANI: AGC mode.";
+      }
+      
+      leaf agc-offset {
+        type int8 {range "-120 .. 120";}
+        default 20;
+        description
+          "This attribute indicates the measurement offset that 
+            the ONU should use in AGC. The attribute has a step 
+            size of 0.1 dB, represented as a signed integer.
+            
+           The theoretical nominal RF signal is 80 channels of
+            NTSC video, each with a per-channel OMI of 3.5%. 
+            An ONU presented with such a signal should produce 
+            its specified output when this attribute is set to zero.
+            
+           If total optical power is used for AGC, this attribute 
+            provides the OMI offset for any NTSC carriers present 
+            from the theoretical 3.5% value. For example, if the 
+            actual signal uses an OMI of 7.0% per channel (3 dB higher), 
+            then the ONU should be given an AGC setting of 30 (coded 0x1E).
+            
+           If broadband RF power is used for AGC, this attribute 
+            provides the total power offset for any NTSC carriers 
+            present from the theoretical 80-channel value. For example,
+            if an actual signal contains 40 NTSC channels (3 dB lower), 
+            then the ONU should be given an AGC setting of -30 (coded 0xE2).";
+        reference
+          "ITU-T G.988 9.13.2 Physical path termination point
+           video ANI: AGC setting.";
+      }
+      
+      leaf lower-optical-threshold {
+        type int8 {range "-120 .. 60";}
+        default -95;
+        description
+          "This attribute specifies the optical level used to declare
+           the video OOR low alarm. Valid values are -12 to +6 dBm in 0.1 
+           dB increments, represented as a 2s complement integer. 
+           (Coding -120 to +60, where 0x00 = 0 dBm, 0x88 = -12.0 dBm, etc.) 
+           Upon ME instantiation, the ONU sets this attribute to 
+           0xA1 (-9.5 dBm).";
+        reference
+          "ITU-T G.988 9.13.2 Physical path termination point
+           video ANI: Video lower optical threshold.";
+      }
+      
+      leaf upper-optical-threshold {
+        type int8 {range "-120 .. 60";}
+        default 10;
+        description
+          "This attribute specifies the optical level used to declare
+           the video OOR high alarm. Valid values are -12 to +6 dBm in 0.1 dB 
+           increments, represented as a 2s complement integer. 
+           (Coding -120 to +60, 0x00 = 0 dBm, 0x88 = -12.0 dBm, etc.) 
+           Upon ME instantiation, the ONU sets this attribute to 
+           0x19 (+2.5 dBm).";
+        reference
+          "ITU-T G.988 9.13.2 Physical path termination point
+           video ANI: Video upper optical threshold.";
+      }
+    }
+  }
+  
+  augment "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface" {
+    when "derived-from-or-self(if-mounted:type, 
+          'nokia-if-id-mounted:rf-video-ani')";
+    description
+      "Augments operational state nodes for RF video ANI.";
+
+    container rf-video-ani {
+      description
+        "The status node of RF video ANI.";
+      reference
+        "ITU-T G.988 9.13.2 Physical path termination point video ANI.";
+        
+      leaf freq-range-low {
+        type enumeration {
+          enum "no-low-band" {
+            description
+              "No low band";
+          }
+          enum "50-550mhz" {
+            description
+              "50..550 MHz.";
+          }
+          enum "50-750mhz" {
+            description
+              "50..750 MHz.";
+          }
+          enum "50-870mhz" {
+            description
+              "50..870 MHz.";
+          }
+        }
+        description
+          "This attribute indicates the lower of the two 
+          frequency ranges supported.";
+        reference
+          "ITU-T G.988 9.13.2 Physical path termination point 
+           video ANI: Frequency range low.";
+      }
+      
+      leaf freq-range-high {
+        type enumeration {
+          enum "no-high-band" {
+            description
+              "No high band";
+          }
+          enum "550-750mhz" {
+            description
+              "550..750 MHz.";
+          }
+          enum "550-870mhz" {
+            description
+              "550..870 MHz.";
+          }
+          enum "950-2050mhz" {
+            description
+              "950..2050 MHz.";
+          }
+          enum "2150-3250mhz" {
+            description
+              "2150..3250 MHz.";
+          }
+          enum "950-3250mhz" {
+            description
+              "950..3250 MHz.";
+          }
+        }
+        description
+          "This attribute indicates the higher of the two 
+          frequency ranges supported.";
+        reference
+          "ITU-T G.988 9.13.2 Physical path termination point
+           video ANI: Frequency range high.";
+      }
+      
+      leaf signal-power-measurement-capability {
+        type enumeration {
+          enum "no-signal" {
+            description
+              "No signal level measurement capability.";
+          }
+          enum "optical-power" {
+            description
+              "Total optical power level.";
+          }
+          enum "fixed-freq" {
+            description
+              "Fixed frequency pilot tone power level.";
+          }
+          enum "optical-fixed" {
+            description
+              "Total optical power level and fixed frequency
+               pilot tone power level.";
+          }
+          enum "var-freq" {
+            description
+              "Variable frequency pilot tone power level.";
+          }
+          enum "optical-var" {
+            description
+              "Total optical power level and variable frequency 
+               pilot tone power level.";
+          }
+          enum "bb-rfpower" {
+            description
+              "Broadband RF power level.";
+          }
+          enum "optical-rfpower" {
+            description
+              "Total optical power level and broadband RF power level.";
+          }
+        }
+        description
+          "This attribute indicates the capability of the ONU 
+           to measure the video signal level.";
+        reference
+          "ITU-T G.988 9.13.2 Physical path termination point
+           video ANI: Signal capability.";
+      }
+      
+      leaf optical-signal-level {
+        type union {
+          type enumeration {
+            enum undefined {
+              description
+                "undefined because of related attribute is undefined. ";
+            }
+          }
+          type uint8;
+        }
+        units "dBuW";
+        description
+          "This attribute is an unsigned integer that returns the 
+           current measurement of the total optical signal level.
+             - If signal-power-measurement-capability  = 'no-signal',
+               'fixed-freq', 'var-freq' or 'bb-rfpower' this attribute
+               is undefined.
+             - If signal-power-measurement-capability  ='optical-power',
+               'optical-fixed', 'optical-var' or 'optical-rfpower', 
+               this attribute describes the total optical power that is 
+               generating photocurrent on the receiver.";
+        reference
+          "ITU-T G.988 9.13.2 Physical path termination point
+           video ANI: Optical signal level.";
+      }
+      
+      leaf pilot-signal-level {
+        type union {
+          type enumeration {
+            enum undefined {
+              description
+                "undefined because of related attribute is undefined. ";
+            }
+          }
+          type uint8;
+        }
+        units "dBuV";
+        description
+          "This attribute indicates the current measurement of 
+           the pilot signal level or broadband RF level. The 
+           unit of this attribute is decibel-microvolt at the
+           RF video service port.
+             - If signal-power-measurement-capability = 'no-signal' 
+               or 'optical-power', then this attribute is undefined.
+             - If signal-power-measurement-capability  = 'fixed-freq',
+              'optical-fixed', 'var-freq' or 'optical-var', this 
+               attribute reports the pilot signal level at the 
+               output of the video UNI.
+             - If signal-power-measurement-capability  = 'bb-rfpower'
+               or 'optical-rfpower', this attribute reports the total 
+               RF power level at the output of the video UNI.";
+        reference
+          "ITU-T G.988 9.13.2 Physical path termination point
+           video ANI: Pilot signal level.";
+      }
+      
+      leaf signal-level-min {
+        type uint8;
+        units "dBuW";
+        description
+          "This attribute indicates the minimum optical RF power
+           per channel that results in a CNR of 47 dBc for a channel
+           of 4.5 MHz bandwidth at a receive optical power of -5 dBm.";
+        reference
+          "ITU-T G.988 9.13.2 Physical path termination point
+           video ANI: Signal level min.";
+      }
+      
+      leaf signal-level-max {
+        type uint8;
+        units "dBuW";
+        description
+          "This attribute indicates the maximum optical RF power
+           per channel that results in a CTB of -57 dBc for an 
+           80-channel ensemble of carriers at a per-channel optical 
+           modulation index (OMI) of 3.5%. ";
+        reference
+          "ITU-T G.988 9.13.2 Physical path termination point
+           video ANI: Signal level max.";
+      }
+      
+      leaf actual-pilot-frequency {
+        type union {
+          type enumeration {
+            enum undefined {
+              description
+                "undefined because of related attribute is undefined. ";
+            }
+          }
+          type int32;
+        }
+        units "Hz";
+        description
+          "This attribute specifies the frequency of the pilot channel 
+           receiver. The unit of this attribute is hertz.
+             - If signal-power-measurement-capability = 'no-signal', 
+               'optical-power', 'bb-rfpower' or 'optical-rfpower', this
+               data node is undefined.
+             - If signal-power-measurement-capability = 'fixed-freq' or 
+               'optical-fixed', this data node is autonomously determined 
+               by the system.
+             - If signal-power-measurement-capability = 'var-freq' or 
+               'optical-var', this attribute is as configured in 
+               'pilot-frequency'. It is undefined if not configured.";
+        reference
+          "ITU-T G.988 9.13.2 Physical path termination point
+           video ANI: Pilot frequency.";
+      }
+      
+      leaf actual-agc-mode {
+        type agc-mode;
+        description
+          "This attribute reports the actual ONU's AGC mode 
+           as discovered from the ONU or as configured.";
+        reference
+          "ITU-T G.988 9.13.2 Physical path termination point
+           video ANI: AGC mode.";
+      }
+    }
+  }
+
+}

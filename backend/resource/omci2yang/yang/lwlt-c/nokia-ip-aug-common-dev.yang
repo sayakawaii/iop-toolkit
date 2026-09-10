@@ -1,0 +1,146 @@
+module nokia-ip-aug-common-dev {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+            + "nokia-ip-aug-common-dev";
+
+  prefix nokia-ip-aug-common-dev;
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import nokia-ip-aug {
+    prefix ip-aug;
+  }
+
+  import iana-if-type {
+    prefix ianaift;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG deviations on top
+     of the nokia-ip-aug.yang module.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2017-2018, Nokia. All Rights Reserved.";
+  
+  revision 2023-05-02 {
+    description "Solve yang errors and resolve canonical order according to RFC 6020.";
+    reference "Nokia specific.";
+  }
+
+  revision 2022-06-28 {
+    description
+      "Fixing deviation for 'tag-ip-intf' leaf";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2019-11-18 {
+    description
+      "Adapted XPATH change for ipif-lower-layer container
+       and added a deviation for 'tag-ip-intf' leaf";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2019-07-15 {
+     description
+       "Initial revision.";
+     reference
+       "Nokia specific";
+  }
+
+  /* low layer interface defined in nokia-ip-aug.yang */
+  deviation "/if:interfaces/if:interface/ip-aug:ipif-lower-layer/ip-aug:sub-interface"  {
+
+    /* IP interface type can not be modified */
+    deviate add {
+      must "(../../if:type = 'ianaift:ipForward')" {
+        error-message "IP interface type should be ipForward.";
+        description "A lower layer l2 termination interface cannot be added in a non-ipForward interface";
+      }
+    }
+  }
+
+  deviation "/if:interfaces/if:interface/ip-aug:tag-ip-intf/ip-aug:tag-ip-intf" {
+    deviate add {
+      must "not ((/if:interfaces/if:interface[if:name != current()/../../if:name]"
+        +                                  "[bit-is-set(ip-aug:tag-ip-intf/tag-ip-intf,'inband-mgnt')]) and (current() = 'inband-mgnt'))" {
+           error-message
+             "Another interface is already assigned with "
+           + "inband-mgnt tag.Maximum one inband IP interface "
+           + "is possible";
+           description "Only 1 inband-mgnt tagged interface is supported";
+      }
+    }
+  }
+  
+  /* dummy deviations */
+  deviation "/if:interfaces/if:interface/ip-aug:ipif-lower-layer/ip-aug:sub-interface" {
+    description "An ipForward interface must be configured on top of an already configured lower layer l2 termination interface. The error message 'Ipforward Interface Lower layer name is not available' will be displayed when the constraint is violated";
+    deviate add {}
+  }
+
+  deviation "/if:interfaces/if:interface/ip-aug:ipif-lower-layer/ip-aug:sub-interface" {
+    description "The lower layer l2 termination subinterface of an ipForward interface cannot be modified. The error message 'forbid to modify ipif-lower-layer l2-termination-interface of ipforward interface' will be displayed when the constraint is violated";
+    deviate add {}
+  }
+  
+  deviation "/if:interfaces/if:interface/ip-aug:tag-ip-intf/ip-aug:tag-ip-intf" {
+    description "Only 1 inband-mgnt tagged interface is supported. The error message 'only support 1 inband mgnt interface' will be displayed when the constraint is violated";
+    deviate add {}
+  }
+    
+  deviation "/if:interfaces/if:interface/ip-aug:tag-ip-intf/ip-aug:tag-ip-intf" {
+    description "At least one of the configured ipForward interfaces should be inband-mgnt tagged. The error message 'At least 1 interface should be inband mgnt interface' will be displayed when the constraint is violated";
+    deviate add {}
+  }
+ 
+  deviation "/if:interfaces/if:interface/ip-aug:tag-ip-intf/ip-aug:tag-ip-intf" {
+    description "An ipForward's interface yang tagging cannot be added/modified/deleted. The error message 'Tag addition/modification/deletion on interface not allowed' will be displayed when the constraint is violated";
+    deviate add {}
+  }
+}

@@ -1,0 +1,370 @@
+module nokia-bbf-sub-interface-tagging-mounted-eonu-only-dev {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+           + "nokia-bbf-sub-interface-tagging-mounted-eonu-only-dev";
+
+  prefix nokia-bbf-sub-interface-tagging-mounted-eonu-only-dev;
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import ietf-interfaces-mounted {
+    prefix if-mounted;
+  }
+
+  import bbf-sub-interface-tagging-mounted {
+    prefix bbf-subif-tag-mounted;
+  }
+
+  import bbf-sub-interfaces-mounted {
+    prefix bbf-subif-mounted;
+  }
+
+  import nokia-template-common {
+    prefix template-common;
+  }
+
+  import bbf-if-type-mounted {
+    prefix bbfift-mounted;
+  }
+
+/*
+  import bbf-qos-policies-mounted{
+    prefix bbf-qos-pol-mounted;
+  }
+
+  import bbf-qos-classifiers-mounted{
+    prefix bbf-qos-cls-mounted;
+  }
+*/
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "This module contains a collection of YANG deviations on top-
+     of standard for supporting BBF/bbf-sub-interfaces-tagging YANG module.
+     Copyright (C) 2017-2018, Nokia. All Rights Reserved.";
+
+  revision 2026-04-01 {
+    description
+      "tunnel transparent";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2025-11-25 {
+    description
+      "remove deviation to support more match untagged VSIs under the same UNI.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2024-01-04 {
+    description
+      "loosen any-frame rule validation.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2023-06-13 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific";
+  }
+
+
+    deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:ingress-rule"
+           +"/bbf-subif-mounted:rule/bbf-subif-mounted:flexible-match/bbf-subif-tag-mounted:match-criteria"
+           +"/bbf-subif-tag-mounted:frame-filter/bbf-subif-tag-mounted:any-frame/bbf-subif-tag-mounted:any-frame" {
+    deviate add {
+      must "not(derived-from-or-self(../../../../../../../../../onu:usage, 'template-common:node-actual-usage'))"
+          + "or not(boolean((current()/../../../../bbf-subif-mounted:rule/bbf-subif-mounted:ingress-rewrite/bbf-subif-tag-mounted:push-tag"
+          + "/bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:pbit-from-tag-index)))" 
+          {
+            error-message "If one VSI has rule match 'any-frame', all rules' ingress-rewrite should use pbit-marking-index.";
+          }
+        }
+    }
+
+
+    deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:ingress-rule"
+           +"/bbf-subif-mounted:rule/bbf-subif-mounted:flexible-match/bbf-subif-tag-mounted:match-criteria"
+           +"/bbf-subif-tag-mounted:frame-filter/bbf-subif-tag-mounted:any-frame/bbf-subif-tag-mounted:any-frame" {
+    deviate add {
+      must "not(derived-from-or-self(../../../../../../../../../onu:usage, 'template-common:node-actual-usage'))
+            or
+            count(current()/../../../../bbf-subif-mounted:rule) < 2
+            or
+            (current()/../../../../../bbf-subif-mounted:egress-rewrite/pop-tags = 1
+            and not(boolean(current()/../../../../../bbf-subif-mounted:egress-rewrite/push-tag)))" 
+          {
+            error-message "If match any-frame is in the rule, the egress-rewrite of match any-frame rule must pop 1 tag and no push.";
+          }
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:ingress-rule"
+           +"/bbf-subif-mounted:rule/bbf-subif-mounted:flexible-match/bbf-subif-tag-mounted:match-criteria"
+           +"/bbf-subif-tag-mounted:frame-filter/bbf-subif-tag-mounted:any-frame/bbf-subif-tag-mounted:any-frame" {
+    deviate add {
+      must "not(derived-from-or-self(../../../../../../../../../onu:usage, 'template-common:node-actual-usage'))
+            or 
+            count(current()/../../../../bbf-subif-mounted:rule)<2
+            or
+            (count(current()/../../../../bbf-subif-mounted:rule)=2
+             and count(current()/../../../../bbf-subif-mounted:rule[bbf-subif-mounted:flexible-match/bbf-subif-tag-mounted:match-criteria/bbf-subif-tag-mounted:tag/bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:vlan-id = 'priority-tagged']) = 1)"
+
+          {
+            error-message "If match any-frame is in the rule, and another rule exists in the same VSI: the another rule should only match priority-tag.";
+          }
+        }
+    }
+
+/*    
+    deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:ingress-rule"
+           +"/bbf-subif-mounted:rule/bbf-subif-mounted:flexible-match/bbf-subif-tag-mounted:match-criteria" {
+    deviate add {
+      must "not(derived-from-or-self(../../../../../../../../onu:usage, 'template-common:node-actual-usage'))
+            or
+            count(current()/bbf-subif-tag-mounted:tag[bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:vlan-id = 'any'])= 0
+            or 
+            (count(current()/../../../bbf-subif-mounted:rule) = 1
+            and not(boolean(current()/../../bbf-subif-mounted:ingress-rewrite/bbf-subif-tag-mounted:push-tag))
+            and current()/../../bbf-subif-mounted:ingress-rewrite/bbf-subif-tag-mounted:pop-tags = 0
+            and not(boolean(current()/../../../../bbf-subif-mounted:egress-rewrite/bbf-subif-tag-mounted:push-tag))
+            and current()/../../../../bbf-subif-mounted:egress-rewrite/bbf-subif-tag-mounted:pop-tags = 0
+            and count(current()/../../../../../../if-mounted:interface[if-mounted:type = 'bbfift-mounted:vlan-sub-interface'][bbf-subif-mounted:subif-lower-layer/bbf-subif-mounted:interface = current()/../../../../../bbf-subif-mounted:subif-lower-layer/bbf-subif-mounted:interface]) = 1)"
+          {
+            error-message "If a VLAN any transparent VSI is configured under a uni port, other VSI cannot be configured in the same uni port.";
+          }
+        }
+    }
+*/
+
+    deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:ingress-rule"
+           +"/bbf-subif-mounted:rule/bbf-subif-mounted:flexible-match/bbf-subif-tag-mounted:match-criteria" {
+    deviate add {
+      must "not(derived-from-or-self(../../../../../../../../onu:usage, 'template-common:node-actual-usage'))
+            or
+            count(current()/bbf-subif-tag-mounted:tag[bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:vlan-id = 'any'])= 0
+            or 
+            (count(current()/../../../../../../if-mounted:interface[if-mounted:type = 'bbfift-mounted:vlan-sub-interface'][bbf-subif-mounted:subif-lower-layer/bbf-subif-mounted:interface = current()/../../../../../bbf-subif-mounted:subif-lower-layer/bbf-subif-mounted:interface]) = 1)"
+          {
+            error-message "If a VLAN any transparent VSI is configured under a uni port, other VSI cannot be configured in the same uni port.";
+          }
+        }
+    }
+	
+	deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:ingress-rule"
+           +"/bbf-subif-mounted:rule/bbf-subif-mounted:flexible-match/bbf-subif-tag-mounted:match-criteria" {
+    deviate add {
+      must "not(derived-from-or-self(../../../../../../../../onu:usage, 'template-common:node-actual-usage'))
+            or 
+            count(current()/../../../bbf-subif-mounted:rule) = 1
+            or 	
+            count(current()/../../../bbf-subif-mounted:rule[bbf-subif-mounted:flexible-match/bbf-subif-tag-mounted:match-criteria/bbf-subif-tag-mounted:tag/bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:vlan-id = 'any'])= 0"
+          {
+            error-message "tag any transparent rule could not co-exist with other rules under same VSI.";
+          }
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:ingress-rule"
+           +"/bbf-subif-mounted:rule/bbf-subif-mounted:flexible-match/bbf-subif-tag-mounted:match-criteria" {
+      deviate add {
+        must "not(derived-from-or-self(../../../../../../../../onu:usage, 'template-common:node-actual-usage'))
+              or
+              count(current()/bbf-subif-tag-mounted:tag[bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:vlan-id = 'priority-tagged']) = 0
+              or 
+              count(current()/../../../../../../if-mounted:interface[bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:ingress-rule/bbf-subif-mounted:rule/bbf-subif-mounted:flexible-match/bbf-subif-tag-mounted:match-criteria/
+                      bbf-subif-tag-mounted:tag/bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:vlan-id = 'priority-tagged'][bbf-subif-mounted:subif-lower-layer/bbf-subif-mounted:interface =
+                      current()/../../../../../bbf-subif-mounted:subif-lower-layer/bbf-subif-mounted:interface]) = 1"
+        {
+          error-message "More than one VSIs that match priority-taggged are not allowed under the same UNI.";
+        }
+      }
+    }
+
+
+    deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:ingress-rule"
+           +"/bbf-subif-mounted:rule/bbf-subif-mounted:flexible-match/bbf-subif-tag-mounted:match-criteria" {
+      deviate add {
+        must "not(derived-from-or-self(../../../../../../../../onu:usage, 'template-common:node-actual-usage'))
+              or
+              not(boolean(current()/bbf-subif-tag-mounted:any-frame))
+              or
+              count(current()/../../../../../../if-mounted:interface[bbf-subif-mounted:subif-lower-layer/bbf-subif-mounted:interface = current()/../../../../../bbf-subif-mounted:subif-lower-layer/bbf-subif-mounted:interface]/
+              bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:ingress-rule/bbf-subif-mounted:rule/bbf-subif-mounted:flexible-match/bbf-subif-tag-mounted:match-criteria/
+              bbf-subif-tag-mounted:any-frame) = 1"
+              
+        {
+          error-message "More than one VSIs that match any-frame are not allowed under the same UNI.";
+        }
+      }
+    }
+
+
+    deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:ingress-rule"
+           +"/bbf-subif-mounted:rule/bbf-subif-mounted:flexible-match/bbf-subif-tag-mounted:match-criteria" {
+      deviate add {
+        must "not(derived-from-or-self(../../../../../../../../onu:usage, 'template-common:node-actual-usage'))
+              or
+              not(boolean(current()/bbf-subif-tag-mounted:any-frame))
+              or
+              count(current()/../../../../../../if-mounted:interface[bbf-subif-mounted:subif-lower-layer/bbf-subif-mounted:interface = current()/../../../../../bbf-subif-mounted:subif-lower-layer/bbf-subif-mounted:interface]/
+              bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:ingress-rule/bbf-subif-mounted:rule/bbf-subif-mounted:flexible-match/bbf-subif-tag-mounted:match-criteria/
+              bbf-subif-tag-mounted:untagged) = 0"
+
+        {
+          error-message "VSI match any-frame and VSI match untagged are not allowed under the same UNI.";
+        }
+
+      }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:ingress-rule"
+           +"/bbf-subif-mounted:rule/bbf-subif-mounted:flexible-match/bbf-subif-tag-mounted:match-criteria" {
+      deviate add {
+        must "not(derived-from-or-self(../../../../../../../../onu:usage, 'template-common:node-actual-usage'))
+              or
+              count(current()/bbf-subif-tag-mounted:tag[bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:vlan-id = 'priority-tagged']) = 0
+              or
+              count(current()/../../../../../../if-mounted:interface[bbf-subif-mounted:subif-lower-layer/bbf-subif-mounted:interface = current()/../../../../../bbf-subif-mounted:subif-lower-layer/bbf-subif-mounted:interface]) = 1
+              or
+              count(current()/../../../../../../if-mounted:interface[bbf-subif-mounted:subif-lower-layer/bbf-subif-mounted:interface = current()/../../../../../bbf-subif-mounted:subif-lower-layer/bbf-subif-mounted:interface]/
+              bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:ingress-rule/bbf-subif-mounted:rule/bbf-subif-mounted:flexible-match/bbf-subif-tag-mounted:match-criteria/
+              bbf-subif-tag-mounted:untagged) = 0"
+
+        {
+          error-message "VSI match priority-taggged and VSI match untagged are not allowed under the same UNI.";
+        }
+
+      }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:ingress-rule"
+           +"/bbf-subif-mounted:rule/bbf-subif-mounted:flexible-match/bbf-subif-tag-mounted:match-criteria"
+           +"/bbf-subif-tag-mounted:frame-filter/bbf-subif-tag-mounted:any-frame/bbf-subif-tag-mounted:any-frame" {
+      deviate add {
+        must "not(derived-from-or-self(../../../../../../../../../onu:usage, 'template-common:node-actual-usage'))
+              or
+              count(current()/../../../../bbf-subif-mounted:rule[bbf-subif-mounted:priority > current()/../../../bbf-subif-mounted:priority]) = 0"
+        
+        {
+          error-message "priority of any-frame VSI should be minimum priority in all rules.";
+        }
+      }
+    }
+
+
+   deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing"
+           +"/bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:inline-frame-processing"
+           +"/bbf-subif-mounted:ingress-rule/bbf-subif-mounted:rule/bbf-subif-mounted:flexible-match/bbf-subif-tag-mounted:match-criteria" {
+
+      deviate add {
+
+           must "((count(current()/../../../bbf-subif-mounted:rule) > 1)"
+                +" or derived-from-or-self(../../../../../../../../onu:usage, 'template-common:node-actual-usage')"
+                +" or ((not(boolean(current()/../../bbf-subif-mounted:ingress-rewrite/push-tag)))"
+                +" and (not(boolean(current()/../../../../bbf-subif-mounted:egress-rewrite/push-tag)))"
+                +" and (current()/../../bbf-subif-mounted:ingress-rewrite/bbf-subif-tag-mounted:pop-tags = 0)"
+                +" and (current()/../../../../bbf-subif-mounted:egress-rewrite/pop-tags = 0))"
+
+                +" or (boolean(current()/bbf-subif-tag-mounted:untagged))"
+                +" and current()/../../../../bbf-subif-mounted:egress-rewrite/pop-tags = 1"
+                +" and (boolean(current()/../../bbf-subif-mounted:ingress-rewrite/bbf-subif-tag-mounted:push-tag))"
+                +" and (not(boolean(current()/../../../../bbf-subif-mounted:egress-rewrite/push-tag)))"
+                +" or (current()/bbf-subif-tag-mounted:tag/bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:vlan-id = 'priority-tagged')"
+                +" and (current()/../../../../bbf-subif-mounted:egress-rewrite/pop-tags = 1)"
+                +" and (current()/../../../../bbf-subif-mounted:egress-rewrite/push-tag/bbf-subif-tag-mounted:dot1q-tag"
+                +" /bbf-subif-tag-mounted:vlan-id = 0)"
+
+                +" or (current()/bbf-subif-tag-mounted:tag/bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:vlan-id > 0)"
+                +" and (current()/../../bbf-subif-mounted:ingress-rewrite/bbf-subif-tag-mounted:pop-tags = 1)"
+                +" and (current()/../../../../bbf-subif-mounted:egress-rewrite/pop-tags = 1)"
+                +" and (current()/../../../../bbf-subif-mounted:egress-rewrite/bbf-subif-tag-mounted:push-tag"
+                +" /bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:vlan-id"
+                +" = current()/bbf-subif-tag-mounted:tag/bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:vlan-id)"
+
+                +" or (current()/bbf-subif-tag-mounted:tag/bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:vlan-id > 0)"
+                +" and (current()/../../bbf-subif-mounted:ingress-rewrite/bbf-subif-tag-mounted:pop-tags = 1)"
+                +" and (current()/../../bbf-subif-mounted:ingress-rewrite/bbf-subif-tag-mounted:push-tag"
+                +" /bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:vlan-id = "
+                +" current()/bbf-subif-tag-mounted:tag/bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:vlan-id)"
+                +" and (current()/../../../../bbf-subif-mounted:egress-rewrite/pop-tags = 0)"
+                +" and (not(boolean(current()/../../../../bbf-subif-mounted:egress-rewrite/push-tag)))"
+
+                +" or (current()/bbf-subif-tag-mounted:tag/bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:vlan-id > 0)"
+                +" and (current()/../../bbf-subif-mounted:ingress-rewrite/bbf-subif-tag-mounted:pop-tags = 0)"
+                +" and (boolean(current()/../../bbf-subif-mounted:ingress-rewrite/bbf-subif-tag-mounted:push-tag))"
+                +" and (current()/../../../../bbf-subif-mounted:egress-rewrite/pop-tags = 1)"
+
+                +" or (boolean(current()/bbf-subif-tag-mounted:any-frame))"
+                +" and current()/../../bbf-subif-mounted:ingress-rewrite/bbf-subif-tag-mounted:pop-tags = 0"
+                +" and boolean(current()/../../bbf-subif-mounted:ingress-rewrite/bbf-subif-tag-mounted:push-tag)"
+                +" and current()/../../../../bbf-subif-mounted:egress-rewrite/pop-tags = 1"
+                +" and not(boolean(current()/../../../../bbf-subif-mounted:egress-rewrite/push-tag))"
+
+                +" or ((current()/bbf-subif-tag-mounted:tag/bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:vlan-id = 'any')"
+                +" and (not(boolean(current()/../../bbf-subif-mounted:ingress-rewrite/push-tag)))"
+                +" and (not(boolean(current()/../../../../bbf-subif-mounted:egress-rewrite/push-tag)))"
+                +" and (current()/../../bbf-subif-mounted:ingress-rewrite/bbf-subif-tag-mounted:pop-tags = 0)"
+                +" and (current()/../../../../bbf-subif-mounted:egress-rewrite/pop-tags = 0))"
+
+                +")"
+
+          {
+             error-message "VSI has only one match rule: If match criteria is untagged, the egress rewrite must pop 1 tag and no push; If match criteria is priority-tagged , the egress rewrite must pop 1 tag and push priority tag; If match criteria is vlan x, the egress rewrite must pop 1 and push a vlan equals to the vlan x; If match any-frame, ingress-rewrite no pop tag and push 1 tag, the egress rewrite must pop 1 tag and no push; If match vlan-id any only support transparent, no ingress-rewrite and no egress-rewrite.";
+
+         }
+    }
+
+ }
+
+/*
+    deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-subif-mounted:frame-processing/bbf-subif-mounted:inline-frame-processing/"
+              + "bbf-subif-mounted:inline-frame-processing/bbf-subif-mounted:ingress-rule/bbf-subif-mounted:rule/bbf-subif-mounted:ingress-rewrite/bbf-subif-tag-mounted:push-tag/"
+              + "bbf-subif-tag-mounted:dot1q-tag/bbf-subif-tag-mounted:pbit/bbf-subif-tag-mounted:copy-pbit-from-input-or-0/bbf-subif-tag-mounted:pbit-from-tag-index" {  
+      deviate add {
+        must "not(derived-from-or-self(../../../../../../../../../../onu:usage, 'template-common:node-actual-usage'))"
+              +" or "
+              +"not(boolean(../../../../../../../bbf-qos-pol-mounted:ingress-qos-policy-profile))"
+              +" or "
+              +"(count(deref(../../../../../../../bbf-qos-pol-mounted:ingress-qos-policy-profile)/../bbf-qos-pol-mounted:policy-list"
+                    +"[boolean(deref(deref(bbf-qos-pol-mounted:name)/../bbf-qos-pol-mounted:classifiers/bbf-qos-pol-mounted:name)/../bbf-qos-cls-mounted:match-criteria/bbf-qos-cls-mounted:tag[bbf-qos-cls-mounted:index=0]/bbf-qos-cls-mounted:in-pbit-list)]"
+                    +"[boolean(deref(deref(bbf-qos-pol-mounted:name)/../bbf-qos-pol-mounted:classifiers/bbf-qos-pol-mounted:name)/../bbf-qos-cls-mounted:classifier-action-entry-cfg/bbf-qos-cls-mounted:scheduling-traffic-class)])>=1)" {
+            error-message "If vsi ingress-rewrite uses pbit-from-tag-index, its ingress-qos-policy-profile should have  policy with classifiers that are defined with match in-pbit-list and action scheduling-traffic-class.";
+        }
+      }
+    } 
+*/
+
+
+
+   
+
+
+
+
+
+
+
+
+
+
+}

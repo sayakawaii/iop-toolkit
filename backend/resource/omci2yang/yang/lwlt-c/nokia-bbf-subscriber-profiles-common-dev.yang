@@ -1,0 +1,42 @@
+module nokia-bbf-subscriber-profiles-common-dev {
+
+  namespace
+    "urn:bbf:yang:nokia-bbf-subscriber-profiles-common-dev";
+
+  prefix subscriber-profiles-dev;
+
+  import bbf-subscriber-profiles {
+    prefix bbf-subprof;
+  }
+
+  import nokia-yang-types {
+    prefix nok-typ;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA BBF/bbf-subscriber-profiles YANG module supporting
+     deviations on top of standard.";
+
+  /* revision */
+
+  revision 2019-06-18 {
+    description
+      "Initial revision.";
+    reference
+      "TBD";
+  }
+  
+  /* restrict special characters in subscriber-profile other than nokia-string-ascii64 */
+  deviation "/bbf-subprof:subscriber-profiles/bbf-subprof:subscriber-profile/bbf-subprof:name"{
+    deviate replace{
+      type nok-typ:nokia-string-ascii64;
+    }
+  }
+}
+

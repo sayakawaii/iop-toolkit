@@ -1,0 +1,42 @@
+
+module nokia-interface-speed-monitoring-common-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+          + "nokia-interface-speed-monitoring-common-dev";
+
+  prefix  nokia-interface-speed-monitoring-common-dev;
+
+  import ietf-interfaces {
+      prefix if;
+  }
+
+  import nokia-interface-speed-monitoring {
+      prefix nokia-itf-tm;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA ethernet YANG module supporting
+     deviations on top of standard.";
+
+  revision 2019-08-05 {
+    description
+      "Initial revision.";
+    reference
+      "TBD";
+  }
+  
+  deviation "/if:interfaces/if:interface/nokia-itf-tm:speed-monitoring/nokia-itf-tm:enable" {
+     deviate add{
+        must "((current()/../../if:name != 'LEMIITF') or ((current()/../../if:name = 'LEMIITF') and (current() = 'false')))" {
+                  error-message "Speed_monitoring Cannot Modified on LEMI Interface";
+        }
+     }
+  }
+  
+}

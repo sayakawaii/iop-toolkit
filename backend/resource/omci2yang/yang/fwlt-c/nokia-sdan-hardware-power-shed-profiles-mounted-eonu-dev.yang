@@ -1,0 +1,50 @@
+module nokia-sdan-hardware-power-shed-profiles-mounted-eonu-dev {
+  yang-version 1.1;
+  namespace
+     "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+   + "nokia-sdan-hardware-power-shed-profiles-mounted-eonu-dev";
+
+  prefix nokia-sdan-hardware-power-shed-profiles-mounted-eonu-dev;
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import nokia-sdan-hardware-power-shed-profiles-mounted {
+    prefix nokia-hw-pwr-shed-prof-mounted;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "The NOKIA BBF/hardware YANG module supporting
+     deviations on top of standard.";
+
+  revision 2023-07-10 {
+      description
+        "Add deviation to limit class type to rj45/rj11/rf-video. Update it for BBN-5820";
+      reference
+        "Nokia specific";
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-pwr-shed-prof-mounted:power-shedding-profiles/nokia-hw-pwr-shed-prof-mounted:power-shedding-profile/nokia-hw-pwr-shed-prof-mounted:video-return-service-power-shed-delay" {
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-pwr-shed-prof-mounted:power-shedding-profiles/nokia-hw-pwr-shed-prof-mounted:power-shedding-profile/nokia-hw-pwr-shed-prof-mounted:atm-service-power-shed-delay" {
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-pwr-shed-prof-mounted:power-shedding-profiles/nokia-hw-pwr-shed-prof-mounted:power-shedding-profile/nokia-hw-pwr-shed-prof-mounted:frame-service-power-shed-delay" {
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-pwr-shed-prof-mounted:power-shedding-profiles/nokia-hw-pwr-shed-prof-mounted:power-shedding-profile/nokia-hw-pwr-shed-prof-mounted:sdh-sonet-service-power-shed-delay" {
+    deviate not-supported;
+  }
+}

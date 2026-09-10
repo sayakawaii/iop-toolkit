@@ -1,0 +1,254 @@
+module ietf-ipv4-unicast-routing-mounted {
+
+  yang-version "1.1";
+
+  namespace "urn:ietf:params:xml:ns:yang:ietf-ipv4-unicast-routing-mounted";
+
+  prefix "v4ur-mounted";
+
+  import ietf-routing-mounted  {
+    prefix rt-mounted;
+  }
+
+  import ietf-inet-types {
+    prefix inet;
+  }
+
+  import bbf-fiber-onu-emulated-mount {
+     prefix onu;
+  }
+
+   
+  organization
+    "IETF NETMOD (NETCONF Data Modeling Language) Working Group";
+
+  contact
+    "WG Web:   <https://datatracker.ietf.org/wg/netmod/>
+     WG List:  <mailto:netmod@ietf.org>
+
+     WG Chair: Lou Berger
+               <mailto:lberger@labn.net>
+
+     WG Chair: Kent Watsen
+               <mailto:kwatsen@juniper.net>
+
+     Editor:   Ladislav Lhotka
+               <mailto:lhotka@nic.cz>
+
+     Editor:   Acee Lindem
+               <mailto:acee@cisco.com>";
+
+  description
+    "This YANG module augments the 'ietf-routing' module with basic
+     configuration and state data for IPv4 unicast routing.
+
+     Copyright (c) 2016 IETF Trust and the persons identified as
+     authors of the code.  All rights reserved.
+
+     Redistribution and use in source and binary forms, with or
+     without modification, is permitted pursuant to, and subject to
+     the license terms contained in, the Simplified BSD License set
+     forth in Section 4.c of the IETF Trust's Legal Provisions
+     Relating to IETF Documents
+     (http://trustee.ietf.org/license-info).
+
+     The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL
+     NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'MAY', and
+     'OPTIONAL' in the module text are to be interpreted as described
+     in RFC 2119.
+
+     This version of this YANG module is part of RFC 8022;
+     see the RFC itself for full legal notices.";
+
+  revision 2016-11-04 {
+    description
+      "Initial revision.";
+    reference
+      "RFC 8022: A YANG Data Model for Routing Management";
+  }
+
+  /* Identities */
+
+  identity ipv4-unicast {
+    base rt-mounted:ipv4;
+    description
+      "This identity represents the IPv4 unicast address family.";
+  }
+
+  /* State data */
+
+  augment "/onu:onus/onu:onu/onu:root/rt-mounted:routing-state/rt-mounted:ribs/rt-mounted:rib/rt-mounted:routes/rt-mounted:route" {
+    when "derived-from-or-self(../../rt-mounted:address-family, "
+       + "'v4ur-mounted:ipv4-unicast')" {
+      description
+        "This augment is valid only for IPv4 unicast.";
+    }
+    description
+      "This leaf augments an IPv4 unicast route.";
+    leaf destination-prefix {
+      type inet:ipv4-prefix;
+      description
+        "IPv4 destination prefix.";
+    }
+  }
+
+  augment "/onu:onus/onu:onu/onu:root/rt-mounted:routing-state/rt-mounted:ribs/rt-mounted:rib/rt-mounted:routes/rt-mounted:route/"
+        + "rt-mounted:next-hop/rt-mounted:next-hop-options/rt-mounted:simple-next-hop" {
+    when "derived-from-or-self(../../../rt-mounted:address-family, "
+       + "'v4ur-mounted:ipv4-unicast')" {
+      description
+        "This augment is valid only for IPv4 unicast.";
+    }
+    description
+      "Augment 'simple-next-hop' case in IPv4 unicast routes.";
+    leaf next-hop-address {
+      type inet:ipv4-address;
+      description
+        "IPv4 address of the next hop.";
+    }
+  }
+
+  augment "/onu:onus/onu:onu/onu:root/rt-mounted:routing-state/rt-mounted:ribs/rt-mounted:rib/rt-mounted:routes/rt-mounted:route/"
+        + "rt-mounted:next-hop/rt-mounted:next-hop-options/rt-mounted:next-hop-list/"
+        + "rt-mounted:next-hop-list/rt-mounted:next-hop" {
+    when "derived-from-or-self(../../../../../rt-mounted:address-family, "
+       + "'v4ur-mounted:ipv4-unicast')" {
+      description
+        "This augment is valid only for IPv4 unicast.";
+    }
+    description
+      "This leaf augments the 'next-hop-list' case of IPv4 unicast
+       routes.";
+    leaf address {
+      type inet:ipv4-address;
+      description
+        "IPv4 address of the next-hop.";
+    }
+  }
+
+  augment "/onu:onus/onu:onu/onu:root/rt-mounted:routing-state/rt-mounted:ribs/rt-mounted:rib/rt-mounted:active-route/rt-mounted:input" {
+    when "derived-from-or-self(../rt-mounted:address-family, "
+       + "'v4ur-mounted:ipv4-unicast')" {
+      description
+        "This augment is valid only for IPv4 unicast RIBs.";
+    }
+    description
+      "This augment adds the input parameter of the 'active-route'
+       action.";
+    leaf destination-address {
+      type inet:ipv4-address;
+      description
+        "IPv4 destination address.";
+    }
+  }
+
+  augment "/onu:onus/onu:onu/onu:root/rt-mounted:routing-state/rt-mounted:ribs/rt-mounted:rib/rt-mounted:active-route/"
+        + "rt-mounted:output/rt-mounted:route" {
+    when "derived-from-or-self(../../rt-mounted:address-family, "
+       + "'v4ur-mounted:ipv4-unicast')" {
+      description
+        "This augment is valid only for IPv4 unicast.";
+    }
+    description
+      "This augment adds the destination prefix to the reply of the
+       'active-route' action.";
+    leaf destination-prefix {
+      type inet:ipv4-prefix;
+      description
+        "IPv4 destination prefix.";
+    }
+  }
+
+  augment "/onu:onus/onu:onu/onu:root/rt-mounted:routing-state/rt-mounted:ribs/rt-mounted:rib/rt-mounted:active-route/"
+        + "rt-mounted:output/rt-mounted:route/rt-mounted:next-hop/rt-mounted:next-hop-options/"
+        + "rt-mounted:simple-next-hop" {
+    when "derived-from-or-self(../../../rt-mounted:address-family, "
+       + "'v4ur-mounted:ipv4-unicast')" {
+      description
+        "This augment is valid only for IPv4 unicast.";
+    }
+    description
+      "Augment 'simple-next-hop' case in the reply to the
+       'active-route' action.";
+    leaf next-hop-address {
+      type inet:ipv4-address;
+      description
+        "IPv4 address of the next hop.";
+    }
+  }
+
+  augment "/onu:onus/onu:onu/onu:root/rt-mounted:routing-state/rt-mounted:ribs/rt-mounted:rib/rt-mounted:active-route/"
+        + "rt-mounted:output/rt-mounted:route/rt-mounted:next-hop/rt-mounted:next-hop-options/"
+        + "rt-mounted:next-hop-list/rt-mounted:next-hop-list/rt-mounted:next-hop" {
+    when "derived-from-or-self(../../../../../rt-mounted:address-family, "
+       + "'v4ur-mounted:ipv4-unicast')" {
+      description
+        "This augment is valid only for IPv4 unicast.";
+    }
+    description
+      "Augment 'next-hop-list' case in the reply to the
+       'active-route' action.";
+    leaf next-hop-address {
+      type inet:ipv4-address;
+      description
+        "IPv4 address of the next hop.";
+    }
+  }
+
+  /* Configuration data */
+
+  augment "/onu:onus/onu:onu/onu:root/rt-mounted:routing/rt-mounted:control-plane-protocols/"
+        + "rt-mounted:control-plane-protocol/rt-mounted:static-routes" {
+    description
+      "This augment defines the configuration of the 'static'
+       pseudo-protocol with data specific to IPv4 unicast.";
+    container ipv4 {
+      description
+        "Configuration of a 'static' pseudo-protocol instance
+         consists of a list of routes.";
+      list route {
+        key "destination-prefix";
+        description
+          "A list of static routes.";
+        leaf destination-prefix {
+          type inet:ipv4-prefix;
+          mandatory "true";
+          description
+            "IPv4 destination prefix.";
+        }
+        leaf description {
+          type string;
+          description
+            "Textual description of the route.";
+        }
+        container next-hop {
+          description
+            "Configuration of next-hop.";
+          uses rt-mounted:next-hop-content {
+            augment "next-hop-options/simple-next-hop" {
+              description
+                "Augment 'simple-next-hop' case in IPv4 static
+                 routes.";
+              leaf next-hop-address {
+                type inet:ipv4-address;
+                description
+                  "IPv4 address of the next hop.";
+              }
+            }
+            augment "next-hop-options/next-hop-list/next-hop-list/"
+                  + "next-hop" {
+              description
+                "Augment 'next-hop-list' case in IPv4 static
+                 routes.";
+              leaf next-hop-address {
+                type inet:ipv4-address;
+                description
+                  "IPv4 address of the next hop.";
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

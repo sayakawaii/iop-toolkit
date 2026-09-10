@@ -1,0 +1,45 @@
+module nokia-moca-performance-management-mounted-eonu-dev {
+    namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-moca-performance-management-mounted-eonu-dev";
+    prefix nokia-moca-performance-management-mounted-eonu-dev;
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+    import nokia-moca-performance-management-mounted {
+        prefix nokia-moca-pm-mounted;
+    }
+
+    import bbf-interfaces-performance-management-mounted {
+        prefix bbf-if-pm-mounted;
+    }
+
+    import ietf-interfaces-mounted {
+        prefix if-mounted;
+    }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+  description
+    "This module contains a collection of YANG deviations on top of NOKIA specific  MOCA UNI PM yang module";
+
+   revision 2025-06-10 {
+    description
+      "Deviation added for MOCA UNI PM leaf rx-errors-missed";
+    reference
+      "Nokia specific";
+   }
+
+   deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:current/nokia-moca-pm-mounted:moca/nokia-moca-pm-mounted:frame/nokia-moca-pm-mounted:rx-errors-missed" {
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:history/nokia-moca-pm-mounted:moca/nokia-moca-pm-mounted:frame/nokia-moca-pm-mounted:rx-errors-missed" {
+    deviate not-supported;
+  }
+}

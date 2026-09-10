@@ -1,0 +1,52 @@
+module nokia-bbf-xponvani-onu-authentication-common-dev {
+
+  namespace
+    "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+  + "nokia-bbf-xponvani-onu-authentication-common-dev";
+
+  prefix  nokia-bbf-xponvani-onu-authentication-common-dev;
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import bbf-xponvani {
+    prefix bbf-xponvani;
+  }
+  
+  import bbf-xponvani-onu-authentication {
+      prefix bbf-xponvani-onu-auth;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA IETF/System YANG module supporting
+     deviations on top of standard.";
+
+  revision 2023-06-26 {
+    description
+      "modify authentication related deviations.";
+    reference
+      "TBD";
+  }
+
+  revision 2023-02-27 {
+    description
+      "Initial revision.";
+    reference
+      "TBD";
+  }
+
+  deviation "/if:interfaces-state/if:interface/bbf-xponvani:v-ani/bbf-xponvani:onu-present-on-this-olt/bbf-xponvani-onu-auth:determined-onu-management-mode" {
+      description
+         "This deviation assures that bbf-xponvani-onu-auth:determined-onu-management-mode leaf is not supported.";
+      deviate not-supported;
+  }
+  
+
+}

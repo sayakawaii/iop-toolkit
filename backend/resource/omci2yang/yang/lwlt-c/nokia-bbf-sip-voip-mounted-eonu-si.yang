@@ -1,0 +1,790 @@
+module nokia-bbf-sip-voip-mounted-eonu-si {
+    namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/nokia-bbf-sip-voip-mounted-eonu-si";
+
+    prefix nokia-bbf-sip-voip-mounted-eonu-si;
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+    import bbf-sip-voip-mounted {
+        prefix bbf-sip-voip-mounted;
+    }
+
+    import nokia-sdan-service-impact {
+       prefix nokia-si;
+    }
+
+    organization
+      "Nokia";
+
+    contact
+      "isam.yang@nokia.com";
+
+    description
+      "This module contains a collection of YANG deviations on top
+       of standard for supporting BBF/bbf-sip-voip YANG module.
+
+       This specification is published by Nokia under Non-Disclosure
+       Agreement(s) (NDA) with specific parties and has to be considered
+       as Confidential Information as defined in such NDA. Nokia
+       reserves the right to revise this document for any reason,
+       including but not limited to conformity with standards
+       promulgated by various agencies, utilisation of advances in the
+       state of the technical areas, or the reflection of changes in the
+       design of any equipment, techniques, or procedures described or
+       referred to herein.
+
+       The product specifications and other technical or performance
+       information contained herein are subject to change without
+       notice. Updates of this document will be issued under the above
+       NDA's.lic-appsufficiency, accuracy, or utility of any
+       information or opinion contained herein. Nokia expressly advises
+       that any use of for any purpose or reliance upon this technical
+       reference is at the risk of the user and that Nokia shall not be
+       liable for any damage or injury incurred by any person arising
+       out of the sufficiency, accuracy, or utility of any information
+       or opinion contained herein.
+
+       This document is not to be construed as a suggestion to any
+       manufacturer to modify or change any of its products, nor does
+       this document represent any commitment by Nokia to sell or
+       purchase any product. Nothing contained herein shall be construed
+       as conferring by implication, estoppel, or otherwise any license
+       or right under any patent, whether or not the use of any
+       information herein necessarily employs an invention of any
+       existing or later issued patent.
+
+       Nokia reserves the right not to offer any or all of these
+       products and to withdraw any or all of them at any future time.
+
+       Copyright (C) 2017-2018, Nokia. All Rights Reserved.";
+
+    /* revision */
+    revision 2024-01-29 {
+        description
+          "Initial revision.";
+        reference
+          "Nokia specific";
+    }
+
+/*supplementary services profile*/
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:supplementary-services-profiles/bbf-sip-voip-mounted:supplementary-services-profile"
+          + "/bbf-sip-voip-mounted:direct-connect-service/bbf-sip-voip-mounted:connect-type" {
+        description
+          "Modifying connect-type would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:supplementary-services-profiles/bbf-sip-voip-mounted:supplementary-services-profile"
+          + "/bbf-sip-voip-mounted:direct-connect-service/bbf-sip-voip-mounted:control" {
+        description
+          "Modifying control would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:supplementary-services-profiles/bbf-sip-voip-mounted:supplementary-services-profile"
+          + "/bbf-sip-voip-mounted:call-waiting/bbf-sip-voip-mounted:control" {
+        description
+          "Modifying control would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:supplementary-services-profiles/bbf-sip-voip-mounted:supplementary-services-profile"
+          + "/bbf-sip-voip-mounted:call-waiting/bbf-sip-voip-mounted:cw-caller-id-announcement" {
+        description
+          "Modifying control would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:supplementary-services-profiles/bbf-sip-voip-mounted:supplementary-services-profile"
+          + "/bbf-sip-voip-mounted:attended-call-transfer/bbf-sip-voip-mounted:control" {
+        description
+          "Modifying control would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:supplementary-services-profiles/bbf-sip-voip-mounted:supplementary-services-profile"
+          + "/bbf-sip-voip-mounted:unattended-call-transfer/bbf-sip-voip-mounted:control" {
+        description
+          "Modifying control would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:supplementary-services-profiles/bbf-sip-voip-mounted:supplementary-services-profile"
+          + "/bbf-sip-voip-mounted:Three-party-conference/bbf-sip-voip-mounted:control" {
+        description
+          "Modifying control would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:supplementary-services-profiles/bbf-sip-voip-mounted:supplementary-services-profile"
+          + "/bbf-sip-voip-mounted:call-hold/bbf-sip-voip-mounted:control" {
+        description
+          "Modifying control would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:supplementary-services-profiles/bbf-sip-voip-mounted:supplementary-services-profile"
+          + "/bbf-sip-voip-mounted:call-park/bbf-sip-voip-mounted:control" {
+        description
+          "Modifying control would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:supplementary-services-profiles/bbf-sip-voip-mounted:supplementary-services-profile"
+          + "/bbf-sip-voip-mounted:calling-name/bbf-sip-voip-mounted:control" {
+        description
+          "Modifying control would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:supplementary-services-profiles/bbf-sip-voip-mounted:supplementary-services-profile"
+          + "/bbf-sip-voip-mounted:calling-number/bbf-sip-voip-mounted:control" {
+        description
+          "Modifying control would cause voip service impact.";
+       deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:supplementary-services-profiles/bbf-sip-voip-mounted:supplementary-services-profile"
+          + "/bbf-sip-voip-mounted:callerid/bbf-sip-voip-mounted:control" {
+        description
+          "Modifying control would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:supplementary-services-profiles/bbf-sip-voip-mounted:supplementary-services-profile"
+          + "/bbf-sip-voip-mounted:callerid/bbf-sip-voip-mounted:status" {
+        description
+          "Modifying status would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:supplementary-services-profiles/bbf-sip-voip-mounted:supplementary-services-profile"
+          + "/bbf-sip-voip-mounted:callerid-name/bbf-sip-voip-mounted:control" {
+        description
+          "Modifying control would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:supplementary-services-profiles/bbf-sip-voip-mounted:supplementary-services-profile"
+          + "/bbf-sip-voip-mounted:callerid-name/bbf-sip-voip-mounted:status" {
+        description
+          "Modifying status would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:supplementary-services-profiles/bbf-sip-voip-mounted:supplementary-services-profile"
+          + "/bbf-sip-voip-mounted:call-forwarding-ind/bbf-sip-voip-mounted:control" {
+        description
+          "Modifying control would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:supplementary-services-profiles/bbf-sip-voip-mounted:supplementary-services-profile"
+          + "/bbf-sip-voip-mounted:flash-on-emergency-call/bbf-sip-voip-mounted:control" {
+        description
+          "Modifying control would cause voip service impact.";
+       deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:supplementary-services-profiles/bbf-sip-voip-mounted:supplementary-services-profile"
+          + "/bbf-sip-voip-mounted:emergency-call-originating-hold/bbf-sip-voip-mounted:control" {
+        description
+          "Modifying control would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+/*diaplan digitmap profile*/
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:dialplan-digitmap-profiles/bbf-sip-voip-mounted:dialplan-digitmap-profile/bbf-sip-voip-mounted:dialplan-characteristics"
+          + "/bbf-sip-voip-mounted:sip-dialing-short-timer" {
+        description
+          "Modifying sip-dialing-short-timer would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:dialplan-digitmap-profiles/bbf-sip-voip-mounted:dialplan-digitmap-profile/bbf-sip-voip-mounted:dialplan-characteristics"
+          + "/bbf-sip-voip-mounted:sip-dialing-long-timer" {
+        description
+          "Modifying sip-dialing-long-timer would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:dialplan-digitmap-profiles/bbf-sip-voip-mounted:dialplan-digitmap-profile/bbf-sip-voip-mounted:digitmap"
+          + "/bbf-sip-voip-mounted:digit-map-pattern" {
+        description
+          "Modifying digit-map-pattern would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+ 
+/*subscription profile*/
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:subscription-profiles/bbf-sip-voip-mounted:subscription-profile/bbf-sip-voip-mounted:sip-event-package"
+          + "/bbf-sip-voip-mounted:enabled" {
+        description
+          "Modifying enabled would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:subscription-profiles/bbf-sip-voip-mounted:subscription-profile/bbf-sip-voip-mounted:sip-event-package"
+          + "/bbf-sip-voip-mounted:subscribe-method/bbf-sip-voip-mounted:notification-characteristics/bbf-sip-voip-mounted:visual-indication" {
+        description
+          "Modifying visual-indication would cause voip service impact.";
+       deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:subscription-profiles/bbf-sip-voip-mounted:subscription-profile/bbf-sip-voip-mounted:sip-event-package"
+          + "/bbf-sip-voip-mounted:subscribe-method/bbf-sip-voip-mounted:notification-characteristics/bbf-sip-voip-mounted:tone" {
+        description
+          "Modifying tone would cause voip service impact.";
+       deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:subscription-profiles/bbf-sip-voip-mounted:subscription-profile/bbf-sip-voip-mounted:sip-event-package"
+          + "/bbf-sip-voip-mounted:subscribe-method/bbf-sip-voip-mounted:notification-characteristics/bbf-sip-voip-mounted:ring" {
+        description
+          "Modifying ring would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+/*feature access codes profile*/
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:feature-access-codes-profiles/bbf-sip-voip-mounted:feature-access-codes-profile/bbf-sip-voip-mounted:cancel-cw-feature-access-codes"
+          + "/bbf-sip-voip-mounted:service-activation-code" {
+        description
+          "Modifying service-activation-code would cause voip service impact.";
+       deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:feature-access-codes-profiles/bbf-sip-voip-mounted:feature-access-codes-profile/bbf-sip-voip-mounted:call-park-feature-access-codes"
+          + "/bbf-sip-voip-mounted:service-activation-code" {
+        description
+          "Modifying service-activation-code would cause voip service impact.";
+       deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:feature-access-codes-profiles/bbf-sip-voip-mounted:feature-access-codes-profile/bbf-sip-voip-mounted:call-hold-feature-access-codes"
+          + "/bbf-sip-voip-mounted:service-activation-code" {
+        description
+          "Modifying service-activation-code would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:feature-access-codes-profiles/bbf-sip-voip-mounted:feature-access-codes-profile/bbf-sip-voip-mounted:unattended-call-transfer-feature-access-codes"
+          + "/bbf-sip-voip-mounted:service-activation-code" {
+        description
+          "Modifying service-activation-code would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:feature-access-codes-profiles/bbf-sip-voip-mounted:feature-access-codes-profile/bbf-sip-voip-mounted:attended-call-transfer-feature-access-codes"
+          + "/bbf-sip-voip-mounted:service-activation-code" {
+        description
+          "Modifying service-activation-code would cause voip service impact.";
+       deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:feature-access-codes-profiles/bbf-sip-voip-mounted:feature-access-codes-profile/bbf-sip-voip-mounted:do-not-disturb-feature-access-codes"
+          + "/bbf-sip-voip-mounted:service-activation-code" {
+        description
+          "Modifying service-activation-code would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:feature-access-codes-profiles/bbf-sip-voip-mounted:feature-access-codes-profile/bbf-sip-voip-mounted:do-not-disturb-feature-access-codes"
+          + "/bbf-sip-voip-mounted:service-pincode-change" {
+        description
+          "Modifying service-pincode-change would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:feature-access-codes-profiles/bbf-sip-voip-mounted:feature-access-codes-profile/bbf-sip-voip-mounted:do-not-disturb-feature-access-codes"
+          + "/bbf-sip-voip-mounted:service-deactivation-code" {
+        description
+          "Modifying service-deactivation-code would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:feature-access-codes-profiles/bbf-sip-voip-mounted:feature-access-codes-profile/bbf-sip-voip-mounted:callerid-feature-access-codes"
+          + "/bbf-sip-voip-mounted:service-activation-code" {
+        description
+          "Modifying service-activation-code would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:feature-access-codes-profiles/bbf-sip-voip-mounted:feature-access-codes-profile/bbf-sip-voip-mounted:callerid-feature-access-codes"
+          + "/bbf-sip-voip-mounted:service-deactivation-code" {
+        description
+          "Modifying service-deactivation-code would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+/*sip registerchar profile*/
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:sip-registerchar-profiles/bbf-sip-voip-mounted:sip-registerchar-profile/bbf-sip-voip-mounted:re-register-interval" {
+        description
+          "Modifying service-activation-code would cause voip service impact.";
+       deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:sip-registerchar-profiles/bbf-sip-voip-mounted:sip-registerchar-profile/bbf-sip-voip-mounted:re-register-precursory-start-time" {
+        description
+          "Modifying service-deactivation-code would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+/*sip user agent*/
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-user-agents/bbf-sip-voip-mounted:sip-user-agent/bbf-sip-voip-mounted:sip-uni-uri-type" {
+        description
+          "Modifying sip-uni-uri-type would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-user-agents/bbf-sip-voip-mounted:sip-user-agent/bbf-sip-voip-mounted:sip-ua-transport-protocol-priority/bbf-sip-voip-mounted:sip-ua-transport-port" {
+        description
+          "Modifying sip-ua-transport-port would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+/*voip service gateway*/
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:voip-service-gateways/bbf-sip-voip-mounted:voip-service-gateway/bbf-sip-voip-mounted:sip-dscp-mark" {
+        description
+          "Modifying sip-dscp-mark would cause voip service impact.";
+       deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:voip-service-gateways/bbf-sip-voip-mounted:voip-service-gateway/bbf-sip-voip-mounted:release-timer" {
+        description
+          "Modifying release-timer would cause voip service impact.";
+       deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+/*sip termination*/
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-terminations/bbf-sip-voip-mounted:sip-termination/bbf-sip-voip-mounted:authentication-scheme" {
+        description
+          "Modifying authentication-scheme would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-terminations/bbf-sip-voip-mounted:sip-termination/bbf-sip-voip-mounted:realm" {
+        description
+          "Modifying realm would cause voip service impact.";
+      deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-terminations/bbf-sip-voip-mounted:sip-termination/bbf-sip-voip-mounted:aka-secret-key" {
+        description
+          "Modifying aka-secret-key would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-terminations/bbf-sip-voip-mounted:sip-termination/bbf-sip-voip-mounted:receiver-off-hook-timer" {
+        description
+          "Modifying receiver-off-hook-timer would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+/*sip server pool*/
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-server-pools/bbf-sip-voip-mounted:sip-server-pool/bbf-sip-voip-mounted:sip-servers/bbf-sip-voip-mounted:sip-server-address/bbf-sip-voip-mounted:address-type" {
+        description
+          "Modifying address-type would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-server-pools/bbf-sip-voip-mounted:sip-server-pool/bbf-sip-voip-mounted:sip-servers/bbf-sip-voip-mounted:sip-server-address/bbf-sip-voip-mounted:ip/bbf-sip-voip-mounted:ip-address" {
+        description
+          "Modifying ip-address would cause voip service impact.";
+       deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-server-pools/bbf-sip-voip-mounted:sip-server-pool/bbf-sip-voip-mounted:sip-servers/bbf-sip-voip-mounted:sip-server-role" {
+        description
+          "Modifying sip-server-role would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+/*media codec profile*/
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-profiles/bbf-sip-voip-mounted:media-codec-profiles/bbf-sip-voip-mounted:media-codec-profile/bbf-sip-voip-mounted:codec-selection-1st-order" {
+        description
+          "Modifying codec-selection-1st-order would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-profiles/bbf-sip-voip-mounted:media-codec-profiles/bbf-sip-voip-mounted:media-codec-profile/bbf-sip-voip-mounted:codec-packetization-time-1st-order" {
+        description
+          "Modifying codec-packetization-time-1st-order would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-profiles/bbf-sip-voip-mounted:media-codec-profiles/bbf-sip-voip-mounted:media-codec-profile/bbf-sip-voip-mounted:silence-suppression-1st-order" {
+        description
+          "Modifying silence-suppression-1st-order would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-profiles/bbf-sip-voip-mounted:media-codec-profiles/bbf-sip-voip-mounted:media-codec-profile/bbf-sip-voip-mounted:codec-selection-2nd-order" {
+        description
+          "Modifying codec-selection-2nd-order would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-profiles/bbf-sip-voip-mounted:media-codec-profiles/bbf-sip-voip-mounted:media-codec-profile/bbf-sip-voip-mounted:codec-packetization-time-2nd-order" {
+        description
+          "Modifying codec-packetization-time-2nd-order would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-profiles/bbf-sip-voip-mounted:media-codec-profiles/bbf-sip-voip-mounted:media-codec-profile/bbf-sip-voip-mounted:silence-suppression-2nd-order" {
+        description
+          "Modifying silence-suppression-2nd-order would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-profiles/bbf-sip-voip-mounted:media-codec-profiles/bbf-sip-voip-mounted:media-codec-profile/bbf-sip-voip-mounted:codec-selection-3rd-order" {
+        description
+          "Modifying codec-selection-3rd-order would cause voip service impact.";
+       deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-profiles/bbf-sip-voip-mounted:media-codec-profiles/bbf-sip-voip-mounted:media-codec-profile/bbf-sip-voip-mounted:codec-packetization-time-3rd-order" {
+        description
+          "Modifying codec-packetization-time-3rd-order would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-profiles/bbf-sip-voip-mounted:media-codec-profiles/bbf-sip-voip-mounted:media-codec-profile/bbf-sip-voip-mounted:silence-suppression-3rd-order" {
+        description
+          "Modifying silence-suppression-3rd-order would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-profiles/bbf-sip-voip-mounted:media-codec-profiles/bbf-sip-voip-mounted:media-codec-profile/bbf-sip-voip-mounted:codec-selection-4th-order" {
+        description
+          "Modifying codec-selection-4th-order would cause voip service impact.";
+       deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-profiles/bbf-sip-voip-mounted:media-codec-profiles/bbf-sip-voip-mounted:media-codec-profile/bbf-sip-voip-mounted:codec-packetization-time-4th-order" {
+        description
+          "Modifying codec-packetization-time-4th-order would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-profiles/bbf-sip-voip-mounted:media-codec-profiles/bbf-sip-voip-mounted:media-codec-profile/bbf-sip-voip-mounted:silence-suppression-4th-order" {
+        description
+          "Modifying silence-suppression-4th-order would cause voip service impact.";
+       deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+/*media transport profile*/
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-profiles/bbf-sip-voip-mounted:media-transport-profiles/bbf-sip-voip-mounted:media-transport-profile/bbf-sip-voip-mounted:min-port-range" {
+        description
+          "Modifying min-port-range would cause voip service impact.";
+       deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-profiles/bbf-sip-voip-mounted:media-transport-profiles/bbf-sip-voip-mounted:media-transport-profile/bbf-sip-voip-mounted:max-port-range" {
+        description
+          "Modifying max-port-range would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+/*media forward*/
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-forwarders/bbf-sip-voip-mounted:media-forwarder/bbf-sip-voip-mounted:fax-modem-transition-mode" {
+        description
+          "Modifying fax-modem-transition-mode would cause voip service impact.";
+       deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-forwarders/bbf-sip-voip-mounted:media-forwarder/bbf-sip-voip-mounted:rfc4733-mode" {
+        description
+          "Modifying rfc4733-mode would cause voip service impact.";
+       deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-forwarders/bbf-sip-voip-mounted:media-forwarder/bbf-sip-voip-mounted:piggyback-events" {
+        description
+          "Modifying piggyback-events would cause voip service impact.";
+       deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-forwarders/bbf-sip-voip-mounted:media-forwarder/bbf-sip-voip-mounted:dtmf-events" {
+        description
+          "Modifying dtmf-events would cause voip service impact.";
+       deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-forwarders/bbf-sip-voip-mounted:media-forwarder/bbf-sip-voip-mounted:tone-events" {
+        description
+          "Modifying tone-events would cause voip service impact.";
+       deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-forwarders/bbf-sip-voip-mounted:media-forwarder/bbf-sip-voip-mounted:cas-events" {
+        description
+          "Modifying cas-events would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-forwarders/bbf-sip-voip-mounted:media-forwarder/bbf-sip-voip-mounted:file-download-method" {
+        description
+          "Modifying file-download-method would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-forwarders/bbf-sip-voip-mounted:media-forwarder/bbf-sip-voip-mounted:download-characteristics/bbf-sip-voip-mounted:authentication-scheme" {
+        description
+          "Modifying authentication-scheme would cause voip service impact.";
+       deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-forwarders/bbf-sip-voip-mounted:media-forwarder/bbf-sip-voip-mounted:media-x-connect/bbf-sip-voip-mounted:voice-call-profile" {
+        description
+          "Modifying voice-call-profile would cause voip service impact.";
+       deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+/*pots uni characteristics profile*/
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profile/bbf-sip-voip-mounted:impedance" {
+        description
+          "Modifying impedance would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profile/bbf-sip-voip-mounted:rx-gain" {
+        description
+          "Modifying rx-gain would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profile/bbf-sip-voip-mounted:tx-gain" {
+        description
+          "Modifying tx-gain would cause voip service impact.";
+       deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profile/bbf-sip-voip-mounted:hold-over-time" {
+        description
+          "Modifying hold-over-time would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profile/bbf-sip-voip-mounted:off-hook-announcement-type" {
+        description
+          "Modifying off-hook-announcement-type would cause voip service impact.";
+       deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profile/bbf-sip-voip-mounted:jitter-target" {
+        description
+          "Modifying jitter-target would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profile/bbf-sip-voip-mounted:max-jitter-buffer" {
+        description
+          "Modifying max-jitter-buffer would cause voip service impact.";
+       deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profile/bbf-sip-voip-mounted:echo-cancel-enabled" {
+        description
+          "Modifying echo-cancel-enabled would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profile/bbf-sip-voip-mounted:pstn-protocol-variant" {
+        description
+          "Modifying pstn-protocol-variant would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profile/bbf-sip-voip-mounted:hook-flash-min" {
+        description
+          "Modifying hook-flash-min would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profile/bbf-sip-voip-mounted:hook-flash-max" {
+        description
+          "Modifying hook-flash-max would cause voip service impact.";
+       deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profile/bbf-sip-voip-mounted:dtmf-digit-levels" {
+        description
+          "Modifying dtmf-digit-levels would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profile/bbf-sip-voip-mounted:dtmf-digit-duration" {
+        description
+          "Modifying dtmf-digit-duration would cause voip service impact.";
+        deviate add {
+          nokia-si:service-impact;
+        }
+    }
+}

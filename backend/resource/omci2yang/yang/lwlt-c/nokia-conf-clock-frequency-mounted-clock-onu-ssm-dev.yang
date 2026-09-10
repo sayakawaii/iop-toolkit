@@ -1,0 +1,139 @@
+module nokia-conf-clock-frequency-mounted-clock-onu-ssm-dev {
+
+namespace
+     "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+   + "nokia-conf-clock-frequency-mounted-clock-onu-ssm-dev";
+
+  prefix nokia-conf-clock-frequency-mounted-clock-onu-ssm-dev;
+
+  import ietf-interfaces-mounted {
+    prefix if-mounted;
+  }
+
+  import bbf-fiber-onu-emulated-mount {
+     prefix onu;
+  }
+
+  import nokia-conf-clock-frequency-mounted{
+      prefix clock-frequency-mounted;
+  }
+
+  import bbf-xponani-mounted{
+     prefix bbf-xponani-mounted;
+  }
+
+  organization
+    "Broadband Forum <https://www.broadband-forum.org>
+     Common YANG Project Stream";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA IETF/System YANG module supporting
+     deviations on top of standard.";
+
+  /* revision */
+  revision 2025-09-01 {
+    description
+      "Modiy some yang path";
+    reference
+      "BBN-132900";
+  }
+
+  revision 2023-02-28 {
+    description
+      "Add incidental gemport configuration check.";
+    reference
+      "TBD";
+  }
+
+
+  revision 2022-07-31 {
+    description
+      "this deviation yang file supported in DFMB-A and DFMB-B.";
+    reference
+      "TBD";
+  }
+
+  revision 2020-08-31 {
+    description
+      "Initial revision.";
+    reference
+      "TBD";
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/clock-frequency-mounted:ssm-out/clock-frequency-mounted:ssm-out-enable" {
+      deviate add {
+        must "(current() = 'false')
+         or ((current() = 'true')
+         and (boolean(current()/../../../../clock-frequency-mounted:synce-ssm/clock-frequency-mounted:ESMC-vlan-id)))"  {
+          error-message "ESMC-vlan-id must be configured when ssm-out enabled";
+        }
+      }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/clock-frequency-mounted:synce-ssm/clock-frequency-mounted:admin-state" {
+      deviate add {
+        must "(current() = 'lock')
+         or ((current() = 'unlock')
+         and (boolean(current()/../../clock-frequency-mounted:synce-ssm/clock-frequency-mounted:ESMC-vlan-id)))"  {
+          error-message "ESMC-vlan-id must be configured when synce admin-state unlock";
+        }
+      }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/clock-frequency-mounted:ssm-out/clock-frequency-mounted:ssm-out-enable" {
+      deviate add {
+        must "(current() = 'false')
+         or ((current() = 'true')
+         and (count(current()/../../../if-mounted:interface/bbf-xponani-mounted:ani/bbf-xponani-mounted:multicast-gemport[bbf-xponani-mounted:is-broadcast = 'true']) = 1))"  {
+          error-message "an incidental gemport must be configured when ssm-out-enable is true";
+        }
+      }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/clock-frequency-mounted:synce-ssm/clock-frequency-mounted:admin-state" {
+      deviate add {
+        must "(current() = 'lock')
+         or ((current() = 'unlock')
+         and (count(current()/../../if-mounted:interfaces/if-mounted:interface/bbf-xponani-mounted:ani/bbf-xponani-mounted:multicast-gemport[bbf-xponani-mounted:is-broadcast = 'true']) = 1))"  {
+          error-message "an incidental gemport must be configured when synce admin-state unlock";
+        }
+      }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/clock-frequency-mounted:synce-ssm/clock-frequency-mounted:QL-options" {
+      description
+        "specifies the expected network QL states";
+      deviate replace {
+        type enumeration {
+          enum EEC-option-1 {
+            value 0;
+            description
+              "ITU-T G.8264 EEC option 1 network.";
+          }
+          enum EEC-option-2 {
+            value 1;
+            description
+              "ITU-T G.8264 EEC option 2 network.";
+          }
+        }
+        default EEC-option-1;
+      }
+    }
+    
+//dummy deviations
+deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/clock-frequency-mounted:ssm-out/clock-frequency-mounted:ssm-out-enable"{
+    description
+       "if ssm-out is enabled, the max VSI number is 7 on one UNI. If ssm-out is disabled, the max VSI number is 8 on one UNI.
+       Other dependent xpaths where this rule applies are:
+        '/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/
+       The error message 'ssm is enabled on this Uni, vsi is over max value under one UNI' will be displayed when the constraint is violated.";
+   deviate add{}
+  }
+}
+
+
+
+

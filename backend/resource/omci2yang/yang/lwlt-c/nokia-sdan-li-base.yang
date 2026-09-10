@@ -1,0 +1,302 @@
+module nokia-sdan-li-base {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+          + "nokia-sdan-li-base";
+  prefix nokia-li;
+
+  import ietf-inet-types {
+    prefix inet;
+  }
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  organization
+     "Nokia";
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG definitions for
+     supporting the requirements to allow lawful interception.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2025, Nokia. All Rights Reserved.";
+
+  revision 2026-01-28 {
+    description
+      "Description content changes to lawful intercept";
+    reference
+       "Nokia specific";
+  }
+
+  revision 2026-01-21 {
+    description
+      "Description changes for identity";
+    reference
+       "Nokia specific";
+  }
+
+  revision 2026-01-12 {
+    description
+      "Description content change to li";
+    reference
+       "Nokia specific";
+  }
+
+  revision 2026-01-06 {
+    description
+      "Container name change to li";
+    reference
+       "Nokia specific";
+  }
+
+  revision 2025-12-24 {
+    description
+      "Module name change";
+    reference
+       "Nokia specific";
+  }
+
+  revision 2025-12-16 {
+    description
+      "Introduced mediation status inactive-reason";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2025-01-03 {
+    description
+      "Initial Revision";
+    reference
+      "Nokia specific";
+  }
+
+  identity status-reason-base {
+    description
+      "The reason for deactivating the mediation entry.";
+  }
+
+  identity expired {
+    base status-reason-base;
+    description
+      "The mediation end time has expired";
+  }
+
+  identity li-system-vsi-not-configured {
+    base status-reason-base;
+    description
+      "The lawful intercept system vlan sub-interface has not been configured.";
+  }
+
+  identity system-ip-not-configured {
+    base status-reason-base;
+    description
+      "The system IP address has not been configured.";
+  }
+
+  container li {
+    description
+      "Contains all the data to configure and monitor an intercept.";
+
+    list mediation-entry {
+      key "content-id";
+      description
+        "This is a list of contents to be intercepted.";
+
+      leaf content-id {
+        type uint32 {
+          range "1..4294967295";
+        }
+        description
+          "The id of each content. This will be added in the packet
+           which is intercepted and being sent to the mediation
+           device.";
+      }
+
+      choice transport {
+        mandatory true;
+        description
+          "The configuration for where to send the intercepted stream
+           to.";
+
+        case udp {
+          container udp {
+            description
+              "The configurations to send the stream to a udp
+               destination.";
+
+            leaf dest-ip-addr {
+              type inet:host;
+              mandatory true;
+              description
+                "The IP address of the mediation device where this
+                 intercepted content is to be sent.";
+            }
+
+            leaf dest-port {
+              type inet:port-number;
+              mandatory true;
+              description
+                "The port number of the mediation device where this
+                 intercepted content is to be sent.";
+            }
+
+            leaf dscp {
+              type inet:dscp;
+              default 34;
+              description
+                "The value to fill in the DSCP field of the IP header
+                 in the intercepted content packet, which is sent to
+                 the mediation device.";
+            }
+          }
+        }
+      }
+      choice aging-type {
+        mandatory true;
+        description
+          "Define how the aging of the mediation entry should
+           happen. Aging the mediation entry is necessary to prevent
+           uncontrolled interception if the mediation entry is
+           accidentally not deleted.";
+        case expiry-time {
+          container expiry-time {
+            description
+              "Specify the time at which the mediation entry is
+               to be deactivated. A mediation-entry deactivated due to
+               expiry-time can be reactivated by setting the
+               'mediation-end-time' to a future time. A
+               mediation-entry can be deactivated by setting the
+               'mediation-end-time' to a past time.";
+            leaf mediation-end-time {
+              type yang:date-and-time;
+              description
+                "Specify the time. The time-secfrac part as described in
+                 RFC 3339 Section 5.6(Internet Date/Time Format) will be
+                 ignored even if configured.";
+            }
+          }
+        }
+      }
+
+      leaf status {
+        type enumeration {
+          enum active {
+            description
+              "Indicates that this entry is active and is able
+               to intercept data traffic if the streams are
+               configured";
+          }
+          enum inactive {
+            description
+              "Indicates that this entry is inactive and is not
+               able to intercept data traffic even if the streams
+               are configured and enabled.";
+          }
+        }
+        config false;
+        description
+          "The status of the mediation entry.";
+      }
+
+      leaf-list inactive-reason {
+        type identityref {
+          base nokia-li:status-reason-base;
+        }
+        config false;
+        description
+          "Indicates why the mediation entry status is inactive.";
+      }
+
+      list stream-entry {
+        key "stream-id";
+        description
+          "List of streams that should be intercepted by this
+           mediation entry.";
+        leaf stream-id {
+          type uint32 {
+            range "1..4294967295";
+          }
+          description
+            "Index of the stream.";
+        }
+        leaf intercept-enable {
+          type boolean;
+          default false;
+          description
+            "Enable or disable the stream. This stream configuration
+             will be intercepted only if this is set to true.";
+        }
+        container filter {
+          description
+            "The filter which will be used to select the traffic for
+            this stream.";
+        }
+        container statistics {
+          config false;
+          description
+            "Statistics are collected for this stream.";
+          leaf intercepted-packets {
+            type yang:counter64;
+          units "packets";
+            description
+              "The number of packets matching this data stream
+               specification that have been intercepted.";
+          }
+          leaf intercepted-drops {
+            type yang:counter64;
+          units "packets";
+            description
+              "The number of packets matching this data stream
+               specification that, having been intercepted, were dropped
+               in the lawful intercept process.";
+          }
+        }
+      }
+
+      notification mediation-ended {
+        description
+          "This notification is sent when the mediation entry becomes
+           inactive. Example, due to the 'expiry-time'.";
+      }
+    }
+  }
+}

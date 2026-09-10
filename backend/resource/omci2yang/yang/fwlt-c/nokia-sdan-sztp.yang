@@ -1,0 +1,233 @@
+   module nokia-sdan-sztp {
+    yang-version 1.1;
+    namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+            + "nokia-sdan-sztp";
+
+    prefix nokia-sztp;
+
+    import ietf-inet-types {
+        prefix inet;
+        reference
+          "RFC 6991: Common YANG Data Types";
+    }
+
+    import ietf-crypto-types {
+        prefix ct;
+        // revision-date 2019-03-09;   // This revision not yet supported in LS
+        description
+          "ietf-crypto-types is defined in
+           draft-ietf-netconf-crypto-types";
+        reference
+          "draft-ietf-netconf-crypto-types-05:
+             Common YANG Data Types for Cryptography";
+    }
+
+    import ietf-trust-anchors {
+        prefix ta;
+        // revision-date 2019-03-09;   // This revision not yet supported in LS
+        description
+          "ietf-trust-anchors is defined in
+           draft-ietf-netconf-trust-anchors.";
+        reference
+          "draft-ietf-netconf-trust-anchors-03:
+             YANG Data Model for Global Trust Anchors";
+    }
+
+    organization
+      "Nokia";
+
+    contact
+      "Comments or questions about this Nokia YANG module should be
+       directed to <mailto:isam.yang@nokia.com>.";
+
+    description
+      "This module contains a collection of YANG definitions for
+       supporting Nokia specific requirements as applicable to its
+       access network equipment.
+
+        This specification is published by Nokia under Non-Disclosure
+        Agreement(s) (NDA) with specific parties and has to be considered
+        as Confidential Information as defined in such NDA. Nokia
+        reserves the right to revise this document for any reason,
+        including but not limited to conformity with standards
+        promulgated by various agencies, utilisation of advances in the
+        state of the technical areas, or the reflection of changes in the
+        design of any equipment, techniques, or procedures described or
+        referred to herein.
+
+        The product specifications and other technical or performance
+        information contained herein are subject to change without
+        notice. Updates of this document will be issued under the above
+        NDA's.
+
+        Nokia makes no representation or warranty, expressed or implied,
+        with respect to the sufficiency, accuracy, or utility of any
+        information or opinion contained herein. Nokia expressly advises
+        that any use of for any purpose or reliance upon this technical
+        reference is at the risk of the user and that Nokia shall not be
+        liable for any damage or injury incurred by any person arising
+        out of the sufficiency, accuracy, or utility of any information
+        or opinion contained herein.
+
+        This document is not to be construed as a suggestion to any
+        manufacturer to modify or change any of its products, nor does
+        this document represent any commitment by Nokia to sell or
+        purchase any product. Nothing contained herein shall be construed
+        as conferring by implication, estoppel, or otherwise any license
+        or right under any patent, whether or not the use of any
+        information herein necessarily employs an invention of any
+        existing or later issued patent.
+
+        Nokia reserves the right not to offer any or all of these
+        products and to withdraw any or all of them at any future time.
+
+        Copyright (C) 2021, Nokia. All Rights Reserved.";
+
+    revision 2026-02-02 {
+        description
+          "Add a configurable sztp escalated reset timer.";
+        reference
+          "Nokia specific addition related to escalated system reset.";
+    }
+
+    revision 2019-04-30 {
+        description
+          "Initial version";
+        reference
+          "RFC 8572: Secure Zero Touch Provisioning (SZTP)";
+    }
+
+    // features
+    feature bootstrap-servers {
+        description
+          "The device supports bootstrapping off bootstrap servers.";
+    }
+    feature signed-data {
+        description
+          "The device supports bootstrapping off signed data.";
+    }
+
+    // protocol accessible nodes
+    container sztp {
+        description
+          "Top-level container for the SZTP data model.";
+        leaf enabled {
+            type boolean;
+            default false;
+            // default true;
+            description
+              "The 'enabled' leaf controls if SZTP bootstrapping is
+               enabled or disabled.  The default is 'false' so that, when
+               not enabled, which is most of the time, no configuration
+               is needed.";
+        }
+        leaf idevid-certificate {
+            if-feature bootstrap-servers;
+            type ct:end-entity-cert-cms;
+            config false;
+            description
+              "This CMS structure contains the IEEE 802.1AR
+               IDevID certificate itself and all intermediate
+               certificates leading up to, and optionally including,
+               the manufacturer's well-known trust anchor certificate
+               for IDevID certificates.  The well-known trust anchor
+               does not have to be a self-signed certificate.";
+            reference
+              "IEEE 802.1AR:
+                 IEEE Standard for Local and metropolitan area
+                 networks - Secure Device Identity";
+        }
+        container bootstrap-servers {
+            if-feature bootstrap-servers;
+            config false;
+            description
+              "List of bootstrap servers this device will attempt
+               to reach out to when bootstrapping.";
+            list bootstrap-server {
+                key "address";
+                description
+                  "A bootstrap server entry.";
+                leaf address {
+                    type inet:host;
+                    mandatory true;
+                    description
+                      "The IP address or hostname of the bootstrap server the
+                       device should redirect to.";
+                }
+                leaf port {
+                    type inet:port-number;
+                    default "443";
+                    description
+                      "The port number the bootstrap server listens on.  If no
+                       port is specified, the IANA-assigned port for 'https'
+                       (443) is used.";
+                }
+            }
+        }
+        container bootstrap-server-trust-anchors {
+            if-feature bootstrap-servers;
+            config false;
+            description
+              "Container for a list of trust anchor references.";
+            leaf-list reference {
+                type ta:pinned-certificates-ref;
+                description
+                  "A reference to a list of pinned certificate authority (CA)
+                   certificates that the device uses to validate bootstrap
+                   servers with.";
+            }
+        }
+        container voucher-trust-anchors {
+            if-feature signed-data;
+            config false;
+            description
+              "Container for a list of trust anchor references.";
+            leaf-list reference {
+                type ta:pinned-certificates-ref;
+                description
+                  "A reference to a list of pinned certificate authority (CA)
+                   certificates that the device uses to validate ownership
+                   vouchers with.";
+            }
+        }
+
+        container completed-sztp-process-requires-closure-timer {
+          description
+            "Configure the escalated system reset timer as part of SZTP.
+
+            When SZTP completes successfully and the sztp configuration
+            flag remains true, the device arms the escalated reset timer.
+
+            If the sztp configuration flag transitions to false before expiry,
+            the reboot timer is canceled.
+
+            If the timer expires while armed, the device performs an escalated
+            system reset.";
+
+          leaf enabled {
+            type boolean;
+            default true;
+            description
+              "Enables or Disables the escalated system reset timer after
+              SZTP completion, as long as the SZTP configuration flag is
+              still 'enabled'.";
+          }
+
+          leaf delay {
+            type uint16 {
+              range "1..48";
+            }
+            units "hours";
+            default 2;
+            description
+              "Hours to wait before the SZTP escalated system reset is performed.
+
+              Upon expiry of this timer (which is 2 hours by default),
+              an escalated system reset with default configuration will be triggered.
+
+              If the SZTP configuration flag transitions to 'disabled', this timer
+              is immediately stopped and no escalated system reset is triggered.";
+          }
+        }
+    }
+}

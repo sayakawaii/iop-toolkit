@@ -1,0 +1,994 @@
+submodule bbf-pptp-pots-uni-test-mounted {
+  yang-version 1.1;
+  belongs-to bbf-sip-voip-mounted {
+    prefix bbf-sip-voip-mounted;
+  }
+
+  import bbf-yang-types {
+    prefix bbf-yang;
+  }
+  import bbf-pptp-pots-uni-test-identities {
+    prefix bbf-pptp-pots-uni-test-identities;
+  }
+
+  organization
+    "Broadband Forum <https://www.broadband-forum.org>
+     Common YANG Work Area";
+
+  contact
+    "Comments or questions about this Broadband Forum YANG module
+     should be directed to <mailto:help@broadband-forum.org>.
+     Editor:      Frank Desseyn, Nokia
+     Editor:      Nadine Staelens, Nokia
+     PS Leader:   Joey Boyd, ADTRAN
+     PS Leader:   Ken Kerpez, ASSIA
+     WA Director: Joey Boyd, ADTRAN
+     WA Director: Sven Ooghe, Nokia";
+
+  description
+    "This submodule contains the test of the pptp pots uni.
+     Copyright (c) 2017-2018, Broadband Forum
+     Redistribution and use in source and binary forms, with or
+     without modification, are permitted provided that the following
+     conditions are met:
+     1. Redistributions of source code must retain the above copyright
+        notice, this list of conditions and the following disclaimer.
+     2. Redistributions in binary form must reproduce the above
+        copyright notice, this list of conditions and the following
+        disclaimer in the documentation and/or other materials
+        provided with the distribution.
+     3. Neither the name of the copyright holder nor the names of its
+        contributors may be used to endorse or promote products
+        derived from this software without specific prior written
+        permission.
+     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
+     CONTRIBUTORS \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+     INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+     DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+     CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+     SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+     NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+     CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+     STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+     ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+     ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     The above license is used as a license under copyright only.
+     Please reference the Forum IPR Policy for patent licensing terms
+     <https://www.broadband-forum.org/ipr-policy>.
+     Any moral rights which are necessary to exercise under the above
+     license grant are also deemed granted under this license.
+     This version of this YANG module is part of TR-383; see
+     the TR itself for full legal notices.";
+
+  revision 2023-01-06 {
+    description
+      "update description";
+  }
+
+  revision 2021-07-06 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: 2020-06-01.";
+    reference
+      " ";
+  }
+
+  feature mlt{
+    description
+      "This feature means that the server supports mechanized loop
+       test";
+  }
+  feature pbdt-test{
+    description
+      "This feature means that the server supports SIP pull-break dial
+       tone test";
+  }
+  /* //Move the identity to a seperate module (bbf-pptp-pots-uni-test-identities)
+     //to avoid the suffix "-mounted" issue in confd
+  identity mlt-result-base {
+    description
+      "This identity is used to denote the possible results of
+       a mlt item.";
+  }
+  identity mlt-failed {
+    base mlt-result-base;
+    description
+      "Test failed.";
+  }
+  identity mlt-passed-or-not-run {
+    base mlt-result-base;
+    description
+      "Test passed or test not run ";
+  }
+  identity mlt-measurement-base {
+    description
+      "This identity is used to denote the possible results of
+       a mlt item and whether to report.";
+  }
+  identity test-not-run {
+    base mlt-measurement-base;
+    description
+      "Test not run ";
+  }
+  identity failed-and-not-reported {
+    base mlt-measurement-base;
+    description
+      "Failed, measurement not reported. ";
+  }
+  identity failed-and-reported {
+    base mlt-measurement-base;
+    description
+      "Failed, measurement reported. ";
+  }
+  identity passed-and-not-reported {
+    base mlt-measurement-base;
+    description
+      "Passed, measurement not reported. ";
+  }
+  identity passed-and-reported {
+    base mlt-measurement-base;
+    description
+      "Passed, measurement reported. ";
+  }
+  identity dt-break-result-base {
+    description
+      "This identity is used to denote the possible results of
+       a dial tone break.";
+  }
+  identity break-not-run {
+    base dt-break-result-base;
+    description
+      "Dial tone break not run ";
+  }
+  identity break-failed-and-not-reported {
+    base dt-break-result-base;
+    description
+      "Dial tone break failed, measurement not reported. ";
+  }
+  identity break-failed-and-reported {
+    base dt-break-result-base;
+    description
+      "Dial tone break failed, measurement reported. ";
+  }
+  identity break-passed-and-not-reported {
+    base dt-break-result-base;
+    description
+      "Dial tone break passed, measurement not reported. ";
+  }
+  identity break-passed-and-reported {
+    base dt-break-result-base;
+    description
+      "Dial tone break passed, measurement reported. ";
+  }
+  identity slow-break-and-not-reported {
+    base dt-break-result-base;
+    description
+      "Slow break, measurement not reported. ";
+  }
+  identity slow-break-and-reported {
+    base dt-break-result-base;
+    description
+      "Slow break, measurement reported. ";
+  }
+  identity dt-draw-result-base {
+    description
+      "This identity is used to denote the possible results of
+       a dial tone draw.";
+  }
+  identity draw-not-run {
+    base dt-draw-result-base;
+    description
+      "Dial tone draw not run ";
+  }
+  identity draw-failed-and-not-reported {
+    base dt-draw-result-base;
+    description
+      "Dial tone draw failed, measurement not reported. ";
+  }
+  identity draw-failed-and-reported {
+    base dt-draw-result-base;
+    description
+      "Dial tone draw failed, measurement reported. ";
+  }
+  identity draw-passed-and-not-reported {
+    base dt-draw-result-base;
+    description
+      "Dial tone draw passed, measurement not reported. ";
+  }
+  identity draw-passed-and-reported {
+    base dt-draw-result-base;
+    description
+      "Dial tone draw passed, measurement reported. ";
+  }
+  identity slow-draw-and-not-reported {
+    base dt-draw-result-base;
+    description
+      "Slow draw, measurement not reported. ";
+  }
+  identity slow-draw-and-reported {
+    base dt-draw-result-base;
+    description
+      "Slow draw, measurement reported. ";
+  }
+  identity pbdt-test-result-base {
+    description
+      "This identity is used to denote the possible results of
+       a sip pbdt test.";
+  }
+  identity pbdt-failed {
+    base pbdt-test-result-base;
+    description
+      "Sip pbdt test failed";
+  }
+  identity pbdt-passed {
+    base pbdt-test-result-base;
+    description
+      "Sip pbdt test passed";
+  }
+  identity not-completed-due-to-off-hook {
+    base pbdt-test-result-base;
+    description
+      "Sip pbdt test not completed (line off-hook).";
+  }
+  identity not-completed-due-to-other-reason {
+    base pbdt-test-result-base;
+    description
+      "Sip pbdt test not completed (other reason)";
+  }
+  identity pbdt-automatic-ping-result-base {
+    description
+      "This identity is used to denote the possible results of
+       an automatic ping.";
+  }
+  identity not-attemped {
+    base pbdt-automatic-ping-result-base;
+    description
+      "Ping not attempted.";
+  }
+  identity attempted-and-failed {
+    base pbdt-automatic-ping-result-base;
+    description
+      "Ping attempted and failed";
+  }
+  identity passed {
+    base pbdt-automatic-ping-result-base;
+    description
+      "Ping passed";
+  }
+  identity self-test-result-base {
+    description
+      "This identity is used to denote the possible results of
+       self test";
+  }
+  identity failed {
+    base self-test-result-base;
+    description
+      "Self test failed.";
+  }
+  identity self-test-passed {
+    base self-test-result-base;
+    description
+      "Self test passed.";
+  }
+  identity not-completed {
+    base self-test-result-base;
+    description
+      "Self test not completed.";
+  }
+  identity voip-error-tag{
+    description
+      "A base identity for defining failures with the invocation of an
+       VoIP test action";
+  }
+  identity voip-parameter-error {
+    base voip-error-tag;
+    description
+      "Parameter error.";
+  }
+  identity voip-undetermined-error {
+    base voip-error-tag;
+    description
+      "Undetermined error.";
+  }
+*/
+  grouping pptp-pots-uni-test{
+    action pbdt-test{
+      //if-feature "pbdt-test";
+      description
+        "Pull-break dial tone test using specified parameters.
+
+         Successful invocation of this action results in reporting
+         the result through an asynchronous notification.
+
+         No notification will be sent, if the invocation of this
+         action is unsuccessful. In that case the action will be
+         replied with an error and the 'error-app-tag' and
+         'error-message' in the <rpc-error> element returned by the
+         server are to be populated as follows:
+
+         error-app-tag: A string in the form
+                       <module-name>:<identity> where <identity> is
+                       a string version of an identity value based
+                       on the identity
+                       'bbf-pptp-pots-uni-test-identities:voip-error-tag'
+                       that describes the reason the error occurred
+                       and <module-name> is the name of the module in
+                       which the identity is defined.
+
+         error-message: A text string describing the cause of the
+                        error when either no defined reason exists
+                        or additional information is available
+                        beyond that defined by the tag itself; it is
+                        a string suitable for human display.";
+      input{
+        leaf test-name{
+          mandatory true;
+          type bbf-yang:string-ascii64;
+          description
+            "Is the instance name of the pbdt-test action.
+            Since the pbdt-test action is executed in
+            asynchronous mode,this object is used by the server
+            to associate the pbdt-test action instance with a
+            notification message";
+        }
+        leaf test-mode{
+          type enumeration {
+            enum normal{
+              value 0;
+              description
+                "Deny the test if line busy";
+            }
+            enum force{
+              value 1;
+              description
+                "Force the test if line is busy";
+            }
+          }
+          default normal;
+          description
+            "This leaf indicates whether to deny or force 
+             the test if line is busy";
+        }
+        leaf test-type-select{
+          type enumeration {
+            enum sip-pull-break-dialtone-test{
+              description
+              "SIP pull-break dialtone test";
+            }
+          }
+          default sip-pull-break-dialtone-test;
+          description
+            "Test type for Pull-break dial tone test";
+        }
+        leaf dial-number{
+          mandatory true;
+          type string{
+            length "1..16";
+          }
+          description
+            "This leaf indicates the number to be dialed";
+        }
+      }
+    }
+    notification pbdt-test-result{
+      //if-feature "pbdt-test";
+      description
+        "Indicates the result of a SIP pbdt test.";
+      leaf test-name{
+        type bbf-yang:string-ascii64;
+        mandatory true;
+        description
+          "Since the pbdt-test action is executed in asynchronous
+          mode, this object is used by the server to associate the
+          notification message with a pbdt-test action instance";
+      }
+      leaf test-summary-result{
+        type identityref{
+          base bbf-pptp-pots-uni-test-identities:pbdt-test-result-base;
+        }
+        description
+          "The result of the pull-break dialtone test.";
+      }
+      leaf automatic-ping-result{
+        type identityref{
+          base bbf-pptp-pots-uni-test-identities:pbdt-automatic-ping-result-base;
+        }
+        description
+          "The result of the automatic ping of the test.";
+      }
+      leaf dial-delay-measurement{
+        type uint16;
+        units "tenths of seconds";
+        description
+          "This leaf indicates the post dial delay measurement.";
+      }
+      leaf result-text{
+        type string{
+          length "1..32";
+        }
+        description
+          "This leaf contains the detailed text result";
+      }
+    }
+    action mlt{
+      //if-feature "mlt";
+      description
+        "Mechanized Loop Test using specified parameters.
+
+         Successful invocation of this action results in reporting
+         the result through an asynchronous notification.
+
+         No notification will be sent, if the invocation of this
+         action is unsuccessful. In that case the action will be
+         replied with an error and the 'error-app-tag' and
+         'error-message' in the <rpc-error> element returned by the
+         server are to be populated as follows:
+
+         error-app-tag: A string in the form
+                       <module-name>:<identity> where <identity> is
+                       a string version of an identity value based
+                       on the identity
+                       'bbf-pptp-pots-uni-test-identities:voip-error-tag'
+                       that describes the reason the error occurred and
+                       <module-name> is the name of the module in
+                       which the identity is defined.
+
+         error-message: A text string describing the cause of the
+                        error when either no defined reason exists
+                        or additional information is available
+                        beyond that defined by the tag itself; it is
+                        a string suitable for human display.";
+      input{
+        leaf test-name{
+          mandatory true;
+          type bbf-yang:string-ascii64;
+          description
+            "Is the instance name of the mlt action. Since
+            the mlt action is executed in asynchronous mode, this
+            object is used by the server to associate the mlt action
+            instance with a notification message";
+        }
+        leaf test-mode{
+          type enumeration {
+            enum normal{
+              value 0;
+              description
+                "Deny the test if line busy";
+            }
+            enum force{
+              value 1;
+              description
+                "Force the test if line is busy";
+            }
+          }
+          default normal;
+          description
+            "This leaf indicates whether to deny or force 
+             the test if line is busy";
+        }
+        leaf test-type-select{
+          type enumeration {
+            enum all-mlt-tests{
+              description
+                "All MLT tests";
+            }
+            enum hazardous-potential-test{
+              description
+                "Hazardous potential";
+            }
+            enum foreign-emf-test{
+              description
+                "Foreign EMF";
+            }
+            enum resistive-faults-test{
+              description
+                "Resistive faults";
+            }
+            enum receiver-off-hook-test{
+              description
+                "Receiver off-hook";
+            }
+            enum ringer-test{
+              description
+                "Ringer";
+            }
+            enum self-test-test{
+              description
+                "Self test";
+            }
+            enum h248-dial-tone-make-break-test{
+              description
+                "H.248 dial tone make-break test";
+            }
+          }
+          default all-mlt-tests;
+          description
+            "test type for Mechanized Loop Test";
+        }
+        leaf slow-dial-tone-threshold{
+          type uint8{
+            range "1..60";
+          }
+          units "0.1 seconds";
+          description
+            "DBDT timer T1 (slow dial tone threshold).If this leaf is
+             not configured, the device shall use its default value";
+        }
+        leaf no-dial-tone-threshold{
+          type uint8{
+            range "10..100";
+          }
+          units "0.1 seconds";
+          description
+            "DBDT timer T2 (no dial tone threshold).If this leaf is
+             not configured, the device shall use its default value";
+        }
+        leaf slow-break-dial-tone-threshold{
+          type uint8{
+            range "1..30";
+          }
+          units "0.1 seconds";
+          description
+            "DBDT timer T3 (slow break dial tone threshold).If this
+            leaf is not configured, the device shall use its default
+             value";
+        }
+        leaf no-break-dial-tone-threshold{
+          type uint8{
+            range "10..30";
+          }
+          units "0.1 seconds";
+          description
+            "DBDT timer T4 (no break dial tone threshold).If this
+            leaf is not configured, the device shall use its default
+            value";
+        }
+        leaf pulse-or-dialing{
+          type enumeration{
+            enum tone-dialing{
+              description
+                "Tone dialing.";
+            }
+            enum pulse{
+              description
+                "Pulse.";
+            }
+          }
+          description
+            "This leaf indicates whether to use pulse or tone
+            dialing for testing";
+          default tone-dialing;
+        }
+        leaf dialed-digit-control{
+          type enumeration{
+            enum internal-default-digit{
+              description
+                "Use device internal default digit.";
+            }
+            enum specified-digit {
+              description
+                "Dialed digit specified in digit-to-be-dialed leaf";
+            }
+          }
+          default internal-default-digit;
+          description
+            "This leaf indicates whether to use internal-default-digit 
+             or dialed digit specified in digit-to-be-dialed for testing";
+        }
+        leaf digit-to-be-dialed{
+          type string{
+            length "1";
+          }
+          description
+            "Digit to be dialed.
+             ASCII character in range '0'-'9', '*', '#'.";
+        }
+        leaf dial-tone-frequency-1{
+          type uint16 {
+            range "1..65535";
+          }
+          units "1 Hz";
+          description
+            "Dial tone frequency 1.";
+        }
+        leaf dial-tone-frequency-2{
+          type uint16{
+            range "1..65535";
+          }
+          units "1 Hz";
+          description
+            "Dial tone frequency 2.";
+        }
+        leaf dial-tone-frequency-3{
+          type uint16 {
+            range "1..65535";
+          }
+          units "1 Hz";
+          description
+            "Dial tone frequency 3.";
+        }
+        leaf dialtone-power-threshold{
+          type uint8{
+            range "1..25";
+          }
+          units "1 dBm";
+          description
+            "Dial tone power threshold, absolute value.";
+        }
+        leaf idle-channel-power-threshold{
+          type uint8{
+            range "1..90";
+          }
+          units "1 dBm";
+          description
+            "Idle channel power threshold, absolute value.";
+        }
+        leaf dc-hazardous-voltage-threshold{
+          type union {
+            type uint8 {
+              range "80..150";
+            }
+            type enumeration {
+              enum default {
+                description
+                  "To be used to indicate that the device must use
+                   its internal default value.";
+              }
+            }
+          }
+          units "1 Volt";
+          description
+            "DC hazardous voltage threshold, absolute value.";
+          default default;
+        }
+        leaf ac-hazardous-voltage-threshold{
+          type union {
+            type uint8 {
+              range "50..150";
+            }
+            type enumeration {
+              enum default {
+                description
+                  "To be used to indicate that the device must use
+                   its internal default value.";
+              }
+            }
+          }
+          units "1 Volt RMS";
+          description
+            "AC hazardous voltage threshold.";
+          default default;
+        }
+        leaf dc-foreign-voltage-threshold{
+          type union {
+            type uint8 {
+              range "1..10";
+            }
+            type enumeration {
+              enum default {
+                description
+                  "To be used to indicate that the device must use
+                   its internal default value.";
+              }
+            }
+          }
+          units "1 Volt";
+          description
+            "DC foreign voltage threshold, absolute value.";
+          default default;
+        }
+        leaf ac-foreign-voltage-threshold{
+          type union {
+            type uint8 {
+              range "10..50";
+            }
+            type enumeration {
+              enum default {
+                description
+                  "To be used to indicate that the device must use
+                   its internal default value.";
+              }
+            }
+          }
+          units "1 Volt RMS";
+          description
+            "AC foreign voltage threshold.";
+          default default;
+        }
+        leaf tip-ground-and-ring-ground-resistance-threshold{
+          type union {
+            type uint8 {
+              range "1..250";
+            }
+            type enumeration {
+              enum default {
+                description
+                  "To be used to indicate that the device must use
+                   its internal default value.";
+              }
+            }
+          }
+          units "1 kOhm";
+          description
+            "Tip-ground and ring-ground resistance threshold.";
+          default default;
+        }
+        leaf tip-ring-resistance-threshold{
+          type union {
+            type uint8 {
+              range "1..250";
+            }
+            type enumeration {
+              enum default {
+                description
+                  "To be used to indicate that the device must use
+                  its internal default value.";
+              }
+            }
+          }
+          units "1 kOhm";
+          description
+            "Tip-ring resistance threshold.";
+          default default;
+        }
+        leaf ringer-equivalence-minimum-threshold{
+          type union {
+            type uint16 {
+              range "1..700";
+            }
+            type enumeration {
+              enum default {
+                description
+                  "To be used to indicate that the device must use
+                  its internal default value.";
+              }
+            }
+          }
+          units "0.01 REN";
+          description
+            "Ringer equivalence minimum threshold.";
+          default default;
+        }
+        leaf ringer-equivalence-maximum-threshold{
+          type union {
+            type uint16 {
+              range "1..700";
+            }
+            type enumeration {
+              enum default {
+                description
+                  "To be used to indicate that the device must use
+                   its internal default value.";
+              }
+            }
+          }
+          units "0.01 REN";
+          description
+            "Ringer equivalence maximum threshold.";
+          default default;
+        }
+      }
+    }
+    notification mlt-result{
+      //if-feature "mlt";
+      description
+        "Indicates the result of a mlt.";
+      leaf test-name{
+        type bbf-yang:string-ascii64;
+        mandatory true;
+        description
+          "Since the mlt action is executed in asynchronous mode,
+          this object is used by the server to associate the
+          notification message with a mlt action instance";
+      }
+      leaf hazardous-potential-test-result{
+        type identityref {
+          base bbf-pptp-pots-uni-test-identities:mlt-result-base;
+        }
+        description
+          "Hazardous potential test result.";
+      }
+      leaf foreign-emf-test-result{
+        type identityref {
+          base bbf-pptp-pots-uni-test-identities:mlt-result-base;
+        }
+        description
+          "Foreign EMF test result.";
+      }
+      leaf resistive-faults-test-result{
+        type identityref {
+          base bbf-pptp-pots-uni-test-identities:mlt-result-base;
+        }
+        description
+          "Resistive faults test result.";
+      }
+      leaf receiver-off-hook-test-result{
+        type identityref {
+          base bbf-pptp-pots-uni-test-identities:mlt-result-base;
+        }
+        description
+          "Receiver off-hook test result.";
+      }
+      leaf ringer-test-result{
+        type identityref {
+          base bbf-pptp-pots-uni-test-identities:mlt-result-base;
+        }
+        description
+          "Ringer test reslut. ";
+      }
+      leaf self-test-result{
+        type identityref {
+          base bbf-pptp-pots-uni-test-identities:self-test-result-base;
+        }
+        description
+          "This leaf indicates the self test result.";
+      }
+      leaf dial-tone-draw{
+        type identityref {
+          base bbf-pptp-pots-uni-test-identities:dt-draw-result-base;
+        }
+        description
+          "This leaf indicates the dial tone draw test result";
+      }
+      leaf dial-tone-break{
+        type identityref {
+          base bbf-pptp-pots-uni-test-identities:dt-break-result-base;
+        }
+        description
+          "This leaf indicates the dial tone break test result";
+      }
+      leaf quiet-channel-power{
+         type identityref {
+           base bbf-pptp-pots-uni-test-identities:mlt-measurement-base;
+        }
+        description
+          "Quiet channel power test result and whether to report";
+      }
+      leaf dial-tone-power{
+          type identityref {
+            base bbf-pptp-pots-uni-test-identities:mlt-measurement-base;
+        }
+        description
+          "Dial tone power test result and whether to report.";
+      }
+      leaf vdc-tip-ground-voltage{
+          type identityref {
+            base bbf-pptp-pots-uni-test-identities:mlt-measurement-base;
+        }
+        description
+          "VDC, tip-ground test result and whether to report.";
+      }
+      leaf vdc-ring-ground-voltage{
+          type identityref {
+            base bbf-pptp-pots-uni-test-identities:mlt-measurement-base;
+        }
+        description
+          "VDC, ring-ground test result and whether to report.";
+      }
+      leaf vac-tip-ground-voltage{
+          type identityref {
+            base bbf-pptp-pots-uni-test-identities:mlt-measurement-base;
+        }
+        description
+          "VAC, tip-ground test result and whether to report.";
+      }
+      leaf vac-ring-ground-voltage{
+          type identityref {
+            base bbf-pptp-pots-uni-test-identities:mlt-measurement-base;
+        }
+        description
+          "VAC, ring-ground test result and whether to report.";
+      }
+      leaf resistance-tip-ground{
+          type identityref {
+            base bbf-pptp-pots-uni-test-identities:mlt-measurement-base;
+        }
+        description
+          "Resistance, tip-ground test result and whether to report.";
+      }
+      leaf resistance-ring-ground{
+          type identityref {
+            base bbf-pptp-pots-uni-test-identities:mlt-measurement-base;
+        }
+        description
+          "Resistance, ring-ground test result and whether to report.";
+      }
+      leaf resistance-tip-ring{
+          type identityref {
+            base bbf-pptp-pots-uni-test-identities:mlt-measurement-base;
+        }
+        description
+          "Resistance, tip-ring test result and whether to report.";
+      }
+      leaf ringer-load-test{
+          type identityref {
+            base bbf-pptp-pots-uni-test-identities:mlt-measurement-base;
+        }
+        description
+          "Ringer load test result and whether to report.";
+      }
+      leaf time-to-draw-dial-tone{
+        type uint8;
+        units "0.1 seconds";
+        description
+          "Time to draw dial tone";
+      }
+      leaf time-to-break-dial-tone{
+        type uint8;
+        units "0.1 seconds";
+        description
+          "Time to break dial tone";
+      }
+      leaf total-dial-tone-power-measurement{
+        type uint8;
+        units "0.1 dBm";
+        description
+          "Total dial tone power measurement, unsigned absolute
+          value, Values above 0 dBm are reported as 0";
+      }
+      leaf quiet-channel-power-measurement{
+        type uint8{
+          range "0..90";
+        }
+        units "1 dBm";
+        description
+          "Quiet channel power measurement, unsigned absolute
+          value";
+      }
+      leaf tip-ground-dc-voltage{
+        type uint16;
+        units "1 Volt";
+        description
+          "Tip-ground DC voltage, 2s complement.";
+      }
+      leaf ring-ground-dc-voltage{
+        type uint16;
+        units "1 Volt";
+        description
+          "Ring-ground DC voltage, 2s complement.";
+      }
+      leaf tip-ground-ac-voltage{
+        type uint8;
+        units "1 Volt RMS";
+        description
+          "Tip-ground AC voltage.";
+      }
+      leaf ring-ground-ac-voltage{
+        type uint8;
+        units "1 Volt RMS";
+        description
+          "Ring-ground AC voltage.";
+      }
+      leaf tip-ground-dc-resistance{
+        type uint16;
+        units "1 kOhm";
+        description
+          "Tip-ground DC resistance. Infinite resistance:
+          65535. ";
+      }
+      leaf ring-ground-dc-resistance{
+        type uint16;
+        units "1 kOhm";
+        description
+          "Ring-ground DC resistance. Infinite resistance:
+          65535.  ";
+      }
+      leaf tip-ring-dc-resistance{
+        type uint16;
+        units "1 kOhm";
+        description
+          "Tip-ring DC resistance. Infinite resistance:
+          65535 ";
+      }
+      leaf ringer-equivalence{
+        type uint8;
+        units "0.1 REN";
+        description
+          "Ringer equivalence.";
+      }
+    }
+  }
+}

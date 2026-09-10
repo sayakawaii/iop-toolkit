@@ -1,0 +1,209 @@
+module nokia-ethernet-cfm-oam-ais-mounted {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+          + "nokia-ethernet-cfm-oam-ais-mounted";
+
+  prefix nokia-cfm-oam-ais-mounted;
+
+  import ieee802-dot1q-cfm-mounted {
+    prefix dot1q-cfm-mounted;
+  }
+
+  import iana-if-type-mounted {
+    prefix ianaift-mounted;
+  }
+
+  import ietf-interfaces-mounted {
+    prefix if-mounted;
+  }
+
+  import bbf-interface-usage-mounted {
+    prefix bbf-if-usg-mounted;
+  }
+
+  import ieee802-dot1q-cfm-types {
+    prefix "cfm-types";
+  }
+
+  import ieee802-dot1q-types {
+    prefix "dot1q-types";
+  }
+  
+  import bbf-fiber-onu-emulated-mount {
+     prefix onu;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG definitions for
+     supporting Nokia specific requirements as applicable to its
+     access network equipment.
+
+     Specifically, this module augments the ieee802-dot1q-cfm oam
+     model,specific for providing support for AIS.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2020, Nokia. All Rights Reserved.";
+
+  revision 2020-07-14 {
+    description
+      "Yang definitions for nokia specific ethernet cfm oam AIS
+       requirements.";
+    reference
+      "Nokia specific";
+  }
+
+  feature ethernet-cfm-oam-ais {
+    description
+      "This feature means the device supports configurations for
+       the CFM OAM AIS feature support.";
+    reference
+      "Y1731 section 7.4";
+  }
+
+  typedef ais-period-type {
+    type enumeration {
+      enum one-second {
+        value 1;
+        description
+          "Transmission periodicity of ETH-AIS PDUs are every
+           second.";
+      }
+      enum one-minute {
+        value 2;
+        description
+          "Transmission periodicity of ETH-AIS PDUs are every
+           1-minute.";
+      }
+    }
+    description
+      "Indicates the transmission periodicity of ETH-AIS PDUs";
+    reference
+      "Y1731 section 9.7";
+  }
+
+  augment '/onu:onus/onu:onu/onu:root/dot1q-cfm-mounted:cfm/dot1q-cfm-mounted:maintenance-group/dot1q-cfm-mounted:mep' {
+    description
+      "Augment the ieee ethernet cfm-oam mep";
+
+    container ais {
+      if-feature "ethernet-cfm-oam-ais";
+
+      description
+        "Ethernet cfm oam - AIS support";
+
+      leaf enable {
+        type boolean;
+        default "false";
+        description
+          "This parameter is used to enable/disable AIS generation
+           of the MEP";
+        reference
+          "Y.1731 section 7.4";
+      }
+
+      leaf meglevel {
+        type cfm-types:md-level-type;
+        default 0;
+        description
+          "MEG level at which the most immediate client layer MIPs
+           and MEPs exist";
+        reference
+          "Y.1731 section 7.4";
+      }
+
+      leaf period {
+        type ais-period-type;
+        default "one-second";
+        description
+          "Determines transmission periodicity of frames with ETH-AIS
+           information";
+        reference
+          "Y.1731 section 7.4";
+      }
+
+      leaf priority {
+        type dot1q-types:priority-type;
+        default 7;
+        description
+          "Identifies the priority of frames with ETH-AIS information";
+        reference
+          "Y.1731 section 7.4";
+      }
+    } // ais
+  } // augment - ieee:cfm
+
+  augment '/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface' {
+    when
+      'derived-from-or-self(if-mounted:type, "ianaift-mounted:ethernetCsmacd")'
+      +'and'
+      +'(./bbf-if-usg-mounted:interface-usage/bbf-if-usg-mounted:'
+      +'interface-usage = "user-port")' {
+
+    description
+      "Applicable only for UNI. Eg : ONT UNI port";
+    }
+
+    description
+      "Augments the interface model with nodes specific to
+       CFM OAM AIS";
+
+    container ais {
+      if-feature "ethernet-cfm-oam-ais";
+
+      description
+        "Ethernet cfm oam - AIS support";
+
+      leaf auto-shutdown {
+        type boolean;
+        default "false";
+        description
+          "This flag is used to indicate whether to shutdown
+           port when AIS is received";
+        reference
+          "Y.1731 section 7.4";
+      }
+    }
+  } // interface - aug : ais.
+} // nokia-ethernet-cfm-oam-ais.

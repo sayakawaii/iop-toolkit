@@ -1,0 +1,46 @@
+
+module nokia-interface-speed-monitoring-fiber-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+          + "nokia-interface-speed-monitoring-fiber-dev";
+
+  prefix  nokia-interface-speed-monitoring-fiber-dev;
+
+  import ietf-interfaces {
+      prefix if;
+  }
+
+  import nokia-interface-speed-monitoring {
+      prefix nokia-itf-tm;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA ethernet YANG module supporting
+     deviations on top of standard.";
+
+  revision 2022-12-22 {
+    description
+      "Initial revision.";
+    reference
+      "TBD";
+  }
+
+  deviation "/if:interfaces-state/if:interface/nokia-itf-tm:speed-monitoring/nokia-itf-tm:data/nokia-itf-tm:current/nokia-itf-tm:transmit-broadcast-datarate" {
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces-state/if:interface/nokia-itf-tm:speed-monitoring/nokia-itf-tm:data/nokia-itf-tm:current/nokia-itf-tm:transmit-multicast-datarate" {
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces-state/if:interface/nokia-itf-tm:speed-monitoring/nokia-itf-tm:data/nokia-itf-tm:current/nokia-itf-tm:transmit-unicast-datarate" {
+    deviate not-supported;
+  }   
+
+}

@@ -1,0 +1,260 @@
+module nokia-licensing-app-common-dev {
+
+    yang-version 1.1;
+
+    namespace
+        "http://www.nokia.com/Fixed-Networks/BBA/yang/nokia-licensing-app-common-dev";
+
+    prefix nokia-licensing-app-common-dev;
+
+    import nokia-licensing-app {
+        prefix lic-app;
+    }
+
+    import iana-tls-cipher-suite-algs {
+        prefix "tlscsa";
+    }
+
+    organization
+        "Nokia";
+
+    contact
+      "Comments or questions about this Nokia YANG module should be
+       directed to <mailto:isam.yang@nokia.com>.";
+
+    description
+      "This module contains a collection of YANG definitions for
+       supporting Nokia specific requirements as applicable to its
+       access network equipment.
+
+       Specifically, this module identifies data that potentially
+       contains private data. Note that this classification is product
+       independent while the support of this data is product dependent.
+       I.e. it might be that data that is identified as private is not
+       supported in a particular product variant.
+
+       This specification is published by Nokia under Non-Disclosure
+       Agreement(s) (NDA) with specific parties and has to be considered
+       as Confidential Information as defined in such NDA. Nokia
+       reserves the right to revise this document for any reason,
+       including but not limited to conformity with standards
+       promulgated by various agencies, utilisation of advances in the
+       state of the technical areas, or the reflection of changes in the
+       design of any equipment, techniques, or procedures described or
+       referred to herein.
+
+       The product specifications and other technical or performance
+       information contained herein are subject to change without
+       notice. Updates of this document will be issued under the above
+       NDA's.
+
+       Nokia makes no representation or warranty, expressed or implied,
+       with respect to the sufficiency, accuracy, or utility of any
+       information or opinion contained herein. Nokia expressly advises
+       that any use of for any purpose or reliance upon this technical
+       reference is at the risk of the user and that Nokia shall not be
+       liable for any damage or injury incurred by any person arising
+       out of the sufficiency, accuracy, or utility of any information
+       or opinion contained herein.
+
+       This document is not to be construed as a suggestion to any
+       manufacturer to modify or change any of its products, nor does
+       this document represent any commitment by Nokia to sell or
+       purchase any product. Nothing contained herein shall be construed
+       as conferring by implication, estoppel, or otherwise any license
+       or right under any patent, whether or not the use of any
+       information herein necessarily employs an invention of any
+       existing or later issued patent.
+
+       Nokia reserves the right not to offer any or all of these
+       products and to withdraw any or all of them at any future time.
+
+       Copyright (C) 2020, Nokia. All Rights Reserved.";
+
+
+    revision 2025-11-26 {
+        description "Add deviation for supported ciphers";
+        reference "Nokia specific";
+    }
+
+    revision 2025-02-06  {
+       description "EST keystore.";
+       reference "Nokia specific.";
+
+    }
+
+    revision 2024-08-28 {
+        description "Remove CDE deviation";
+        reference "Nokia specific.";
+
+    }
+
+    revision 2024-07-23 {
+        description "Keystore support for licensing and cipher deviations for hello-params";
+        reference "Nokia specific.";
+
+    }
+
+    revision 2023-05-02 {
+        description "add descriptions and correct the order according to RFC 7950.";
+        reference "Nokia specific.";
+
+    }
+
+    revision 2022-04-17 {
+        description "add not-supported deviation for privatekey";
+        reference "Nokia specific.";
+    }
+    revision 2020-03-17 {
+        description "adding not-supported deviations";
+        reference "Nokia specific.";
+    }
+
+   deviation "/lic-app:licensing/lic-app:certificate/lic-app:server-auth" {
+         deviate delete {
+            must 'pinned-ca-certs or pinned-server-certs';
+         }
+    }
+
+     deviation "/lic-app:licensing/lic-app:certificate/lic-app:server-auth/lic-app:est-certificate-profile" {
+         deviate add {
+             must "not(../pinned-ca-certs)" {
+                error-message "Only one out of 'pinned-ca-certs' or 'est-certificate-profile' can be set.";
+                description "Ensures that 'pinned-ca-certs' is only set when 'est-certificate-profile' is not present and vice versa.";
+             }
+         }
+    }
+
+    deviation "/lic-app:licensing/lic-app:certificate/lic-app:server-auth/lic-app:pinned-server-certs" {
+        deviate not-supported;
+    }
+
+    deviation "/lic-app:licensing/lic-app:certificate/lic-app:client-identity/lic-app:auth-type/lic-app:certificate/lic-app:certificate/lic-app:local-or-keystore/lic-app:local/lic-app:local-definition/lic-app:install-hidden-key/lic-app:input/lic-app:public-key" {
+        deviate not-supported;
+    }
+
+    deviation "/lic-app:licensing/lic-app:certificate/lic-app:client-identity/lic-app:auth-type/lic-app:certificate/lic-app:certificate/lic-app:local-or-keystore/lic-app:local/lic-app:local-definition/lic-app:generate-hidden-key" {
+        deviate not-supported;
+    }
+
+    deviation "/lic-app:licensing/lic-app:certificate/lic-app:client-identity/lic-app:auth-type/lic-app:certificate/lic-app:certificate/lic-app:local-or-keystore/lic-app:local/lic-app:local-definition/lic-app:public-key" {
+        deviate not-supported;
+    }
+
+    deviation "/lic-app:licensing/lic-app:certificate/lic-app:client-identity/lic-app:auth-type/lic-app:certificate/lic-app:certificate/lic-app:local-or-keystore/lic-app:local/lic-app:local-definition/lic-app:algorithm" {
+        deviate not-supported;
+    }
+
+    deviation "/lic-app:licensing/lic-app:certificate/lic-app:client-identity/lic-app:auth-type/lic-app:certificate/lic-app:certificate/lic-app:local-or-keystore/lic-app:local/lic-app:local-definition/lic-app:certificate-expiration" {
+        deviate not-supported;
+    }
+
+    deviation "/lic-app:licensing/lic-app:certificate/lic-app:client-identity/lic-app:auth-type/lic-app:certificate/lic-app:certificate/lic-app:local-or-keystore/lic-app:local/lic-app:local-definition/lic-app:install-hidden-key/lic-app:input/lic-app:algorithm" {
+        deviate not-supported;
+    }
+
+    deviation "/lic-app:licensing/lic-app:certificate/lic-app:client-identity/lic-app:auth-type/lic-app:certificate/lic-app:certificate/lic-app:local-or-keystore/lic-app:keystore/lic-app:reference" {
+        deviate not-supported;
+    }
+
+    deviation "/lic-app:licensing/lic-app:certificate/lic-app:client-identity/lic-app:auth-type/lic-app:certificate/lic-app:certificate/"
+              +"lic-app:local-or-keystore/lic-app:local/lic-app:local-definition/lic-app:private-key" {
+     deviate not-supported;
+    }
+
+    deviation "/lic-app:licensing/lic-app:server/lic-app:port" {
+        deviate add {
+           must " ( . > 0 ) " {
+                  error-message "0 is no valid port number";
+                  description "0 is no valid port number.";
+          }
+        }
+    }
+
+    deviation "/lic-app:licensing/lic-app:server/lic-app:address" {
+         /* multicast and broadcast address is not valid address  */
+       deviate add {
+            must "(not(translate(.,'0123456789','') = '...' and (substring-before(.,'.') >= 224) and (substring-before(.,'.') <= 255) and not(substring(., string-length(.) - string-length('.') +1) = '.')))"{
+                error-message "224.0.0.0~255.255.255.255 are not valid";
+                description "224.0.0.0~255.255.255.255 are not valid.";
+            }
+        }
+
+
+       /* self address is not valid address  */
+        deviate add {
+            must "(not((substring-before(.,'.') = 127) and translate(.,'0123456789','') = '...' and not(substring(., string-length(.) - string-length('.') +1) = '.')))" {
+                error-message "loopback address is not valid";
+                description "loopback address is not valid.";
+            }
+        }
+
+        /* 0.0.0.[0-255] is not valid address */
+        deviate add {
+            must "not(starts-with(.,'0.0.0.') and translate(.,'0123456789','') = '...' and not(substring(., string-length(.) - string-length('.') +1) = '.'))" {
+                error-message "0.0.0.[0-255] is not valid address";
+                description "0.0.0.[0-255] is not valid address.";
+            }
+        }
+
+        /* Multicast address is not valid address  */
+        deviate add {
+            must "not(starts-with(.,'ff'))"{
+                error-message "Multicast address is a not valid address";
+                description "Multicast address is a not valid address.";
+            }
+        }
+
+        /* Site-local address is not valid address  */
+        deviate add {
+            must "(substring-before(.,':') != 'fec0')"{
+                error-message "Site-local address is a not valid address";
+                description "Site-local address is a not valid address.";
+            }
+        }
+
+        /* Loopback address is not valid address  */
+        deviate add {
+            must "(current() != '::1')"{
+                error-message "Loopack address is not a valid address";
+                description "Loopack address is not a valid address.";
+            }
+        }
+
+        /* Unspecified address  */
+        deviate add {
+            must "(current() != '::')"{
+                error-message "Unspecified address";
+                description "Unspecified address.";
+            }
+        }
+    }
+
+     deviation "/lic-app:licensing/lic-app:certificate/lic-app:client-identity/lic-app:auth-type/lic-app:certificate/lic-app:certificate/lic-app:local-or-keystore/lic-app:keystore/lic-app:certificate-reference-choice/lic-app:central-keystore-reference/lic-app:central-keystore-reference/lic-app:asymmetric-key" {
+         deviate add {
+            must '../certificate' {
+                error-message "'asymmetric-key' must be configured together with 'certificate' under 'central-keystore-reference'";
+                description "'asymmetric-key' must be configured together with 'certificate' under 'central-keystore-reference'.";
+            }
+         }
+    }
+
+    deviation "/lic-app:licensing/lic-app:certificate/lic-app:hello-params/lic-app:cipher-suites/lic-app:cipher-suite" {
+        description "The YANG identifiers of the supported ciphers ordered by descending preference";
+        deviate add {
+            must "(current() = 'tlscsa:tls-aes-256-gcm-sha384' or current() = 'tlscsa:tls-chacha20-poly1305-sha256'"+
+                "or current() = 'tlscsa:tls-aes-128-gcm-sha256' or current() = 'tlscsa:tls-ecdhe-rsa-with-aes-256-gcm-sha384'"+
+                "or current() = 'tlscsa:tls-ecdhe-rsa-with-chacha20-poly1305-sha256' or current() = 'tlscsa:tls-ecdhe-rsa-with-aes-128-gcm-sha256'"+
+                "or current() = 'tlscsa:tls-ecdhe-rsa-with-aes-256-cbc-sha384' or current() = 'tlscsa:tls-ecdhe-rsa-with-aes-256-cbc-sha'"+
+                "or current() = 'tlscsa:tls-rsa-with-aes-256-gcm-sha384' or current() = 'tlscsa:tls-rsa-with-aes-256-cbc-sha256'"+
+                "or current() = 'tlscsa:tls-rsa-with-aes-256-cbc-sha' or current() = 'tlscsa:tls-ecdhe-rsa-with-aes-128-cbc-sha256'"+
+                "or current() = 'tlscsa:tls-ecdhe-rsa-with-aes-128-cbc-sha' or current() = 'tlscsa:tls-rsa-with-aes-128-gcm-sha256'"+
+                "or current() = 'tlscsa:tls-rsa-with-aes-128-cbc-sha256' or current() = 'tlscsa:tls-rsa-with-aes-128-cbc-sha')"{
+                error-message "this cipher is not supported";
+                description "The YANG identifiers of the supported ciphers ordered by descending preference";
+            }
+        }
+    }
+
+}
+

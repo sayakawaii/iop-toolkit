@@ -1,0 +1,283 @@
+module nokia-protocol-tracing {
+  yang-version 1.1;
+
+  namespace
+     "http://www.nokia.com/Fixed-Networks/BBA/yang/nokia-protocol-tracing";
+
+  prefix npt;
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import bbf-if-type {
+    prefix bbfift;
+  }
+
+  import bbf-xpon-if-type {
+    prefix bbf-xponift;
+  }
+
+  import iana-if-type {
+    prefix ianaift;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG definitions for
+     supporting Nokia specific requirements as applicable to its
+     access network equipment.
+
+     Specifically, this module describes the configuration and status data
+     for protocol-tracing feature as supported by Nokia access equipement.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2018, Nokia. All Rights Reserved.";
+
+  revision 2024-08-22 {
+    description
+      "move max enabled session to list level.";
+    reference
+      "Nokia reference.";
+  }
+
+  revision 2024-02-23 {
+    description
+      "add vsi name list.";
+    reference
+      "Nokia reference.";
+  }
+  
+  revision 2024-01-16 {
+    description
+      "Set explicit positions for protocol bits.";
+    reference
+      "Nokia reference.";
+  }
+
+  revision 2023-10-10 {
+    description
+      "Enabled MLD protocol support.";
+    reference
+      "Nokia reference.";
+  }
+
+
+  revision 2023-09-13 {
+    description
+      "Initial version.";
+    reference
+      "Nokia reference.";
+  }
+
+  typedef protocol-selection {
+    type union {
+        type enumeration {
+          enum all {
+            value 63;
+            description "all protocols defined in the bits type below and currently supported on the node.
+                         The meaning of this enum value is implementation dependent.";
+          }
+        }
+        type bits {
+          bit dhcp {
+            position 0;
+            description
+              "Identifies IPv4 packets with UDP source port 68 and
+               destination port 67 (client to server), or with UDP source
+               port 67 and destination port 68 (server to client).";
+          }
+          bit dhcpv6 {
+            position 1;
+            description
+              "Identifies IPv6 packets with UDP source port 547 and
+               destination port 546 (client to server), or with UDP source
+               port 546 and destination port 547 (server to client).";
+          }
+          bit igmp {
+            position 2;
+            description
+              "Identifies IPv4 IGMP packets, i.e. the IPv4 packets for
+               which in the IPv4 header the protocol field is set to the
+               value 0x02.";
+          }
+          bit pppoe {
+            position 3;
+            description
+              "Identifies PPPoE discovery packets, which are Ethernet
+               packets with Ethertype=0x8863.";
+          }
+          bit arp {
+            position 4;
+            description
+              "Identifies the ARP packets, which are ethernet packets of
+               ethertype 0x0806.";
+          }
+          bit mld {
+            position 5;
+            description
+              "Identifies IPv6 MLD packets, MLD packets are a subset of
+              the ICMPv6 protocol. ICMPv6 messages are identified with
+               Next Header value of 58. MLD packets are identified by
+               specific values of the Type field. Type field values are
+               defined in RFC 3810.";
+          }
+          /*   bit ancp; */
+        }
+    }
+    description "A [set of] networking protocol[s].";
+  }
+
+  container protocol-tracing {
+    must "(count(session[enabled != 'false']) < 11)" {
+            error-message "Only a maximum of 10 sessions can be enabled at the same time !";
+    }
+
+    description "Management of protocol tracing to syslog.";
+
+    list session {
+      key "name";
+      unique "interface";
+      max-elements 100;
+        
+      leaf name {
+        type string;
+        description "Session name";
+      }
+
+      leaf interface {
+        type if:interface-ref;
+        must
+          "(derived-from-or-self(/if:interfaces/if:interface[if:name = current()]/if:type,'bbfift:vlan-sub-interface') or 
+            derived-from-or-self(/if:interfaces/if:interface[if:name = current()]/if:type,'ianaift:ethernetCsmacd')    or
+            derived-from-or-self(/if:interfaces/if:interface[if:name = current()]/if:type,'ianaift:ptm')    or
+            derived-from-or-self(/if:interfaces/if:interface[if:name = current()]/if:type,'bbf-xponift:olt-v-enet')
+           )" {
+            error-message
+              "An interface of type 'vlan-sub-interface', 'ethernetCsmacd', 'ptm' or 'olt-v-enet' is required !";
+            description
+              "Accepting only interfaces of type 'vlan-sub-interface', 'ethernetCsmacd', 'ptm' or 'olt-v-enet'.";
+          }
+        mandatory true;
+        description "The interface on which the tracing should be enabled.";
+      }
+
+      leaf protocol-selector {
+        type protocol-selection;
+        must ". != ''" {
+            error-message "provide a valid protocol-selection.";
+        }
+        mandatory true;
+        description "Selects the protocols to enable tracing on.";
+      }
+
+      leaf enabled {
+        type boolean;
+    
+        default true;
+        description "Enable or disable this session.
+                     If enabled, configured protocols packets on the configured interface will be traced to syslog.
+                     If disabled, no protocol tracing is triggered by this session.";
+      }
+      description "Configuration of a protocol tracing session,
+                   identified here by the session name.";
+    }
+  }
+
+  container protocol-tracing-state {
+    config false;
+    description "Operation status of protocol tracing.";
+
+    list session {
+      key "name";
+
+      leaf name {
+        type string;
+        description "Name of protocol tracing session.";
+      }
+
+      leaf interface-index {
+        type uint32;
+        description "Index of the interface on which this protocol tracing session is configured.
+                     This index provides an alternative means to uniquely identify the interface.
+                     Its value matches the value of the interface index at '/if:interfaces/if:interface/if:if-index'.";
+      }
+
+      leaf interface-name {
+        type string;
+        description "The Name of the interface on which the configured protocol tracing session applies.";
+      }
+
+      leaf-list vsi-id {
+        type uint32;
+        ordered-by user;
+        status deprecated;
+        description "List of VLAN sub-interfaces contributing to the tracing in this session.
+                     Each index in this list identifies uniquely a VLAN sub-interface.
+                     i.e. a value matches the value of a VLAN sub-interface's '/if:interfaces/if:interface/if:if-index'.";
+      }
+
+      leaf-list vsi-name {
+        type string;
+        ordered-by user;
+        description "List of VLAN sub-interfaces contributing to the tracing in this session.
+                     Each name in this list identifies uniquely a VLAN sub-interface.
+                     i.e. a value matches the value of a VLAN sub-interface's '/if:interfaces/if:interface/if:name'.";
+      }
+      
+      leaf protocols {
+        type protocol-selection;
+        description "The protocols that are traced in the context of this session.
+                     If all protocols are configured, the list of all supported protocols is shown,
+                     even if the enum value 'all' was used during configuration.";
+      }
+
+      leaf enabled{
+        type boolean;
+        description "Session status : enabled or disabled.";
+      }
+      description "State data of a protocol tracing session.";
+    }
+  }
+}

@@ -1,0 +1,41 @@
+module nokia-ietf-routing-route-default-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-ietf-routing-route-default-dev";
+
+  prefix nokia-ietf-routing-route-default-dev;
+
+  import ietf-routing {
+    prefix rt;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA IETF/Route YANG module supporting
+     deviations on top of standard.";
+    
+  revision 2023-05-02 {
+    description "Solve yang errors and resolve canonical order according to RFC 6020.";
+    reference "Nokia specific.";
+  }
+
+  revision 2022-03-24 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific";
+  }
+
+  deviation  "/rt:routing/rt:control-plane-protocols/rt:control-plane-protocol"{
+    description "Only 1 routing control protocol can be configured";
+    deviate add {
+      max-elements 1;
+    }
+    
+  }
+}

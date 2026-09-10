@@ -1,0 +1,184 @@
+submodule bbf-clip-data-mode-profile-body-mounted {
+  yang-version 1.1;
+  belongs-to bbf-sip-voip-mounted  {
+    prefix bbf-sip-voip-mounted;
+  }
+
+  organization
+    "Broadband Forum <https://www.broadband-forum.org>
+     Common YANG Work Area";
+
+  contact
+    "Comments or questions about this Broadband Forum YANG module
+     should be directed to <mailto:help@broadband-forum.org>.
+     Editor:      Frank Desseyn, Nokia
+     Editor:      Nadine Staelens, Nokia
+     PS Leader:   Joey Boyd, ADTRAN
+     PS Leader:   Ken Kerpez, ASSIA
+     WA Director: Joey Boyd, ADTRAN
+     WA Director: Sven Ooghe, Nokia";
+
+  description
+    "This submodule contains a collection of YANG definitions for
+     CLIP mode profile.
+     Copyright (c) 2017-2018, Broadband Forum
+     Redistribution and use in source and binary forms, with or
+     without modification, are permitted provided that the following
+     conditions are met:
+     1. Redistributions of source code must retain the above copyright
+        notice, this list of conditions and the following disclaimer.
+     2. Redistributions in binary form must reproduce the above
+        copyright notice, this list of conditions and the following
+        disclaimer in the documentation and/or other materials
+        provided with the distribution.
+     3. Neither the name of the copyright holder nor the names of its
+        contributors may be used to endorse or promote products
+        derived from this software without specific prior written
+        permission.
+     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
+     CONTRIBUTORS \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+     INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+     DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+     CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+     SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+     NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+     CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+     STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+     ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+     ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     The above license is used as a license under copyright only.
+     Please reference the Forum IPR Policy for patent licensing terms
+     <https://www.broadband-forum.org/ipr-policy>.
+     Any moral rights which are necessary to exercise under the above
+     license grant are also deemed granted under this license.
+     This version of this YANG module is part of TR-383; see
+     the TR itself for full legal notices.";
+
+  revision 2020-03-06 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: 2020-03-06.";
+    reference
+      " ";
+  }
+  
+  grouping clip-data-mode-profile-body {	  	  
+	choice etsi-or-telcordia-data-transmission-mode {
+	  description
+		"Either the etsi clip data mode or the 
+		 telcordia-clip-data-mode applies."; 
+	  case etsi-clip-data-mode {	
+		  leaf etsi-data-transmission-mode {
+       	  	    type enumeration {
+  			enum fsk {
+			  value 1;
+			  description
+			  	"The Frequency-Shift Keying data transmission
+				 format applies.";
+			}
+			enum dtmf {
+			  value 2;
+			  description
+				"The Dual Tone Multi-Frequency data transmission
+		     	 format applies.";
+			}
+		  }
+       	          description
+		  	"The ETSI CLIP data transmission protocol.";
+    	    }
+	    container pots-interface-dtmf-settings {
+	      when "../etsi-data-transmission-mode = 'dtmf'";
+		  description
+			"The POTS interface DTMF settings.";
+		  leaf dtmf-positive-twist {
+			type uint8 {range "1..16";}
+			units "1 db";
+			default 10;       		
+			description
+			  "The acceptable positive twist for the DTMF signal.
+			   e.g. a positive twist threshold of 6dB means that the 
+			   higher than the low frequency
+			   component to be considered as reliable.";
+		  }
+		  leaf dtmf-negative-twist {
+			type int8 {range "-16..-1";}
+			units "1 db";
+			default -10;       		
+			description
+			  "The acceptable negative twist for the DTMF signal.
+			   e.g. a negative twist threshold of 6dB means that the
+			   low frequency component must not be more than 6dB 
+			   higher than high frequency component to be considered
+			   as reliable.";
+		  }
+		  leaf dtmf-min-level-threshold {
+			type int8 {range "-48..-14";}
+			units "1 db";
+		    default -27;		
+		    description
+			  "The minimum level for each of the received DTMF 
+			   frequency components.
+			   Signals with both components at or above this level 
+			   must be detected. 
+			   If either component is 2dB or more below this level,
+			   the signal will be rejected.";
+		  }
+		  leaf dtmf-snr-threshold-adjustment {
+			type int8 {range "-3..6";}
+			units "1 db";
+			default 0;		
+			description
+			  "The minimum Signal to Noise ratio threshold for the
+			   DTMF detector.
+			   e.g. a value of 3dB lowers the internal threshold 3dB,
+			   which increases the SNR threshold 3dB and a value of 
+			   -3dB raises the internal threshold 3dB, which 
+			   lowers the SNR threshold 3dB.";
+		  }
+		  leaf dtmf-echo-control {
+			type enumeration {
+	   	      enum enabled {
+				value 1;
+				description
+			      "DTMF echo control enabled.";
+			  }
+			  enum disabled {
+				value 2;
+				description
+				  "DTMF echo control disabled.";
+			  }
+			}
+			default disabled;		
+			description
+			  "To enable or disable the ECHO DTMF feature.";
+		  }
+		  leaf dtmf-max-volume {
+			type int8 {range "-63..0";}
+			units "1 dbm";
+			default 0;		
+			description
+			  "The max DTMF volume (RFC 2833) volume to IP direction
+			   in dBm.";
+		  }
+		}
+	  }  
+	  case telcordia-clip-data-mode {		
+		leaf telcordia-data-transmission-mode {
+		  type enumeration {
+	  	    enum fsk {
+			  value 1;
+			  description
+			    "The Frequency-Shift Keying  data transmission
+			     format applies.";
+			  }
+			}			
+			description
+			  "The TELCORDIA CLIP data transmission protocol.";
+	  	}
+	  } 
+	}
+  }	
+}

@@ -1,0 +1,95 @@
+module nokia-sdan-vmac-host-id-aug {
+  yang-version 1.1;
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/nokia-sdan-vmac-host-id-aug";
+
+  prefix nokia-sdan-vmac-host-id-aug;
+
+  import ietf-system {
+    prefix sys;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+     "This module contains YANG definitions for supporting Nokia
+     specific requirements (host-id configuration) as applicable to its
+     access network equipment.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2018, Nokia. All Rights Reserved.";
+
+
+  revision 2017-01-24 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific";
+  }
+
+  augment "/sys:system" {
+    description
+      "Augment system with host-id-format specific configuration";
+
+    container host-id {
+      description
+        "Contains host-id specific configuration.";
+
+      leaf host-id {
+        type uint32 {
+          range "1..524287";
+        }
+        description
+          "This field specifies the value of the DSLAM Id. This value
+          must be unique a DSLAM Id within an EMAN connected to the same
+          IP edges. When the value is 0, it implies that the parameter
+          has not yet been set and vMAC could not be enabled on any
+          VLAN. The value 0 cannot be configured; it is a factory
+          default value only.For CFM, this field must be configured to
+          ensure the uniqueness of the MP MAC address across the network
+          with multiple DSLAMs.";
+      }
+    }
+  }
+}
+
+

@@ -1,0 +1,49 @@
+module nokia-sdan-olt-v-enet-common-imm {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-sdan-olt-v-enet-common-imm";
+
+  prefix nokia-sdan-olt-v-enet-common-imm;
+
+  import ietf-immutable{
+    prefix im;
+  }
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import bbf-xponvani {
+    prefix bbf-xponvani;
+  }
+
+  import nokia-sdan-olt-v-enet {
+    prefix nokia-olt-v-enet;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA IETF/System YANG module supporting
+     deviations on top of standard.";
+
+  revision 2022-11-20 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia Specific.";
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-xponvani:olt-v-enet/nokia-olt-v-enet:uni-name" {
+      description
+      "The uni-name of an olt-v-enet interface cannot be modified.
+       The client can delete or remove the interface and subsequently create the interface again.";
+      deviate add {
+        im:immutable "create delete";
+      }
+  }
+}

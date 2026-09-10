@@ -1,0 +1,84 @@
+module nokia-bbf-qos-policing-mounted-eonu-dev {
+  namespace
+    "http://www.nokia.com/Fixed-Networks/BBA/yang/nokia-bbf-qos-policing-mounted-eonu-dev";
+
+  prefix  nokia-bbf-qos-policing-mounted-eonu-dev;
+
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import bbf-qos-classifiers-mounted {
+        prefix bbf-qos-cls-mounted;
+  }
+
+  import bbf-qos-policing-mounted {
+    prefix bbf-qos-plc-mounted;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "This module contains a collection of YANG deviations on top 
+     of standard for supporting BBF/bbf-qos-policing YANG module.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia 
+     reserves the right to revise this document for any reason, 
+     including but not limited to conformity with standards 
+     promulgated by various agencies, utilisation of advances in the 
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or 
+     referred to herein.
+
+     The product specifications and other technical or performance 
+     information contained herein are subject to change without 
+     notice. Updates of this document will be issued under the above 
+     NDA's.lic-appsufficiency, accuracy, or utility of any 
+     information or opinion contained herein. Nokia expressly advises 
+     that any use of for any purpose or reliance upon this technical 
+     reference is at the risk of the user and that Nokia shall not be 
+     liable for any damage or injury incurred by any person arising 
+     out of the sufficiency, accuracy, or utility of any information 
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any 
+     manufacturer to modify or change any of its products, nor does 
+     this document represent any commitment by Nokia to sell or 
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license 
+     or right under any patent, whether or not the use of any 
+     information herein necessarily employs an invention of any 
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2017-2018, Nokia. All Rights Reserved.";
+
+    /* revision */
+    revision 2023-03-10 {
+        description
+        "add deviation for pbit-making-list index";
+        reference
+        "Nokia specific";
+    }
+
+    deviation '/onu:onus/onu:onu/onu:root/bbf-qos-cls-mounted:classifiers/bbf-qos-cls-mounted:classifier-entry'
+            +'/bbf-qos-cls-mounted:filter-method/bbf-qos-cls-mounted:inline/bbf-qos-cls-mounted:match-criteria'
+            +'/bbf-qos-plc-mounted:pbit-marking-list/bbf-qos-plc-mounted:index'{
+        description
+            "pbit-marking-list index value must be 0.";
+        deviate add {
+            must "current() = 0 " {
+                error-message "pbit-marking-list index value in classifier match-criteria must be 0";
+            }
+        }
+    }
+}

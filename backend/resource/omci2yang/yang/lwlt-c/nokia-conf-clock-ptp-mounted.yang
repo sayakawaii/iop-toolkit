@@ -1,0 +1,959 @@
+module nokia-conf-clock-ptp-mounted {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"+
+             "nokia-conf-clock-ptp-mounted";
+
+  prefix clock-ptp-mounted;
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  import ietf-interfaces-mounted {
+    prefix if-mounted;
+  }
+
+  import iana-if-type-mounted {
+    prefix ianaift-mounted;
+  }
+
+  import bbf-fiber-onu-emulated-mount {
+     prefix onu;
+  }
+  
+  import nokia-template-common {
+    prefix template-common;
+  }
+
+  organization "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "This module contains extension of YANG definitions for
+    the overall structure of clock ptp on physical
+    entities.
+
+    Nokia reserves the right not to offer any or all of these
+    products and to withdraw any or all of them at any future time.
+
+    Copyright (C) 2018, Nokia. All Rights Reserved.";
+
+  revision 2026-02-27 {
+    description
+      "Update for BBN-340083";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2025-11-01 {
+    description
+      "Update for BBN-132906";
+    reference
+      "Nokia specific";
+  }
+  
+  revision 2023-08-11 {
+    description
+      "modify the type ofutc-offset.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2020-04-08 {
+    description
+      "modify format.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2020-02-26 {
+    description
+      "add domain leaf node for G.8275 and CCSA profiles.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2020-02-16 {
+    description
+      "add default value for some leaf nodes.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2020-02-03 {
+    description
+      "update contact and descriptions.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2020-01-10 {
+    description
+      "add Announce interval leaf node,
+      remove remote and admin in acceptable-master list";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2019-11-20 {
+    description
+      "Initial revision.";
+    reference
+      "TBD";
+  }
+
+  feature ptp {
+    description
+      "Indicates support for PTP functionality.";
+  }
+  feature  profile-g8275dot1{
+    description
+      "Indicates support for G.8275.1 profile.";
+  }      
+  feature profile-g8265dot1 {
+    description
+      "Indicates support for G.8265.1 profile.";
+  }
+  feature profile-ccsa {
+    description
+      "Indicates support for CCSA profile.";
+  }     
+  
+  typedef time-source {
+    type enumeration {
+      enum "atomic-clock" {
+        value 16;
+        description "Indicates time source is atomic-clock.";}
+      enum "gps" {
+        value 32;
+        description "Indicates time source is gps.";
+      }
+      enum "terrestrial-radio" {
+        value 48;
+        description "Indicates time source is terrestrial-radio.";
+      }
+      enum "ptp" {
+        value 64;
+        description "Indicates time source is ptp.";}
+      enum "ntp" {
+        value 80;
+        description "Indicates time source is ntp.";
+      }
+      enum "hand-set" {
+        value 96;
+        description "Indicates time source is hand-set.";
+      }
+      enum "other" {
+        value 144;
+        description "Indicates time source is other.";}
+      enum "internal-oscillator" {
+        value 160;
+        description "Indicates time source is internal-oscillator.";
+      }
+      enum "no-information" {
+        value 255;
+        description "Indicates no source or source is unknown.";
+      }
+    }
+    description
+      "The PTP source.";
+  }
+  
+  typedef domain {
+    type uint32 {
+      range "0..255";
+    }
+    description
+      "The Precision Time Protocol (PTP) domain.
+
+      The value 0 specifies the default domain for CCSA profile.
+      The value 4 specifies the default domain for ITU-T G.8265.1
+      specification.
+      The value 24 specifies the default domain for ITU-T G.8275.1
+      specification.";
+  }
+
+  typedef log-interval {
+    type int32 {
+      range "-128..127";
+    }
+    description
+      "The interval between PTP packets, or equivalently a packet
+      rate.
+      Is is the logarithm to the base 2 of the interval in seconds.
+
+      For example, -7 specifies a rate of 128 packets per second,
+      and +4 specifies a packet rate of 1 packet every 16 seconds.";
+  }
+
+  typedef step-mode {
+    type enumeration {
+      enum "one-step" {
+        value 1;
+        description ".";}
+      enum "two-step" {
+        value 2;
+        description ".";
+      }
+    }
+    description
+      "The PTP profile delay-mechanism.";
+  }
+
+  typedef dest-mac-addr-forwardable {
+    type enumeration {
+      enum "forwardable" {
+        value 1;
+        description "01:1B:19:00:00:00";}
+      enum "non-forwardable" {
+        value 2;
+        description "01:80:C2:00:00:0E";
+      }
+    }
+    description
+      "The PTP port selected multicast destination MAC,
+          can be fowardable, or none forwadable.";
+  }
+
+  typedef priority {
+    type uint32 {
+      range "0..255";
+    }
+    description
+      "The Precision Time Protocol (PTP) priority used both for the 
+      value to advertise in the Announce messages and for the local
+      clock value in data set comparisons.
+
+      It is used by the Best Master Clock Algorithm to determine
+      which clock should provide timing for the network.
+
+      The priority is rated highest (0) to lowest (255).";
+  }
+
+  typedef ptp-state {/*Not compatible with ISAM, according to IEEE1588V2(2008) page 73 section 8.2.5.3.1*/
+    type enumeration {
+      enum "INITIALIZING" {
+        value 1;
+        description ".";
+      }
+      enum "FAULTY" {
+        value 2;
+        description ".";
+      }
+      enum "DISABLED" {
+        value 3;
+        description ".";
+      }
+      enum "LISTENING" {
+        value 4;
+        description ".";
+      }
+      enum "PRE_MASTER" {
+        value 5;
+        description ".";
+      }
+      enum "MASTER" {
+        value 6;
+        description ".";
+      }
+      enum "PASSIVE" {
+        value 7;
+        description ".";
+      }
+      enum "UNCALIBRATED" {
+        value 8;
+        description ".";
+      }
+      enum "SLAVE" {
+        value 9;
+        description ".";
+      }
+
+    }
+    description
+      "The PTP state.";
+  }
+  
+  augment "/onu:onus/onu:onu/onu:root" {
+    when "derived-from-or-self(../onu:usage, 'template-common:node-actual-usage') or "
+         + "derived-from-or-self(../onu:usage, 'template-common:node-template-usage')" {
+       description
+         "it should be a node-actual-usage or node-template-usage ONU";
+    }
+    description "augment onu root for ptp profiles ";
+    container ptp-g8275dot1-profiles {
+      if-feature profile-g8275dot1;
+      list ptp-g8275dot1-port-profile {
+        key "name";
+        description
+        "List containing the parameters for profile G.8275.1
+           configuration.";
+        leaf name {
+          type string {
+            length "1..32";
+            pattern '[a-zA-Z0-9\-_.]*';
+          }
+          description
+            "Name of the profile.";
+        }
+        leaf domain {
+          type domain {
+            range "24..43";
+          }
+          default "24";
+          description "The domain in which PTP runs on the system.";
+        }
+        leaf master-only {
+          type boolean;
+          default "false";
+          description "Enable/disable the master-only parameter
+          of the PTP port";
+        }
+        leaf dest-mac-addr-forwardable {
+          type dest-mac-addr-forwardable;
+          default "forwardable";
+          description "The PTP dest-mac-addr-forwardable";
+        }
+        leaf log-anno-interval {
+          type log-interval {
+            range "-3";
+          }
+        default "-3";
+        description
+        "The PTP port announce message interval (specified
+           as the logarithm to the base 2 in seconds).";
+        }
+        leaf log-sync-interval {
+          type log-interval {
+            range "-4";
+          }
+          default "-4";
+          description
+          "The PTP port sync message interval (specified
+            as the logarithm to the base 2 in seconds).";
+        }
+        leaf log-delay-interval {
+          type log-interval {
+            range "-4";
+          }
+          default "-4";
+          description
+            "The PTP port delay message interval (specified
+            as the logarithm to the base 2 in seconds).";
+        }
+        leaf step-mode {
+          type step-mode;
+          default "one-step";
+          description "The PTP step-mode.";
+        }
+        leaf communication-model {
+          type enumeration{
+            enum multicast {
+              value 0;
+              description
+                "The communication-model is multicast.";
+            }
+          }
+          default multicast;
+          description
+            "specifies the communication model of PTP packets encapsulation";
+          reference
+            "ITU-T G.988 9.12.22 Precision Time Protocol";
+        }
+        leaf network-transport-protocol {
+          type enumeration{
+            enum IEEE-802.3 {
+              value 3;
+              description
+                "The network-transport-protocol is IEEE-802.3.";
+            }
+          }
+          default IEEE-802.3;
+          description
+            "specifies the network protocol of PTP packets encapsulation";
+          reference
+            "ITU-T G.988 9.12.22 Precision Time Protocol";
+        }
+        leaf ToD-update-interval  {
+          type uint32 {
+            range "0..1440";
+          }
+          units "minute";
+          default "1";
+          description "The expected ToD(time of day) update interval via OLT-G in minutes";
+        }
+      }
+      description
+        "PTP 8275.1 profiles.";
+    }
+  }
+ 
+  augment "/onu:onus/onu:onu/onu:root" {
+    when "derived-from-or-self(../onu:usage, 'template-common:node-actual-usage') or "
+         + "derived-from-or-self(../onu:usage, 'template-common:node-template-usage')" {
+       description
+         "it should be a node-actual-usage or node-template-usage ONU";
+    }
+    description "augment onu root with ptp";
+    container ptp-ccsa-profiles {
+      if-feature profile-ccsa;
+      description
+        "PTP port configuration profiles.";
+      list ptp-ccsa-port-profile {
+        key "name";
+        description
+          "List containing the parameters for ccsa profile
+           configuration.";
+        leaf name {
+          type string {
+            length "1..32";
+            pattern '[a-zA-Z0-9\-_.]*';
+          }
+          description
+            "Name of the profile.";
+        }
+        leaf domain {
+          type domain {
+            range "0..255";
+          }
+          default "0";
+            description "The domain in which PTP runs on the system.";
+        }
+        leaf master-only {
+          type boolean;
+          default "false";
+          description "Enable/disable the master-only parameter
+          of the PTP port.";
+        }
+        leaf dest-mac-addr-forwardable {
+          type dest-mac-addr-forwardable;
+          default "forwardable";
+          description "The PTP dest-mac-addr-forwardable";
+        }
+        leaf log-anno-interval {
+          type log-interval {
+            range "-4..4";
+          }
+          default "-3";
+          description
+          "The PTP port announce message interval (specified
+           as the logarithm to the base 2 in seconds).";
+        }
+        leaf log-sync-interval {
+          type log-interval {
+            range "-8..1";
+          }
+          default "-4";
+          description
+            "The PTP port sync message interval (specified
+            as the logarithm to the base 2 in seconds).";
+        }
+        leaf log-delay-interval {
+          type log-interval {
+            range "-4..4";
+          }
+          default "0";
+          description
+            "The PTP port delay message interval (specified
+            as the logarithm to the base 2 in seconds).";
+        }
+        leaf step-mode {
+          type step-mode;
+          default "one-step";
+          description
+            "The PTP port step-mode: one step or two step.";
+        }
+        leaf communication-model {
+          type enumeration{
+            enum multicast {
+              value 0;
+              description
+                "The communication-model is multicast.";
+            }
+          }
+          default multicast;
+          description
+            "specifies the communication model of PTP packets encapsulation";
+          reference
+            "ITU-T G.988 9.12.22 Precision Time Protocol";
+        }
+        leaf network-transport-protocol {
+          type enumeration{
+            enum IEEE-802.3 {
+              value 3;
+              description
+                "The network-transport-protocol is IEEE-802.3.";
+            }
+          }
+          default IEEE-802.3;
+          description
+            "specifies the network protocol of PTP packets encapsulation";
+          reference
+            "ITU-T G.988 9.12.22 Precision Time Protocol";
+        }
+        leaf ToD-update-interval  {
+          type uint32 {
+            range "0..1440";
+          }
+          units "minute";
+          default "1";
+          description "The expected ToD(time of day) update interval via OLT-G in minutes";
+        }
+      }
+    }
+  }
+
+  grouping ptp-port{
+    description "grouping ptp-port";
+    container ptp-port{
+      if-feature ptp;
+      description "ptp port can be attached to an interface.";
+      leaf enable{
+        type boolean;
+        default "false";
+        description
+          "Enable or disable ptp port function at the interface.";
+      }
+    }
+  }
+
+  augment "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface"  {
+    when
+      "derived-from-or-self(if-mounted:type, 'ianaift-mounted:ethernetCsmacd')" {
+      description
+        "Augment ptp port configuration to /if:interfaces/if:interface";
+    }
+    description "augmnet ethernet interface for ptp port"; 
+
+    uses ptp-port;
+  }
+  
+  augment "/onu:onus/onu:onu/onu:root"{
+    when "derived-from-or-self(../onu:usage, 'template-common:node-actual-usage') or "
+         + "derived-from-or-self(../onu:usage, 'template-common:node-from-template-usage')" {
+       description
+         "it should be a node-actual-usage or node-from-template-usage ONU";
+    }
+    description
+      "show sync ptp master state on the interfaces.";
+    container sync-ptp-mstrport {
+      config false;
+      description "PTP master clock device status";
+      list sync-ptp-mstrport {
+        key "ptp-dev-index";
+        description "PTP master clock device status";
+        leaf ptp-dev-index {
+          type string;
+          description "PTP master clock device info index";
+        }
+        leaf time-source {
+          type time-source;
+          description "specifies time source of PTP master clock device";
+        }
+
+        leaf log-var {
+          type uint32;
+          description "specifies OffsetScaledLogVariance of PTP master clock device";
+        }
+
+        leaf clock-id {
+          type string;
+          description "specifies clockId of PTP master clock device";
+        }
+
+        leaf prio1 {
+          type priority;
+          description "specifies priority1 of PTP master clock device";
+        }
+
+        leaf prio2 {
+          type priority;
+          description "specifies priority2 of PTP master clock device";
+        }
+
+        leaf clock-class {
+          type uint32;
+          description "specifies clockclass of PTP master clock device";
+        }
+
+        leaf clock-accuracy {
+          type uint32; 
+          description "specifies clockAccuracy of PTP master clock device";
+        }
+
+        leaf port-number {
+          type uint32;
+          description "specifies MasterPortNumber of PTP master clock device";
+        }
+
+        leaf grandmaster-clockid {
+          type string;
+          description "specifies GrandMasterClkId of PTP master clock device";
+        }
+
+        leaf domain {
+          type domain;
+          description "specifies domain of PTP master clock device";
+        }
+
+        leaf sync-interval {
+          type int32;
+          description "specifies the mean time interval between successive messages 
+          shall be represented as the logarithm to the base 2 of this time interval 
+          measured in seconds on the PTP master clock device sending the message";
+        }
+
+        leaf delay-interval {
+          type int32;
+          description "specifies the mean time interval between successive messages 
+          shall be represented as the logarithm to the base 2 of this time interval 
+          measured in seconds on the PTP master clock device sending the message";
+        }
+
+        leaf announce-interval {
+          type int32;
+          description "specifies the mean time interval between successive messages 
+          shall be represented as the logarithm to the base 2 of this time interval 
+          measured in seconds on the PTP master clock device sending the message";
+        }
+
+        leaf mac-addr {
+          type yang:mac-address;
+          description "specifies the Mac Address of PTP master clock device. 
+          A value of 00:00:00:00:00:00 indicates a non-valid value";
+        }
+
+        leaf announce-packets {
+          type uint32;
+          description "specifies the statistics information of the Announce messages";
+        }
+
+        leaf sync-packets {
+          type uint32;
+          description "specifies the statistics information of the Sync messages";
+        }
+
+        leaf delay-req-packets {
+          type uint32;
+          description "specifies the statistics information of the Delay-Req messages";
+        }
+
+        leaf delay-resp-packets {
+          type uint32;
+          description "specifies the statistics information of the Delay-Resp messages";
+        }
+
+        leaf utc-offset {
+          type int32;
+          description "specifies CurrentUtcOffset of PTP master clock device";
+        }
+
+        leaf step-removed {
+          type uint32;
+          description "specifies the steps removed of PTP master clock device";
+        }
+
+        leaf port-state {
+          type ptp-state;//passive, slave
+          description "specifies port state of PTP master clock device";
+        }
+
+        leaf tai-time {
+          type string;
+          description "specifies Tai second of PTP master clock device";
+        }
+
+        leaf utc-time {
+          type string;
+          description "specifies Tai nano second of PTP master clock device";
+        }
+
+        /*Flag start*/
+        leaf FlagLeap61 {
+          type boolean;
+          description "specifies the value of Leap61 of PTP master clock device";
+       
+        }
+        leaf FlagLeap59 {
+          type boolean;
+          description "specifies the value of Leap59 of PTP master clock device";
+        
+        }
+        leaf FlagCurUtcOSValid {
+          type boolean;
+          description "specifies the vlaue of currentUtcOffsetValid of PTP master clock device";
+        
+        }
+        leaf FlagPtpTimeScale {
+          type boolean;
+          description "specifies the vlaue of PTP timescale of PTP master clock device";
+        
+        }
+        leaf FlagPtpTimeTraceable {
+          type boolean;
+          description "specifies the vlaue of Time traceable of PTP master clock device";
+        
+        }
+        leaf FlagPtpFreqTrcable {
+          type boolean;
+          description "specifies the vlaue of Frequency traceable of PTP master clock device";
+        
+        }
+      }
+    }
+  }
+  
+  augment "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface" {
+     when
+      "derived-from-or-self(if-mounted:type, 'ianaift-mounted:ethernetCsmacd')" {
+        description
+        "show sync ptp client state on the interfaces.";
+    }
+    description "augment ethernet interface for PTP";
+
+    container sync-ptp-client {
+      config false;
+      description "PTP client status";
+
+      leaf clock-id {
+        type string;
+        description "specifies clockId of PTP client";
+      }
+
+      leaf port-number {
+        type uint32;
+        description "specifies MasterPortNumber of PTP client";
+      }
+
+      leaf mac-addr {
+        type yang:mac-address;
+        description "specifies the Mac Address of PTP client.
+        A value of 00:00:00:00:00:00 indicates a non-valid value";
+      }
+
+      leaf sync-interval {
+        type int32;
+        description "specifies the mean time interval between successive messages
+        shall be represented as the logarithm to the base 2 of this time interval
+        measured in seconds on the PTP client sending the message";
+      }
+
+      leaf delay-interval {
+        type int32;
+        description "specifies the mean time interval between successive messages
+        shall be represented as the logarithm to the base 2 of this time interval
+        measured in seconds on the PTP client sending the message";
+      }
+
+      leaf announce-interval {
+        type int32;
+        description "specifies the mean time interval between successive messages
+        shall be represented as the logarithm to the base 2 of this time interval
+        measured in seconds on the PTP client sending the message";
+      }
+    }
+  }
+
+  augment "/onu:onus/onu:onu/onu:root" {
+    when "derived-from-or-self(../onu:usage, 'template-common:node-actual-usage') or "
+         + "derived-from-or-self(../onu:usage, 'template-common:node-template-usage')" {
+       description
+         "it should be a node-actual-usage or node-template-usage ONU";
+    }
+    description "augment onu root for ptp";
+    container ptp {
+      if-feature ptp;
+      presence "Present if ptp is configured";
+      description "ptp configuration";
+      leaf admin-state {
+        type enumeration {
+          enum lock {
+            value 0;
+            description
+              "The PTP function is lock.";
+          }
+          enum unlock {
+            value 1;
+            description
+              "The PTP function is unlock.";
+          }
+        }
+        default lock;
+        description
+          "The administrative state of the PTP function.";
+        reference
+          "ITU-T G.988 9.12.22 Precision Time Protocol";
+      }
+      container profile-ref {
+        description "ptp profile configuration";
+        choice port-type {
+          description "port-type";
+          case g.8275.1_port {
+            leaf profile-ref-8275dot1 {
+              type leafref {
+                path '../../../clock-ptp-mounted:ptp-g8275dot1-profiles/clock-ptp-mounted:' +
+                'ptp-g8275dot1-port-profile/clock-ptp-mounted:name';
+              }
+              description
+                "Reference to the G.8275.1 configuration profile.";
+            }
+          }
+          case ccsa_port {
+            leaf profile-ref-ccsa {
+              type leafref {
+                path '../../../clock-ptp-mounted:ptp-ccsa-profiles/clock-ptp-mounted:' +
+                'ptp-ccsa-port-profile/clock-ptp-mounted:name';
+              }
+              description
+              "Reference to the CCSA Port configuration profile.";
+            }
+          }
+        }
+      }
+    }
+  }
+
+  augment "/onu:onus/onu:onu/onu:root"{
+    when "derived-from-or-self(../onu:usage, 'template-common:node-actual-usage') or "
+         + "derived-from-or-self(../onu:usage, 'template-common:node-from-template-usage')" {
+       description
+         "it should be a node-actual-usage or node-from-template-usage ONU";
+    }
+    description
+      "show sync ptp status on the interfaces.";
+    container ptp-status {
+      config false;
+      description "PTP status";
+      leaf clock-id {
+        type string;
+        description "specifies the clock identity attribute of the ONU PTP clock";
+      }
+      leaf clock-state {
+        type enumeration{
+          enum free-run {
+            value 0;
+            description
+              "The operating condition of the ONU clock has lost traceability to the OLT-G ME ToD timestamp";
+          }
+          enum holdover-in {
+            value 1;
+            description
+              "The operating condition of the ONU clock has lost traceability to the
+               controlling OLT-G ME ToD BUT is using the last valid OLT-G ME ToD timestamp
+               and its performance is within desired specification";
+          }
+          enum holdover-out {
+            value 2;
+            description
+              "The operating condition of the ONU clock has lost traceability to the controlling
+               OLT-G ME ToD BUT is using the last valid OLT-G ME ToD timestamp and its
+               performance is outside desired specification";
+          }
+          enum locked {
+            value 3;
+            description
+              "The operating condition of the ONU clock is locked/controlled by received OLT-G ToD";
+          }
+        }
+        description
+          "specifies the current ONU PTP clock state";
+      }
+
+      leaf clock-state-change-time {
+        type string;
+        description "specifies the time which the ONU last changed the clock state";
+      }
+
+      leaf tx-sync-messages {
+        type uint32;
+        description "specifies the increments when a sync message is sent by the ONU";
+      }
+
+      leaf tx-follow-up-messages {
+        type uint32;
+        description "specifies the increments when a follow up message is sent by the ONU";
+      }
+
+      leaf tx-announce-messages {
+        type uint32;
+        description "specifies the increments when an announce message is sent by the ONU";
+      }
+
+      leaf rx-delay-request-messages {
+        type uint32;
+        description "specifies the increments when a delay request message is received by the ONU";
+      }
+
+      leaf tx-delay-response-messages {
+        type uint32;
+        description "specifies the increments when a delay response message is sent by the ONU";
+      }
+
+      leaf utc-time {
+        type string;
+        description "specifies Tai nano second of ONU PTP clock";
+      }
+
+      leaf tai-time {
+        type string;
+        description "specifies Tai second of ONU PTP clock";
+      }
+
+      list ptp-slave-table {
+        key "index";
+        description "The list of synchronized ptp slave nodes detected by ONU";
+        leaf index {
+          type uint8 {
+              range "1..64";
+          }
+          description
+              "The sequence number of the ptp-slave-table";
+        }
+        leaf mac-address {
+          type yang:mac-address;
+          description "specifies the Mac Address of slave node";
+        }
+
+        leaf timestamp {
+          type string;
+          description "specifies UTC timestamp at which the ONU detected the slave node";
+        }
+      }
+
+      list enhanced-ptp-slave-table {
+        key "index";
+        description "The list of PTP properties of synchronized PTP slave nodes detected by ONU";
+        leaf index {
+          type uint8 {
+              range "1..64";
+          }
+          description
+              "The sequence number of the enhanced-ptp-slave-table";
+        }
+        leaf mac-address {
+          type yang:mac-address;
+          description "specifies the Mac Address of slave node";
+        }
+
+        leaf clock-id {
+          type string;
+          description "specifies the the Clock identity of slave node";
+        }
+
+        leaf port-number {
+          type uint32;
+          description "specifies the Port Number identifies PTP port of the slave node";
+        }
+
+        leaf domain-number {
+          type domain;
+          description "specifies the domain number of the slave node";
+        }
+      }
+    }
+  }
+
+}
+

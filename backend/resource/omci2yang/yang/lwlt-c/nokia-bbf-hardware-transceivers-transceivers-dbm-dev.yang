@@ -1,0 +1,46 @@
+module nokia-bbf-hardware-transceivers-transceivers-dbm-dev {
+
+  namespace
+     "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+   + "nokia-bbf-hardware-transceivers-transceivers-dbm-dev";
+
+  prefix nokia-bbf-hardware-transceivers-transceivers-dbm-dev;
+
+  import ietf-hardware {
+    prefix hw;
+  }
+
+  import bbf-hardware-transceivers {
+    prefix bbf-hw-xcvr;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "The NOKIA BBF/hardware YANG module supporting
+     deviations on top of standard.";
+
+/* revision */
+
+  revision 2022-08-15 {
+    description
+      "Added not-supported deviations to un-used yang leafs ";
+    reference
+      "BBN-5857";
+  }
+
+  deviation "/hw:hardware-state/hw:component/bbf-hw-xcvr:transceiver-link/bbf-hw-xcvr:diagnostics/bbf-hw-xcvr:tx-power" {
+   deviate not-supported;
+  }
+
+
+  deviation "/hw:hardware-state/hw:component/bbf-hw-xcvr:transceiver-link/bbf-hw-xcvr:diagnostics/bbf-hw-xcvr:rx-power" {
+   deviate not-supported;
+  }
+
+}

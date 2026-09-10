@@ -1,0 +1,55 @@
+module nokia-bbf-xpongemtcont-mounted-eonu-si {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+           + "nokia-bbf-xpongemtcont-mounted-eonu-si";
+
+  prefix nokia-bbf-xpongemtcont-mounted-eonu-si;
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import nokia-sdan-service-impact {
+    prefix nokia-si;
+  }
+
+  import bbf-xpongemtcont-mounted {
+    prefix bbf-xpongemtcont-mounted;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "This module contains a collection of YANG deviations on top
+     of standard for supporting BBF/bbf-xpongemtcont-tcont-body YANG module.
+     Copyright (C) 2021, Nokia. All Rights Reserved.";
+
+  revision 2023-06-30 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific";
+  }
+
+  deviation '/onu:onus/onu:onu/onu:root/bbf-xpongemtcont-mounted:xpongemtcont/bbf-xpongemtcont-mounted:tconts/bbf-xpongemtcont-mounted:tcont/bbf-xpongemtcont-mounted:alloc-id' {
+      description
+        "When TCONT is referred by Gemport, when its alloc-id is modified, traffic will be down for a short time period.
+         This will result in service interruptions of several seconds.";
+      deviate add {
+        nokia-si:service-impact;
+      }
+  }
+
+  deviation '/onu:onus/onu:onu/onu:root/bbf-xpongemtcont-mounted:xpongemtcont/bbf-xpongemtcont-mounted:tconts/bbf-xpongemtcont-mounted:tcont/bbf-xpongemtcont-mounted:interface-reference' {
+      description
+        "When TCONT is referred by Gemport, when its interface-reference is modified, traffic will be down for a short time period.
+         This will result in service interruptions of several seconds.";
+      deviate add {
+        nokia-si:service-impact;
+      }
+  }
+}

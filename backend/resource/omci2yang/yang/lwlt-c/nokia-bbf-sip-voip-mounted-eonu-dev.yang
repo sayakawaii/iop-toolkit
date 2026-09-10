@@ -1,0 +1,2235 @@
+module nokia-bbf-sip-voip-mounted-eonu-dev {
+    namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/nokia-bbf-sip-voip-mounted-eonu-dev";
+
+    prefix nokia-bbf-sip-voip-mounted-eonu-dev;
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+    import bbf-sip-voip-mounted {
+        prefix bbf-sip-voip-mounted;
+    }
+
+     import ietf-interfaces-mounted {
+       prefix if-mounted;
+    }
+
+    organization
+      "Nokia";
+
+    contact
+      "isam.yang@nokia.com";
+
+    description
+      "This module contains a collection of YANG deviations on top
+       of standard for supporting BBF/bbf-sip-voip YANG module.
+
+       This specification is published by Nokia under Non-Disclosure
+       Agreement(s) (NDA) with specific parties and has to be considered
+       as Confidential Information as defined in such NDA. Nokia
+       reserves the right to revise this document for any reason,
+       including but not limited to conformity with standards
+       promulgated by various agencies, utilisation of advances in the
+       state of the technical areas, or the reflection of changes in the
+       design of any equipment, techniques, or procedures described or
+       referred to herein.
+
+       The product specifications and other technical or performance
+       information contained herein are subject to change without
+       notice. Updates of this document will be issued under the above
+       NDA's.lic-appsufficiency, accuracy, or utility of any
+       information or opinion contained herein. Nokia expressly advises
+       that any use of for any purpose or reliance upon this technical
+       reference is at the risk of the user and that Nokia shall not be
+       liable for any damage or injury incurred by any person arising
+       out of the sufficiency, accuracy, or utility of any information
+       or opinion contained herein.
+
+       This document is not to be construed as a suggestion to any
+       manufacturer to modify or change any of its products, nor does
+       this document represent any commitment by Nokia to sell or
+       purchase any product. Nothing contained herein shall be construed
+       as conferring by implication, estoppel, or otherwise any license
+       or right under any patent, whether or not the use of any
+       information herein necessarily employs an invention of any
+       existing or later issued patent.
+
+       Nokia reserves the right not to offer any or all of these
+       products and to withdraw any or all of them at any future time.
+
+       Copyright (C) 2017-2018, Nokia. All Rights Reserved.";
+
+  /* revision */
+  revision 2024-12-20 {
+    description
+      "Adding Deviations for not-supported bbf-sip-voip oper-data and config-data";
+    reference
+      "Sub-task BBN-250454 and BBN-258321";
+  }
+
+  revision 2024-05-28 {
+    description
+      "Add deviation YANG to remove unsupported voip oper-data yang node";
+    reference
+      "Sub-task BBN-216498";
+  }
+
+  revision 2024-01-02 {
+    description
+      "Adding Deviations for not-supported bbf-sip-voip oper-data";
+    reference
+      "Nokia specific";
+  }
+
+    revision 2023-04-29 {
+        description
+          "Adding Deviations for not-supported emergency-call-status";
+        reference
+          "Nokia specific";
+    }
+
+    revision 2022-10-10 {
+        description
+          "Adding Deviations for not-supported supplementary-services-profile";
+        reference
+          "Nokia specific";
+    }
+
+    revision 2021-07-16 {
+        description
+          "Adding Deviations for bbf-sip-voip module";
+        reference
+          "Nokia specific";
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-sip-voip-mounted:phys-voice-itf/bbf-sip-voip-mounted:pptp-pots-uni/bbf-sip-voip-mounted:pptp-pots-connection-type" {
+    description
+      "This deviation assures that pptp-pots-connection-type is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-sip-voip-mounted:phys-voice-itf/bbf-sip-voip-mounted:pptp-pots-uni/bbf-sip-voip-mounted:test-state" {
+    description
+      "This deviation assures that test-state is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-sip-voip-mounted:phys-voice-itf/bbf-sip-voip-mounted:pptp-pots-uni/bbf-sip-voip-mounted:port-off-hook-timer" {
+    description
+      "This deviation assures that port-off-hook-timer is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-sip-voip-mounted:phys-voice-itf/bbf-sip-voip-mounted:pptp-pots-uni/bbf-sip-voip-mounted:nbr-port-releases" {
+    description
+      "This deviation assures that nbr-port-releases is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-sip-voip-mounted:phys-voice-itf/bbf-sip-voip-mounted:pptp-pots-uni/bbf-sip-voip-mounted:pptp-media-pm-statistics" {
+    description
+      "This deviation assures that pptp-media-pm-statistics is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-sip-voip-mounted:phys-voice-itf/bbf-sip-voip-mounted:pptp-pots-uni/bbf-sip-voip-mounted:physical-pots-interface-config-server-not-reachable" {
+    description
+      "This deviation assures that physical-pots-interface-config-server-not-reachable is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-sip-voip-mounted:phys-voice-itf/bbf-sip-voip-mounted:pptp-pots-uni/bbf-sip-voip-mounted:physical-pots-interface-config-server-fail-connect" {
+    description
+      "This deviation assures that physical-pots-interface-config-server-fail-connect is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-sip-voip-mounted:phys-voice-itf/bbf-sip-voip-mounted:pptp-pots-uni/bbf-sip-voip-mounted:physical-pots-interface-bearer-packet-loss-exceeded" {
+    description
+      "This deviation assures that physical-pots-interface-bearer-packet-loss-exceeded is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-sip-voip-mounted:phys-voice-itf/bbf-sip-voip-mounted:pptp-pots-uni/bbf-sip-voip-mounted:physical-pots-interface-exc-jitter-buffer-exceeded" {
+    description
+      "This deviation assures that physical-pots-interface-exc-jitter-buffer-exceeded is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-sip-voip-mounted:phys-voice-itf/bbf-sip-voip-mounted:pptp-pots-uni/bbf-sip-voip-mounted:physical-pots-interface-rtcp-stream-lost" {
+    description
+      "This deviation assures that physical-pots-interface-rtcp-stream-lost is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-sip-voip-mounted:phys-voice-itf/bbf-sip-voip-mounted:pptp-pots-uni/bbf-sip-voip-mounted:physical-pots-interface-notification" {
+    description
+      "This deviation assures that physical-pots-interface-notification is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:supplementary-services-profiles/bbf-sip-voip-mounted:supplementary-services-profile/bbf-sip-voip-mounted:direct-connect-service"
+    + "/bbf-sip-voip-mounted:control" {
+    deviate replace {
+      type enumeration {
+        enum disable {
+          value 0;
+          description "disable";
+        }
+        enum operator {
+          value 1;
+          description "operator";
+        }
+      }
+      default disable;
+    }
+  }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:supplementary-services-profiles/bbf-sip-voip-mounted:supplementary-services-profile/bbf-sip-voip-mounted:direct-connect-service"
+          + "/bbf-sip-voip-mounted:delay-timer" {
+        description
+          "This deviation assures that delay-timer leaf is not supported.";
+        deviate not-supported;
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:supplementary-services-profiles/bbf-sip-voip-mounted:supplementary-services-profile/bbf-sip-voip-mounted:call-waiting"
+    + "/bbf-sip-voip-mounted:control" {
+
+      deviate replace {
+        type enumeration {
+          enum disable {
+            value 0;
+            description "disable";
+          }
+          enum operator {
+            value 1;
+            description "operator";
+          }
+        }
+      }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:supplementary-services-profiles/bbf-sip-voip-mounted:supplementary-services-profile/bbf-sip-voip-mounted:call-waiting"
+          + "/bbf-sip-voip-mounted:cw-timer" {
+        description
+          "This deviation assures that cw-timer leaf is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:supplementary-services-profiles/bbf-sip-voip-mounted:supplementary-services-profile/bbf-sip-voip-mounted:call-waiting"
+          + "/bbf-sip-voip-mounted:reject-response" {
+        description
+          "This deviation assures that reject-response leaf is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:supplementary-services-profiles/bbf-sip-voip-mounted:supplementary-services-profile/bbf-sip-voip-mounted:call-waiting"
+          + "/bbf-sip-voip-mounted:cancel-cw-sasc" {
+        description
+          "This deviation assures that cancel-cw-sasc leaf is not supported.";
+        deviate not-supported;
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:supplementary-services-profiles/bbf-sip-voip-mounted:supplementary-services-profile/bbf-sip-voip-mounted:attended-call-transfer"
+    + "/bbf-sip-voip-mounted:control" {
+
+      deviate replace {
+        type enumeration {
+          enum disable {
+            value 0;
+            description "disable";
+          }
+          enum operator {
+            value 1;
+            description "operator";
+          }
+        }
+      }
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:supplementary-services-profiles/bbf-sip-voip-mounted:supplementary-services-profile/bbf-sip-voip-mounted:unattended-call-transfer"
+    + "/bbf-sip-voip-mounted:control" {
+
+      deviate replace {
+        type enumeration {
+          enum disable {
+            value 0;
+            description "disable";
+          }
+          enum operator {
+            value 1;
+            description "operator";
+          }
+        }
+      }
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:supplementary-services-profiles/bbf-sip-voip-mounted:supplementary-services-profile/bbf-sip-voip-mounted:Three-party-conference"
+    + "/bbf-sip-voip-mounted:control" {
+
+      deviate replace {
+        type enumeration {
+          enum disable {
+            value 0;
+            description "disable";
+          }
+          enum operator {
+            value 1;
+            description "operator";
+          }
+        }
+      }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:supplementary-services-profiles/bbf-sip-voip-mounted:supplementary-services-profile/bbf-sip-voip-mounted:Three-party-conference"
+          + "/bbf-sip-voip-mounted:conference-uri" {
+        description
+          "This deviation assures that conference-uri leaf is not supported.";
+        deviate not-supported;
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:supplementary-services-profiles/bbf-sip-voip-mounted:supplementary-services-profile/bbf-sip-voip-mounted:call-hold"
+    + "/bbf-sip-voip-mounted:control" {
+
+      deviate replace {
+        type enumeration {
+          enum disable {
+            value 0;
+            description "disable";
+          }
+          enum operator {
+            value 1;
+            description "operator";
+          }
+        }
+      }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:supplementary-services-profiles/bbf-sip-voip-mounted:supplementary-services-profile/bbf-sip-voip-mounted:call-hold"
+          + "/bbf-sip-voip-mounted:SDP-setting" {
+        description
+          "This deviation assures that SDP-setting leaf is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:supplementary-services-profiles/bbf-sip-voip-mounted:supplementary-services-profile/bbf-sip-voip-mounted:call-hold"
+          + "/bbf-sip-voip-mounted:hold-resume-method" {
+        description
+          "This deviation assures that hold-resume-method leaf is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:supplementary-services-profiles/bbf-sip-voip-mounted:supplementary-services-profile/bbf-sip-voip-mounted:call-hold"
+          + "/bbf-sip-voip-mounted:ch-timer" {
+        description
+          "This deviation assures that ch-timer leaf is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:supplementary-services-profiles/bbf-sip-voip-mounted:supplementary-services-profile/bbf-sip-voip-mounted:call-hold"
+          + "/bbf-sip-voip-mounted:reject-response" {
+        description
+          "This deviation assures that reject-response leaf is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:supplementary-services-profiles/bbf-sip-voip-mounted:supplementary-services-profile/bbf-sip-voip-mounted:callerid"
+          + "/bbf-sip-voip-mounted:control" {
+        description
+          "This deviation assures that control leaf is restriced to 'operator'.";
+        deviate add
+        {
+          must "(current() = 'operator')" {
+            error-message "control must be 'operator'.";
+          }
+        }
+    }
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:supplementary-services-profiles/bbf-sip-voip-mounted:supplementary-services-profile/bbf-sip-voip-mounted:callerid-name"
+          + "/bbf-sip-voip-mounted:control" {
+        description
+          "This deviation assures that control leaf is restriced to 'operator'.";
+        deviate add
+        {
+          must "(current() = 'operator')" {
+            error-message "control must be 'operator'.";
+          }
+        }
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:supplementary-services-profiles/bbf-sip-voip-mounted:supplementary-services-profile/bbf-sip-voip-mounted:do-not-disturb" {
+    description
+       "This deviation assures that do-not-disturb is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:supplementary-services-profiles/bbf-sip-voip-mounted:supplementary-services-profile/bbf-sip-voip-mounted:six-party-conference" {
+    description
+       "This deviation assures six-party-conference is not supported.";
+    deviate not-supported;
+  }
+
+/*
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:digit-manipulation-rule-profiles" {
+        description
+          "This deviation assures that digit-manipulation-rule-profiles is not supported.";
+        deviate not-supported;
+    }
+*/
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:dialplan-digitmap-profiles/bbf-sip-voip-mounted:dialplan-digitmap-profile/bbf-sip-voip-mounted:dialplan-characteristics"
+          + "/bbf-sip-voip-mounted:sip-pre-dialing-timer" {
+        description
+          "This deviation assures that sip-pre-dialing-timer is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:dialplan-digitmap-profiles/bbf-sip-voip-mounted:dialplan-digitmap-profile/bbf-sip-voip-mounted:dialplan-characteristics"
+          + "/bbf-sip-voip-mounted:sip-digitmap-match-mode" {
+        description
+          "This deviation assures that sip-digitmap-match-mode is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:dialplan-digitmap-profiles/bbf-sip-voip-mounted:dialplan-digitmap-profile/bbf-sip-voip-mounted:dialplan-characteristics"
+          + "/bbf-sip-voip-mounted:sip-digitmap-partial-match" {
+        description
+          "This deviation assures that sip-digitmap-partial-match is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:dialplan-digitmap-profiles/bbf-sip-voip-mounted:dialplan-digitmap-profile/bbf-sip-voip-mounted:digitmap"
+          + "/bbf-sip-voip-mounted:digit-map-pattern" {
+        description
+            "Specifies the actual digit map ascii symbols and assures that only one digit-map-pattern can be configured.";
+        deviate replace {
+            type string {
+                length "0..1024";
+                pattern '[ -~]*';
+            }
+        }
+        deviate add {
+            max-elements 1;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:subscription-profiles/bbf-sip-voip-mounted:subscription-profile/bbf-sip-voip-mounted:sip-event-package" {
+        description
+          "This deviation assures that only one sip-event-package can be configured.";
+        deviate add {
+            max-elements 1;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:subscription-profiles/bbf-sip-voip-mounted:subscription-profile/bbf-sip-voip-mounted:sip-event-package"
+          + "/bbf-sip-voip-mounted:subscribe-method/bbf-sip-voip-mounted:subscription-method" {
+        description
+          "This deviation assures that subscription-method is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:subscription-profiles/bbf-sip-voip-mounted:subscription-profile/bbf-sip-voip-mounted:sip-event-package"
+          + "/bbf-sip-voip-mounted:subscribe-method/bbf-sip-voip-mounted:subscription-chars" {
+        description
+          "This deviation assures that subscription-chars is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:feature-access-codes-profiles/bbf-sip-voip-mounted:feature-access-codes-profile"
+          + "/bbf-sip-voip-mounted:call-waiting-feature-access-codes" {
+        description
+          "This deviation assures that call-waiting-feature-access-codes is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:feature-access-codes-profiles/bbf-sip-voip-mounted:feature-access-codes-profile"
+          + "/bbf-sip-voip-mounted:cancel-cw-feature-access-codes/bbf-sip-voip-mounted:service-deactivation-code" {
+        description
+          "This deviation assures that service-deactivation-code is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:feature-access-codes-profiles/bbf-sip-voip-mounted:feature-access-codes-profile"
+          + "/bbf-sip-voip-mounted:cancel-cw-feature-access-codes/bbf-sip-voip-mounted:service-interrogation-code" {
+        description
+          "This deviation assures that service-interrogation-code is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:feature-access-codes-profiles/bbf-sip-voip-mounted:feature-access-codes-profile"
+          + "/bbf-sip-voip-mounted:call-hold-feature-access-codes/bbf-sip-voip-mounted:service-deactivation-code" {
+        description
+          "This deviation assures that service-deactivation-code is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:feature-access-codes-profiles/bbf-sip-voip-mounted:feature-access-codes-profile"
+          + "/bbf-sip-voip-mounted:call-hold-feature-access-codes/bbf-sip-voip-mounted:service-interrogation-code" {
+        description
+          "This deviation assures that service-interrogation-code is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:feature-access-codes-profiles/bbf-sip-voip-mounted:feature-access-codes-profile"
+          + "/bbf-sip-voip-mounted:three-way-call-feature-access-codes" {
+        description
+          "This deviation assures that three-way-call-feature-access-codes is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:feature-access-codes-profiles/bbf-sip-voip-mounted:feature-access-codes-profile"
+          + "/bbf-sip-voip-mounted:call-park-feature-access-codes/bbf-sip-voip-mounted:service-deactivation-code" {
+        description
+          "This deviation assures that service-deactivation-code is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:feature-access-codes-profiles/bbf-sip-voip-mounted:feature-access-codes-profile"
+          + "/bbf-sip-voip-mounted:call-park-feature-access-codes/bbf-sip-voip-mounted:service-interrogation-code" {
+        description
+          "This deviation assures that service-interrogation-code is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:feature-access-codes-profiles/bbf-sip-voip-mounted:feature-access-codes-profile"
+          + "/bbf-sip-voip-mounted:unattended-call-transfer-feature-access-codes/bbf-sip-voip-mounted:service-deactivation-code" {
+        description
+          "This deviation assures that service-deactivation-code is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:feature-access-codes-profiles/bbf-sip-voip-mounted:feature-access-codes-profile"
+          + "/bbf-sip-voip-mounted:unattended-call-transfer-feature-access-codes/bbf-sip-voip-mounted:service-interrogation-code" {
+        description
+          "This deviation assures that service-interrogation-code is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:feature-access-codes-profiles/bbf-sip-voip-mounted:feature-access-codes-profile"
+          + "/bbf-sip-voip-mounted:attended-call-transfer-feature-access-codes/bbf-sip-voip-mounted:service-deactivation-code" {
+        description
+          "This deviation assures that service-deactivation-code is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:feature-access-codes-profiles/bbf-sip-voip-mounted:feature-access-codes-profile"
+          + "/bbf-sip-voip-mounted:attended-call-transfer-feature-access-codes/bbf-sip-voip-mounted:service-interrogation-code" {
+        description
+          "This deviation assures that service-interrogation-code is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:feature-access-codes-profiles/bbf-sip-voip-mounted:feature-access-codes-profile"
+          + "/bbf-sip-voip-mounted:do-not-disturb-feature-access-codes/bbf-sip-voip-mounted:service-interrogation-code" {
+        description
+          "This deviation assures that service-interrogation-code is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:feature-access-codes-profiles/bbf-sip-voip-mounted:feature-access-codes-profile"
+          + "/bbf-sip-voip-mounted:callerid-feature-access-codes/bbf-sip-voip-mounted:service-interrogation-code" {
+        description
+          "This deviation assures that service-interrogation-code is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:feature-access-codes-profiles/bbf-sip-voip-mounted:feature-access-codes-profile"
+          + "/bbf-sip-voip-mounted:warmline-feature-access-codes" {
+        description
+          "This deviation assures that service-interrogation-code is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:feature-access-codes-profiles/bbf-sip-voip-mounted:feature-access-codes-profile"
+          + "/bbf-sip-voip-mounted:hotline-feature-access-codes" {
+        description
+          "This deviation assures that service-interrogation-code is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:sip-registerchar-profiles/bbf-sip-voip-mounted:sip-registerchar-profile"
+          + "/bbf-sip-voip-mounted:register-uri" {
+        description
+          "This deviation assures that register-uri is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:sip-registerchar-profiles/bbf-sip-voip-mounted:sip-registerchar-profile"
+          + "/bbf-sip-voip-mounted:re-register-min-precursory-start-time" {
+        description
+          "This deviation assures that re-register-min-precursory-start-time is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:sip-registerchar-profiles/bbf-sip-voip-mounted:sip-registerchar-profile"
+          + "/bbf-sip-voip-mounted:register-retry-interval" {
+        description
+          "This deviation assures that register-retry-interval is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:sip-registerchar-profiles/bbf-sip-voip-mounted:sip-registerchar-profile"
+          + "/bbf-sip-voip-mounted:register-dispersion-interval" {
+        description
+          "This deviation assures that register-dispersion-interval is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:sip-protocol-data-profiles" {
+        description
+          "This deviation assures that sip-protocol-data-profiles is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-user-agents/bbf-sip-voip-mounted:sip-user-agent" {
+        description
+          "This deviation assures that only one sip-user-agent can be configured.";
+        deviate add {
+            max-elements 1;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-user-agents/bbf-sip-voip-mounted:sip-user-agent/bbf-sip-voip-mounted:sip-protocol-data-profile" {
+        description
+          "This deviation assures that sip-protocol-data-profile is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-user-agents/bbf-sip-voip-mounted:sip-user-agent/bbf-sip-voip-mounted:sip-ua-transport-protocol-priority" {
+        description
+          "This deviation assures that only one sip-ua-transport-protocol-priority can be configured.";
+        deviate add {
+            max-elements 1;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-user-agents/bbf-sip-voip-mounted:sip-user-agent/bbf-sip-voip-mounted:sip-ua-transport-protocol-priority"
+         + "/bbf-sip-voip-mounted:sip-ua-transport-tcp-max-idle-time" {
+        description
+          "This deviation assures that sip-ua-transport-tcp-max-idle-time is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:voip-service-gateways/bbf-sip-voip-mounted:voip-service-gateway/bbf-sip-voip-mounted:voip-access-gateways" {
+        description
+          "This deviation assures that only one voip-access-gateways can be configured.";
+        deviate add {
+            max-elements 1;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:voip-service-gateways/bbf-sip-voip-mounted:voip-service-gateway/bbf-sip-voip-mounted:vsg-phone-number" {
+        description
+          "This deviation assures that vsg-phone-number is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:voip-service-gateways/bbf-sip-voip-mounted:voip-service-gateway/bbf-sip-voip-mounted:vsg-contact-address" {
+        description
+          "This deviation assures that vsg-contact-address is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:voip-service-gateways/bbf-sip-voip-mounted:voip-service-gateway/bbf-sip-voip-mounted:dtmf-sip-info" {
+        description
+          "This deviation assures that dtmf-sip-info is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:voip-service-gateways/bbf-sip-voip-mounted:voip-service-gateway/bbf-sip-voip-mounted:release-timer" {
+      deviate replace {
+        type uint8 {
+          range "0..60";
+        }
+      }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:voip-service-gateways/bbf-sip-voip-mounted:voip-service-gateway/bbf-sip-voip-mounted:digit-sending-mode" {
+        description
+          "This deviation assures that digit-sending-mode is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:voip-service-gateways/bbf-sip-voip-mounted:voip-service-gateway/bbf-sip-voip-mounted:overlap-dialing" {
+        description
+          "This deviation assures that overlap-dialing is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:voip-service-gateways/bbf-sip-voip-mounted:voip-service-gateway/bbf-sip-voip-mounted:sip-response-table" {
+        description
+          "This deviation assures that sip-response-table is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-terminations/bbf-sip-voip-mounted:sip-termination/bbf-sip-voip-mounted:global-directory-number" {
+        description
+          "This deviation assures that global-directory-number is not supported.";
+        deviate not-supported;
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-terminations/bbf-sip-voip-mounted:sip-termination"
+    + "/bbf-sip-voip-mounted:sip-uni-display-name" {
+      description
+        "customer ID user for display name";
+      deviate replace {
+        type string
+        {
+          length "0..25";
+        }
+      }
+
+      deviate add {
+        default "";
+      }
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-terminations/bbf-sip-voip-mounted:sip-termination/bbf-sip-voip-mounted:sip-uni-uri" {
+    description
+      "user identification";
+    deviate replace {
+      type string
+      {
+        length "0..50";
+      }
+    }
+    deviate add {
+      default "";
+    }
+  }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-terminations/bbf-sip-voip-mounted:sip-termination/bbf-sip-voip-mounted:sip-uni-pani-header-line-id" {
+        description
+          "This deviation assures that sip-uni-pani-header-line-id is not supported.";
+        deviate not-supported;
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-terminations/bbf-sip-voip-mounted:sip-termination/bbf-sip-voip-mounted:sip-termination-register-unresolved-dn" {
+    description
+      "This deviation assures that sip-termination-register-unresolved-dn is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-terminations/bbf-sip-voip-mounted:sip-termination/bbf-sip-voip-mounted:sip-termination-register-authorisation-failure" {
+    description
+      "This deviation assures that sip-termination-register-authorisation-failure is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-terminations/bbf-sip-voip-mounted:sip-termination/bbf-sip-voip-mounted:sip-termination-register-request-timeout" {
+    description
+      "This deviation assures that sip-termination-register-request-timeout is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-terminations/bbf-sip-voip-mounted:sip-termination/bbf-sip-voip-mounted:sip-termination-register-error-response" {
+    description
+      "This deviation assures that sip-termination-register-error-response is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-terminations/bbf-sip-voip-mounted:sip-termination/bbf-sip-voip-mounted:sip-termination-invite-unresolved-dn" {
+    description
+      "This deviation assures that sip-termination-invite-unresolved-dn is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-terminations/bbf-sip-voip-mounted:sip-termination/bbf-sip-voip-mounted:sip-termination-invite-request-timeout" {
+    description
+      "This deviation assures that sip-termination-invite-request-timeout is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-terminations/bbf-sip-voip-mounted:sip-termination/bbf-sip-voip-mounted:sip-termination-invite-authorisation-failure" {
+    description
+      "This deviation assures that sip-termination-invite-authorisation-failure is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-terminations/bbf-sip-voip-mounted:sip-termination/bbf-sip-voip-mounted:sip-termination-invite-error-response" {
+    description
+      "This deviation assures that sip-termination-invite-error-response is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-terminations/bbf-sip-voip-mounted:sip-termination/bbf-sip-voip-mounted:sip-termination-subscribe-unresolved-dn" {
+    description
+      "This deviation assures that sip-termination-subscribe-unresolved-dn is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-terminations/bbf-sip-voip-mounted:sip-termination/bbf-sip-voip-mounted:sip-termination-subscribe-authorisation-failure" {
+    description
+      "This deviation assures that sip-termination-subscribe-authorisation-failure is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-terminations/bbf-sip-voip-mounted:sip-termination/bbf-sip-voip-mounted:sip-termination-subscribe-request-timeout" {
+    description
+      "This deviation assures that sip-termination-subscribe-request-timeout is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-terminations/bbf-sip-voip-mounted:sip-termination/bbf-sip-voip-mounted:sip-termination-subscribe-error-response" {
+    description
+      "This deviation assures that sip-termination-subscribe-error-response is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-terminations/bbf-sip-voip-mounted:sip-termination/bbf-sip-voip-mounted:sip-termination-subscribe-refresh-timeout" {
+    description
+      "This deviation assures that sip-termination-subscribe-refresh-timeout is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-terminations/bbf-sip-voip-mounted:sip-termination/bbf-sip-voip-mounted:sip-termination-emergency-call-ongoing" {
+    description
+      "This deviation assures that sip-termination-emergency-call-ongoing is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-terminations/bbf-sip-voip-mounted:sip-termination/bbf-sip-voip-mounted:sip-termination-alarm-notification" {
+    description
+      "This deviation assures that sip-termination-alarm-notification is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-terminations/bbf-sip-voip-mounted:sip-termination/bbf-sip-voip-mounted:sip-termination-inform-notification" {
+    description
+      "This deviation assures that sip-termination-inform-notification is not supported.";
+    deviate not-supported;
+  }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:voip-access-gateways/bbf-sip-voip-mounted:voip-access-gateway/bbf-sip-voip-mounted:admin-state" {
+        description
+          "This deviation assures that admin-state is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:voip-access-gateways/bbf-sip-voip-mounted:voip-access-gateway/bbf-sip-voip-mounted:sip-service-profile" {
+        description
+          "This deviation assures that sip-service-profile is not supported.";
+        deviate not-supported;
+    }
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:voip-access-gateways/bbf-sip-voip-mounted:voip-access-gateway/bbf-sip-voip-mounted:vag-first-hop-sip-server-validation" {
+        description
+          "This deviation assures that vag-first-hop-sip-server-validation is not supported.";
+        deviate not-supported;
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:voip-access-gateways/bbf-sip-voip-mounted:voip-access-gateway/bbf-sip-voip-mounted:dwnload-config-state" {
+    description
+      "This deviation assures that dwnload-config-state is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:voip-access-gateways/bbf-sip-voip-mounted:voip-access-gateway/bbf-sip-voip-mounted:sip-redundancy-state" {
+    description
+      "This deviation assures that sip-redundancy-state is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:voip-access-gateways/bbf-sip-voip-mounted:voip-access-gateway/bbf-sip-voip-mounted:sip-vag-ssp-file-not-found" {
+    description
+      "This deviation assures that sip-vag-ssp-file-not-found is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:voip-access-gateways/bbf-sip-voip-mounted:voip-access-gateway/bbf-sip-voip-mounted:sip-vag-transport-protocol-mismatch" {
+    description
+      "This deviation assures that sip-vag-transport-protocol-mismatch is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:voip-access-gateways/bbf-sip-voip-mounted:voip-access-gateway/bbf-sip-voip-mounted:sip-vag-first-hop-sip-server-failover" {
+    description
+      "This deviation assures that sip-vag-first-hop-sip-server-failover is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:voip-access-gateways/bbf-sip-voip-mounted:voip-access-gateway/bbf-sip-voip-mounted:sip-vag-first-hop-sip-server-failback" {
+    description
+      "This deviation assures that sip-vag-first-hop-sip-server-failback is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:voip-access-gateways/bbf-sip-voip-mounted:voip-access-gateway/bbf-sip-voip-mounted:sip-vag-primary-first-hop-sip-server-substitution" {
+    description
+      "This deviation assures that sip-vag-primary-first-hop-sip-server-substitution is not supported.";
+    deviate not-supported;
+  }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-server-pools/bbf-sip-voip-mounted:sip-server-pool/bbf-sip-voip-mounted:sip-servers"
+          + "/bbf-sip-voip-mounted:admin-state" {
+        description
+          "This deviation assures that admin-state is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-server-pools/bbf-sip-voip-mounted:sip-server-pool/bbf-sip-voip-mounted:sip-servers"
+          + "/bbf-sip-voip-mounted:sip-server-address/bbf-sip-voip-mounted:ip/bbf-sip-voip-mounted:ip-priority" {
+        description
+          "This deviation assures that ip-priority is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-server-pools/bbf-sip-voip-mounted:sip-server-pool/bbf-sip-voip-mounted:sip-servers"
+          + "/bbf-sip-voip-mounted:sip-server-address/bbf-sip-voip-mounted:ip/bbf-sip-voip-mounted:ip-weight" {
+        description
+          "This deviation assures that ip-weight is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-server-pools/bbf-sip-voip-mounted:sip-server-pool/bbf-sip-voip-mounted:sip-servers"
+          + "/bbf-sip-voip-mounted:sip-server-address/bbf-sip-voip-mounted:ip/bbf-sip-voip-mounted:ip-transport-protocol-priority" {
+        description
+          "This deviation assures that ip-transport-protocol-priority is not supported.";
+        deviate not-supported;
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-server-pools/bbf-sip-voip-mounted:sip-server-pool/bbf-sip-voip-mounted:sip-servers"
+    + "/bbf-sip-voip-mounted:sip-server-address/bbf-sip-voip-mounted:fully-qualified-domain"
+    + "/bbf-sip-voip-mounted:fully-qualified-domain-name" {
+      description
+        "The fully-qualified-domain-name of the first hop SIP server.";
+      deviate replace {
+        type string
+        {
+          length "0..100";
+        }
+      }
+
+      deviate add {
+        default "";
+      }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-server-pools/bbf-sip-voip-mounted:sip-server-pool/bbf-sip-voip-mounted:sip-servers"
+          + "/bbf-sip-voip-mounted:sip-server-address/bbf-sip-voip-mounted:fully-qualified-domain/bbf-sip-voip-mounted:fqdn-priority" {
+        description
+          "This deviation assures that fqdn-priority is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-server-pools/bbf-sip-voip-mounted:sip-server-pool/bbf-sip-voip-mounted:sip-servers"
+          + "/bbf-sip-voip-mounted:sip-server-address/bbf-sip-voip-mounted:fully-qualified-domain/bbf-sip-voip-mounted:fqdn-weight" {
+        description
+          "This deviation assures that fqdn-weight is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-server-pools/bbf-sip-voip-mounted:sip-server-pool/bbf-sip-voip-mounted:sip-servers"
+          + "/bbf-sip-voip-mounted:sip-server-address/bbf-sip-voip-mounted:fully-qualified-domain/bbf-sip-voip-mounted:fqdn-transport-protocol-priority" {
+        description
+          "This deviation assures that fqdn-transport-protocol-priority is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-server-pools/bbf-sip-voip-mounted:sip-server-pool/bbf-sip-voip-mounted:sip-servers"
+          + "/bbf-sip-voip-mounted:sip-server-address/bbf-sip-voip-mounted:service-record" {
+        description
+          "This deviation assures that service-record is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-server-pools/bbf-sip-voip-mounted:sip-server-pool/bbf-sip-voip-mounted:sip-servers"
+          + "/bbf-sip-voip-mounted:sip-server-address/bbf-sip-voip-mounted:domain" {
+        description
+          "This deviation assures that domain is not supported.";
+        deviate not-supported;
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-server-pools/bbf-sip-voip-mounted:sip-server-pool/bbf-sip-voip-mounted:sip-servers/bbf-sip-voip-mounted:sip-server-oper-state" {
+    description
+      "This deviation assures that sip-server-oper-state is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-server-pools/bbf-sip-voip-mounted:sip-server-pool/bbf-sip-voip-mounted:sip-servers/bbf-sip-voip-mounted:oos-reason" {
+    description
+      "This deviation assures that oos-reason is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-server-pools/bbf-sip-voip-mounted:sip-server-pool/bbf-sip-voip-mounted:sip-servers/bbf-sip-voip-mounted:rcvd-minse" {
+    description
+      "This deviation assures that rcvd-minse is not supported.";
+    deviate not-supported;
+  }
+
+/*
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:voicemail-servers" {
+        description
+          "This deviation assures that voicemail-servers is not supported.";
+        deviate not-supported;
+    }
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:voip-access-gateways/bbf-sip-voip-mounted:voip-access-gateway/bbf-sip-voip-mounted:voicemail-server" {
+        description
+          "This deviation assures that voicemail-server is not supported.";
+        deviate not-supported;
+    }
+*/
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:voip-service-providers/bbf-sip-voip-mounted:voip-service-provider/bbf-sip-voip-mounted:admin-state" {
+        description
+          "This deviation assures that admin-state is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:voip-service-providers/bbf-sip-voip-mounted:voip-service-provider/bbf-sip-voip-mounted:dynamic-payload-type" {
+        description
+          "This deviation assures that dynamic-payload-type is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:voip-service-providers/bbf-sip-voip-mounted:voip-service-provider/bbf-sip-voip-mounted:release-mode" {
+        description
+          "This deviation assures that release-mode is not supported.";
+        deviate not-supported;
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:voip-service-providers/bbf-sip-voip-mounted:sip-vsp-bad-digitmap" {
+    description
+      "This deviation assures that sip-vsp-bad-digitmap is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:voip-service-providers/bbf-sip-voip-mounted:sip-vsp-notification" {
+    description
+      "This deviation assures that sip-vsp-notification is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling-state/bbf-sip-voip-mounted:sip-user-agents/bbf-sip-voip-mounted:sip-user-agent/bbf-sip-voip-mounted:sip-protocol-pm-statistics" {
+    description
+      "This deviation assures that sip-protocol-pm-statistics is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling-state/bbf-sip-voip-mounted:sip-user-agents/bbf-sip-voip-mounted:sip-user-agent/bbf-sip-voip-mounted:call-initiation-pm-statistics" {
+    description
+      "This deviation assures that call-initiation-pm-statistics is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling-state/bbf-sip-voip-mounted:sip-user-agents/bbf-sip-voip-mounted:sip-user-agent/bbf-sip-voip-mounted:sip-x-connections" {
+    description
+      "This deviation assures that sip-x-connections is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling-state/bbf-sip-voip-mounted:sip-user-agents/bbf-sip-voip-mounted:sip-user-agent/bbf-sip-voip-mounted:sip-ua-no-reply-from-dhcpv4-server" {
+    description
+      "This deviation assures that sip-ua-no-reply-from-dhcpv4-server is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling-state/bbf-sip-voip-mounted:sip-user-agents/bbf-sip-voip-mounted:sip-user-agent/bbf-sip-voip-mounted:sip-ua-notification" {
+    description
+      "This deviation assures that sip-ua-notification is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling-state/bbf-sip-voip-mounted:sip-terminations/bbf-sip-voip-mounted:sip-termination/bbf-sip-voip-mounted:sip-pots-uni-contact-user-info" {
+    description
+      "This deviation assures that sip-pots-uni-contact-user-info is not supported.";
+    deviate not-supported;
+  }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling-state/bbf-sip-voip-mounted:sip-terminations/bbf-sip-voip-mounted:sip-termination/bbf-sip-voip-mounted:emergency-call-status" {
+        description
+          "This deviation assures that emergency-call-status is not supported.";
+        deviate not-supported;
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling-state/bbf-sip-voip-mounted:sip-terminations/bbf-sip-voip-mounted:sip-termination/bbf-sip-voip-mounted:call-initiation-pm-statistics" {
+    description
+      "This deviation assures that call-initiation-pm-statistics is not supported.";
+    deviate not-supported;
+  }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-profiles/bbf-sip-voip-mounted:media-codec-profiles/bbf-sip-voip-mounted:media-codec-profile/bbf-sip-voip-mounted:codec-selection-5th-order" {
+        description
+          "This deviation assures that codec-selection-5th-order is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-profiles/bbf-sip-voip-mounted:media-codec-profiles/bbf-sip-voip-mounted:media-codec-profile/bbf-sip-voip-mounted:codec-packetization-time-5th-order" {
+        description
+          "This deviation assures that codec-packetization-time-5th-order is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-profiles/bbf-sip-voip-mounted:media-codec-profiles/bbf-sip-voip-mounted:media-codec-profile/bbf-sip-voip-mounted:silence-suppression-5th-order" {
+        description
+          "This deviation assures that silence-suppression-5th-order is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-profiles/bbf-sip-voip-mounted:media-voice-call-profiles/bbf-sip-voip-mounted:media-voice-call-profile/bbf-sip-voip-mounted:initial-call-jitter-buffer" {
+        description
+          "This deviation assures that initial-call-jitter-buffer is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-profiles/bbf-sip-voip-mounted:media-voice-call-profiles/bbf-sip-voip-mounted:media-voice-call-profile/bbf-sip-voip-mounted:minimum-call-jitter-buffer" {
+        description
+          "This deviation assures that minimum-call-jitter-buffer is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-profiles/bbf-sip-voip-mounted:media-voice-call-profiles/bbf-sip-voip-mounted:media-voice-call-profile/bbf-sip-voip-mounted:maximum-call-jitter-buffer" {
+        description
+          "This deviation assures that maximum-call-jitter-buffer is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-profiles/bbf-sip-voip-mounted:media-voice-call-profiles/bbf-sip-voip-mounted:media-voice-call-profile/bbf-sip-voip-mounted:voice-call-activity-detection" {
+        description
+          "This deviation assures that voice-call-activity-detection is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-profiles/bbf-sip-voip-mounted:media-voice-call-profiles/bbf-sip-voip-mounted:media-voice-call-profile/bbf-sip-voip-mounted:asymmetrical-rtp-rtcp" {
+        description
+          "This deviation assures that asymmetrical-rtp-rtcp is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-profiles/bbf-sip-voip-mounted:media-voice-call-profiles/bbf-sip-voip-mounted:media-voice-call-profile/bbf-sip-voip-mounted:voice-to-t38-switch-same-port" {
+        description
+          "This deviation assures that voice-to-t38-switch-same-port is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-profiles/bbf-sip-voip-mounted:media-voice-band-data-profiles" {
+        description
+          "This deviation assures that media-voice-band-data-profiles is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-forwarders/bbf-sip-voip-mounted:media-forwarder/bbf-sip-voip-mounted:network-element-name" {
+        description
+          "This deviation assures that network-element-name is not supported.";
+        deviate not-supported;
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-forwarders/bbf-sip-voip-mounted:media-forwarder/bbf-sip-voip-mounted:rfc4733-mode" {
+    deviate replace {
+      default rfc4733;
+    }
+  }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-forwarders/bbf-sip-voip-mounted:media-forwarder/bbf-sip-voip-mounted:rfc4733-payload-type" {
+        description
+          "This deviation assures that rfc4733-payload-type is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-forwarders/bbf-sip-voip-mounted:media-forwarder/bbf-sip-voip-mounted:media-path-mtu" {
+        description
+          "This deviation assures that media-path-mtu is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-forwarders/bbf-sip-voip-mounted:media-forwarder/bbf-sip-voip-mounted:file-download-method" {
+      deviate replace {
+        type enumeration {
+          enum ftp-download {
+            value 2;
+            description
+              "The configuration file is downloaded from
+               an external ftp-server.";
+          }
+        }
+      }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-forwarders/bbf-sip-voip-mounted:media-forwarder/bbf-sip-voip-mounted:file-name" {
+      deviate replace {
+        type string {
+          length "0..50";
+        }
+      }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-forwarders/bbf-sip-voip-mounted:media-forwarder/bbf-sip-voip-mounted:download-characteristics"
+      + "/bbf-sip-voip-mounted:authentication-scheme" {
+        deviate replace {
+          type enumeration {
+            enum md5-digest-authentication {
+            value 3;
+            description
+              "MD5 Digest authentication for file transfer.";
+            }
+          }
+          default md5-digest-authentication;
+        }
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-forwarders/bbf-sip-voip-mounted:media-forwarder"
+    + "/bbf-sip-voip-mounted:download-characteristics/bbf-sip-voip-mounted:user-name" {
+      deviate replace {
+        type string {
+          length "0..50";
+        }
+      }
+      deviate add {
+        default "";
+      }
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-forwarders/bbf-sip-voip-mounted:media-forwarder"
+    + "/bbf-sip-voip-mounted:download-characteristics/bbf-sip-voip-mounted:realm" {
+      deviate replace {
+        type string {
+          length "0..25";
+        }
+      }
+      deviate add {
+        default "";
+      }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-forwarders/bbf-sip-voip-mounted:media-forwarder"
+    + "/bbf-sip-voip-mounted:download-characteristics/bbf-sip-voip-mounted:ssh-public-key" {
+      description
+          "This deviation assures that ssh-public-key is not supported.";
+        deviate not-supported;
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-forwarders/bbf-sip-voip-mounted:media-forwarder/bbf-sip-voip-mounted:download-file" {
+    description
+      "This deviation assures that download-file is not supported.";
+    deviate not-supported;
+  }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-forwarders/bbf-sip-voip-mounted:media-forwarder/bbf-sip-voip-mounted:media-x-connect" {
+        description
+          "This deviation assures that only one media-x-connect can be configured.";
+        deviate add {
+            max-elements 1;
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-forwarders/bbf-sip-voip-mounted:media-forwarder/bbf-sip-voip-mounted:media-x-connect"
+              + "/bbf-sip-voip-mounted:voice-call-profile" {
+        description
+          "This deviation remove the restriction with media-connection-type.";
+        deviate delete {
+          must "../bbf-sip-voip-mounted:media-connection-type = 'pots-loop' or "
+               + "../bbf-sip-voip-mounted:media-connection-type = "
+               + "'pots-extension-loop'";
+        }
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-forwarders/bbf-sip-voip-mounted:media-forwarder/bbf-sip-voip-mounted:media-x-connect/bbf-sip-voip-mounted:media-connection-type" {
+        description
+          "This deviation assures that media-connection-type is not supported.";
+        deviate not-supported;
+    }
+
+    /* deviation "/bbf-sip-voip-mounted:media-forwarders/bbf-sip-voip-mounted:media-forwarder/bbf-sip-voip-mounted:media-x-connect/bbf-sip-voip-mounted:media-dscp-mark" {
+        description
+          "This deviation assures that media-dscp-mark is not supported.";
+        deviate not-supported;
+    } */
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-forwarders/bbf-sip-voip-mounted:media-forwarder/bbf-sip-voip-mounted:media-x-connect/bbf-sip-voip-mounted:vbd-profile" {
+        description
+          "This deviation assures that vbd-profile is not supported.";
+        deviate not-supported;
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-forwarders/bbf-sip-voip-mounted:media-forwarder/bbf-sip-voip-mounted:media-x-connect/bbf-sip-voip-mounted:media-connections" {
+    description
+      "This deviation assures that media-x-connect/media-connections is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-forwarders/bbf-sip-voip-mounted:media-forwarder/bbf-sip-voip-mounted:media-connections" {
+    description
+      "This deviation assures that media-connections is not supported.";
+    deviate not-supported;
+  }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-forwarders/bbf-sip-voip-mounted:media-forwarder/bbf-sip-voip-mounted:statistics" {
+        description
+          "This deviation assures that statistics is not supported.";
+        deviate not-supported;
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-forwarders/bbf-sip-voip-mounted:media-forwarder/bbf-sip-voip-mounted:media-voice-call-codec-not-supported" {
+    description
+      "This deviation assures that media-voice-call-codec-not-supported is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-forwarders/bbf-sip-voip-mounted:media-forwarder/bbf-sip-voip-mounted:media-vbd-codec-not-supported" {
+    description
+      "This deviation assures that media-vbd-codec-not-supported is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-forwarders/bbf-sip-voip-mounted:media-forwarder/bbf-sip-voip-mounted:media-voice-call-codec-notification" {
+    description
+      "This deviation assures that media-voice-call-codec-notification is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-forwarders/bbf-sip-voip-mounted:media-forwarder/bbf-sip-voip-mounted:media-fwd-rtp-errors-thr-exceeded" {
+    description
+      "This deviation assures that media-fwd-rtp-errors-thr-exceeded is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-forwarders/bbf-sip-voip-mounted:media-forwarder/bbf-sip-voip-mounted:media-fwd-packet-loss-thr-exceeded" {
+    description
+      "This deviation assures that media-fwd-packet-loss-thr-exceeded is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-forwarders/bbf-sip-voip-mounted:media-forwarder/bbf-sip-voip-mounted:media-fwd-packet-max-jitter-thr-exceeded" {
+    description
+      "This deviation assures that media-fwd-packet-max-jitter-thr-exceeded is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-forwarders/bbf-sip-voip-mounted:media-forwarder/bbf-sip-voip-mounted:media-fwd-packet-max-intv-packets-thr-exceeded" {
+    description
+      "This deviation assures that media-fwd-packet-max-intv-packets-thr-exceeded is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-forwarders/bbf-sip-voip-mounted:media-forwarder/bbf-sip-voip-mounted:media-fwd-packet-buffer-underflow-thr-exceeded" {
+    description
+      "This deviation assures that media-fwd-packet-buffer-underflow-thr-exceeded is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-forwarders/bbf-sip-voip-mounted:media-forwarder/bbf-sip-voip-mounted:media-fwd-packet-buffer-overflow-thr-exceeded" {
+    description
+      "This deviation assures that media-fwd-packet-buffer-overflow-thr-exceeded is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-forwarders/bbf-sip-voip-mounted:media-forwarder/bbf-sip-voip-mounted:media-fwd-inform-notification" {
+    description
+      "This deviation assures that media-fwd-inform-notification is not supported.";
+    deviate not-supported;
+  }
+
+/*
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-profiles/bbf-sip-voip-mounted:tone-pattern-profiles" {
+        description
+          "This deviation assures that tone-pattern-profiles is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-profiles/bbf-sip-voip-mounted:ringing-pattern-profiles" {
+        description
+          "This deviation assures that ringing-pattern-profiles is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-profiles/bbf-sip-voip-mounted:file-profiles" {
+        description
+          "This deviation assures that file-profiles is not supported.";
+        deviate not-supported;
+    }
+*/
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profile"
+          + "/bbf-sip-voip-mounted:feeding-current" {
+        description
+          "This deviation assures that feeding-current is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profile"
+          + "/bbf-sip-voip-mounted:feeding-voltage" {
+        description
+          "This deviation assures that feeding-voltage is not supported.";
+        deviate not-supported;
+    }
+
+    deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profile"
+          + "/bbf-sip-voip-mounted:transmission-path" {
+    description
+       "This deviation assures that transmission-path is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profile"
+          + "/bbf-sip-voip-mounted:loss-of-softswitch" {
+    description
+       "This deviation assures that loss-of-softswitch is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profile"
+          + "/bbf-sip-voip-mounted:automatic-gain-control-enabled" {
+    description
+       "This deviation assures that automatic-gain-control-enabled is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profile"
+          + "/bbf-sip-voip-mounted:analog-subscriber-characteristics" {
+    description
+       "This deviation assures that analog-subscriber-characteristics is not supported.";
+    deviate not-supported;
+  }
+/*
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-profiles/bbf-sip-voip-mounted:clip-data-mode-profiles" {
+    description
+       "This deviation assures that clip-data-mode-profiles is not supported.";
+    deviate not-supported;
+  }
+*/
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:feature-access-codes-profiles"
+    + "/bbf-sip-voip-mounted:feature-access-codes-profile/bbf-sip-voip-mounted:emergency-call-feature-access-codes" {
+      description
+       "This deviation assures that emergency-call-feature-access-codes is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:voip-service-gateways/bbf-sip-voip-mounted:voip-service-gateway/bbf-sip-voip-mounted:sip-dscp-mark" {
+
+    deviate replace {
+      default 24;
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profiles"
+    + "/bbf-sip-voip-mounted:pots-uni-characteristics-profile/bbf-sip-voip-mounted:off-hook-announcement-type" {
+
+      deviate add {
+        default not-applicable;
+      }
+    }
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profiles"
+    + "/bbf-sip-voip-mounted:pots-uni-characteristics-profile/bbf-sip-voip-mounted:echo-cancel-enabled" {
+
+      deviate add {
+        default enabled;
+      }
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profiles"
+    + "/bbf-sip-voip-mounted:pots-uni-characteristics-profile/bbf-sip-voip-mounted:hook-flash-min" {
+
+      deviate add {
+        default 0;
+      }
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profiles"
+    + "/bbf-sip-voip-mounted:pots-uni-characteristics-profile/bbf-sip-voip-mounted:hook-flash-max" {
+
+      deviate add {
+        default 0;
+      }
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-profiles/bbf-sip-voip-mounted:media-codec-profiles/bbf-sip-voip-mounted:media-codec-profile/bbf-sip-voip-mounted:silence-suppression-2nd-order" {
+    description
+      "Silence suppression.";
+    deviate replace {
+      type enumeration {
+        enum on {
+          value 1;
+          description "on";
+        }
+        enum off {
+          value 2;
+          description "off";
+        }
+      }
+      default off;
+    }
+  }
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-profiles/bbf-sip-voip-mounted:media-codec-profiles/bbf-sip-voip-mounted:media-codec-profile/bbf-sip-voip-mounted:silence-suppression-3rd-order" {
+    description
+      "Silence suppression.";
+    deviate replace {
+      type enumeration {
+        enum on {
+          value 1;
+          description "on";
+        }
+        enum off {
+          value 2;
+          description "off";
+        }
+      }
+      default off;
+    }
+  }
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-profiles/bbf-sip-voip-mounted:media-codec-profiles/bbf-sip-voip-mounted:media-codec-profile/bbf-sip-voip-mounted:silence-suppression-4th-order" {
+    description
+      "Silence suppression.";
+    deviate replace {
+      type enumeration {
+        enum on {
+          value 1;
+          description "on";
+        }
+        enum off {
+          value 2;
+          description "off";
+        }
+      }
+      default off;
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profiles"
+    + "/bbf-sip-voip-mounted:pots-uni-characteristics-profile/bbf-sip-voip-mounted:impedance" {
+      description
+        "This deviation is used to the content of impendance is supported by Nokia ONT.";
+      deviate replace {
+        type enumeration {
+          enum 600 {
+            description
+              "600 0hms";
+          }
+          enum 900 {
+            description
+              "900 0hms";
+          }
+          enum 750 {
+            description
+              "750 0hms + 150 nF + 270 ohms";
+          }
+          enum 820 {
+            description
+              "820 0hms + 115 nF + 220 ohms";
+          }
+          enum 1050 {
+            description
+              "1050 ohms + 230 nF + 320 ohms";
+          }
+          enum unspecified {
+            description
+              "the impedance of the line will be handled by the ont
+              internally";
+          }
+        }
+      }
+
+      deviate add {
+        default unspecified;
+      }
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profiles"
+    + "/bbf-sip-voip-mounted:pots-uni-characteristics-profile/bbf-sip-voip-mounted:rx-gain" {
+      description
+        "gain value for the received signal in 0.1db increments should be
+        between -120 and 60.";
+      deviate replace {
+        type int16 {
+          range "-120..60" {
+            description
+              "-120 to 60 with unit 0.1db";
+          }
+        }
+      }
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profiles"
+    + "/bbf-sip-voip-mounted:pots-uni-characteristics-profile/bbf-sip-voip-mounted:tx-gain" {
+      description
+        "gain value for the transmit signal in 0.1db increments should be
+        between -120 and 60.";
+      deviate replace {
+        type int16 {
+          range "-120..60" {
+            description
+              "-120 to 60 with units 0.1db";
+          }
+        }
+      }
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profiles"
+    + "/bbf-sip-voip-mounted:pots-uni-characteristics-profile/bbf-sip-voip-mounted:hold-over-time" {
+      description
+        "time during which pots loop voltage is held up. units: 1 sec";
+      deviate replace {
+        type uint16;
+      }
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:sip-registerchar-profiles"
+    + "/bbf-sip-voip-mounted:sip-registerchar-profile/bbf-sip-voip-mounted:re-register-precursory-start-time" {
+      description
+        "Change the default value of re-registration head start time.";
+      deviate replace {
+        default 360;
+      }
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-user-agents/bbf-sip-voip-mounted:sip-user-agent"
+    + "/bbf-sip-voip-mounted:sip-user-agent-domain" {
+      description
+        "URI profile that contains the host or domain part of the SIP address of record.";
+      deviate replace {
+        type string
+        {
+          length "0..100";
+        }
+      }
+      deviate add {
+        default "";
+      }
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-user-agents"
+    + "/bbf-sip-voip-mounted:sip-user-agent/bbf-sip-voip-mounted:sip-uni-uri-type" {
+      description
+        "URI format to specify the format of the URI in outgoing SIP messages";
+      deviate replace {
+        type enumeration {
+          enum sip-uri {
+            value 1;
+            description
+              "SIP Uniform Resource Identifier.";
+          }
+          enum tel-uri {
+            value 2;
+            description
+              "TEL Uniform Resource Identifier.";
+          }
+        }
+        default tel-uri;
+      }
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-profiles/bbf-sip-voip-mounted:media-codec-profiles/bbf-sip-voip-mounted:media-codec-profile"
+    + "/bbf-sip-voip-mounted:codec-selection-1st-order" {
+      description
+        "packet period selection option";
+      deviate replace {
+        type enumeration {
+          enum g711-a-law {
+          value 1;
+          description
+          "G711a-law codec.";
+          }
+          enum g711-u-law {
+          value 2;
+          description
+            "G711u-law codec.";
+          }
+          enum g722 {
+            value 3;
+          description
+            "G722 codec.";
+          }
+          enum g723.1-5.3kb {
+          value 6;
+          description
+            "G723.1 5.3 Kbits/sec codec.";
+          }
+          enum g729 {
+          value 12;
+          description
+            "G729 codec.";
+          }
+        }
+      }
+      deviate add {
+        default g711-u-law;
+      }
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-profiles/bbf-sip-voip-mounted:media-codec-profiles/bbf-sip-voip-mounted:media-codec-profile"
+    + "/bbf-sip-voip-mounted:codec-selection-2nd-order" {
+      description
+        "packet period selection option";
+      deviate replace {
+        type enumeration {
+          enum g711-a-law {
+          value 1;
+          description
+          "G711a-law codec.";
+          }
+          enum g711-u-law {
+          value 2;
+          description
+            "G711u-law codec.";
+          }
+          enum g722 {
+            value 3;
+          description
+            "G722 codec.";
+          }
+          enum g723.1-5.3kb {
+          value 6;
+          description
+            "G723.1 5.3 Kbits/sec codec.";
+          }
+          enum g729 {
+          value 12;
+          description
+            "G729 codec.";
+          }
+        }
+        default g711-u-law;
+      }
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-profiles/bbf-sip-voip-mounted:media-codec-profiles/bbf-sip-voip-mounted:media-codec-profile"
+    + "/bbf-sip-voip-mounted:codec-selection-3rd-order" {
+      description
+        "packet period selection option";
+      deviate replace {
+        type enumeration {
+          enum g711-a-law {
+          value 1;
+          description
+          "G711a-law codec.";
+          }
+          enum g711-u-law {
+          value 2;
+          description
+            "G711u-law codec.";
+          }
+          enum g722 {
+            value 3;
+          description
+            "G722 codec.";
+          }
+          enum g723.1-5.3kb {
+          value 6;
+          description
+            "G723.1 5.3 Kbits/sec codec.";
+          }
+
+          enum g729 {
+          value 12;
+          description
+            "G729 codec.";
+          }
+        }
+        default g711-u-law;
+      }
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-profiles/bbf-sip-voip-mounted:media-codec-profiles/bbf-sip-voip-mounted:media-codec-profile"
+    + "/bbf-sip-voip-mounted:codec-selection-4th-order" {
+      description
+        "packet period selection option";
+      deviate replace {
+        type enumeration {
+          enum g711-a-law {
+          value 1;
+          description
+          "G711a-law codec.";
+          }
+          enum g711-u-law {
+          value 2;
+          description
+            "G711u-law codec.";
+          }
+          enum g722 {
+            value 3;
+          description
+            "G722 codec.";
+          }
+          enum g723.1-5.3kb {
+          value 6;
+          description
+            "G723.1 5.3 Kbits/sec codec.";
+          }
+          enum g729 {
+          value 12;
+          description
+            "G729 codec.";
+          }
+        }
+        default g711-u-law;
+      }
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-profiles/bbf-sip-voip-mounted:media-codec-profiles"
+    + "/bbf-sip-voip-mounted:media-codec-profile/bbf-sip-voip-mounted:codec-packetization-time-1st-order" {
+      description
+        "packet period selection option.";
+      deviate replace {
+        type uint8 {
+          range "10..30" {
+            description
+              "packet period order";
+          }
+        }
+      }
+      deviate add {
+        default 10;
+      }
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-profiles/bbf-sip-voip-mounted:media-codec-profiles"
+    + "/bbf-sip-voip-mounted:media-codec-profile/bbf-sip-voip-mounted:codec-packetization-time-2nd-order" {
+      description
+        "packet period selection option.";
+      deviate replace {
+        type uint8 {
+          range "10..30" {
+            description
+              "packet period order";
+          }
+        }
+        default 10;
+      }
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-profiles/bbf-sip-voip-mounted:media-codec-profiles"
+    + "/bbf-sip-voip-mounted:media-codec-profile/bbf-sip-voip-mounted:codec-packetization-time-3rd-order" {
+      description
+        "packet period selection option.";
+      deviate replace {
+        type uint8 {
+          range "10..30" {
+            description
+              "packet period order";
+          }
+        }
+        default 10;
+      }
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-profiles/bbf-sip-voip-mounted:media-codec-profiles"
+    + "/bbf-sip-voip-mounted:media-codec-profile/bbf-sip-voip-mounted:codec-packetization-time-4th-order" {
+      description
+        "packet period selection option.";
+      deviate replace {
+        type uint8 {
+          range "10..30" {
+            description
+              "packet period order";
+          }
+        }
+        default 10;
+      }
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-profiles/bbf-sip-voip-mounted:media-transport-profiles"
+    + "/bbf-sip-voip-mounted:media-transport-profile/bbf-sip-voip-mounted:min-port-range" {
+      description
+        "base rtp port for voice traffic.";
+      deviate replace {
+        type uint32 {
+          range "5000..65000" {
+            description
+              "range: [5000...65000]";
+          }
+        }
+      }
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-profiles/bbf-sip-voip-mounted:media-transport-profiles"
+    + "/bbf-sip-voip-mounted:media-transport-profile/bbf-sip-voip-mounted:max-port-range" {
+      description
+        "highest rtp port for voice traffic.";
+      deviate replace {
+        type uint32 {
+          range "5000..65000" {
+            description
+              "range: [5000...65000]";
+          }
+        }
+        default 60000;
+      }
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:feature-access-codes-profiles"
+    + "/bbf-sip-voip-mounted:feature-access-codes-profile"
+    + "/bbf-sip-voip-mounted:cancel-cw-feature-access-codes"
+    + "/bbf-sip-voip-mounted:service-activation-code" {
+      description
+        "access code to cancel call waiting.";
+      deviate replace {
+        type string {
+          length "0..5";
+          pattern "[0-9*#]*";
+        }
+      }
+      deviate add {
+        default "";
+      }
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:feature-access-codes-profiles"
+    + "/bbf-sip-voip-mounted:feature-access-codes-profile"
+    + "/bbf-sip-voip-mounted:call-hold-feature-access-codes"
+    + "/bbf-sip-voip-mounted:service-activation-code" {
+      description
+        "access code to hold a call.";
+      deviate replace {
+        type string {
+          length "0..5";
+          pattern "[0-9*#]*";
+        }
+      }
+      deviate add {
+        default "";
+      }
+    }
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:feature-access-codes-profiles"
+    + "/bbf-sip-voip-mounted:feature-access-codes-profile"
+    + "/bbf-sip-voip-mounted:call-park-feature-access-codes"
+    + "/bbf-sip-voip-mounted:service-activation-code" {
+      description
+        "access code to park a call.";
+      deviate replace {
+        type string {
+          length "0..5";
+          pattern "[0-9*#]*";
+        }
+      }
+      deviate add {
+        default "";
+      }
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:feature-access-codes-profiles"
+    + "/bbf-sip-voip-mounted:feature-access-codes-profile"
+    + "/bbf-sip-voip-mounted:callerid-feature-access-codes"
+    + "/bbf-sip-voip-mounted:service-activation-code" {
+      description
+        "access code to activate caller id.";
+      deviate replace {
+        type string {
+          length "0..5";
+          pattern "[0-9*#]*";
+        }
+      }
+
+      deviate add {
+        default "";
+      }
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:feature-access-codes-profiles"
+    + "/bbf-sip-voip-mounted:feature-access-codes-profile"
+    + "/bbf-sip-voip-mounted:callerid-feature-access-codes"
+    + "/bbf-sip-voip-mounted:service-deactivation-code" {
+      description
+        "access code to deactivate caller id.";
+      deviate replace {
+        type string {
+          length "0..5";
+          pattern "[0-9*#]*";
+        }
+      }
+
+      deviate add {
+        default "";
+      }
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:feature-access-codes-profiles"
+    + "/bbf-sip-voip-mounted:feature-access-codes-profile"
+    + "/bbf-sip-voip-mounted:do-not-disturb-feature-access-codes"
+    + "/bbf-sip-voip-mounted:service-activation-code" {
+      description
+        "access code to activate do not disturb.";
+      deviate replace {
+        type string {
+          length "0..5";
+          pattern "[0-9*#]*";
+        }
+      }
+      deviate add {
+        default "";
+      }
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:feature-access-codes-profiles"
+    + "/bbf-sip-voip-mounted:feature-access-codes-profile"
+    + "/bbf-sip-voip-mounted:do-not-disturb-feature-access-codes"
+    + "/bbf-sip-voip-mounted:service-deactivation-code" {
+      description
+        "access code to de-activate do not disturb.";
+      deviate replace {
+        type string {
+          length "0..5";
+          pattern "[0-9*#]*";
+        }
+      }
+
+      deviate add {
+        default "";
+      }
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:feature-access-codes-profiles"
+    + "/bbf-sip-voip-mounted:feature-access-codes-profile"
+    + "/bbf-sip-voip-mounted:do-not-disturb-feature-access-codes"
+    + "/bbf-sip-voip-mounted:service-pincode-change" {
+      description
+        "access code to to change the do not disturb pin.";
+      deviate replace {
+        type string {
+          length "0..5";
+          pattern "[0-9*#]*";
+        }
+      }
+
+      deviate add {
+        default "";
+      }
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:feature-access-codes-profiles"
+    + "/bbf-sip-voip-mounted:feature-access-codes-profile"
+    + "/bbf-sip-voip-mounted:unattended-call-transfer-feature-access-codes"
+    + "/bbf-sip-voip-mounted:service-activation-code" {
+      description
+        "access code to select attended call transfer behavior.";
+      deviate replace {
+        type string {
+          length "0..5";
+          pattern "[0-9*#]*";
+        }
+      }
+      deviate add {
+        default "";
+      }
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:feature-access-codes-profiles"
+    + "/bbf-sip-voip-mounted:feature-access-codes-profile"
+    + "/bbf-sip-voip-mounted:attended-call-transfer-feature-access-codes"
+    + "/bbf-sip-voip-mounted:service-activation-code" {
+      description
+        "select unattended call transfer behavior.";
+      deviate replace {
+        type string {
+          length "0..5";
+          pattern "[0-9*#]*";
+        }
+      }
+      deviate add {
+        default "";
+      }
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:dialplan-digitmap-profiles"
+    + "/bbf-sip-voip-mounted:dialplan-digitmap-profile/bbf-sip-voip-mounted:dialplan-characteristics"
+    + "/bbf-sip-voip-mounted:sip-dialing-short-timer" {
+      description
+        "critical dial timeout in seconds.";
+      deviate replace {
+        type uint8 {
+          range "1..40";
+        }
+        default 4;
+      }
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-profiles/bbf-sip-voip-mounted:dialplan-digitmap-profiles"
+    + "/bbf-sip-voip-mounted:dialplan-digitmap-profile/bbf-sip-voip-mounted:dialplan-characteristics"
+    + "/bbf-sip-voip-mounted:sip-dialing-long-timer" {
+      description
+        "partial dial timeout in seconds.";
+      deviate replace {
+        type uint8 {
+          range "1..40";
+        }
+        default 16;
+      }
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-terminations"
+    + "/bbf-sip-voip-mounted:sip-termination"
+    + "/bbf-sip-voip-mounted:authentication-scheme" {
+      description
+        "validation scheme required for authentication.";
+      deviate replace {
+        type enumeration {
+          enum md5-digest {
+            value 1;
+            description
+              "validate using md5 digest authentication.";
+          }
+        }
+      }
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-terminations"
+    + "/bbf-sip-voip-mounted:sip-termination/bbf-sip-voip-mounted:auth-user-name" {
+      description
+        "user name required for authentication.";
+      deviate replace {
+        type string {
+          length "0..50";
+        }
+      }
+      deviate add {
+        default "";
+      }
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:sip-signaling/bbf-sip-voip-mounted:sip-terminations"
+    + "/bbf-sip-voip-mounted:sip-termination/bbf-sip-voip-mounted:realm" {
+      description
+        "realm for authentication.";
+      deviate replace {
+        type string {
+          length "0..25";
+        }
+      }
+
+      deviate add {
+        default "";
+      }
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profiles"
+    + "/bbf-sip-voip-mounted:pots-uni-characteristics-profile/bbf-sip-voip-mounted:jitter-target" {
+      deviate replace {
+        type uint16;
+      }
+      deviate add {
+        default 0;
+      }
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profiles"
+    + "/bbf-sip-voip-mounted:pots-uni-characteristics-profile/bbf-sip-voip-mounted:max-jitter-buffer" {
+      deviate replace {
+        type uint16;
+      }
+      deviate add {
+        default 0;
+      }
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profiles"
+    + "/bbf-sip-voip-mounted:pots-uni-characteristics-profile/bbf-sip-voip-mounted:pstn-protocol-variant" {
+      deviate replace {
+        type uint16 {
+          range "0..999";
+        }
+      }
+      deviate add {
+        default 0;
+      }
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profiles"
+    + "/bbf-sip-voip-mounted:pots-uni-characteristics-profile/bbf-sip-voip-mounted:dtmf-digit-levels" {
+      deviate replace {
+        type int8 {range "-25..-3 | 0";}
+      }
+      deviate add {
+        default 0;
+      }
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-profiles/bbf-sip-voip-mounted:pots-uni-characteristics-profiles"
+    + "/bbf-sip-voip-mounted:pots-uni-characteristics-profile/bbf-sip-voip-mounted:dtmf-digit-duration" {
+      deviate add {
+        default 0;
+      }
+    }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-interworking-nodes-state/bbf-sip-voip-mounted:pots-interworking/bbf-sip-voip-mounted:pots-x-connections"
+          + "/bbf-sip-voip-mounted:sip-sessions/bbf-sip-voip-mounted:sip-remote-ip-version" {
+    description
+      "This deviation assures that sip-remote-ip-version is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-interworking-nodes-state/bbf-sip-voip-mounted:pots-interworking/bbf-sip-voip-mounted:pots-x-connections"
+          + "/bbf-sip-voip-mounted:sip-sessions/bbf-sip-voip-mounted:calling-number" {
+    description
+      "This deviation assures that calling-number is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-interworking-nodes-state/bbf-sip-voip-mounted:pots-interworking/bbf-sip-voip-mounted:pots-x-connections"
+          + "/bbf-sip-voip-mounted:sip-sessions/bbf-sip-voip-mounted:called-number" {
+    description
+      "This deviation assures that called-number is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-interworking-nodes-state/bbf-sip-voip-mounted:pots-interworking/bbf-sip-voip-mounted:pots-x-connections"
+          + "/bbf-sip-voip-mounted:sip-sessions/bbf-sip-voip-mounted:sip-remote-ip-prefix" {
+    description
+      "This deviation assures that sip-remote-ip-prefix is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-interworking-nodes-state/bbf-sip-voip-mounted:pots-interworking/bbf-sip-voip-mounted:pots-x-connections"
+          + "/bbf-sip-voip-mounted:sip-sessions/bbf-sip-voip-mounted:sip-remote-ip-address" {
+    description
+      "This deviation assures that sip-remote-ip-address is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-interworking-nodes-state/bbf-sip-voip-mounted:pots-interworking/bbf-sip-voip-mounted:pots-x-connections"
+          + "/bbf-sip-voip-mounted:sip-sessions/bbf-sip-voip-mounted:sip-remote-port-used" {
+    description
+      "This deviation assures that sip-remote-port-used is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-interworking-nodes-state/bbf-sip-voip-mounted:pots-interworking/bbf-sip-voip-mounted:pots-x-connections"
+          + "/bbf-sip-voip-mounted:sip-sessions/bbf-sip-voip-mounted:sip-transport-used" {
+    description
+      "This deviation assures that sip-transport-used is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-interworking-nodes-state/bbf-sip-voip-mounted:pots-interworking/bbf-sip-voip-mounted:pots-x-connections"
+          + "/bbf-sip-voip-mounted:sip-sessions/bbf-sip-voip-mounted:session-start-time" {
+    description
+      "This deviation assures that session-start-time is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-interworking-nodes-state/bbf-sip-voip-mounted:pots-interworking/bbf-sip-voip-mounted:pots-x-connections"
+          + "/bbf-sip-voip-mounted:sip-sessions/bbf-sip-voip-mounted:session-direction" {
+    description
+      "This deviation assures that session-direction is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-interworking-nodes-state/bbf-sip-voip-mounted:pots-interworking/bbf-sip-voip-mounted:pots-x-connections"
+          + "/bbf-sip-voip-mounted:sip-sessions/bbf-sip-voip-mounted:session-duration" {
+    description
+      "This deviation assures that session-duration is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-interworking-nodes-state/bbf-sip-voip-mounted:pots-interworking/bbf-sip-voip-mounted:pots-x-connections"
+          + "/bbf-sip-voip-mounted:sip-sessions/bbf-sip-voip-mounted:media-remote-ip-address" {
+    description
+      "This deviation assures that media-remote-ip-address is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-interworking-nodes-state/bbf-sip-voip-mounted:pots-interworking/bbf-sip-voip-mounted:pots-x-connections"
+          + "/bbf-sip-voip-mounted:sip-sessions/bbf-sip-voip-mounted:media-remote-port-used" {
+    description
+      "This deviation assures that media-remote-port-used is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-interworking-nodes-state/bbf-sip-voip-mounted:pots-interworking/bbf-sip-voip-mounted:pots-x-connections"
+          + "/bbf-sip-voip-mounted:sip-sessions/bbf-sip-voip-mounted:media-local-port-used" {
+    description
+      "This deviation assures that media-local-port-used is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:pots-interworking-nodes-state/bbf-sip-voip-mounted:pots-interworking/bbf-sip-voip-mounted:pots-x-connections"
+          + "/bbf-sip-voip-mounted:sip-sessions/bbf-sip-voip-mounted:vbd-session" {
+    description
+      "This deviation assures that vbd-session is not supported.";
+    deviate not-supported;
+  }
+}

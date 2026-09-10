@@ -1,0 +1,732 @@
+module nokia-hardware-extension-mounted {
+  yang-version 1.1;
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+  + "nokia-hardware-extension-mounted";
+
+  prefix nokia-hw-ext-mounted;
+
+  import ietf-hardware-mounted {
+    prefix hw-mounted;
+  }
+
+  import nokia-sdan-hardware-module-types-mounted {
+    prefix nokia-sdan-hwmdlt-mounted;
+  }
+
+  import bbf-hardware-types {
+    prefix bbf-hwt;
+  }
+  import iana-hardware {
+    prefix ianahw;
+  }
+  import nokia-hardware-profiles-mounted {
+    prefix nokia-hw-prof-mounted;
+  }
+  import ietf-yang-types {
+    prefix yang;
+  }
+  import bbf-fiber-onu-emulated-mount {
+     prefix onu;
+  }
+  organization
+    "Nokia";
+
+  contact
+     "Comments or questions about this Nokia YANG module should be 
+     directed to <mailto:isam.yang@nokia.com>.";
+
+
+  description
+     "This module contains a collection of YANG definitions for 
+     supporting Nokia specific requirements as applicable to its 
+     access network equipment.
+     
+     Specifically, this module augments the hardware model with 
+	 additional identifying operational data of a component.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia 
+     reserves the right to revise this document for any reason, 
+     including but not limited to conformity with standards 
+     promulgated by various agencies, utilisation of advances in the 
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or 
+     referred to herein.
+
+     The product specifications and other technical or performance 
+     information contained herein are subject to change without 
+     notice. Updates of this document will be issued under the above 
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any 
+     information or opinion contained herein. Nokia expressly advises 
+     that any use of for any purpose or reliance upon this technical 
+     reference is at the risk of the user and that Nokia shall not be 
+     liable for any damage or injury incurred by any person arising 
+     out of the sufficiency, accuracy, or utility of any information 
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any 
+     manufacturer to modify or change any of its products, nor does 
+     this document represent any commitment by Nokia to sell or 
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license 
+     or right under any patent, whether or not the use of any 
+     information herein necessarily employs an invention of any 
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2020, Nokia. All Rights Reserved.";
+
+  revision 2024-09-11 {
+    description
+      "remove operational data related when statement";
+    reference
+      "BBN-107706";
+  }
+
+  revision 2024-06-01 {
+    description
+      "add a new leaf planned-module-type on hardware component and a new leaf actual-module-type on hardware-state component";
+    reference
+      " Epic BBN-107806";
+  }
+
+  revision 2024-01-30 {
+    description
+      "add new container omci-hw-layout and leaf equipment-id on hardware-state component
+      port for onumgmt";
+    reference
+      " Epic BBN-146760";
+  }
+
+  revision 2023-07-30 {
+    description
+      "add new leaves equipment-id and mac-address
+       on hardware-state component chassis for onumgmt";
+    reference
+      " Epic BBN-114929";
+  }
+  
+   revision 2023-05-25 {
+    description
+      "add a new leaf port-id in omci-identifier-helper";
+    reference
+      " Epic BBN-98030";
+  }
+
+  revision 2022-08-26 {
+    description
+      "add new leaf configuration-errors";
+    reference
+      " Epic BBN-69626";
+  }
+
+  revision 2022-04-11 {
+    description
+      "add new leaf virtual-board-number on hardware port for onumgmt";
+    reference
+      " Epic BBN-38309";
+  }
+
+  revision 2021-06-25 {
+       description
+         "als-enabled descripion change";
+       reference
+         "Nokia specific. EPIC BBN-766";
+  }
+
+  revision 2021-03-25 {
+       description
+         "TCA parameter rxpower migration from rssi";
+       reference
+         "Nokia specific. EPIC BBN-682";
+  }
+
+  revision 2021-03-17 {
+       description
+         "Moving tx-power-dbm , rx-power-dbm to nokia-hardware-transceivers-dbm.yang";
+       reference
+         "Nokia specific. EPIC BBN-1693";
+  }
+
+  revision 2021-03-08 {
+       description
+         "Support transceiver rx-power and tx-power in 0.1dBm Units";
+       reference
+         "Nokia specific. RCR ALU02739128";
+  }
+
+  revision 2021-02-17 {
+     description
+       "TCA parameters units for Temperature, Voltage and TxBias is changed.";
+     reference
+       "Nokia specific. EPIC BBN-682";
+  }
+
+  revision 2020-11-26 {
+       description
+         "Configurable TCA parameters";
+       reference
+         "Nokia specific. RCR ALU02503366";
+  }
+
+  revision 2020-11-12 {
+       description
+         "Introducing als if-feature";
+       reference
+         "Nokia specific. RCR ALU02722973";
+  }
+
+  revision 2020-09-10 {
+       description
+         "Introducing self-test if-feature";
+       reference
+         "Nokia specific. RCR ALU02678607";
+  }
+
+  revision 2020-09-03 {
+       description
+         "Introducing last-self-test-error field to display reset-with-self-test result";
+       reference
+         "Nokia specific. RCR ALU02678607";
+  }
+
+  revision 2020-06-04 {
+       description
+         "if-feature update on uptime monitoring leaf nodes.";
+       reference
+         "Nokia specific. RCR ALU02615153";
+  }
+
+  revision 2020-06-03 {
+       description
+         "Enclosing uptime monitoring leaf nodes in container.";
+       reference
+         "Nokia specific. RCR ALU02615153";
+  }
+
+  revision 2020-04-28 {
+       description
+         "Change in names of uptime monitoring leaf nodes.";
+       reference
+         "Nokia specific. RCR ALU02615153";
+  }
+
+  revision 2020-03-27 {
+       description
+         "Activation time and uptime  addition to hardware-state.";
+       reference
+         "Nokia specific. RCR ALU02615153";
+  }
+
+  revision 2020-02-26 {
+        description
+          "rssi threshold units changed to int16.";
+        reference
+          "Nokia specific. RCR ALU02503367";
+  }
+
+  revision 2020-02-06 {
+       description
+         "RSSI profile addition, trancsevier-link types.";
+       reference
+         "Nokia specific. RCR ALU02503367";
+  }
+
+  revision 2018-09-13 {
+    description
+      "Make updates based upon comment resolution about raise or clear alarm when board temperature is over threshold.";
+    reference
+      "Nokia specific. RCR ALU02451272";
+  }
+
+  revision 2017-12-08 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific";
+  }
+
+  feature tca-profiles {
+    description
+      "Indicates support for tca profiles.";
+  }
+
+  feature uptime {
+    description
+      "Indicates support for hardware uptime.";
+  }
+
+  feature self-test {
+    description
+      "Indicates support for hardware self-test.";
+  }
+
+  feature als {
+    description
+      "Indicates support for automatic laser shutdown per transceiver.";
+  }
+
+
+  augment "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component" {
+
+    description
+      "Augment the module hardware state with NOKIA specific remote inventory data.";
+
+      leaf sensor-temp-threshold-high {
+          type int32;
+          description
+            "The threshold is involved in protecting the system against overheating. The sensor-temp-threshold-high is the threshold to raise the overheat alarm.";
+      }
+
+      leaf sensor-temp-threshold-high-clear {
+          type int32;
+          description
+            "The threshold is involved in indicating the overheating is eliminated. The sensor-temp-threshold-high-clear is the threshold to clear the overheat alarm.";
+      }
+
+      leaf sensor-temp-threshold-low {
+          type int32;
+          description
+            "The threshold is involved in protecting the system against overcooling. The sensor-temp-threshold-low is the threshold to raise the overcool alarm.";
+      }
+
+      leaf sensor-temp-threshold-low-clear {
+          type int32;
+          description
+            "The threshold is involved in indicating the overcooling is eliminated. The sensor-temp-threshold-low-clear is the threshold to clear the overcool alarm.";
+      }
+
+      leaf ont-serial-num-base {
+        type string;
+        description
+          "ONT serial number base.";
+      }
+
+      leaf local-network-address {
+        type string;
+        description
+          "Address assigned to the component when connected to a local network.";
+      }
+
+      leaf fim {
+        type string;
+        description
+          "Format Identifier Manufacturing.";
+      }
+
+      leaf factory-id {
+        type string;
+        description
+          "Identification code of the factory who manufactured the component.";
+      }
+
+      leaf clei-code {
+        type string;
+        description
+          "Common Language Equipment Identifier code.";
+      }
+      container hardware-duration-in-operation
+      {
+        description
+          "Container providing information about hardware component duration-in-operation";
+
+        leaf duration-in-operation {
+          if-feature "uptime";
+          type uint16;
+          units "weeks";
+          description
+            "Indicates accumulated duration of hardware component is in operation. The 'duration-in-operation' is being monitored and accumulated from the time indicated by the 'start-duration-in-operation-monitoring'.";
+        }
+
+        leaf start-duration-in-operation-monitoring {
+          if-feature "uptime";
+          type yang:date-and-time;
+          description
+            "Indicates start time of hardware component 'duration-in-operation'  monitoring. Monitoring  of hardware component starts after  installation of new hardware. For pre-installed hardware the monitoring starts after software upgrade to the release where this feature is made available, hence the need for this leaf. The 'start-duration-in-operation-monitoring' is stamped based on NTP synchronization. Any historical start time of hardware component prior to the 'start-duration-in-operation-monitoring' is not taken into account.";
+        }
+      }
+
+      leaf customer-serial-num {
+        type string;
+        description
+          "The customer-specific serial number string for the component.";
+      }
+
+      leaf last-self-test-error {
+        if-feature "self-test";
+        type string;
+        description
+          "Indicates last self test error. As long as there has been no failing selftest, the value of this
+          Leaf would be 00:00:00:00 Any other value indicates the last failed test information
+          which needs to be further checked and correlated with OFLT(offline test) document.";
+      }
+  }
+
+  augment "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component" {
+    description
+      "Augment the transceiver hardware-state with NOKIA specific temperature and voltage threshold values.";
+
+     leaf temperature-low-alarm {
+        if-feature "tca-profiles";
+        type int32;
+        units "0.001 degrees Celsius";
+        config false;	   
+        description
+          "Indicates the low alarm threshold value that is considered for raising tca alarms.";
+     }
+
+     leaf temperature-high-alarm {
+        if-feature "tca-profiles";
+        type int32;
+        units "0.001 degrees Celsius";
+        config false;	   
+        description
+          "Indicates the high alarm threshold value that is considered for raising tca alarms.";
+     }
+
+     leaf temperature-low-warning {
+        if-feature "tca-profiles";
+        type int32;
+        units "0.001 degrees Celsius";
+        config false;	   
+        description
+          "Indicates the low warning threshold value that is considered for raising tca alarms.";
+     }
+
+     leaf temperature-high-warning {
+        if-feature "tca-profiles";
+        type int32;
+        units "0.001 degrees Celsius";
+        config false;	   
+        description
+          "Indicates the high warning threshold value that is considered for raising tca alarms.";
+     }
+
+     leaf voltage-low-alarm {
+        if-feature "tca-profiles";
+        type uint16;
+        units "100 uV";
+        config false;	   
+        description
+          "Indicates the low alarm threshold value that is considered for raising tca alarms.";
+     }
+
+     leaf voltage-high-alarm {
+        if-feature "tca-profiles";
+        type uint16;
+        units "100 uV";
+        config false;	   
+        description
+          "Indicates the high alarm threshold value that is considered for raising tca alarms.";
+     }
+
+     leaf voltage-low-warning {
+        if-feature "tca-profiles";
+        type uint16;
+        units "100 uV";
+        config false;	   
+        description
+          "Indicates the low warning threshold value that is considered for raising tca alarms.";
+     }
+
+     leaf voltage-high-warning {
+        if-feature "tca-profiles";
+        type uint16;
+        units "100 uV";
+        config false;	   
+        description
+          "Indicates the high warning threshold value that is considered for raising tca alarms.";
+     }
+
+     leaf actual-module-type {
+       type identityref {
+          base nokia-sdan-hwmdlt-mounted:eth-module-type-base;
+       }
+       description
+         "Indicates actual type associated with this
+          physical hardware module, per ITU-T G.988 Table 9.1.5-1(and extensions).
+          If the component is unknown or undefined the data node has as value the identity 'unrecognized'.
+          If the component is a plug-in unit that is not equipped, the data node has as value the identity 'unequipped'.";
+       reference
+          "ITU-T G.988 Clause 9.1.5 - Actual plug-in unit type attribute";
+     }
+  }
+
+  augment "/onu:onus/onu:onu/onu:root/hw-mounted:hardware/hw-mounted:component" {
+    description
+      "Augment the trasceiver hardware with NOKIA specific configuration parameters.";
+
+    leaf tca-transceiver-profile {
+       if-feature "tca-profiles";
+       type leafref {
+          path "../../../nokia-hw-prof-mounted:tca-profiles/nokia-hw-prof-mounted:transceiver-tca-profile/nokia-hw-prof-mounted:name";
+       }
+       description
+         "Reference to a tca transceiver configuration profile.";
+    }
+
+     leaf als-enabled {
+        if-feature "als";
+        type boolean;
+        default true;
+        description
+          "Indicates whether automatic laser shutdown is enabled or disabled per transceiver.
+           Takes effect when configured on optical ethernet transceiver, ignored if transceiver 
+           is of type electrical or GPON or NGPON.";
+     }
+
+     leaf tca-monitoring-enabled {
+       if-feature "tca-profiles";
+       type boolean;
+       default false;
+       description
+         "Indicates whether transceiver's voltage, temperature, transceiver-link tca parameters rx-power,tx-power, bias-current monitoring is enabled or disabled per transceiver. When enabled, current values are compared with the defined thresholds to raise alarm incase crossing defined thresholds. ";
+     }
+
+     leaf planned-module-type {
+       type identityref {
+          base nokia-sdan-hwmdlt-mounted:expected-eth-module-type-base;
+       }
+       description
+         "Indicates the planned type of physical hardware module,per ITU-T G.988 Table 9.1.5-1(and extensions).";
+       reference
+         "ITU-T G.988 Clause 9.1.5 - Expected plug-in unit type attribute";
+     }
+  }
+
+  augment "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component" {
+    description
+      "Augment the transceiver-link hardware state with NOKIA specific rx-power threshold values.";
+
+     leaf rx-power-low-alarm {
+        if-feature "tca-profiles";
+        type int16;
+        units "0.1 dBm";
+        config false;	   
+        description
+          "Indicates the low alarm threshold value that is considered for raising rx-power alarms.";
+     }
+
+     leaf rx-power-high-alarm {
+        if-feature "tca-profiles";
+        type int16;
+        units "0.1 dBm";
+        config false;	   
+        description
+          "Indicates the high alarm threshold value that is considered for raising rx-power alarms.";
+     }
+
+     leaf rx-power-low-warning {
+        if-feature "tca-profiles";
+        type int16;
+        units "0.1 dBm";
+        config false;	   
+        description
+          "Indicates the low warning threshold value that is considered for raising rx-power alarms.";
+     }
+
+     leaf rx-power-high-warning {
+        if-feature "tca-profiles";
+        type int16;
+        units "0.1 dBm";
+        config false;	   
+        description
+          "Indicates the high warning threshold value that is considered for raising rx-power alarms.";
+     }
+
+     leaf tx-power-low-alarm {
+        if-feature "tca-profiles";
+        type int16;
+        units "0.1 dBm";
+        config false;	   
+        description
+          "Indicates the low alarm threshold value that is considered for raising tca alarms.";
+     }
+
+     leaf tx-power-high-alarm {
+        if-feature "tca-profiles";
+        type int16;
+        units "0.1 dBm";
+        config false;	   
+        description
+          "Indicates the high alarm threshold value that is considered for raising tca alarms.";
+     }
+
+     leaf tx-power-low-warning {
+        if-feature "tca-profiles";
+        type int16;
+        units "0.1 dBm";
+        config false;	   
+        description
+          "Indicates the low warning threshold value that is considered for raising tca alarms.";
+     }
+
+     leaf tx-power-high-warning {
+        if-feature "tca-profiles";
+        type int16;
+        units "0.1 dBm";
+        config false;	   
+        description
+          "Indicates the high warning threshold value that is considered for raising tca alarms.";
+     }
+
+     leaf tx-bias-low-alarm {
+        if-feature "tca-profiles";
+        type uint32;
+        units "1 uA";
+        config false;	   
+        description
+          "Indicates the low alarm threshold value that is considered for raising tca alarms.";
+     }
+
+     leaf tx-bias-high-alarm {
+        if-feature "tca-profiles";
+        type uint32;
+        units "1 uA";
+        config false;	   
+        description
+          "Indicates the high alarm threshold value that is considered for raising tca alarms.";
+     }
+
+     leaf tx-bias-low-warning {
+        if-feature "tca-profiles";
+        type uint32;
+        units "1 uA";
+        config false;	   
+        description
+          "Indicates the low warning threshold value that is considered for raising tca alarms.";
+     }
+
+     leaf tx-bias-high-warning {
+        if-feature "tca-profiles";
+        type uint32;
+        units "1 uA";
+        config false;	   
+        description
+          "Indicates the high warning threshold value that is considered for raising tca alarms.";
+     }
+  }
+
+  augment "/onu:onus/onu:onu/onu:root/hw-mounted:hardware/hw-mounted:component" {
+    when "derived-from-or-self(hw-mounted:class,'bbf-hwt:transceiver-link')";
+    description
+      "tca configuration parameters.";
+
+     leaf tca-transceiver-link-profile {
+        if-feature "tca-profiles";
+        type leafref {
+          path "../../../nokia-hw-prof-mounted:tca-profiles/nokia-hw-prof-mounted:transceiver-link-tca-profile/nokia-hw-prof-mounted:name";
+        }
+        description
+          "Reference to a tca transceiver-link configuration profile.";
+     }
+  }
+
+  augment '/onu:onus/onu:onu/onu:root/hw-mounted:hardware/hw-mounted:component' {
+    when "derived-from-or-self(hw-mounted:class,'ianahw:port')";
+    description
+      "Data nodes for ONU ports to help forming corresponding 
+       OMCI ME identifier.";
+    container omci-identifier-helper {
+      presence
+        "This container is only relevant for ports that belong
+         to an ONU device. It contains data nodes to help forming 
+         the corresponding port OMCI ME identifier in case the 
+         ONU ports is on top of a virtual OMCI board, i.e. not 
+         Visible in the ONU HW model.";
+    description
+        "This container is only relevant for ports that belong
+         to an ONU device. It contains data nodes to help forming 
+         the corresponding port OMCI ME identifier in case the 
+         ONU ports is on top of a virtual OMCI board, i.e. not 
+         Visible in the ONU HW model.";
+      leaf virtual-board-number {
+        type uint16;
+        description
+          "In OMCI, some ONUs have ports on top of virtual 
+           Boards unknown to the ONU YANG HW model. 
+           This data node provides the (virtual) board identifier 
+           used by OMCI for this port in the ONU. This board number
+           is ONU vendor specific and depends on the port type.";
+        reference
+          "G.988: 9.1.5 Cardholder";
+      }
+      leaf port-id {
+        type uint16;
+        description
+          "In OMCI, some ONUs have multiple UNI ports on top of one virtual
+           boards unknown to the ONU YANG HW model.
+           This data node provides port identifer used by OMCI for this port in the ONU.
+           This port number is ONU vendor specific.";
+        reference
+          "G.988: 9.5.1 and 9.5.5";
+      }
+    }
+  }
+
+ augment "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component" {
+     description
+      "Augment the component equipment id.";
+     leaf equipment-id {
+        type string;
+        description
+          "This leaf may be used to identify the vendor's specific type of the component.
+           In some environments, this attribute may include the common
+           language equipment identification (CLEI) code.";
+        reference
+          "G.988: 9.1.2 ONU2-G and 9.1.6 Circuit Pack;";
+     }
+  }
+  augment "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component" {
+    description
+      "Augment the ONU MAC address.";
+     leaf mac-address {
+        type yang:mac-address;
+        description
+          "The MAC address of physical ONU.
+           The preferred value is the MAC address printed on the ONU itself.";
+        }
+  }
+
+  augment '/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component' {
+    description
+      "Data nodes for ONU ports which are reported by ONU itself";
+    container onu-hw-layout {
+      description
+        "This container is only relevant for slots/boards and ports that belong
+         to an ONU device. It contains data nodes which are reported by ONU from G.988 view";
+      leaf detected-card-number {
+        type uint16;
+        description
+          "This data node indicates the physical position of the slot. It is derived from the first bytes of managed entity ID of the Physical path termination point Ethernet UNI ME,
+          the Virtual Ethernet interface point ME, the Physical path termination point POTS UNI ME or the Physical path termination point video UNI etc.";
+        reference
+          "G.988: 9.5.1, 9.5.5, G.9.9.1 and 9.13.1 etc.";
+      }
+      leaf detected-port-number {
+        type uint16;
+        description
+          "This data node indicates the physical position of the UNI. It is derived from the second bytes of managed entity ID of the Physical path termination point Ethernet UNI ME,
+          the Virtual Ethernet interface point ME, the Physical path termination point POTS UNI ME or the Physical path termination point video UNI etc.";
+        reference
+          "G.988: 9.5.1, 9.5.5, G.9.9.1 and 9.13.1 etc.";
+      }
+      leaf is-integrated {
+        type boolean;
+        description
+           "This data node is to indicate whether the detected board is integrated unit or pluggable unit.
+            It is derived from the first bytes of managed entity ID of Cardholder ME or Circuit Pack ME. The value 1 means the ONU is
+            a single integrated equipment, while the value 0 means the ONU contains pluggable equipment modules";
+       reference
+          "G.988: 9.1.5 Cardholder and 9.1.6 Circuit Pack";
+      }
+   }
+ }
+}

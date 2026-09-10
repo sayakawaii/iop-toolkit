@@ -1,0 +1,232 @@
+module nokia-sdan-pbit-statistics {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+          + "nokia-sdan-pbit-statistics";
+
+  prefix nokia-pbit-statistics;
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+  import bbf-if-type {
+    prefix bbfift;
+  }
+  import bbf-dot1q-types {
+    prefix bbf-dot1qt;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG definitions for
+     trouble shooting counters and traffic engineering counters.
+     Traffic engineering will be achieved by configuring to export the 
+     YANG nodes via IPFIX.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2021, Nokia. All Rights Reserved.";
+  
+  revision 2023-03-09 {
+    description
+      "Update state data model.";
+    reference
+      "Nokia Specific";
+  }
+  revision 2022-11-22 {
+    description
+      "Initial revision. Trouble shooting counters.";
+    reference
+      "Nokia specific";
+  }
+
+    /* configuration */
+
+  augment "/if:interfaces/if:interface" {
+      when "derived-from-or-self(if:type,'bbfift:vlan-sub-interface')" {
+         description
+              "Applies only to Vlan sub interface.";
+       }
+    description
+      "Augments the VLAN sub-interface configuration with the data nodes that
+       manage the collection of the pbit statistics.";
+    
+    container pbit-statistics {
+      presence
+        "The presence of this container indicates that the NETCONF-YANG 
+         client takes control of the collection of pbit statistics.";
+      description
+        "The presence of this container indicates that the NETCONF-YANG 
+         client takes control of the collection of pbit statistics.";
+
+
+      leaf enable {
+        type boolean;
+        default "true";
+        description
+          "The value 'true' indicates that the pbit statistics shall be 
+           collected on the interface. The collected statistics will be
+           available in the container pbit-statistics within
+           /if:interfaces-state/if:interface. The value 'false' indicates
+           that the pbit statistics are not to be collected.";
+      }
+    }
+  }
+  augment "/if:interfaces-state/if:interface" {
+      when "derived-from-or-self(if:type,'bbfift:vlan-sub-interface')" {
+         description
+           "Applies only to Vlan sub interface.";
+       }
+    description
+      "Augments the VLAN sub-interface with the pbit forward/discard 
+       statistics.";
+    container pbit-statistics {
+      
+      description
+        "This container groups together the pbit statistics and the reset
+         action.";
+      
+      leaf discontinuity-time {
+          type yang:date-and-time;
+          mandatory true;
+          description
+              "The time on the most recent occasion at which any one or
+              more of this interface's pbit-statistics counters suffered a
+              discontinuity.  If no such discontinuities have occurred
+              since the last re-initialization of the local management
+              subsystem, then this node contains the time the local
+              management subsystem re-initialized itself.";
+      }
+
+      list pbit {
+       
+        key "pbit-id";
+        
+        description
+          "This list records the ingress and egress forward/discard pbit 
+           statistics.";
+ 
+        leaf pbit-id {
+          type   bbf-dot1qt:pbit;
+          description
+            "The pbit value.";
+        }
+
+        leaf in-fwd-bytes {
+          type  yang:counter64;
+          units "bytes";
+          description
+            "The number of bytes forwarded per pbit on the interface in the 
+             ingress direction.";
+        }
+
+        leaf in-fwd-frames {
+          type yang:counter64;
+          units "frames";
+          description
+            "The number of frames forwarded per pbit on the interface in the 
+             ingress direction.";
+        }
+
+        leaf in-discard-bytes {
+          type yang:counter64;
+          units "bytes";
+          description
+            "The number of bytes discarded per pbit on the interface in the 
+             ingress direction.";
+        }
+
+        leaf in-discard-frames {
+          type yang:counter64;
+          units "frames";
+          description
+            "The number of frames discarded per pbit on the interface in the 
+             ingress direction.";
+        }
+        
+        leaf out-fwd-bytes {
+          type  yang:counter64;
+          units "bytes";
+          description
+            "The number of bytes forwarded per pbit on the interface in the 
+             egress direction.";
+        }
+
+        leaf out-fwd-frames {
+          type yang:counter64;
+          units "frames";
+          description
+            "The number of frames forwarded per pbit on the interface in the 
+             egress direction.";
+        }
+
+        leaf out-discard-bytes {
+          type yang:counter64;
+          units "bytes";
+          description
+            "The number of bytes discarded per pbit on the interface in the 
+             egress direction.";
+        }
+
+        leaf out-discard-frames {
+          type yang:counter64;
+          units "frames";
+          description
+            "The number of frames discarded per pbit on the interface in the 
+             egress direction.";
+        }
+
+      }
+
+      action reset {
+        description
+          "When this action is triggered, the pbit statistics of the 
+           VLAN sub-interface are cleared.";
+      }
+	}
+  }
+}
+

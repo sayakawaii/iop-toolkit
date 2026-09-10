@@ -1,0 +1,150 @@
+module nokia-ietf-ipv4-unicast-routing-mounted-eonu-dev {
+
+  namespace "urn:ietf:params:xml:ns:yang:nokia-ietf-ipv4-unicast-routing-mounted-eonu-dev";
+
+  prefix nokia-ietf-ipv4-unicast-routing-mounted-eonu-dev;
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import ietf-routing-mounted {
+    prefix rt-mounted;
+  }
+
+  import ietf-ipv4-unicast-routing-mounted {
+    prefix v4ur-mounted;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA IETF/IPV4/Unicast/Routing YANG module supporting
+     deviations on top of standard.";
+
+  /* revision */
+  revision 2024-12-20 {
+    description
+      "Adding Deviations for not-supported v4ur oper-data and config-data";
+    reference
+      "Sub-task BBN-250454 and BBN-258321";
+  }
+
+  revision 2022-01-13 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia-specific";
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/rt-mounted:routing-state/rt-mounted:ribs/rt-mounted:rib/rt-mounted:routes/rt-mounted:route/rt-mounted:next-hop"
+          + "/rt-mounted:next-hop-options/rt-mounted:simple-next-hop/v4ur-mounted:next-hop-address" {
+    description
+      "This deviation assures that next-hop-address is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/rt-mounted:routing-state/rt-mounted:ribs/rt-mounted:rib/rt-mounted:routes/rt-mounted:route/rt-mounted:next-hop"
+          + "/rt-mounted:next-hop-options/rt-mounted:next-hop-list/rt-mounted:next-hop-list"
+          + "/rt-mounted:next-hop/v4ur-mounted:address" {
+    description
+      "This deviation assures that address is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/rt-mounted:routing-state/rt-mounted:ribs/rt-mounted:rib/rt-mounted:routes/rt-mounted:route/v4ur-mounted:destination-prefix" {
+    description
+      "This deviation assures that destination-prefix is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/rt-mounted:routing-state/rt-mounted:ribs/rt-mounted:rib/rt-mounted:active-route/rt-mounted:input/v4ur-mounted:destination-address" {
+    description
+      "This deviation assures that destination-address is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/rt-mounted:routing-state/rt-mounted:ribs/rt-mounted:rib/rt-mounted:active-route/rt-mounted:output/rt-mounted:route/rt-mounted:next-hop"
+          + "/rt-mounted:next-hop-options/rt-mounted:simple-next-hop/v4ur-mounted:next-hop-address" {
+    description
+      "This deviation assures that next-hop-address is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/rt-mounted:routing-state/rt-mounted:ribs/rt-mounted:rib/rt-mounted:active-route/rt-mounted:output/rt-mounted:route/rt-mounted:next-hop"
+          + "/rt-mounted:next-hop-options/rt-mounted:next-hop-list/rt-mounted:next-hop-list"
+          + "/rt-mounted:next-hop/v4ur-mounted:next-hop-address" {
+    description
+      "This deviation assures that next-hop-address is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/rt-mounted:routing-state/rt-mounted:ribs/rt-mounted:rib/rt-mounted:active-route/rt-mounted:output/rt-mounted:route/v4ur-mounted:destination-prefix" {
+    description
+      "This deviation assures that destination-prefix is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/rt-mounted:routing/rt-mounted:control-plane-protocols/rt-mounted:control-plane-protocol/rt-mounted:static-routes"
+          + "/v4ur-mounted:ipv4/v4ur-mounted:route/v4ur-mounted:description" {
+    description
+      "This deviation assures that description leaf is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/rt-mounted:routing/rt-mounted:control-plane-protocols/rt-mounted:control-plane-protocol/rt-mounted:static-routes"
+          + "/v4ur-mounted:ipv4/v4ur-mounted:route/v4ur-mounted:next-hop/v4ur-mounted:next-hop-options/v4ur-mounted:simple-next-hop"
+          + "/v4ur-mounted:outgoing-interface" {
+    description
+      "This deviation assures that outgoing-interface leaf is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/rt-mounted:routing/rt-mounted:control-plane-protocols/rt-mounted:control-plane-protocol/rt-mounted:static-routes"
+          + "/v4ur-mounted:ipv4/v4ur-mounted:route/v4ur-mounted:next-hop/v4ur-mounted:next-hop-options"
+          + "/v4ur-mounted:special-next-hop" {
+    description
+      "This deviation assures that special-next-hop leaf is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/rt-mounted:routing/rt-mounted:control-plane-protocols/rt-mounted:control-plane-protocol/rt-mounted:static-routes"
+          + "/v4ur-mounted:ipv4/v4ur-mounted:route/v4ur-mounted:next-hop/v4ur-mounted:next-hop-options/v4ur-mounted:next-hop-list"
+          + "/v4ur-mounted:next-hop-list/v4ur-mounted:next-hop" {
+    description
+      "This deviation assures that next-hop-list container is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/rt-mounted:routing/rt-mounted:control-plane-protocols/rt-mounted:control-plane-protocol/rt-mounted:static-routes"
+          + "/v4ur-mounted:ipv4/v4ur-mounted:route/v4ur-mounted:next-hop/v4ur-mounted:next-hop-options/v4ur-mounted:simple-next-hop"
+          + "/v4ur-mounted:next-hop-address" {
+
+    /* Is Loopback IPv4 address(127.0.0.0 - 127.255.255.255) */
+    deviate add {
+       must "(substring-before(.,'.') != 127)" {
+             error-message "Loopback IPv4 address is invalid for next hop address";
+             description "Loopback IPv4 address is invalid to configure as next hop address";
+      }
+    }
+    /* IS_CLASSD (224.0.0.0 to 239.255.255.255) ?  */
+    deviate add {
+       must "not((substring-before(.,'.') >= 224)
+             and (substring-before(.,'.') <= 239))" {
+             error-message "224.0.0.0 - 239.255.255.255 are invalid for next hop address";
+             description "IPv4 address range from 224.0.0.0 to 239.255.255.255  are invalid to configure as next hop address ";
+      }
+    }
+    /* Is address.IS_ALL 1s ? */
+    deviate add {
+       must "current() != '255.255.255.255'" {
+             error-message "255.255.255.255 is invalid for next hop address";
+             description "IPv4 address 255.255.255.255 is invalid to configure as next hop address ";
+      }
+    }
+  }
+}

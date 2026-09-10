@@ -1,0 +1,237 @@
+module nokia-ietf-hardware-common-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-ietf-hardware-common-dev";
+
+  prefix nokia-ietf-hardware-common-dev;
+
+  import ietf-hardware {
+    prefix hw;
+  }
+
+  import nokia-yang-types {
+    prefix nok-typ;
+  }
+
+  import iana-hardware {
+    prefix ianahw;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG deviations on top
+     of the standard module.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2023, Nokia. All Rights Reserved.";
+
+  revision 2026-02-14 {
+    description
+      "Added not-supported deviation for alarm-state leaf";
+    reference
+      "Nokia Specific";
+  }
+
+  revision 2023-06-06 {
+    description
+      "Removed not-supported deviation for state-last-changed leaf BBN-748";
+    reference
+      "Nokia Specific";
+  }
+
+  revision 2023-02-22 {
+    description
+      "restricting serial-num, asset-id, mfg-name to nokia ascii string type of size 64 ";
+    reference
+      "Nokia Specific";
+  }
+
+  revision 2023-01-23 {
+    description
+      "removed dummy deviation checks on parent and class ";
+    reference
+      "Nokia Specific";
+  }
+
+  revision 2021-09-21 {
+    description
+      "Added not-supported deviations to un-used yang leafs ";
+    reference
+      "BBN-5857";
+  }
+
+  revision 2021-07-23 {
+    description
+      "Add validator checks in deviation yang RCR BBN-625.";
+    reference
+      "Nokia Specific.";
+  }
+
+  revision 2020-03-11 {
+    description
+      "Adapt in scope of performance improvements RCR ALU02653604.";
+    reference
+      "Nokia Specific.";
+  }
+
+  revision 2019-07-02 {
+    description
+      "hw:name hw:alias string checks, mandatory hw:class hw:parent-rel-pos checks moved to common deviation.";
+    reference
+      "Nokia Specific.";
+  }
+
+  revision 2019-05-09 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia Specific.";
+  }
+
+/**********************************************/
+/* definitions which should always be present */
+/**********************************************/
+
+  deviation "/hw:hardware/hw:component" {
+    deviate add
+    {
+      unique "hw:class hw:parent hw:parent-rel-pos";
+    }
+    deviate add
+    {
+      must "./hw:class"
+      {
+        error-message "class leaf is mandatory";
+        description
+          "The attribute class is mandatory because it defines the type of hardware.";
+      }
+      must "(./hw:class != 'ianahw:chassis' and ./hw:parent and ./hw:parent-rel-pos) or 
+            (./hw:class = 'ianahw:chassis' and not(boolean(./hw:parent)) and not(boolean(./hw:parent-rel-pos))
+             and count(/hw:hardware/hw:component[hw:class = 'ianahw:chassis' ]) <= 1)"
+      {
+        error-message "The 'parent' and 'parent-rel-pos' leaf are mandatory, except for the one and only component of the class chassis";
+        description
+          "The device its hardware is represented as a tree.
+           Every hardware component has a parent in the hardware tree, except the top of the tree
+           which is the component of the class chassis. Then every component is uniquely identified
+           within its parent by its own class and the parent-rel-pos, hence these two attributes
+           are mandatory. The chassis is special not only because it does not have a parent, but
+           also because there is just one.";
+      }
+    }
+  }
+
+  deviation "/hw:hardware/hw:component/hw:name" {
+    deviate replace {
+      type nok-typ:nokia-string-ascii64;
+    }
+  }
+
+  deviation "/hw:hardware/hw:component/hw:alias" {
+    deviate replace
+    {
+      type nok-typ:nokia-string-ascii64-or-empty;
+    }
+  }
+
+  deviation "/hw:hardware/hw:component/hw:mfg-name" {
+    deviate replace {
+      type nok-typ:nokia-string-ascii64-or-empty;
+    }
+  }
+
+  deviation "/hw:hardware/hw:component/hw:asset-id" {
+    deviate replace
+    {
+      type nok-typ:nokia-string-ascii64-or-empty;
+    }
+  }
+
+  deviation "/hw:hardware/hw:component/hw:serial-num" {
+    deviate replace {
+      type nok-typ:nokia-string-ascii64-or-empty;
+    }
+  }
+
+  deviation "/hw:hardware/hw:component/hw:parent-rel-pos" {
+    deviate replace {
+      type int32 {
+        range "1 .. 2147483647";
+      }
+    }
+  }
+
+  deviation "/hw:hardware-state/hw:component/hw:physical-index" {
+   deviate not-supported;
+  }
+
+  deviation "/hw:hardware-state/hw:component/hw:firmware-rev" {
+   deviate not-supported;
+  }
+
+  deviation "/hw:hardware-state/hw:component/hw:software-rev" {
+   deviate not-supported;
+  }
+
+  deviation "/hw:hardware-state/hw:component/hw:uuid" {
+   deviate not-supported;
+  }
+
+  deviation "/hw:hardware-state/hw:component/hw:state/hw:usage-state" {
+   deviate not-supported;
+  }
+
+  deviation "/hw:hardware-state/hw:component/hw:state/hw:alarm-state" {
+   deviate not-supported;
+  }
+
+  deviation "/hw:hardware-state-oper-enabled/hw:alarm-state" {
+   deviate not-supported;
+  }
+
+  deviation "/hw:hardware-state-oper-disabled/hw:alarm-state" {
+   deviate not-supported;
+  }
+
+}

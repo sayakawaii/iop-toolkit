@@ -1,0 +1,72 @@
+module nokia-bbf-xponvani-common-imm {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-bbf-xponvani-common-imm";
+
+  prefix nokia-bbf-xponvani-common-imm;
+
+  import ietf-immutable{
+    prefix im;
+  }
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import bbf-xponvani{
+    prefix bbf-xponvani;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA IETF/System YANG module supporting
+     deviations on top of standard.";
+
+  revision 2022-11-20 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia Specific.";
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-xponvani:v-ani/bbf-xponvani:channel-partition" {
+      description
+      "The channel-partition of a v-ani interface cannot be modified.
+       The client can delete or remove the interface and subsequently create the interface again.";
+      deviate add {
+        im:immutable "create delete";
+      }
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-xponvani:v-ani/bbf-xponvani:preferred-channel-pair" {
+      description
+      "The preferred-channel-pair of a v-ani interface cannot be modified.
+       The client can delete or remove the interface and subsequently create the interface again.";
+      deviate add {
+        im:immutable "create delete";
+      }
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-xponvani:v-ani/bbf-xponvani:onu-id" {
+      description
+      "The onu-id of a v-ani interface cannot be modified.
+       The client can delete or remove the interface and subsequently create the interface again.";
+      deviate add {
+        im:immutable "create delete";
+      }
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-xponvani:olt-v-enet/bbf-xponvani:lower-layer-interface" {
+      description
+      "The lower-layer-interface of an olt-v-enet interface cannot be modified.
+       The client can delete or remove the interface and subsequently create the interface again.";
+      deviate add {
+        im:immutable "create delete";
+      }
+  }
+}

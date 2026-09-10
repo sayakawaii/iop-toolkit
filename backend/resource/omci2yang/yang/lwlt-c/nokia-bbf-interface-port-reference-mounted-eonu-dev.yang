@@ -1,0 +1,122 @@
+module nokia-bbf-interface-port-reference-mounted-eonu-dev {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-bbf-interface-port-reference-mounted-eonu-dev";
+
+  prefix nokia-bbf-interface-port-reference-mounted-eonu-dev;
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import ietf-interfaces-mounted {
+    prefix if-mounted;
+  }
+
+  import iana-if-type-mounted {
+    prefix ianaift-mounted;
+  }
+
+  import bbf-hardware-types {
+    prefix bbf-hwt;
+  }
+
+  import nokia-hardware-identities {
+    prefix nokia-hwi;
+  }
+
+  import bbf-interface-port-reference-mounted {
+    prefix bbf-if-port-ref-mounted;
+  }
+
+  import ietf-hardware-mounted {
+    prefix hw-mounted;
+  }
+
+  import iana-hardware {
+    prefix ianahw;
+  }
+
+  import nokia-interface-identities-mounted {
+    prefix nokia-if-id-mounted;
+  }
+
+  import bbf-xpon-if-type-mounted {
+      prefix bbf-xponift-mounted;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA IETF/System YANG module supporting
+     deviations on top of standard.";
+
+  revision 2024-05-22 {
+    description
+      "Add deviation to limit moca-uni interface type to match port-layer-if type moca.";
+    reference
+      "Nokia specific EPIC BBN-729";
+  }
+  revision 2023-09-26 {
+    description
+      "Add import bbf-xpon-if-type";
+    reference
+      "Nokia specific EPIC BBN-27738";
+  }
+
+  revision 2023-08-31 {
+    description
+      "Add deviation to limit rf-video-uni interface type to match port-layer-if type rf-video.";
+    reference
+      "Nokia specific EPIC BBN-27738";
+  }
+
+  revision 2022-06-09 {
+    description
+      "Add deviation to limit interface type to match port-layer-if type. Update it for BBN-38309.";
+    reference
+      "Aligning Onu Eqpt YANG model to TR-383";
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-if-port-ref-mounted:port-layer-if"
+  {
+    deviate add {
+      must
+          "(derived-from-or-self (../../../hw-mounted:hardware
+           /hw-mounted:component[hw-mounted:name=current()]/hw-mounted:class,
+           'ianahw:port') and (../if-mounted:type != 'ianaift-mounted:ethernetCsmacd')
+           and (../if-mounted:type != 'ianaift-mounted:voiceFXS')) or
+           ((derived-from-or-self (../../../hw-mounted:hardware
+            /hw-mounted:component[hw-mounted:name=current()]/hw-mounted:class,
+            'bbf-hwt:rj45') or derived-from-or-self (../../../hw-mounted:hardware
+            /hw-mounted:component[hw-mounted:name=current()]/hw-mounted:class,
+            'bbf-hwt:transceiver-link')) and (../if-mounted:type = 'ianaift-mounted:ethernetCsmacd')) or
+           ((derived-from-or-self (../../../hw-mounted:hardware
+            /hw-mounted:component[hw-mounted:name=current()]/hw-mounted:class,
+            'nokia-hwi:rj11') or derived-from-or-self (../../../hw-mounted:hardware
+            /hw-mounted:component[hw-mounted:name=current()]/hw-mounted:class,
+            'bbf-hwt:transceiver-link')) and (../if-mounted:type = 'ianaift-mounted:voiceFXS')) or
+           ((derived-from-or-self (../../../hw-mounted:hardware
+            /hw-mounted:component[hw-mounted:name=current()]/hw-mounted:class,
+            'nokia-hwi:virtual-port')) and (../if-mounted:type = 'bbf-xponift-mounted:onu-v-vrefpoint')) or
+           ((derived-from-or-self (../../../hw-mounted:hardware
+            /hw-mounted:component[hw-mounted:name=current()]/hw-mounted:class,
+            'nokia-hwi:rf-video')) and (../if-mounted:type = 'nokia-if-id-mounted:rf-video-uni'))" {
+          error-message
+            "The configured interface type and its port-layer-if type doesn't matched.";
+      }
+    }
+    
+    deviate add {
+      must "current()/../if-mounted:type != 'nokia-if-id-mounted:moca-uni' or "
+          +"current()/../../../hw-mounted:hardware/hw-mounted:component[hw-mounted:name=current()]/hw-mounted:class = 'nokia-hwi:moca'" {
+          error-message
+            "The configured interface type and its port-layer-if type doesn't matched.";
+      }
+    }
+  }
+}

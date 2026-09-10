@@ -1,0 +1,161 @@
+module nokia-ipfix-common-dev {
+
+    namespace
+        "http://www.nokia.com/Fixed-Networks/BBA/yang:nokia-ipfix-common-dev";
+
+    prefix nokia-ipfix-common-dev;
+
+    import ietf-ipfix-psamp { prefix ipfix;      }
+    import nokia-ipfix      { prefix nokia-ipfix;}
+    import iana-tls-cipher-suite-algs { prefix "tlscsa"; }
+
+    organization
+        "Nokia";
+
+    contact
+        "isam.yang@nokia.com";
+
+    description
+        "The NOKIA IPFIX YANG module supporting
+         deviations on top of standard.";
+
+    revision 2025-11-26 {
+        description "Add deviation for supported ciphers";
+        reference "Nokia specific";
+    }
+
+    revision 2025-05-02  {
+       description "EST keystore support.";
+       reference "Nokia specific.";
+    }
+
+    revision 2024-07-23 {
+        description "Keystore support for ipfix - also add supported ciphers for hello-params";
+        reference "Nokia specific.";
+    }
+
+    revision 2021-07-22 {
+        description "Adding description in all must clauses for Yang data constraints information";
+        reference "Nokia internal.";
+    }
+
+    revision 2021-05-10 {
+        description
+            "Deviating ipfix certificates module - initial version";
+        reference
+            "Nokia internal.";
+    }
+
+    // Deviations on the tsc certificate structure
+/*
+    deviation "/ipfix:ipfix/ipfix:exportingProcess/ipfix:destination/ipfix:DestinationParameters/ipfix:tcpExporter/ipfix:tcpExporter/" +
+              "nokia-ipfix:certificate/nokia-ipfix:hello-params" {
+        deviate not-supported;
+    }
+*/
+    deviation "/ipfix:ipfix/ipfix:exportingProcess/ipfix:destination/ipfix:DestinationParameters/ipfix:tcpExporter/ipfix:tcpExporter/" +
+              "nokia-ipfix:certificate/nokia-ipfix:server-auth" {
+        deviate delete {
+            must 'pinned-ca-certs or pinned-server-certs';
+        }
+    }
+
+
+    deviation "/ipfix:ipfix/ipfix:exportingProcess/ipfix:destination/ipfix:DestinationParameters/ipfix:tcpExporter/ipfix:tcpExporter/" +
+              "nokia-ipfix:certificate/nokia-ipfix:server-auth/nokia-ipfix:pinned-ca-certs" {
+        deviate add {
+            must "not(../est-certificate-profile)" {
+                //Note: If we want to enable the below error-message, then we first need to adapt the following ATC which would otherwise fail:
+                //       - CU_RANTCY_IPFIX_TLS_01::SUBMGMT_IPFIX_TLS_CERTIFICATE_USAGE
+                //error-message "Only one out of 'pinned-ca-certs' or 'est-certificate-profile' can not set.";
+                description "Ensures that 'pinned-ca-certs' is only set when 'est-certificate-profile' is not present and vice versa.";
+            }
+        }
+    }
+
+    deviation "/ipfix:ipfix/ipfix:exportingProcess/ipfix:destination/ipfix:DestinationParameters/ipfix:tcpExporter/ipfix:tcpExporter/" +
+              "nokia-ipfix:certificate/nokia-ipfix:server-auth/nokia-ipfix:pinned-server-certs" {
+        deviate not-supported;
+    }
+
+/*
+    deviation "/ipfix:ipfix/ipfix:exportingProcess/ipfix:destination/ipfix:DestinationParameters/ipfix:tcpExporter/ipfix:tcpExporter/"
+              +"nokia-ipfix:certificate/nokia-ipfix:client-identity/nokia-ipfix:auth-type/nokia-ipfix:certificate/nokia-ipfix:certificate/"
+              +"nokia-ipfix:local-or-keystore/nokia-ipfix:keystore" {
+        deviate not-supported;
+    }
+*/
+
+    deviation "/ipfix:ipfix/ipfix:exportingProcess/ipfix:destination/ipfix:DestinationParameters/ipfix:tcpExporter/ipfix:tcpExporter/"
+              +"nokia-ipfix:certificate/nokia-ipfix:client-identity/nokia-ipfix:auth-type/nokia-ipfix:certificate/nokia-ipfix:certificate/"
+              +"nokia-ipfix:local-or-keystore/nokia-ipfix:keystore/nokia-ipfix:reference" {
+        deviate not-supported;
+    }
+
+
+    deviation "/ipfix:ipfix/ipfix:exportingProcess/ipfix:destination/ipfix:DestinationParameters/ipfix:tcpExporter/ipfix:tcpExporter/"
+              +"nokia-ipfix:certificate/nokia-ipfix:client-identity/nokia-ipfix:auth-type/nokia-ipfix:certificate/nokia-ipfix:certificate/"
+              +"nokia-ipfix:local-or-keystore/nokia-ipfix:keystore/nokia-ipfix:certificate-reference-choice/"
+              +"nokia-ipfix:central-keystore-reference/nokia-ipfix:central-keystore-reference/nokia-ipfix:asymmetric-key" {
+        deviate add {
+            must '../certificate' {
+                error-message "'asymmetric-key' must be configured together with 'certificate' under 'central-keystore-reference'";
+                description "'asymmetric-key' must be configured together with 'certificate' under 'central-keystore-reference'.";
+            }
+        }
+    }
+
+
+    deviation "/ipfix:ipfix/ipfix:exportingProcess/ipfix:destination/ipfix:DestinationParameters/ipfix:tcpExporter/ipfix:tcpExporter/" +
+              "nokia-ipfix:certificate/nokia-ipfix:client-identity/nokia-ipfix:auth-type/nokia-ipfix:certificate/nokia-ipfix:certificate/nokia-ipfix:local-or-keystore/nokia-ipfix:local/nokia-ipfix:local-definition/nokia-ipfix:install-hidden-key/nokia-ipfix:input/nokia-ipfix:public-key" {
+        deviate not-supported;
+    }
+
+    deviation "/ipfix:ipfix/ipfix:exportingProcess/ipfix:destination/ipfix:DestinationParameters/ipfix:tcpExporter/ipfix:tcpExporter/" +
+              "nokia-ipfix:certificate/nokia-ipfix:client-identity/nokia-ipfix:auth-type/nokia-ipfix:certificate/nokia-ipfix:certificate/nokia-ipfix:local-or-keystore/nokia-ipfix:local/nokia-ipfix:local-definition/nokia-ipfix:install-hidden-key/nokia-ipfix:input/nokia-ipfix:algorithm" {
+        deviate not-supported;
+    }
+
+    deviation "/ipfix:ipfix/ipfix:exportingProcess/ipfix:destination/ipfix:DestinationParameters/ipfix:tcpExporter/ipfix:tcpExporter/" +
+              "nokia-ipfix:certificate/nokia-ipfix:client-identity/nokia-ipfix:auth-type/nokia-ipfix:certificate/nokia-ipfix:certificate/nokia-ipfix:local-or-keystore/nokia-ipfix:local/nokia-ipfix:local-definition/nokia-ipfix:generate-hidden-key" {
+        deviate not-supported;
+    }
+
+    deviation "/ipfix:ipfix/ipfix:exportingProcess/ipfix:destination/ipfix:DestinationParameters/ipfix:tcpExporter/ipfix:tcpExporter/" +
+              "nokia-ipfix:certificate/nokia-ipfix:client-identity/nokia-ipfix:auth-type/nokia-ipfix:certificate/nokia-ipfix:certificate/nokia-ipfix:local-or-keystore/nokia-ipfix:local/nokia-ipfix:local-definition/nokia-ipfix:public-key" {
+        deviate not-supported;
+    }
+
+    deviation "/ipfix:ipfix/ipfix:exportingProcess/ipfix:destination/ipfix:DestinationParameters/ipfix:tcpExporter/ipfix:tcpExporter/" +
+              "nokia-ipfix:certificate/nokia-ipfix:client-identity/nokia-ipfix:auth-type/nokia-ipfix:certificate/nokia-ipfix:certificate/nokia-ipfix:local-or-keystore/nokia-ipfix:local/nokia-ipfix:local-definition/nokia-ipfix:algorithm" {
+        deviate not-supported;
+    }
+
+    deviation "/ipfix:ipfix/ipfix:exportingProcess/ipfix:destination/ipfix:DestinationParameters/ipfix:tcpExporter/ipfix:tcpExporter/" +
+              "nokia-ipfix:certificate/nokia-ipfix:client-identity/nokia-ipfix:auth-type/nokia-ipfix:certificate/nokia-ipfix:certificate/nokia-ipfix:local-or-keystore/nokia-ipfix:local/nokia-ipfix:local-definition/nokia-ipfix:certificate-expiration" {
+        deviate not-supported;
+    }
+
+    deviation "/ipfix:ipfix/ipfix:exportingProcess/ipfix:destination/ipfix:DestinationParameters/ipfix:tcpExporter/ipfix:tcpExporter/" +
+              "nokia-ipfix:certificate/nokia-ipfix:client-identity/nokia-ipfix:auth-type/nokia-ipfix:certificate/nokia-ipfix:certificate/nokia-ipfix:local-or-keystore/nokia-ipfix:local/nokia-ipfix:local-definition/nokia-ipfix:private-key" {
+        deviate not-supported;
+    }
+
+    deviation "/ipfix:ipfix/ipfix:exportingProcess/ipfix:destination/ipfix:DestinationParameters/ipfix:tcpExporter/ipfix:tcpExporter/" +
+              "nokia-ipfix:certificate/nokia-ipfix:hello-params/nokia-ipfix:cipher-suites/nokia-ipfix:cipher-suite" {
+        description "The YANG identifiers of the supported ciphers ordered by descending preference";
+        deviate add {
+            must "(current() = 'tlscsa:tls-aes-256-gcm-sha384' or current() = 'tlscsa:tls-chacha20-poly1305-sha256'"+
+                "or current() = 'tlscsa:tls-aes-128-gcm-sha256' or current() = 'tlscsa:tls-ecdhe-rsa-with-aes-256-gcm-sha384'"+
+                "or current() = 'tlscsa:tls-ecdhe-rsa-with-chacha20-poly1305-sha256' or current() = 'tlscsa:tls-ecdhe-rsa-with-aes-128-gcm-sha256'"+
+                "or current() = 'tlscsa:tls-ecdhe-rsa-with-aes-256-cbc-sha384' or current() = 'tlscsa:tls-ecdhe-rsa-with-aes-256-cbc-sha'"+
+                "or current() = 'tlscsa:tls-rsa-with-aes-256-gcm-sha384' or current() = 'tlscsa:tls-rsa-with-aes-256-cbc-sha256'"+
+                "or current() = 'tlscsa:tls-rsa-with-aes-256-cbc-sha' or current() = 'tlscsa:tls-ecdhe-rsa-with-aes-128-cbc-sha256'"+
+                "or current() = 'tlscsa:tls-ecdhe-rsa-with-aes-128-cbc-sha' or current() = 'tlscsa:tls-rsa-with-aes-128-gcm-sha256'"+
+                "or current() = 'tlscsa:tls-rsa-with-aes-128-cbc-sha256' or current() = 'tlscsa:tls-rsa-with-aes-128-cbc-sha')"{
+                error-message "this cipher is not supported";
+                description "The YANG identifiers of the supported ciphers ordered by descending preference";
+            }
+        }
+    }
+}

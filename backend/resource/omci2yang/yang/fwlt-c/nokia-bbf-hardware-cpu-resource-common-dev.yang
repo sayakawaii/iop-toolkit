@@ -1,0 +1,41 @@
+module nokia-bbf-hardware-cpu-resource-common-dev {
+
+  namespace
+     "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+   + "nokia-bbf-hardware-cpu-resource-common-dev";
+
+  prefix nokia-bbf-hardware-cpu-resource-common-dev;
+
+  import ietf-hardware {
+    prefix hw;
+  }
+
+  import bbf-hardware-cpu-resource {
+    prefix bbf-cpu-rs;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "The NOKIA BBF/hardware YANG module supporting
+     deviations on top of standard.";
+
+/* revision */
+
+  revision 2021-10-01 {
+    description
+      "Move to common category";
+    reference
+      "Nokia specific";
+  }
+
+  deviation "/hw:hardware-state/hw:component/bbf-cpu-rs:cpu-processor-data/bbf-cpu-rs:thread-counts" {
+    deviate  not-supported;
+  }
+   
+}

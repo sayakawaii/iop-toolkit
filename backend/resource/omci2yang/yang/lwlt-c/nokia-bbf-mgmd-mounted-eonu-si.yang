@@ -1,0 +1,54 @@
+module nokia-bbf-mgmd-mounted-eonu-si {
+
+  namespace "urn:broadband-forum-org:yang:" +
+            "nokia-bbf-mgmd-mounted-eonu-si";  
+            
+  prefix "nokia-bbf-mgmd-mounted-eonu-si";
+
+  /* import */ 
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import bbf-mgmd-mounted {
+	prefix bbf-mgmd-mounted;
+  }
+
+  import nokia-sdan-service-impact {
+    prefix nokia-si;
+  }
+
+  organization
+    "NOKIA";
+    
+  contact
+    "TBD";
+    
+  description
+    "The NOKIA BBF Multicast YANG module supporting
+     deviations on top of standard.";
+
+  revision 2023-06-30 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia Specific.";
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/bbf-mgmd-mounted:multicast/bbf-mgmd-mounted:mgmd/bbf-mgmd-mounted:multicast-vpn/bbf-mgmd-mounted:multicast-interface-to-host/bbf-mgmd-mounted:vlan-sub-interface" {
+      description
+       "Modifying the vlan-sub-interface referenced by multicast-interface-to-host would cause multicast service impact";
+      deviate add {
+        nokia-si:service-impact;
+      }
+  }
+  
+
+  deviation "/onu:onus/onu:onu/onu:root/bbf-mgmd-mounted:multicast/bbf-mgmd-mounted:mgmd/bbf-mgmd-mounted:multicast-vpn/bbf-mgmd-mounted:multicast-network-interface/bbf-mgmd-mounted:multicast-transport/bbf-mgmd-mounted:single-uplink/bbf-mgmd-mounted:single-uplink-interface-data/bbf-mgmd-mounted:vlan-sub-interface" {
+      description
+       "Modifying the vlan-sub-interface referenced by multicast-network-interface would cause multicast service impact";
+     deviate add {
+        nokia-si:service-impact;
+      }
+  }
+}

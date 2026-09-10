@@ -1,0 +1,198 @@
+submodule bbf-voip-service-provider-mounted {
+  yang-version 1.1;
+  belongs-to bbf-sip-voip-mounted  {
+	prefix bbf-sip-voip-mounted;
+  }
+ 
+  include bbf-sip-profiles-mounted;
+  include bbf-sip-types-mounted;
+  include bbf-sip-voip-base-mounted;
+  
+  organization
+    "Broadband Forum <https://www.broadband-forum.org>
+     FTTdp (Fiber to the Distribution Point) Work Area";
+
+  contact
+    "Comments or questions about this Broadband Forum YANG module
+     should be directed to <mailto:help@broadband-forum.org>.
+
+     Editor:      Joey Boyd, ADTRAN
+                  <mailto:joey.boyd@adtran.com>
+
+     Editor:      Ken Kerpez, ASSIA, Inc.
+                  <mailto:kkerpez@assia-inc.com>
+
+     WA Director: Christopher Croot, BT plc
+                  <mailto:chris.croot@bt.com>
+
+     WA Director: Sven Ooghe, Nokia
+                  <mailto:sven.ooghe@nokia.com>";
+
+  description
+    "This module contains a collection of YANG definitions for 
+     supporting the Voip Service Provider (VSP).
+
+     Copyright (c) 2016, 2017 Broadband Forum
+
+     Redistribution and use in source and binary forms, with or
+     without modification, are permitted provided that the following
+     conditions are met:
+
+     1. Redistributions of source code must retain the above copyright
+        notice, this list of conditions and the following disclaimer.
+
+     2. Redistributions in binary form must reproduce the above
+        copyright notice, this list of conditions and the following
+        disclaimer in the documentation and/or other materials
+        provided with the distribution.
+
+     3. Neither the name of the copyright holder nor the names of its
+        contributors may be used to endorse or promote products
+        derived from this software without specific prior written
+        permission.
+
+     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
+     CONTRIBUTORS \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+     INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+     DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+     CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+     SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+     NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+     CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+     STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+     ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+     ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+     The above license is used as a license under copyright only.
+     Please reference the Forum IPR Policy for patent licensing terms
+     <https://www.broadband-forum.org/ipr-policy>.
+
+     Any moral rights which are necessary to exercise under the above
+     license grant are also deemed granted under this license.
+
+     This version of this YANG module is part of TR-355c1; see
+     the TR itself for full legal notices.";
+
+  revision 2020-03-06 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: 2020-03-06.";
+    reference
+      " ";
+  }     
+
+  grouping voice-service-settings {
+        leaf dynamic-payload-type {
+	  type enumeration {
+	    enum far-end {
+		  value 1;
+		  description 
+		    "Negotiate with supported by far-end  ";
+	    }
+	    enum asymmetric {
+		  value 2;
+		  description 
+		    "Negotiate with different payload type for
+                     sending and receiving  ";
+	    }
+	  }
+	  default far-end;
+	  description
+	    "How to negotiate dynamic payload type";
+	}
+	leaf release-mode {
+	  type enumeration {
+	    enum normal {
+		  value 1;
+		  description
+		    "Sending BYE immediately, applicable for the
+                     normal call release procedure ";
+	    }
+	    enum caller {
+		  value 2;
+		  description
+		    "Postpone BYE until access-held-time times out for
+                     caller, only postpone BYE in case the subscriber is
+		     caller ";
+	    }
+	    enum callee {
+		  value 3;
+		  description
+		    "Postpone BYE until access-held-time times out for
+                     callee, only postpone BYE in case the subscriber is
+		     callee ";
+	    }
+	    enum both {
+		  value 4;
+		  description
+		    "Postpone BYE until access-held-time times out for
+			 caller and callee, postpone BYE in case the subscriber
+			 is caller or callee ";
+	    }
+	  }	  
+	  default normal;
+	  description  
+	    "send BYE immediately or not after caller/callee/both 
+	     onhook.";
+       }
+  }
+  
+  grouping voip-service-provider {
+    leaf admin-state {
+        type enumeration {
+          enum unlocked {
+        	  value 1;
+        	  description
+        	    "The VSP is unlocked.";
+          }
+          enum locked {
+        	  value 2;
+        	  description
+        	    "The VSP is locked.";
+          }					
+        }
+        default locked;
+        description
+        	"The administrative state of the VSP.";
+    }
+    uses voice-service-settings;
+    leaf dialplan-characteristics {
+	  /* type bbf-sip-voip-mounted:dialplan-digitmap-ref; */
+      type leafref {
+ 	    path "../../../../bbf-sip-voip-mounted:sip-profiles"
+           + "/bbf-sip-voip-mounted:dialplan-digitmap-profiles"
+		   + "/bbf-sip-voip-mounted:dialplan-digitmap-profile"
+		   + "/bbf-sip-voip-mounted:name";	
+	  }	  
+	  description
+	    "Dialplan and digitmap profile for a specific Voip Service 
+		 Provider.";
+    }
+    leaf suppl-services-feature-access-codes {
+      /*    type bbf-sip-voip-mounted:feature-access-codes-profile-ref; */
+      type leafref {
+        path "../../../../bbf-sip-voip-mounted:sip-profiles"
+           + "/bbf-sip-voip-mounted:feature-access-codes-profiles"
+           + "/bbf-sip-voip-mounted:feature-access-codes-profile"
+		   + "/bbf-sip-voip-mounted:name";
+      }      
+	  description
+	    "Feature access codes to activate, deactivate or interrogate
+		 supplementary services.";
+    } 
+    leaf subscription-profile {
+	if-feature subscriptions;
+        type leafref {
+ 	    path "../../../../bbf-sip-voip-mounted:sip-profiles"
+	       + "/bbf-sip-voip-mounted:subscription-profiles"
+	       + "/bbf-sip-voip-mounted:subscription-profile"
+	       + "/bbf-sip-voip-mounted:name";
+	  }
+	  description
+	    "References the subscription profile.";
+    }   	
+  }	
+}

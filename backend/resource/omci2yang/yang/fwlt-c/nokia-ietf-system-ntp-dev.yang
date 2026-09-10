@@ -1,0 +1,93 @@
+module nokia-ietf-system-ntp-dev {
+
+  yang-version 1.1;
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-ietf-system-ntp-dev";
+
+  prefix  nokia-ietf-system-ntp-dev;
+
+  import ietf-inet-types {
+    prefix inet;
+  }
+
+  import ietf-system {
+    prefix sys;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA IETF/System YANG module supporting
+     deviations on top of standard.";
+
+  revision 2021-07-30 {
+    description
+      "Add missing descriptions for must-statements.";
+    reference
+      "Nokia specific.";
+  }
+
+  revision 2020-05-01 {
+    description
+      "Initial revision for disable lt board ntp configuration,systemmanagement_default.xml";
+    reference
+      "TBD";
+  }
+
+/**********************************************/
+/* definitions which should always be present */
+/**********************************************/
+
+/* deviations max-elements */
+/* ----------------------- */
+/* add max-elements to limit the number of created ntp servers   */
+/* max-elements defined for demo differs from product defined */
+/* max values                                                 */
+
+/* profiles defined in ietf-system.yang         */
+
+/*
+  deviation "/sys:system/sys:ntp/sys:server" {
+    deviate add {
+      max-elements 1;
+    }
+  }
+*/
+
+/***********************************************************************************/
+/* definitions which are nokia system restrictions compared to standard definition */
+/***********************************************************************************/
+
+  deviation "/sys:system/sys:ntp/sys:server/sys:transport/sys:udp/sys:udp/sys:port" {
+    deviate replace {
+      type inet:port-number {
+        range "123"; //other values not supported by proxy
+      }
+    }
+  }
+
+  deviation "/sys:system/sys:ntp/sys:server/sys:name" {
+    deviate add {
+      must "current() = 'ntp_fixed_server'" {
+         error-message "Only ntp_fixed_server is supported";
+         description "The only name allowed for NTP server is 'ntp_fixed_server'.";
+      }
+    }
+  }
+
+  deviation "/sys:system/sys:ntp/sys:server/sys:transport/sys:udp/sys:udp/sys:address" {
+    deviate add {
+      must "current() = '169.254.1.253'" {
+         error-message "Only 169.254.1.253 is supported";
+         description "The only IP address allowed for NTP server is 169.254.1.253.";
+      }
+    }
+  }
+
+}
+

@@ -1,0 +1,318 @@
+module nokia-sdan-moca-pm-threshold-profiles-mounted {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+          + "nokia-sdan-moca-pm-threshold-profiles-mounted";
+  prefix nokia-moca-pm-tca-prof-mounted;
+
+  import bbf-yang-types {
+    prefix bbf-yang;
+  }
+  import nokia-yang-types-mounted {
+    prefix nok-typ-mounted;
+  }
+  import nokia-hardware-profiles-mounted {
+    prefix nokia-hw-prof-mounted;
+  }
+  import nokia-sdan-hardware-pm-threshold-profiles-mounted {
+    prefix nokia-hw-pm-threshold-prof-mounted;
+  }
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  organization
+    "Nokia";
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+  description
+    "This module contains a collection of YANG definitions for
+     supporting Nokia specific requirements as applicable to its
+     access network equipment.
+
+     This module, in particular, augments the performance monitoring threshold
+     profiles with data that allows you to configure thresholding values for
+     performance data associated with MoCA Performance monitoring counters.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whmocaer or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2022, Nokia. All Rights Reserved.";
+
+
+  revision 2025-06-10 {
+    description
+      "TCA profile support for MoCA Physical PM History Data performace monitoring counters";
+    reference
+      "ITU-T G.988 OMCI specification";
+  }
+
+
+  identity moca-pm-tca-alert {
+    description
+      "Indicates which MoCA performance monitoring TCA element has reached the configured
+       threshold within the current interval";
+  }
+
+  identity in-errored-packets-exceeded {
+    base moca-pm-tca-alert;
+    description
+      "Indicates that the total number of received errored packet count on the MoCA PHY
+       has reached the configured threshold value within the current interval";
+  }
+
+  identity in-errored-and-missed-packets-exceeded {
+    base moca-pm-tca-alert;
+    description
+      "Indicates that the total number of received errored and missed packet count on the MoCA PHY
+       has reached the configured threshold value within the current interval";
+  }
+
+  identity in-unicast-packets-exceeded {
+    base moca-pm-tca-alert;
+    description
+      "Indicates that the total number of received unicast packet count on the MoCA ethernet
+       has reached the configured threshold value within the current interval";
+  }
+
+  identity in-discarded-packets-exceeded {
+    base moca-pm-tca-alert;
+    description
+      "Indicates that the total number of received discarded packet count on the MoCA ethernet
+       has reached the configured threshold value within the current interval";
+  }
+
+  identity in-unknown-packets-exceeded {
+    base moca-pm-tca-alert;
+    description
+      "Indicates that the total number of received unknown packet count on the MoCA ethernet
+       has reached the configured threshold value within the current interval";
+  }
+
+  identity in-multicast-packets-exceeded {
+    base moca-pm-tca-alert;
+    description
+      "Indicates that the total number of received multicast packet count on the MoCA ethernet
+       has reached the configured threshold value within the current interval";
+  }
+
+  identity in-broadcast-packets-exceeded {
+    base moca-pm-tca-alert;
+    description
+      "Indicates that the total number of received broadcast packet count on the MoCA ethernet
+       has reached the configured threshold value within the current interval";
+  }
+
+  identity in-octets-exceeded {
+    base moca-pm-tca-alert;
+    description
+      "Indicates that the total number of received octets count on the MoCA ethernet
+       has reached the configured threshold value within the current interval";
+  }
+
+  identity out-unicast-packets-exceeded {
+    base moca-pm-tca-alert;
+    description
+      "Indicates that the total number of transmitted unicast packet count on the MoCA ethernet
+       has reached the configured threshold value within the current interval";
+  }
+
+  identity out-discarded-packets-exceeded {
+    base moca-pm-tca-alert;
+    description
+      "Indicates that the total number of transmitted discarded packet count on the MoCA ethernet
+       has reached the configured threshold value within the current interval";
+  }
+
+  identity out-errored-packets-exceeded {
+    base moca-pm-tca-alert;
+    description
+      "Indicates that the total number of transmitted errored packet count on the MoCA ethernet
+       has reached the configured threshold value within the current interval";
+  }
+
+  identity out-unknown-packets-exceeded {
+    base moca-pm-tca-alert;
+    description
+      "Indicates that the total number of transmitted unknown packet count on the MoCA ethernet
+       has reached the configured threshold value within the current interval";
+  }
+
+  identity out-multicast-packets-exceeded {
+    base moca-pm-tca-alert;
+    description
+      "Indicates that the total number of transmitted multicast packet count on the MoCA ethernet
+       has reached the configured threshold value within the current interval";
+  }
+
+  identity out-broadcast-packets-exceeded {
+    base moca-pm-tca-alert;
+    description
+      "Indicates that the total number of transmitted broadcast packet count on the MoCA ethernet
+       has reached the configured threshold value within the current interval";
+  }
+
+  identity out-octets-exceeded {
+    base moca-pm-tca-alert;
+    description
+      "Indicates that the total number of transmitted octets count on the MoCA ethernet
+       has reached the configured threshold value within the current interval";
+  }
+
+  augment "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles" {
+    description "augment pm profiles";
+    list moca-interface-tca-profile {
+      key "name";
+      description
+        "TCA profile to configure moca interface parameters";
+      leaf name {
+        type nok-typ-mounted:nokia-string-ascii64;
+        description
+          "Indicates name of the profile that can be applied to moca
+           interface performace monitoring counters.";
+      }
+      leaf in-errored-threshold {
+        type bbf-yang:performance-counter64;
+        description
+          "Threshold value for the errored packets.
+           When number of errored packets crosses this threshold a TCA is raised.";
+      }
+      leaf in-errored-and-missed-threshold {
+        type bbf-yang:performance-counter64;
+        description
+          "Threshold value for the errored and missed packets.
+           When number of errored and missed packets crosses this threshold a TCA is raised.";
+      }
+    }
+
+    list moca-ethernet-frame-tca-profile {
+        key "name";
+      description
+        "TCA profile to configure moca ethernet frame parameters";
+      leaf name {
+        type nok-typ-mounted:nokia-string-ascii64;
+        description
+          "Indicates name of the profile that can be applied to moca
+           ethernet frame performace monitoring counters.";
+      }
+      leaf in-unicast-packets-threshold {
+        type bbf-yang:performance-counter64;
+        description
+          "Threshold value for the incoming unicast packets.
+           When number of incoming unicast packets crosses this threshold a TCA is raised.";
+      }
+      leaf in-discarded-packets-threshold {
+        type bbf-yang:performance-counter64;
+        description
+          "Threshold value for the incoming discarded packets.
+           When number of incoming discarded packets crosses this threshold a TCA is raised.";
+      }
+      leaf in-errored-packets-threshold {
+        type bbf-yang:performance-counter64;
+        description
+          "Threshold value for the incoming errored packets.
+           When number of incoming errored packets crosses this threshold a TCA is raised.";
+      }
+      leaf in-unknown-packets-threshold {
+        type bbf-yang:performance-counter64;
+        description
+          "Threshold value for the incoming unknown packets.
+           When number of incoming unknown packets crosses this threshold a TCA is raised.";
+      }
+      leaf in-multicast-packets-threshold {
+        type bbf-yang:performance-counter64;
+        description
+          "Threshold value for the incoming multicast packets.
+           When number of incoming multicast packets crosses this threshold a TCA is raised.";
+      }
+      leaf in-broadcast-packets-threshold {
+        type bbf-yang:performance-counter64;
+        description
+          "Threshold value for the incoming broadcast packets.
+           When number of incoming broadcast packets crosses this threshold a TCA is raised.";
+      }
+      leaf in-octets-threshold {
+        type bbf-yang:performance-counter64;
+        description
+          "Threshold value for the incoming octets.
+           When number of incoming octets crosses this threshold a TCA is raised.";
+      }
+      leaf out-unicast-packets-threshold {
+        type bbf-yang:performance-counter64;
+        description
+          "Threshold value for the outgoing unicast packets.
+           When number of outgoing unicast packets crosses this threshold a TCA is raised.";
+      }
+      leaf out-discarded-packets-threshold {
+        type bbf-yang:performance-counter64;
+        description
+          "Threshold value for the outgoing discarded packets.
+           When number of outgoing discarded packets crosses this threshold a TCA is raised.";
+      }
+      leaf out-errored-packets-threshold {
+        type bbf-yang:performance-counter64;
+        description
+          "Threshold value for the outgoing errored packets.
+           When number of outgoing errored packets crosses this threshold a TCA is raised.";
+      }
+      leaf out-unknown-packets-threshold {
+        type bbf-yang:performance-counter64;
+        description
+          "Threshold value for the outgoing unknown packets.
+           When number of outgoing unknown packets crosses this threshold a TCA is raised.";
+      }
+      leaf out-multicast-packets-threshold {
+        type bbf-yang:performance-counter64;
+        description
+          "Threshold value for the outgoing multicast packets.
+           When number of outgoing multicast packets crosses this threshold a TCA is raised.";
+      }
+      leaf out-broadcast-packets-threshold {
+        type bbf-yang:performance-counter64;
+        description
+          "Threshold value for the outgoing broadcast packets.
+           When number of outgoing broadcast packets crosses this threshold a TCA is raised.";
+      }
+      leaf out-octets-threshold {
+        type bbf-yang:performance-counter64;
+        description
+          "Threshold value for the outgoing octets.
+           When number of outgoing octets crosses this threshold a TCA is raised.";
+      }
+    }
+ }
+
+}

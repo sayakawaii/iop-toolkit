@@ -1,0 +1,180 @@
+module nokia-ietf-routing-mounted-eonu-dev {
+
+  namespace "urn:ietf:params:xml:ns:yang:nokia-ietf-routing-mounted-eonu-dev";
+
+  prefix nokia-ietf-routing-mounted-eonu-dev;
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import ietf-routing-mounted {
+    prefix rt-mounted;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA IETF/Routing YANG module supporting
+     deviations on top of standard.";
+
+  /* revision */
+  revision 2024-12-20 {
+    description
+      "Adding Deviations for not-supported routing oper-data and config-data";
+    reference
+      "Sub-task BBN-250454 and BBN-258321";
+  }
+
+  revision 2024-01-02 {
+    description
+      "Adding Deviations for not-supported routing-state";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2022-01-13 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia Specific";
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/rt-mounted:routing-state/rt-mounted:router-id" {
+    description
+      "This deviation assures that router-id is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/rt-mounted:routing-state/rt-mounted:interfaces" {
+    description
+      "This deviation assures that interfaces is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/rt-mounted:routing-state/rt-mounted:control-plane-protocols" {
+    description
+      "This deviation assures that control-plane-protocols is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/rt-mounted:routing-state/rt-mounted:ribs/rt-mounted:rib/rt-mounted:address-family" {
+    description
+      "This deviation assures that rib route route-preference is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/rt-mounted:routing-state/rt-mounted:ribs/rt-mounted:rib/rt-mounted:routes/rt-mounted:route/rt-mounted:route-preference" {
+    description
+      "This deviation assures that rib route route-preference is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/rt-mounted:routing-state/rt-mounted:ribs/rt-mounted:rib/rt-mounted:routes/rt-mounted:route/rt-mounted:next-hop"
+          + "/rt-mounted:next-hop-options/rt-mounted:simple-next-hop/rt-mounted:outgoing-interface" {
+    description
+      "This deviation assures that rib route simple-next-hop outgoing-interface is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/rt-mounted:routing-state/rt-mounted:ribs/rt-mounted:rib/rt-mounted:routes/rt-mounted:route/rt-mounted:next-hop"
+          + "/rt-mounted:next-hop-options/rt-mounted:special-next-hop" {
+    description
+      "This deviation assures that rib route special-next-hop is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/rt-mounted:routing-state/rt-mounted:ribs/rt-mounted:rib/rt-mounted:routes/rt-mounted:route/rt-mounted:next-hop"
+          + "/rt-mounted:next-hop-options/rt-mounted:next-hop-list/rt-mounted:next-hop-list"
+          + "/rt-mounted:next-hop/rt-mounted:outgoing-interface" {
+    description
+      "This deviation assures that rib route next-hop-list outgoing-interface is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/rt-mounted:routing-state/rt-mounted:ribs/rt-mounted:rib/rt-mounted:routes/rt-mounted:route/rt-mounted:source-protocol" {
+    description
+      "This deviation assures that rib route source-protocol is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/rt-mounted:routing-state/rt-mounted:ribs/rt-mounted:rib/rt-mounted:routes/rt-mounted:route/rt-mounted:active" {
+    description
+      "This deviation assures that rib route active is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/rt-mounted:routing-state/rt-mounted:ribs/rt-mounted:rib/rt-mounted:routes/rt-mounted:route/rt-mounted:last-updated" {
+    description
+      "This deviation assures that rib route last-updated is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/rt-mounted:routing-state/rt-mounted:ribs/rt-mounted:rib/rt-mounted:active-route/rt-mounted:output/rt-mounted:route/rt-mounted:next-hop"
+          + "/rt-mounted:next-hop-options/rt-mounted:simple-next-hop/rt-mounted:outgoing-interface" {
+    description
+      "This deviation assures that rib active-route simple-next-hop outgoing-interface is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/rt-mounted:routing-state/rt-mounted:ribs/rt-mounted:rib/rt-mounted:active-route/rt-mounted:output/rt-mounted:route/rt-mounted:next-hop"
+          + "/rt-mounted:next-hop-options/rt-mounted:special-next-hop" {
+    description
+      "This deviation assures that rib active-route special-next-hop is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/rt-mounted:routing-state/rt-mounted:ribs/rt-mounted:rib/rt-mounted:active-route/rt-mounted:output/rt-mounted:route/rt-mounted:next-hop"
+          + "/rt-mounted:next-hop-options/rt-mounted:next-hop-list/rt-mounted:next-hop-list"
+          + "/rt-mounted:next-hop/rt-mounted:outgoing-interface" {
+    description
+      "This deviation assures that rib active-route next-hop-list outgoing-interface is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/rt-mounted:routing-state/rt-mounted:ribs/rt-mounted:rib/rt-mounted:active-route/rt-mounted:output/rt-mounted:route/rt-mounted:source-protocol" {
+    description
+      "This deviation assures that rib active-route source-protocol is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/rt-mounted:routing-state/rt-mounted:ribs/rt-mounted:rib/rt-mounted:active-route/rt-mounted:output/rt-mounted:route/rt-mounted:active" {
+    description
+      "This deviation assures that rib active-route active is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/rt-mounted:routing-state/rt-mounted:ribs/rt-mounted:rib/rt-mounted:active-route/rt-mounted:output/rt-mounted:route/rt-mounted:last-updated" {
+    description
+      "This deviation assures that rib active-route last-updated is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/rt-mounted:routing-state/rt-mounted:ribs/rt-mounted:rib/rt-mounted:active-route" {
+    description
+      "This deviation assures that rib active-route is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/rt-mounted:routing-state" {
+    description
+      "This deviation assures that routing-state is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/rt-mounted:routing/rt-mounted:control-plane-protocols/rt-mounted:control-plane-protocol/rt-mounted:description" {
+    description
+      "This deviation assures that control-plane-protocol description leaf is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/rt-mounted:routing/rt-mounted:ribs" {
+    description
+      "This deviation assures that ribs container is not supported.";
+    deviate not-supported;
+  }
+}

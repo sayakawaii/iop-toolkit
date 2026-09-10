@@ -1,0 +1,231 @@
+module nokia-ietf-alarms-common-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-ietf-alarms-common-dev";
+
+  prefix nokia-ietf-alarms-common-dev;
+
+  import ietf-alarms {
+    prefix al;
+  }
+
+  import nokia-yang-types{
+     prefix "nok-typ";
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG deviations on top
+     of the standard module.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2021, Nokia. All Rights Reserved.";
+
+
+  revision 2026-06-12 {
+    description
+      "Added description and error-message under the length constraint for
+       the alarm-type-qualifier-match deviation; only the empty string is
+       allowed.";
+    reference
+      "Nokia Specific.";
+  }
+
+  revision 2026-02-20 {
+    description
+      "Added deviations for the alarm shelving (suppression) feature:
+       restricted shelf/name length, limited shelf list to one entry,
+       constrained alarm-type-qualifier-match to the empty string, and
+       marked shelf/resource and shelved-alarm purge/last-raised/
+       alt-resource as not-supported.";
+    reference
+      "Nokia Specific.";
+  }
+
+    revision 2025-10-01 {
+    description
+      "operational leaf-list alarm-notification->alt-resource and
+       alarms->alarm-inventory->alarm-type->resource is not supported.";
+    reference
+      "Nokia Specific.";
+  }
+
+    revision 2023-02-13 {
+    description
+      "operational leaf-list alt-resource is not supported.";
+    reference
+      "Nokia Specific.";
+  }
+
+    revision 2022-11-16 {
+    description
+      "notification alarm-inventory-changed is not supported.";
+    reference
+      "Nokia Specific.";
+  }
+
+  revision 2021-10-27 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia Specific.";
+  }
+
+/**********************************************/
+/* definitions which should always be present */
+/**********************************************/
+
+
+  deviation "/al:alarms/al:alarm-list/al:purge-alarms" {
+    description "This action is not supported currently";
+    deviate not-supported;
+  }
+
+  deviation "/al:alarms/al:control/al:max-alarm-status-changes" {
+    description "The configuration of these leaves are not supported currently";
+    deviate not-supported;
+  }
+  deviation "/al:alarms/al:control/al:notify-status-changes" {
+    description "The configuration of these leaves are not supported currently";
+    deviate not-supported;
+  }
+  deviation "/al:alarms/al:control/al:notify-severity-level" {
+    description "The configuration of these leaves are not supported currently";
+    deviate not-supported;
+  }
+  deviation "/al:alarms/al:alarm-list/al:alarm/al:last-raised" {
+    description "This operational leaf is not supported currently";
+    deviate not-supported;
+  }
+  deviation "/al:alarms/al:summary/al:alarm-summary/al:cleared" {
+    description "This operational leaf is not supported currently";
+    deviate not-supported;
+  }
+  deviation "/al:alarms/al:summary/al:alarm-summary/al:not-cleared" {
+    description "This operational leaf is not supported currently";
+    deviate not-supported;
+  }
+  deviation "/al:alarm-inventory-changed" {
+    description "This notification is not supported currently";
+    deviate not-supported;
+  }
+  deviation "/al:alarms/al:alarm-list/al:alarm/al:alt-resource" {
+    description "This operational leaf-list is not supported currently";
+    deviate not-supported;
+  }
+  deviation "/al:alarm-notification/al:alt-resource" {
+    description "This operational leaf-list is not supported currently";
+    deviate not-supported;
+  }
+  deviation "/al:alarms/al:alarm-inventory/al:alarm-type/al:resource" {
+    description "This operational leaf-list is not supported currently";
+    deviate not-supported;
+  }
+
+  deviation "/al:alarms/al:control/al:alarm-shelving/al:shelf" {
+    description
+      "A shelf defines the criteria used to shelve (suppress) alarms.
+       An alarm is matched on its 'alarm-type-id' (the 'alarm-type-qualifier-match'
+       list key is restricted to the empty string) or on the Nokia-specific
+       'severity-level' threshold; the standard 'resource' leaf-list is
+       not supported as a shelving criterion. At most one shelf entry is
+       allowed. Contrary to the IETF default behaviour, a shelf entry that
+       specifies no matching criteria does NOT shelve any alarms.";
+    deviate add {}
+  }
+
+  deviation "/al:alarms/al:control/al:alarm-shelving/al:shelf/al:name" {
+    description "Shelf name can be up to 64 characters.";
+    deviate replace {
+      type nok-typ:nokia-string-ascii64;
+    }
+  }
+
+  deviation "/al:alarms/al:control/al:alarm-shelving/al:shelf/al:alarm-type/al:alarm-type-qualifier-match" {
+    description
+      "Restricted to the empty string. As this leaf is a list key it
+       MUST still be present in configuration, but its only valid value
+       is \"\". Alarm type matching is performed based on alarm-type-id only.";
+    deviate replace {
+      type string {
+        length "0" {
+          error-message
+            "alarm-type-qualifier-match must be the empty string (\"\"); no other value is allowed.";
+          description
+            "Only the empty string (\"\") is allowed for alarm-type-qualifier-match.";
+        }
+      }
+    }
+  }
+
+  deviation "/al:alarms/al:control/al:alarm-shelving/al:shelf/al:resource" {
+    description
+      "The 'resource' leaf-list is not supported in Nokia implementation.
+       Resource is not used in the suppression criteria for alarm shelving.
+       Alarm suppression is based on other criteria such as alarm-type-id
+       and severity Nokia-specific filtering mechanisms.";
+    deviate not-supported;
+  }
+
+  deviation "/al:alarms/al:control/al:alarm-shelving/al:shelf" {
+    description "This list contains the shelved-alarms profiles. The maximum allowed number of profiles is one";
+    deviate add {
+      max-elements 1;
+    }
+  }
+
+  deviation "/al:alarms/al:shelved-alarms/al:shelved-alarm/al:last-raised" {
+    description "This operational leaf is not supported currently";
+    deviate not-supported;
+  }
+  deviation "/al:alarms/al:shelved-alarms/al:shelved-alarm/al:alt-resource" {
+    description "This operational leaf-list is not supported currently";
+    deviate not-supported;
+  }
+  deviation "/al:alarms/al:shelved-alarms/al:purge-shelved-alarms" {
+    description "This action is not supported currently";
+    deviate not-supported;
+  }
+
+}

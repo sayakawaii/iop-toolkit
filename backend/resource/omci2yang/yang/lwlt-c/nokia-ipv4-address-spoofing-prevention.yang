@@ -1,0 +1,701 @@
+module nokia-ipv4-address-spoofing-prevention {
+  yang-version 1.1;
+  namespace "uri:http://www.nokia.com/Fixed-Networks/BBA/yang/"
+          + "nokia-ipv4-address-spoofing-prevention";
+
+  prefix nokia-ipv4-sppr;
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import ietf-inet-types {
+    prefix inet;
+  }
+
+  import ietf-ip {
+    prefix ip;
+  }
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  import bbf-if-type {
+    prefix bbfift;
+  }
+  /*          
+  import bbf-sub-interfaces {
+    prefix bbf-subif;
+  }
+  */
+  import bbf-interface-usage {
+    prefix bbf-if-usg;
+  }
+
+  import ietf-netconf-acm {
+    prefix nacm;
+  }
+  import bbf-l2-forwarding {
+    prefix bbf-l2-fwd;
+  }
+
+  import nokia-mgmd-ipspoof {
+    prefix nokia-mgmd-ipspoof;
+  }
+
+  import bbf-mgmd {
+    prefix bbf-mgmd;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be 
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG definitions for 
+     supporting Nokia specific requirements as applicable to its 
+     access network equipment.
+     
+     Specifically, this module augments the interface model with data
+     specific for IPv4 address spoofing prevention.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia 
+     reserves the right to revise this document for any reason, 
+     including but not limited to conformity with standards 
+     promulgated by various agencies, utilisation of advances in the 
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or 
+     referred to herein.
+
+     The product specifications and other technical or performance 
+     information contained herein are subject to change without 
+     notice. Updates of this document will be issued under the above 
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any 
+     information or opinion contained herein. Nokia expressly advises 
+     that any use of for any purpose or reliance upon this technical 
+     reference is at the risk of the user and that Nokia shall not be 
+     liable for any damage or injury incurred by any person arising 
+     out of the sufficiency, accuracy, or utility of any information 
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any 
+     manufacturer to modify or change any of its products, nor does 
+     this document represent any commitment by Nokia to sell or 
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license 
+     or right under any patent, whether or not the use of any 
+     information herein necessarily employs an invention of any 
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2018, Nokia. All Rights Reserved.";
+
+  revision 2023-09-26 {
+    description
+      "new state data server-ip and gateway-ip added for IPv4 Security.
+       Units added for lease-time data";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2021-08-03 {
+    description
+      "in-arp-srcmac-senderhwaddr-mismatch-discards is changed to in-arp-source-mac-senderhwaddr-mismatch-discards";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2020-12-08 {
+    description
+      "add inhert interface-usage for ipv4-security";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2019-08-02 {
+    description
+      "Added a new leaf max-address in ipv4-security container to specify the maximum number of IP address allowed for VLAN sub-interfaces.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2019-03-05 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: yyyy-mm-dd.";
+    reference
+      "TR-383: Common YANG Modules
+               <https://www.broadband-forum.org/technical/download/
+                        TR-383.pdf>";
+  }
+
+  augment '/if:interfaces/if:interface' {
+    when 'derived-from-or-self(if:type, "bbfift:vlan-sub-interface")'
+        +' and '
+        +'(current()/bbf-if-usg:interface-usage/bbf-if-usg:'
+        +'interface-usage = "user-port"'
+        +' or '
+        +'current()/bbf-if-usg:interface-usage/bbf-if-usg:'
+        +'interface-usage = "inherit")' {
+      description
+        "Applies only to VLAN sub-interfaces at the user side.";
+    }
+    description
+      "This augments configuration data for VLAN sub-interfaces.";
+
+    container ipv4-security {
+      presence
+        "Presence of this container indicates IP anti-spoofing is supported on
+         this interface.";
+
+      description
+        "This container provides configuration data that assures there
+         is knowledge on the interface on the IPv4 addresses used by 
+         the device connected to the interface.";
+
+      leaf prevent-ipv4-address-spoofing {
+        type boolean;
+        must
+         'current() = "false"'
+         + 'or (current() = "true" and ((boolean(/bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarders'
+         +'/bbf-l2-fwd:forwarder/bbf-l2-fwd:ports/bbf-l2-fwd:port'
+         +'[bbf-l2-fwd:sub-interface = current()/../../if:name]))'
+         +'or (boolean(/bbf-mgmd:multicast/bbf-mgmd:mgmd/bbf-mgmd:multicast-vpn'
+         +'/bbf-mgmd:multicast-interface-to-host'
+         +'[bbf-mgmd:vlan-sub-interface = current()/../../if:name and '
+         +'nokia-mgmd-ipspoof:vlan-sub-interface-ref-for-ipspoof]))))' {
+          error-message "Before enable prevent-ipv4-address-spoofing, the VLAN sub-interface should be attached to forwarder or multicast-vpn;
+                       Before detach the VLAN sub-interface, prevent-ipv4-address-spoofing should be disabled.";
+           
+          description
+            "Can not enable IP address security on a VLAN 
+             sub-interface that is not connected to a forwarder or multicast-vpn.";
+        }
+        default "false";
+        description
+          "When 'true', the system will perform IPv4 address security 
+           checks on incoming packets on the VLAN sub-interface. To do
+           these checks it needs to know which IPv4 addresses are 
+           assigned to the VLAN sub-interface. How addresses get 
+           assigned is subject to configration defined in the 
+           container ipv4-addresses. 
+
+           The security checks performed are :
+           - Only accept incoming IPv4 packets when the IPv4 source 
+             address is assigned to the interface.
+           - Only accept incoming ARP packets when the 'protocol 
+             address of sender of this packet' is assigned to the 
+             interface.
+           - Only accept incoming GARP packets when the 'protocol 
+             address of sender of this packet' is assigned to the 
+             interface.
+           Packets with an IPv4 address not passing the test are 
+           discarded.
+           
+           When 'false', no checks on the IPv4 address are 
+           performed.";
+
+        reference
+          "TR-178i1 - R156, R157, R158 and TR-101i2 - R-135, R-136, 
+           R-137. RFC 826";
+      }
+
+      leaf learn-addresses-from-dhcp {
+        type empty;
+        must '../nokia-ipv4-sppr:prevent-ipv4-address-spoofing = '
+            +'"true"' {
+          error-message "Before enable learn-addresses-from-dhcp,prevent-ipv4-address-spoofing should be enabled;
+                      Before disable prevent-ipv4-address-spoofing ,learn-addresses-from-dhcp should be disabled.";
+        }
+          
+        description
+          "When set, the system will learn IPv4 addresses from the 
+           DHCPv4 messages passing the VLAN sub-interface, and assign 
+           them to the VLAN sub-interface.";
+
+        reference
+          "TR-178i1 - R154 and TR-101i2 - R134";
+      }
+
+      list address {
+        key "ip";
+        description
+          "The list of IPv4 addresses statically configured on the 
+           VLAN sub-interface.";
+        reference
+          "TR-178i1 - R158 and TR-101i2 - R137";
+
+        leaf ip {
+          type inet:ipv4-address;
+          description
+            "An IPv4 address assigned to the interface.";
+        }
+        		
+        choice subnet {
+          mandatory true;
+          description
+            "The subnet is optional.
+
+             If no subnet is configured, then the spoofing prevention 
+             applies to the IP address identified by the leaf 'ip'. 
+             When a subnet is configured then the spoofing prevention 
+             applies to all the IP addresses identified by the IP 
+             address identified by the leaf ip, combined with the 
+             subnet. The subnet can be specified as a prefix-length, 
+             or, if the server supports non-contiguous netmasks, as a
+             netmask.";
+
+          leaf prefix-length {
+            type uint8 {
+              range "0..32";
+            }
+            description
+              "The length of the subnet prefix.";
+          }
+
+          leaf netmask {
+            if-feature ip:ipv4-non-contiguous-netmasks;
+            type yang:dotted-quad;
+            description
+              "The subnet specified as a netmask.";
+          }
+        }
+      }
+      leaf max-address {
+        type union {
+          type enumeration {
+            enum "no-limit" {
+              description
+                "Used to indicate that all profiles are allowed.";
+            }
+          }
+          type uint32;
+        }
+        default "no-limit";
+        description
+          "Specifies the maximum number of IP address (static and dynamic) 
+           allowed for VLAN sub-interfaces where the default value no-limit
+           refers that there is no restriction";
+      }
+    }
+  }
+
+  augment '/if:interfaces' {
+    description
+      "This augment adds IPv4 spoofing prevention configuration 
+       data.";
+
+    container ipv4-security-statistics {
+      presence
+        "Presence of this container indicates IP anti-spoofing statisitics is supported on
+         this interface.";
+      description
+         "This container provides the configuration data/yang for
+          the IPv4 address security statistics.";
+
+      list interface {
+        key "name";
+
+        description
+          "The list of interfaces on the device for which IPv4 
+           security check statistics are collected.";
+
+        leaf name {
+          type if:interface-ref;
+
+          description
+            "The name of a VLAN sub-interface where prevent IPv4 
+             address antispoofing is enabled.";
+        }
+
+      }
+    }
+  }
+
+  augment '/if:interfaces-state/if:interface' {
+    when
+      'derived-from-or-self(if:type, "bbfift:vlan-sub-interface")' {
+      description
+        "Applies only to VLAN sub-interfaces.";
+    }
+
+    description
+      "This augment adds IPv4 spoofing prevention state data for VLAN 
+       sub-interfaces.";
+       
+    container ipv4-security {
+
+      description
+        "This container provides state data for IPv4 address assigned
+         to VLAN sub-interfaces. Addresses can be assigned 
+         dynamically, by learning from inspected DHCP messages, or 
+         they can be statically configured.";
+
+      list address {
+        key "ip";
+        description
+          "The list of IPv4 addresses assigned to the interface.";
+
+        leaf ip {
+          type inet:ipv4-address;
+          description
+            "An IPv4 address assigned to the interface.";
+        }
+
+        choice subnet {
+          description
+            "The subnet is optional.
+
+             If no subnet is configured, then the spoofing prevention 
+             applies to the IP address identified by the leaf 'ip'. 
+             When a subnet is configured then the spoofing prevention 
+             applies to all the IP addresses identified by the IP 
+             address identified by the leaf ip, combined with the 
+             subnet. The subnet can be specified as a prefix-length, 
+             or, if the server supports non-contiguous netmasks, as a
+             netmask.";
+
+          leaf prefix-length {
+            type uint8 {
+              range "0..32";
+            }
+            description
+              "The length of the subnet prefix.";
+          }
+
+          leaf netmask {
+            if-feature ip:ipv4-non-contiguous-netmasks;
+            type yang:dotted-quad;
+            description
+              "The subnet specified as a netmask.";
+          }
+        }
+
+        leaf ip-address-origin {
+          type ip:ip-address-origin;
+          description
+            "The origin of this address.";
+        }
+
+        uses ipv4-security-dynamic-state-data {
+          when 'ip-address-origin = "dhcp"' {
+            description
+              "Applies when the origin of the IP address is DHCP.";
+          }
+        }
+      }	
+
+      action remove-dhcp-learned-ip-addresses {
+        nacm:default-deny-all;
+        description
+          "When the action is received, the system will remove all the
+           IP addresses learned dynamically from DHCP on this 
+           interface.
+           IP addresses or subnets statically assigned to a particular
+           interface must be removed by deleting the static 
+           configuration.";
+      }
+
+      notification dhcp-address-assignment-inconsistency {
+        description
+          "A notification that there is an inconsistency with the IP 
+           addresses learned via DHCP.";
+
+        leaf ip {
+          type inet:ipv4-address;
+          mandatory true;
+          description
+            "An IPv4 address that is assigned through DHCP, but that 
+             is not learned because this address assignment is 
+             inconsistent with other address assignements. E.g. is 
+             inconsistent with the configuration of a static address 
+             / subnet.";
+        }
+        leaf forwarder {
+          type leafref {
+             path '/bbf-l2-fwd:forwarding/bbf-l2-fwd:forwarders'
+                  +'/bbf-l2-fwd:forwarder/bbf-l2-fwd:name';
+          }
+          mandatory true;
+          description
+            "The forwarder for which the event is reported.";
+        }
+        leaf reason {
+          type string;
+          mandatory true;
+          
+          description
+           "The reason for dhcp-address-assignment inconsistency.
+            Scenarios :
+            -IP address allocated by the DHCP server for a new user 
+             conflicts with one of the existing DHCP user IP address.
+            -IP address allocated by the DHCP server for a new user 
+             not learnt by the system due to system max dimensioning 
+             limit is reached.
+            -IP address allocated by the DHCP server for a new user 
+             conflicts with one of the configured static user IP 
+             addresses/subnets.
+            -IP address/subnet configured for a static user conflicts 
+             with one or more (in case subnet configuration) existing 
+             DHCP user IP addresses.
+            -The dynamic IP addresses which are learnt already 
+             preempted to make room for the new static IP/subnet 
+             configuration. 
+            -The number of IP has reached the value of configured 
+             max-address for that VSI.";
+        }
+      }
+    }
+  }
+
+  grouping ipv4-security-dynamic-state-data {
+    description
+         "A resuable grouping to represent state data applicable for DHCP IP's";
+    leaf lease-time {
+         type uint32;
+         units seconds;
+         description
+           "Reports the latest lease time, that is assigned to the IP
+            address.";
+    }
+    leaf ip-address-expiry-time {
+         type yang:date-and-time;
+         description
+           "The time the IP address will expire.";
+    }
+    leaf chaddr {
+         type yang:mac-address;
+         description
+           "Provides the chaddr (i.e. MAC address) used to request
+            this IP address.";
+    }
+    leaf server-ip {
+         type inet:ipv4-address;
+         description
+           "Provides the IP address of the DHCP server present in DHCP ACK packet";
+         reference
+           "RFC 2132 DHCP Options and BOOTP Vendor Extensions, section 9.7.";
+    }
+    leaf-list gateway-ip {
+         type inet:ipv4-address;
+         description
+           "Provides the IP address of the gateway router present in DHCP ACK packet.
+
+            Note: if more than one gateway IP present in DHCP ACK packet, then only
+            first IP in the list is provided as gateway router IP";
+         reference
+           "RFC 2132 DHCP Options and BOOTP Vendor Extensions, section 3.5.";
+    }
+  }
+
+  augment '/if:interfaces-state' {
+    description
+      "This augment adds IPv4 spoofing prevention state data.";
+
+    container ipv4-security-statistics {
+      description
+         "This container provides the state data 
+          for the IPv4 address security statistics.";
+
+      list interface {
+        key "name";
+
+        description
+          "The list of interfaces on the device for which IPv4
+           security check statistics are collected.";
+
+        leaf name {
+          type if:interface-ref;
+
+          must
+            "derived-from-or-self(
+             /if:interfaces/if:interface[if:name = current()]
+             /if:type,'bbfift:vlan-sub-interface') ";
+
+          description
+            "The name of a VLAN sub-interface.";
+        }
+      
+        action reset {
+           nacm:default-deny-all; // To be confirmed.
+           description
+             "Resets the IPv4 address security statistics.";
+           reference
+             "None.";
+        }
+
+        leaf in-ip-packet-discards {
+          type uint64;
+          description
+            "The number of IP packets received on the interface that
+             are discarded because of the source IP address of the 
+             incoming packet is not assigned to the interface.
+             
+             This counter includes the protocol packets processed by
+             the system, such as IGMP and DHCP, for which applies that
+             packets with the source IP adress 0.0.0.0 are valid. I.e.
+             such a control packet is discarded if the IP address is 
+             not assigned to the interface and is different from 
+             0.0.0.0.
+
+             Discontinuities in the value of this counter can occur
+             at re-initialization of the management system, and at
+             other times as indicated by the value of 
+             'interfaces-state/interfaces/statistics/
+             discontinuity-time'.";
+        }
+
+        leaf in-arp-source-mac-senderhwaddr-mismatch-discards {
+          type uint64;
+          description
+            "The number of ARP packets received on the interface that
+             are discarded because the sender hardware address which 
+             is available in the packet payload does not match with 
+             the source MAC address which is available in the packet 
+             Ethernet Header.
+
+             Discontinuities in the value of this counter can occur
+             at re-initialization of the management system, and at
+             other times as indicated by the value of
+             'interfaces-state/interfaces/statistics/
+             discontinuity-time'.";
+        }
+
+        leaf in-arp-probe-discards {
+          type uint64;
+          description
+            "The number of ARP packets received on the interface that
+             are discarded because the sender protocol address of the 
+             packet contains all zeros. ARP Probe packets are not
+             supported. 
+
+             Discontinuities in the value of this counter can occur
+             at re-initialization of the management system, and at
+             other times as indicated by the value of
+             'interfaces-state/interfaces/statistics/
+             discontinuity-time'.";
+        }
+        
+        leaf in-arp-sender-ip-discards {
+          type uint64;
+          description
+            "The number of ARP packets received on the interface that
+             are discarded because the protocol address of the sender 
+             is not assigned to the interface.
+
+             Discontinuities in the value of this counter can occur
+             at re-initialization of the management system, and at
+             other times as indicated by the value of
+             'interfaces-state/interfaces/statistics/
+             discontinuity-time'.";
+        }
+
+        leaf in-arp-mac-mismatch-discards {
+          type uint64;
+          description
+            "The number of ARP packets received on the interface that
+            are discarded because the packet's sender hardware address
+            and sender protocol address do not correspond to an IP address
+            and MAC address assigned to the interface. 
+
+             These fields are matching if they correspond with a pair
+             that is logged during DHCP snooping. I.e. at DHCP session
+             establishment a DHCP client uses a particular MAC address
+             as chaddr. When the DHCP server assigns an IP address, 
+             then this IP address is associated to this MAC address.
+             ARP packets are discarded if the sender hardware address 
+             and sender protocol address are not associated to each 
+             other, even when these fields are valid on their own.
+
+             Discontinuities in the value of this counter can occur
+             at re-initialization of the management system, and at
+             other times as indicated by the value of
+             'interfaces-state/interfaces/statistics/
+             discontinuity-time'.";
+        }
+
+        leaf in-arp-target-ip-discards {
+          type uint64;
+          description
+            "The number of ARP packets received on the interface that
+             are discarded because the protocol address of the target 
+             is assigned to the interface where the packet is 
+             received, provided the protocol address of the sender and
+             protocol address of target are different.
+
+             Discontinuities in the value of this counter can occur
+             at re-initialization of the management system, and at
+             other times as indicated by the value of
+             'interfaces-state/interfaces/statistics/
+             discontinuity-time'.";
+        }
+
+        leaf in-garp-forwards {
+          type uint64;
+          description
+            "The number of ARP packets received on the interface that
+             are forwarded and for which applies that:
+             - the protocol address of the sender equals the protocol 
+               address of the target, and
+             - this address is assigned to the interface where the 
+               packet is received.
+
+             Discontinuities in the value of this counter can occur
+             at re-initialization of the management system, and at
+             other times as indicated by the value of
+             'interfaces-state/interfaces/statistics/
+             discontinuity-time'.";
+        }
+      }
+    }
+  }
+
+  container ipv4-antispoofing-system {
+    presence
+     "Presence of this container indicates the support of IPv4 feature handling objects";
+    description
+      "Supports IPv4 Antispoofing feature handling objects.";
+
+    leaf clear-dhcp-learned-ips-on-operdown {
+      type boolean;
+      default "false";
+      description
+        "Enable the removal of dynamic learned IPv4 addresses on a VLAN sub-interface,
+        when its corresponding lower layer interface is operational down.";
+    }
+
+    leaf clear-dhcp-learned-ips-on-admindown {
+      type boolean;
+      default "true";
+      description
+        "Enable the removal of dynamic learned IPv4 addresses on a VLAN sub-interface,
+        when the VLAN sub-interface or its corresponding lower layer interface is admin down.";
+    }
+
+    leaf tca-in-ip-packet-discards {
+      type uint32 {
+        range "0..1000";
+      }
+      default 10;
+      description
+        "Specifies a threshold value of in-ip-packet-discards. When packets
+         with illegal source IP and/or source MAC address exceed the threshold
+         value within certain interval, a TCA alarm will be raised";
+
+    }
+  }
+}
+
+

@@ -1,0 +1,165 @@
+module nokia-ieee802-dot1q-cfm-inexpressible-constraints-validator-cfm-dev {
+
+  yang-version "1.1";
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+            + "nokia-ieee802-dot1q-cfm-inexpressible-constraints-validator-cfm-dev";
+
+  prefix nokia-ieee802-dot1q-cfm-inexpressible-constraints-validator-cfm-dev;
+
+  import ieee802-dot1q-cfm {
+    prefix dot1q-cfm;
+  }
+  
+  organization
+    "NOKIA";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "The NOKIA common/nokia-ieee802-dot1q-cfm-inexpressible-constraints-validator-cfm-dev
+     YANG module supporting deviations on top of ietf-ssh-server standard.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2019, Nokia. All Rights Reserved.";
+
+  revision 2017-04-24 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific"; 
+  }
+
+  deviation "/dot1q-cfm:cfm/dot1q-cfm:maintenance-domain" {
+    description
+      "The error message 'Maintenance Association Name must be unique across all Maintenance Associations that have no Maintenance Domain Name.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/dot1q-cfm:cfm/dot1q-cfm:maintenance-domain" {
+    description
+      "The error message 'A Pair of Maintenance Domain Name format and Maintenance Domain Name must be unique across all Maintenance Domain, except when there is no Maintenance Domain Name.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/dot1q-cfm:cfm/dot1q-cfm:maintenance-domain" {
+    description
+      "The error message 'A Pair of Maintenance Association Name format and Maintenance Association Name must be unique within a Maintenance Domain.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/dot1q-cfm:cfm/dot1q-cfm:maintenance-domain" {
+    description
+      "The error message 'Number of configured MAs exceed the maximum number of supported MAs.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/dot1q-cfm:cfm/dot1q-cfm:maintenance-domain" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/dot1q-cfm:cfm/dot1q-cfm:maintenance-group'
+       The error message 'Multiple MGs can refer same forwarder only if they are at a different MD level.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/dot1q-cfm:cfm/dot1q-cfm:maintenance-domain" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/dot1q-cfm:cfm/dot1q-cfm:maintenance-group'
+       The error message 'Atmost one MEP can be configured per MD level on an interface.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/dot1q-cfm:cfm/dot1q-cfm:maintenance-group" {
+    description
+      "The error message 'A unique pair of Maintenance Domain and Maintenance Association must form a Maintenance Group.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/dot1q-cfm:cfm/dot1q-cfm:maintenance-group" {
+    description
+      "The error message 'Number of configured MEPs exceed the maximum number of supported MEPs.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/dot1q-cfm:cfm/dot1q-cfm:maintenance-group" {
+    description
+      "The error message 'All MEPs in a maintenance-group must have the same direction.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/dot1q-cfm:cfm/dot1q-cfm:maintenance-group" {
+    description
+      "The error message 'All MEPs in a maintenance-group must belong to the same forwarder and match the forwarder referred (if any) in MG.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/dot1q-cfm:cfm/dot1q-cfm:maintenance-group" {
+    description
+      "The error message 'Within a Maintenance Group, two MEPs cannot coexist on the same interface.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/dot1q-cfm:cfm/dot1q-cfm:maintenance-group" {
+    description
+      "The error message 'MEP interface cannot be re-used for another MEP in the same MD level, without first deleting the previous configuration.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/dot1q-cfm:cfm/dot1q-cfm:maintenance-group" {
+    description
+      "The error message 'A Maintenance Group with a forwarder associated can not have MEPs with direction down.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/dot1q-cfm:cfm/dot1q-cfm:maintenance-group" {
+    description
+      "The error message 'A Maintenance Group can contain atmost one down MEP.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/dot1q-cfm:cfm/dot1q-cfm:maintenance-group" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/dot1q-cfm:cfm/dot1q-cfm:maintenance-domain/dot1q-cfm:maintenance-association'
+       The error message 'A reference to a forwarder is allowed only when the Maintenance Association is configured for auto-creating MIPs.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+}

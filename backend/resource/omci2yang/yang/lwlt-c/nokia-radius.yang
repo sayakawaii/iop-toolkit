@@ -1,0 +1,472 @@
+module nokia-radius {
+  
+  namespace "urn:aul:params:xml:ns:yang:nokia-radius";
+  prefix "nokia-radius";
+  
+  import ietf-system {
+    prefix "sys"; 
+  }
+  import ietf-tls-client {
+    prefix tlsc;
+  }
+  import nokia-radius-types {
+    prefix nokia-radius-types;
+  }
+
+  organization
+    "nokia";
+
+  contact
+    "nokia";
+     
+  description
+    "this is radius yang augment by nokia.";   
+
+  revision 2024-06-12 {
+    description
+      "Dynamic authorization specific counters added for
+      the RADIUS authentication server.
+      Added a new leaf calling-station-id-format.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2023-03-08 {
+    description
+      "Moved common types to nokia-radius-types yang file";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2022-04-20 {
+    description
+      "Added server-certificate leaf under radius server";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2022-03-02 {
+    description
+      "Added disable-accounting, accept-or-reject-all, accounting-on-reboot
+       leafs and radius-statistics container";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2019-12-04 {
+    description
+      "Added accounting-server leaf in policy for radius";
+    reference
+      "Nokia specific";
+  }
+
+  revision "2016-06-16" {
+    description
+    "Initial Version.";
+    reference
+    "ISAM CLI of RADIUS configuration.";
+  }
+
+  typedef domain-policy-name-ref {
+    type leafref {
+      path "/sys:system/sys:radius/nokia-radius:policy/nokia-radius:name";
+    }
+    description
+      "This type is used by data models that need to
+      reference configured radius policy name.";
+  }
+
+  typedef connection-domain-name-ref {
+    type leafref {
+      path "/sys:system/sys:radius/nokia-radius:domain/nokia-radius:name";
+    }
+    description
+      "This type is used by data models that need to
+      reference configured radius domain name.";
+  }
+
+  /* ---------------------------------------------------
+   * Configuration objects used by 802.1X YANG module
+   * ---------------------------------------------------
+   */
+  augment "/sys:system/sys:radius" {
+    description
+      "Augment Configuration of the RADIUS client.";
+
+      /*
+      *add policy, domain, connection-profile, connection-policy 
+      */
+
+      list policy {
+        key name;
+        ordered-by user;
+        description
+          "configure RADIUS policy.";
+
+        leaf name {
+          type string;
+          description
+            "name of the RADIUS policy.";
+        }
+
+        leaf nas-port-id-syntax {
+          type string;
+          description
+            "NAS-Port-Id used in messages towards RADIUS servers.";
+          reference
+            "RFC 2869 section-5.17";
+        }
+
+        leaf calling-station-id-format {
+          type enumeration {
+            enum hex-format {
+              description
+                "To send Calling-Station-Id in hex-format in RADIUS packets
+                 E.g.00 10 A4 23 19 C0";
+            }
+            enum ascii-format {
+              description
+                "To send Calling-Station-Id in ascii-format in RADIUS packets
+                 E.g. 00-10-A4-23-19-C0, the Regular expression for the format
+                 is: ^([0-9A-Fa-f]{2}[-]){5}([0-9A-Fa-f]{2})$";
+            }
+          }
+          default hex-format;
+          description
+            "Identifies the format of the Calling-Station-Id parameter in RADIUS packets";
+        }
+
+        uses nokia-radius-types:nas-config;
+
+        leaf keep-domain-name {
+          type boolean;
+          default false;
+          description
+            "whether strip domain name when sending to RADIUS server.";
+        }
+
+        leaf disable-eap {
+          type boolean;
+          default false;
+          description
+            "whether terminate the EAP protocol,that's no EAP will be
+            present between device and RADIUS server.";
+        }
+
+        uses nokia-radius-types:auth-server;
+
+        uses nokia-radius-types:acct-server;
+      }
+
+      list domain {
+        key name;
+        ordered-by user;
+        description
+          "domain handling, support user-name@domain format.";
+
+        leaf name {
+          type string;
+          description
+            "name of the domain.";
+        }
+
+        leaf authenticator {
+          if-feature sys:radius;
+          type nokia-radius:domain-policy-name-ref;
+          mandatory true;
+          description
+            "the type of authenticator.";
+        }
+
+      }
+      container connection-policy {
+        description
+          "connection policy define the specify domain name.";
+
+        leaf domain-name {
+          type nokia-radius:connection-domain-name-ref;
+          description
+            "name of the domain to use.";
+        }
+        leaf reject-no-domain {
+          type boolean;
+          default false;
+          description
+            "reject user session auth if no domain.";
+        }
+        leaf reject-inv-domain {
+          type boolean;
+          default false;
+          description
+            "reject user session auth if invalid domain.";
+        }
+        leaf accept-or-reject-all {
+          type enumeration {
+            enum accept-all {
+              description
+                "All 802.1X session requests are accepted";
+            }
+            enum reject-all {
+              description
+                "All 802.1X session requests are rejected";
+            }
+          }
+          default reject-all;
+          description
+            "Only when authentication server is not reachable during 802.1X user
+            session establishment, it helps to either reject or accept all the
+            user sessions.";
+        }
+        leaf accounting-on-reboot {
+          type boolean;
+          default false;
+          description
+            "Radius client shall send accounting-on related messages to accounting server
+            associated with 802.1x sessions in case of system restart/reboot event.";
+        }
+      }
+
+  } // Augment system
+
+  augment "/sys:system/sys:radius/sys:server" {
+    description
+      "Augment Configuration of the RADIUS server certificate for
+       mab-based authentication-mode.";
+    uses tlsc:server-auth-grouping {
+      refine server-auth {
+        presence "Server certificate used for mab-based authentication-mode";
+      }
+    }
+  }
+
+  /* ---------------------------------------------------
+   * RADIUS server's operational status and statistics
+   * of both authentication and accounting servers"
+   * ---------------------------------------------------
+   */
+   augment "/sys:system-state"  {
+     description " augment system state with radius";
+     container radius-statistics {
+       description
+         "Contains the operational state and statistics of both RADIUS
+         Authentication and Accounting servers.";
+
+       list authentication-server {
+         key "name";
+         description
+           "List providing the current operational status and statistics of the
+           authentication servers.";
+         leaf name {
+           type nokia-radius-types:policy-server-name-ref;
+           description
+             "Used for the reference of RADIUS authentication server.";
+         }
+         leaf auth-state {
+           type enumeration {
+             enum up {
+               description
+                 "Indicates that the operational state of the
+                 authentication server is up.";
+             }
+             enum down {
+               description
+                 "Indicates that the operational state of the
+                 authentication server is down.";
+             }
+             enum unknown {
+               description
+                 "Indicates that the operational state of the
+                 authentication server is unknown.";
+             }
+           }
+           description
+             "The operational state of the authentication server";
+         }
+         leaf server-reply-time {
+           type uint32;
+           units milliseconds;
+           description
+             "The time interval between the most recent RADIUS Access-Reply or
+             Access-Challenge and the Access-Request packets that matched from
+             this authentication server.";
+         }
+         leaf access-request-tx {
+           type uint32;
+           description
+             "The number of RADIUS Access-Request packets sent to this server
+             which does not include retransmissions.";
+         }
+         leaf access-retransmission-tx {
+           type uint32;
+           description
+             "The number of RADIUS Access-Request packets retransmitted to this
+             authentication server.";
+         }
+         leaf access-accept-rx {
+           type uint32;
+           description
+             "The number of RADIUS Access-Accept packets received from this
+             authentication server.";
+         }
+         leaf access-reject-rx {
+           type uint32;
+           description
+             "The number of RADIUS Access-Reject packets received from this
+             authentication server.";
+         }
+         leaf access-challenge-rx {
+           type uint32;
+           description
+             "The number of RADIUS Access-Challenge packets received from this
+             authentication server.";
+         }
+         leaf access-accept-dynamic-authorization-rx {
+           type uint32;
+           description
+             "The number of RADIUS Access-Accept packets received with
+             dynamic authorization requests from this authentication
+             server.";
+         }
+         leaf invalid-access-response-rx {
+           type uint32;
+           description
+             "The number of malformed RADIUS Access-Response packets received
+             from this authentication server.
+             Note that Malformed packets include packets with an invalid length. Bad
+             authenticators and unknown types are not included as
+             malformed access responses.";
+         }
+         leaf bad-authenticator-rx {
+           type uint32;
+           description
+             "The number of RADIUS Access-Response packets containing invalid
+             authenticators or signature received from this authentication
+             server.";
+         }
+         leaf pending-request-rx {
+           type uint32;
+           description
+             "The number of RADIUS Access-Request packets destined for this
+             server have not received a response.";
+         }
+         leaf timeouts {
+           type uint32;
+           description
+             "The number of timeouts for which the responses  have not received
+             from this authentication server.";
+         }
+         leaf unknown-packet-rx {
+           type uint32;
+           description
+             "The number of RADIUS packets of unknown type which are received
+             from this authentication server.";
+         }
+         leaf packet-discards-rx {
+           type uint32;
+           description
+             "The number of RADIUS packets of which are dropped by receiving
+             from this authentication server.";
+         }
+       }
+
+       list accounting-server {
+         key "name";
+         description
+           "List providing the current operational status and statistics of the
+           accounting servers.";
+         leaf name {
+           type nokia-radius-types:policy-server-name-ref;
+           description
+             "Used for the reference of RADIUS accounting server.";
+         }
+         leaf acct-state {
+           type enumeration {
+             enum up {
+               description
+                 "Indicates that the operational state of the
+                 accounting server is up.";
+             }
+             enum down {
+               description
+                 "Indicates that the operational state of the
+                 accounting server is down.";
+             }
+             enum unknown {
+               description
+                 "Indicates that the operational state of the
+                 accounting server is unknown.";
+             }
+           }
+           description
+             "The operational state of the accounting server";
+         }
+         leaf server-reply-time {
+           type uint32;
+           units milliseconds;
+           description
+             "The time interval between the most recent Accounting-Response
+             and the Accounting-Request of RADIUS packets that matched from this
+             accounting server.";
+         }
+         leaf accounting-request-tx {
+           type uint32;
+           description
+             "The number of RADIUS Accounting-Request packets sent to this server
+             which does not include retransmissions.";
+         }
+         leaf accounting-retransmission-tx {
+           type uint32;
+           description
+             "The number of RADIUS Accounting-Request packets retransmitted to
+             this accounting server.";
+         }
+         leaf accounting-response-rx {
+           type uint32;
+           description
+             "The number of RADIUS Accounting-Response packets received from
+             this accounting server.";
+         }
+         leaf invalid-accounting-response-rx {
+           type uint32;
+           description
+             "The number of malformed RADIUS Accounting-Response packets received
+             from this accounting server.
+             Note that Malformed packets include packets with an invalid length. Bad
+             authenticators and unknown types are not included as
+             malformed accounting responses.";
+         }
+         leaf bad-authenticator-rx {
+           type uint32;
+           description
+             "The number of RADIUS Accounting-Response packets containing invalid
+             authenticators or signature received from this accounting
+             server.";
+         }
+         leaf pending-request-rx {
+           type uint32;
+           description
+             "The number of RADIUS Accouting-Request packets destined for this
+             server have not received a response.";
+         }
+         leaf timeouts {
+           type uint32;
+           description
+             "The number of timeouts for which the responses have not received
+             from this accounting server.";
+         }
+         leaf unknown-packet-rx {
+           type uint32;
+           description
+             "The number of RADIUS packets of unknown type which are received
+             from this accounting server.";
+         }
+         leaf packet-discards-rx {
+           type uint32;
+           description
+             "The number of RADIUS packets of which are dropped by receiving
+             from this accounting server.";
+         }
+       }
+     }
+   }
+}

@@ -1,0 +1,52 @@
+module nokia-sdan-rf-video-ani-mounted-eonu-dev {
+
+  namespace
+     "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+   + "nokia-sdan-rf-video-ani-mounted-eonu-dev";
+
+  prefix nokia-rf-video-ani-mounted-eonu-dev;
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import ietf-interfaces-mounted {
+     prefix if-mounted;
+  }
+
+  import nokia-sdan-rf-video-ani-mounted {
+    prefix nokia-rf-ani-mounted;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "The NOKIA BBF/hardware YANG module supporting
+     deviations on top of standard.";
+
+  revision 2023-09-26 {
+    description
+      "Remove unused import nokia-interface-identities.";
+    reference
+      "Nokia specific EPIC BBN-27738";
+  }
+
+  revision 2023-08-31 {
+    description
+      "Add deviation that rf-video-ani does not support pilot-frequency.";
+    reference
+      "Nokia specific EPIC BBN-27738";
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/nokia-rf-ani-mounted:rf-video-ani/nokia-rf-ani-mounted:pilot-frequency" {
+    description
+       "This deviation assures that rf-video-ani does not support pilot-frequency.";
+    deviate not-supported;
+  }
+
+}

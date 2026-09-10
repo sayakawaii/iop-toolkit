@@ -1,0 +1,145 @@
+module bbf-qos-policies-sub-interfaces-frommounted {
+  yang-version 1.1;
+  namespace "urn:bbf:yang:bbf-qos-policies-sub-interfaces-frommounted";
+
+  prefix bbf-qos-pol-subif-frommounted;
+
+  import ietf-interfaces-frommounted {
+    prefix if-frommounted;
+  }
+  
+  import bbf-qos-classifiers-frommounted {
+    prefix bbf-qos-cls-frommounted;
+  }
+  
+  import bbf-sub-interfaces-frommounted {
+    prefix bbf-subif-frommounted;
+  }
+
+  import bbf-sub-interface-tagging-frommounted {
+    prefix bbf-subif-tag-frommounted;
+  }
+  
+  import bbf-fiber-onu-emulated-mount {
+     prefix onu;
+  }
+    
+  organization
+    "Broadband Forum <https://www.broadband-forum.org>
+     Common YANG Project Stream";
+
+  contact
+    "Comments or questions about this Broadband Forum YANG module
+     should be directed to <mailto:help@broadband-forum.org>.
+
+     Editor:      Joey Boyd, ADTRAN
+                  <mailto:joey.boyd@adtran.com>
+
+     Editor:      Ludwig Pauwels, Nokia
+                  <mailto:ludwig.pauwels@nokia.com>
+
+     PS Leader:   Michael Shaffer, Nokia
+                  <mailto:michael.shaffer@nokia.com>
+
+     PS Leader:   William Lupton, Broadband Forum
+                  <mailto:wlupton@broadband-forum.org>";
+
+  description
+    "This module contains a collection of YANG definitions for 
+     supporting the Broadband Forum requirements on the management of
+     Quality of Service (QoS) as applicable to access network 
+     equipment. As such, this module is specific to access network 
+     equipment (e.g., BBF-specified Access Nodes and FTTdp DPUs).
+
+     Specifically, this module contains augments to sub-interfaces to 
+     support policies applied to packets.
+
+     Copyright (c) 2017, Broadband Forum
+
+     Redistribution and use in source and binary forms, with or
+     without modification, are permitted provided that the following
+     conditions are met:
+
+     1. Redistributions of source code must retain the above copyright
+        notice, this list of conditions and the following disclaimer.
+
+     2. Redistributions in binary form must reproduce the above
+        copyright notice, this list of conditions and the following
+        disclaimer in the documentation and/or other materials
+        provided with the distribution.
+
+     3. Neither the name of the copyright holder nor the names of its
+        contributors may be used to endorse or promote products
+        derived from this software without specific prior written
+        permission.
+
+     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
+     CONTRIBUTORS \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+     INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+     DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+     CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+     SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+     NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+     CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+     STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+     ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+     ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+     The above license is used as a license under copyright only.
+     Please reference the Forum IPR Policy for patent licensing terms
+     <https://www.broadband-forum.org/ipr-policy>.
+
+     Any moral rights which are necessary to exercise under the above
+     license grant are also deemed granted under this license.
+
+     This version of this YANG module is part of TR-383; see
+     the TR itself for full legal notices.";
+
+  revision 2017-05-08 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: 2017-06-02.";
+    reference
+      "TR-383: Common YANG Modules
+               <https://www.broadband-forum.org/technical/download/
+                        TR-383.pdf>";
+  }
+
+  augment '/onu:onus/onu:onu/onu:fromroot/if-frommounted:interfaces/if-frommounted:interface/bbf-subif-frommounted:frame-processing/'
+        + 'bbf-subif-frommounted:inline-frame-processing/bbf-subif-frommounted:inline-'
+        + 'frame-processing/bbf-subif-frommounted:ingress-rule/bbf-subif-frommounted:rule/'
+        + 'bbf-subif-frommounted:ingress-rewrite/bbf-subif-tag-frommounted:push-tag/bbf-subif-tag-frommounted:dot1q-tag/bbf-subif-tag-frommounted:pbit' {
+    description
+      "Allows for the PBIT bits of VLAN tag of a frame to be derived 
+       from a QoS policy profile.";
+
+    case generate-pbit-via-profile-or-0 {
+      description
+        "The PBIT bits are generated via a QoS policy profile attached
+         to the VLAN sub-interface.
+
+         If no PBIT bits are generated via the profile, or if no 
+         profile is assigned to the interface, then PBIT bits=000 is 
+         pushed in the VLAN tag of the frame.";
+
+      leaf pbit-marking-index {
+        type bbf-qos-cls-frommounted:qos-pbit-marking-index {
+          range "0";
+        }
+        description
+          "A QoS policy can generate more than one pbit-value (for 
+           possible usage in multiple VLAN tags). In this case each of
+           them is identified by an index.
+
+           This leaf provides the index in the list pbit-marking-list 
+           from which the PBIT bits value shall be taken to put in the
+           VLAN tag.";
+      }
+    }
+  }
+
+
+}

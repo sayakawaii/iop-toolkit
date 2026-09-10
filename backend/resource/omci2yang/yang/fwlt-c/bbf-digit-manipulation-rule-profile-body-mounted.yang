@@ -1,0 +1,200 @@
+submodule bbf-digit-manipulation-rule-profile-body-mounted {
+  yang-version 1.1;
+  belongs-to bbf-sip-voip-mounted  {
+	prefix bbf-sip-voip-mounted;
+  }
+
+  import bbf-yang-types {
+    prefix bbf-yang;
+  }
+  
+  organization
+    "Broadband Forum <https://www.broadband-forum.org>
+     Common YANG Work Area";
+
+  contact
+    "Comments or questions about this Broadband Forum YANG module
+     should be directed to <mailto:help@broadband-forum.org>.
+     Editor:      Frank Desseyn, Nokia
+     Editor:      Nadine Staelens, Nokia
+     PS Leader:   Joey Boyd, ADTRAN
+     PS Leader:   Ken Kerpez, ASSIA
+     WA Director: Joey Boyd, ADTRAN
+     WA Director: Sven Ooghe, Nokia";
+	 
+  description
+    "This module contains a collection of YANG definitions for 
+     managing the digit manipulation rules.
+    Copyright (c) 2017-2018, Broadband Forum
+     Redistribution and use in source and binary forms, with or
+     without modification, are permitted provided that the following
+     conditions are met:
+     1. Redistributions of source code must retain the above copyright
+        notice, this list of conditions and the following disclaimer.
+     2. Redistributions in binary form must reproduce the above
+        copyright notice, this list of conditions and the following
+        disclaimer in the documentation and/or other materials
+        provided with the distribution.
+     3. Neither the name of the copyright holder nor the names of its
+        contributors may be used to endorse or promote products
+        derived from this software without specific prior written
+        permission.
+     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
+     CONTRIBUTORS \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+     INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+     DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+     CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+     SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+     NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+     CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+     STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+     ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+     ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     The above license is used as a license under copyright only.
+     Please reference the Forum IPR Policy for patent licensing terms
+     <https://www.broadband-forum.org/ipr-policy>.
+     Any moral rights which are necessary to exercise under the above
+     license grant are also deemed granted under this license.
+     This version of this YANG module is part of TR-383; see
+     the TR itself for full legal notices.";
+
+  revision 2020-03-06 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: 2020-03-06.";
+    reference
+      " ";
+  }
+
+
+  grouping dm-rule-parameters {
+    description
+      "Digit manipulation rule parameters.";
+    leaf dm-rule {
+	  type bbf-yang:name-string;	
+	  description
+		"A rule is built up of key words and configurable
+		 values which must be configured according to a
+		 predetermined order. The position of the key words
+		 and configurable values may be different
+ 		 depending on the manipulation rule type.
+ 		 The following rule types are supported whereby only
+		 1 rule type can be configured for a rule :		
+                  	1) [outg-use-default-pbx-number:numericvalue]
+		 The manipulation rule consists of a fixed character
+		 string 'outg-use-default-pbx-number:'
+		 It is immediately followed by a numeric value with
+		 a  range [0,1].
+		 It is not allowed to insert a space between the
+		 fixed character string and the numeric value.                    	
+                  	2)  [inc-add-phone-context-to-number]
+		 The manipulation rule consists of a fixed character
+		 string 'inc-add-phone-context-to-number'.
+					3)  [outg-add-country-area-code-in-phone-context:
+		 countrycode-areacode]
+		 The manipulation rule consists of a fixed character
+		 string 
+		 'outg-add-country-area-code-in-phone-context:'.
+		 It is immediately followed by 2 numeric values 
+		 combined with a hyphen. 
+		 It is not allowed to insert a space between the fixed
+		 character string and the numeric value nor between
+		 the numeric value and the combining hyphen.
+		 The country code can be 1..3 digits long while the area
+		 code can be 1..5 digits long.
+                  	4)  [inc-short-number-len:shortnumberlength] 
+		 The manipulation rule consists of a fixed character
+		 string 'inc-short-number-len:'. It is immediately
+		 followed by a numeric value with a  range [1,9].
+		 It is not allowed to insert a space between the fixed 
+		 character string and the numeric value.                     	
+                  	5)[outg-add-domain-name-in-phone-context]
+		 The manipulation rule consists of a fixed character 
+		 string 'outg-add-domain-name-in-phone-context'
+		 This rule type does not require the domain name to be
+		 configured as part of the manipulation rule.
+					6)[out-dialedprefix-outprefix]
+		 The manipulation rule consists of a fixed character
+		 string 'out-dialedprefix-outprefix'
+		 It is immediately followed by the dialing number rule map. 
+		 It is not allowed to insert a space between
+		 the fixed character string and rule map nor between the 
+		 rule map and the combining hyphen.
+                     	
+					7)[outg-add-country-area-code-in-cpn:
+		 countrycode-areacode]
+		 The manipulation rule consists of a fixed character 
+		 string 'outg-add-country-area-code-in-cpn:'.
+		 It is immediately followed by 2 numeric values combined 
+		 with a hyphen. It is not allowed to insert a 
+		 space between the fixed character string and the numeric 
+		 value nor between the numeric value and the
+		 combining hyphen. The country code can be 1..3 digits
+		 long while the area code can be 1..5 digits long
+
+					8)[inc-del-local-country-code-in-cpn:countrycode] 
+		 The manipulation rule consists of a fixed character
+		 string 'inc-del-local-country-code-in-cpn:'. 
+		 It is immediately followed by a numeric value. It is not 
+		 allowed to insert a space between the fixed
+		 character string and the numeric value. The country code 
+		 can be 1..3 digits long.";
+    }
+	leaf dm-rule-type {
+	  type enumeration {
+		enum individual-pots-user-interface {
+		  value 1;
+		  description
+			"The rule is a POTS rule that applies to
+			 a single POTS user interface or a POTS 
+			 rule that applies to a subset of the POTS 
+			 user interfaces present in the NE.";
+		}
+		enum all-pots-user-interfaces {
+		  value 2;
+		  description
+			"The rule is a POTS rule that applies to
+			 all POTS user interfaces present in the NE.";
+		}
+	  }		
+	  description
+		"The digit manipulation rule type.";
+	}
+	leaf dm-rule-state {
+	  type enumeration {
+		enum activated {
+		  value 1;
+		  description
+			"The rule is activated.";
+		}
+		enum de-activated {
+		  value 2;
+		  description
+			"The rule is de-activated.";
+		}
+	  }
+	  default de-activated;		
+	  description
+		"The state of the digit manipulation rule i.e. whether 
+		 it is actually activated or de-activated by the operator.";
+	} 
+  }
+  
+  grouping digit-manipulation-rule-profile-body {
+    description
+      "Defines the parameters included in the 
+	   digit-manipulation-rule profile.";
+	list digit-manipulation-rules { 
+	  key "index";
+	  leaf index {
+	    type uint16;
+		description
+		  "Index.";
+	  }
+      uses dm-rule-parameters;
+	}
+  }
+}

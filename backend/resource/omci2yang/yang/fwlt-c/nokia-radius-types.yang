@@ -1,0 +1,183 @@
+module nokia-radius-types {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+          + "nokia-radius-types";
+
+  prefix "nokia-radius-types";
+
+  import ietf-system {
+    prefix sys;
+  }
+
+  import ietf-inet-types {
+    prefix inet;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains new nodes according to Nokia specific
+     requirements for AAA Radius authentication.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not  to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2023, Nokia. All Rights Reserved.";
+
+  revision 2023-03-06 {
+    description
+      "Initial version";
+    reference
+      "Nokia specific";
+  }
+
+  typedef policy-server-name-ref {
+    type leafref {
+      path "/sys:system/sys:radius/sys:server/sys:name";
+    }
+    description
+      "This type is used by data models that need to
+      reference configured radius server name.";
+  }
+
+  grouping nas-config {
+    description
+      "Radius client on the access node(NAS) identifying parameters";
+
+    leaf nas-id {
+      type string;
+      description
+        "NAS-Identifier used in messages towards RADIUS servers.";
+      reference
+        "RFC 2865 section-5.32";
+    }
+    leaf nas-ip-address {
+      type inet:ip-address;
+      description
+        "The identifying IP Address of the Radius Client on the
+        access node(NAS) requesting the Authentication or
+        Accounting. According to RFC standard, it is the IP
+        Address of the NAS which is requesting authentication of
+        the user, and SHOULD be unique to the NAS within the scope
+        of the RADIUS  server.
+        If this leaf is not configured, following values are
+        considered by the Access Node in the mentioned order.
+        i) The IP address of the Access Node inband management
+        interface - either configured statically or assigned
+        dynamically through dhcp.
+        ii) The IP address of the outband interface, if the Access
+        Node works in outband mode.
+        If the aforementioned values not available/configured, then
+        the NAS-IP-Address AVP field is sent with no value(empty)
+        in the outgoing messages.";
+
+      reference
+        "RFC3162 - section 2.1,RFC 2865 - section 5.4";
+    }
+  }
+
+  grouping auth-server {
+    description
+      "RFC 2865";
+
+    leaf auth-server-first {
+      if-feature sys:radius;
+      type nokia-radius-types:policy-server-name-ref;
+      mandatory true;
+      description
+        "primary RADIUS authentication server.";
+    }
+
+    leaf auth-server-second {
+      if-feature sys:radius;
+      type nokia-radius-types:policy-server-name-ref;
+      description
+        "secondary RADIUS authentication server.";
+    }
+  }
+
+  grouping acct-server {
+    description
+      "RFC 2866";
+
+    leaf acct-server-first {
+      if-feature sys:radius;
+      type nokia-radius-types:policy-server-name-ref;
+      description
+        "primary RADIUS accounting server.";
+    }
+
+    leaf acct-server-second {
+      if-feature sys:radius;
+      type nokia-radius-types:policy-server-name-ref;
+      must "boolean(../acct-server-first)" {
+        error-message "Primary Accounting Server needs to be "
+          +"configured prior to configuration of Secondary Accounting "
+          +"Server";
+      }
+      must "not(../acct-server-second = ../acct-server-first)" {
+        error-message "Secondary Accounting Server shall not be same "
+          +"as the Primary Accounting Server";
+      }
+      description
+        "secondary RADIUS accounting server.";
+    }
+
+    leaf acct-interval {
+      type uint16 {
+        range "1..65535";
+      }
+      units seconds;
+      default "600";
+      description
+        "NAS will use this interim interval for each interval
+        it will send interim message to accounting server.";
+    }
+
+    leaf disable-accounting {
+      type boolean;
+      default "false";
+      description
+        "Indicates to disable accounting when the value is true";
+    }
+  }
+
+}

@@ -1,0 +1,172 @@
+module nokia-sdan-software-package-data {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+          + "nokia-software-package-data";
+  prefix nokia-sw-activation-log;
+
+  import bbf-software-image-management-one-dot-one {
+    prefix bbf-sim;
+  }
+ 
+  import ietf-hardware {
+    prefix hw;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "This module contains YANG definitions for 
+     descriptive information about the software packages present.
+     It will show the past activation history and future activation prediction
+     mainly focussing on the in-service-activation-ability of the sw package.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2022, Nokia. All Rights Reserved.";
+
+  
+ 
+  revision 2022-09-09 {
+    description
+      "Updating when condition for History,prediction information.";
+    reference
+      "Nokia specific";
+  }
+  revision 2022-08-30 {
+    description
+      "Adding history,prediction information.";
+    reference
+      "Nokia specific";
+  }
+  revision 2022-04-20 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific";
+  }
+
+augment "/hw:hardware-state/hw:component/bbf-sim:software"{
+  description
+    "An augmentation for the software revision details with respect to package contents and the activation prediction / history.";
+    list software-details {
+      key "name";
+      description "list of sw";
+      leaf name {
+        type leafref {
+          path "/hw:hardware-state/hw:component[hw:name=current()/../../../hw:name]/bbf-sim:software/bbf-sim:software/bbf-sim:name";
+        }
+
+        description
+          "The name of the list software (example: application_software)";
+      }
+      list revision{
+        key "name";
+        description "list of sw revisions";
+        leaf name {
+          type leafref {
+            path "/hw:hardware-state/hw:component[hw:name=current()/../../../../hw:name]/bbf-sim:software/bbf-sim:software[bbf-sim:name=current()/../../../bbf-sim:software/bbf-sim:name]/bbf-sim:revisions/bbf-sim:revision/bbf-sim:name";
+          }
+          description
+            "The name of the software revision.";
+        }
+        container sw-entity-details{
+	  description
+            "Information about software package contents read from the meta-data file";
+          list sw-entity{
+            key "name";
+            description
+              "list of sw entities";
+            leaf name{
+              type string;
+              description
+                "Name of the software entity";
+            }
+            leaf type{
+              type string;
+              description
+                "Type of the software entity (OS, APP, APP-DATA, SYSTEM-APP,...)";
+            }
+            list application{
+              key "name";
+              description "list of applications in sw entity";
+              leaf name{
+                type string;
+                description "Name of the applications contained in the software entity";
+              }
+            }
+            leaf version{
+              type string;
+                description "software version of the software enity";
+            }
+            leaf issu-enabled{
+              type boolean;
+              description "whether the software entity could be upgraded in-service or not";
+            }
+          }
+        }
+        container history-of-activation{
+          when "current()/../../../bbf-sim:software[bbf-sim:name=current()/../../nokia-sw-activation-log:name]/bbf-sim:revisions/bbf-sim:revision[bbf-sim:name=current()/../nokia-sw-activation-log:name]/bbf-sim:is-active = 'true'"{
+            description "details about the activation mode, in-service activation or not, of the active revision";
+          }
+          description "history-of-activation";
+          leaf summary{
+            type enumeration{
+              enum issu{
+                description "sw package has been activated in-service";
+              }
+              enum non-issu{
+                description "sw package has been activated through reset, i.e. not in-service";
+              }
+            }
+            description "summary";
+          }
+          list impacted-application{
+            when "../summary = 'issu'"{
+              description "list of applications that have changed version in the in-service activation";
+            }
+            key "name";
+            description "list of applications that have changed version in the in-service activation";
+            leaf name{
+              type string;
+              description "application names that have swapped version in the in-service activation";
+            }
+          }
+        }
+        container activation-prediction{
+          when "../../../bbf-sim:software[bbf-sim:name=current()/../../nokia-sw-activation-log:name]/bbf-sim:revisions/bbf-sim:revision[bbf-sim:name=current()/../nokia-sw-activation-log:name]/bbf-sim:is-active = 'false'"{
+            description "prediction on the activation mode for the passive revision";
+          }
+          description "activation-prediction";
+          leaf summary{
+            type enumeration{
+              enum issu{
+                description "sw package will be activated in-service";
+              }
+              enum non-issu{
+                 description "sw package will be activated through reset, i.e. not in-service";
+              }
+            }
+            description "summary";
+          }
+          list impacted-application{
+            when "../summary = 'issu'"{
+              description "list of applications that are expected to change version in the in-service activation";
+            }
+            key "name";
+            description "list of app names";
+            leaf name{
+              type string;
+              description "list of applications that will change version in the predicted in-service activation";
+            }
+          }
+        }
+      }
+    }
+  }
+}
+

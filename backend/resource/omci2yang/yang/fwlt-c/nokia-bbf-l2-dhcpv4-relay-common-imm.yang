@@ -1,0 +1,63 @@
+module nokia-bbf-l2-dhcpv4-relay-common-imm {
+
+  namespace
+     "urn:bbf:yang:nokia-bbf-l2-dhcpv4-relay-common-imm";
+
+  prefix  dhcpv4-relay-imm;
+
+  import bbf-l2-dhcpv4-relay {
+      prefix bbf-l2-d4r;
+  }
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import ietf-immutable {
+    prefix im;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA BBF/bbf-l2-dhcpv4-relay YANG module supporting
+     deviations on top of standard.";
+
+  /* revision */
+
+  revision 2025-04-22 {
+    description
+      "Introducing immutable support for l2-dhcpv4-relay trusted-port leaf.";
+    reference
+      "Nokia Specific.";
+  }
+
+  revision 2022-12-23 {
+    description
+      "Introducing immutable support for l2-dhcpv4-relay enable leaf.";
+    reference
+      "Nokia Specific.";
+  }
+
+
+  deviation "/if:interfaces/if:interface/bbf-l2-d4r:l2-dhcpv4-relay/bbf-l2-d4r:enable"
+  {
+     description
+       "interface l2-dhcpv4-relay enable leaf can not be modified or deleted.";
+     deviate add {
+            im:immutable "create";
+    }
+  }
+  deviation "/if:interfaces/if:interface/bbf-l2-d4r:l2-dhcpv4-relay/bbf-l2-d4r:trusted-port"
+  {
+     description
+       "interface l2-dhcpv4-relay trusted-port leaf can not be modified or deleted but can be created with default value";
+     deviate add {
+            im:immutable "create";
+    }
+  }
+}

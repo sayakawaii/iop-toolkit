@@ -1,0 +1,52 @@
+module nokia-sdan-xpon-channel-pair-body-xgs-capable-si {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-sdan-xpon-channel-pair-body-xgs-capable-si";
+
+  prefix nokia-sdan-xpon-channel-pair-body-xgs-capable-si;
+
+  import nokia-sdan-service-impact {
+    prefix nokia-si;
+  }
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import bbf-xpon{
+    prefix bbf-xpon;
+  }
+
+  import nokia-sdan-xpon-channel-pair-body {
+    prefix nokia-sdan-xpon-channel-pair-body;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA IETF/System YANG module supporting
+     deviations on top of standard.";
+
+  revision 2023-02-20 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia Specific.";
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-xpon:channel-pair/nokia-sdan-xpon-channel-pair-body:burst-overhead" {
+      description
+        "Changing the burst-overhead parameter while the PON is operational will result in the PON being operationally down
+         and traffic loss for a short period of time. 
+         When the burst-overhead is changed to reduced but the inserted optical module does not support this, 
+         traffic will not recover and the PON will stay down.";
+      deviate add {
+        nokia-si:service-impact;
+      }
+  }
+
+}

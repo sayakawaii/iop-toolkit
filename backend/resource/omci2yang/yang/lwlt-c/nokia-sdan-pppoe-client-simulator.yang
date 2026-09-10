@@ -1,0 +1,298 @@
+module nokia-sdan-pppoe-client-simulator {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+          + "nokia-sdan-pppoe-client-simulator";
+
+  prefix nokia-sdan-ppp-client;
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import ietf-netconf-acm {
+    prefix nacm;
+  }
+
+  import bbf-if-type {
+    prefix bbfift;
+  }
+
+  import bbf-interface-usage {
+    prefix bbf-if-usg;
+  }
+
+  import bbf-yang-types {
+    prefix bbf-yang;
+  }
+
+  import nokia-sdan-client-simulator-types {
+    prefix client-simulator-types;
+  }
+
+  import ietf-yang-types {
+     prefix yang;
+  }
+
+  import bbf-vlan-sub-interface-vector {
+      prefix bbf-vsi-vctr;
+  }
+
+  import bbf-vlan-sub-interface-vector-usage {
+      prefix bbf-vsi-vctr-usg;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains new nodes according to Nokia specific
+     requirements for pppoe Client simulation.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not  to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2022, Nokia. All Rights Reserved.";
+
+  revision 2023-07-17 {
+    description
+      "Added error-message for client-mac.";
+    reference
+      "";
+  }
+
+  revision 2023-04-05 {
+    description
+      "client-mac should not allow any multicast address or broadcast address";
+    reference
+      "";
+  }
+
+  revision 2022-09-22 {
+    description
+      "Initial version";
+    reference
+      "";
+  }
+
+  container pppoe-client-simulator {
+    presence
+      "Presence of this container indicates that PPPoE sessions are simulated
+      on the User vlan-sub-interfaces.";
+    description
+      "PPPoE client session paramters and provides state data for the
+      simulated PPPoE client sessions.";
+
+    list session {
+      key "interface";
+      description
+        "List of PPPoE sessions simulated in the system.";
+
+      leaf interface {
+        type if:interface-ref;
+        must "derived-from-or-self("
+          + "/if:interfaces/if:interface[if:name = current()]"
+          + "/if:type,'bbfift:vlan-sub-interface') and"
+          + "(/if:interfaces/if:interface[if:name = current()]"
+          + "/bbf-if-usg:interface-usage/bbf-if-usg:"
+          + "interface-usage = 'user-port'"
+          + " or "
+          + "/bbf-vsi-vctr:vsi-vector-profiles/bbf-vsi-vctr:vsi-vector-profile[bbf-vsi-vctr:name = "
+          + "/if:interfaces/if:interface[if:name = current()]/bbf-vsi-vctr:vector-profile]/"
+          + "bbf-vsi-vctr-usg:interface-usage/bbf-vsi-vctr-usg:interface-usage = 'user-port')" {
+
+            error-message
+              "Only interfaces of type 'vlan-sub-interface' and interface-usage
+              'user-port' can be used to simulate PPPoE client session.";
+            description
+              "Allows only user vlan sub interface to which simulated PPPoE client session
+              packets are sent.";
+          }
+        description
+          "User Vlan sub interface which will receive the simulated PPPoE session packets
+          and will relay to the PPPoE server.";
+      }
+
+
+      action start-client-session {
+        nacm:default-deny-all;
+        description
+          "Initiates PPPoE client session with the provided input parameters.
+           PPPoE Discovery and Session packets will be exchanged with the PPPoE Server,
+           MRU(Maximum Receivable Unit) exchange and IP Address allocation will happen
+           with PPP protocol.
+           Multiple start action commands cannot be executed for a single session and
+           when triggered, will be dropped with error message.
+           Stop action has to be triggered before initiating another start action.";
+
+        input {
+
+          leaf client-mac {
+            type yang:mac-address {
+		pattern "[0-9a-fA-F][02468aAcCeE](:[0-9a-fA-F]{2}){5}" {
+                  error-message
+                    "Invalid MAC Address format or Multicast/Broadcast address as client-mac"
+                    + " are not supported";
+           }
+	}
+            mandatory true;
+            description
+              "MAC address of the Client.";
+          }
+
+          leaf mru {
+            type uint16 {
+              range "66..1492";
+            }
+            description
+              "The Maximum Receive Unit(mru) Option is sent to inform peer about the
+               maximum packet the client could receive.";
+            reference
+              "RFC 1661 section 4.6 (Maximum-Receive-Unit)";
+          }
+
+          leaf authentication-protocol {
+            type enumeration {
+              enum "pap" {
+                description
+                  "Password Authentication Protocol(pap). The Password Authentication Protocol
+                  (PAP) provides a simple method for the peer to establish its identity using
+                  a 2-way handshake. This is done only upon initial link establishment";
+                reference
+                  "RFC 1334 - Section 2.";
+              }
+
+              enum "chap" {
+                description
+                  "Challenge Handshake Authentication Protocol(chap). The Challenge-Handshake
+                  Authentication Protocol (CHAP) is used to periodically verify the identity
+                  of the peer using a 3-way handshake. This is done upon initial link
+                  establishment, and MAY be repeated anytime after the link has been
+                  established.";
+                reference
+                  "RFC 1334 - Section 3.";
+              }
+            }
+            description
+              "This leaf provides a method to negotiate the use of a specific protocol
+               for authentication. If not configured, no authentication will be performed.";
+            reference
+              "RFC 1661 - Section 6.2.";
+          }
+
+          leaf user-name {
+	    when "(../authentication-protocol = 'pap') or "
+	      +  "(../authentication-protocol = 'chap')" {
+                description
+                  "Applicable only when authentication protocol is configured.";
+              }
+            type bbf-yang:string-ascii64;
+            description
+              "Username to be used in authentication process with PPP server.";
+          }
+
+          leaf password {
+	    when "(../authentication-protocol = 'pap') or "
+	      +  "(../authentication-protocol = 'chap')" {
+                description
+                  "Applicable only when authentication protocol is configured.";
+              }
+            type bbf-yang:string-ascii64;
+            description
+              "Password to be used in authentication process with PPP server.";
+          }
+
+          uses client-simulator-types:simulation-vlan-tag-params;
+          leaf time-out {
+            type client-simulator-types:time-out;
+            description "time out";
+          }
+        }
+      }
+
+      action stop-client-session {
+        nacm:default-deny-all;
+        description
+          "Terminates PPPoE client session which is running based on this User Interface.
+           Removes the state data and clears the client device and the input parameters
+           provided in start action.";
+      }
+
+      container session-status {
+        config false;
+        description "session status";
+        uses client-simulator-types:simulation-session-status;
+        uses client-simulator-types:simulation-status-params {
+          refine user-ip
+          {
+            description
+              "IP address of the User allocated by PPP(Point-to-Point)
+               - IPCP (Internet Protocol Control Protocol).";
+            reference
+              "RFC 1332 - Section 3.3";
+          }
+        }
+
+        leaf authentication-mode {
+          type string;
+          description
+            "Authentication mode configured for PPP authentication";
+        }
+
+        leaf user-name {
+          type bbf-yang:string-ascii64;
+          description
+            "Username provided for authentication.";
+        }
+
+        leaf session-id {
+          type uint32;
+          description
+            "Session ID, a number allotted by the server for this PPPoE session with
+            this client, which will be used in PPP sessions as well.";
+          reference
+            "RFC 2516";
+        }
+
+        uses client-simulator-types:simulation-timing-params;
+      }
+    }
+  }
+}

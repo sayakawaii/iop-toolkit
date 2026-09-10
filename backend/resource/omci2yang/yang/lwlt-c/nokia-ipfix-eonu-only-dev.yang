@@ -1,0 +1,45 @@
+module nokia-ipfix-eonu-only-dev {
+
+    namespace
+        "http://www.nokia.com/Fixed-Networks/BBA/yang:nokia-ipfix-eonu-only-dev";
+
+    prefix nokia-ipfix-eonu-only-dev;
+
+    import ietf-ipfix-psamp { prefix ipfix;       }
+    import nokia-ipfix      { prefix nokia-ipfix; }
+    import ietf-interfaces  { prefix if;          }
+    import ietf-interfaces-mounted { prefix if-mounted; }
+
+    organization
+        "Nokia";
+
+    contact
+        "isam.yang@nokia.com";
+
+    description
+        "The NOKIA IPFIX YANG module supporting
+         deviations on top of standard.";
+
+    revision 2024-05-10 {
+        description "Deviate interface-types to include also if-mounted types";
+        reference "Nokia internal.";
+    }
+
+
+  deviation "/ipfix:ipfix/ipfix:cache/nokia-ipfix:scope-identifier/nokia-ipfix:interface-type/nokia-ipfix:interface-type" {
+    description "Exporting interval can be a multiple of 60
+                  (value is in seconds, hence the exporting granularity is set in minutes)
+                  or for specific xpaths be set to sub-minute value.
+                  This value is only relevant for caches that are not configured as on-change";
+    deviate replace {
+      type union {
+        type identityref {
+            base if:interface-type;
+        }
+        type identityref {
+            base if-mounted:interface-type;
+        }
+      }
+    }   
+  }
+}

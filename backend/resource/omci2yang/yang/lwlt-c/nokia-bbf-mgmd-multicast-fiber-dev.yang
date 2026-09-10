@@ -1,0 +1,146 @@
+module nokia-bbf-mgmd-multicast-fiber-dev {
+
+  yang-version 1.1;
+
+  namespace "urn:broadband-forum-org:yang:" +
+            "nokia-bbf-mgmd-multicast-fiber-dev";  
+            
+  prefix "nokia-bbf-mgmd-multicast-fiber-dev";
+
+  /* import  */
+  import ietf-interfaces {
+    prefix if;
+  }
+  
+  import bbf-sub-interfaces{
+    prefix bbf-subif;
+  }
+
+  import bbf-sub-interface-tagging{
+    prefix bbf-subif-tag;
+  }
+ 
+  import bbf-mgmd {
+    prefix "bbf-mgmd";
+  }   
+  
+  import bbf-frame-processing-profile {
+    prefix bbf-frameproc;
+  }
+
+  organization 
+    "Nokia";
+    
+  contact 
+    "isam.yang@nokia.com";
+    
+  description 
+    "The NOKIA BBF/bbf-mgmd YANG module supporting
+     deviations on top of standard. ";
+
+  revision 2026-05-21 {
+    description
+      "Remove some MLD-related restrictions.";
+    reference
+      "TBD";
+  }
+  
+  revision 2022-07-15 {
+    description
+      "Restrict unsupported lefs
+       for multicast";
+    reference
+      "TBD";
+  }
+
+  revision 2019-03-25 {
+    description 
+      "Initial revision on 2016-03-16.
+       Update yang on 2019-03-25.
+       Update on 2019-06-27 ";
+    reference
+      "TBD";
+  }
+  
+/**********************************************/
+/* definitions which should always be present */
+/**********************************************/
+
+ deviation "/bbf-mgmd:multicast/bbf-mgmd:mgmd/bbf-mgmd:multicast-vpn" {
+    deviate add {
+      max-elements 64;
+    }
+ }
+
+ deviation "/bbf-mgmd:multicast/bbf-mgmd:mgmd/bbf-mgmd:multicast-vpn/bbf-mgmd:ip-version"{
+    deviate add {
+        must "current() = 'ipv4' or current() = 'ipv6'"{
+               error-message "Only IGMP and MLD supported currently.";
+        }
+     }   
+  }
+
+ deviation "/bbf-mgmd:multicast/bbf-mgmd:mgmd/bbf-mgmd:multicast-vpn/bbf-mgmd:multicast-interface-to-host/bbf-mgmd:data-path-vlan-sub-interface"{
+    deviate add{
+       must "current() = current()/../bbf-mgmd:vlan-sub-interface"{
+             error-message "data-path-vlan-sub-interface should be same as vlan-sub-interface.";
+       }
+    }
+ }
+
+deviation "/bbf-mgmd:multicast/bbf-mgmd:mgmd/bbf-mgmd:multicast-vpn"
+        +"/bbf-mgmd:multicast-network-interface/bbf-mgmd:multicast-transport"
+        +"/bbf-mgmd:single-uplink/bbf-mgmd:single-uplink-interface-data/bbf-mgmd:vlan-sub-interface"{
+    deviate add{
+      must "(boolean(/if:interfaces/if:interface[if:name = current()]"
+        +"/bbf-subif:inline-frame-processing/bbf-subif:ingress-rule/"
+        +"bbf-subif:rule/bbf-subif:flexible-match/bbf-subif-tag:match-criteria"
+        +"/bbf-subif-tag:tag/bbf-subif-tag:index = 0) and "
+        +"not(boolean(/if:interfaces/if:interface[if:name = current()]"
+        +"/bbf-subif:inline-frame-processing/bbf-subif:ingress-rule"
+        +"/bbf-subif:rule/bbf-subif:flexible-match/bbf-subif-tag:match-criteria"
+        +"/bbf-subif-tag:tag/bbf-subif-tag:index = 1))) "
+        +" or "
+        +"(boolean(/bbf-frameproc:frame-processing-profiles/"
+        +"bbf-frameproc:frame-processing-profile[bbf-frameproc:name "
+        +"= /if:interfaces/if:interface[if:name = current()]"
+        +"/bbf-frameproc:frame-processing-profile-ref]"
+        +"/bbf-frameproc:match-criteria/bbf-frameproc:tag/bbf-frameproc:index = 0) and "
+        +"not(boolean(/bbf-frameproc:frame-processing-profiles"
+        +"/bbf-frameproc:frame-processing-profile[bbf-frameproc:name = "
+        +"/if:interfaces/if:interface[if:name = current()]/bbf-frameproc:frame-processing-profile-ref]"
+        +"/bbf-frameproc:match-criteria/bbf-frameproc:tag/bbf-frameproc:index = 1)))"
+      {
+          error-message "multicast network interface supports single tag only";
+      }
+   }
+ }
+
+deviation "/bbf-mgmd:multicast/bbf-mgmd:mgmd/bbf-mgmd:multicast-vpn/bbf-mgmd:multicast-interface-to-host/bbf-mgmd:multicast-rate-limit"{
+    description "multicast mgmd multicast-rate-limit not supported for this board";
+    deviate not-supported;
+  }
+
+deviation "/bbf-mgmd:multicast/bbf-mgmd:mgmd/bbf-mgmd:multicast-vpn/bbf-mgmd:multicast-interface-to-host/bbf-mgmd:multicast-rate-limit-exceed-action"{
+    description "multicast mgmd multicast-rate-limit-exceed-action not supported for this board";
+    deviate not-supported;
+  }
+
+deviation "/bbf-mgmd:multicast/bbf-mgmd:mgmd/bbf-mgmd:multicast-vpn/bbf-mgmd:multicast-channel/bbf-mgmd:interface-to-host"
+  {
+    description "multicast mgmd multicast-channel interface-to-host not supported for this board";
+    deviate not-supported;
+  }
+
+  deviation "/bbf-mgmd:multicast-state/bbf-mgmd:mgmd/bbf-mgmd:multicast-vpn/bbf-mgmd:multicast-interface-to-host/bbf-mgmd:multicast-rate-limit-exceeded-count"
+  {
+     description "multicast mgmd multicast-rate-limit-exceeded-count is not supported for this board at host interface level";
+     deviate not-supported;
+  }
+
+  deviation "/bbf-mgmd:multicast-state/bbf-mgmd:mgmd/bbf-mgmd:multicast-vpn/bbf-mgmd:multicast-interface-to-host/bbf-mgmd:current-multicast-bw-delivered"
+  {
+     description "multicast mgmd current-multicast-bw-delivered is not supported for this board at host interface level";
+     deviate not-supported;
+  }
+}

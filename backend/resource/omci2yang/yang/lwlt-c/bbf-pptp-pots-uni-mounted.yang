@@ -1,0 +1,203 @@
+submodule bbf-pptp-pots-uni-mounted {
+  yang-version 1.1;
+  belongs-to bbf-sip-voip-mounted  {
+    prefix bbf-sip-voip-mounted;
+  }
+
+  import bbf-fiber-onu-emulated-mount {
+     prefix onu;
+  }
+
+  import ietf-interfaces-mounted {
+     prefix if-mounted;
+  }
+
+
+  include bbf-pptp-pots-uni-base-mounted;
+  include bbf-pptp-media-pm-statistics-mounted;
+  include bbf-pots-uni-characteristics-mounted;
+  include bbf-pptp-pots-uni-operational-data-mounted;
+  include bbf-pots-notifications-mounted;
+  include bbf-tone-pattern-profiles-mounted;
+  include bbf-ringing-pattern-profiles-mounted;
+  include bbf-clip-data-mode-profiles-mounted;
+  include bbf-file-profiles-mounted;
+  include bbf-pptp-pots-uni-test-mounted;
+
+  organization
+    "Broadband Forum <https://www.broadband-forum.org>
+     Common YANG Work Area";
+
+  contact
+    "Comments or questions about this Broadband Forum YANG module
+     should be directed to <mailto:help@broadband-forum.org>.
+     Editor:      Frank Desseyn, Nokia
+     Editor:      Nadine Staelens, Nokia
+     PS Leader:   Joey Boyd, ADTRAN
+     PS Leader:   Ken Kerpez, ASSIA
+     WA Director: Joey Boyd, ADTRAN
+     WA Director: Sven Ooghe, Nokia";
+
+  description
+    "This submodule contains the pptp POTS uni container.
+     Copyright (c) 2017-2018, Broadband Forum
+     Redistribution and use in source and binary forms, with or
+     without modification, are permitted provided that the following
+     conditions are met:
+     1. Redistributions of source code must retain the above copyright
+        notice, this list of conditions and the following disclaimer.
+     2. Redistributions in binary form must reproduce the above
+        copyright notice, this list of conditions and the following
+        disclaimer in the documentation and/or other materials
+        provided with the distribution.
+     3. Neither the name of the copyright holder nor the names of its
+        contributors may be used to endorse or promote products
+        derived from this software without specific prior written
+        permission.
+     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
+     CONTRIBUTORS \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+     INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+     DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+     CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+     SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+     NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+     CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+     STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+     ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+     ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     The above license is used as a license under copyright only.
+     Please reference the Forum IPR Policy for patent licensing terms
+     <https://www.broadband-forum.org/ipr-policy>.
+     Any moral rights which are necessary to exercise under the above
+     license grant are also deemed granted under this license.
+     This version of this YANG module is part of TR-383; see
+     the TR itself for full legal notices.";
+
+  revision 2021-07-06 {
+    description
+      "Include bbf-pptp-pots-uni-test submodule.";
+    reference
+      " ";
+  }
+
+  revision 2020-03-06 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: 2020-03-06.";
+    reference
+      " ";
+  }
+
+
+  augment "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface"
+        + "/bbf-sip-voip-mounted:phys-voice-itf"
+	    + "/bbf-sip-voip-mounted:pptp-pots-uni" {
+    description
+	  "The Physical Path Termination Point user interface.";
+    leaf pptp-pots-connection-type {
+	  type enumeration {
+		enum private {
+		  value 1;
+		  description
+			"A SIP POTS user interface of a physical POTS
+			 interface serving a single subscriber.";
+		}
+		enum party {
+		  value 2;
+		  description
+			"A SIP POTS user interface of a shared physical POTS
+			 interface serving more than 1 subscriber.";
+		}
+	  }
+	  default private;
+	  description
+		"The SIP POTS user interface type.";
+    }
+    leaf pots-uni-characteristics {
+      /* type bbf-sip-voip-mounted:pots-uni-characteristics-ref; */
+      type leafref {
+        path "../../../../../bbf-sip-voip-mounted:pots-profiles"
+	     + "/bbf-sip-voip-mounted:pots-uni-characteristics-profiles"
+             + "/bbf-sip-voip-mounted:pots-uni-characteristics-profile"
+	     + "/bbf-sip-voip-mounted:name";
+      }
+      /*default null-pointer;*/
+      description
+	    "References the POTS uni characteristics.";
+    }
+    leaf tone-pattern-profile {
+    if-feature tones;
+	  type leafref {
+ 	    path "../../../../../bbf-sip-voip-mounted:pots-profiles"
+	       + "/bbf-sip-voip-mounted:tone-pattern-profiles"
+	       + "/bbf-sip-voip-mounted:tone-pattern-profile"
+	       + "/bbf-sip-voip-mounted:name";
+	  }
+	  /*default null-pointer;*/
+	  description
+	    "References the tone pattern profile.";
+    }
+    leaf ringing-pattern-profile {
+	  if-feature rings;
+	  type leafref {
+	    path "../../../../../bbf-sip-voip-mounted:pots-profiles"
+           + "/bbf-sip-voip-mounted:ringing-pattern-profiles"
+	       + "/bbf-sip-voip-mounted:ringing-pattern-profile"
+	       + "/bbf-sip-voip-mounted:name";
+	  }
+	  /*default null-pointer;*/
+	  description
+	    "References the ringing pattern profile.";
+    }
+    leaf clip-data-mode-profile {
+	  if-feature clip-data-mode;
+	  type leafref {
+ 	    path "../../../../../bbf-sip-voip-mounted:pots-profiles"
+	       + "/bbf-sip-voip-mounted:clip-data-mode-profiles"
+	       + "/bbf-sip-voip-mounted:clip-data-mode-profile"
+	       + "/bbf-sip-voip-mounted:name";
+	  }
+	  /*default null-pointer;*/
+	  description
+	    "References the clip data-mode profile.";
+    }
+    leaf file-prof-ref {
+	  if-feature ringtone-files;
+	  type leafref {
+	    path "../../../../../bbf-sip-voip-mounted:pots-profiles"
+	       + "/bbf-sip-voip-mounted:file-profiles"
+	       + "/bbf-sip-voip-mounted:file-profile"
+	       + "/bbf-sip-voip-mounted:name";
+	  }
+      /*default null-pointer;*/
+	  description
+	    "References the file profile, needed for downloading a file.
+		 This file can contain hardware settings, Z-interface
+		 settings.";
+	}
+    leaf call-statistics-enabled {
+      if-feature "statistics";
+      type boolean;
+      default false;
+      description
+        "Enable the VoIP call statistics for a particular POTS
+         line.";
+    }
+  }
+
+  augment "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface"
+        + "/bbf-sip-voip-mounted:phys-voice-itf"
+	+ "/bbf-sip-voip-mounted:pptp-pots-uni" {
+    description
+	  "The Physical Path Termination Point user interface.";
+    uses pptp-pots-uni-operational-data;
+    container pptp-media-pm-statistics {
+	  uses pptp-media-pm-statistics;
+    }
+    uses pptp-pots-uni-notifications;
+    uses pptp-pots-uni-test;
+  }
+}

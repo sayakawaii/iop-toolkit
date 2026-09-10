@@ -1,0 +1,153 @@
+module nokia-bbf-icmpv6-common-dev {
+
+  namespace
+     "urn:bbf:yang:nokia-bbf-icmpv6-common-dev";
+
+  prefix  icmpv6-dev;
+
+  import bbf-icmpv6 {
+      prefix bbf-icmpv6;
+  }
+
+  import nokia-yang-types {
+    prefix nok-typ;
+  }
+  import ietf-interfaces {
+    prefix if;
+  }
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA BBF/bbf-icmpv6 YANG module supporting
+     deviations on top of standard.";
+
+  /* revision */
+
+  revision 2022-12-16 {
+    description
+      "Restricting unsupported Icmpv6 forward counter yang leaf ";
+    reference
+      "Nokia internal.";
+  }
+  revision 2020-06-22 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia internal.";
+  }
+   
+
+  /***************************************************************************************/
+  /* restrict special characters in icmpv6-relay profile other than nokia-string-ascii64 */
+  /***************************************************************************************/
+
+  deviation "/bbf-icmpv6:icmpv6-profiles/bbf-icmpv6:icmpv6-profile/bbf-icmpv6:name"{
+    deviate replace{
+      type nok-typ:nokia-string-ascii64;
+    }
+  }
+
+  /***************************************************************************************/
+  /* icmpv6 profiles - max 16 profiles							 */
+  /***************************************************************************************/
+
+  deviation "/bbf-icmpv6:icmpv6-profiles/bbf-icmpv6:icmpv6-profile"{
+    deviate add {
+      max-elements 16;
+    }
+  }
+    deviation "/if:interfaces-state/if:interface/if:statistics/bbf-icmpv6:icmpv6-stats/bbf-icmpv6:upstream/bbf-icmpv6:router-solicitation/bbf-icmpv6:forward-packets" {
+    description "Upstream icmpv6 router-solicitation forward-packets not supported.";
+    deviate not-supported;
+  }
+
+    deviation "/if:interfaces-state/if:interface/if:statistics/bbf-icmpv6:icmpv6-stats/bbf-icmpv6:upstream/bbf-icmpv6:router-advertisement/bbf-icmpv6:forward-packets" {
+    description "Upstream icmpv6 router-advertisement forward-packets not supported";
+    deviate not-supported;
+  }
+
+    deviation "/if:interfaces-state/if:interface/if:statistics/bbf-icmpv6:icmpv6-stats/bbf-icmpv6:upstream/bbf-icmpv6:neighbour-advertisement/bbf-icmpv6:forward-packets" {
+    description "Upstream icmpv6 neighbour-advertisement forward-packets not supported";
+    deviate not-supported;
+  }
+
+    deviation "/if:interfaces-state/if:interface/if:statistics/bbf-icmpv6:icmpv6-stats/bbf-icmpv6:upstream/bbf-icmpv6:neighbour-solicitation/bbf-icmpv6:forward-packets" {
+    description "Upstream icmpv6 neighbour-solicitation forward-packets not supported";
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces-state/if:interface/if:statistics/bbf-icmpv6:icmpv6-stats/bbf-icmpv6:upstream/bbf-icmpv6:router-redirect/bbf-icmpv6:forward-packets" {
+    description "Upstream icmpv6 router-redirect forward-packets not supported";
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces-state/if:interface/if:statistics/bbf-icmpv6:icmpv6-stats/bbf-icmpv6:upstream/bbf-icmpv6:multicast-listener-query/bbf-icmpv6:forward-packets" {
+    description "Upstream icmpv6 multicast-listener-query forward-packets not supported";
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces-state/if:interface/if:statistics/bbf-icmpv6:icmpv6-stats/bbf-icmpv6:upstream/bbf-icmpv6:error-message/bbf-icmpv6:forward-packets" {
+    description "Upstream icmpv6 error-message forward-packets not supported";
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces-state/if:interface/if:statistics/bbf-icmpv6:icmpv6-stats/bbf-icmpv6:upstream/bbf-icmpv6:informational-message/bbf-icmpv6:forward-packets" {
+    description "Upstream icmpv6 informational-message forward-packets not supported";
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces-state/if:interface/if:statistics/bbf-icmpv6:icmpv6-stats/bbf-icmpv6:upstream/bbf-icmpv6:invalid-message/bbf-icmpv6:forward-packets" {
+    description "Upstream icmpv6 invalid-message forward-packets not supported";
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces-state/if:interface/if:statistics/bbf-icmpv6:icmpv6-stats/bbf-icmpv6:downstream/bbf-icmpv6:router-solicitation/bbf-icmpv6:forward-packets" {
+    description "Upstream icmpv6 router-solicitation forward-packets not supported";
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces-state/if:interface/if:statistics/bbf-icmpv6:icmpv6-stats/bbf-icmpv6:downstream/bbf-icmpv6:router-advertisement/bbf-icmpv6:forward-packets" {
+    description "Downstream icmpv6 router-advertisement forward-packets not supported";
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces-state/if:interface/if:statistics/bbf-icmpv6:icmpv6-stats/bbf-icmpv6:downstream/bbf-icmpv6:neighbour-advertisement/bbf-icmpv6:forward-packets" {
+    description "Downstream icmpv6 neighbour-advertisement forward-packets not supported";
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces-state/if:interface/if:statistics/bbf-icmpv6:icmpv6-stats/bbf-icmpv6:downstream/bbf-icmpv6:neighbour-solicitation/bbf-icmpv6:forward-packets" {
+    description "Downstream icmpv6 neighbour-solicitation forward-packets not supported";
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces-state/if:interface/if:statistics/bbf-icmpv6:icmpv6-stats/bbf-icmpv6:downstream/bbf-icmpv6:router-redirect/bbf-icmpv6:forward-packets" {
+    description "Downstream icmpv6 router-redirect forward-packets not supported";
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces-state/if:interface/if:statistics/bbf-icmpv6:icmpv6-stats/bbf-icmpv6:downstream/bbf-icmpv6:multicast-listener-query/bbf-icmpv6:forward-packets" {
+    description "Downstream icmpv6 multicast-listener-query forward-packets not supported";
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces-state/if:interface/if:statistics/bbf-icmpv6:icmpv6-stats/bbf-icmpv6:downstream/bbf-icmpv6:error-message/bbf-icmpv6:forward-packets" {
+    description "Downstream icmpv6 error-message forward-packets not supported";
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces-state/if:interface/if:statistics/bbf-icmpv6:icmpv6-stats/bbf-icmpv6:downstream/bbf-icmpv6:informational-message/bbf-icmpv6:forward-packets" {
+    description "Downstream icmpv6 informational-message forward-packets not supported";
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces-state/if:interface/if:statistics/bbf-icmpv6:icmpv6-stats/bbf-icmpv6:downstream/bbf-icmpv6:invalid-message/bbf-icmpv6:forward-packets" {
+    description "Downstream icmpv6 invalid-message forward-packets not supported";
+    deviate not-supported;
+  }
+
+}

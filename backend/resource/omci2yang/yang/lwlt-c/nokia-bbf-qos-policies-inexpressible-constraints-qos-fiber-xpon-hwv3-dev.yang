@@ -1,0 +1,232 @@
+module nokia-bbf-qos-policies-inexpressible-constraints-qos-fiber-xpon-hwv3-dev {
+
+  yang-version "1.1";
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+            + "nokia-bbf-qos-policies-inexpressible-constraints-qos-fiber-xpon-hwv3-dev";
+
+  prefix nokia-bbf-qos-policies-inexpressible-constraints-qos-fiber-xpon-hwv3-dev;
+
+  import bbf-qos-policies {
+    prefix bbf-qos-pol;
+  }
+  
+  organization
+    "NOKIA";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "The NOKIA common/nokia-bbf-qos-policies-inexpressible-constraints-qos-fiber-xpon-hwv3-dev
+     YANG module supporting deviations on top of ietf-ssh-server standard.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2019, Nokia. All Rights Reserved.";
+
+  revision 2017-04-24 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific"; 
+  }
+
+  deviation "/bbf-qos-pol:policies/bbf-qos-pol:policy" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry'
+       The error message 'For pbit2pbits type classifier of marker policy, its filter should be in-pbit or pbit-marking-list, and action must be pbit-marking.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-qos-pol:policies/bbf-qos-pol:policy" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry'
+       The error message 'For Marker-type policy, each classifier can only have one filter type.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-qos-pol:policies/bbf-qos-pol:policy" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry'
+       The error message 'For QueueColor type policy, the filter in classifiers only supports (Metered-color = false) and ((S or C Pbit) OR (S or C Dei)), and the filter type and tag index in all classifiers should be the same, and the action only supports bac-color.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-qos-pol:policies/bbf-qos-pol:policy" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry'
+       The error message 'For all marker policies, a maximum of 64 pbit marker profiles can be configured.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-qos-pol:policies/bbf-qos-pol:policy" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry'
+       The error message 'For the board, the limit for qos scheduler type policies has been exceeded.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-qos-pol:policies/bbf-qos-pol:policy" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry'
+       The error message 'For Marker-type policy, classifiers should be one of the followings: dscp2pbit, igmp2pbit, mld2pbit, untag2pbit and pbit2pbit.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-qos-pol:policies/bbf-qos-pol:policy" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry'
+       The error message 'For Marker-type policy, classifiers should be one of the followings: igmp2pbit, mld2pbit, untag2pbit and pbit2pbit.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-qos-pol:qos-policy-profiles/bbf-qos-pol:policy-profile" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-qos-pol:policies/bbf-qos-pol:policy'
+        '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry'
+       The error message 'For policies except CCL, all their classifiers must use the same pbit or dei filter type.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-qos-pol:qos-policy-profiles/bbf-qos-pol:policy-profile" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-qos-pol:policies/bbf-qos-pol:policy'
+        '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry'
+       The error message 'For marker policies, if pbit action lists 0 and 1 for vlan tag are configured, pbit action list 0 should remark all pbits to a fixed value, or pbit action lists 0 and 1 for all pbits should be the same.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-qos-pol:qos-policy-profiles/bbf-qos-pol:policy-profile" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-qos-pol:policies/bbf-qos-pol:policy'
+        '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry'
+       The error message 'For marker policies, if vlan tag filter is configured in the classifier, pbit action list 0 should be configured firstly.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-qos-pol:qos-policy-profiles/bbf-qos-pol:policy-profile" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-qos-pol:policies/bbf-qos-pol:policy'
+        '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry'
+       The error message 'For marker policies, if pbit action lists 0 and 1 for tag and untag are configured, pbit action lists 0 and 1 for untag and tag should be the same, or pbit action list 0 for untag and tag filter should have a fixed, same value.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-qos-pol:qos-policy-profiles/bbf-qos-pol:policy-profile" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-qos-pol:policies/bbf-qos-pol:policy'
+        '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry'
+       The error message 'For a marker policy, if a pbit action is configured, vlan pbit filters for this action should include all pbit values.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-qos-pol:qos-policy-profiles/bbf-qos-pol:policy-profile" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-qos-pol:policies/bbf-qos-pol:policy'
+        '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry'
+       The error message 'For the same marker policy, pbit action lists for pbit remarker should be the same in classifiers.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-qos-pol:qos-policy-profiles/bbf-qos-pol:policy-profile" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-qos-pol:policies/bbf-qos-pol:policy'
+        '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry'
+        '/bbf-qos-plc:policing-profiles/bbf-qos-plc:policing-profile'
+        '/nokia-qos-plc-ext:policing-pre-handling-profiles/nokia-qos-plc-ext:pre-handling-profile'
+       The error message 'Match-params of pre-handling-profile assignment to flow-color as a list should be same as Queue-color policy filter assignment to bac-color expressed by set of classifiers. For example, pbit or dei to flow-color or bac-color assignment should be same.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-qos-pol:qos-policy-profiles/bbf-qos-pol:policy-profile" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-qos-pol:policies/bbf-qos-pol:policy'
+        '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry'
+        '/bbf-qos-plc:policing-profiles/bbf-qos-plc:policing-profile'
+        '/bbf-qos-filt:filters/bbf-qos-enhfilt:enhanced-filter'
+       The error message 'For CCL-type policies, the action must be one of the following: pbit-mark, policer, discard, pass.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-qos-pol:qos-policy-profiles/bbf-qos-pol:policy-profile" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-qos-pol:policies/bbf-qos-pol:policy'
+        '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry'
+       The error message 'For all classifiers in a policy except CCL, they can only use the same pbit or dei tag index.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-qos-pol:qos-policy-profiles/bbf-qos-pol:policy-profile" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-qos-pol:policies/bbf-qos-pol:policy'
+        '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry'
+        '/bbf-qos-plc:policing-profiles/bbf-qos-plc:policing-profile'
+        '/bbf-qos-filt:filters/bbf-qos-enhfilt:enhanced-filter'
+       The error message 'For igmp2pbits or mld2pbits type classifier of marker policy, its filter must be igmp or mld, and action must be pbit-marking.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/bbf-qos-pol:qos-policy-profiles/bbf-qos-pol:policy-profile" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-qos-pol:policies/bbf-qos-pol:policy'
+        '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry'
+        '/bbf-qos-plc:policing-profiles/bbf-qos-plc:policing-profile'
+        '/bbf-qos-filt:filters/bbf-qos-enhfilt:enhanced-filter'
+       The error message 'For Marker-type policy, its filters must be one of the followings: pbit, pbit-marking-list, dscp, igmp, mld and untagged.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+}

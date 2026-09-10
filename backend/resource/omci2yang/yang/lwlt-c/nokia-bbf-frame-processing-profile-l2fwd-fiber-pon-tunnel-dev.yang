@@ -1,0 +1,90 @@
+module nokia-bbf-frame-processing-profile-l2fwd-fiber-pon-tunnel-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/" +
+            "nokia-bbf-frame-processing-profile-l2fwd-fiber-pon-tunnel-dev";
+
+  prefix nokia-bbf-frame-processing-profile-l2fwd-fiber-pon-tunnel-dev;
+
+  import bbf-frame-processing-profile {
+	  prefix bbf-frameproc;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "This module contains a collection of YANG deviations to enable
+     any-frame match criteria for S-Tunnel support on specific boards
+     (LWLT-C, LGLT-D).
+     
+     This deviation overrides the frame-filter container deviation
+     from l2fwd-fiber-pon by only disabling specific leaf nodes,
+     allowing the any-frame leaf to be configured.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia 
+     reserves the right to revise this document for any reason, 
+     including but not limited to conformity with standards 
+     promulgated by various agencies, utilisation of advances in the 
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or 
+     referred to herein.
+
+     The product specifications and other technical or performance 
+     information contained herein are subject to change without 
+     notice. Updates of this document will be issued under the above 
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any 
+     information or opinion contained herein. Nokia expressly advises 
+     that any use of for any purpose or reliance upon this technical 
+     reference is at the risk of the user and that Nokia shall not be 
+     liable for any damage or injury incurred by any person arising 
+     out of the sufficiency, accuracy, or utility of any information 
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any 
+     manufacturer to modify or change any of its products, nor does 
+     this document represent any commitment by Nokia to sell or 
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license 
+     or right under any patent, whether or not the use of any 
+     information herein necessarily employs an invention of any 
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2017-2026, Nokia. All Rights Reserved.";
+
+  revision 2026-04-28 {
+    description
+      "Initial revision - enable any-frame match criteria for
+       S-Tunnel support on LWLT-C and LGLT-D boards.";
+    reference
+      "Nokia specific - BBN-297319"; 
+  }
+
+  // Override frame-filter container deviation by disabling only specific leaf nodes
+  // This allows any-frame to be configured while still blocking unsupported filter types
+
+  deviation "/bbf-frameproc:frame-processing-profiles/bbf-frameproc:frame-processing-profile/bbf-frameproc:match-criteria/bbf-frameproc:frame-filter/bbf-frameproc:destination-mac-address"
+  {
+    deviate not-supported;
+  }
+
+  deviation "/bbf-frameproc:frame-processing-profiles/bbf-frameproc:frame-processing-profile/bbf-frameproc:match-criteria/bbf-frameproc:frame-filter/bbf-frameproc:destination-ipv4-address"
+  {
+    deviate not-supported;
+  }
+
+  deviation "/bbf-frameproc:frame-processing-profiles/bbf-frameproc:frame-processing-profile/bbf-frameproc:match-criteria/bbf-frameproc:frame-filter/bbf-frameproc:destination-ipv6-address"
+  {
+    deviate not-supported;
+  }
+}

@@ -1,0 +1,351 @@
+submodule bbf-tone-pattern-profile-body-mounted {
+  yang-version 1.1;
+  belongs-to bbf-sip-voip-mounted  {
+	prefix bbf-pots;
+  }
+
+  import bbf-yang-types {
+    prefix bbf-yang;
+  }
+  
+ 
+  organization
+    "Broadband Forum <https://www.broadband-forum.org>
+     FTTdp (Fiber to the Distribution Point) Work Area";
+
+  contact
+    "Comments or questions about this Broadband Forum YANG module
+     should be directed to <mailto:help@broadband-forum.org>.
+     Editor:      Frank Desseyn, Nokia
+     Editor:      Nadine Staelens, Nokia
+     WA Director: Christopher Croot, BT plc
+                  <mailto:chris.croot@bt.com>
+     WA Director: Sven Ooghe, Nokia
+                  <mailto:sven.ooghe@nokia.com>";
+
+  description
+    "This module contains a tone pattern profile. 
+     Copyright (c) 2016, 2017 Broadband Forum
+     Redistribution and use in source and binary forms, with or
+     without modification, are permitted provided that the following
+     conditions are met:
+     1. Redistributions of source code must retain the above copyright
+        notice, this list of conditions and the following disclaimer.
+     2. Redistributions in binary form must reproduce the above
+        copyright notice, this list of conditions and the following
+        disclaimer in the documentation and/or other materials
+        provided with the distribution.
+     3. Neither the of the copyright holder nor the names of its
+        contributors may be used to endorse or promote products
+        derived from this software without specific prior written
+        permission.
+     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
+     CONTRIBUTORS \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+     INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+     DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+     CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+     SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+     NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+     CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+     STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+     ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+     ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     The above license is used as a license under copyright only.
+     Please reference the Forum IPR Policy for patent licensing terms
+     <https://www.broadband-forum.org/ipr-policy>.
+     Any moral rights which are necessary to exercise under the above
+     license grant are also deemed granted under this license.
+     This version of this YANG module is part of TR-355c1; see
+     the TR itself for full legal notices.";
+
+  revision 2020-03-06 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: 2020-03-06.";
+    reference
+      " ";
+  }
+  
+  grouping tone-pattern-profile-body {
+	description
+	  "Defines the tones pattern profile.";
+	list tone-events {
+	  description
+		"The events for which a tone is defined. 
+		 If the tone can be synthesized by a sequence of
+		 complex tones and silence, the event refers to
+		 a tone pattern profile. Otherwise, the event 
+		 refers to a file name.";
+	  key "event";
+	  leaf event {
+		type enumeration {
+	      enum busy {
+			value 1;
+			description
+			  "The busy event.";
+		  }
+		  enum confirmation {
+			value 2;
+			description
+			  "The confirmation event.";
+		  }
+		  enum dial {
+			value 3;
+			description
+			  "The dial event.";
+		  }
+		  enum message-waiting {
+			value 4;
+			description
+			  "The message waiting event.";
+		  }
+		  enum off-hook {
+	    	value 5;
+	    	description
+	    	  "The off-hook event.";
+	      }
+	      enum ringback {
+	    	value 6;
+	    	description
+	    	  "The ringback (audible ring)
+	    	   event.";
+	      }
+	      enum re-order {
+	    	value 7;
+	    	description
+	    	  "The re-order event.";
+	      }
+	      enum stutter-dial {
+	    	value 8;
+	    	description
+	    	  "The stutter dial event.";
+	      }
+	      enum call-waiting-1 {
+	    	value 9;
+	    	description
+	    	  "The call waiting option 1 event.";
+	      }
+	      enum call-waiting-2 {
+	    	value 10;
+	    	description
+	    	  "The call waiting option 2 event.";
+	      }
+	      enum call-waiting-3 {
+	    	value 11;
+	    	description
+	    	  "The call waiting option 3 event.";
+	      }
+	      enum call-waiting-4 {
+	    	value 12;
+	    	description
+	    	 "The call waiting option 4 event.";
+	      }
+	      enum alerting-signal {
+	    	value 13;
+	    	description
+	    	  "The alerting signal event.";
+	      }
+	      enum special-dial {
+	    	value 14;
+	    	description
+	    	  "The special dial event.";
+	      }
+	      enum special-info {
+	    	value 15;
+	    	description
+	    	  "The special info event.";
+	      }
+	      enum release {
+	    	value 16;
+	    	description
+	    	  "The release event.";
+	      }
+	      enum congestion {
+	    	value 17;
+	    	description
+	    	  "The congestion event.";
+	      }
+	      enum intrusion {
+	    	value 33;
+	    	description
+	    	  "The intrusion event.";
+	      }
+	      enum dead {
+	    	value 34;
+	    	description
+	    	  "The dead event.";
+	      }
+	    }
+		description
+			"An event for which a tone is defined.";
+	  }
+      choice tone-pattern-definition {	  
+	    description
+		  "The tone may be manually configured or defined by means of 
+		   a downloaded tone file. The event and tone pattern 
+		   provisioning method.";
+	    case tone-pattern-file {
+		  description
+			"The tone definition is received in a downloaded 
+			 file.";
+		  leaf tone-file {
+			type empty;
+			description
+			  "Tone defined by means of
+			   downloaded tone file.";
+		  }
+		  leaf tone-file-name {
+			type bbf-yang:name-string;
+			description
+			  "References an executable tone file.";
+		  }			
+		  leaf tone-file-repetition {
+			type uint8;
+			description
+			  "The number of times the tone file is to be repeated.
+			   The value 0 means that the file is to be repeated 
+			   indefinitely until terminated by some external
+			   event.";
+			}
+		} 
+		case tone-pattern-definition {
+		  description
+			"The tone definition is received by means of manual
+			 configuration input.";
+		  leaf tone-config {
+			type empty;
+			description
+			  "Tone defined by means of manual configuration 
+			   input.";
+		  }
+		  list tone-pattern {
+			key "tone-pattern-name tone-pattern-sequence-nbr";
+			description
+			  "Allows to specify a complex tone (or
+			   silence) and a duration. 
+			   By linking tones and silence together,
+			   possibly cyclically, continuous, varying
+			   or interrupted tone sequences, repetitive
+			   or not, may be defined. A tone sequence 
+			   is initiated by pointing to the first 
+			   tone pattern entry that defines its
+			   parameters.";
+			leaf tone-pattern-name {
+			  type bbf-yang:name-string;
+			  description
+			    "The name of the tones and ringing pattern.";
+			}
+			leaf tone-pattern-sequence-nbr {
+			  type uint8 {range "1..255";}
+			  description
+			    "The sequence of this list entry in the entire tone
+			     sequence.";
+			}
+			leaf tone-pattern-enabled {
+			  type boolean;
+			  default false;
+			  description
+			    "This attribute controls whether the tone is on 
+			     (true) or off(false).";
+			}
+			leaf tone-component-frequency1 {
+			  type uint16;
+			  units "1 hz";
+			  description
+			    "The frequency of a tone component.";
+			}
+			leaf tone-component-power1 {
+			  type int8 {range "-25..0";}
+			  units "0.1 dBm0";
+			  description
+			    "The power level of the corresponding tone frequency 
+				 component.";
+			}
+			leaf tone-component-frequency2 {
+			  type uint16;
+			  units "1 hz";
+			  description
+			    "The frequency of a tone component.
+			     If a pair of tone component frequency / tone
+			     component power is the tone component frequency
+			     must be set to 0.";
+			}
+			leaf tone-component-power2 {
+			  type int8 {range "-25..0";}
+			  units "0.1 dBm0";
+			  description
+			    "The power level of the corresponding tone frequency
+				 component.";
+			}
+			leaf tone-component-frequency3 {
+			  type uint16;
+			  units "1 hz";
+			  description
+			    "The frequency of a tone component.
+			     If a pair of tone component
+ 			     frequency / tone component power is
+			     the tone component frequency must be
+			     set to 0.";
+			}
+			leaf tone-component-power3 {
+			  type int8 {range "-25..0";}
+			  units "0.1 dBm0";
+			  description
+			    "The power level of the corresponding tone frequency
+				 component.";
+			}
+			leaf tone-component-frequency4 {
+			  type uint16;
+			  units "1 hz";
+			  description
+			    "The frequency of a tone component.
+			    If a pair of tone component
+ 			    frequency / tone component power is
+			    the tone component frequency must be
+			    set to 0.";
+			}
+			leaf tone-component-power4 {
+			  type int8 {range "-25..0";}
+			  units "0.1 dBm0";
+			  description
+			   "The power level of the corresponding tone frequency
+			    component.";
+			}
+			leaf modulation-frequency {
+			  type uint16;
+			  units "1 hz";
+			  description
+			    "The modulation frequency and
+			     modulation power allow the composite 
+			     tone to be modulated. If this effect
+			     is not applicable, the modulation
+			     frequency must be set to 0.";
+			}
+			leaf modulation-power {
+			  type int8 {range "0..25";}
+			  units "1 dBm0";
+			  description
+			    "The modulation frequency and
+			     modulation power allow the composite 
+			     tone to be modulated. If this effect
+			     is not applicable, the modulation
+			     frequency must be set to 0.";
+			}
+			leaf phase-duration {
+			  type uint16;
+			  units "1 msec";
+			  description
+			    "The duration of the phase.
+			     The value 0 specifies that the phase
+			     endures indefinitely, i.e., until
+			     terminated by other events.";
+			}  
+		  } 
+		} 
+	  } 
+    }
+  } 
+} 

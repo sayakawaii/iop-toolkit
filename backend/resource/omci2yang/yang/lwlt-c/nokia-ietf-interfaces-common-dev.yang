@@ -1,0 +1,138 @@
+module nokia-ietf-interfaces-common-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-ietf-interfaces-common-dev";
+
+  prefix nokia-ietf-interfaces-common-dev;
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import nokia-yang-types {
+  prefix nok-typ;
+  }
+
+  import iana-if-type {
+    prefix ianaift;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA IETF/System YANG module supporting
+     deviations on top of standard.";
+
+  revision 2025-03-06 {
+    description
+      "Removed LAG admin modification restriction deviation";
+    reference
+      "Nokia Specific.";
+  }
+
+  revision 2023-08-29 {
+    description
+      "Allow interface name upto 100 characters";
+    reference
+      "Nokia Specific.";
+  }
+
+  revision 2022-02-10 {
+    description
+      "Adding dummy deviation for interface type.";
+    reference
+      "Nokia Specific.";
+  }
+
+  revision 2021-10-15 {
+    description
+      "Move Lemi restrictions to other file";
+    reference
+      "Nokia Specific.";
+  }
+  
+  revision 2019-05-09 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia Specific.";
+  }
+
+/**********************************************/
+/* definitions which should always be present */
+/**********************************************/
+
+/* --------------------------------------------*/
+/* deviations for user provided interface name */
+/* --------------------------------------------*/
+/* name is one of the input parameters for interface creation*/
+/* name is restricted to have alphanumeric characters */
+/* and special characters "#*+,\-.:;_" */
+
+ deviation '/if:interfaces/if:interface/if:name' {
+   deviate replace {
+     type nok-typ:nokia-string-ascii100;
+   }
+ }
+ 
+ deviation "/if:interfaces/if:interface/if:name" {
+    description "An ipForward interface name should not contain any of the characters |,/,;,:,`,&,(,),?,<,>,'";
+    deviate add {
+        must "(current()/../if:type != 'ianaift:ipForward') or
+              ((current()/../if:type = 'ianaift:ipForward') and
+              (not(contains(.,'`')) and not(contains(.,'&')) and                
+               not(contains(.,'(')) and not(contains(.,')')) and               
+               not(contains(.,':')) and not(contains(.,';')) and
+               not(contains(.,'/')) and not(contains(.,'?')) and
+               not(contains(.,'<')) and not(contains(.,'>')) and
+               not(contains(.,'|'))))"
+        {
+            error-message "interface name contains invalid character";
+        }        
+     }
+  }
+  
+  deviation "/if:interfaces/if:interface/if:name" {
+    description "An ipForward interface name should not be longer than 15 characters";
+    deviate add {
+        must "(current()/../if:type != 'ianaift:ipForward') or
+              ((current()/../if:type = 'ianaift:ipForward') and
+              (string-length(.) < 16))"
+        {
+            error-message "interface name 's length exceeds the limit.";
+        }        
+     }
+  }
+
+  deviation "/if:interfaces/if:interface/if:name" {
+    description "An ipForward interface name should not be named as +";
+    deviate add {
+        must "(current()/../if:type != 'ianaift:ipForward') or
+              ((current()/../if:type = 'ianaift:ipForward') and
+              (current() != '+'))"
+        {
+            error-message "invalid interface name";
+        }        
+     }
+  } 
+  
+  /* dummy deviations */
+  deviation "/if:interfaces/if:interface" {
+    description "This restriction is applicable for itfType=ipForward: Only 1 ipForward interface is supported. The error message 'only support 1 ipforward interface' will be displayed when the constraint is violated";
+    deviate add {}
+  }
+  
+  deviation "/if:interfaces/if:interface" {
+    description "This restriction is applicable for itfType=ipForward: An ipForward interface cannot be removed if an ipv4/ipv6 route still exists. The error message 'cannot remove interface as ipv4/ipv6 route still exists' will be displayed when the constraint is violated";
+    deviate add {}
+  }
+
+  deviation "/if:interfaces/if:interface/if:type" {
+    description "Changing the interface type is not allowed. The error message 'Is not allowed to change.' will be displayed when the constraint is violated";
+    deviate add {}
+  }
+}

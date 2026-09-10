@@ -1,0 +1,88 @@
+module nokia-conf-clock-ptp-mounted-clock-onu-ssm-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+          + "nokia-conf-clock-ptp-mounted-clock-onu-ssm-dev";
+
+  prefix  nokia-conf-clock-ptp-mounted-clock-onu-ssm-dev;
+
+import ietf-interfaces-mounted {
+    prefix if-mounted;
+  }
+
+  import bbf-fiber-onu-emulated-mount {
+     prefix onu;
+  }
+
+  import nokia-conf-clock-ptp-mounted{
+      prefix clock-ptp-mounted;
+  }
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA ethernet YANG module supporting
+     deviations on top of standard.";
+
+  revision 2025-11-01 {
+    description
+      "Modify some yang path";
+    reference
+      "BBN-132906";
+  }
+
+  revision 2022-11-30 {
+    description
+      "Add ptp profile unmodification parameters";
+    reference
+      "TBD";
+  }
+
+  revision 2021-04-21 {
+    description
+      "Initial revision.";
+    reference
+      "TBD";
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/clock-ptp-mounted:ptp-port/clock-ptp-mounted:enable" {
+     deviate add {
+       must "(current() = 'false')
+        or ((current() = 'true')
+        and ((boolean(current()/../../../../clock-ptp-mounted:ptp/profile-ref/clock-ptp-mounted:profile-ref-8275dot1))
+        or (boolean(current()/../../../../clock-ptp-mounted:ptp/profile-ref/clock-ptp-mounted:profile-ref-ccsa))))"  {
+         error-message "profile-ref must be configured when ptp-port enabled";
+       }
+     }
+   }
+
+  deviation "/onu:onus/onu:onu/onu:root/clock-ptp-mounted:ptp/clock-ptp-mounted:admin-state" {
+    deviate add {
+      must "(current() = 'lock')
+         or ((current() = 'unlock')
+       and ((boolean(current()/../profile-ref/clock-ptp-mounted:profile-ref-8275dot1))
+       or (boolean(current()/../profile-ref/clock-ptp-mounted:profile-ref-ccsa))))"  {
+        error-message "profile-ref must be configured when ptp admin-state unlock";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/clock-ptp-mounted:ptp-g8275dot1-profiles/clock-ptp-mounted:ptp-g8275dot1-port-profile/clock-ptp-mounted:master-only" {
+    deviate add {
+      must "(current() = 'true')"  {
+        error-message "master-only must be configured true";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/clock-ptp-mounted:ptp-ccsa-profiles/clock-ptp-mounted:ptp-ccsa-port-profile/clock-ptp-mounted:master-only" {
+    deviate add {
+      must "(current() = 'true')"  {
+        error-message "master-only must be configured true";
+      }
+    }
+  }
+
+}

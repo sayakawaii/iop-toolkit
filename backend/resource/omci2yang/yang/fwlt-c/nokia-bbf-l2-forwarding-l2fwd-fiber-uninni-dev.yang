@@ -1,0 +1,331 @@
+module nokia-bbf-l2-forwarding-l2fwd-fiber-uninni-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/" +
+            "nokia-bbf-l2-forwarding-l2fwd-fiber-uninni-dev";
+
+  prefix nokia-bbf-l2-forwarding-l2fwd-fiber-uninni-dev;
+
+  import bbf-l2-forwarding {
+    prefix bbf-l2-fwd;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "This module contains a collection of YANG deviations on top
+     of standard for supporting BBF/bbf-l2-forwarding YANG module.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2017-2018, Nokia. All Rights Reserved.";
+
+  revision 2024-01-31 {
+    description
+      "move deviations to l2fwd-fiber-uninni-p2p/pon";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2023-11-11 {
+    description
+      "typos";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2022-06-14 {
+    description
+      "modify profile rule.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2021-12-14 {
+    description
+      "correct the YANG expression to let it can work on altiplano.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2021-03-08 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific";
+  }
+
+  deviation "/bbf-l2-fwd:forwarding/bbf-l2-fwd:split-horizon-profiles/bbf-l2-fwd:split-horizon-profile"{
+    deviate add {
+      must "(count(./bbf-l2-fwd:split-horizon[bbf-l2-fwd:in-interface-usage = 'user-port']) = 1 and"
+         + " count(./bbf-l2-fwd:split-horizon[bbf-l2-fwd:in-interface-usage = 'subtended-node-port']) = 1) or"
+         + " (count(./bbf-l2-fwd:split-horizon[bbf-l2-fwd:in-interface-usage = 'user-port']) = 0 and"
+         + " count(./bbf-l2-fwd:split-horizon[bbf-l2-fwd:in-interface-usage = 'subtended-node-port']) = 0)" 
+      {
+        error-message "split-horizon-profile must have 2 split-horizon with in-interface-usage user-port and subtended-node-port; or 2 split-horizon with in-interface-usage user-port and subtended-node-port do not exist";
+      }
+    }
+  }
+
+  deviation "/bbf-l2-fwd:forwarding/bbf-l2-fwd:split-horizon-profiles/bbf-l2-fwd:split-horizon-profile/bbf-l2-fwd:split-horizon"{
+    deviate add {
+      must "(current()/bbf-l2-fwd:in-interface-usage != 'network-port' and count(./bbf-l2-fwd:out-interface-usage) = 2 and count(./bbf-l2-fwd:out-interface-usage[.='user-port']) = 1 and count(./bbf-l2-fwd:out-interface-usage[.='subtended-node-port']) = 1) or (current()/bbf-l2-fwd:in-interface-usage = 'network-port')"
+      {
+        error-message "split-horizon must have 2 out-interface-usage, user-port and subtended-node-port; or only out-interface-usage network-port";
+      }
+    }
+  }
+
+  deviation "/bbf-l2-fwd:forwarding/bbf-l2-fwd:mac-learning-control-profiles/bbf-l2-fwd:mac-learning-control-profile"{
+	deviate add {
+	  must "(count(./bbf-l2-fwd:mac-learning-rule[bbf-l2-fwd:receiving-interface-usage = 'user-port']) = 1 and"
+	     + " count(./bbf-l2-fwd:mac-learning-rule[bbf-l2-fwd:receiving-interface-usage = 'subtended-node-port']) = 1) or"
+		 + " (count(./bbf-l2-fwd:mac-learning-rule[bbf-l2-fwd:receiving-interface-usage = 'user-port']) = 0 and"
+		 + " count(./bbf-l2-fwd:mac-learning-rule[bbf-l2-fwd:receiving-interface-usage = 'subtended-node-port']) = 0)"
+	  {
+	    error-message "mac-learning-control-profile must have 2 mac-learning-rule with receiving-interface-usage user-port and subtended-node-port; or 2 mac-learning-rule with receiving-interface-usage user-port and subtended-node-port do not exist";
+	  }
+	}
+  }
+
+  deviation "/bbf-l2-fwd:forwarding/bbf-l2-fwd:mac-learning-control-profiles/bbf-l2-fwd:mac-learning-control-profile/bbf-l2-fwd:mac-learning-rule"{
+    deviate add {
+      must "count(./bbf-l2-fwd:mac-can-not-move-to) = 2 and count(./bbf-l2-fwd:mac-can-not-move-to[.='user-port']) = 1 and count(./bbf-l2-fwd:mac-can-not-move-to[.='subtended-node-port']) = 1"
+      {
+        error-message "mac-learning-rule must have 2 mac-can-not-move-to, user-port and subtended-node-port.";
+      }
+    }
+  }
+  
+  deviation "/bbf-l2-fwd:forwarding/bbf-l2-fwd:flooding-policies-profiles/bbf-l2-fwd:flooding-policies-profile/bbf-l2-fwd:flooding-policy/bbf-l2-fwd:in-interface-usages/bbf-l2-fwd:interface-usages"{
+    deviate add{
+      must " . != 'inherit' "
+      {
+        error-message "Don't support interface-usages of 'inherit'.";
+      }
+    }
+    deviate add {
+      must " not (. = 'user-port' and count(../../bbf-l2-fwd:out-interface-usages/bbf-l2-fwd:interface-usages[. = 'subtended-node-port']) > 0) "
+      {
+        error-message "Don't support user-port to subtended-node-port.";
+      }
+    }
+    deviate add {
+      must " not (. = 'subtended-node-port' and count(../../bbf-l2-fwd:out-interface-usages/bbf-l2-fwd:interface-usages[. = 'user-port']) > 0) "
+      {
+        error-message "Don't support subtended-node-port to user-port.";
+      }
+    }
+  }
+
+  deviation "/bbf-l2-fwd:forwarding/bbf-l2-fwd:flooding-policies-profiles/bbf-l2-fwd:flooding-policies-profile/bbf-l2-fwd:flooding-policy/bbf-l2-fwd:frame-forwarding/bbf-l2-fwd:forward/bbf-l2-fwd:out-interface-usages/bbf-l2-fwd:interface-usages"{
+    deviate add {
+      must " . != 'inherit' "
+      {
+        error-message "Don't support interface-usages of 'inherit'!";
+      }
+    }
+  }
+
+  deviation "/bbf-l2-fwd:forwarding/bbf-l2-fwd:flooding-policies-profiles/bbf-l2-fwd:flooding-policies-profile/bbf-l2-fwd:flooding-policy"{
+    deviate add {
+      must "not(boolean(current()/bbf-l2-fwd:in-interface-usages/bbf-l2-fwd:interface-usages = 'network-port') and
+                not(boolean(current()/bbf-l2-fwd:destination-address/bbf-l2-fwd:ipv4-multicast-address)) and
+                not(boolean(current()/bbf-l2-fwd:destination-address/bbf-l2-fwd:ntp-multicast-address)) and
+                (boolean(current()/bbf-l2-fwd:discard) or count(current()/bbf-l2-fwd:out-interface-usages[bbf-l2-fwd:interface-usages = 'subtended-node-port']) = 0))"
+      {
+        error-message "Must config flooding on subtended-node-port.";
+      }
+    }
+
+     /*
+      * forbid below two conditions occur simultaneously, according to case1
+      * 1. not contain any policy which is down direction and configured ipv4-multicast-address discard
+      * 2. contain any policies which are down direction and configured 224.0.0.0/24 on subtended-node-port
+      */
+     deviate add{
+        must "not((current()/bbf-l2-fwd:in-interface-usages/bbf-l2-fwd:interface-usages = 'network-port' and
+                  count(./bbf-l2-fwd:out-interface-usages[bbf-l2-fwd:interface-usages = 'subtended-node-port']) > 0 and
+                  boolean(current()/bbf-l2-fwd:destination-address/bbf-l2-fwd:ipv4-prefix = '224.0.0.0/24'))
+                and
+                (count(../bbf-l2-fwd:flooding-policy[./bbf-l2-fwd:in-interface-usages/bbf-l2-fwd:interface-usages = 'network-port' and
+                                                     ./bbf-l2-fwd:destination-address/bbf-l2-fwd:ipv4-multicast-address and ./bbf-l2-fwd:discard]) = 0)
+                )"
+        {
+           error-message "Must NOT config prefix==224.0.0.0/24 without ipv4-multicast-address discard";
+        }
+     }
+     /*
+      * forbid below two conditions occur simultaneously, according to case2
+      * 1. contain policy which is down direction and configured ipv4-multicast-address discard
+      * 2. not contain any policy which is down direction and configured 224.0.0.0/24 on subtended-node-port
+      */
+     deviate add{
+        must "not((./bbf-l2-fwd:in-interface-usages/bbf-l2-fwd:interface-usages = 'network-port' and
+                  ./bbf-l2-fwd:destination-address/bbf-l2-fwd:ipv4-multicast-address and ./bbf-l2-fwd:discard)
+                  and
+                  (count(../bbf-l2-fwd:flooding-policy[./bbf-l2-fwd:in-interface-usages/bbf-l2-fwd:interface-usages = 'network-port' and
+                                                      (count(./bbf-l2-fwd:out-interface-usages[bbf-l2-fwd:interface-usages = 'subtended-node-port']) > 0) and
+                                                     ./bbf-l2-fwd:destination-address/bbf-l2-fwd:ipv4-prefix = '224.0.0.0/24']) = 0)
+                )"
+        {
+           error-message "Must configure prefix==224.0.0.0/24 to sub-nod when configure to discard ipv4-multicast-address";
+        }
+     }
+     /*
+      * forbid below two conditions occur simultaneously, to forbid case4
+      * 1. contain policy which is down direction and configured ipv4-multicast-address discard
+      * 2. contain any policy which is down direction and configured 224.0.0.0/24 on user-port
+      */
+     deviate add{
+        must "not((./bbf-l2-fwd:in-interface-usages/bbf-l2-fwd:interface-usages = 'network-port' and
+                  (count(./bbf-l2-fwd:out-interface-usages[bbf-l2-fwd:interface-usages = 'user-port']) > 0) and
+                  ./bbf-l2-fwd:destination-address/bbf-l2-fwd:ipv4-prefix = '224.0.0.0/24')
+                  and
+                  (count(../bbf-l2-fwd:flooding-policy[./bbf-l2-fwd:in-interface-usages/bbf-l2-fwd:interface-usages = 'network-port' and
+                                                     ./bbf-l2-fwd:destination-address/bbf-l2-fwd:ipv4-multicast-address and ./bbf-l2-fwd:discard]) > 0)
+             )"
+        {
+           error-message "Must NOT configure prefix==224.0.0.0/24 to USR-PORT when configure to discard ipv4-multicast-address";
+        }
+     }
+     /*
+      * forbid below two conditions occur simultaneously, according to case 2
+      * 1. contain policy which is down direction and configured ipv4-multicast-address discard
+      * 2. contain any policy which allow ntp forwarding.
+      */
+     deviate add{
+        must "not((./bbf-l2-fwd:in-interface-usages/bbf-l2-fwd:interface-usages = 'network-port' and
+                  (count(./bbf-l2-fwd:out-interface-usages[bbf-l2-fwd:interface-usages = 'user-port' or bbf-l2-fwd:interface-usages = 'subtended-node-port']) > 0) and
+                  ./bbf-l2-fwd:destination-address/bbf-l2-fwd:ntp-multicast-address)
+                  and
+                  (count(../bbf-l2-fwd:flooding-policy[./bbf-l2-fwd:in-interface-usages/bbf-l2-fwd:interface-usages = 'network-port' and
+                                               ./bbf-l2-fwd:destination-address/bbf-l2-fwd:ipv4-multicast-address and ./bbf-l2-fwd:discard]) > 0)
+              )"
+        {
+           error-message "Must NOT config ntp forward when configure to discard ipv4-multicast-address";
+        }
+     }
+     /*
+      * forbid below two conditions occur simultaneously, according to case 2
+      * 1. contain policy which is down direction and configured ipv4-multicast-address discard
+      * 2. contain any policy which allow rip forwarding on user-port.
+      */
+     deviate add{
+        must "not((./bbf-l2-fwd:in-interface-usages/bbf-l2-fwd:interface-usages = 'network-port' and
+                  (count(./bbf-l2-fwd:out-interface-usages[bbf-l2-fwd:interface-usages = 'user-port']) > 0) and
+                  ./bbf-l2-fwd:destination-address/bbf-l2-fwd:rip-multicast-address)
+                and
+                (count(../bbf-l2-fwd:flooding-policy[./bbf-l2-fwd:in-interface-usages/bbf-l2-fwd:interface-usages = 'network-port' and
+                                               ./bbf-l2-fwd:destination-address/bbf-l2-fwd:ipv4-multicast-address and ./bbf-l2-fwd:discard]) > 0)
+              )"
+        {
+           error-message "Must NOT config rip forward on USR-PORT when configure to discard ipv4-multicast-address";
+        }
+     }
+
+     deviate add{
+        must "not(./bbf-l2-fwd:destination-address/bbf-l2-fwd:ipv4-prefix != '224.0.0.0/24')"
+        {
+           error-message "prefix must equal 224.0.0.0/24";
+        }
+     }
+
+     deviate add{
+        must "not(./bbf-l2-fwd:in-interface-usages/bbf-l2-fwd:interface-usages != 'network-port' and ./bbf-l2-fwd:destination-address/bbf-l2-fwd:ipv4-prefix)"
+        {
+           error-message "NOT allow to conifgue prefix on uplode direction";
+        }
+     }
+
+     /*
+      * for ipv4-multicast downstream flooding profile, must include action, forward or discard.
+      */
+     deviate add{
+        must "not(./bbf-l2-fwd:in-interface-usages/bbf-l2-fwd:interface-usages = 'network-port' and
+               ./bbf-l2-fwd:destination-address/bbf-l2-fwd:ipv4-multicast-address and
+               not(boolean(./bbf-l2-fwd:discard)) and
+               count(./bbf-l2-fwd:out-interface-usages) = 0)"
+        {
+           error-message "For Downstream,  ipv4-multicast-address must include one action, discard or forwarder";
+        }
+     }
+
+
+     /*
+      * for ipv4-multicast downstream flooding profile,  not support forwarder only to user-port.
+      */
+     deviate add{
+        must "not(./bbf-l2-fwd:in-interface-usages/bbf-l2-fwd:interface-usages = 'network-port' and
+               ./bbf-l2-fwd:destination-address/bbf-l2-fwd:ipv4-multicast-address and
+               count(./bbf-l2-fwd:out-interface-usages[bbf-l2-fwd:interface-usages = 'user-port']) = 1 and
+               count(./bbf-l2-fwd:out-interface-usages[bbf-l2-fwd:interface-usages = 'subtended-node-port']) = 0)
+             "
+        {
+           error-message "For Downstream,  ipv4-multicast-address not support forwarder only to user-port, must include both user-port and subtended-node-port";
+        }
+     }
+
+    /*
+     * for UpStream, ntp-multicast-address not allow discard
+     */
+    deviate add{
+        must "not(./bbf-l2-fwd:in-interface-usages/bbf-l2-fwd:interface-usages != 'network-port' and
+                  boolean(current()/bbf-l2-fwd:destination-address/bbf-l2-fwd:ntp-multicast-address) and
+                  boolean(current()/bbf-l2-fwd:discard))"
+        {
+           error-message "Don't support ntp-multicast-address discard singly !";
+        }
+    }
+
+    /*
+     * for UpStream, rip-multicast-address not allow discard
+     */
+    deviate add{
+        must "not(./bbf-l2-fwd:in-interface-usages/bbf-l2-fwd:interface-usages != 'network-port' and
+                  boolean(current()/bbf-l2-fwd:destination-address/bbf-l2-fwd:rip-multicast-address) and
+                  boolean(current()/bbf-l2-fwd:discard))"
+        {
+           error-message "Don't support rip-multicast-address discard singly !";
+        }
+    }
+
+  }
+}

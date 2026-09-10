@@ -1,0 +1,235 @@
+submodule bbf-dialplan-digitmap-profile-body-mounted {
+  yang-version 1.1;
+  belongs-to bbf-sip-voip-mounted  {
+	prefix bbf-sip-voip-mounted;
+  }
+
+  organization
+    "Broadband Forum <https://www.broadband-forum.org>
+     Common YANG Work Area";
+
+  contact
+    "Comments or questions about this Broadband Forum YANG module
+     should be directed to <mailto:help@broadband-forum.org>.
+     Editor:      Frank Desseyn, Nokia
+     Editor:      Nadine Staelens, Nokia
+     PS Leader:   Joey Boyd, ADTRAN
+     PS Leader:   Ken Kerpez, ASSIA
+     WA Director: Joey Boyd, ADTRAN
+     WA Director: Sven Ooghe, Nokia";
+
+  description
+    "This submodule contains the Yang definitions for the dialplan digitmap
+	 profile.
+     Copyright (c) 2017-2018, Broadband Forum
+     Redistribution and use in source and binary forms, with or
+     without modification, are permitted provided that the following
+     conditions are met:
+     1. Redistributions of source code must retain the above copyright
+        notice, this list of conditions and the following disclaimer.
+     2. Redistributions in binary form must reproduce the above
+        copyright notice, this list of conditions and the following
+        disclaimer in the documentation and/or other materials
+        provided with the distribution.
+     3. Neither the name of the copyright holder nor the names of its
+        contributors may be used to endorse or promote products
+        derived from this software without specific prior written
+        permission.
+     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
+     CONTRIBUTORS \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+     INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+     DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+     CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+     SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+     NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+     CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+     STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+     ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+     ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     The above license is used as a license under copyright only.
+     Please reference the Forum IPR Policy for patent licensing terms
+     <https://www.broadband-forum.org/ipr-policy>.
+     Any moral rights which are necessary to exercise under the above
+     license grant are also deemed granted under this license.
+     This version of this YANG module is part of TR-383; see
+     the TR itself for full legal notices.";
+
+  revision 2020-03-06 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: 2020-03-06.";
+    reference
+      " ";
+  } 
+
+  grouping dialplan-digitmap-profile-body {
+    description
+	  "The dialplan and digitmap profile.";
+    container dialplan-characteristics {
+	  description 
+		"The dial plan characteristics.";
+	  leaf sip-pre-dialing-timer {
+	    type uint8 {range "1..60";}
+	    units "1 second";
+	    default 10;		
+	    description
+	      "The pre-dialing timer, also called the permanent timer.
+	       The pre-dialling timer is started upon the detection of an
+	       off-hook event and expires when no digits were	dialed
+	       after the off-hook event was detected.";
+	  }
+      leaf sip-dialing-short-timer {
+        type uint8 {range "1..60";}
+        units "1 second";
+        default 5;		
+        description
+      	"S or Short-timer, also called critical timer. Timer 
+      	 associated with the T modifier	and starts when a match
+      	 was found in the digit	map for a previously received
+      	 digit pattern.";
+      }
+      leaf sip-dialing-long-timer {
+        type uint8 {range "1..60";}
+        units "1 second";
+        default 20;	
+        description
+      	"L or Long-timer, also called the partial timer.
+      	 Inter-digit timer (re-) started after each received digit 
+      	 and no match found so far in the digit map.";
+      }
+      leaf sip-digitmap-match-mode {
+        type enumeration {
+      	  enum max-match {
+      	    value 1;					
+      	    description
+      	      "With the Max-Match mode, the NE initiates a 
+      	  	   SIP INVITE request from the moment all digits 
+      		   have been received and an exact match is found.";
+      	  }			
+      	  enum min-match {
+      	    value 2;					
+      	    description
+      		  "With the Min-Match mode, the NE initiates a 
+      		   SIP INVITE request from the moment an exact
+      		   match is found for the digits been received so far.";
+      	  }
+        }
+        default max-match;		
+        description
+      	  "The digit map matching mode.";
+      }
+	  leaf sip-digitmap-partial-match {
+	    type enumeration {
+	      enum send-sip-invite {
+		    value 1;					
+		    description
+			  "A SIP INVITE is sent upon the expiry of the 
+			   dialing long timer.";
+		  }
+		  enum drop-call-attempt {
+		    value 2;					
+		    description
+			  "The call attempt is aborted upon the expiry
+			   of the dialing long timer.";
+		  }
+	    }
+	    default send-sip-invite;		
+	    description
+		  "The action to be taken at the moment the dialing
+		   long timer has expired and only
+		   a partial match is found in the digit map.";
+	  }	
+    }
+    container digitmap {
+	  description
+	    "The digit map.";
+      leaf-list digit-map-pattern {
+        type string;
+        description
+    	  "A digit map pattern. A pattern is specified as 
+    	   sequence of digit map symbols
+    	   or a regular expression of digit map symbols.
+    	   Digit map symbols :
+    		- The 0..9, A..D, *, and #, representing 
+    		  the respective dialed digits
+    		  (Characters are case insensitive)
+    		- The symbol x is used as a wildcard, 
+    		  designating any event corresponding to
+    		  symbols in the range 0..9
+    		- white space is non significant
+    	   Digit map regular expressions:
+    		- A set of alternative digit symbols can 
+    		  be enclosed in brackets [ ],
+    		  represents one occurrence of any of the
+    		  enclosed digit symbols
+    		  Allows for ranging using hyphen symbol -
+    		  If a ^ appears immediately following the
+    		  opening bracket, it means negation.
+    		  Hence it represents one occurrence of 
+    		  any NOT enclosed digit symbol
+    		- Multiple occurrence symbols
+    			. 	: signifies zero or more
+    				  occurrence
+    			+ 	: signifies one or more 
+    				  occurrences
+    			? 	: signifies zero or one 
+    				  occurrence
+    		- Multiple occurrence Ranges
+    			{m} 	: signifies exactly m 
+    				  occurrences
+    			{m,n} 	: signifies at least m but
+    				  no more than n occurrences
+    			{m, } 	: signifies at least m 
+    				  occurrences
+    			m can be zero (0) and {,m} is not
+    			supported
+    		- A sequence of pattern elements enclosed 
+    		  in ( ) ,this matches the concatenation of
+    		  the elements in the sequence.
+    	   Interdigit timer modifiers
+    		- The T-modifier can be used to switch from
+    		L to S interdigit timer.
+    		A pattern element followed by the symbol T 
+    		matches if and only if the critical timer
+    		expires at that point
+    		- By default, x. equals x.T, and results in 
+    		a switch from L to S interdigit timer.
+    	   A modifier is any of the following:
+    		- The symbol T, representing the application
+    		of the critical timer: a pattern element 
+    		followed by the T modifier matches if and 
+    		only if the critical timer expires at that
+    		point.
+    		- The symbol P, representing the application
+    		of dial tone when a partial match reaches
+    		that point.
+    		- The symbol R, representing the application
+    		of recall,dial tone when a partial match 
+    		reaches that point.
+    		- The symbol I, representing the insertion
+    		of a character into the collected digit 
+    		string immediately following the substring
+    		that matches the pattern element that is 
+    		followed by the I modified; the inserted
+    		character is specified immediately 
+    		following the I in the pattern.
+    		- The symbol E, specifying that the substring
+    		that matches the pattern element
+    		that is followed by the E modifier represents
+    		an emergency call (the pattern
+    		element would generally be a sequence of 
+    		pattern elements enclosed in parentheses.
+    		- The symbol S, specifying that the substring
+    		that matches the pattern element that is 
+    		followed by the S modifier represents a 
+    		service code that may be of local interest to
+    		the User Agent (the pattern element would
+    		generally be a sequence of pattern elements
+    		enclosed in parentheses).";
+      } 
+    }	  
+  }	
+}

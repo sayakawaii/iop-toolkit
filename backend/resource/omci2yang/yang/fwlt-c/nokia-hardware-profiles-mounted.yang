@@ -1,0 +1,411 @@
+module nokia-hardware-profiles-mounted {
+  yang-version 1.1;
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+  + "nokia-hardware-profiles-mounted";
+
+  prefix nokia-hw-prof-mounted;
+
+  import nokia-yang-types-mounted {
+    prefix nok-typ-mounted;
+  }
+  import bbf-fiber-onu-emulated-mount {
+     prefix onu;
+  }
+  organization
+    "Nokia";
+
+  contact
+     "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+
+  description
+     "This module contains a collection of YANG definitions for
+     supporting Nokia specific requirements as applicable to its
+     access network equipment.
+
+     Specifically, this module augments the hardware model with
+	 additional identifying operational data of a component.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2020, Nokia. All Rights Reserved.";
+
+     revision 2021-03-25 {
+       description
+         "TCA parameter rxpower migration from rssi";
+       reference
+         "Nokia specific. EPIC BBN-682";
+     }
+
+     revision 2021-02-17 {
+       description
+         "TCA parameters units for Temperature, Voltage and TxBias is changed.";
+       reference
+         "Nokia specific. EPIC BBN-682";
+     }
+
+     revision 2020-11-26 {
+       description
+         "Configurable TCA parameters.";
+       reference
+         "Nokia specific. RCR ALU02503366";
+     }
+
+     revision 2020-07-30 {
+        description
+          "tca profile name leaf type change to nokia-string-ascii64";
+        reference
+          "Nokia specific. FR ALU02702485";
+     }
+
+     revision 2020-05-22 {
+        description
+          "tca profile leaves set as mandatory";
+        reference
+          "Nokia specific. RCR ALU02503367";
+     }
+
+     revision 2020-02-26 {
+        description
+          "rssi threshold units changed to int16.";
+        reference
+          "Nokia specific. RCR ALU02503367";
+     }
+
+     revision 2020-02-06 {
+        description
+          "Introduction of RSSI profiles to store the thresholds.";
+        reference
+          "Nokia specific. RCR ALU02503367";
+     }
+     
+     augment "/onu:onus/onu:onu/onu:root"{
+     description "augment onu with tca profiles";
+     container tca-profiles {
+        description "tca profiles";
+        list transceiver-link-tca-profile {
+           key "name";
+           max-elements 200;
+           description
+              "Indicates tca profile with configurable thresholds that can be applied to transciver-link port. Configurable thresholds comes in addition to the BBF read only thresholds bbf-hw-xcvr:rx-power-high-alarm, bbf-hw-xcvr:rx-power-low-alarm, bbf-hw-xcvr:rx-power-high-warning, bbf-hw-xcvr:rx-power-low-warning, not as a replacement";
+
+        leaf name {
+        type nok-typ-mounted:nokia-string-ascii64;
+        description
+          "Indicates name of the profile that can be applied to transciver-link port.";
+
+        }
+
+        leaf rx-power-threshold-low-alarm {
+           type int16{
+              range "-1270 .. 200";
+           }
+           units "0.1 dBm";
+           must ". <= ../rx-power-threshold-low-warning" {
+           error-message
+             "The rx-power-threshold low alarm  threshold value must be less than or equal to low threshold warning";
+           }
+        description
+          "The power below which will trigger a low rx-power alarm.";
+        }
+
+        leaf rx-power-threshold-low-warning {
+          type int16{
+              range "-1270 .. 200";
+           }
+           units "0.1 dBm";
+           must ". <= ../rx-power-threshold-high-warning" {
+           error-message
+             "The rx-power-threshold low warning threshold value must be less than or equal to high threshold warning";
+           }
+        description
+          "The power below which will trigger a low rx-power warning .";
+        }
+
+        leaf rx-power-threshold-high-warning {
+           type int16{
+              range "-1270 .. 200";
+           }
+           units "0.1 dBm";
+           must ". <= ../rx-power-threshold-high-alarm" {
+           error-message
+             "The rx-power-threshold high warning threshold value must be less than or equal to high threshold alarm";
+           }
+        description
+          "The power above which will trigger a high rx-power warning.";
+        }
+
+        leaf rx-power-threshold-high-alarm {
+           type int16{
+              range "-1270 .. 200";
+           }
+           units "0.1 dBm";
+           must ". >= ../rx-power-threshold-high-warning" {
+           error-message
+             "The rx-power-threshold high alarm threshold value  must be greater than or equal to rx power high threshold warning";
+           }
+        description
+          "The power above which will trigger a high rx-power alarm .";
+        }
+
+        leaf tx-power-threshold-low-alarm {
+           type int16{
+              range "-1270 .. 200";
+           }
+           units "0.1 dBm";
+           must ". <= ../tx-power-threshold-low-warning" {
+           error-message
+             "The tx-power-threshold low alarm  threshold value must be less than or equal to low threshold warning";
+           }
+        description
+          "The power below which will trigger a low tx-power alarm.";
+        }
+
+        leaf tx-power-threshold-low-warning {
+           type int16{
+              range "-1270 .. 200";
+           }
+           units "0.1 dBm";
+           must ". <= ../tx-power-threshold-high-warning" {
+           error-message
+             "The tx-power-threshold low warning threshold value must be less than or equal to high threshold warning";
+           }
+        description
+          "The power below which will trigger a low tx-power warning .";
+        }
+
+        leaf tx-power-threshold-high-warning {
+         type int16{
+             range "-1270 .. 200";
+          }
+          units "0.1 dBm";
+          must ". <= ../tx-power-threshold-high-alarm" {
+          error-message
+            "The tx-power-threshold high warning threshold value must be less than or equal to high threshold alarm";
+          }
+        description
+          "The power above which will trigger a high tx-power warning.";
+        }
+
+        leaf tx-power-threshold-high-alarm {
+           type int16{
+              range "-1270 .. 200";
+           }
+           units "0.1 dBm";
+           must ". >= ../tx-power-threshold-high-warning" {
+           error-message
+             "The tx-power-threshold high alarm threshold value  must be greater than or equal to tx-power high threshold warning";
+           }
+        description
+          "The power above which will trigger a high tx-power alarm .";
+        }
+
+        leaf tx-bias-threshold-low-alarm {
+           type uint32{
+              range "0 .. 250000";
+           }
+           units "1 uA";
+           must ". <= ../tx-bias-threshold-low-warning" {
+           error-message
+             "The tx-bias-threshold low alarm  threshold value must be less than or equal to low threshold warning";
+           }
+        description
+          "The bias below which will trigger a low tx-bias alarm.";
+        }
+
+        leaf tx-bias-threshold-low-warning {
+          type uint32{
+              range "0 .. 250000";
+           }
+           units "1 uA";
+           must ". <= ../tx-bias-threshold-high-warning" {
+           error-message
+             "The tx-bias-threshold low warning threshold value must be less than or equal to high threshold warning";
+           }
+        description
+          "The bias below which will trigger a low tx-bias warning .";
+        }
+
+        leaf tx-bias-threshold-high-warning {
+           type uint32{
+              range "0 .. 250000";
+           }
+           units "1 uA";
+           must ". <= ../tx-bias-threshold-high-alarm" {
+           error-message
+             "The tx-bias-threshold high warning threshold value must be less than or equal to high threshold alarm";
+           }
+        description
+          "The bias above which will trigger a high tx-bias warning.";
+        }
+
+        leaf tx-bias-threshold-high-alarm {
+          type uint32{
+              range "0 .. 250000";
+           }
+           units "1 uA";
+           must ". >= ../tx-bias-threshold-high-warning" {
+           error-message
+             "The tx-bias-threshold high alarm threshold value  must be greater than or equal to tx-bias high threshold warning";
+           }
+        description
+          "The bias above which will trigger a high tx-bias alarm .";
+        }
+     }
+
+     list transceiver-tca-profile {
+           key "name";
+           max-elements 200;
+           description
+              "Indicates tca profile with configurable thresholds that can be applied to transceiver. ";
+
+        leaf name {
+        type nok-typ-mounted:nokia-string-ascii64;
+        description
+          "Indicates name of the profile that can be applied to transceiver.";
+
+        }
+
+        leaf temperature-threshold-low-alarm {
+           type int32{
+              range "-45000 .. 90000";
+           }
+           units "0.001 degrees Celsius";
+           must ". <= ../temperature-threshold-low-warning" {
+           error-message
+             "The temperature-threshold low alarm  threshold value must be less than or equal to low threshold warning";
+           }
+        description
+          "The temperature below which will trigger a low temperature alarm.";
+        }
+
+        leaf temperature-threshold-low-warning {
+          type int32{
+              range "-45000 .. 90000";
+           }
+           units "0.001 degrees Celsius";
+           must ". <= ../temperature-threshold-high-warning" {
+           error-message
+             "The temperature-threshold low warning threshold value must be less than or equal to high threshold warning";
+           }
+        description
+          "The temperature below which will trigger a low temperature warning .";
+        }
+
+        leaf temperature-threshold-high-warning {
+           type int32{
+              range "-45000 .. 90000";
+           }
+           units "0.001 degrees Celsius";
+           must ". <= ../temperature-threshold-high-alarm" {
+           error-message
+             "The temperature-threshold high warning threshold value must be less than or equal to high threshold alarm";
+           }
+        description
+          "The temperature above which will trigger a high temperature warning.";
+        }
+
+        leaf temperature-threshold-high-alarm {
+           type int32{
+              range "-45000 .. 90000";
+           }
+           units "0.001 degrees Celsius";
+           must ". >= ../temperature-threshold-high-warning" {
+           error-message
+             "The temperature-threshold high alarm threshold value  must be greater than or equal to temperature high threshold warning";
+           }
+        description
+          "The temperature above which will trigger a high temperature alarm .";
+        }
+
+        leaf voltage-threshold-low-alarm {
+          type uint16{
+              range "0 .. 65500";
+           }
+           units "100 uV";
+           must ". <= ../voltage-threshold-low-warning" {
+           error-message
+             "The voltage-threshold low alarm  threshold value must be less than or equal to low threshold warning";
+           }
+           description
+            "The voltage below which will trigger a low voltage alarm.";
+        }
+
+         leaf voltage-threshold-low-warning {
+           type uint16{
+              range "0 .. 65500";
+           }
+           units "100 uV";
+           must ". <= ../voltage-threshold-high-warning" {
+           error-message
+             "The voltage-threshold low warning threshold value must be less than or equal to high threshold warning";
+           }
+          description
+            "The voltage below which will trigger a low voltage warning .";
+        } 
+
+        leaf voltage-threshold-high-warning {
+           type uint16{
+              range "0 .. 65500";
+           }
+           units "100 uV";
+           must ". <= ../voltage-threshold-high-alarm" {
+           error-message
+             "The voltage-threshold high warning threshold value must be less than or equal to high threshold alarm";
+           }
+           description
+            "The voltage above which will trigger a high voltage warning.";
+        }
+
+        leaf voltage-threshold-high-alarm {
+           type uint16{
+              range "0 .. 65500";
+           }
+           units "100 uV";
+           must ". >= ../voltage-threshold-high-warning" {
+           error-message
+             "The voltage-threshold high alarm threshold value  must be greater than or equal to voltage high threshold warning";
+           }
+           description
+            "The voltage above which will trigger a high voltage alarm .";
+        }
+     }
+  }
+  }
+}

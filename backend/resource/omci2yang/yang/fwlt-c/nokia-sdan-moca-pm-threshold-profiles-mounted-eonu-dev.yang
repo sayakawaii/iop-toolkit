@@ -1,0 +1,185 @@
+module nokia-sdan-moca-pm-threshold-profiles-mounted-eonu-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+  + "nokia-sdan-moca-pm-threshold-profiles-mounted-eonu-dev";
+  prefix nokia-moca-pm-tca-prof-mounted-eonu-dev;
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import nokia-hardware-profiles-mounted {
+    prefix nokia-hw-prof-mounted;
+  }
+
+  import nokia-sdan-hardware-pm-threshold-profiles-mounted {
+    prefix nokia-hw-pm-threshold-prof-mounted;
+  }
+
+  import nokia-sdan-moca-pm-threshold-profiles-mounted {
+    prefix nokia-moca-pm-tca-prof-mounted;
+  }
+
+  organization
+    "Nokia";
+  contact
+    "Nokia";
+  description
+    "This module contains a collection of YANG deviations on top of NOKIA specific  MOCA UNI PM TCA profile yang module";
+
+  revision 2025-06-10 {
+    description
+      "Adding deviations for restricting number of TCA profiles for MOCA UNI PM";
+    reference "Nokia specific";
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-moca-pm-tca-prof-mounted:moca-interface-tca-profile/nokia-moca-pm-tca-prof-mounted:in-errored-threshold" {
+      description
+      "This deviation limits the values of the threshold between 1 and (2^32)-2.";
+    deviate replace {
+      type uint32 {
+        range "1..4294967294";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-moca-pm-tca-prof-mounted:moca-interface-tca-profile/nokia-moca-pm-tca-prof-mounted:in-errored-and-missed-threshold" {
+      description
+      "This deviation limits the values of the threshold between 1 and (2^32)-2.";
+    deviate replace {
+      type uint32 {
+        range "1..4294967294";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-moca-pm-tca-prof-mounted:moca-ethernet-frame-tca-profile/nokia-moca-pm-tca-prof-mounted:in-unicast-packets-threshold" {
+      description
+      "This deviation limits the values of the threshold between 1 and (2^32)-2.";
+    deviate replace {
+      type uint32 {
+        range "1..4294967294";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-moca-pm-tca-prof-mounted:moca-ethernet-frame-tca-profile/nokia-moca-pm-tca-prof-mounted:in-discarded-packets-threshold" {
+      description
+      "This deviation limits the values of the threshold between 1 and (2^32)-2.";
+    deviate replace {
+      type uint32 {
+        range "1..4294967294";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-moca-pm-tca-prof-mounted:moca-ethernet-frame-tca-profile/nokia-moca-pm-tca-prof-mounted:in-unknown-packets-threshold" {
+      description
+      "This deviation limits the values of the threshold between 1 and (2^32)-2.";
+    deviate replace {
+      type uint32 {
+        range "1..4294967294";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-moca-pm-tca-prof-mounted:moca-ethernet-frame-tca-profile/nokia-moca-pm-tca-prof-mounted:in-multicast-packets-threshold" {
+      description
+      "This deviation limits the values of the threshold between 1 and (2^32)-2.";
+    deviate replace {
+      type uint32 {
+        range "1..4294967294";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-moca-pm-tca-prof-mounted:moca-ethernet-frame-tca-profile/nokia-moca-pm-tca-prof-mounted:in-broadcast-packets-threshold" {
+      description
+      "This deviation limits the values of the threshold between 1 and (2^32)-2.";
+    deviate replace {
+      type uint32 {
+        range "1..4294967294";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-moca-pm-tca-prof-mounted:moca-ethernet-frame-tca-profile/nokia-moca-pm-tca-prof-mounted:in-octets-threshold" {
+      description
+      "This deviation limits the values of the threshold between 1 and (2^32)-2.";
+    deviate replace {
+      type uint32 {
+        range "1..4294967294";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-moca-pm-tca-prof-mounted:moca-ethernet-frame-tca-profile/nokia-moca-pm-tca-prof-mounted:out-unicast-packets-threshold" {
+      description
+      "This deviation limits the values of the threshold between 1 and (2^32)-2.";
+    deviate replace {
+      type uint32 {
+        range "1..4294967294";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-moca-pm-tca-prof-mounted:moca-ethernet-frame-tca-profile/nokia-moca-pm-tca-prof-mounted:out-discarded-packets-threshold" {
+      description
+      "This deviation limits the values of the threshold between 1 and (2^32)-2.";
+    deviate replace {
+      type uint32 {
+        range "1..4294967294";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-moca-pm-tca-prof-mounted:moca-ethernet-frame-tca-profile/nokia-moca-pm-tca-prof-mounted:out-errored-packets-threshold" {
+      description
+      "This deviation limits the values of the threshold between 1 and (2^32)-2.";
+    deviate replace {
+      type uint32 {
+        range "1..4294967294";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-moca-pm-tca-prof-mounted:moca-ethernet-frame-tca-profile/nokia-moca-pm-tca-prof-mounted:out-unknown-packets-threshold" {
+      description
+      "This deviation limits the values of the threshold between 1 and (2^32)-2.";
+    deviate replace {
+      type uint32 {
+        range "1..4294967294";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-moca-pm-tca-prof-mounted:moca-ethernet-frame-tca-profile/nokia-moca-pm-tca-prof-mounted:out-multicast-packets-threshold" {
+      description
+      "This deviation limits the values of the threshold between 1 and (2^32)-2.";
+    deviate replace {
+      type uint32 {
+        range "1..4294967294";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-moca-pm-tca-prof-mounted:moca-ethernet-frame-tca-profile/nokia-moca-pm-tca-prof-mounted:out-broadcast-packets-threshold" {
+      description
+      "This deviation limits the values of the threshold between 1 and (2^32)-2.";
+    deviate replace {
+      type uint32 {
+        range "1..4294967294";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-moca-pm-tca-prof-mounted:moca-ethernet-frame-tca-profile/nokia-moca-pm-tca-prof-mounted:out-octets-threshold" {
+      description
+      "This deviation limits the values of the threshold between 1 and (2^32)-2.";
+    deviate replace {
+      type uint32 {
+        range "1..4294967294";
+      }
+    }
+  }
+}

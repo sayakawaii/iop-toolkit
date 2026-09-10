@@ -1,0 +1,189 @@
+module nokia-sdan-lldp-mounted {
+  yang-version "1.1";
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-sdan-lldp-mounted";
+  prefix nokia-sdan-lldp-mounted;
+  import ieee802-dot1ab-lldp-mounted {
+    prefix lldp-mounted;
+  }
+  import nokia-yang-types-mounted {
+    prefix nok-typ-mounted;
+  }
+  import ietf-inet-types {
+    prefix inet;
+  }
+  import bbf-fiber-onu-emulated-mount {
+     prefix onu;
+  }
+  organization
+    "Nokia";
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+  description
+    "This module contains a collection of YANG definitions for
+     supporting Nokia specific requirements as applicable to its
+     access network equipment.
+     Specifically, this module augments the hardware model with
+     data that supports configuring thresholding values for
+     performance data associated with hardware components.
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+     Copyright (C) 2024, Nokia. All Rights Reserved.";
+
+     revision 2024-05-31 {
+       description
+         "ONU LLDP MED network policy profile definition";
+       reference
+         "Nokia specific";
+     }
+
+     augment "/onu:onus/onu:onu/onu:root/lldp-mounted:lldp" {
+       description "Augment for LLDP-MED profiles";
+         container lldp-med-profiles {
+           description
+             "LLDP MED profiles";
+           list lldp-med-media-policy-profile {
+             key "name";
+             description
+               "Profile to configure the LLDP MED media policy parameters";
+             leaf name {
+               type nok-typ-mounted:nokia-string-ascii64;
+               description
+                 "Name of the LLDP MED media policy profile";
+             }
+             list lldp-med-media-policy-per-app {
+               key "app-type";
+               description
+                 "LLDP MED media policy based on primary function of the application at media end point";
+               leaf app-type {
+                 type enumeration {
+                   enum unknown {
+                     description
+                       "The LLDP MED media policy application type is unknown";  
+                   }                       
+                   enum voice {
+                     description
+                       "The LLDP MED media policy application type is voice";   
+                   }
+                   enum voice-signaling {
+                     description
+                       "The LLDP MED media policy application type is voice-signaling";   
+                   }
+                   enum guest-voice {
+                     description
+                       "The LLDP MED media policy application type is guest-voice";   
+                   }
+                   enum guest-voice-signaling {
+                     description
+                       "The LLDP MED media policy application type is guest-voice-signaling";   
+                   }
+                   enum softphone-voice {
+                     description
+                       "The LLDP MED media policy application type is softphone-voice";   
+                   }
+                   enum video-conferencing {
+                     description
+                       "The LLDP MED media policy application type is video-conferencing";   
+                   }
+                   enum streaming-video {
+                     description
+                       "The LLDP MED media policy application type is streaming-video";   
+                   }
+                   enum video-signaling {
+                     description
+                       "The LLDP MED media policy application type is voice-signaling"; 
+                   }
+                 }
+                 description
+                   "The media type that defines the primary function of the
+                   application for the policy advertised by an endpoint";
+               }
+               choice lldp-med-media-policy {
+                  mandatory true;
+                  description
+                    "The LLDP MED Media policy option";
+                    case media-policy-unknown {
+                      leaf media-policy-unknown {
+                        type empty;
+                         description
+                          "The LLDP MED media policy is unknown";
+                     }
+                    }
+                    case tagged {
+                        leaf vlan-id {
+                            type uint16 {
+                                range "0 | 1..4094 | 4095";
+                            }
+                            description
+                                "VLAN Identifier for the port as defined in IEEE 802.1Q-2014
+                                A value from 1 to 4094 indicates a valid port vlan-id.
+                                A value of 0 shall be used if the media end point device is
+                                using priority tagged frames. A value of 4095 is reserved for
+                                implementation purpose.";
+                        }
+                        leaf priority {
+                            type uint8 {
+                                range "0..7";
+                            }
+                            description
+                                "Defines the the value of the 802.1p priority which is associated
+                                with the given port on the local system";
+                        }
+                    }
+                    case untagged {
+                        leaf dscp {
+                            type inet:dscp;
+                            description
+                                "Defines the value of the Differentiated Service Code Point (DSCP)
+                                as defined in IETF RFC 2474 and RFC 2475 which is associated with
+                                the given port on the local system.";
+                        }
+                    }
+                  }
+               }
+             }
+           }
+         }
+
+     augment "/onu:onus/onu:onu/onu:root/lldp-mounted:lldp/lldp-mounted:port" {
+       description
+         "Data nodes for associating the LLDP MED profile to the interface";
+         leaf lldp-med-media-policy-associate {
+           type leafref {
+             path "../../nokia-sdan-lldp-mounted:lldp-med-profiles/nokia-sdan-lldp-mounted:lldp-med-media-policy-profile/nokia-sdan-lldp-mounted:name";
+           }
+           description
+             "Indicates the LLDP MED media policy associated to the UNI interface";
+         }
+     }
+}

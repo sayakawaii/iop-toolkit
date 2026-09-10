@@ -1,0 +1,106 @@
+module nokia-bbf-xpon-gpon-xgpon-xgs-25g-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-bbf-xpon-gpon-xgpon-xgs-25g-dev";
+
+  prefix nokia-bbf-xpon-gpon-xgpon-xgs-25g-dev;
+
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import bbf-xpon{
+    prefix bbf-xpon;
+  }
+
+  import bbf-xpon-types {
+    prefix bbf-xpon-types;
+  }
+
+  import ietf-hardware {
+    prefix hw;
+  }
+
+  import nokia-hardware-identities {
+    prefix nokia-hwi;
+  }
+
+  import bbf-interface-port-reference {
+    prefix bbf-if-port-ref;
+  }
+
+  import nokia-sdan-xpon-types {
+    prefix nokia-sdan-xpon-types;
+  }
+
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA IETF/System YANG module supporting
+     deviations on top of standard.";
+
+  revision 2025-11-20 {
+    description
+      "Remove deviation for multicast gemport-id";
+    reference
+      "Nokia Specific.";
+  }
+
+  revision 2024-08-26 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia Specific.";
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-xpon:channel-pair/bbf-xpon:channel-pair-type" {
+    deviate add {
+      must "current() = 'bbf-xpon-types:xgpon' or 'bbf-xpon-types:xgs' or current() = 'bbf-xpon-types:gpon' or current() = 'nokia-sdan-xpon-types:twentyfivegs'" {
+        error-message "Only supported values xgpon, xgs, gpon and twentyfivegs are acceptable.";
+      }
+    }
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-xpon:channel-pair/bbf-xpon:wavelength-prof-ref" {
+    deviate add {
+      must "((current()/../bbf-xpon:channel-pair-type = 'bbf-xpon-types:xgs') and "
+         + "(/bbf-xpon:xpon/bbf-xpon:wavelength-profiles/bbf-xpon:wavelength-profile[bbf-xpon:name = current()]"
+         + "/bbf-xpon:downstream-wavelength = 157700))" {
+        error-message "When channel-pair-type is xgs, wavelength-prof-ref must be configured and should be xgs, or channel-pair-type is other value.";
+      }
+      mandatory true;
+    }
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-xpon:channel-termination/bbf-xpon:location" {
+    deviate add {
+      must "current() = 'bbf-xpon-types:inside-olt'" {
+        error-message "Only value inside-olt is supported for non-NGPON2 type.";
+      }
+      mandatory true;
+    }
+  }
+  
+  deviation "/if:interfaces/if:interface/bbf-xpon:channel-termination/bbf-xpon:channel-termination-type" {
+    deviate add {
+
+      must "(current() = 'bbf-xpon-types:gpon' and"
+         + "/hw:hardware/hw:component[hw:name = current()/../../bbf-if-port-ref:port-layer-if]/hw:class = 'nokia-hwi:transceiver-link-gpon') or"
+         + "(current() = 'bbf-xpon-types:xgpon' and"
+         + "/hw:hardware/hw:component[hw:name = current()/../../bbf-if-port-ref:port-layer-if]/hw:class = 'nokia-hwi:transceiver-link-xgpon') or "
+         + "(current() = 'bbf-xpon-types:xgs' and"
+         + "/hw:hardware/hw:component[hw:name = current()/../../bbf-if-port-ref:port-layer-if]/hw:class = 'nokia-hwi:transceiver-link-ngpon') or "
+         + "(current() = 'nokia-sdan-xpon-types:twentyfivegs' and"
+         + "/hw:hardware/hw:component[hw:name = current()/../../bbf-if-port-ref:port-layer-if]/hw:class = 'nokia-hwi:transceiver-link-twentyfivegspon')" {
+        error-message "None-exist of port-layer-if, or mismatch hw class between port-layer-if and channel-termination-type.";
+      }
+    }
+  }
+
+}

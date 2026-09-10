@@ -1,0 +1,61 @@
+module nokia-conf-clock-tod-ctrl {
+
+  yang-version "1.1";
+  namespace "urn:ietf:params:xml:ns:yang:nokia-conf-clock-tod-ctrl";
+
+  prefix clock-tod-ctrl;
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import bbf-xponvani{
+    prefix bbf-xponvani;
+  }
+
+  organization "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "This module contains extension of YANG definitions for
+    the overall structure of clock ptp on physical
+    entities.
+
+    Nokia reserves the right not to offer any or all of these
+    products and to withdraw any or all of them at any future time.
+
+    Copyright (C) 2018, Nokia. All Rights Reserved.";
+
+  revision 2025-10-14 {
+    description
+      "Add tod-interval to support control ToD update interval via OLT-G.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2021-05-31 {
+    description
+      "add provider and modify some leaves of ptp profiles.";
+    reference
+      "Nokia specific";
+  }
+
+  augment /if:interfaces/if:interface/bbf-xponvani:v-ani{
+    description "augment v-ani interface with tod";
+    leaf tod-enable {
+        type boolean;
+        description "To enable/disable ToD function on LT per vANI(ONU)";
+    }
+    leaf tod-interval {
+        type uint32 {
+          range "1..1440";
+        }
+        units "minute";
+        default 1; 
+        description "The expected ToD(time of day) update interval via OLT-G in minutes";
+    }
+  }
+
+}

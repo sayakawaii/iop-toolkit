@@ -1,0 +1,268 @@
+module nokia-sdan-power-state {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+  + "nokia-sdan-power-state";
+
+  prefix nokia-sdan-pst;
+
+  import ietf-hardware {
+    prefix hw;
+  }
+
+  import bbf-hardware-types {
+    prefix bbf-hwt;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG definitions for
+     supporting Nokia specific requirements as applicable to its
+     access network equipment.
+
+     Specifically, this module augments hardware component
+     oper-state notifications with power state related nodes.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+     Copyright (C) 2025, Nokia. All Rights Reserved.";
+
+  revision 2025-05-30 {
+    description
+      "Initial version of the hardware component
+       specific power state and notifications
+       module";
+    reference
+      "Nokia specific";
+  }
+
+  /* identities for power state */
+
+  identity power-state-base {
+    description
+      "Base identity that defines the power state of a
+       hardware component.";
+  }
+
+  identity powered-on {
+    base power-state-base;
+    description
+      "The component is powered nominally.";
+  }
+
+  identity reduced-power {
+    base power-state-base;
+    description
+      "The component is consuming reduced power compared to its nominal power
+       consumption. There may be several causes for the component to use
+       reduced power. For instance, the component could have entered thermal
+       protection or the component could have met some power saving criteria,
+       etc. When in 'reduced-power' some of the nominal functions of the component
+       may not be available or some available functions may not have their nominal
+       performance.";
+  }
+
+  identity powered-off {
+    base power-state-base;
+    description
+      "All parts of component are switched off except for the circuitry that
+       allows the component to enter the 'power-on' or 'reduced-power' state
+       in case appropriate. None of the component functions are available.";
+  }
+
+  /* identities for power state reason */
+
+  identity power-state-reason-base {
+    description
+      "Base identity that defines the reason for current
+       power state of hardware component.";
+  }
+
+  identity unconfigured {
+     base power-state-reason-base;
+     description
+      "hardware component is powered off due to not being configured
+       inspite of physically present.";
+  }
+
+  identity config-mismatch {
+     base power-state-reason-base;
+     description
+      "hardware component is powered off due to model-name mismatch
+       between configured type and detected type.";
+  }
+
+  identity admin-locked {
+     base power-state-reason-base;
+     description
+      "hardware component is powered off due to administrative
+       prohibition from use.";
+  }
+
+  identity hw-fault {
+    base power-state-reason-base;
+     description
+      "hardware component is powered off due to faulty hardware.";
+  }
+
+  identity power-saving {
+    base power-state-reason-base;
+     description
+      "hardware component either operates in reduced power or powered off
+       due to automatic power saving.";
+  }
+
+  augment "/hw:hardware-state/hw:component/hw:state" {
+    when "derived-from-or-self(../hw:class,'bbf-hwt:transceiver') or
+          derived-from-or-self(../hw:class,
+          'bbf-hwt:transceiver-link')" {
+      description
+       "This augment is only applicable to a hardware transceiver
+        and transceiver-link component.";
+    }
+    description
+      "Augments hardware component state with power state
+       related nodes .";
+
+    container power {
+      description
+        "State data that defines the power state of the
+         hardware component.";
+
+    leaf state {
+      type identityref {
+        base power-state-base;
+      }
+      description
+        "Data node showing power state of hardware component.";
+    }
+
+    leaf-list reason {
+      when "../nokia-sdan-pst:state = 'nokia-sdan-pst:reduced-power' or
+            ../nokia-sdan-pst:state = 'nokia-sdan-pst:powered-off'" {
+        description
+          "Reason is valid only when hardware component
+           operating either in reduced-power or powered-off.";
+      }
+      type identityref {
+        base power-state-reason-base;
+      }
+      description
+        "Indicates possible reasons for current power state of
+         hardware component.";
+    }
+  }
+}
+
+augment "/hw:hardware-state-oper-enabled" {
+  when "derived-from-or-self(/hw:hardware/hw:component/hw:class,'bbf-hwt:transceiver') or
+        derived-from-or-self(/hw:hardware/hw:component/hw:class,
+        'bbf-hwt:transceiver-link')" {
+      description
+        "This augment is only applicable to a hardware transceiver
+         and transceiver-link component.";
+  }
+  description
+    "Augments hardware component oper state enabled
+     notification with power state specific data nodes.";
+
+  leaf power-state {
+    type leafref {
+      path "/hw:hardware-state/hw:component[hw:name = current()/../hw:name]/hw:state/" +
+           "nokia-sdan-pst:power/nokia-sdan-pst:state";
+    }
+    description
+      "Power state of the component.";
+  }
+
+  leaf-list power-state-reason {
+    when "../nokia-sdan-pst:power-state = 'nokia-sdan-pst:reduced-power'" {
+      description
+        "Reason is valid only when hardware component
+         operates in reduced-power.";
+    }
+    type leafref {
+      path "/hw:hardware-state/hw:component[hw:name = current()/../hw:name]/hw:state/" +
+           "nokia-sdan-pst:power/nokia-sdan-pst:reason";
+    }
+    description
+      "Possible reasons indicating current power state
+       of hardware component.";
+   }
+ }
+
+ augment "/hw:hardware-state-oper-disabled" {
+   when "derived-from-or-self(/hw:hardware/hw:component/hw:class,'bbf-hwt:transceiver') or
+         derived-from-or-self(/hw:hardware/hw:component/hw:class,
+         'bbf-hwt:transceiver-link')" {
+     description
+       "This augment is only applicable to a hardware transceiver
+        and transceiver-link component.";
+   }
+   description
+     "Augments hardware component oper state disabled
+      notification with power state specific data nodes.";
+
+   leaf power-state {
+    type leafref {
+      path "/hw:hardware-state/hw:component[hw:name = current()/../hw:name]/hw:state/" +
+           "nokia-sdan-pst:power/nokia-sdan-pst:state";
+     }
+     description
+       "Power state of the component.";
+   }
+
+   leaf-list power-state-reason {
+     when "../nokia-sdan-pst:power-state = 'nokia-sdan-pst:reduced-power' or
+           ../nokia-sdan-pst:power-state = 'nokia-sdan-pst:powered-off'" {
+     description
+       "Reason is valid only when hardware component
+        operates either in reduced-power or fully
+        powered-off.";
+    }
+    type leafref {
+      path "/hw:hardware-state/hw:component[hw:name = current()/../hw:name]/hw:state/" +
+           "nokia-sdan-pst:power/nokia-sdan-pst:reason";
+    }
+    description
+      "Possible reasons indicating current power state
+       of hardware component.";
+   }
+ }
+}

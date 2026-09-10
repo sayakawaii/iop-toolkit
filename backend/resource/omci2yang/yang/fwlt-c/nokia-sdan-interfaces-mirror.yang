@@ -1,0 +1,329 @@
+module nokia-sdan-interfaces-mirror {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+          + "nokia-sdan-interfaces-mirror";
+
+  prefix nokia-sdan-if-mir;
+
+  import iana-if-type {
+    prefix ianaift;
+  }
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import bbf-yang-types {
+    prefix bbf-yang;
+  }
+
+  import bbf-xpon-if-type {
+    prefix bbf-xponift;
+  }
+
+  import bbf-if-type {
+    prefix bbfift;
+  }
+
+  import bbf-l2-terminations {
+    prefix bbf-l2term;
+  }
+
+  import bbf-qos-classifiers {
+    prefix bbf-qos-cls;
+  }
+
+  import nokia-sdan-filters {
+    prefix nokia-sdan-filt;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG definitions for
+     supporting Nokia specific requirements as applicable to its
+     access network equipment.
+
+     Specifically, this module provides data nodes for support
+     mirroring.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2023, Nokia. All Rights Reserved.";
+
+  revision 2023-09-15 {
+    description
+      "Removing inline-criteria filter";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2023-07-27 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific";
+  }
+
+  container mirror-filter-profiles {
+    description
+      "Provides data nodes that allow to configure filters in various
+       combinations on multiple frame fields for use in mirroring.";
+    list mirror-filter-profile {
+      key "name";
+      
+      description
+        "A mirror filter profile.
+
+         An mirror filter entry can contain multiple filter entries.
+         In case it contains multiple filter entries, then these
+         entries have to be combined using the setting of a filter
+         operations.";
+      
+      leaf name {
+        type bbf-yang:string-ascii64;
+        description
+          "Filter name.";
+      }
+
+      leaf description {
+        type bbf-yang:string-ascii64-or-empty;
+        description
+          "Description of the mirror filter.";
+      }
+
+
+      leaf filter-operation {
+        type identityref {
+          base bbf-qos-cls:classifier-entry-filter-operation-type;
+        }
+        default "bbf-qos-cls:match-any-filter";
+        description
+          "The mirror filter contains a 'filter' list. This leaf
+           specifies how the entries of the 'filter' list have to be
+           combined.
+
+           The value 'match-any-filter' means a frame is declared to
+           have a match with the mirror filter entry if there is a
+           match with at least one of the entries of its contained
+           'filter' list.
+
+           The value 'match-all-filter' means a frame is declared to
+           have a match with the mirror filter entry if there is a
+           match with all entries of its contained filter list.";
+      }
+
+      list filter {
+        key "name";
+        description
+          "A filter.
+
+           When filter criteria are used for multiple fields, then all
+           of them need a match in order to conclude there is a match
+           for this filter entry, i.e. all the match criteria
+           specified in this filter have to be combined with a logical
+           AND.";
+        leaf name {
+          type bbf-yang:string-ascii64;
+          description
+            "Filter name.";
+        }
+        leaf description {
+          type bbf-yang:string-ascii64-or-empty;
+          description
+            "Description of the filter.";
+        }
+
+        choice filter-method {
+          mandatory true;
+          description
+            "Choice of filter configuration way.";
+      
+          case by-reference {
+            uses mirror-filter-profile-ref;
+          }
+          case inline {
+            uses nokia-sdan-filt:extended-filter;
+          }
+        }
+      }
+    }
+  }
+
+  grouping mirror-filter-profile-ref {
+    description
+      "A reference to an mirror filter profile.";
+    leaf mirror-filter-profile-name {
+      type leafref {
+        path "/nokia-sdan-if-mir:mirror-filter-profiles"
+           + "/nokia-sdan-if-mir:mirror-filter-profile/nokia-sdan-if-mir:name";
+      }
+      description
+        "A reference to a mirror filter profile.";
+    }
+  }
+
+  grouping mirror-configuration {
+    description
+      "Mirror configuration data nodes.";
+
+    choice filter {
+      mandatory true;
+      description
+        "Choice for configuring the frame filter.";
+
+      case any-frame {
+        description
+          "Any frame is subject to mirroring.";
+        leaf any-frame {
+          type empty;
+          description
+            "Any frame passing the mirror point is subject to
+             mirroring and will be sent to the output interface.";
+        }
+      }
+      case via-mirror-profile {
+        description
+          "Filter criteria are specified in a profile.";
+        uses mirror-filter-profile-ref;
+      }
+    }
+
+    container output {
+      description "output choice";
+      choice interface {
+        mandatory true;
+        description
+          "Choice for configuring the output interface.";
+
+        case vlan-sub-interface {
+          leaf vlan-sub-interface {
+            type if:interface-ref;
+            must
+              "derived-from-or-self(/if:interfaces/if:interface[if:name = current()]"
+            + " /if:type, 'bbfift:vlan-sub-interface')" {
+              error-message "Output interface should be vlan-sub-interface";
+            }
+            description
+              "References the output VLAN sub-interface.";
+          }
+        }
+
+        case l2-termination-interface {
+          leaf l2-termination-interface {
+            type if:interface-ref;
+            must
+              "derived-from-or-self(/if:interfaces/if:interface[if:name = current()]"
+            + " /if:type, 'bbf-l2term:l2-termination-interface')" {
+              error-message "Output interface should be l2-termination-interface";
+            }
+            description
+              "References the output l2-termination-interface.";
+          }
+        }
+      }
+    }
+  }
+
+  augment '/if:interfaces/if:interface' {
+    when
+      "derived-from-or-self(if:type, 'ianaift:ethernetCsmacd') or "
+    + "derived-from-or-self(if:type, 'ianaift:ieee8023adLag') or "
+    + "derived-from-or-self(if:type, 'ianaift:ptm') or "
+    + "derived-from-or-self(if:type, 'bbf-xponift:olt-v-enet') or "
+    + "derived-from-or-self(if:type, 'bbfift:vlan-sub-interface')" {
+      description
+        "Applies only to physical and logical ethernet and LAG
+         interfaces or a VLAN sub-interface.";
+    }
+    description
+      "Augments the interface to support mirroring frames.";
+
+    container mirror {
+      must "(current()/ingress) or (current()/egress)" {
+        error-message "Either ingress or egress should be configure";
+      }
+      presence
+        "Presence of this container indicates mirroring functionality
+         is supported on this interface. When mirror is enabled,(part
+         of) the frames passed through the interface will be mirrored
+         to a specified outgoing interface.";
+      description
+        "Interface mirror configuration parameters.";
+
+ 
+      container ingress {
+        presence
+          "Presence of this container indicates ingress frames will be
+           mirrored.";
+        description
+          "Ingress configuration data nodes defining which frames have
+           to be mirrored and where the mirrored frames have to be
+           sent to.
+
+           Ingress mirroring applies to frames 'as received on the
+           interface', i.e. they apply before any QoS policy
+           processing (e.g. before policing), and before any frame
+           manipulation (e.g. before executing ingress-rewrite actions
+           on a VLAN sub-interface.";
+        uses mirror-configuration;
+      }
+
+      container egress {
+        presence
+          "Presence of this container indicates egress frames will be
+           mirrored.";
+        description
+          "Egress configuration data nodes defining which frames have
+           to be mirrored and where the mirrored frames have to be
+           sent to.
+
+           Egress mirroring applies to frames 'as queued for
+           transmission on the interface', i.e. they apply after any
+           QoS policy processing e.g. after QoS ACLs are applied), and
+           after any frame manipulation (e.g. after executing
+           egress-rewrite actions on a VLAN sub-interface.";
+        uses mirror-configuration;
+      }
+    }
+  }
+}

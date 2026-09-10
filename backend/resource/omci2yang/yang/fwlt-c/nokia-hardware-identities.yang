@@ -1,0 +1,543 @@
+module nokia-hardware-identities {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+          + "nokia-hardware-identities";
+
+  prefix nokia-hwi;
+
+  import iana-hardware {
+    prefix ianahw;
+  }
+
+  import bbf-hardware-types {
+    prefix bbf-hwt;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG definitions for
+     supporting Nokia specific requirements as applicable to its
+     access network equipment.
+
+     Specifically, this module defines specialized hardware identities
+     to be used in product variants that have pluggable hardware, and/
+     or product variants that have specialized ports.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2024, Nokia. All Rights Reserved.";
+
+
+  revision 2026-07-27 {
+    description
+      "Addition of new port type rs232.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2024-11-25 {
+    description
+      "Addition of new port type dac-port.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2024-08-29 {
+    description
+      "Introduced transceiver-link-xgpon specialization,
+       slot-lt-ntio specialization to represent a hybrid
+       slot.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2024-05-22 {
+    description
+      "Add moca.";
+    reference
+      "Nokia specific EPIC BBN-729";
+  }
+
+  revision 2023-08-31 {
+    description
+      "Add rf-video.";
+    reference
+      "Nokia specific EPIC BBN-27738";
+  }
+  
+  revision 2023-05-25 {
+    description
+      "Addition of new cage-uni and virtual-port";
+    reference
+      " Epic BBN-98030";
+  }
+
+  revision 2022-11-28 {
+    description
+      "Addition of hardware reset specific parameters.";
+    reference
+      "Nokia specific.";
+  }
+
+  revision 2022-04-11 {
+    description
+      "Addition of new rj45 specializations and rj11.";
+    reference
+      " Epic BBN-38309";
+ }
+
+  revision 2022-03-04 {
+    description
+      "Addition of transceiver-link-hspon transceiver-link component specialization.";
+    reference
+      "Nokia specific EPIC BBN-6615";
+  }
+
+  revision 2021-09-06 {
+    description
+      "Addition of transceiver-link-25gspon transceiver-link component specialization.";
+    reference
+      "Nokia specific EPIC BBN-656";
+  }
+
+  revision 2021-05-30 {
+    description
+      "Addition of input and output scan point  component specializations.";
+    reference
+      "Nokia specific EPIC BBN-555";
+  }
+
+  revision 2019-12-23 {
+    description
+      "Addition of new transceiver-link specializations.";
+    reference
+      "Nokia specific RCR ALU02607475";
+  }
+
+  revision 2019-08-12 {
+    description
+      "Addition of new port type backplane-port.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2018-11-03 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific";
+  }
+
+  identity slot-nt {
+    base bbf-hwt:slot;
+    description
+      "A slot-nt is a special type of slot that can contain a board
+       of the class nt or class ntio.";
+  }
+
+  identity slot-ntio {
+    base bbf-hwt:slot;
+    description
+      "A slot-ntio is a special type of slot that can contain a board
+       of the class ntio.";
+  }
+
+  identity slot-lt {
+    base bbf-hwt:slot;
+    description
+      "A slot-lt is a special type of slot that can contain a board
+       of the class lt.";
+  }
+
+  identity slot-lt-ntio {
+    base bbf-hwt:slot;
+    description
+      "A slot-lt-ntio is a special type of slot that can contain either
+       a board of the class lt or ntio.";
+  }
+
+  identity slot-fan {
+    base bbf-hwt:slot;
+    description
+      "A slot-fan is a special type of slot that can contain a board
+       of the class fan-pack.";
+  }
+
+  identity slot-acu {
+    base bbf-hwt:slot;
+    description
+      "A slot-acu is a special type of slot that can contain a board
+       of the class acu.";
+  }
+
+  identity slot-psu {
+    base bbf-hwt:slot;
+    description
+      "A slot-psu is a special type of slot that can contain a board
+       of the class psu.";
+  }
+
+  identity nt {
+    base bbf-hwt:board;
+    description
+      "A network termination board (nt) is a central board in the
+       system, i.e. it concentrates traffic coming from various other
+       boards and provides interfaces to the network.";
+  }
+
+  identity ntio {
+    base bbf-hwt:board;
+    description
+      "A network termination input output board (ntio) provides
+       additional network interfaces. Additional functionality is
+       possible on specific ntio variants. E.g. it can be combined
+       with a power supply.";
+  }
+
+  identity lt {
+    base bbf-hwt:board;
+    description
+      "A line termination board (lt) is a board that terminates lines
+       and concentrates the traffic to a nt.";
+  }
+
+  identity fan-pack {
+    base bbf-hwt:board;
+    description
+      "A fan-pack board is board that supports one or more fans.";
+  }
+
+  identity acu {
+    base bbf-hwt:board;
+    description
+      "An acu board is board that provides a local management
+       interfaces such as a craft interface or an alarm interface.";
+  }
+
+  identity psu {
+    base bbf-hwt:board;
+    description
+      "A psu board is board that provides a power supply.";
+  }
+
+  identity external-alarm-port {
+    base ianahw:port;
+    description
+      "An external-alarm-port is a connector that allows to connect
+       an external device for which electrical connectivity can be
+       monitored.";
+  }
+
+  identity alarm-port-input-scan-point {
+    base ianahw:hardware-class;
+    description
+        "An alarm-port-input-scan-point is a scanpoint that monitors electrical
+        connectivity when connected to an external-alarm monitoring device,
+        e.g., a device that monitors door of a cabinet being open or closed.";
+  }
+
+  identity alarm-port-output-scan-point {
+    base ianahw:hardware-class;
+    description
+        "An alarm-port-output-scan-point is a scanpoint that drives external
+        device that reports an alarm condition, e.g., to provide visible or audible
+        alarm.";
+  }
+
+
+  identity backplane-port {
+    base ianahw:port;
+    description
+      "This identity is applicable for ports giving access
+       to a shared backplane in a multi-board system.";
+  }
+
+  identity transceiver-link-gpon {
+    base bbf-hwt:transceiver-link;
+    description
+      "A transceiver-link-gpon is a special type of transceiver-link that
+       terminates an optical fiber for gpon.";
+  }
+
+  identity transceiver-link-ngpon {
+    base bbf-hwt:transceiver-link;
+    description
+      "A transceiver-link-ngpon is a special type of transceiver-link  that
+       terminates an optical fiber for ngpon, include xgpon1, ngpon2 and XGS.";
+  }
+
+  identity transceiver-link-twentyfivegspon {
+    base bbf-hwt:transceiver-link;
+    description
+      "A transceiver-link-25gspon is a special type of transceiver-link that
+       terminates an optical fiber for 25GS-PON.";
+  }
+
+  identity transceiver-link-hspon {
+    base bbf-hwt:transceiver-link;
+    description
+      "A transceiver-link-hspon is a special type of transceiver-link that
+       terminates an optical fiber for 25G/50G HSP.";
+  }
+
+  identity transceiver-link-xgpon {
+    base bbf-hwt:transceiver-link;
+    description
+      "A transceiver-link-xgpon is a special type of transceiver-link  that
+       terminates an optical fiber for xgpon.";
+  }
+
+  identity bits-port {
+    base ianahw:port;
+    description
+      "A bits port on NT board.";
+  }
+
+  identity gnss-port {
+    base ianahw:port;
+    description
+      "A gnss port on NT board.";
+  }
+
+  identity rj45-10M {
+    base bbf-hwt:rj45;
+    description
+      "A RJ45-10M is a special type of port that terminates an electrical
+       Ethernet link for rj45-10M.";
+  }
+
+  identity rj45-100M {
+    base bbf-hwt:rj45;
+    description
+      "A RJ45-100M is a special type of port that terminates an electrical
+       Ethernet link for rj45-100M.";
+  }
+  
+  identity rj45-10-100M {
+    base bbf-hwt:rj45;
+    description
+      "A RJ45-10-100M is a special type of port that terminates an electrical
+       Ethernet link for rj45-10/100M.";
+  }
+
+  identity rj45-1G {
+    base bbf-hwt:rj45;
+    description
+      "A RJ45-1G is a special type of port that terminates an electrical
+       Ethernet link for rj45-1G.";
+  } 
+
+  identity rj45-10G {
+    base bbf-hwt:rj45;
+    description
+      "A RJ45-10G is a special type of port that terminates an electrical
+       Ethernet link for rj45-10G.";
+  }
+
+  identity rj45-2.5G {
+    base bbf-hwt:rj45;
+    description
+      "A RJ45-2.5G is a special type of port that terminates an electrical
+       Ethernet link for rj45-2.5G.";
+  }
+
+  identity rj45-5G {
+    base bbf-hwt:rj45;
+    description
+      "A RJ45-5G is a special type of port that terminates an electrical
+       Ethernet link for rj45-5G.";
+  }
+
+  identity rj45-25G {
+    base bbf-hwt:rj45;
+    description
+      "A RJ45-25G is a special type of port that terminates an electrical
+       Ethernet link for rj45-25G.";
+  }
+
+  identity rj45-40G {
+    base bbf-hwt:rj45;
+    description
+      "A RJ45-40G is a special type of port that terminates an electrical
+       Ethernet link for rj45-40G.";
+  }
+
+  identity rj11 {
+    base ianahw:port;
+    description
+      "A RJ11 is a special type of port that terminates a POTS link.";
+  }
+
+  identity reset-reason {
+    description
+    "Base identity for reset-reason.";
+  }
+
+  identity unknown-reset-reason {
+    base reset-reason;
+    description
+    "The reset reason is not known.";
+  }
+
+  identity operator-triggered-chassis-reset {
+    base reset-reason;
+    description
+    "Chassis reset tiggered by operator.";
+  }
+
+  identity operator-triggered-board-reset {
+    base reset-reason;
+    description
+    "Board reset tiggered by operator.";
+  }
+
+  identity autonomous-sw-triggered-reset {
+    base reset-reason;
+    description
+    "Reset triggered by software autonomously.";
+  }
+
+  identity hw-triggered-reset {
+    base reset-reason;
+    description
+    "Reset triggered by hardware autonomously.";
+  }
+
+  identity power-button-reset {
+    base reset-reason;
+    description
+    "Reset triggered when power button on hardware is pushed.";
+  }
+
+  identity reset-button-reset {
+    base reset-reason;
+    description
+    "Reset triggered when reset button on hardware is pushed.";
+  }
+
+  identity reset-type {
+    description
+    "Base identity for reset-type.";
+  }
+
+  identity unknown-reset{
+    base reset-type;
+    description
+    "The reset type is not known.";
+  }
+
+ identity hardware-reset {
+   base reset-type;
+   description
+   "Restart of hardware with traffic interruption.";
+ }
+
+ identity hardware-reset-with-selftest {
+   base reset-type;
+   description
+   "Restart of hardware with traffic interruption and self-test.";
+ }
+
+ identity  power-on-reset {
+   base reset-type;
+   description
+   "Power on restart of hardware.";
+ }
+
+ identity hardware-reset-to-default-configuration {
+   base reset-type;
+   description
+   "Reset of the hardware to default configuration. OAM configuration preserved if config stored persistently.";
+ }
+
+ identity hardware-reset-to-factory-datastore {
+   base reset-type;
+   description
+   "Reset of the hardware to factory datastore, Cleans up full database including the persistent config with loss of OAM configuration.";
+ }
+
+ identity hardware-reset-watchdog-expiry {
+   base reset-type;
+   description
+   "Restart of hardware autonomously due to hardware watchdog expiry.";
+ }
+
+ identity cage-uni {
+   base bbf-hwt:cage;
+   description
+     "cage for ONU UNI side which support pluggable SFP.";
+ }
+
+ identity virtual-port {
+   base ianahw:port;
+   description
+     "A hardware port that is not externally visible. 
+      It could be used as a direct underlying HW port 
+      for virtual interfaces such as TR-385 onu-v-vrefpoint."; 
+ }
+ 
+ identity rf-video {
+   base ianahw:port;
+   description
+     "A rf-video is a special type of port that terminates a Radio Frequency (RF) video link.";
+ }
+
+ identity moca {
+   base ianahw:port;
+   description
+     "A moca is a special type of port that terminates a Multimedia over Coax Alliance Link.";
+ }
+
+  identity rs232 {
+    base ianahw:port;
+    description
+      "An RS232 port is a classic asynchronous serial communication port. It is applied to serial communication, device debugging and data transmission..";
+  }
+
+ identity dac-port {
+   base ianahw:port;
+   description
+     "A dac-port is a special type of port that could be used as a HW port for Direct Attach Cable.";
+ }
+
+}

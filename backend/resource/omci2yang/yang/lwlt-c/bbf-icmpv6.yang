@@ -1,0 +1,374 @@
+module bbf-icmpv6 {
+  yang-version 1.1;
+  namespace "urn:bbf:yang:bbf-icmpv6";
+
+  prefix bbf-icmpv6;
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  import bbf-yang-types {
+    prefix bbf-yang;
+  }
+
+  import bbf-if-type {
+    prefix bbfift;
+  }
+
+  organization
+    "Broadband Forum <https://www.broadband-forum.org>
+     Common YANG Work Area";
+
+  contact
+    "Comments or questions about this Broadband Forum YANG module
+     should be directed to <mailto:help@broadband-forum.org>.
+
+     Editor:      Nick Hancock, ADTRAN
+
+     Editor:      Ludwig Pauwels, Nokia
+
+     PS Leader:   Joey Boyd, ADTRAN
+
+     PS Leader:   Sowrirajan Padmanabhan, Nokia
+
+     WA Director: Joey Boyd, ADTRAN
+
+     WA Director: Sven Ooghe, Nokia";
+
+  description
+    "This module has not yet been standardized but is NOKIA proprietary.
+     This module contains a collection of YANG definitions for 
+     supporting the Broadband Forum requirements on subscriber 
+     management via the icmpv6 protocol as applicable to access 
+     network equipment. As such, this module is specific to access 
+     network equipment (e.g., BBF-specified Access Nodes and FTTdp 
+     DPUs).
+
+     Copyright (c) 2017-2020, Broadband Forum
+
+     Redistribution and use in source and binary forms, with or
+     without modification, are permitted provided that the following
+     conditions are met:
+
+     1. Redistributions of source code must retain the above copyright
+        notice, this list of conditions and the following disclaimer.
+
+     2. Redistributions in binary form must reproduce the above
+        copyright notice, this list of conditions and the following
+        disclaimer in the documentation and/or other materials
+        provided with the distribution.
+
+     3. Neither the name of the copyright holder nor the names of its
+        contributors may be used to endorse or promote products
+        derived from this software without specific prior written
+        permission.
+
+     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
+     CONTRIBUTORS \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+     INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+     DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+     CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+     SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+     NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+     CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+     STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+     ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+     ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+     The above license is used as a license under copyright only.
+     Please reference the Forum IPR Policy for patent licensing terms
+     <https://www.broadband-forum.org/ipr-policy>.
+
+     Any moral rights which are necessary to exercise under the above
+     license grant are also deemed granted under this license.";
+
+  revision 2020-09-30 {
+    description
+      "Initial revision.This is the initial model supported 
+       in LightSpan 20.9.
+       * Approval Date:    see revision date above.";
+    reference
+      "NOKIA proprietary.";
+  }
+  /* Features */
+
+  feature icmpv6-filter {
+    description
+      "Support configuraiton of icmpv6 message secure forward.";
+  }
+
+  feature line-identification-option {
+    description
+      "Support LIO insertion/removal.";
+  }
+  
+  augment '/if:interfaces/if:interface' {
+    when
+      "derived-from-or-self(if:type,
+                            'bbfift:vlan-sub-interface')" {
+      description
+        "Applies only to VLAN sub-interfaces.";
+    }
+    description
+      "Additions for ICMPv6 on the VLAN sub-interface.";
+
+    container icmpv6 {
+	  presence
+        "Presence of this container indicates icmpv6 relay 
+         functionality is supported on this interface.";
+      description
+        "This container indicates ICMPv6 functionality is 
+		 supported on this interface.";
+	  
+      leaf icmpv6-filter {
+	    if-feature icmpv6-filter;
+        type boolean;
+        default "false";
+        description
+          "Manages icmpv6 message forward or discard .
+		   When it is true, the following messages must be discarded:
+           - Downstream Router Solicitation
+           - Upstream Router Advertisement 
+           - Upstream Redirect
+           - Upstream MLD Multicast Listener Queries.
+		   Forward error and informational messages transparently.
+		   when it is false, forward messages transparently.";
+	    reference
+          "TR-177 section 5.6.2";
+      }
+
+      leaf line-identification-option {
+        if-feature line-identification-option;
+        type boolean;
+        default "false";
+        description
+          "Manages the icmpv6 line identification option (LIO)
+           insertion/removal in the Router Solicitation
+           and Router Advertisement messages.
+
+           When it is true, then before forwarding the packets 
+           received on the line the device inserts the LIO data
+           based on the syntax configured via icmpv6-profile or
+           subscriber-profile, and also adds an IPv6 tunnel header.
+           In the reverse direction the devices removes the LIO 
+           data before sending the packet on the line.
+           When it is false, LIO data does not modify Router 
+		   Solicitation and Router Advertisement messages.";
+		   
+		reference
+          "TR-177 R-15,16";
+      }
+
+      leaf profile-ref {
+	    if-feature line-identification-option;
+        when "../line-identification-option = 'true'" {
+          description
+            "Applicable only when LIO-insert functionality 
+             is enabled.";
+        }
+        type leafref {
+          path '/bbf-icmpv6:icmpv6-profiles/bbf-icmpv6:'
+             + 'icmpv6-profile/bbf-icmpv6:name';
+        }
+        mandatory true;
+        description
+          "Reference to the icmpv6 configuration profile.";
+      }
+    }
+  }
+
+  container icmpv6-profiles {
+    description
+      "ICMPv6 configuration profiles.";
+
+    list icmpv6-profile {
+	  if-feature line-identification-option;
+      key "name";
+      description
+        "List containing the parameters for ICMPv6 
+         configuration.";
+
+      leaf name {
+        type bbf-yang:string-ascii64;
+        description
+          "Name of the profile.";
+      }
+
+      container line-identification-option-format {
+        description
+          "Contains information that needs to be filled 
+           in Router Solicitation message line identification 
+           option.";
+
+        leaf default-circuit-id-syntax {
+          type bbf-yang:string-ascii63-or-empty;
+          default "";
+          description
+            "To be used to generate a LI-option when no
+             circuit-id is provided for the VLAN sub-interface via a 
+             referenced subscriber-profiles/subscriber-profile.
+
+             The syntax is a string of ASCII characters that 
+             determines the actual value inserted in the sub-option.
+             Parts of the syntax that are recognized as predefined
+             keywords will be replaced by an actual value.";
+          reference
+            "TR-177 - R15, R-16";
+        }
+
+        leaf start-numbering-from-zero {
+          type boolean;
+          default "false";
+          description
+            "In case the default-circuit-id-syntax or 
+             default-remote-id-syntax indicates a Slot or a Port 
+             identification shall be added to the sub-option value, 
+             then this leaf determines if the slot/port numbering 
+             MUST start from 0 or 1.";
+        }
+
+        leaf use-leading-zeroes {
+          type boolean;
+          default "false";
+          description
+            "In case the default-circuit-id-syntax indicates a Slot
+             or a Port identification shall be added to the 
+             sub-option value, then this leaf determines if the
+             slot/port numbering MUST use leading 0's or not, i.e.
+             generate a fixed length string or a string with only
+             meaningful digits.";
+        }
+      }
+    }
+  }
+
+  grouping counters{
+    description
+      "Defines counter parameters.";
+	  
+    leaf forward-packets {
+      type yang:counter32;
+      description
+        "Number of packets forwarded counter.";
+    }
+
+    leaf discard-packets {
+      type yang:counter32;
+      description
+        "Number of packets discarded counter.";
+    }
+  }
+
+  grouping icmpv6-counters{ 
+    description
+      "Defines icmpv6 statistics parameters.";
+	  
+    container router-solicitation {
+      description
+        "ICMPv6 Router Solicitation statistics.";
+      uses counters;
+      reference
+        "TR-177 R-17";
+    }
+
+    container router-advertisement {
+      description
+        "ICMPv6 Router Advertisement statistics.";
+      uses counters;
+      reference
+        "TR-177 R-18";
+    }
+
+    container neighbour-advertisement {
+      description
+        "ICMPv6 Neighbour Advertisement statistics.";
+      uses counters;
+    }
+
+    container neighbour-solicitation {
+      description
+        "ICMPv6 Neighbour Solicitation statistics.";
+      uses counters;
+    }
+      
+    container router-redirect {
+      description
+        "ICMPv6 Redirect Message statistics.";
+      uses counters;
+      reference
+        "TR-177 R-19";
+    }
+	container multicast-listener-query {
+      description
+        "ICMPv6 Multicast Listener Query statistics.";
+      uses counters;
+  	  reference
+        "TR-177 R-20";
+    }
+    container error-message {
+      description
+        "Counts following icmpv6 error messages,
+		Type 1 - Destination Unreachable
+        Type 2 - Packet Too Big
+        Type 3 - Time Exceeded
+        Type 4 - Parameter Problem.";
+      uses counters;
+  	  reference
+        "TR-177, sec 5.6.2";
+    }
+    container informational-message {
+      description
+        "Counts following icmpv6 informational messages
+		Type 128 - Echo Request
+        Type 129 - Echo Reply.";
+      uses counters;
+  	  reference
+        "TR-177, sec 5.6.2";
+    }
+	container invalid-message {
+      description
+        "ICMPv6 invalid message statistics.";
+      uses counters;
+    }
+  }
+  
+  augment '/if:interfaces-state/if:interface/if:statistics' {
+    when
+      "derived-from-or-self(../if:type,
+                            'bbfift:vlan-sub-interface')" {
+      description
+        "Applies only to VLAN sub-interfaces and only when the
+         icmpv6-filter functionality is enabled.";
+    }
+
+    container icmpv6-stats {
+      presence
+        "Statistics are provided when the ICMPv6
+         functionality is enabled";
+
+      description
+        "Container presents the packet statistics related to the
+         ICMPv6.";
+
+      container upstream {
+        description
+          "upstream icmpv6 statistics.";
+           uses icmpv6-counters;
+      }
+
+	  container downstream{
+        description
+          "downstream icmpv6 statistics.";
+        uses icmpv6-counters;
+      }
+
+    }
+  }
+}                                                                                                          

@@ -1,0 +1,172 @@
+module nokia-ietf-interfaces-inexpressible-constraints-qos-fiber-xpon-dev {
+
+  yang-version "1.1";
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+            + "nokia-ietf-interfaces-inexpressible-constraints-qos-fiber-xpon-dev";
+
+  prefix nokia-ietf-interfaces-inexpressible-constraints-qos-fiber-xpon-dev;
+
+  import ietf-interfaces {
+    prefix if;
+  }
+  
+  organization
+    "NOKIA";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "The NOKIA common/nokia-ietf-interfaces-inexpressible-constraints-qos-fiber-xpon-dev
+     YANG module supporting deviations on top of ietf-ssh-server standard.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2019, Nokia. All Rights Reserved.";
+
+  revision 2017-04-24 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific"; 
+  }
+
+  deviation "/if:interfaces/if:interface" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-qos-pol:qos-policy-profiles/bbf-qos-pol:policy-profile'
+        '/bbf-qos-pol:policies/bbf-qos-pol:policy'
+        '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry'
+        '/bbf-qos-filt:filters/bbf-qos-enhfilt:enhanced-filter'
+       The error message 'For the board, its userside upstream L2 and ipv4 CCL entry limit has been exceeded.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/if:interfaces/if:interface" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-qos-pol:qos-policy-profiles/bbf-qos-pol:policy-profile'
+        '/bbf-qos-pol:policies/bbf-qos-pol:policy'
+        '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry'
+        '/bbf-qos-filt:filters/bbf-qos-enhfilt:enhanced-filter'
+       The error message 'For the board, its userside downstream L2 and ipv4 CCL entry limit has been exceeded.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/if:interfaces/if:interface" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-qos-pol:qos-policy-profiles/bbf-qos-pol:policy-profile'
+        '/bbf-qos-pol:policies/bbf-qos-pol:policy'
+        '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry'
+        '/bbf-qos-filt:filters/bbf-qos-enhfilt:enhanced-filter'
+       The error message 'For the board, its userside Ipv6 CCL entry limit has been exceeded.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/if:interfaces/if:interface" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-qos-pol:qos-policy-profiles/bbf-qos-pol:policy-profile'
+        '/bbf-qos-pol:policies/bbf-qos-pol:policy'
+        '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry'
+        '/bbf-qos-plc:policing-profiles/bbf-qos-plc:policing-profile'
+        '/bbf-qos-filt:filters/bbf-qos-enhfilt:enhanced-filter'
+       The error message 'For the untag2pbit classifier, it can only be applied to the ingress-qos-profile for user VSI.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/if:interfaces/if:interface" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-qos-tm:tm-profiles/bbf-qos-tm:tc-id-2-queue-id-mapping-profile'
+       The error message 'For the interface, TC2QueueMapping entry must be fully configured and only support 1:1 or 2:1 tc2queue mapping ' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/if:interfaces/if:interface" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-qos-tm:tm-profiles/bbf-qos-tm:tc-id-2-queue-id-mapping-profile'
+       The error message 'For the interface working under the flat scheduler mode, only supports 1:1 tc2queue mapping.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/if:interfaces/if:interface" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/if:interfaces/if:interface/bbf-qos-tm:tm-root/bbf-qos-tm:children-type/bbf-qos-sched:scheduler-node/bbf-qos-sched:scheduler-node'
+        '/bbf-qos-tm:tm-profiles/bbf-qos-tm:tc-id-2-queue-id-mapping-profile'
+       The error message 'For queues created under the scheduler-node, id can't exceed the max queue id used in attached tc2queue mapping profile.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/if:interfaces/if:interface" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-qos-pol:qos-policy-profiles/bbf-qos-pol:policy-profile'
+        '/bbf-qos-pol:policies/bbf-qos-pol:policy'
+        '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry'
+        '/bbf-qos-filt:filters/bbf-qos-enhfilt:enhanced-filter'
+        '/bbf-mgmd:multicast/bbf-mgmd:mgmd/bbf-mgmd:multicast-vpn'
+        '/bbf-mgmd:multicast/bbf-mgmd:mgmd/bbf-mgmd:multicast-vpn/bbf-mgmd:multicast-network-interface'
+       The error message 'For network VSIs in different multicast vpns, either all of them must configure a pbit2tc policy or none of them should configure it.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/if:interfaces/if:interface" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/bbf-qos-pol:qos-policy-profiles/bbf-qos-pol:policy-profile'
+        '/bbf-qos-pol:policies/bbf-qos-pol:policy'
+        '/bbf-qos-cls:classifiers/bbf-qos-cls:classifier-entry'
+        '/bbf-qos-plc:policing-profiles/bbf-qos-plc:policing-profile'
+        '/bbf-qos-filt:filters/bbf-qos-enhfilt:enhanced-filter'
+       The error message 'For Network VSI, only supports scheduler policy with tag index 0 in its ingress qos policy.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+  deviation "/if:interfaces/if:interface" {
+    description
+      "Other dependent xpaths where this rule applies are:
+        '/if:interfaces/if:interface/bbf-qos-tm:tm-root/bbf-qos-tm:children-type/bbf-qos-sched:scheduler-node/bbf-qos-sched:scheduler-node'
+       The error message 'For this board, the enabled queue-stats entries have exceed its dimension.' will be displayed when the constraint is violated.";
+    deviate add {}
+  }
+  
+}

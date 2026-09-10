@@ -1,0 +1,552 @@
+module nokia-eqpt-alarm-types {
+     yang-version 1.1;
+     namespace "https://www.nokia.com/Fixed-Networks/BBA/yang/nokia-eqpt-alarm-types";
+     prefix eqpt-al;
+
+     import nokia-base-alarm-types {
+         prefix base-al;
+     }
+
+     organization
+      "Nokia";
+
+     contact
+      "Comments or questions about this Nokia equipment alarm types should be
+       directed to <mailto:isam.yang@nokia.com>.";
+
+     description
+       "This module provides the details of supported eqpt alarm types.
+
+        This specification is published by Nokia under Non-Disclosure
+        Agreement(s) (NDA) with specific parties and has to be considered
+        as Confidential Information as defined in such NDA. Nokia
+        reserves the right to revise this document for any reason,
+        including but not limited to conformity with standards
+        promulgated by various agencies, utilisation of advances in the
+        state of the technical areas, or the reflection of changes in the
+        design of any equipment, techniques, or procedures described or
+        referred to herein.
+
+        The product specifications and other technical or performance
+        information contained herein are subject to change without
+        notice. Updates of this document will be issued under the above
+        NDA's.
+
+        Nokia makes no representation or warranty, expressed or implied,
+        with respect to the sufficiency, accuracy, or utility of any
+        information or opinion contained herein. Nokia expressly advises
+        that any use of for any purpose or reliance upon this technical
+        reference is at the risk of the user and that Nokia shall not be
+        liable for any damage or injury incurred by any person arising
+        out of the sufficiency, accuracy, or utility of any information
+        or opinion contained herein.
+
+        This document is not to be construed as a suggestion to any
+        manufacturer to modify or change any of its products, nor does
+        this document represent any commitment by Nokia to sell or
+        purchase any product. Nothing contained herein shall be construed
+        as conferring by implication, estoppel, or otherwise any license
+        or right under any patent, whether or not the use of any
+        information herein necessarily employs an invention of any
+        existing or later issued patent.
+
+        Nokia reserves the right not to offer any or all of these
+        products and to withdraw any or all of them at any future time.
+
+        Copyright (C) 2026, Nokia. All Rights Reserved.";
+
+    revision 2026-03-11 {
+      description
+        "Equipment alarms - added firmware-upgrade-failure, door-open alarm";
+      reference
+        "Nokia specific";
+    }
+
+    revision 2025-03-11 {
+      description
+        "Equipment alarms - added board-sensor-failure";
+      reference
+       "Nokia specific";
+     }
+
+    revision 2024-08-30 {
+      description
+        "Equipment alarms - added transceiver-link-tx-fault";
+      reference
+       "Nokia specific Epic BBN-142695";
+     }
+
+    revision 2024-03-11 {
+      description
+        "Equipment alarms - added transceiver-not-accessible-alarm and Removed service-affecting info for sensor-temp-high,sensor-temp-low alarms";
+      reference
+       "Nokia specific Epic BBN-117856 and BBN-25050";
+     }
+
+    revision 2023-03-31 {
+      description
+        "Equipment alarms - added unsupported-transceiver.";
+      reference
+       "Nokia specific Epic BBN-126469";
+     }
+
+    revision 2022-09-08 {
+      description
+        "Remove alarms battery-failure and battery-property-mismatch";
+      reference
+        "Nokia specific. EPIC BBN-623";
+    } 
+     
+    revision 2022-08-10 {
+      description
+        "Equipment alarms - added following alarms
+         board-inserted-in-wrong-shelf, board-capability-mismatch";
+
+      reference
+        "Nokia specific";
+    }
+
+    revision 2022-07-07 {
+      description
+        "Equipment alarms - added transceiver-initialization-failure-alarm.";
+      reference
+       "Nokia specific Epic BBN-6615";
+     }
+
+     revision 2021-10-28 {
+      description
+        "Equipment alarms - extended with water-seepage and box-open alarms.";
+      reference
+       "Nokia specific Epic BBN-29100";
+     }
+
+     revision 2021-10-27 {
+      description
+        "Equipment alarms - extended with ac-power-loss alarm.";
+      reference
+       "Nokia specific Epic BBN-525";
+     }
+
+     revision 2021-03-24 {
+       description
+         "Multiple alarms on each TCA parameters rssi,txpower,txbias and voltage are removed
+          and replaced with sinlge generic alarm. ";
+       reference
+         "Nokia specific. EPIC BBN-682";
+     }
+
+     revision 2021-02-04 {
+       description
+         "Rename yang with nokia prefix.
+           - nokia-eqpt-alarm-types
+         ";
+       reference
+         "Nokia specific";
+     }
+
+     revision 2020-12-10 {
+      description
+        "Equipment alarms - extended with external alarm.";
+      reference
+       "Nokia specific RCR ALU02724955";
+     }
+
+     revision 2020-06-17 {
+      description
+        "Equipment alarms - added following alarms
+         fan-tray-missing, fan-failure, transceiver-voltage, tx-bias, tx-power,
+         rx-power, transceiver-supply-voltage-low,
+         transceiver-supply-voltage-low-warning,
+         transceiver-supply-voltage-high-warning,
+         transceiver-supply-voltage-high, transceiver-link-tx-bias-low,
+         transceiver-link-tx-bias-low-warning,
+         transceiver-link-tx-bias-high-warning,
+         transceiver-link-tx-bias-high, transceiver-link-tx-power-low,
+         transceiver-link-tx-power-low-warning,
+         transceiver-link-tx-power-high-warning,
+         transceiver-link-tx-power-high, transceiver-link-rx-power-low,
+         transceiver-link-rx-power-low-warning,
+         transceiver-link-rx-power-high-warning,
+         transceiver-link-rx-power-high, power-supply-unit,
+         power-supply-unit-voltage-low, power-supply-unit-voltage-high,
+         power-supply-unit-failure, power-circuit-failure, bat-failure,
+         board-initialization-failure, board-communicate-failure,
+         water-seepage-in-box, sealed-box-open";
+
+      reference
+        "Nokia specific";
+     }
+
+
+// ---- draft proposal alarm identifiers for eqpt ----
+
+     identity sw-alarms {
+       base base-al:equipment-alarm;
+       description
+         "eqpt sw specific alarm type definitions";
+     }
+
+     identity eqpt-environmental-alarms {
+       base base-al:environmental-alarm;
+       description
+         "eqpt environmental specific alarm type definitions";
+     }
+
+     identity temperature {
+       base eqpt-environmental-alarms;
+       description
+         "Abstract alarm type for temperature alarms";
+     }
+
+     identity board-sensor-failure {
+       base eqpt-environmental-alarms;
+       description
+         "Board sensor failure detected.";
+     }
+
+     identity firmware-upgrade-failure {
+       base eqpt-environmental-alarms;
+       description
+          "Firmware upgrade failure detected.";
+     }
+
+     identity sensor-temperature-high {
+       base temperature;
+       description
+         "Temperature measured by the hardware is exceeding the system defined threshold.";
+     }
+
+     identity sensor-temperature-low {
+       base temperature;
+       description
+         "Temperature measured by the hardware is deceeding the system defined threshold.";
+     }
+
+     identity sensor-temperature-critical {
+       base temperature;
+       description
+         "Temperature measured by the hardware is exceeding the critical system defined threshold. If this critical temperature is maintained it will result in a power down of the system.";
+     }
+
+     identity board-temperature-shutdown {
+       base temperature;
+       description
+         "Temperature measured by the hardware is exceeding the shutdown threshold. The hardware is powered down to protect it from being damaged.";
+     }
+
+
+     identity transceiver-sensor-temperature-low {
+       base temperature;
+       description
+         "Temperature measured by the hardware is exceeding the system defined critical low threshold.";
+     }
+
+     identity transceiver-sensor-temperature-low-warning {
+       base temperature;
+       description
+         "Temperature measured by the hardware is exceeding the system defined warning low threshold.";
+     }
+
+     identity transceiver-sensor-temperature-high-warning {
+       base temperature;
+       description
+         "Temperature measured by the hardware is exceeding the system defined warning high threshold.";
+     }
+
+     identity transceiver-sensor-temperature-high {
+       base temperature;
+       description
+         "Temperature measured by the hardware is exceeding the system defined critical high threshold.";
+     }
+
+     identity external-alarms {
+       base eqpt-environmental-alarms;
+       description
+         "External alarm types.";
+     }
+
+      identity external-alarm-1  {
+       base external-alarms;
+       description
+         "external alarm for the 1st scanpoint";
+     }
+
+     identity external-alarm {
+      base external-alarms;
+      description
+        "external alarm for the alarm port input scan points";
+    }
+
+     identity fan-alarms {
+       base eqpt-environmental-alarms;
+       description
+         "Abstract alarm type for fan alarms";
+     }
+
+     identity single-fan-alarm {
+       base fan-alarms;
+       description
+         "single fan alarm";
+     }
+
+     identity multiple-fan-alarm {
+       base fan-alarms;
+       description
+         "multiple fan alarm";
+     }
+
+     identity fan-tray-missing {
+       base fan-alarms;
+       description
+         "missing fan tray or fan unit fail alarm";
+     }
+
+     identity fan-failure {
+       base fan-alarms;
+       description
+         "one or multi fan failure alarm";
+     }
+
+
+     identity transceiver-initialization-failure-alarm{
+       base eqpt-environmental-alarms;
+       description
+         "Transceiver fails to initialize after poweron";
+     }
+
+
+     identity sfp-extraction-alarm {
+       base eqpt-environmental-alarms;
+       description
+         "sfp extraction alarm";
+     }
+
+     identity transceiver-property-mismatch-alarm {
+       base eqpt-environmental-alarms;
+       description
+         "transceiver property mismatch alarm";
+     }
+
+     identity transceiver-presence-mismatch-alarm {
+       base eqpt-environmental-alarms;
+       description
+         "transceiver presence mismatch alarm";
+     }
+     identity board-property-mismatch {
+       base eqpt-environmental-alarms;
+       description
+         "board property mismatch alarm";
+     }
+
+     identity board-presence-mismatch {
+       base eqpt-environmental-alarms;
+       description
+         "board presence mismatch alarm";
+     }
+     identity chassis-property-mismatch-alarm {
+       base eqpt-environmental-alarms;
+       description
+         "chassis property mismatch alarm";
+     }
+     identity board-inserted-in-wrong-shelf {
+       base eqpt-environmental-alarms;
+       description
+         "board inserted in wrong shelf alarm";
+     }
+     identity board-capability-mismatch {
+       base eqpt-environmental-alarms;
+       description
+         "board capability mismatch alarm";
+     }
+     identity transceiver-supply-voltage {
+       base eqpt-environmental-alarms;
+       description
+         "Voltage measured by the transceiver is exceeding the system defined thresholdsd.";
+     }
+
+     identity transceiver-alarm {
+       base eqpt-environmental-alarms;
+       description
+         "Generic alarm representing multiple transceiver link level alarms";
+     }
+
+     identity transceiver-link-tx-bias {
+       base eqpt-environmental-alarms;
+       description
+         "TX bias current measured by the transceiver is exceeding the system defined thresholds.";
+     }
+
+     identity transceiver-link-tx-power {
+       base eqpt-environmental-alarms;
+       description
+         "Transceiver-link tx power measured by the transceiver is exceeding the system defined thresholds.";
+     }
+
+     identity transceiver-link-rx-power {
+       base eqpt-environmental-alarms;
+       description
+          "Transceiver-link rx power measured by the transceiver is exceeding the system defined thresholds.";
+     }
+
+     identity power-supply-unit {
+       base eqpt-environmental-alarms;
+       description
+         "abstract type for the power supply failure alarms.";
+     }
+
+     identity power-supply-unit-voltage-low {
+       base power-supply-unit;
+       description
+         "voltage  measured by the hardware is  lower than the system defined thresholds.";
+     }
+
+     identity power-supply-unit-voltage-high {
+       base power-supply-unit;
+       description
+         "voltage  measured by the hardware is  higher than the system defined thresholds.";
+     }
+
+     identity power-supply-unit-failure {
+       base power-supply-unit;
+       description
+         "Power supply unit failure as detected by Hardware.";
+     }
+
+     identity power-circuit-failure {
+       base power-supply-unit;
+       description
+        "Power redundancy capability is lost";
+     }
+
+     identity bat-failure {
+       base power-supply-unit;
+       description
+        "Power supply disconnected or input voltage is low";
+     }
+
+     identity cpu-usage-exceeding {
+       base eqpt-environmental-alarms;
+       description
+         "the cpu usage is too high.";
+     }
+
+     identity memory-usage-exceeding {
+       base eqpt-environmental-alarms;
+       description
+         "the memory usage is too high.";
+     }
+
+     identity disk-usage-exceeding {
+       base eqpt-environmental-alarms;
+       description
+         "the disk usage is too high.";
+     }
+
+     identity sw-missing {
+       base sw-alarms;
+       description
+         "sw missing alarm.";
+     }
+
+     identity board-initialization-failure {
+       base eqpt-environmental-alarms;
+       description
+         "LT/NTIO board can not startup successfully.";
+     }
+
+     identity board-communication-failure {
+       base eqpt-environmental-alarms;
+       description
+         "communication between boards is failing.";
+     }
+
+     identity board-reset-protection {
+       base sw-alarms;
+       description
+         "board is in reset protection mode.";
+     }
+
+     identity water-seepage-in-box {
+       base external-alarms;
+       description
+         "water seepage detected.";
+     }
+
+     identity sealed-box-open {
+       base external-alarms;
+       description
+         "sealed box is opened.";
+     }
+
+     identity ac-power-loss {
+       base power-supply-unit;
+       description
+         "AC power supply loss detected. RPF backup is activated. Check power supply";
+     }
+     
+     identity power-supply-unit-not-active {
+       base power-supply-unit;
+       description
+         "PSU is not able to deliver power to the system because there is a problem with the input from the external  power source.";
+     }
+
+     identity battery-low {
+       base power-supply-unit;
+       description
+         "Battery discharged to a critical level which will result in the system powering down in case no immediate action is taken.";
+     }
+
+     identity battery-not-active {
+       base power-supply-unit;
+       description
+         "The battery is switched off by toggling the on/off switch on the battery PSU to the OFF position.";
+     }        
+     
+     identity battery-missing {
+       base power-supply-unit;
+       description
+         "There is no battery detected by the battery PSU";
+     }
+
+     identity battery-temperature-sensor-missing {
+       base power-supply-unit;
+       description
+         "The battery temperature sensor is not detected by the battery PSU.";
+     }
+
+     identity battery-temperature-out-of-range {
+       base power-supply-unit;
+       description
+         "The battery temperature is out of range.";
+     }
+
+     identity unsupported-transceiver {
+       base eqpt-environmental-alarms;
+       description
+         "unsupported transceiver alarm";
+     }
+
+     identity transceiver-not-accessible-alarm{
+       base eqpt-environmental-alarms;
+       description
+         "Transceiver access failure";
+     }
+
+     identity transceiver-link-tx-fault{
+       base eqpt-environmental-alarms;
+       description
+         "Transceiver link failure";
+     }
+
+     identity board-software-incompatibility{
+       base eqpt-environmental-alarms;
+       description
+         "board software incompatibility";
+     }
+
+     identity door-open{
+       base eqpt-environmental-alarms;
+       description
+         "Shelf door is open";
+     }
+}

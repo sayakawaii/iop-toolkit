@@ -1,0 +1,461 @@
+module nokia-ietf-hardware-mounted-eonu-dev {
+
+  namespace
+     "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+   + "nokia-ietf-hardware-mounted-eonu-dev";
+
+  prefix nokia-ietf-hardware-mounted-eonu-dev;
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import ietf-hardware-mounted {
+    prefix hw-mounted;
+  }
+
+  import bbf-yang-types {
+     prefix bbf-yang;
+  }
+
+  import iana-hardware {
+    prefix ianahw;
+  }
+
+  import bbf-hardware-types {
+    prefix bbf-hwt;
+  }
+
+  import nokia-hardware-identities {
+    prefix nokia-hwi;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "The NOKIA BBF/hardware YANG module supporting
+     deviations on top of standard.";
+
+  revision 2024-09-27 {
+    description
+      "remove state-last-changed not-supported deviation check.";
+    reference
+      "Nokia specific EPIC BBN-221678";
+  }
+
+  revision 2024-05-22 {
+    description
+      "Extend class check for MoCA.";
+    reference
+      "Nokia specific EPIC BBN-729";
+  }
+  
+  revision 2024-01-30 {
+    description
+      "Remove deviation for parent and parent-rel-pos.";
+    reference
+      "Nokia specific EPIC BBN-146760";
+  }
+  
+  revision 2023-11-16 {
+    description
+      "Modified deviation for hardware component admin-state to support locked and unlocked.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2023-08-31 {
+    description
+      "Add rf-video.";
+    reference
+      "Nokia specific EPIC BBN-27738";
+  }
+
+   revision 2023-07-02 {
+      description
+         "Adding deviations for BBN-98030.";
+      reference
+        "Nokia specific";
+  }
+
+  revision 2023-04-12 {
+      description
+        "Moving CPU deviation from Board to Chassis";
+      reference
+        "Nokia specific";
+  }
+
+  revision 2022-12-05 {
+      description
+        "Adding Deviations for unsupported Yang leaves for epic BBN-88491.";
+      reference
+        "Nokia specific";
+  }
+
+  revision 2022-10-13 {
+    description
+      "Introduced the class cpu";
+    reference
+      "Nokia Specific.";
+  }
+
+  revision 2022-05-20 {
+    description
+      "rj45 and rj11 are supported components in BBN-38309.";
+    reference
+      "Nokia Specific.";
+  }
+
+  revision 2019-09-27 {
+    description
+      "Move onu deviations to e-onu category";
+    reference
+      "Nokia Specific.";
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware/hw-mounted:component/hw-mounted:name" {
+    deviate replace {
+        type bbf-yang:string-ascii64-or-empty {
+          pattern '[!#&-Z\^_-z|~]*';
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware/hw-mounted:component/hw-mounted:class" {
+    deviate add {
+      must "((current() != 'ianahw:chassis') and (current() != 'bbf-hwt:board'))
+           or
+            boolean(current()/../hw-mounted:admin-state)"
+      {
+        error-message "admin-state must be configured for chassis or board";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware/hw-mounted:component/hw-mounted:parent-rel-pos" {
+    deviate add {
+      must "((current()/../hw-mounted:class != 'bbf-hwt:cage') and (current()/../hw-mounted:class != 'bbf-hwt:transceiver'))
+           or
+           (current() = 0)" {
+        error-message "parent-rel-pos must be configured to zero for cage or transceiver";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware/hw-mounted:component/hw-mounted:admin-state" {
+    deviate add {
+      must "(current()/../hw-mounted:class != 'ianahw:chassis') or ((current()/../hw-mounted:class = 'ianahw:chassis') and ((current() = 'locked') or (current() = 'unlocked')))" {
+          error-message "Admin-state is only supported as locked or unlocked for Chassis component.";
+      }
+      
+      must "(current()/../hw-mounted:class = 'ianahw:chassis') or ((current()/../hw-mounted:class != 'ianahw:chassis') and (current() = 'unlocked'))" {
+        error-message "Admin-state is only supported as unlocked";
+      }
+
+      must "current()/../hw-mounted:class != 'ianahw:cpu' or
+           (current()/../hw-mounted:class = 'ianahw:cpu' and not(current()))"
+      {
+        error-message "admin-state is not supported by a cpu component.";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware/hw-mounted:component/hw-mounted:alias" {
+    deviate replace {
+      type string
+      {
+        length "0..64";
+        pattern "[-_a-zA-Z0-9]*";
+      }
+    }
+
+    deviate add {
+      must "current()/../hw-mounted:class != 'ianahw:cpu' or
+           (current()/../hw-mounted:class = 'ianahw:cpu' and not(current()))"
+      {
+        error-message "alias is not supported by a cpu component.";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware/hw-mounted:component/hw-mounted:parent-rel-pos" {
+    deviate replace {
+      type int32 {
+        range "0 .. 2147483647";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware/hw-mounted:component/hw-mounted:class" {
+    deviate add {
+//class type test
+      must "current() = 'ianahw:chassis' or
+            current() = 'bbf-hwt:board' or
+            current() = 'bbf-hwt:cage' or
+            current() = 'bbf-hwt:transceiver-link' or
+            current() = 'bbf-hwt:transceiver' or
+            current() = 'bbf-hwt:rj45' or 
+            current() = 'nokia-hwi:rf-video' or
+            starts-with(current(),'nokia-hwi:rj45') or
+            current() = 'nokia-hwi:rj11' or 
+            current() = 'ianahw:cpu' or
+            current() = 'nokia-hwi:cage-uni' or 
+            current() = 'nokia-hwi:virtual-port' or 
+            current() = 'nokia-hwi:moca'"
+      {
+        error-message "Unsupported hardware class identity.";
+      }
+
+      must "current() != 'ianahw:chassis' or
+           (current()  = 'ianahw:chassis' and count(current()/../../../hw-mounted:hardware/hw-mounted:component[hw-mounted:class = 'ianahw:chassis'])  <= 1)"
+      {
+        error-message "Only one chassis configuration is supported.";
+      }
+
+      must "current() != 'ianahw:cpu' or
+           (current()  = 'ianahw:cpu' and count(current()/../../../hw-mounted:hardware/hw-mounted:component[hw-mounted:class = 'ianahw:cpu']) <= 1)"
+     {
+       error-message "Only one CPU configuration is supported.";
+     }
+
+      must "count(current()/../../../hw-mounted:hardware/hw-mounted:component[hw-mounted:class = current()  and
+            hw-mounted:parent = current()/../hw-mounted:parent and
+            hw-mounted:name != current()/../hw-mounted:name and
+            hw-mounted:parent-rel-pos = current()/../hw-mounted:parent-rel-pos ]) = 0"
+      {
+        error-message "A component of the same class is already configured on this location in the hierarchy. The class, parent and parent-rel-pos combination must be unique for each component.";
+      }
+
+//parent test
+//chassis parent rules
+      must "current() != 'ianahw:chassis' or
+            (current() = 'ianahw:chassis' and (not(boolean(current()/../hw-mounted:parent))))"
+      {
+        error-message "For a chassis component, the parent leaf must be empty";
+      }
+
+      must "current() = 'ianahw:chassis' or 
+           (current() != 'ianahw:chassis' and boolean(current()/../hw-mounted:parent) and (current()/../hw-mounted:parent != ''))"
+      {
+        error-message "The parent leaf is mandatory during configuration.";
+      }
+
+      must "current() != 'bbf-hwt:slot' or
+           (current() = 'bbf-hwt:slot' and
+           (count(current()/../../../hw-mounted:hardware/hw-mounted:component[hw-mounted:class = 'ianahw:chassis' and
+           hw-mounted:name = current()/../hw-mounted:parent ])= 1))"
+      {
+        error-message "A slot component is only supported when contained in a chassis component.";
+      }
+
+      must "current() != 'bbf-hwt:board' or
+           (current() = 'bbf-hwt:board' and
+           ((count(current()/../../../hw-mounted:hardware/hw-mounted:component[hw-mounted:class = 'ianahw:chassis' and
+           hw-mounted:name = current()/../hw-mounted:parent]) = 1) or
+           (count(current()/../../../hw-mounted:hardware/hw-mounted:component[hw-mounted:class = 'bbf-hwt:slot' and
+           hw-mounted:name = current()/../hw-mounted:parent]) = 1)))"
+      {
+        error-message "A board component is only supported when contained in a slot or chassis component.";
+      }
+
+      must "current() != 'bbf-hwt:transceiver' or
+           (current() = 'bbf-hwt:transceiver' and
+           (count(current()/../../../hw-mounted:hardware/hw-mounted:component[hw-mounted:class = 'bbf-hwt:cage' and
+           hw-mounted:name = current()/../hw-mounted:parent]) = 1)) or
+           (current() = 'bbf-hwt:transceiver' and
+           (count(current()/../../../hw-mounted:hardware/hw-mounted:component[hw-mounted:class = 'nokia-hwi:cage-uni' and
+           hw-mounted:name = current()/../hw-mounted:parent]) = 1 ))"
+      {
+        error-message "A transceiver component is only supported when contained in a cage or cage-uni component.";
+      }
+      
+
+      must "current() != 'bbf-hwt:transceiver' or
+           (current() = 'bbf-hwt:transceiver' and
+           ((current()/../hw-mounted:parent-rel-pos = 0) or
+           (current()/../hw-mounted:parent-rel-pos = 1)))"
+      {
+        error-message "The parent relative position of a transceiver component must be 0 or 1.";
+      }
+
+      must "current() != 'bbf-hwt:cage' or
+           (current() = 'bbf-hwt:cage' and
+           (current()/../hw-mounted:parent-rel-pos <= 16))"
+      {
+        error-message "Number of supported cage component which is contained by the board component is exceeded!";
+      }
+
+      must "current() != 'ianahw:cpu' or
+           (current() = 'ianahw:cpu' and
+           (count(current()/../../../hw-mounted:hardware/hw-mounted:component[hw-mounted:class = 'ianahw:chassis' and
+           hw-mounted:name = current()/../hw-mounted:parent]) = 1))"
+      {
+        error-message "A cpu component is only supported when contained in a chassis component.";
+      }
+
+      must "current() != 'ianahw:cpu' or
+           (current() = 'ianahw:cpu' and
+           (current()/../hw-mounted:parent-rel-pos = 0))"
+      {
+        error-message "The parent relative position of a cpu component must be zero.";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware/hw-mounted:component/hw-mounted:parent" {
+    deviate add {
+      must "(current()/../../hw-mounted:component[hw-mounted:name = current()]/hw-mounted:class != 'bbf-hwt:transceiver') or"
+         + "((current()/../../hw-mounted:component[hw-mounted:name = current()]/hw-mounted:class = 'bbf-hwt:transceiver') and"
+         + "((current()/../hw-mounted:parent-rel-pos = 0) or (current()/../hw-mounted:parent-rel-pos = 1) or"
+         + "(current()/../hw-mounted:parent-rel-pos = 2)))"
+      {
+        error-message "The parent relative position of a transceiver-link component must be 0, 1 or 2.";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware/hw-mounted:component/hw-mounted:asset-id" {
+    deviate add {
+      must "current()/../hw-mounted:class != 'ianahw:cpu' or
+           (current()/../hw-mounted:class = 'ianahw:cpu' and not(current()))"
+      {
+        error-message "asset-id is not supported by a cpu component.";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware/hw-mounted:component/hw-mounted:mfg-name" {
+    deviate add {
+      must "current()/../hw-mounted:class != 'ianahw:cpu' or
+           (current()/../hw-mounted:class = 'ianahw:cpu' and not(current()))"
+      {
+        error-message "mfg-name is not supported by a cpu component.";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware/hw-mounted:component/hw-mounted:serial-num" {
+    deviate add {
+      must "current()/../hw-mounted:class != 'ianahw:cpu' or
+           (current()/../hw-mounted:class = 'ianahw:cpu' and not(current()))"
+      {
+        error-message "serial-num is not supported by a CPU component.";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware/hw-mounted:component/hw-mounted:uri" {
+    deviate add {
+      must "current()/../hw-mounted:class != 'ianahw:cpu' or
+           (current()/../hw-mounted:class = 'ianahw:cpu' and not(current()))"
+      {
+        error-message "uri is not supported by a CPU component.";
+      }
+    }
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:last-change"{
+    description
+       "This deviation assures that hardware-state does not support last-change.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/hw-mounted:alias"{
+    description
+       "This deviation assures that hardware-state component does not support alias.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/hw-mounted:physical-index"{
+    description
+       "This deviation assures that hardware-state component does not support physical-index.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/hw-mounted:description"{
+    description
+       "This deviation assures that hardware-state component does not support description.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/hw-mounted:contains-child"{
+    description
+       "This deviation assures that hardware-state component does not support contains-child.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/hw-mounted:firmware-rev"{
+    description
+       "This deviation assures that hardware-state component does not support firmware-rev.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/hw-mounted:software-rev"{
+    description
+       "This deviation assures that hardware-state component does not support software-rev.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/hw-mounted:asset-id"{
+    description
+       "This deviation assures that hardware-state component does not support asset-id.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/hw-mounted:is-fru"{
+    description
+       "This deviation assures that hardware-state component does not support is-fru.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/hw-mounted:mfg-date"{
+    description
+       "This deviation assures that hardware-state component does not support mfg-date.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/hw-mounted:uri"{
+    description
+       "This deviation assures that hardware-state component does not support uri.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/hw-mounted:uuid"{
+    description
+       "This deviation assures that hardware-state component does not support uuid.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/hw-mounted:state/hw-mounted:usage-state"{
+    description
+       "This deviation assures that hardware-state component does not support usage-state.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/hw-mounted:state/hw-mounted:alarm-state"{
+    description
+       "This deviation assures that hardware-state component does not support alarm-state.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/hw-mounted:state/hw-mounted:standby-state"{
+    description
+       "This deviation assures that hardware-state component does not support standby-state.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/hw-mounted:sensor-data"{
+    description
+       "This deviation assures that hardware-state component does not support sensor-data.";
+    deviate not-supported;
+  }
+}
+
+
+
+

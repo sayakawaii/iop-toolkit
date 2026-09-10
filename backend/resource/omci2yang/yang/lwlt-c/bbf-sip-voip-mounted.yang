@@ -1,0 +1,157 @@
+module bbf-sip-voip-mounted  {
+  yang-version 1.1;
+  namespace "urn:bbf:yang:bbf-sip-voip-mounted";
+  prefix bbf-sip-voip-mounted;
+
+  /* Common */
+  include bbf-sip-voip-base-mounted;  
+ 
+  /* SIP Signaling */
+  include bbf-sip-profiles-mounted; 
+  include bbf-sip-types-mounted;
+  include bbf-sip-user-agent-mounted;
+  include bbf-sip-user-agent-operational-data-mounted;
+  include bbf-sip-x-connect-operational-data-mounted;
+  include bbf-sip-transport-protocol-characteristics-mounted;
+  include bbf-sip-protocol-data-profile-body-mounted;
+  include bbf-sip-terminations-mounted;
+  include bbf-sip-termination-mounted;
+  include bbf-sip-termination-status-mounted;
+  include bbf-sip-termination-operational-data-mounted;
+  include bbf-supplementary-services-profile-body-mounted;
+  include bbf-feature-access-codes-profile-body-mounted;
+  include bbf-dialplan-digitmap-profile-body-mounted;
+  include bbf-subscription-profile-body-mounted;
+  include bbf-voip-service-gateway-mounted;
+  include bbf-voip-service-gateway-characteristics-mounted;
+  include bbf-voip-access-gateways-mounted;
+  include bbf-voip-access-gateway-mounted;
+  include bbf-voip-access-gateway-operational-data-mounted;
+  include bbf-voip-service-providers-mounted;
+  include bbf-voip-service-provider-mounted;
+  include bbf-sip-server-pool-mounted;
+  include bbf-sip-server-mounted;
+  include bbf-sip-server-operational-data-mounted;
+  include bbf-sip-server-redundancy-settings-mounted;
+  include bbf-sip-server-redundancy-operational-data-mounted;
+  include bbf-sip-registerchar-profile-body-mounted;
+  include bbf-file-authentication-settings-mounted;
+  include bbf-digit-manipulation-rule-profile-body-mounted;
+  include bbf-voicemail-servers-mounted;
+  include bbf-voicemail-server-mounted;
+  include bbf-sip-protocol-pm-statistics-mounted;
+  include bbf-sip-call-initiation-pm-statistics-mounted;
+  include bbf-sip-ua-call-initiation-pm-statistics-mounted;
+  include bbf-sip-signaling-notifications-mounted; 
+  
+  /* Media */
+  include bbf-media-base-mounted;
+  include bbf-media-forwarder-mounted;
+  include bbf-media-forwarder-characteristics-mounted;
+  include bbf-media-forwarder-operational-data-mounted;
+  include bbf-media-x-connect-mounted;
+  include bbf-media-x-connect-operational-data-mounted;
+  include bbf-media-codec-profile-body-mounted;
+  include bbf-media-transport-profile-body-mounted;
+  include bbf-media-voice-call-profile-body-mounted;
+  include bbf-media-voice-band-data-profile-body-mounted;
+  include bbf-media-statistics-mounted; 
+  include bbf-hw-file-profile-body-mounted;
+  include bbf-media-notifications-mounted; 
+  include bbf-media-notification-identities-mounted;
+
+  /* physical interface */
+  include bbf-pptp-pots-uni-base-mounted;
+  include bbf-pptp-pots-uni-mounted;
+  include bbf-pptp-pots-uni-test-mounted;
+  include bbf-pots-uni-characteristics-mounted;
+  include bbf-pptp-pots-uni-operational-data-mounted;
+  include bbf-pptp-media-pm-statistics-mounted; 
+  include bbf-tone-pattern-profiles-mounted;
+  include bbf-tone-pattern-profile-body-mounted;
+  include bbf-ringing-pattern-profiles-mounted;
+  include bbf-ringing-pattern-profile-body-mounted;
+  include bbf-file-profiles-mounted;
+  include bbf-file-profile-body-mounted;
+  include bbf-clip-data-mode-profiles-mounted;
+  include bbf-clip-data-mode-profile-body-mounted;
+  include bbf-pots-notifications-mounted;
+  include bbf-pots-interworking-mounted;
+  
+  /* Performance monitoring */
+  /* include bbf-sip-voip-pm-base-mounted; */
+  /* include bbf-sip-voip-pm-line-15min-mounted; */
+  /* include bbf-sip-voip-pm-line-24hours-mounted; */
+  /* include bbf-sip-voip-pm-cdr-5min-mounted; */
+  /* include bbf-media-pm-statistics-mounted; */
+  /* include bbf-sip-aggregator-pm-statistics-mounted; */
+  
+  /* Performance Management */
+  /* include bbf-sip-performance-management-mounted; */
+  /* include bbf-sip-protocol-performance-body-mounted; */
+  /* include bbf-call-control-performance-body-mounted; */
+
+  /* Status Monitoring */
+  /* include bbf-voip-status-monitoring-mounted; */
+  /* include bbf-voip-termination-status-body-mounted; */
+
+  organization
+    "Broadband Forum <https://www.broadband-forum.org>
+     Common YANG Work Area";
+
+  contact
+    "Comments or questions about this Broadband Forum YANG module
+     should be directed to <mailto:help@broadband-forum.org>.
+     Editor:      Frank Desseyn, Nokia
+     Editor:      Nadine Staelens, Nokia
+     PS Leader:   Joey Boyd, ADTRAN
+     PS Leader:   Ken Kerpez, ASSIA
+     WA Director: Joey Boyd, ADTRAN
+     WA Director: Sven Ooghe, Nokia";
+
+  description
+    "This module contains the common voip Yang model.
+     Copyright (c) 2017-2018, Broadband Forum
+     Redistribution and use in source and binary forms, with or
+     without modification, are permitted provided that the following
+     conditions are met:
+     1. Redistributions of source code must retain the above copyright
+        notice, this list of conditions and the following disclaimer.
+     2. Redistributions in binary form must reproduce the above
+        copyright notice, this list of conditions and the following
+        disclaimer in the documentation and/or other materials
+        provided with the distribution.
+     3. Neither the name of the copyright holder nor the names of its
+        contributors may be used to endorse or promote products
+        derived from this software without specific prior written
+        permission.
+     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
+     CONTRIBUTORS \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+     INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+     DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+     CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+     SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+     NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+     CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+     STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+     ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+     ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     The above license is used as a license under copyright only.
+     Please reference the Forum IPR Policy for patent licensing terms
+     <https://www.broadband-forum.org/ipr-policy>.
+     Any moral rights which are necessary to exercise under the above
+     license grant are also deemed granted under this license.
+     This version of this YANG module is part of TR-383; see
+     the TR itself for full legal notices.";
+
+  revision 2020-03-06 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: 2020-03-06.";
+    reference
+      " ";
+  }  
+}

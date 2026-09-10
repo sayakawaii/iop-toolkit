@@ -1,0 +1,131 @@
+module nokia-interfaces-performance-management-mounted-eonu-dev {
+  namespace
+    "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+  + "nokia-interfaces-performance-management-mounted-eonu-dev";
+  prefix nokia-interfaces-performance-management-mounted-eonu-dev;
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import ietf-interfaces-mounted {
+    prefix if-mounted;
+  }
+  import bbf-interfaces-performance-management-mounted {
+    prefix bbf-if-pm-mounted;
+  }
+  import nokia-interfaces-performance-management-mounted {
+    prefix nokia-interfaces-performance-management-mounted;
+  }
+  import bbf-xpon-performance-management-mounted {
+    prefix bbf-xpon-pm-mounted;
+  }
+  import nokia-interface-identities-mounted {
+    prefix nokia-if-id-mounted;
+  }
+  import nokia-sdan-moca-mounted {
+    prefix nokia-moca-mounted;
+  }
+
+  organization
+    "Nokia";
+  contact
+    "isam.yang@nokia.com";
+  description
+    "The NOKIA YANG module supporting
+     deviations on top of standard.";
+  revision 2025-09-10 {
+    description
+      "Deviation for unsupported MoCA PM Group on MoCA Home service";
+    reference
+      "TBD";
+  }
+  revision 2023-07-25 {
+    description
+      "Deviation for unsupported ANI level GEM counters";
+    reference
+      "TBD";
+  }
+  revision 2022-07-14 {
+    description
+      "Initial revision.";
+    reference
+      "TBD";
+  }
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-if-pm-mounted:performance/nokia-interfaces-performance-management-mounted:continuous-accumulation-enable" {
+      description
+         "This deviation assures that continuous-accumuation-enable leaf is not supported.";
+      deviate not-supported;
+  }
+ 
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:history/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:gemport/nokia-interfaces-performance-management-mounted:misinserted-frames" {
+      description
+         "This deviation assures that misinserted-frames leaf is not supported.";
+      deviate not-supported;
+  }
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:history/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:gemport/nokia-interfaces-performance-management-mounted:rx-payload-bytes" {
+      description
+         "This deviation assures that rx-payload-bytes leaf is not supported.";
+      deviate not-supported;
+  }
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:history/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:gemport/nokia-interfaces-performance-management-mounted:tx-payload-bytes" {
+      description
+         "This deviation assures that tx-payload-bytes leaf is not supported.";
+      deviate not-supported;
+  }
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:history/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:gemport/nokia-interfaces-performance-management-mounted:encryption-key-err" {
+      description
+         "This deviation assures that encryption-key-err leaf is not supported.";
+      deviate not-supported;
+  }
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:history/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:gemport/nokia-interfaces-performance-management-mounted:impaired-blocks" {
+      description
+         "This deviation assures that impaired-blocks leaf is not supported.";
+      deviate not-supported;
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:current/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:gemport/nokia-interfaces-performance-management-mounted:misinserted-frames" {
+      description
+         "This deviation assures that misinserted-frames leaf is not supported.";
+      deviate not-supported;
+  }
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:current/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:gemport/nokia-interfaces-performance-management-mounted:rx-payload-bytes" {
+      description
+         "This deviation assures that rx-payload-bytes leaf is not supported.";
+      deviate not-supported;
+  }
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:current/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:gemport/nokia-interfaces-performance-management-mounted:tx-payload-bytes" {
+      description
+         "This deviation assures that tx-payload-bytes leaf is not supported.";
+      deviate not-supported;
+  }
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:current/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:gemport/nokia-interfaces-performance-management-mounted:encryption-key-err" {
+      description
+         "This deviation assures that encryption-key-err leaf is not supported.";
+      deviate not-supported;
+  }
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:current/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:gemport/nokia-interfaces-performance-management-mounted:impaired-blocks" {
+      description
+         "This deviation assures that impaired-blocks leaf is not supported.";
+      deviate not-supported;
+  }
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-if-pm-mounted:performance/nokia-interfaces-performance-management-mounted:moca/nokia-interfaces-performance-management-mounted:moca-pm-group" {
+    deviate add {
+      must "not(../../../nokia-moca-mounted:moca-home/nokia-moca-mounted:automatic-power-control)"{
+        error-message
+          "The associated PM group type is not supported on this MoCA service";
+        description
+         "This deviation assures that moca-pm-group leaf-list is not supported on moca-home service.";
+      }
+    }
+  }
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-if-pm-mounted:performance/nokia-interfaces-performance-management-mounted:moca/nokia-interfaces-performance-management-mounted:moca-pm-group" {
+    deviate add {
+      must "../../../if-mounted:type = 'nokia-if-id-mounted:moca-uni'"{
+        error-message
+          "The associated PM group type is not supported on this MoCA interface";
+        description
+         "This deviation assures that moca-pm-group leaf-list is not supported on non moca interface";
+      }
+    }
+  }
+}

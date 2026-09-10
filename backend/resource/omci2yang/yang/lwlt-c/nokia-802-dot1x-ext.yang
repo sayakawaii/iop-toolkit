@@ -1,0 +1,976 @@
+module nokia-802-dot1x-ext {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+          + "nokia-802-dot1x-ext";
+  prefix "nokia-dot1x-ext";
+  
+  import nokia-yang-types {
+    prefix "nok-typ";
+  }
+  import ietf-yang-types {
+    prefix "yang";
+  }
+  import ietf-interfaces { 
+    prefix "if"; 
+  }  
+  import iana-if-type {
+    prefix "ianaift";
+  }
+  import ieee802-dot1x { 
+    prefix "dot1x"; 
+  }
+  import ietf-system {
+    prefix "sys";
+  }
+  import tailf-common {
+    prefix "tailf";
+  }
+  import bbf-yang-types {
+    prefix bbf-yang;
+  }
+  import bbf-if-type {
+    prefix bbfift;
+  }
+  import bbf-sub-interfaces{
+    prefix bbf-subif;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be 
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG definitions for 
+     supporting Nokia specific requirements as applicable to its 
+     access network equipment.
+     
+     Specifically, this module augments the standard IEEE model with
+     data for when the system shall initiate authentication.   
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia 
+     reserves the right to revise this document for any reason, 
+     including but not limited to conformity with standards 
+     promulgated by various agencies, utilisation of advances in the 
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or 
+     referred to herein.
+
+     The product specifications and other technical or performance 
+     information contained herein are subject to change without 
+     notice. Updates of this document will be issued under the above 
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any 
+     information or opinion contained herein. Nokia expressly advises 
+     that any use of for any purpose or reliance upon this technical 
+     reference is at the risk of the user and that Nokia shall not be 
+     liable for any damage or injury incurred by any person arising 
+     out of the sufficiency, accuracy, or utility of any information 
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any 
+     manufacturer to modify or change any of its products, nor does 
+     this document represent any commitment by Nokia to sell or 
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license 
+     or right under any patent, whether or not the use of any 
+     information herein necessarily employs an invention of any 
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these 
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2017, Nokia. All Rights Reserved.";
+
+  revision 2026-06-18 {
+    description
+      "Added new enum value mac-and-mab-based to the interface level
+       (ext-authenticator) authentication-mode leaf to support both
+       mac-based and mab-based authentication on the same interface, and
+       updated the affected when conditions accordingly.
+       Added new leaf max-number-mab-sessions applicable for
+       mac-and-mab-based authentication-mode.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2026-04-29 {
+    description
+      "Added new leaf and feature to support
+       multiple mac in mab mode authentication.
+       YANG changes for reauthentication feature support";
+    reference
+      "Nokia specific,
+       RFC 3580, section-3.17, 3.19";
+  }
+
+  revision 2025-05-20 {
+    description
+      "Added new enum for terminate-cause and
+       Added session-id part of port based state data";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2025-02-12 {
+    description
+      "Added port-bounce-interval and feature.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2022-07-21 {
+    description
+      "Added mab-based support to leaf max-number-mac-addresses.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2022-05-22 {
+    description
+      "Added range in leaf handshake-period.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2022-04-05 {
+    description
+      "Added a container mac in interface-state.
+       Included interface authentication-mode feature and new
+       interface-supplicant-timeout leaf.Also added default value
+       for max-number-mac-addresses ";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2022-02-09 {
+    description
+      "Included mac conflict to pae termination causes";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2019-12-04 {
+    description
+      "Added a container port in interfaces-state for port based feature,
+       and include some of the termination causes by RADIUS";
+    reference
+      "Nokia specific"; 
+  }  
+
+  revision 2018-06-29 {
+    description
+      "Added an enum value to an existing leaf pae-terminate-cause.";
+    reference
+      "Nokia specific"; 
+  }  
+  
+  revision 2017-12-01 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific"; 
+  }
+
+  /* Features */
+  feature interface-authentication-mode {
+    description
+      "Indicates support for authentication-mode per interface.";
+  }
+ 
+  feature port-bounce-feature {
+    description
+      "Indicates support for port-bounce.";
+  }
+
+  feature reauthentication-state {
+    description
+      "Indicates support for 802.1x session reauthentication.";
+  }
+  
+  feature multiple-mac-in-mab-feature {
+    description
+      "Indicates support for multiple mac in mab mode authentication";
+  }
+
+  typedef pae-terminate-cause {
+    type enumeration {
+      enum supplicant-logoff {
+        description 
+          "The system received an eap-logoff frame from the 
+           supplicant.";
+      }
+      enum port-failure {
+        description
+          "The session is terminated due to loss of physical 
+           connectivity for reasons other than roaming between 
+           Access Points." ;
+      }
+      enum supplicant-restart {
+        description
+          "Re-initialization of the supplicant state machines.";
+      }
+      enum reauthentication-failed {
+        description
+          "A previously authenticated supplicant has failed to 
+           re-authenticate successfully following expiry of the 
+           re-authentication timer or explicit re-authentication
+           request by management action.";
+      }
+      enum forced-unauthenticated {
+        description
+          "The port has been administratively forced into the 
+           unauthorized state.";
+      }
+      enum port-reinitialized {
+        description
+          "The port's MAC has been reinitialized.";
+      }
+      enum port-administrative-disabled {
+        description
+          "The port has been administratively disabled.";
+      }
+      enum not-terminated-yet {
+        description
+          "The session is not termination yet.";
+      }
+      enum user-id-mismatch {
+        description
+          "The cause of authentication failure is user-id 
+           mismatch.";
+      }
+      enum password-mismatch {
+        description
+          "The cause of authentication failure is password 
+           mismatch.";
+      }
+      enum mac-mismatch {
+        description
+          "The cause of authentication failure is mac mismatch.";
+      }
+      enum radius-access-reject {
+        description
+          "The RADIUS server rejects the user for authentication.";
+      }
+      enum radius-server-not-reachable {
+        description
+          "The RADIUS server is not reachable for the user to authenticate.";
+      }
+      enum incorrect-domain-name {
+        description
+          "The user sends with incorrect domain name for authentication.";
+      }
+      enum mac-conflict {
+        description
+          "The cause of authentication failure when already the same
+           MAC address is authenticated in the board.";
+      }
+      enum others {
+        description
+          "Authentication failed.";
+      }
+      enum server-logoff {
+        description
+          "Disconnect message received from DAC/RADIUS server.";
+      }
+      enum session-timeout {
+        if-feature "nokia-dot1x-ext:reauthentication-state";
+        description
+          "Session terminated upon expiry of the Session-Timeout
+          attribute provided in the RADIUS Access-Accept.";
+      }
+    }
+    description
+      "The reason for the session termination.";
+  }
+     
+  augment "/sys:system/dot1x:pae-system" {
+    description 
+      "Augment system with 802.1X Port Access Entity (PAE) System 
+       specific configuration nodes.";
+        
+    leaf authentication-server {
+      type enumeration {
+        enum local-authentication {
+          value  1;
+          description
+            "Indicates that a user will be authenticated using local 
+             authentication data.";
+        }
+        enum radius {
+          value  2;
+          description
+            "Indicates that a user will be authenticated using radius 
+             communication to a remote server.";
+        }    
+      }
+      description
+        "Contains the user authentication mode.";
+    }
+
+    leaf authentication-mode {
+      type enumeration {
+        enum port {
+          value  1;
+          description
+            "A successful authentication authenticates all the traffic
+             received on the port over which the 802.1X authentication
+             is executed.";
+        }
+
+        enum mac-based {
+          value  2;
+          description
+            "A successful authentication authenticates the traffic 
+             received on the port over which the 802.1X authentication
+             is executed, but restricted to the traffic that has the 
+             same source MAC address as the source MAC address used in
+             the 802.1X Extensible Authentication Protocol (EAP) 
+             messages.";
+        }
+      }
+      description
+        "The object identifies the traffic that is being 
+         authenticated.";
+    }
+
+    leaf authentication-failure-threshold {
+      type union {
+        type uint8;
+        type enumeration {
+          enum "inactive" {
+            description
+              "Indicates that this function is not active.";
+          }
+        }
+      }
+      description
+        "The threshold value controls the reporting of authentication 
+         failures via notifications.";
+    }  
+
+    leaf port-bounce-interval {
+      if-feature "port-bounce-feature";
+      type uint16 {
+        range "1..300";
+      }
+      units "seconds";
+      default 5;
+      description
+        "Configure port bounce interval. When a port bounce request is received
+        make interface operational-down, after timer expiry make interface operational-up.";
+    }
+
+    leaf multiple-mac-in-mab-mode {
+      if-feature "multiple-mac-in-mab-feature";
+      type boolean;
+      default false;
+      description
+        "Enable or disable forwarding of all traffic upon successful
+         MAB authentication from the first 802.1X unaware device
+         on the OLT-vENET interface.";
+    }
+  }
+  
+  augment "/if:interfaces/if:interface/dot1x:pae" {
+    description
+      "Extends the configuration of the 802.1X PAE.";
+
+    container ext-authenticator {      
+      description
+        "Contains configuration nodes for the authenticator PAE
+         associated with each port.";
+ 
+      leaf initiate-authentication-request {
+        type boolean;
+        default "false";
+        description
+          "Configuring 'true' enables and configuring 'false' disables
+           the initiation of an authentication request to the 
+           supplicant.";
+      }
+
+      leaf tx-period {
+        type uint16;
+        units seconds;
+        default "600";
+        description
+          "Number of seconds sending request identity to
+           supplicant.";
+      }
+
+      leaf supplicant-timeout {
+        when '/sys:system/dot1x:pae-system/nokia-dot1x-ext:'
+          + 'authentication-server = "radius" and '
+          + '/sys:system/dot1x:pae-system/nokia-dot1x-ext:'
+          + 'authentication-mode = "port"' {
+          description
+            "Applies for port-based authentication.";
+        }
+        type uint16;
+        units seconds;
+        default "60";
+        description
+          "If reply from supplicant is not reached within this timeout,
+           authenticator will retry with Eap Request ID/Challenge.";
+      }
+
+      leaf interface-supplicant-timeout {
+        if-feature "interface-authentication-mode";
+        type uint16;
+        units seconds;
+        default "30";
+        description
+          "If reply from supplicant is not received within this timeout,
+           authenticator will retry with Eap Request (got from the server).
+           Applies for authentication-mode as mac-based, mab-based,
+           mac-and-mab-based or port";
+      }
+
+      leaf response-identity-period {
+        when '/sys:system/dot1x:pae-system/nokia-dot1x-ext:'
+          + 'authentication-server = "local-authentication" and '
+          + '/sys:system/dot1x:pae-system/nokia-dot1x-ext:'
+          + 'authentication-mode = "mac-based"' {
+          description
+            "Applies for mac-based authentication.";
+        }
+        type uint16;
+        units seconds;
+        default "30";
+        description
+          "Number of seconds waiting for response identity 
+           from supplicant.";
+      }
+
+      leaf response-challenge-period {
+        when '/sys:system/dot1x:pae-system/nokia-dot1x-ext:'
+          + 'authentication-server = "local-authentication" and '
+          + '/sys:system/dot1x:pae-system/nokia-dot1x-ext:'
+          + 'authentication-mode = "mac-based"' {
+          description
+            "Applies for mac-based authentication.";
+        }
+        type uint16;
+        units seconds;
+        default "30";
+        description
+          "Number of seconds waiting for response challenge 
+           from supplicant.";
+      } 
+
+      leaf handshake-enable {
+        type boolean;
+        default "false";
+        description
+          "Handshake mechanism is enabled or not.";
+      }
+
+      leaf handshake-period {
+        type uint16{
+          range 5..90;
+        }
+        units seconds;
+        default "60";
+        description
+          "This object indicates the time period of each
+          handshake message to the supplicant.";
+      }
+
+      leaf authentication-mode {
+        type enumeration {
+          enum port {
+            description
+              "A successful authentication authenticates all the traffic
+               received on the port over which the 802.1X authentication
+               is executed.";
+          }
+          enum mac-based {
+            description
+              "A successful authentication authenticates the traffic
+              received on the port over which the 802.1X authentication
+              is executed, but restricted to the traffic that has the
+              same source MAC address as the source MAC address used in
+              the 802.1X Extensible Authentication Protocol (EAP)
+              messages.";
+          }
+          enum mab-based {
+            description
+              "Dummy devices can be connected to 802.1x enabled interface.
+              Dummy devices can be cameras, printers etc. For such devices,
+              system needs to support MAC address bypass authentication
+              in which the system uses MAC address of dummy device as
+              username/password for 802.1x authentication.";
+          }
+          enum mac-and-mab-based {
+            description
+              "A combined authentication mode that supports both mac-based
+              and mab-based authentication on the same 802.1x enabled
+              interface. Supplicants capable of 802.1x EAP are authenticated
+              using mac-based authentication, while dummy devices (such as
+              cameras, printers etc.) that are not 802.1x capable fall back
+              to MAC address bypass (mab-based) authentication, using the
+              MAC address of the device as username/password.";
+          }
+        }
+        description
+          "The object identifies the authentication mode of the interface";
+      }
+
+      leaf max-number-mac-addresses {
+        when '(current()/../nokia-dot1x-ext:authentication-mode = "mac-based") or
+              (current()/../nokia-dot1x-ext:authentication-mode = "mab-based") or
+              (current()/../nokia-dot1x-ext:authentication-mode = "mac-and-mab-based")' {
+          description
+            "Applies when authentication-mode is mac-based, mab-based or
+             mac-and-mab-based.";
+        }
+        type uint8 {
+          range 1..2;
+        }
+        default "1";
+        description
+          "The maximum number mac-address that are are allowed to authenticate
+          on the interface.";
+      }
+
+      leaf max-number-mab-sessions {
+        when '(current()/../nokia-dot1x-ext:authentication-mode = "mac-and-mab-based")' {
+          description
+            "Applies when authentication-mode is mac-and-mab-based.";
+        }
+        type uint8 {
+          range 0..1;
+        }
+        default "1";
+        description
+          "The maximum number of MAB sessions that are allowed to
+          authenticate on the interface.";
+      }
+
+      leaf signalling-channel {
+        when "derived-from-or-self(current()/../../../if:type, 'bbfift:ethernet-like')" {
+         description
+           "Applies to olt-v-enet Interface.";
+        }
+        type if:interface-ref;
+        must
+          "derived-from-or-self(
+           /if:interfaces/if:interface[if:name = current()]
+           /if:type, 'bbfift:vlan-sub-interface') and
+          (/if:interfaces/if:interface[if:name = current()]
+           /bbf-subif:subif-lower-layer/bbf-subif:interface = ../../../if:name) " {
+          description
+            "The interface being referenced MUST
+             be a 'vlan-sub-interface' and link the same interface";
+          }
+        description
+          "Reference to the vlan-sub-interface for 802.1x packets";
+      }
+    }
+
+    container users {
+      when '/sys:system/dot1x:pae-system/nokia-dot1x-ext:'
+         + 'authentication-server = "local-authentication" and '
+         + '/sys:system/dot1x:pae-system/nokia-dot1x-ext:'
+         + 'authentication-mode = "mac-based"' {
+        description 
+          "Applies when the user authentication is local mode.";
+      }
+      description
+        "The user authentication data.";
+        
+      list user {
+        key mac-address;
+        description
+          "The list of users configured on this device.";
+
+        leaf mac-address {
+          type yang:mac-address;
+          description
+            "The supplicant source MAC address to which this 
+             authentication data applies.";
+        }
+
+        leaf user-id {
+          type bbf-yang:name-string;
+          description
+            "The user name.";
+        }
+
+        leaf password {
+          type tailf:aes-cfb-128-encrypted-string {
+             length "1..128"{
+               error-message "Aborted: password string min: 1 chars, max: 20 chars!";
+             }
+          }
+          description
+            "The password for this user.";
+        }
+      }
+    }
+  }
+  
+  typedef pae-authentication-status {
+    type enumeration {
+      enum initialize {
+        description
+          "In this state, the state machine is being 
+           initialized";
+      }
+      enum disconnected {
+        description
+          "This state is entered from the CONNECTING state, 
+           the AUTHENTICATED state, and the ABORTING state 
+           if an explicit logoff request is received from 
+           the Supplicant.";
+      }
+      enum connecting {
+        description
+          "In this state, the Port is operable, the higher 
+           layer is in sync and ready to attempt to establish 
+           communication with a Supplicant.";
+      }
+      enum authenticating {
+        description
+          "In this state, a Supplicant is being authenticated. 
+           And signal to the Backend Authentication state 
+           machine to start the authentication procedure.";
+      }
+      enum authenticated {
+        description
+          "In this state, the Authenticator has successfully 
+           authenticated.";
+      }
+      enum aborting {
+        description
+          "In this state, the authentication procedure is being 
+           prematurely aborted due to receipt of an EAPOL-Start
+           frame, an EAPOL-Logoff frame, or an authTimeout. 
+           And signal to the Backend Authentication state 
+           machine that it should terminate the authentication 
+           procedure.";
+      }
+      enum held {
+        description
+          "In this state, the state machine ignores and discards
+           all EAPOL packets, so as to discourage brute force 
+           attacks. This state is entered from the 
+           AUTHENTICATING state following an authentication 
+           failure.";
+      }
+      enum force-auth {
+        description
+          "The authPortStatus is set to Authorized.";
+      }
+      enum force-unauth {
+        description
+          "The authPortStatus is set to Unauthorized.";
+      }
+    }
+    description
+      "Contains the status for the authentication of this 
+       user.";
+  }
+
+  /** Termination-Action */
+  identity termination-action {
+    description
+      "Base identity for timeout expiry behavior.";
+  }
+  identity default-action {
+    base nokia-dot1x-ext:termination-action;
+    description
+      "Corresponds to RADIUS Termination-Action value Default (0).
+      Indicates default timeout expiry behavior.
+      When associated with a non-zero session-timeout, expiry of the
+      timeout typically results in termination of the authenticated
+      session.";
+  }
+  identity radius-request {
+    base nokia-dot1x-ext:termination-action;
+    description
+      "Corresponds to RADIUS Termination-Action value
+      RADIUS-Request (1).
+      Indicates that timer expiry results in initiation of
+      reauthentication.
+      Reauthentication trigger timers may be derived from:
+        - Session-Timeout received from RADIUS Access-Accept
+        - locally configured reAuthPeriod
+      ";
+  }
+
+  grouping reauthentication-state-data {
+    description
+      "Grouping for the session reauthentication state data.";
+
+    container reauthentication-state {
+      if-feature "nokia-dot1x-ext:reauthentication-state";
+      description
+        "Session reauthentication state data.";
+
+      leaf termination-action {
+        type identityref {
+          base nokia-dot1x-ext:termination-action;
+        }
+        description
+          "The attribute value received as part of the RADIUS
+          Access-Accept message.
+          Indicates what action should be taken when the service
+          is completed. The value RADIUS-Request(1) indicates that
+          re-authentication should occur on expiration of the
+          session-timeout. The value Default(0) indicates that the
+          session should terminate after the expiry of the received
+          non-zero session-timeout.";
+        reference
+          "RFC 3580, section 3.19";
+      }
+      leaf session-timeout {
+        type uint32;
+        units "seconds";
+        description
+          "The attribute value received as part of the RADIUS
+          access-accept message.
+          Indicates the effective session timeout currently applied
+          to the session.
+          When sent along in an Access-Accept without a
+          Termination-Action attribute or with a Termination-Action
+          attribute set to Default, the Session-Timeout attribute
+          specifies the maximum number of seconds of service provided
+          prior to session termination.
+
+          When sent in an Access-Accept along with a
+          Termination-Action value of RADIUS-Request, the
+          Session-Timeout attribute specifies the maximum number of
+          seconds of service provided prior to re-authentication.
+          In this case, the Session-Timeout attribute is used to load
+          the reAuthPeriod constant within the Reauthentication Timer
+          state machine of 802.1X.
+
+          When sent with a Termination-Action value of RADIUS-Request,
+          a Session-Timeout value of zero indicates the desire to
+          perform another authentication(possibly of a different type)
+          immediately after the first authentication has successfully
+          completed.";
+
+        reference
+          "RFC 3580, section 3.17";
+      }
+      leaf session-end-time {
+        type yang:date-and-time;
+        description
+          "Expected session termination time. Applicable when
+          session-timeout results in termination.";
+      }
+      leaf session-next-reauth-time {
+        type yang:date-and-time;
+        description
+          "Expected session reauthentication time.";
+      }
+    }
+  }
+
+  augment "/if:interfaces-state/if:interface" {
+    when "if:type = 'ianaift:ptm' or
+          derived-from-or-self(if:type, 'bbfift:ethernet-like')" {
+      description
+        "Applies for ptm interfaces and olt-v-enet interfaces";
+    }
+    description
+      "Contains operational state nodes for pae sessions.";
+    container pae {
+    description "pae";
+
+    container users {
+      presence
+        "Presence of this container indicates that
+         authentication-server is local-authentication and
+         authentication-mode is mac-based.";
+      description
+        "The users state data.";
+
+      list user {
+        key "mac-address";
+        description
+          "List providing the current authentication status of the 
+           users.";
+
+        leaf mac-address {
+          type yang:mac-address;
+          description 
+            "The supplicant source MAC address to which this 
+             authentication status applies.";
+        }
+
+        leaf user-id {
+          type bbf-yang:name-string;
+          description
+            "The user name.";
+        }
+
+        leaf last-authentication-start-timestamp {
+          type yang:date-and-time;
+          description
+            "The last date and time of the session creation.";
+        }    
+                 
+        leaf authentication-status {
+          type pae-authentication-status;
+          description
+            "Contains the status for the authentication of this 
+             user.";
+        }         
+
+        leaf terminate-cause {
+          type pae-terminate-cause;
+          description
+            "The reason for the session termination.";
+        }         
+      }
+
+      list history-authentication-status {
+        key "index";
+        description
+          "List of operational state nodes associated with the session
+           statistics.";
+
+        leaf index {
+          type int16;
+          description 
+            "An index that identifies an entry in the list.";
+        }
+
+        leaf mac-address {
+          type yang:mac-address;
+          description 
+            "The supplicant source MAC address to which this 
+             authentication history data applies.";
+        }
+
+        leaf user-id {
+          type bbf-yang:name-string;
+          description
+            "The user name.";
+        }
+
+        leaf authentication-start-timestamp {
+          type yang:date-and-time;
+          description
+            "The date and time of the start of this authentication 
+             attempt.";
+        }
+
+        leaf authentication-state {
+          type enumeration {
+            enum success {
+              description
+                "The authentication of supplicant is success.";
+            }
+            enum failure {
+              description
+                "The authentication of supplicant is failure.";
+            }
+          }
+          description
+            "Contains the status for the authentication of this 
+             user.";   
+        }
+
+        leaf terminate-cause {
+          type pae-terminate-cause;
+          description
+            "The reason for the session termination.";
+        }
+      }
+    }
+    container port {
+      presence
+        "Presence of this container indicates that
+         authentication-server is radius and authentication-mode
+         is port on this interface.";
+      description
+        "The port state data.";
+    
+      leaf authentication-status {
+        type pae-authentication-status;
+        description
+          "Contains the status for the authentication of this 
+           user.";
+      } 
+
+      leaf last-authentication-timestamp {
+        type yang:date-and-time;
+        description
+          "The last date and time of the session creation.";
+      }
+
+      leaf last-terminate-cause {
+        type pae-terminate-cause;
+        description
+          "The reason for the session termination.";
+      }
+
+      leaf session-id {
+        when '../authentication-status = "authenticated"' {
+        description
+          "Applies only when the session gets authenticated";
+        }
+        type nok-typ:nokia-string-ascii64;
+        description
+          "The session ID of the authenticator";
+      }
+      uses reauthentication-state-data;
+    }
+    container mac {
+      presence
+        "Presence of this container indicates that
+         authentication-server is radius and authentication-mode
+         is mac or mab  on this interface.";
+      description
+        "Displays the mac-addresses and state data authenticated via mac or mab based authentication modes.";
+
+      list session {
+        key "mac-address";
+        description
+          "List providing the mac-address and current authentication
+           status of the interface.";
+
+        leaf mac-address {
+          type yang:mac-address;
+          description
+            "The supplicant source MAC address to which this
+             authentication status applies.";
+        }
+
+        leaf authentication-status {
+          type pae-authentication-status;
+          description
+            "Contains the status for the authentication of this
+             session.";
+        }
+
+        leaf last-authentication-timestamp {
+          type yang:date-and-time;
+          description
+            "The last date and time of the session creation.";
+        }
+
+        leaf last-terminate-cause {
+          type pae-terminate-cause;
+          description
+            "The reason for the session termination.";
+        }
+ 
+        uses reauthentication-state-data;
+      }
+    }
+    }
+  }
+}
+

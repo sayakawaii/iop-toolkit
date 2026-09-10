@@ -1,0 +1,302 @@
+submodule bbf-media-voice-band-data-profile-body-mounted {
+  yang-version 1.1;
+  belongs-to bbf-sip-voip-mounted  {
+    prefix bbf-sip-voip-mounted;
+  }
+  
+  import bbf-yang-types {
+    prefix bbf-yang;
+  }  
+  
+  import bbf-fiber-onu-emulated-mount {
+     prefix onu;
+  }
+  
+  include bbf-media-base-mounted;
+  include bbf-media-codec-profile-body-mounted;
+  include bbf-media-transport-profile-body-mounted;
+
+  organization
+    "Broadband Forum <https://www.broadband-forum.org>
+     Common YANG Work Area";
+
+  contact
+    "Comments or questions about this Broadband Forum YANG module
+     should be directed to <mailto:help@broadband-forum.org>.
+     Editor:      Frank Desseyn, Nokia
+     Editor:      Nadine Staelens, Nokia
+     PS Leader:   Joey Boyd, ADTRAN
+     PS Leader:   Ken Kerpez, ASSIA
+     WA Director: Joey Boyd, ADTRAN
+     WA Director: Sven Ooghe, Nokia";
+
+  description
+    "This submodule contains a collection of YANG definitions for
+     managing a voice band data profile.
+     Copyright (c) 2017-2018, Broadband Forum
+     Redistribution and use in source and binary forms, with or
+     without modification, are permitted provided that the following
+     conditions are met:
+     1. Redistributions of source code must retain the above copyright
+        notice, this list of conditions and the following disclaimer.
+     2. Redistributions in binary form must reproduce the above
+        copyright notice, this list of conditions and the following
+        disclaimer in the documentation and/or other materials
+        provided with the distribution.
+     3. Neither the name of the copyright holder nor the names of its
+        contributors may be used to endorse or promote products
+        derived from this software without specific prior written
+        permission.
+     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
+     CONTRIBUTORS \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+     INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+     DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+     CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+     SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+     NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+     CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+     STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+     ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+     ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     The above license is used as a license under copyright only.
+     Please reference the Forum IPR Policy for patent licensing terms
+     <https://www.broadband-forum.org/ipr-policy>.
+     Any moral rights which are necessary to exercise under the above
+     license grant are also deemed granted under this license.
+     This version of this YANG module is part of TR-383; see
+     the TR itself for full legal notices.";
+
+  revision 2020-03-06 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: 2020-03-06.";
+    reference
+      " ";
+  }
+		
+  /* typedef voice-band-data-profile-ref {
+    type leafref {
+      path "/bbf-sip-voip-mounted:media-profiles"
+         + "/bbf-sip-voip-mounted:media-voice-band-data-profiles"
+		 + "/bbf-sip-voip-mounted:media-voice-band-data-profile"
+	     + "/bbf-sip-voip-mounted:name";
+    }
+    description
+       "References a vbd profile";
+  } */
+  
+  grouping voice-band-data-characteristics {
+    description
+      "Voice band data characteristics.";
+	leaf vbd-mode {
+	  type enumeration {
+		enum auto-switch {
+		  value 1;
+		  description
+			"Automatic switch from voice mode to fax mode.
+			 The default codec is used without any negotiation.";
+		}
+		enum re-negotiation {
+		  value 2;
+		  description
+		  "A SIP Re-INVITE is sent for VBD negotiation in case
+		   of fax/modem detection.";
+		}
+		enum v152-fallback-auto-switch {
+		  value 3;
+		  description
+		    "Apply V.152 procedure, VBD codec (with dynamic payload
+			type) will be negotiated at voice call setup. 
+			If V152 negotiation	fails, behave as auto-switch.";
+		}
+		enum v152-fallback-re-negotiation {
+		  value 4;
+		  description
+		    "Apply V.152 procedure, VBD codec (with dynamic payload
+			type) will be negotiated at voice call setup. 
+			If V152 negotiation	fails, behave as re-negotiation.";
+		}
+	  }
+	  default auto-switch;		
+	  description
+		"The Voice Band Data mode.";
+	}	
+	leaf vbd-g711a-payload-type {
+	  type uint8 {range "96..127";}
+	  default 97;		
+	  description
+		"VBD dynamic payload type for G711A, applied for vbd-modes
+		 v152-fallback-auto-switch and 
+		 v152-fallback-re-negotiation.";
+	}
+	leaf vbd-g711u-payload-type {
+	  type uint8 {range "96..127";}
+	  default 98;		
+	  description
+		"VBD dynamic payload type for G711u, applied for vbd-modes 
+		 v152-fallback-auto-switch and 
+		 v152-fallback-re-negotiation.";
+	}
+	leaf initial-vbd-jitter-buffer {
+	  type uint8 {range "0..200";}
+	  units milli-seconds;
+	  default 50;		
+	  description
+		"The Initial data jitter buffer for voice band data
+		 working in RTP mode.";
+	}
+    leaf minimum-vbd-jitter-buffer {
+	  type uint8 {range "0..200";}
+	  units milli-seconds;
+	  default 20;		
+	  description
+		"The minimum data jitter buffer for voice band data
+		 working in RTP mode.";
+	}	
+    leaf maximum-vbd-jitter-buffer {
+	  type uint8 {range "0..200";}
+	  units milli-seconds;
+	  default 100;		
+	  description
+		"The maximum data jitter buffer for voice band data
+		 working in RTP mode.";
+	}
+	leaf vbd-switch-over {
+	  type enumeration {
+	    enum enabled {
+		  value 1;
+		  description
+		    "Voice to Voice Band Data auto switchover is 
+		    enabled and supporting all tones.";
+	    }
+	    enum enabled-without-v21hl {
+		  value 2;
+		  description
+		   "Voice to Voice Band Data auto switchover is
+		       enabled excluding the following tones :V21L, 
+		   V21H, V21_LOW, V21_UPPER.";
+	    }
+	    enum enabled-with-basic-tones {
+		  value 3;
+		  description
+		    "Voice to Voice Band Data auto switchover is
+		     enabled for the following tones : CT, CNG, ANS,
+		     /ANS, ANSam /ANSam, V21flag, CED, BellANS.";
+	    }
+	    enum disabled {
+		  value 4;
+		  description
+		    "Voice to Voice Band Data auto switchover is
+		     disabled.";
+	    }
+	  }
+      default enabled;		
+	  description
+	    "Voice to Voice Band Data auto switchover mode.";
+    }
+	leaf dtmf-in-vbd-mode {
+	  type enumeration {
+		enum event-sending-enabled {
+		  value 1;
+		  description
+			"The DTMF event sending in voice band data mode
+			 is enabled.";
+		}
+		enum event-sending-disabled {
+		  value 2;
+		  description
+			"The DTMF event sending in voice band data mode
+			 is disabled.";
+		}
+	  }
+	  default event-sending-disabled;		
+	  description
+		"The DTMF event sending in Voice Band Data mode.";
+	  reference
+		"RFC 2833 RTP Payload for DTMF Digits, Telephony Tones 
+		 and Telephony Signals.";
+	}	
+    leaf ip-side-inband-tone-detection {
+	  type enumeration {
+		enum enabled {
+		  value 1;		  
+		  description
+			"IP side inband tone detection
+			 is enabled with exclusion of v.18 (text phone).";
+		}
+		enum enabled-with-v18 {
+		  value 2;		  
+		  description
+			"IP side inband tone detection is enabled, 
+			 including v.18.";
+		}
+		enum enabled-ans-only {
+		  value 3;					
+		  description
+			"IP side inband tone detection enabled for ANS only
+			i.e. only CED, ANS, ANSam, /ANS, /ANSam.";
+		}
+		enum disabled {
+		  value 4;		  
+		  description
+			"IP side inband tone detection is disabled.";
+		}
+	  }
+	  default disabled;		
+	  description
+		"IP side inband tone detection.";
+	}
+  }
+  
+  grouping voice-band-data-profile-body {
+    description
+      "Defines the parameters included in the voice band 
+	   data profile.";	   
+	leaf voice-call-codec-profile {
+      /* type bbf-sip-voip-mounted:codec-profile-ref;  */
+      type leafref {
+        path "../../../../bbf-sip-voip-mounted:media-profiles"
+           + "/bbf-sip-voip-mounted:media-codec-profiles"
+	       + "/bbf-sip-voip-mounted:media-codec-profile"
+	       + "/bbf-sip-voip-mounted:name";
+      }      
+	  description
+		"References the voice call codec profile.";
+	}	
+	leaf media-transport-profile {
+      /* type bbf-sip-voip-mounted:media-transport-profile-ref; */
+      type leafref {
+        path "../../../../bbf-sip-voip-mounted:media-profiles"
+           + "/bbf-sip-voip-mounted:media-transport-profiles"
+		   + "/bbf-sip-voip-mounted:media-transport-profile"
+	       + "/bbf-sip-voip-mounted:name";
+      }      
+	  /*default null-pointer;*/		
+	  description
+		"References the voice call profile.";
+	}	
+    uses voice-band-data-characteristics;
+  }
+
+  grouping media-vbd-conf {
+    list media-voice-band-data-profile {
+      key "name";    
+	  description
+        "A voice band data profile.";
+      leaf name {
+        type bbf-yang:name-string;		
+ 	    description
+          "Uniquely identifies the profile.";
+      }
+       uses voice-band-data-profile-body;
+    } 
+  }
+  
+  augment "/onu:onus/onu:onu/onu:root/bbf-sip-voip-mounted:media-profiles"
+        + "/bbf-sip-voip-mounted:media-voice-band-data-profiles" {
+    uses media-vbd-conf; 
+  } 
+}

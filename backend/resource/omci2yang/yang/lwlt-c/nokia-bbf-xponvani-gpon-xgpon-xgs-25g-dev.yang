@@ -1,0 +1,46 @@
+module nokia-bbf-xponvani-gpon-xgpon-xgs-25g-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/nokia-bbf-xponvani-gpon-xgpon-xgs-25g-dev";
+
+  prefix nokia-bbf-xponvani-gpon-xgpon-xgs-25g-dev;
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import bbf-xponvani{
+    prefix bbf-xponvani;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA IETF/System YANG module supporting
+     deviations on top of standard.";
+
+  revision 2024-08-26 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia Specific.";
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-xponvani:v-ani/bbf-xponvani:onu-id" {
+    deviate add {
+      mandatory true;
+    }
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-xponvani:v-ani/bbf-xponvani:protection-channel-pair" {
+    deviate add {
+      must "not(boolean(current()))" {
+        error-message "If both preferred-channel-pair and protection-channel-pair are configured, the preferred-channel-pair and protection-channel-pair must both be NGPON2 type.";
+      }
+    }
+  }
+
+}

@@ -1,0 +1,646 @@
+module nokia-conf-clock-frequency {
+  yang-version "1.1";
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"+
+            "nokia-conf-clock-frequency";
+
+  prefix clock-frequency;
+
+  import ietf-system {
+    prefix sys;
+  }
+  import iana-if-type {
+    prefix ianaift;
+  }
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import bbf-xpon-if-type {
+    prefix bbf-xponift;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.mibsupport@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG definitions for
+     supporting Nokia specific requirements as applicable to its
+     access network equipment.
+
+     This module contains extension of YANG definitions for the
+     overall structure of clock frequency on physical entities.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2019-2022, Nokia. All Rights Reserved.";
+
+  revision 2025-09-04 {
+    description
+      "Add untag and vlan 0 to the range of ssm-out-vlan-id.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2025-04-07 {
+    description
+      "Modify the description of output-ql-thresh.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2024-04-20 {
+    description
+      "update format";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2023-03-15 {
+    description
+      "Modify the description of freq-type ptp.";
+    reference
+      "Nokia specific.";
+  }
+
+  revision 2022-06-06 {
+    description
+      "Add bits-direction in clock-freq-port grouping.";
+    reference
+      "Nokia specific.";
+  }
+
+  revision 2020-07-27 {
+    description
+      "Import bbf-xpon-if-type with standard prefix.";
+    reference
+      "Nokia specific.";
+  }
+
+  revision 2020-04-08 {
+    description
+      "modify format.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2020-02-16 {
+    description
+      "Add default value for some leafs, update contact
+       and description.";
+    reference
+      "Nokia specific.";
+  }
+
+  revision 2020-02-03 {
+    description
+      "update contact and descriptions.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2019-11-20 {
+    description
+      "Initial revision.";
+    reference
+      "TBD";
+  }
+
+  feature clock-freq {
+    description
+      "Indicates support for clock frequency function.";
+  }
+  feature ssm-in {
+    description
+      "Indicates support for SSM input function.";
+  }
+  feature ssm-out {
+    description
+      "Indicates support for SSM output function.";
+  }
+
+
+  typedef sets-ref-source {
+    type enumeration {
+      enum "synce" {
+        value 1;
+        description
+          "The frequency reference source type is Synchronous Ethernet.";
+      }
+      enum "bits" {
+        value 2;
+        description
+          "The frequency reference source type is BITs.";
+      }
+      enum "ptp" {
+        value 3;
+        description
+          "The frequency reference source type is IEEE1588 v2
+           precision time protocol under profile G8265.1.";
+      }
+    }
+    description
+      "The sets-ref-source data type is an enumerated integer that
+       describes the values used to identify the Synchronous Equipment
+       Timing Source (SETS) timing reference source.";
+  }
+
+  typedef ssm-quality-level {
+    type enumeration {
+      enum "clk-ql-stu" {
+        description
+          " Synchronized-Traceability Unknown.";
+      }
+      enum "clk-ql-prs" {
+        description
+          " Primary Reference Clock.";
+      }
+      enum "clk-ql-prc" {
+        description
+          " Primary Reference Clock.";
+      }
+      enum "clk-ql-inv3" {
+        description
+          " Quality Level unallocated.";
+      }
+      enum "clk-ql-ssu-a" {
+        description
+          " Traced to Sync Supply Unit-A .";
+      }
+      enum "clk-ql-tnc" {
+        description
+          " Traced to Transmit Node Clock .";
+      }
+      enum "clk-ql-inv5" {
+        description
+          " Quality Level unallocated.";
+      }
+      enum "clk-ql-inv6" {
+        description
+          " Quality Level unallocated.";
+      }
+      enum "clk-ql-st2" {
+        description
+          " Traceable to Stratum 2.";
+      }
+      enum "clk-ql-ssu-b" {
+        description
+          " Traced to Sync Supply Unit-B.";
+      }
+      enum "clk-ql-inv9" {
+        description
+          " Quality Level unallocated.";
+      }
+      enum "clk-ql-st3" {
+        description
+          " Traceable to Stratum 3.";
+      }
+      enum "clk-ql-sec" {
+        description
+          " Trace to SDH equipment clock.";
+      }
+      enum "clk-ql-smc" {
+        description
+          " Traceable to SONET Clock SelfTimed.";
+      }
+      enum "clk-ql-st3e" {
+        description
+          " Traceable to Stratum 3E.";
+      }
+      enum "clk-ql-prov" {
+        description
+          " Operator Provisioned.";
+      }
+      enum "clk-ql-dnu" {
+        description
+          " Signal should not be used for sync.";
+      }
+      enum "clk-ql-dus" {
+        description
+          " Signal should not be used for sync.";
+      }
+    }
+    description
+      "This is an enumeration that describes the
+       values used to identify the SSM Quality.";
+  }
+
+  typedef freq-status {
+    type enumeration {
+      enum "reference" {
+        description
+          " Clock is selected as the reference clock.";
+      }
+      enum "valid" {
+        description
+          " Clock is available for selection.";
+      }
+      enum "signal-failed"  {
+        description
+          " Clock failed (HW fail, freq error, phase error, unlocked...).";
+      }
+      enum "doNotUse" {
+        description
+          " Clock must not be used as indicated by SSM.";
+      }
+      enum "unknown" {
+        description
+          " Clock status unknown.";
+      }
+      enum "forced"  {
+        description
+          " Clock is manually selected.";
+      }
+      enum "ssm-missing" {
+        description
+          " No SSM-QL received.";
+      }
+      enum "ql-invalid" {
+        description
+          " Clock not available for selection.";
+      }
+      enum "nosynce-support" {
+        description
+          " SyncE clock is bound to a port that does not support SyncE clock extraction.";
+      }
+    }
+    description
+      "The status of a frequency source.";
+  }
+
+  grouping clock-freq-port {
+    description
+      "This grouping is use by data models that describes clock
+       frequency port.";
+
+    container clock-freq-port {
+      if-feature clock-freq;
+      description
+        "Indicate a set of leafs of frequency port.";
+      leaf enable {
+        type boolean;
+        default "false";
+        description
+          "Enable or disable frequency function at the interface.";
+      }
+      leaf freq-type {
+        type sets-ref-source;
+        description
+          "The frequency reference source type for the system.";
+      }
+
+      leaf priority {
+        when "../enable = 'true'"{
+          description
+            "Priority only applicable to enabled ports.";
+        }
+        type uint32;
+        description
+          "The priority of this frequency source.";
+      }
+      leaf ql-minimum {
+        type ssm-quality-level;
+        description
+          "Minimum input quality level.";
+      }
+      leaf ql-default {
+        type ssm-quality-level;
+        description
+          "The default quality level.";
+      }
+
+      container bits {
+        when "../freq-type = 'bits' and
+              ../../if:type = 'ianaift:bits'" {
+          description
+            "Applicable only when frequency source is bits.";
+        }
+        presence
+          "The presence of this container enables the inclusion of
+           BITS attributes when frequency source is BITS.";
+        description
+          "A collection of bits configuration when frequency source
+           is BITS.";
+
+       
+        leaf bits-mode {
+          type enumeration {
+            enum "e1" {
+              value 0;
+              description
+                "Indicate the bitsmode is e1.";
+            }
+            enum "ds1" {
+              value 1;
+              description
+                "Indicate the bitsmode is ds1.";
+            }
+            enum "khz2048" {
+              value 2;
+              description
+                "Indicate the bitsmode is khz2048.";
+            }
+          }
+          description
+            "Select the external clock type e1 or ds1 or khz2048.";
+        }
+
+        leaf bits-direction {
+          type enumeration {
+            enum "both" {
+              description
+                "The BITS port support both bits-in and bits-out.";
+            }
+            enum "in" {
+              description
+                "The BITS port only support bits-in.";
+            }
+            enum "out" {
+              description
+                "The BITS port only support bits-out.";
+            }
+          }
+          default "both";
+          description
+            "Define the BITS frames direction in this interface.";
+        }
+
+        leaf ais-sensitivity {
+          type boolean;
+          default "false";
+          description
+            "Enable system react upon detection of an Alarm Indication
+             Signal (AIS) on an incoming BITS signal used as NTR source
+             and the system shall not lock on such a BITS source.";
+        }
+      }
+    }
+  }
+
+  augment "/if:interfaces/if:interface"
+  {
+    when
+      "derived-from-or-self(if:type, 'ianaift:ethernetCsmacd') or
+       derived-from-or-self(if:type, 'ianaift:bits')"{
+      description
+        "Enable Frequency Source function on the interfaces.";
+    }
+
+    uses clock-freq-port;
+    description
+      "Enable Frequency function on the interfaces.";
+  }
+
+  augment "/sys:system/sys:clock" {
+    container frequency {
+      if-feature "clock-freq";
+      description
+        "Synchronous interface timing frequency for the chassis.";
+
+      leaf revert {
+        type boolean;
+        default "true";
+        description
+          "Revert to a higher priority re-validated reference source.";
+      }
+
+      leaf force-local-reference {
+        type boolean;
+        default "false";
+        description
+          "To force the local clock as system reference.";
+      }
+
+      leaf wait-to-restore {
+        type uint32 {
+          range "0..12";
+        }
+        units "minutes";
+        default "5";
+        description
+          "The time, in minutes, that a previously failed input
+           reference must be valid before it will be used for either
+           the BITS output or the central clock input reference.";
+      }
+
+      leaf output-ql-thresh {
+        type ssm-quality-level;
+        description
+          "NTR output threshold for BITS, if the system QL - the QL of
+           the current reference clock - becomes worse than this configured
+           value, the T4 output (only BITS supported) is shut down.";
+      }
+
+      leaf ssmout-ceiling {
+        type ssm-quality-level;
+        description
+          "Maximum QL for frequency output, if the source QL is higher
+           that this value, output this value.";
+      }
+    }
+    description
+      "Synchronous interface timing frequency for the chassis.";
+  }
+
+  grouping ssm-out {
+    description "grouping ssm out";
+    container ssm-out {
+      if-feature "ssm-out";
+      presence
+        "The presence of this conainer indicate SSM out configuration.";
+      description
+        "A set of leafs of SSM out configuration.";
+      leaf ssm-out-enable {
+        type boolean;
+        default "false";
+        description
+          "Enable or disable ssm out function at the interface.";
+      }
+    }
+
+  }
+
+  container clock-ssm-out-vlan-profiles {
+    description
+      "SSM OUT vlan profiles.";
+
+      list clock-ssm-out-vlan-profile {
+        key "name";
+        description
+          "List containing the parameters for a vlan should be shared
+           by all SSM out ports.";
+
+        leaf name {
+          type string;
+          description
+            "A name of the profile.";
+        }
+
+        leaf ssm-out-vlan-id {
+          type union {
+            type uint32 {
+              range "0..4095";
+            }
+            type enumeration {
+              enum untag {
+                value 65535;
+                description
+                  "Indicates that no VLAN association for ESMC messages.";
+              }
+            }
+          }
+          default "4088";
+          description
+            "The ethernet interface's vlan id.";
+      }
+    }
+  }
+
+  augment "/if:interfaces/if:interface" {
+    when
+      "derived-from-or-self(if:type, 'bbf-xponift:channel-pair') or
+       derived-from-or-self(if:type, 'ianaift:ethernetCsmacd') or
+       derived-from-or-self(if:type, 'ianaift:ptm') or
+       derived-from-or-self(if:type, 'ianaift:bits')" {
+
+       description
+         "Enable SSM out function on the interfaces.";
+    }
+    uses ssm-out;
+    description
+      "Indicate to enalbe/disable SSM out on an interface.";
+  }
+
+  augment "/if:interfaces/if:interface" {
+    when
+      "derived-from-or-self(if:type, 'bbf-xponift:channel-pair')" {
+       description
+         "SSM vlan, applicable on PON interface.";
+    }
+
+    leaf ssm-out-profile-ref {
+      type leafref {
+        path '/clock-frequency:clock-ssm-out-vlan-profiles/'+
+             'clock-frequency:clock-ssm-out-vlan-profile/'+
+             'clock-frequency:name';
+      }
+      description
+        "Reference to the SSM out vlan-id profile.";
+    }
+    description
+      "Indicate the SSM vlan over this interface.";
+  }
+
+
+  grouping ssm-in {
+    description
+      "A set of leafs of SSM in.";
+
+    container ssm-in {
+      if-feature "ssm-in";
+      leaf ssm-in-enable {
+        type boolean;
+        default "false";
+        description
+          "Enable or disable SSM in function at the interface.";
+      }
+      description
+        "Container SSM in.";
+    }
+  }
+
+  augment "/if:interfaces/if:interface" {
+    when
+      "derived-from-or-self(if:type, 'ianaift:ethernetCsmacd') or
+       derived-from-or-self(if:type, 'ianaift:bits')" {
+
+      description
+        "Enable SSM In function on the interfaces.";
+    }
+    uses ssm-in;
+    description
+      "Indicate to enalbe/disable SSM in on an interface.";
+  }
+
+
+  augment "/sys:system-state/sys:clock" {
+    description
+      "Indicate the frequency source status.";
+
+    container freq-status {
+      description
+        "Indicate the frequency source status.";
+
+      list freq-status {
+        key "freq-source";
+        description
+          "Indicate the frequency source status list.";
+        leaf freq-source {
+          type string;
+          description
+            "The clock interface name to identify a clock source
+             uniquely.";
+        }
+
+        leaf priority {
+          type uint32;
+          description
+            "The priority of the frequency source.";
+        }
+
+        leaf ql {
+          type ssm-quality-level;
+          description
+            "The QL of this frequency source.";
+        }
+        leaf status {
+          type freq-status;
+          description
+            "The status of this freqency source.";
+        }
+      }
+    }
+  }
+}
+
+
+
+

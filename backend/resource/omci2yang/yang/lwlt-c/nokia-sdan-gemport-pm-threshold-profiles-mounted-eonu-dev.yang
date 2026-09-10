@@ -1,0 +1,61 @@
+module nokia-sdan-gemport-pm-threshold-profiles-mounted-eonu-dev {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+  + "nokia-sdan-gemport-pm-threshold-profiles-mounted-eonu-dev";
+  prefix nokia-gemport-pm-tca-prof-mounted-eonu-dev;
+  
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import nokia-hardware-profiles-mounted {
+    prefix nokia-hw-prof-mounted;
+  }
+
+  import nokia-sdan-hardware-pm-threshold-profiles-mounted {
+    prefix nokia-hw-pm-threshold-prof-mounted;
+  }
+
+  import nokia-sdan-gemport-pm-threshold-profiles-mounted {
+    prefix nokia-gemport-pm-tca-prof-mounted;
+  }
+
+  organization
+    "Nokia";
+  contact
+    "Nokia";
+  description
+    "This module contains a collection of YANG deviations on top of NOKIA specific GEM port PM TCA profile yang module";
+
+  revision 2023-06-14 {
+    description
+      "Limits the values of the threshold between 1 and (2^32)-2.";
+    reference "Nokia specific";
+  }
+
+  revision 2023-03-11 {
+    description
+      "Adding deviations for restricting number of gemport-tca-profile for gemport PM TCA";
+    reference "Nokia specific";
+  }
+  
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-gemport-pm-tca-prof-mounted:gemport-tca-profile" {
+    deviate add {
+      must "count(current()/../nokia-gemport-pm-tca-prof-mounted:gemport-tca-profile) <= 10" {
+      error-message "Exceeds maximum number of gemport-tca-profile supported in the system.";
+      description
+        "This deviation limits the number of gemport-tca-profile configured per system to 10.";
+      }
+    }
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles/nokia-gemport-pm-tca-prof-mounted:gemport-tca-profile/nokia-gemport-pm-tca-prof-mounted:encryption-key-errors-threshold" {
+    description
+      "This deviation limits the values of the threshold between 1 and (2^32)-2.";
+    deviate replace {
+      type uint32 {
+        range "1..4294967294";
+      }
+    }
+  }
+}

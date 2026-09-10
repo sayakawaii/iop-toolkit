@@ -1,0 +1,52 @@
+module nokia-ietf-system-aug-mgnt1-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-ietf-system-aug-mgnt1-dev";
+
+  prefix nokia-ietf-system-aug-mgnt1-dev;
+
+  import nokia-ietf-system-aug {
+    prefix "nokia-ietf-system-aug";
+  }
+
+  import ietf-system {
+    prefix "sys";
+  }
+  
+  import ietf-netconf-server {
+    prefix ncs;
+  }
+  
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "The NOKIA IETF system aug YANG module supporting
+     deviations on top of standard.";
+
+  revision 2021-10-15 {
+    description
+      "new deviation checking that either call home ,cli over ssh, netconf over ssh is enabled";
+    reference
+      "TBD";
+  }
+
+  deviation "/sys:system/nokia-ietf-system-aug:management" {
+    deviate add {
+         must "(   /sys:system/nokia-ietf-system-aug:management/nokia-ietf-system-aug:cli/nokia-ietf-system-aug:transport/nokia-ietf-system-aug:ssh/nokia-ietf-system-aug:ip_itf/nokia-ietf-system-aug:enable='true'
+                or /sys:system/nokia-ietf-system-aug:management/nokia-ietf-system-aug:netconf/nokia-ietf-system-aug:transport/nokia-ietf-system-aug:ssh/nokia-ietf-system-aug:ip_itf/nokia-ietf-system-aug:enable='true'
+                or boolean(/ncs:netconf-server/ncs:call-home) )" {
+
+          error-message "At least one management channel must remain enabled";
+           description
+             "You cannot disable all management channels, make sure either call home ,cli over ssh, netconf over ssh is enabled";
+         }
+         
+     }
+  }
+
+}

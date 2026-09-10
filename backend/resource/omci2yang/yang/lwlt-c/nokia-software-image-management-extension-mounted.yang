@@ -1,0 +1,93 @@
+module nokia-software-image-management-extension-mounted {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+          + "nokia-software-image-management-extension-mounted";
+  prefix nokia-swm-ext-mounted;
+
+  import bbf-software-image-management-one-dot-one-mounted {
+    prefix bbf-sim-mounted;
+  }
+ 
+  import ietf-hardware-mounted {
+    prefix hw-mounted;
+  }
+
+  import ietf-trust-anchors {
+    prefix ta;
+    reference
+      "RFC YYYY: YANG Data Model for Global Trust Anchors";
+  }
+
+  import bbf-fiber-onu-emulated-mount {
+     prefix onu;
+  }
+  
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "This module contains extension of YANG definitions for 
+     the overall structure of software image management on physical 
+     entities as defined by ietf-hardware.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2018, Nokia. All Rights Reserved.";
+
+   revision 2023-05-24 {
+    description
+      "Using relative path instead of absolute path
+       to avoid performance issue";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2019-05-10 {
+    description
+      "added leaf server-public-key in
+       nokia-software-image-management-extension.yang";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2018-03-15 {
+    description
+      "Initial revision.";
+    reference
+      "TBD";
+  }
+ 
+  augment "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/bbf-sim-mounted:software/bbf-sim-mounted:software/bbf-sim-mounted:download/bbf-sim-mounted:current-state" { 
+
+    description 
+      "An augmentation of a physical entity to add support for the 
+       CPE software download progress in percentage.";
+      leaf download-progress {
+        when "../bbf-sim-mounted:state = 'in-progress'" {
+          description
+            "The precentage of download is valid when a download is in
+             progress.";
+        } 
+        type uint32;
+        description
+          "The precentage of the cpe software revision currently being
+           downloaded.";
+      }    
+  }
+ augment "/onu:onus/onu:onu/onu:root/hw-mounted:hardware-state/hw-mounted:component/bbf-sim-mounted:software/bbf-sim-mounted:software/bbf-sim-mounted:download/bbf-sim-mounted:download-software/bbf-sim-mounted:input" {
+   description
+      "An augmentation of a physical entity to add server public key needed for download action using https";
+    leaf server-public-key {
+       if-feature "ta:x509-certificates"; 
+       type ta:pinned-certificates-ref;
+       description
+          "A reference to a list of certificate authority (CA)
+           certificates used while download using https.";
+     }
+  }
+}

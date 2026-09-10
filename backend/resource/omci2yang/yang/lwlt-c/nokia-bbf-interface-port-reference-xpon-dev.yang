@@ -1,0 +1,57 @@
+module nokia-bbf-interface-port-reference-xpon-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-bbf-interface-port-reference-xpon-dev";
+
+  prefix nokia-bbf-interface-port-reference-xpon-dev;
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import bbf-xpon-if-type {
+    prefix bbf-xponift;
+  }
+
+  import bbf-interface-port-reference {
+     prefix bbf-if-port-ref;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA IETF/System YANG module supporting
+     deviations on top of standard.";
+
+  revision 2024-08-26 {
+    description
+      "Correct the error message";
+    reference
+      "Nokia Specific.";
+  }
+
+  revision 2023-02-24 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia Specific.";
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-if-port-ref:port-layer-if"
+  {
+    deviate add {
+      must "(current()/../if:type != 'bbf-xponift:channel-group') and
+              (current()/../if:type != 'bbf-xponift:channel-partition') and
+              (current()/../if:type != 'bbf-xponift:channel-pair') and
+              (current()/../if:type != 'bbf-xponift:v-ani') and
+              (current()/../if:type != 'bbf-xponift:olt-v-enet')"
+      {
+        error-message "The port-layer-if is not supported on this interface.";
+      }
+    }
+  }
+}

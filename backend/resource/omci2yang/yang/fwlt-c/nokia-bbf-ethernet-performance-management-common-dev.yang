@@ -1,0 +1,62 @@
+module nokia-bbf-ethernet-performance-management-common-dev {
+
+  namespace
+    "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+  + "nokia-bbf-ethernet-performance-management-common-dev";
+
+  prefix  nokia-bbf-ethernet-performance-management-common-dev;
+
+  import ietf-interfaces {
+    prefix if;
+  }
+  
+  import bbf-interfaces-performance-management {
+    prefix bbf-if-pm;
+  }
+  
+  import bbf-ethernet-performance-management {
+    prefix bbf-eth-pm;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA ethernet performace management Yang module supporting
+     deviations on top of standard.";
+
+  revision 2022-07-12 {
+    description
+      "Deviation for in-undersize-pkts removed, excluded using if-feature";
+    reference
+      "TBD";
+  }
+
+  revision 2022-03-30 {
+    description
+      "Initial revision.";
+    reference
+      "TBD";
+  }
+  
+  deviation "/if:interfaces-state/if:interface/bbf-if-pm:performance/bbf-if-pm:intervals-15min/bbf-if-pm:current/bbf-eth-pm:ethernet/bbf-eth-pm:in-giant-pkts" {
+    description
+            "indicated that in-giant-pkts is not supported";
+    deviate not-supported;
+  }
+  
+  deviation "/if:interfaces-state/if:interface/bbf-if-pm:performance/bbf-if-pm:intervals-15min/bbf-if-pm:current/bbf-eth-pm:ethernet/bbf-eth-pm:in-errors-mac-internal" {
+    description
+            "indicated that in-errors-mac-internal is not supported";
+    deviate not-supported;
+  }
+  
+  deviation "/if:interfaces-state/if:interface/bbf-if-pm:performance/bbf-if-pm:intervals-15min/bbf-if-pm:current/bbf-eth-pm:ethernet/bbf-eth-pm:out-errors-mac-internal" {
+    description
+            "indicated that state out-errors-mac-internal is not supported";
+    deviate not-supported;
+  }
+}

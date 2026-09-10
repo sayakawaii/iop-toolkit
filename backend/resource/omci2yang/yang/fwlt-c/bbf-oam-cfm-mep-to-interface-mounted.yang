@@ -1,0 +1,193 @@
+module bbf-oam-cfm-mep-to-interface-mounted {
+  yang-version 1.1;
+  namespace "urn:bbf:yang:bbf-oam-cfm-mep-to-interface-mounted";
+
+  prefix bbf-cfm-mep2i-mounted;
+
+  import iana-if-type-mounted {
+    prefix ianaift-mounted;
+  }
+
+  import ietf-interfaces-mounted {
+    prefix if-mounted;
+  }
+
+  import bbf-if-type-mounted {
+    prefix bbfift-mounted;
+  }
+
+  import ieee802-dot1q-cfm-mounted {
+    prefix dot1q-cfm-mounted;
+  }
+
+
+  import bbf-xpon-if-type-mounted {
+    prefix bbf-xponift-mounted;
+  }
+
+  import bbf-fiber-onu-emulated-mount {
+     prefix onu;
+  }
+
+  organization
+    "Broadband Forum <https://www.broadband-forum.org>
+     Common YANG Project Stream";
+
+  contact
+    "Comments or questions about this Broadband Forum YANG module
+     should be directed to <mailto:help@broadband-forum.org>.
+
+     Editor:      Joey Boyd, ADTRAN
+                  <mailto:joey.boyd@adtran.com>
+
+     Editor:      Ludwig Pauwels, Nokia
+                  <mailto:ludwig.pauwels@nokia.com>
+
+     PS Leader:   Michael Shaffer, Nokia
+                  <mailto:michael.shaffer@nokia.com>
+
+     PS Leader:   William Lupton, Broadband Forum
+                  <mailto:wlupton@broadband-forum.org>";
+
+  description
+    "This module is part of a collection of YANG definitions for
+     supporting the Broadband Forum requirements on CFM OAM as
+     applicable to access network equipment. As such, this module is
+     specific to access network equipment (e.g., BBF-specified Access
+     Nodes and FTTdp DPUs).
+
+     Specifically, this module augments the CFM model to link a MEP
+     (Maintenance End Point) to an interface.
+
+     Copyright (c) 2017, Broadband Forum
+     All rights reserved.
+
+     Redistribution and use in source and binary forms, with or
+     without modification, are permitted provided that the following
+     conditions are met:
+
+     1. Redistributions of source code must retain the above copyright
+        notice, this list of conditions and the following disclaimer.
+
+     2. Redistributions in binary form must reproduce the above
+        copyright notice, this list of conditions and the following
+        disclaimer in the documentation and/or other materials
+        provided with the distribution.
+
+     3. Neither the name of the copyright holder nor the names of its
+        contributors may be used to endorse or promote products
+        derived from this software without specific prior written
+        permission.
+
+     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
+     CONTRIBUTORS \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+     INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+     DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+     CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+     SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+     NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+     CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+     STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+     ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+     ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+     The above license is used as a license under copyright only.
+     Please reference the Forum IPR Policy for patent licensing terms
+     <https://www.broadband-forum.org/ipr-policy>.
+
+     Any moral rights which are necessary to exercise under the above
+     license grant are also deemed granted under this license.
+
+     This version of this YANG module is part of TR-383; see
+     the TR itself for full legal notices.";
+
+  revision 2016-04-26 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: yyyy-mm-dd.";
+    reference
+      "TR-383: Common YANG Modules
+               <https://www.broadband-forum.org/technical/download/
+                        TR-383.pdf>";
+  }
+
+  augment '/onu:onus/onu:onu/onu:root/dot1q-cfm-mounted:cfm/dot1q-cfm-mounted:maintenance-group/dot1q-cfm-mounted:mep' {
+    description
+      "Link a MEP to the BBF frame classification / forwarding
+       model.";
+
+    leaf interface {
+      type leafref { path '../../../../if-mounted:interfaces/if-mounted:interface/if-mounted:name'; }
+      must
+        "(derived-from-or-self(
+         ../../../../if-mounted:interfaces/if-mounted:interface[if-mounted:name = current()]
+         /if-mounted:type,'ianaift-mounted:ethernetCsmacd'))
+         or
+         (derived-from-or-self(
+         ../../../../if-mounted:interfaces/if-mounted:interface[if-mounted:name = current()]
+         /if-mounted:type,'ianaift-mounted:ptm'))
+         or
+         (derived-from-or-self(
+         ../../../../if-mounted:interfaces/if-mounted:interface[if-mounted:name = current()]
+         /if-mounted:type,'bbf-xponift-mounted:onu-v-vrefpoint'))
+         or
+         (derived-from-or-self(
+         ../../../../if-mounted:interfaces/if-mounted:interface[if-mounted:name = current()]
+         /if-mounted:type,'bbfift-mounted:vlan-sub-interface'))" {
+        error-message
+          "A down MEP can be created on an interface of the type
+           ethernetCsmacd, ptm, or vlan-sub-interface. An up MEP can
+           be created on a vlan-sub-interface.";
+        }
+
+/**
+      must
+        "(derived-from-or-self(
+         /if-mounted:interfaces/if-mounted:interface[if-mounted:name = current()]
+         /if-mounted:type,'ianaift-mounted:ethernetCsmacd') and
+         ../dot1q-cfm-mounted:direction = 'dot1q-cfm-mounted:down')
+         or
+         (derived-from-or-self(
+         /if-mounted:interfaces/if-mounted:interface[if-mounted:name = current()]
+         /if-mounted:type,'ianaift-mounted:ptm') and
+         ../dot1q-cfm-mounted:direction = 'dot1q-cfm-mounted:down')
+         or
+         (derived-from-or-self(
+         /if-mounted:interfaces/if-mounted:interface[if-mounted:name = current()]
+         /if-mounted:type,'bbf-xponift-mounted:onu-v-vrefpoint') and
+         ../dot1q-cfm-mounted:direction = 'dot1q-cfm-mounted:up')
+         or
+         derived-from-or-self(
+         /if-mounted:interfaces/if-mounted:interface[if-mounted:name = current()]
+         /if-mounted:type,'bbfift-mounted:vlan-sub-interface')" {
+        error-message
+          "A down MEP can be created on an interface of the type
+           ethernetCsmacd, ptm, or vlan-sub-interface. An up MEP can
+           be created on a vlan-sub-interface.";
+      }
+      must
+        "(/dot1q-cfm-mounted:cfm/dot1q-cfm-mounted:maintenance-domain
+          [dot1q-cfm-mounted:md-id = current()/../../dot1q-cfm-mounted:md-id]/dot1q-cfm-mounted:md-level <
+          /dot1q-cfm-mounted:cfm/dot1q-cfm-mounted:maintenance-domain
+          [dot1q-cfm-mounted:md-id = /dot1q-cfm-mounted:cfm/dot1q-cfm-mounted:maintenance-group/bbf-cfm-mip-mounted:mip[bbf-cfm-mip-mounted:interface = current()]
+           /../dot1q-cfm-mounted:md-id]/dot1q-cfm-mounted:md-level)" {
+        error-message
+          "The level of any MEP on an interface must be lower than the
+           level of the MIP.";
+      }
+*/
+      description
+        "References the interface on which the MEP shall be created.
+         Note that MEPs can be VLAN-unaware and refer to a -link
+         level- interface, and can be VLAN-aware and refer to a VLAN
+         sub-interface. Note that the Link Aggregation Group (LAG) is
+         not part of the -link level- interfaces. This is because IEEE
+         802.1ag defines that if a LAG is used in combination with
+         VLAN-unaware MEPs, then the MEPs are configured below the
+         LAG, i.e. per Ethernet inteface.";
+    }
+  }
+}

@@ -1,0 +1,119 @@
+module nokia-sdan-ip-l4-binding-common-mounted {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+             + "nokia-sdan-ip-l4-binding-common-mounted";
+  prefix nokia-sdan-ip-l4-bind-mounted;
+ 
+  import ietf-inet-types {
+    prefix inet;
+  }
+ 
+  organization
+    "Nokia";
+ 
+  contact
+    "Comments or questions about this Broadband Forum YANG module
+     should be directed to <mailto:isam.yang@nokia.com>.";
+ 
+ 
+  description
+    "This module contains a collection of YANG definitions for
+     common transport layer configuration.
+ 
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+ 
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+ 
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+ 
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+ 
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+ 
+     Copyright (C) 2022, Nokia. All Rights Reserved.";
+ 
+  revision 2026-03-25 {
+    description
+      "Initial revision.";
+    reference
+      "";
+  }
+ 
+  grouping transport-config {
+    description
+      "Common transport layer configuration.
+       Based on ITU-T G.988 TCP/UDP Config Data ME (136).";
+ 
+    leaf local-port {
+      type inet:port-number;
+      description
+        "The local port number to listen on for incoming TCP/UDP
+         client connections.";
+    }
+
+    choice protocol {
+      description
+        "Transport protocol selection (TCP or UDP).
+         Maps to TCP/UDP Config Data ME attr 'Protocol'.
+         This grouping leaves the choice optional; consumers refine it
+         to be mandatory where required (e.g. the RS232 port).";
+
+      case tcp {
+        description
+          "TCP transport protocol.";
+        leaf tcp {
+          type empty;
+          description
+            "TCP protocol selected.";
+        }
+      }
+
+      case udp {
+        description
+          "UDP transport protocol (default).";
+        leaf udp {
+          type empty;
+          description
+            "UDP protocol selected.";
+        }
+      }
+    }
+
+    leaf dscp {
+      type uint8 {
+        range "0..63";
+      }
+      default 46;
+      description
+        "DSCP value for transport packets.
+         46 = EF (Expedited Forwarding).
+         Maps to TCP/UDP Config Data ME attr 'TOS/Diffserv'.";
+    }
+  }
+}

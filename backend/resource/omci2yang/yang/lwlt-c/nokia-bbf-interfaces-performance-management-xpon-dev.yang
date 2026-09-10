@@ -1,0 +1,56 @@
+module nokia-bbf-interfaces-performance-management-xpon-dev {
+
+  namespace
+    "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+  + "nokia-bbf-interfaces-performance-management-xpon-dev";
+
+  prefix  nokia-bbf-interfaces-performance-management-xpon-dev;
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import bbf-interfaces-performance-management{
+    prefix bbf-if-pm;
+  }
+
+  import bbf-xpon-if-type {
+    prefix bbf-xponift;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA IETF/System YANG module supporting
+     deviations on top of standard.";
+
+  revision 2024-08-26 {
+    description
+      "Correct the error message";
+    reference
+      "Nokia Specific.";
+  }
+
+  revision 2020-06-19 {
+    description
+      "Initial revision.";
+    reference
+      "TBD";
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-if-pm:performance/bbf-if-pm:enable" {
+    deviate add{
+      must "(current() = 'false') or"
+          + "((current()/../../if:type !='bbf-xponift:channel-group') and"
+          + "(current()/../../if:type !='bbf-xponift:channel-partition') and"
+          + "(current()/../../if:type !='bbf-xponift:channel-pair') and"
+          + "(current()/../../if:type !='bbf-xponift:olt-v-enet'))"{
+        error-message "Can't enable PM counter on channel-group, channel-partition, channel-pair or olt-v-enet";
+      }
+    }
+  }
+}

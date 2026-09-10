@@ -1,0 +1,50 @@
+module nokia-bbf-interfaces-performance-management-eth-bp-pm-dev {
+
+  namespace
+    "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+  + "nokia-bbf-interfaces-performance-management-eth-bp-pm-dev";
+
+  prefix  nokia-bbf-interfaces-performance-management-eth-bp-pm-dev;
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import bbf-interfaces-performance-management{
+    prefix bbf-if-pm;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA ethernet YANG module supporting
+     deviations on top of standard.";
+
+  revision 2020-11-13 {
+    description
+      "move from eth-bp.";
+    reference
+      "TBD";
+  }
+
+  revision 2019-08-05 {
+    description
+      "Initial revision.";
+    reference
+      "TBD";
+  }
+  
+  deviation "/if:interfaces/if:interface/bbf-if-pm:performance/bbf-if-pm:enable" {
+    deviate add{
+       must "(current()/../../if:name != 'BP_Eth') or
+              ((current()/../../if:name = 'BP_Eth') and (current() = 'false'))" {
+                 error-message "PM counter Cannot Modified on BP_Eth Interface";
+       }
+    }
+  }
+
+}

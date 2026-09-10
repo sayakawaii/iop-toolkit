@@ -1,0 +1,315 @@
+module nokia-sdan-xponani-pm-threshold-profiles-mounted {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+          + "nokia-sdan-xponani-pm-threshold-profiles-mounted";
+  prefix nokia-xponani-pm-tca-profile-mounted;
+  import bbf-yang-types {
+    prefix bbf-yang;
+  }
+  import nokia-yang-types-mounted {
+    prefix nok-typ-mounted;
+  }
+  import nokia-hardware-profiles-mounted {
+    prefix nokia-hw-prof-mounted;
+  }
+  import nokia-sdan-hardware-pm-threshold-profiles-mounted {
+    prefix nokia-hw-pm-threshold-prof-mounted;
+  }
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+  organization
+    "Nokia";
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+  description
+    "This module contains a collection of YANG definitions for
+     supporting Nokia specific requirements as applicable to its
+     access network equipment.
+     This module, in particular, augments the performance monitoring threshold
+     profiles with data that allows you to configure thresholding values for
+     performance data associated with Ethernet counters.
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+     Copyright (C) 2022, Nokia. All Rights Reserved.";
+
+  revision 2023-04-03 {
+    description
+      "Added identities to support new ANI PM TCA";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2023-03-13 {
+    description
+      "Implementation of threshold profiles to assiciate with XPON ANI performance monitoring counters.";
+    reference
+      "G.988";
+  }
+  identity xpon-ani-pm-tca-alert {
+    description
+      "Indicates which xPON ANI performance monitoring TCA element has reached the configured
+       threshold within the current interval";
+  }
+  identity fec-corrected-bytes-exceeding {
+    base xpon-ani-pm-tca-alert;
+    description
+      "Indicates that the ANI FEC corrected bytes count has reached the configured threshold value
+       within the current interval";
+  }
+  identity fec-corrected-code-words-exceeding {
+    base xpon-ani-pm-tca-alert;
+    description
+      "Indicates that the ANI FEC corrected code words count has reached the configured threshold value
+       within the current interval";
+  }
+  identity fec-uncorrectable-code-words-exceeding {
+    base xpon-ani-pm-tca-alert;
+    description
+      "Indicates that the ANI FEC uncorrectable code words count has reached the configured threshold value
+       within the current interval";
+  }
+  identity fec-seconds-exceeding {
+    base xpon-ani-pm-tca-alert;
+    description
+      "Indicates that the ANI FEC seconds count has reached the configured threshold value
+       within the current interval";
+  }
+  identity psbd-hec-error-exceeding {
+    base xpon-ani-pm-tca-alert;
+    description
+      "Indicates that the ANI Downstream Physical sync block HEC error count has reached the
+      configured threshold value within the current interval";
+  }
+  identity xgtc-hec-error-exceeding {
+    base xpon-ani-pm-tca-alert;
+    description
+      "Indicates that the XGPON Transmission Convergence layer HEC error count has reached the
+      configured threshold value within the current interval";
+  }
+  identity unknown-profile-exceeding {
+    base xpon-ani-pm-tca-alert;
+    description
+      "Indicates that the number of grants received for the unknown profile has reached the
+      configured threshold value within the current interval";
+  }
+  identity xgem-hec-loss-count-exceeding {
+    base xpon-ani-pm-tca-alert;
+    description
+      "Indicates that the number of 4 byte words lost because of XGEM frame HEC error has
+       reached the configured threshold value within the current interval";
+  }
+  identity xgem-key-error-count-exceeding {
+    base xpon-ani-pm-tca-alert;
+    description
+      "Indicates that the number of downstream XGEM frames received with an invalid key specification
+       has reached the configured threshold value within the current interval";  
+  }
+  identity xgem-hec-error-count-exceeding {
+    base xpon-ani-pm-tca-alert;
+    description
+      "Indicates that the number of instances of XGEM frame HEC error has reached the configured
+      threshold value within the current interval";      
+  }
+  identity ploam-mic-error-count-exceeding {
+    base xpon-ani-pm-tca-alert;
+    description
+      "Indicates that number of the MIC errors detected in downstream PLOAM messages has reached 
+       the configured threshold value within the current interval";
+  }
+  identity omci-mic-error-count-exceeding {
+    base xpon-ani-pm-tca-alert;
+    description
+      "Indicates that number of the MIC errors detected in OMCI messages has reached the configured
+       threshold value within the current interval";
+  }
+  identity in-lost-gem-frames-exceeding {
+    base xpon-ani-pm-tca-alert;
+    description
+      "Indicates that number of lost GEM frame count in downstream has reached the
+      configured threshold value within the current interval";
+  }
+  identity out-lost-gem-frames-exceeding {
+    base xpon-ani-pm-tca-alert;
+    description
+      "Indicates that number of lost GEM frame count in upstream has reached the
+      configured threshold value within the current interval";
+  }
+  identity bad-gem-header-error-exceeding {
+    base xpon-ani-pm-tca-alert;
+    description
+      "Indicates that number of bad GEM frame count has reached the
+      configured threshold value within the current interval";
+  }
+
+  augment "/onu:onus/onu:onu/onu:root/nokia-hw-prof-mounted:tca-profiles/nokia-hw-pm-threshold-prof-mounted:pm-profiles" {
+    description "augment pm profiles";
+    list xpon-fec-error-profile {
+        key "name";
+        description
+          "TCA profile to configure threhsold values for XPON ANI forward error correction performance monitoring counters";
+        leaf name {
+          type nok-typ-mounted:nokia-string-ascii64;
+          description
+            "Name of the TCA profile that can be associated to XPON ANI interface to notify
+            TCA when the PM counter values crosses the configured threshold";
+        }
+        leaf corrected-bytes-threshold {
+            type bbf-yang:performance-counter64;
+            description
+              "Threshold value for the number of bytes that were corrected by the FEC function.
+               When the FEC corrected bytes count crosses the threshold, a TCA is raised";
+        }
+        leaf corrected-code-words-threshold {
+            type bbf-yang:performance-counter64;
+            description
+              "Threshold value for the number of the code words that were corrected by the FEC function.
+               When the FEC corrected code words count crosses the threshold, a TCA is raised";
+        }
+        leaf uncorrectable-code-words-threshold {
+            type bbf-yang:performance-counter64;
+            description
+              "Threshold value for the number of errored code words that could not be corrected by the FEC function.
+               When the FEC uncorrectable code words count crosses the threshold, a TCA is raised";
+        }
+        leaf fec-seconds-threshold {
+            type bbf-yang:performance-counter64;
+            description
+              "Threshold value for the number of seconds during which there was an FEC anomaly.
+               When the FEC seconds count crosses the threshold, a TCA is raised";
+        }
+    }
+
+    list gem-frame-error-profile {
+        key "name";
+        description
+          "TCA profile for configuring thresholds for GEM frame error performance monitoring
+           counters on the ANI interface.";
+        leaf name {
+          type nok-typ-mounted:nokia-string-ascii64;
+          description
+            "Name of the TCA profile that can be associated to ANI interface to notify
+            TCA when the PM counter values crosses the configured threshold";
+        }
+        leaf in-lost-gem-frames-threshold {
+            type bbf-yang:performance-counter64;
+            description
+              "Threshold value for the number of lost GEM frames count in downstream crosses
+               the threshold, a TCA is raised";
+        }
+        leaf out-lost-gem-frames-threshold {
+            type bbf-yang:performance-counter64;
+            description
+              "Threshold value for the number of lost GEM frames count in upstream crosses
+               the threshold, a TCA is raised";
+        }
+        leaf bad-gem-header-error-threshold {
+            type bbf-yang:performance-counter64;
+            description
+              "Threshold value for the number of bad GEM header error count crosses
+               the threshold, a TCA is raised";
+        }
+    }
+    list xgponani-tc-error-profile {
+        key "name";
+        description
+          "TCA profile to configure threhsold values for XGPON ANI TC layer performance monitoring error counters";
+        leaf name {
+          type nok-typ-mounted:nokia-string-ascii64;
+          description
+            "Name of the TCA profile that can be associated to XGPON ANI interface to notify
+            TCA when the PM counter values crosses the configured threshold";
+        }
+        leaf psbd-hec-error-threshold {
+            type bbf-yang:performance-counter64;
+            description
+              "Threshold value for number of HEC errors in any of the fields of the downstream physical sync block.
+               When the PSBD HEC error count crosses the threshold, a TCA is raised";
+        }
+        leaf xgtc-hec-error-threshold {
+          type bbf-yang:performance-counter64;
+          description
+            "Threshold value for number of HEC errors detected in the XGTC header. When the XGTC HEC error crosses the
+            threshold, a TCA is raised";
+        }
+        leaf unknown-profile-threshold {
+          type bbf-yang:performance-counter64;
+          description
+            "Threshold value for the number of grants received whose specified profile was not known to the ONU
+             When the number of grants received crosses the threshold, a TCA is raised";
+        }
+        leaf xgem-hec-loss-threshold {
+          type bbf-yang:performance-counter64;
+          description
+            "Threshold value for the number of 4 byte words lost because of an XGEM frame HEC error
+             When the number of XGEM HEC loss count crosses the threshold, a TCA is raised";
+        }
+        leaf xgem-key-errors-threshold {
+          type bbf-yang:performance-counter64;
+          description
+            "Threshold value for the number of downstream XGEM frames received with an invalid key specification
+             When the number of XGEM key errors count crosses the threshold, a TCA is raised";
+        }
+        leaf xgem-hec-error-threshold {
+          type bbf-yang:performance-counter64;
+          description
+            "Threshold value for the number of instances of an XGEM frame HEC error
+             When the number of XGEM HEC errors count crosses the threshold, a TCA is raised";
+        }
+    }
+    list xgponani-downstream-error-profile {
+        key "name";
+        description
+          "TCA profile to configure threhsold values for XGPON ANI Downstream performance monitoring error counters";
+        leaf name {
+          type nok-typ-mounted:nokia-string-ascii64;
+          description
+            "Name of the TCA profile that can be associated to XGPON ANI interface to notify
+            TCA when the PM counter values crosses the configured threshold";
+        }
+        leaf ploam-mic-error-threshold {
+            type bbf-yang:performance-counter64;
+            description
+              "Threshold value for number of MIC errors detected in downstream PLOAM messages,
+              either directed to this ONU or broadcast to all ONUs.When the PLOAM MIC error count
+              crosses the threshold, a TCA is raised";
+        }
+        leaf omci-mic-error-threshold { 
+            type bbf-yang:performance-counter64;
+            description
+              "Threshold value for number of MIC errors detected in OMCI messages directed to this ONU
+               When the OMCI MIC error count crosses the threshold, a TCA is raised";
+        }
+    }
+  }
+}

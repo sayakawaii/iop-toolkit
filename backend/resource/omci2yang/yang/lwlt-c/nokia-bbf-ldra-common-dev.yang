@@ -1,0 +1,109 @@
+module  nokia-bbf-ldra-common-dev{
+
+    namespace
+       "urn:bbf:nokia-bbf-ldra-common-dev";
+
+    prefix  ldra-dev;
+
+    import bbf-ldra{
+        prefix bbf-ldra;
+    }
+
+    import nokia-yang-types {
+	 prefix nok-typ;
+    }
+
+    organization
+       "Nokia";
+
+    contact
+       "isam.yang@nokia.com";
+
+    description
+       "The NOKIA BBF/bbf-ldra YANG module supporting
+        deviations on top of standard.";
+
+    /* revision */
+
+    revision 2020-12-09 {
+        description
+           "move user port check to usage-user-port";
+        reference
+           "Nokia internal.";
+    }
+
+    revision 2019-11-12 {
+        description
+           "deviation for user Port config";
+        reference
+           "Nokia internal.";
+    }
+
+     /* restrict special characters in ldra  profile other than nokia-string-ascii64 */
+
+     deviation "/bbf-ldra:dhcpv6-ldra-profiles/bbf-ldra:dhcpv6-ldra-profile/bbf-ldra:name" {
+	deviate replace{
+	   type nok-typ:nokia-string-ascii64;
+	}
+     }
+
+     /* Max 16 profiles only allowed */
+     deviation "/bbf-ldra:dhcpv6-ldra-profiles/bbf-ldra:dhcpv6-ldra-profile" {
+	deviate add {
+	    max-elements 16;
+	}
+     }
+
+     deviation "/bbf-ldra:dhcpv6-ldra-profiles/bbf-ldra:dhcpv6-ldra-profile/bbf-ldra:options/bbf-ldra:option" {
+        deviate replace {
+            type enumeration {
+                  enum interface-id {
+              description
+                "Add option interface-ID (code 18) to the relayed
+                 (RELAY-FORW) DHCPv6 messages. The LDRA SHOULD use the
+                 same option value for a given interface, and this
+                 value SHOULD be retained  across restarts. This is
+                 because if the value changes, a server will not be
+                 able to use it reliably in parameter assignment
+                 policies.
+                 The value inserted is the value of the leaf
+                 circuit-id defined in the instance in the list
+                 subscriber-profiles/subscriber-profile that is
+                 associated with the interface, if any. If this leaf
+                 is unknown, then the option
+                 interface-ID will be generated according to the
+                 syntax defined in the leaf
+                 default-interface-id-syntax.";
+              reference
+                "RFC 6221 - Section 5.3.2";
+            }
+            enum remote-id {
+              description
+                "Add option remote-ID (code 37) to the relayed
+                 (RELAY-FORW) DHCPv6 messages.
+                 The value inserted is the value of the leaf
+                 remote-id defined in the instance in the list
+                 subscriber-profiles/subscriber-profile that is
+                 associated with the interface, if any. If this leaf
+                 is unknown, then the option
+                 remote-ID will be generated according to the syntax
+                 defined in the leaf default-remote-id-syntax.";
+              reference
+                "RFC 4649 - Section 4";
+            }
+            enum vendor-specific-information {
+              description
+                "Add access loop characteristics (code 17) to the
+                 relayed (RELAY-FORW) DHCPv6 messages. The content of
+                 the option is controlled via the leaf
+                 access-loop-characteristics.";
+              reference
+                "TR-177 - R12";
+            }
+                       }
+                 }
+
+         }
+}
+
+

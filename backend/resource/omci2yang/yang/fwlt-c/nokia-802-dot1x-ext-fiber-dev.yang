@@ -1,0 +1,225 @@
+module nokia-802-dot1x-ext-fiber-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+            + "nokia-802-dot1x-ext-fiber-dev";
+
+  prefix nokia-802-dot1x-ext-fiber-dev;
+
+  import ietf-interfaces {
+    prefix "if";
+  }
+
+  import ietf-system {
+    prefix "sys";
+  }
+
+  import ieee802-dot1x {
+    prefix dot1x;
+  }
+
+  import nokia-802-dot1x-ext {
+    prefix nokia-dot1x-ext;
+  }
+
+  import bbf-xponvani {
+    prefix bbf-xponvani;
+  }
+
+  import nokia-sdan-olt-v-enet {
+    prefix nokia-olt-v-enet;
+  }
+
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG deviations on top
+     of the standard bbf-ancp-interfaces.yang module.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2020, Nokia. All Rights Reserved.";
+
+  revision 2026-06-26 {
+    description
+      "Added must constraint to ensure the combined total of
+       max-number-mac-addresses and max-number-mab-sessions does not
+       exceed 2 for mac-and-mab-based authentication-mode.
+       Deleted the default value of max-number-mab-sessions.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2022-05-13 {
+    description
+      "Replace default values for tx-period and
+       initiate-authentication-request.";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2022-01-28 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific";
+  }
+
+  deviation "/sys:system/dot1x:pae-system/"
+          + "nokia-dot1x-ext:authentication-server" {
+    description
+      "Local User Authentication server is not supported in current
+       feature scope.";
+    deviate replace {
+      type enumeration {
+        enum radius {
+          value  2;
+          description
+            "Indicates that a user will be authenticated using radius
+             communication to a remote server.";
+        }
+      }
+    }
+  }
+  deviation "/sys:system/dot1x:pae-system/"
+          + "nokia-dot1x-ext:authentication-failure-threshold" {
+    description
+      "No support for system level authentication-failure-threshold
+       in current feature scope.";
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces/if:interface/dot1x:pae/"
+          + "nokia-dot1x-ext:users" {
+    description
+      "Local User Authentication server is not supported in current
+       feature scope.";
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces/if:interface/dot1x:pae/"
+          + "nokia-dot1x-ext:ext-authenticator/"
+          + "nokia-dot1x-ext:response-identity-period" {
+    description
+      "Local User Authentication server is not supported in current
+       feature scope.";
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces/if:interface/dot1x:pae/"
+          + "nokia-dot1x-ext:ext-authenticator/"
+          + "nokia-dot1x-ext:response-challenge-period" {
+    description
+      "Local User Authentication server is not supported in current
+       feature scope.";
+    deviate not-supported;
+  }
+
+  deviation "/sys:system/dot1x:pae-system/"
+          + "nokia-dot1x-ext:authentication-mode" {
+    description
+      "No support to enable system authentication-mode in current
+       feature scope.";
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces-state/if:interface/nokia-dot1x-ext:pae/nokia-dot1x-ext:users" {
+    description
+      "Local User Authentication server is not supported in current
+       feature scope.";
+    deviate not-supported;
+  }
+  deviation "/if:interfaces/if:interface/dot1x:pae/"
+          + "nokia-dot1x-ext:ext-authenticator/nokia-dot1x-ext:supplicant-timeout" {
+    description
+      "Supplicant timeout based on system level authentication server
+       and system level authentication mode is not supported in current
+       feature scope.";
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces/if:interface/dot1x:pae/nokia-dot1x-ext:ext-authenticator"{
+    deviate add {
+      must "((boolean(current()/nokia-dot1x-ext:signalling-channel) and boolean(current()/../../bbf-xponvani:olt-v-enet/nokia-olt-v-enet:uni-name) and (current()/../dot1x:port-capabilities/dot1x:auth = 'true'))"
+    + " or ( not(boolean(current()/nokia-dot1x-ext:signalling-channel)) and not(boolean(current()/../../bbf-xponvani:olt-v-enet/nokia-olt-v-enet:uni-name)) and (current()/../dot1x:port-capabilities/dot1x:auth = 'false')))"
+      {
+         error-message " signalling-channel and uni-name must be configured(or unconfigured) when dot1x enable(or disable) on olt-v-enet interface.";
+         description "signalling-channel and uni-name must be configured(or unconfigured) when dot1x enable(or disable) on olt-v-enet interface.";
+      }
+      must "not(current()/nokia-dot1x-ext:authentication-mode = "
+        + "'mac-and-mab-based') or "
+        + "(sum(current()/nokia-dot1x-ext:max-number-mac-addresses) + "
+        + "sum(current()/nokia-dot1x-ext:max-number-mab-sessions) <= 2)" {
+        error-message
+          "max number of sessions received: the total of "
+        + "max-number-mac-addresses and max-number-mab-sessions "
+        + "must not exceed 2 for mac-and-mab-based authentication-mode";
+        description
+          "Total of max-number-mac-addresses and max-number-mab-sessions "
+        + "must not exceed 2 for mac-and-mab-based authentication-mode.";
+      }
+    }
+  }
+  deviation "/if:interfaces/if:interface/dot1x:pae/nokia-dot1x-ext:"
+          + "ext-authenticator/nokia-dot1x-ext:initiate-authentication-request" {
+   description "Authentication request initiation is enabled by default.";
+   deviate replace {
+     default "true";
+   }
+  }
+  deviation "/if:interfaces/if:interface/dot1x:pae/nokia-dot1x-ext:"
+          + "ext-authenticator/nokia-dot1x-ext:tx-period" {
+    description "Tx period has a default value of 30 seconds.";
+    deviate replace {
+      default "30";
+    }
+  }
+  deviation "/if:interfaces/if:interface/dot1x:pae/nokia-dot1x-ext:"
+          + "ext-authenticator/nokia-dot1x-ext:max-number-mab-sessions" {
+    description
+      "The value is present in the data store only if it is
+       explicitly configured.";
+    deviate delete {
+      default "1";
+    }
+  }
+}

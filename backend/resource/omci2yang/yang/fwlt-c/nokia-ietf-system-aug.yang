@@ -1,0 +1,1441 @@
+module nokia-ietf-system-aug {
+  yang-version "1.1";
+  namespace
+    "http://www.nokia.com/Fixed-Networks/BBA/yang/nokia-ietf-system-aug";
+
+  prefix nokia-ietf-system-aug;
+
+  import ietf-system {
+    prefix sys;
+  }
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  import ietf-netconf-acm {
+    prefix nacm;
+  }
+
+  import ietf-inet-types {
+    prefix inet;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA IETF/System YANG module supporting
+     deviations on top of standard.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2024, Nokia. All Rights Reserved.";
+
+  revision 2026-09-01 {
+    description
+      "Add auto-lock-board-on-upgrade-failure with a YANG feature flag.";
+    reference
+      "Nokia specific.";
+  }
+
+  revision 2026-04-01 {
+    description "
+     Do not allow # as keystring."; 
+     reference
+      "Nokia specific.";
+  }
+  
+  revision 2026-02-12 {
+    description "
+     Add pma-db-version 
+     Remove start-up-control container.";
+     reference
+      "Nokia specific.";
+  }
+  
+  revision 2025-05-01 {
+    description
+      "Add ntp debug container";
+    reference
+      "Nokia specific.";
+  }
+  
+  revision 2024-10-09 {
+    description
+      "Add parameters enable and time to rollback incase of connectivity loss during application software upgrade";
+    reference
+      "Nokia specific.";
+  }
+
+  revision 2023-12-08 {
+    description
+      "Add production-serial-number leaf. Updated description";
+    reference
+      "BBN-179927";
+  }
+
+  revision 2023-08-15 {
+    description "Add cli ssh port.";
+    reference "Nokia specific";
+  }
+  
+  revision 2023-03-30 {
+    description "Solve yang errors.";
+    reference "Nokia specific";
+  }
+
+  revision 2023-03-20 {
+    description
+      "Update description statements of containers";
+    reference
+      "Nokia specific";
+  }
+  
+  revision 2022-12-13 {
+    description
+      "Update System IP description";
+    reference
+      "BBN-87695";
+  }
+
+  revision 2022-09-20 {
+    description
+      "Add System IP";
+    reference
+      "BBN-87695";
+  }
+
+  revision 2022-06-22 {
+    description
+      "Add volatile-storage container.";
+    reference
+      "3HH-91258-AGAA-DFZZA-01P13, sec. 2.";
+  }
+
+  revision 2022-05-30 {
+    description
+      "Change default value CLI over Lemi to true";
+    reference
+    "TBD.";
+  }
+
+  revision 2021-12-06 {
+    description
+      "Add system uptime leaf.";
+    reference
+      "3HH-12369-0987-DFZZA/BBN-2182 Flow statistics collection on Lightspan SF-8M";
+  }
+
+  revision 2021-10-15 {
+    description
+      "Remove managemnt channel enabled check, replaced by explicit deviations ";
+    reference
+    "compile with no feature set";
+  }
+
+  revision 2021-09-19 {
+    description
+      "Add debug UART open/close for the USB debug port ";
+    reference
+    "BBN-789 USB security improvement";
+  }
+
+  revision 2021-07-30 {
+    description
+      "Added missing descriptions for must-statements.";
+    reference
+      "Nokia specific.";
+  }
+
+  revision 2021-07-27 {
+    description
+      "Import ietf-system with standard prefix";
+    reference
+    "TBD";
+  }
+
+  revision 2021-06-19 {
+    description
+      "Add NTP authentication";
+    reference
+    "TBD";
+  }
+
+  revision 2021-05-18 {
+    description
+      "Add DUID leaf.";
+    reference
+      "3FE-62898-8010-DFZZA-01P01, sec. 6.2.";
+  }
+
+  revision 2020-04-18 {
+    description
+      "Add management container";
+    reference
+      "3HH-90304-AGAA-DFZZA-ALU02642074 Management container added";
+  }
+
+  revision 2018-06-06 {
+    description
+      "Add minpoll and maxpoll definition for ntp server.
+       Add ntp peer state definition.
+       Added nacm:default-deny-all extension for action
+       /system/clock/set-current-datetime";
+    reference
+      "3HH-03782-AAAA-DFZZA-01P28-Netconf_YANG Management
+       FD: SDN-MGNT-SYS-NTP-4, SDN-MGNT-SYS-NTP-5, SDN-MGNT-SYS-NTP-6,
+       SDN-MGNT-SYS-NTP-7";
+  }
+
+  revision 2016-08-31 {
+    description
+      "Initial revision.";
+    reference
+      "TBD";
+  }
+
+  feature local-serial-port {
+     description
+     "This feature means the device has a serial port that can be used by an installer to manage the device.";
+  }
+
+  feature local-ethernet-port {
+     description
+     "This feature means the device has an ethernet port that can be used by an installer to manage the device.
+      The ethernet port has a fixed MAC address and on top of it a fixed IP 192.168.1.1 for operator access and a fixed IP 169.254.0.1 for vendor debug access.";
+  }
+
+  feature cli-over-telnet {
+      description
+      "This feature means the device support CLI acces over telnet.
+       This feature is only active on specific products as it's not a secured access";
+  }
+
+  feature netconf-over-tls {
+      description
+      "This feature means the device supports RFC7589.
+       This feature is currently not supported, TLS only supported as part of call home";
+  }
+
+  feature managed-start-up-datastore {
+	status deprecated;
+      description
+      "IETF RFC 6241 defines multiple capabilities to handle datastores.
+       One of them is the capability to use a 'startup' datastore next to the running datastore.
+       When the device does not support the 'startup' datastore, then the question is with which
+       datastore does the device start up? This feature gives some NETCONF-YANG client control on this.";
+  }
+
+  feature local-debug-uart-port {
+      description
+      "This feature means the device supports the debug interface
+       - uart over USB, the panel name at NT board is CRAFT in
+       LMNT-A/B, debug in LANT-A, and USB in FANT-G/H, ...
+       And internally they all use uart portocol for trace log out.
+       This feature is only active on specific products as it's not
+       a secured access";
+  }
+
+   feature region-control {
+      description
+      "This feature means device support the customer to configure which region this device should be working.";
+  }
+
+  feature volatile-storage {
+      description "Whether the volatile datastore and/or volatile logging can be enabled on board";
+  }
+
+  feature auto-lock-board-on-upgrade-failure {
+    description
+      "Enables configuration of auto-lock when a board fails
+      during software upgrade. When this feature is not
+      advertised, the auto-lock container is not present.";
+  }  
+
+  typedef poll-interval {
+    type enumeration {
+      enum poll-16sec {
+        value 4;
+          description "The polling interval is 16 seconds, corresponding to the
+                       value of 4 in the poll field of NTP packet expressed in
+                       the power of 2.";
+      }
+      enum poll-32sec {
+        value 5;
+          description "The polling interval is 32 seconds, corresponding to the
+                       value of 5 in the poll field of NTP packet expressed in
+                       the power of 2.";
+      }
+      enum poll-1min4sec {
+        value 6;
+          description "The polling interval is 64 seconds, corresponding to the
+                       value of 6 in the poll field of NTP packet expressed in
+                       the power of 2.";
+      }
+      enum poll-2min8sec {
+        value 7;
+          description "The polling interval is 128 seconds, corresponding to the
+                       value of 7 in the poll field of NTP packet expressed in
+                       the power of 2.";
+      }
+      enum poll-4min16sec {
+        value 8;
+          description "The polling interval is 256 seconds, corresponding to the
+                       value of 8 in the poll field of NTP packet expressed in
+                       the power of 2.";
+      }
+      enum poll-8min32sec {
+        value 9;
+          description "The polling interval is 512 seconds, corresponding to the
+                       value of 9 in the poll field of NTP packet expressed in
+                       the power of 2.";
+      }
+      enum poll-17min4sec {
+        value 10;
+          description "The polling interval is 1024 seconds, corresponding to the
+                       value of 10 in the poll field of NTP packet expressed in
+                       the power of 2.";
+      }
+      enum poll-34min8sec {
+        value 11;
+          description "The polling interval is 2048 seconds, corresponding to the
+                       value of 11 in the poll field of NTP packet expressed in
+                       the power of 2.";
+      }
+      enum poll-1hour8min16sec {
+        value 12;
+          description "The polling interval is 4096 seconds, corresponding to the
+                       value of 12 in the poll field of NTP packet expressed in
+                       the power of 2.";
+      }
+      enum poll-2hour16min32sec {
+        value 13;
+          description "The polling interval is 8192 seconds, corresponding to the
+                       value of 13 in the poll field of NTP packet expressed in
+                       the power of 2.";
+      }
+      enum poll-4hour33min4sec {
+        value 14;
+          description "The polling interval is 16384 seconds, corresponding to the
+                       value of 14 in the poll field of NTP packet expressed in
+                       the power of 2.";
+      }
+      enum poll-9hour6min8sec {
+        value 15;
+          description "The polling interval is 32768 seconds, corresponding to the
+                       value of 15 in the poll field of NTP packet expressed in
+                       the power of 2.";
+      }
+      enum poll-18hour12min16sec {
+        value 16;
+          description "The polling interval is 65536 seconds, corresponding to the
+                       value of 16 in the poll field of NTP packet expressed in
+                       the power of 2.";
+      }
+      enum poll-36hour24min32sec {
+        value 17;
+          description "The polling interval is 131072 seconds, corresponding to the
+                       value of 12 in the poll field of NTP packet expressed in
+                       the power of 2.";
+      }
+    }
+    description "The polling interval expressed in the power of 2.";
+  }
+
+  typedef select-status  {
+      type enumeration {
+        enum  reject {
+          description "discarded as not valid." ;
+        }
+        enum  falsetick {
+          description "discarded by intersection algorithm." ;
+        }
+        enum excess  {
+          description "discarded by table overflow." ;
+        }
+        enum outlier {
+          description "discarded by the cluster algorithm." ;
+        }
+        enum candidate {
+          description "included by the combine algorithm." ;
+        }
+        enum backup {
+          description " backup (more than tos maxclock sources)." ;
+        }
+        enum sys-peer  {
+          description "system peer." ;
+        }
+        enum pps-peer {
+          description "PPS peer (when the prefer peer is valid)." ;
+        }
+     }
+     description "This type define the value of current selection status indicated by
+                 the selection field.";
+  }
+
+  typedef peer-type {
+    type enumeration {
+      enum unicast-manycast-client {
+        description "Unicast or manycast client.";
+      }
+      enum broadcast-multicast-client {
+        description "Broadcast or multicast client.";
+      }
+      enum local {
+        description "Local (reference clock).";
+      }
+      enum symmetric {
+        description "Symmetric (peer).";
+      }
+      enum manycast-server {
+        description "Manycast server.";
+      }
+      enum broadcast-server {
+        description "Broadcast server.";
+      }
+      enum multicast-server {
+        description "Multicast server.";
+      }
+    }
+    description "The type of the NTP peer.";
+  }
+
+ typedef peer-auth-status {
+     type enumeration {
+
+      enum "no" {
+        value 0;
+        description
+          "no authentication at client/server";
+      }
+      enum "ok" {
+        value 1;
+        description
+          "Authentication verification succeeded";
+      }
+       enum "bad" {
+        value 2;
+        description
+          "Authentication verification failed";
+      }
+    }
+    description
+      "Status of authenticating with peer or server";
+  }
+
+
+
+  typedef peer-event {
+    type enumeration {
+     enum "unspecified" {
+        value 0;
+        description
+          "unspecified";
+      }
+      enum "mobilize" {
+        value 1;
+        description
+          "association mobilized";
+      }
+      enum "demobilize" {
+        value 2;
+        description
+          "association demobilized";
+      }
+      enum "unreachable" {
+        value 3;
+        description
+          "peer unreachable (peer.reach was nonzero now zero)";
+      }
+      enum "reachable" {
+        value 4;
+        description
+          "server reachable (peer.reach was zero now nonzero)";
+      }
+      enum "restart" {
+        value 5;
+        description
+          "association restarted or timed out";
+      }
+      enum "no-reply" {
+        value 6;
+        description
+          "no reply (only used with one-shot clock set command)";
+      }
+      enum "rate-exceeded" {
+        value 7;
+        description
+          "peer rate limiy exceeded (kiss code RATE received)";
+      }
+      enum "access-denied" {
+        value 8;
+        description
+          "access denied (kiss code DENY received)";
+      }
+      enum "leap-armed" {
+        value 9;
+        description
+          "leap second insertion/deletion at months end armed by peer vote";
+      }
+      enum "sys-peer" {
+        value 10;
+        description
+          "become system peer (sys.peer)";
+      }
+      enum "clock-alarm" {
+        value 11;
+        description
+          "clock tick errors";
+      }
+      enum "bad-auth" {
+        value 12;
+        description
+          "authentication failed";
+      }
+      enum "popcorn" {
+        value 13;
+        description
+          "Popcorn spike suppressed by peer clock filter register";
+      }
+      enum "interleave-mode" {
+        value 14;
+        description
+          "entering interleaved mode";
+      }
+      enum "interleave-error" {
+        value 15;
+        description
+          "recovering from interleave error";
+      }
+    }
+    description
+      "Event received by device and sent by peer";
+  }
+
+  typedef region-type {
+     type enumeration {
+
+      enum "ansi" {
+        value 0;
+        description
+          "The device follow ANSI standard working in North America area";
+      }
+      enum "etsi" {
+        value 1;
+        description
+          "The device follow ETSI standard working in Europe/Asia area";
+      }
+    }
+    description
+      "The type to indicate the region device should be working";
+  }
+
+  typedef volatile-storage-type  {
+    type enumeration {
+      enum "non-volatile-datastore-and-non-volatile-logging" {
+        value 1;
+        description "Neither datastore nor logging is volatile";
+      }
+      enum "volatile-datastore" {
+        value 2;
+        description "datastore is volatile. Logging is not volatile";
+      }
+      enum "volatile-datastore-and-logging" {
+        value 3;
+        description "Both datastore and logging are volatile";
+      }
+    }
+    description "The volatile storage type indicates which data or information to be volatile or non-volatile. With volatile, it is expected that data, logging or any other info within the context of the storage-type is NOT being preserved during a power outage of the systems.";
+  }
+
+  identity ntp-active {
+         description
+           "Defined to return as error-app-tag when set-curent-datetime and ntp is active";
+  }
+
+  /* crypto-algorithm */
+  identity crypto-algorithm {
+    description
+      "Base identity of cryptographic algorithm options.";
+   }
+
+  identity md5 {
+    base crypto-algorithm;
+    description
+      "The MD5 algorithm. Note that RFC 8573
+       deprecates the use of MD5-based authentication.";
+  }
+
+  identity ripemd160 {
+    base crypto-algorithm;
+    description
+      "The RIPEMD160 algorithm.";
+  }
+
+  identity sha1 {
+    base crypto-algorithm;
+    description
+      "The SHA1 algorithm.";
+  }
+
+  identity sha224 {
+    base crypto-algorithm;
+    description
+      "The SHA224 algorithm.";
+  }
+
+  identity sha256 {
+      base crypto-algorithm;
+    description
+      "SHA256 authentication algorithm.";
+  }
+
+  identity sha384 {
+      base crypto-algorithm;
+    description
+      "SHA384 authentication algorithm.";
+  }
+
+  identity sha512 {
+      base crypto-algorithm;
+    description
+      "SHA512 authentication algorithm.";
+  }
+
+  identity aes128cmac {
+    base crypto-algorithm;
+    description
+      "The AES-CMAC algorithm - required by
+       RFC 8573 for MAC for the NTP";
+    reference
+      "RFC 4493: The AES-CMAC Algorithm";
+  }
+
+   /* profiles defined in ietf-system.yang         */
+   augment "/sys:system/sys:dns-resolver/sys:options" {
+        leaf ndots {
+                type uint8 {
+                range "1..15";
+                }
+                default "1";
+                description
+                     "Sets a threshold for the number of dots which must
+                     appear in a name given to res_query(3) (see
+                     resolver(3)) before an initial absolute query will be
+                     made.  The default for n is 1, meaning that if there
+                     are any dots in a name, the name will be tried first as
+                     an absolute name before any search list elements are
+                     appended to it.  The value for this option is silently
+                     capped to 15.";
+        }
+        description "Minimun number of dots in a domain name to be considered initially as fully qualified.";
+     }
+
+  augment "/sys:system/sys:clock" {
+    action set-current-datetime {
+      nacm:default-deny-all;
+      description
+        "Set the /system-state/clock/current-datetime leaf
+         to the specified value.
+
+         If the system is using NTP (i.e., /system/ntp/enabled
+         is set to 'true'), then this operation will fail with
+         error-tag 'operation-failed' and error-app-tag value of
+         'ntp-active'.";
+      input {
+        leaf current-datetime {
+          type yang:date-and-time;
+          mandatory true;
+          description
+            "The current system date and time.";
+        }
+      }
+    }
+    description "Set the system's current date in the format of RFC 3339, sec.5.6.";
+  }
+
+  augment "/sys:system" {
+    container volatile-storage {
+     if-feature volatile-storage;
+     description "configure system storage of data";
+      action set {
+        description
+        "Set the /system/volatile-storage/set/type to the specified value.";
+        input {
+          leaf type {
+            type volatile-storage-type;
+            mandatory true;
+            description "The type of volatile storage to set.";
+          }
+        }
+      }
+    }
+    description "Set the type of volatile storage for the device.";
+  }
+
+    augment "/sys:system-state/sys:platform" {
+        leaf software-release {
+            type string;
+            description
+                "A vendor-specific identifier string representing
+                the release in use.";
+            reference
+                "IEEE Std 1003.1-2008 ";
+        }
+        leaf duid {
+          type string;
+          description
+            "The DUID identifier of this host.
+
+             Actually this identifier is the host's IDevID as used in the X.509
+             certificate for Call-Home (BBF TR-301 Issue 2, Corrig. 1,
+             sec. 16.5.1.3).  However it has a one-to-one correspondence to the
+             true DUID identifier.";
+
+          reference
+            "RFC 8415 sec. 11.3, BBF TR-301 issue 2 corrigendum 1,
+            3FE-62898-8010-DFZZA-01P01";
+        }
+        leaf production-serial-number {
+          type string;
+          description
+            "The device's serial number.";
+          reference
+            "BBN-179927";
+        }
+        description "Platform related info, such as DUID and software version.";
+    }
+
+    augment "/sys:system-state" {
+      container system-ip {
+        config false;
+
+        description
+          "System IP Address";
+
+        leaf ipv4 {
+          type inet:ipv4-address-no-zone;
+            default "0.0.0.0";
+            description
+              "System IPv4 Address. Default value is the 0.0.0.0";
+        }
+        leaf ipv6 {
+          type inet:ipv6-address-no-zone;
+            default "::";
+            description
+              "System IPv6 Address. Default value is the ::";
+        }
+      }
+      description "The system IP address.";
+    }
+
+    augment "/sys:system/sys:ntp" {
+      description
+        "Note that system level settings of iburst, minpoll, maxpoll, authentication are only
+        applicable to NTP servers discovered dynamically via DHCP. The maxdistance is always applicable";
+      leaf maxdist {
+         type decimal64 {
+         fraction-digits 1;
+         range "1 .. 16";
+         }
+         units "seconds";
+         default 1.5 ;
+         description 
+           "Synchronization distance threshold used by the clock selection algorithm. 
+           It can be decreased to improve reliability or increased to synchronize clocks on the Moon or planets.
+           Increase maxdist such that maxdist is greater then the root synchronization distance:
+           i.e. maxdist > (root-delay + delay) / 2 + (root-dispersion + dispersion + jitter)  ";
+      }
+      leaf minpoll {
+        type poll-interval;
+        default poll-1min4sec;
+        description
+          "For dynamic servers, specify the global minimum poll intervals for NTP messages,
+           in seconds as a power of two.  The minimum poll
+           interval defaults to 6 (64 s).";
+      }
+      leaf maxpoll {
+        type poll-interval;
+        must "enum-value(.) <= enum-value(./../maxpoll)" {
+          error-message "ntp: the minpoll should be no larger than maxpoll";
+          description
+            "For dynamic servers, Minimum poll interval for NTP cannot be larger than the maximum
+            poll interval.";
+        }
+        must "enum-value(./../minpoll) <= enum-value(.)" {
+          error-message "ntp: the minpoll should be no larger than maxpoll";
+          description
+            "For dynamic servers, Maximum poll interval for NTP cannot be smaller than the minimum
+            poll interval.";
+        }
+        default poll-17min4sec;
+        description
+          "Specify the global maximum poll intervals for NTP messages,
+           in seconds as a power of two. The maximum poll interval
+           defaults to 10 (1024 s).";
+      }
+      leaf iburst {
+        type boolean;
+          default true;
+          description
+            "Indicates globally whether this server should enable burst
+             synchronization or not.";
+      }
+      container authentication {
+        presence "enables authentication for dynamic servers";
+        description
+          "Configuration of authentication.";
+        choice authentication-type {
+        mandatory true;
+          description
+          "Type of authentication.";
+          case symmetric-key {
+            leaf key-id {
+              type leafref {
+              path "../../nokia-ietf-system-aug:authentication-keys/"
+                + "nokia-ietf-system-aug:key-id";
+              }
+              description
+              "Authentication key id referenced in this association.";
+            }
+          }
+        }
+      }
+      list authentication-keys {
+          key "key-id";
+          nacm:default-deny-all;
+          leaf key-id {
+            type uint16 {
+            range "1..65535";
+            }
+            description
+            "Authentication key identifier.";
+          }
+          leaf algorithm {
+            type identityref {
+            base crypto-algorithm;
+            }
+            mandatory true;
+            description
+            "Authentication algorithm.";
+          }
+          leaf istrusted {
+            type boolean;
+            default true;
+            description
+            "Key-id is trusted or not";
+          }
+          container key {
+            choice key-string-style {
+              mandatory true;
+              description
+              "Key string styles";
+              case keystring {
+                leaf keystring {
+                  type string {
+                    length "1..20";
+                    pattern '[!-"$-~]+';
+                  }
+                  description
+                  "Key string in ASCII format.";
+                }
+              }
+              case hexadecimal {
+                leaf hexadecimal-string {
+                  type string {
+                    length "21..40";
+                    pattern '[a-fA-F0-9]+';
+                  }
+                  description
+                  "Key in hexadecimal string format.";
+                }
+              }
+            }
+            description
+            "The key. Note that RFC 8573 deprecates the use of MD5-based authentication.";
+          }
+          description
+          "List of authentication keys.";
+      }
+    }
+
+    augment "/sys:system/sys:ntp/sys:server" {
+      leaf minpoll {
+        type poll-interval;
+        must "enum-value(.) <= enum-value(./../maxpoll)" {
+          error-message "ntp: the minpoll should be no larger than maxpoll";
+          description
+            "Minimum poll interval for an NTP server cannot be larger than the
+            maximum poll interval.";
+        }
+        default poll-1min4sec;
+        description
+          "Specify the minimum poll intervals for NTP messages,
+           in seconds as a power of two.  The minimum poll
+           interval defaults to 6 (64 s).";
+      }
+      leaf maxpoll {
+        type poll-interval;
+        must "enum-value(./../minpoll) <= enum-value(.)" {
+          error-message "ntp: the minpoll should be no larger than maxpoll";
+          description
+            "Maximum poll interval for an NTP server cannot be smaller than the
+            minimum poll interval.";
+        }
+        default poll-17min4sec;
+        description
+          "Specify the maximum poll intervals for NTP messages,
+           in seconds as a power of two. The maximum poll interval
+           defaults to 10 (1024 s).";
+      }
+      container authentication {
+        presence "enables authentication for configured server";
+        description
+        "Authentication.";
+          choice authentication-type {
+          mandatory true;
+          description
+          "Type of authentication.";
+          case symmetric-key {
+            leaf key-id {
+              type leafref {
+              path "../../../nokia-ietf-system-aug:authentication-keys/"
+                + "nokia-ietf-system-aug:key-id";
+              }
+              description
+              "Authentication key id referenced in this association.";
+            }
+          }
+        }
+      }
+      description "NTP-server related settings, such as polling intervals and authentication key.";
+    }
+
+
+    /*
+    * ntp operational state data nodes, same as the result of command "ntpq -p"
+    */
+    augment "/sys:system-state"  {
+      container volatile-storage {
+        if-feature volatile-storage;
+        config false;
+        leaf type {
+          type volatile-storage-type;
+          description "The type of volatile storage being used.";
+        }
+        description "Current type of volatile storage being used.";
+      }
+      container ntp-state {
+        config false;
+        list peer {
+          key remote;
+          leaf remote {
+            type string {
+              length "1 .. 15";
+            }
+            description "host name (or IP address) of peer.";
+          }
+          leaf select {
+            type  select-status;
+            description "The Select Field (5-7) displays the current selection status.";
+          }
+          
+          leaf refid {
+            type string {
+              length "1 .. 15";
+            }
+            description "association ID or kiss code.";
+          }
+          leaf stratum {
+            type uint8;
+              description "stratum. 1 represent primary server. 2-15 represent
+                           secondary server.";
+          }
+          leaf type {
+            type peer-type;
+            description "unicast-manycast-client: unicast or manycast client,
+                         broadcast-multicast-client: broadcast or multicast client,
+                         local: local (reference clock),
+                         symmetric: symmetric (peer),
+                         manycast-server: manycast server,
+                         broadcast-server: broadcast server,
+                         multicast-server: multicast server";
+          }
+          leaf when {
+            type string {
+              length "1 .. 4";
+            }
+            description "sec/min/hr since last received packet";
+          }
+
+          leaf poll {
+            type string {
+              length "1 .. 4";
+            }
+            description "poll interval";
+          }
+          leaf reach {
+            type string {
+              length "1 .. 3";
+            }
+            description
+                "An 8-bit shift register that tracks packet
+                 generation and receipt.  It is used to determine
+                 whether the server is reachable and the data are
+                 fresh.";
+          }
+          leaf unreach {
+                type uint32;
+                description "unreachable counter, start from zero and icrements when no NTP response received. Reset to 0 when NTP response received";
+          }
+              
+          leaf delay {
+            type decimal64 {
+              fraction-digits 3;
+            }
+             units "milliseconds";
+             description
+              "filter delay: Time in ms between query and response by the server.";
+          }
+          leaf offset {
+            type decimal64 {
+              fraction-digits 3;
+            }
+            units "milliseconds";
+            description
+                "filter offset: Time in ms between system time and NTP time";
+          }
+          leaf jitter {
+            type decimal64 {
+            fraction-digits 3;
+            }
+            units "milliseconds";
+            description 
+              "filter jitter: refers to the amount of drift since the last time a clock was queried.
+               Offset in ms between system time and NTP in the last query";
+          }
+          leaf dispersion {
+           type decimal64 {
+              fraction-digits 3;
+            }
+            units "milliseconds";
+            description
+              "filter dispersion.";
+            }
+          
+         
+          leaf root-delay {
+               type decimal64 {
+                  fraction-digits 3;
+                }
+                units "milliseconds";
+                description
+                 "total roundtrip delay to the primary reference clock";
+          }
+          leaf root-dispersion {
+               type decimal64 {
+                  fraction-digits 3;
+                }
+                units "milliseconds";
+                description
+                  "total root dispersion to the primary reference clock";
+          }
+          
+          leaf conf {
+            type boolean;
+            description
+            "Indicates if this association is configured (true) or dynamically learned (false).";
+          }
+          leaf auth {
+           type peer-auth-status;
+           description " indicates the authentication status";
+          }
+
+          leaf last-event {
+            type peer-event;
+            description "displays the most recent event message" ;
+          }
+          leaf flash {
+                type string {
+                length "1 .. 4";
+                }
+                description "flash code, shows errors found in the last packet received (pkt) and during protocol processing (peer)";
+          }
+              
+          description "The current state of NTP with respect to a specific peer.";
+
+        }
+        description "The current state of NTP with respect to the configured or dynamic peers.";
+      }
+      description "The system state regarding NTP and volatile storage.";
+    }
+
+  augment "/sys:system" {
+    container start-up-control {
+      if-feature managed-start-up-datastore;
+
+	status deprecated;
+      leaf start-up-datastore {
+        type enumeration {
+          enum running-datastore {
+            description
+              "In all situations the device tries to start up with the latest committed
+               running datastore that was available before the startup of the device.
+               This goes together with the device storing the running datastore persistent
+               after each commit. Then the starting up from this latest running datastore
+               also applies after a power-on.
+
+               A loss or corruption of the running datastore can result in an escalation that
+               causes the device to start up with 'default-configuration' data.";
+          }
+          enum default-configuration {
+            description
+              "After a power-on, the device starts up with default data that allows inband
+               management. (This data can be the system default, or it can be the system
+               default adapted to realize inband management in a different way than the
+               system default.) Using this datastore to start-up goes together with the device
+               not storing the running datastore persistent.
+
+               After a software reset, i.e. a partial or full start up of software without
+               power-off/on, the device tries to start up from the running datastore.
+               However, a loss or corruption of the running datastore can also in this
+               situation result in an escalation that causes the device to start up with
+               'default-configuration' data.";
+          }
+        }
+        default running-datastore;
+        description
+          "Indicates how the system shall start up.";
+      }
+      description "Indicates how the system shall start up.";
+    }
+
+  container management {
+     description "configure the allowed management accesses";
+     container netconf {
+     description "enable/disable netconf access over different protocols and interfaces.";
+        container transport {
+        description "transport protocols supported for netconf access.";
+           container ssh {
+           description "netconf access over SSH (RFC6242).";
+              container ip_itf {
+                 description "netconf access over SSH via configured ipForward interface.";
+                 leaf enable {
+                    type boolean;
+                    default true;
+                    description
+                    "Enables/Disables netconf over ssh via any yang configured ipForward interface.";
+                 }
+              }
+              container lemi {
+              if-feature local-ethernet-port;
+                 leaf enable {
+                    type boolean;
+                     default true;
+                     description
+                     "Enables/disables netconf over ssh via lemi.";
+                 }
+                 description "netconf access over SSH via local management interface.";
+              }
+           } //ssh
+
+           container tls {
+           if-feature netconf-over-tls;
+           description "netconf access over TLS (RFC7589).";
+              container ip_itf {
+                 description "netconf access over TLS via configured ipForward interface.";
+                 leaf enable {
+                    type boolean;
+                    default false;
+                    description
+                    "Enables/Disables netconf over ssh via any yang configured ipForward interface.";
+                 }
+              }
+              container lemi {
+              if-feature local-ethernet-port;
+                 leaf enable {
+                    type boolean;
+                    default false;
+                    description
+                    "Enables/disables netconf over ssh via lemi.";
+                 }
+                 description "netconf access over TLS via local management interface.";
+
+              }
+           }
+        }
+     }
+
+     container cli {
+     description "enable/disable command line interface over different protocols and interfaces.";
+        container transport {
+        description "transport protocols supported for cli access.";
+           container ssh {
+           description "cli access over SSH";
+              leaf use_port_22 {
+              type boolean;
+              default false;
+              description "When this parameter is set, then access to eCLI is via port 22 (iso 2024 or 940 )";
+              }
+              container ip_itf {
+                 description "CLI access over SSH via configured ipForward interface.";
+                 leaf enable {
+                    type boolean;
+                    default false;
+                    description
+                    "Enables/Disables CLI over ssh via any yang configured ipForward interface.";
+                 }
+              }
+              container lemi {
+              if-feature local-ethernet-port;
+                 leaf enable {
+                    type boolean;
+                    default true;
+                    description
+                    "Enables/disables CLI over ssh via lemi.";
+                 }
+                 description "CLI access over SSH via local management interface";
+
+              }
+           } // ssh
+           container telnet {
+           if-feature cli-over-telnet;
+           description "cli access over telnet using port 23.";
+              container ip_itf {
+              description "CLI access over TELNET via configured ipForward interface.";
+                 leaf enable {
+                   type boolean;
+                   default false;
+                   description
+                   "Enables/disables CLI over telnet via any yang configured ipForward interface.";
+                 }
+              }
+              container lemi {
+              if-feature local-ethernet-port;
+                 leaf enable {
+                    type boolean;
+                    default false;
+                    description
+                    "Enables/disables CLI over telnet via lemi.";
+                 }
+                description "CLI access over TELNET via local management interface";
+              }
+
+           } // telnet
+        } // transport
+
+        container serial {
+        if-feature local-serial-port;
+           leaf enable {
+              type boolean;
+              default true;
+              description
+              "Enables/disables CLI via serial port.";
+           }
+           description "CLI access over serial port";
+
+        }
+     }
+
+     container debug {
+     description "enable/disable debug over different interfaces; to be used only by vendor of this equipment.";
+        container ip_itf {
+           leaf enable {
+              type boolean;
+              default false;
+              description
+              "Enables/disables debug via any yang configured ipForward interface.";
+           }
+           description "debug access over ssh via configured ipForward interface.";
+        }
+        container lemi {
+        if-feature local-ethernet-port;
+           leaf enable {
+              type boolean;
+              default false;
+              description
+              "Enables/disables debug via lemi.";
+           }
+           description "debug access over ssh via local management interface";
+        }
+     }
+
+     container serial {
+     if-feature local-serial-port;
+        leaf enable {
+           type boolean;
+           default true;
+           description
+           "Enables/disables serial port access for all services.";
+        }
+        description "(Un)Block serial port access.";
+     } // serial
+     container lemi {
+
+     if-feature local-ethernet-port;
+        container operator {
+        description "Operator lemi access options.";
+           leaf enable {
+              type boolean;
+              default true;
+              description
+              "Enables/disables lemi operator access for all services; i.e ip address 192.168.1.1 is added/removed from the interface";
+           }
+           leaf ip_forward {
+              type boolean;
+              default false;
+              description
+              "Enables/disables ip forwarding via Lemi, i.e to allow outgoing access from lemi using SNAT";
+           }
+        }
+        container vendor {
+           description "vendor lemi access options.";
+           leaf enable {
+              type boolean;
+              default true;
+              description
+              "Enables/disables debug vendor access; i.e ip address 169.254.0.1 is added/removed from the interface";
+           }
+        }
+        description "(Un)Block local management interface access.";
+     } // lemi
+     container uart {
+        if-feature local-debug-uart-port;
+        description
+        "Open/close the debug interface of uart port; to be used only
+         by vendor techsupport of this equipment.";
+        nacm:default-deny-all;
+        leaf open {
+           type boolean;
+           default false;
+           description
+           "Open/close the debug port uart-usb.";
+        }
+     } // uart
+
+  } // management
+
+  container region{
+     if-feature region-control;
+     presence "board region type";
+     leaf region {
+         type region-type;
+         mandatory true;
+         description
+         "Set the region this device should be working;
+         etsi:Europe
+         ansi:America.";
+    }
+    description "Configure the device region.";
+  } // region
+  description "Miscellaneous device settings, such as port access management and start-up datastore.";
+
+  } // augment
+
+    augment "/sys:system-state/sys:clock" {
+        leaf sys-up-time {
+            type uint64;
+            units "milliseconds";
+            description
+                "Indicates total measured milliseconds since start of system initialization";
+        }
+        description "Add system uptime.";
+    }
+    augment "/sys:system" {
+        description "augment the software rollback configuration.";
+        container software-upgrade-rollback-on-connectivity-loss {
+           description
+              "Container containing rollback configuration parameters. Rollback applicable only in case of connectivity loss after application software upgrade/migrate/downgrade.";
+           leaf enable {
+             type boolean;
+             default true;
+             description
+                "true indicates rollback on connectivity loss, false indicates no rollback.";
+           }
+           leaf time {
+             type uint8 {
+               range "5..120";
+             }
+             units "minutes";
+             default "20";
+             description
+                "Indicates duration after which application software rollbacks if there is no connectivity,
+                  configured time is in addition to the system startup/initialization time";
+           }
+        }
+    }
+
+    augment "/sys:system" {
+        description "augment for a new leaf pma-db-version";
+ 
+        leaf pma-db-version {
+            type string;
+            description
+                "A vendor-specific identifier representing which version of DB the system is using";
+            reference
+                "Nokia specific";
+        }
+    }
+
+    augment "/sys:system" {
+       description "augment the auto-lock configuration. ";
+       container auto-lock-board-on-upgrade-failure {
+           if-feature auto-lock-board-on-upgrade-failure;
+           description
+              "Container containing auto-lock configuration parameters.
+               When enabled, a board that fails during upgrade is auto-locked:
+               so that board cannot forward traffic and switchover to that board is not allowed.
+               Auto-lock is a device state reached on upgrade failure, not a configuration
+               action similar to lock-protection-group or force-active.
+               same system config to be used for NT sequential upgrade and LT upgrade.";
+           leaf enable {
+             type boolean;
+             default false;
+             description
+                "true enables auto-lock of a failed board during upgrade.
+                 false (default) disables auto-lock for the next upgrade.
+                 Setting this leaf to false does not unlock an already auto-locked board.";
+           }
+        }
+    }
+    
+} // module
+

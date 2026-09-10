@@ -1,0 +1,163 @@
+module nokia-bbf-xponvani-common-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/nokia-bbf-xponvani-common-dev";
+
+  prefix nokia-bbf-xponvani-common-dev;
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import bbf-xponvani{
+    prefix bbf-xponvani;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA IETF/System YANG module supporting
+     deviations on top of standard.";
+
+ revision 2024-05-07 {
+    description
+      "Add not supported for in-service-onu-tune-request.";
+    reference
+      "Nokia Specific.";
+  }
+
+ revision 2022-11-25 {
+    description
+      "Add not supported parameters.";
+    reference
+      "Nokia Specific.";
+  }
+
+ revision 2022-06-02 {
+    description
+      "merge deviation from category xpon to common";
+    reference
+      "Nokia Specific.";
+  }
+  
+  revision 2019-05-09 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia Specific.";
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-xponvani:v-ani/bbf-xponvani:channel-partition" {
+    deviate add {
+      mandatory true;
+    }
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-xponvani:v-ani/bbf-xponvani:preferred-channel-pair" {
+    deviate add {
+      mandatory true;
+    }
+  }
+
+ deviation "/if:interfaces/if:interface/bbf-xponvani:v-ani/bbf-xponvani:expected-registration-id" {
+      deviate replace {
+          type string {
+              pattern "(([2][1-F])|([2][1-f])|([3-6][0-F])|([3-6][0-f])|([7][0-E])|([7][0-e])){0,36}";
+           }
+       }
+  }
+
+  deviation "/if:interfaces-state/if:interface/bbf-xponvani:v-ani/bbf-xponvani:active-defects"{
+    description "This parameter is not supported.";
+    deviate not-supported;
+  } 
+
+  deviation "/if:interfaces-state/if:interface/bbf-xponvani:v-ani/bbf-xponvani:onu-wl-protected"{
+    description "This parameter is not supported.";
+    deviate not-supported;
+  } 
+
+  deviation "/if:interfaces-state/if:interface/bbf-xponvani:v-ani/bbf-xponvani:onu-present-on-this-olt/bbf-xponvani:onu-present-on-this-channel-termination"{
+    description "This parameter is not supported.";
+    deviate not-supported;
+  } 
+  
+  deviation "/if:interfaces-state/if:interface/bbf-xponvani:v-ani/bbf-xponvani:onu-present-on-this-olt/bbf-xponvani:onu-present-on-this-channel-pair"{
+    description "This parameter is not supported.";
+    deviate not-supported;
+  } 
+
+  deviation "/if:interfaces/if:interface/bbf-xponvani:v-ani/bbf-xponvani:in-service-onu-tune-request" {
+      description "This parameter is not supported.";
+      deviate not-supported;
+  }
+
+
+/* Deviation below is just for reference */
+/*
+    deviation "/if:interfaces/if:interface/bbf-xponvani:v-ani/bbf-xponvani:onu-id" {
+        deviate add {
+            must "((current() >= 0 and current() <= 255)
+    				and
+    				(/if:interfaces/if:interface[if:name = current()/../preferred-channel-pair]/bbf-xpon:channel-pair/bbf-xpon:channel-pair-type = 'bbf-xpon-types:ngpon2-twdm'))
+    			or
+    			  ((current() >= 0 and current() <= 127)
+    				and
+    				((/if:interfaces/if:interface[if:name = current()/../preferred-channel-pair]/bbf-xpon:channel-pair/bbf-xpon:channel-pair-type = 'bbf-xpon-types:gpon')
+    			    or
+    			    (/if:interfaces/if:interface[if:name = current()/../preferred-channel-pair]/bbf-xpon:channel-pair/bbf-xpon:channel-pair-type = 'bbf-xpon-types:xgs')))"
+    		{
+                error-message "For NGPON2:The onu-id range is 0~255, for GPON/XGSPON: The onu-id range is 0~127";
+            }
+        }
+    }
+
+    deviation "/if:interfaces/if:interface/bbf-xponvani:v-ani/bbf-xponvani:upstream-channel-speed" {
+        deviate add {
+            must "(current() = 10000000000
+                    and
+                    (/if:interfaces/if:interface[if:name = current()/../preferred-channel-pair]/bbf-xpon:channel-pair/bbf-xpon:channel-pair-type = 'bbf-xpon-types:xgs'
+                    or
+                    /if:interfaces/if:interface[if:name = current()/../preferred-channel-pair]/bbf-xpon:channel-pair/bbf-xpon:channel-pair-type = 'bbf-xpon-types:ngpon2-twdm'))
+                or
+                    (current() = 2500000000
+                    and
+                    /if:interfaces/if:interface[if:name = current()/../preferred-channel-pair]/bbf-xpon:channel-pair/bbf-xpon:channel-pair-type = 'bbf-xpon-types:xgs')
+                or
+                    (current() = 1250000000
+                    and
+                    /if:interfaces/if:interface[if:name = current()/../preferred-channel-pair]/bbf-xpon:channel-pair/bbf-xpon:channel-pair-type = 'bbf-xpon-types:gpon')"
+    		{
+                error-message "For GPON case, only value '1.25G' is supported.For XGSPON case it can be 10G and 2.5G, for NGPON2 case it can be 10G";
+            }
+        }
+    }
+
+    deviation "/if:interfaces/if:interface/bbf-xponvani:v-ani/bbf-xponvani:protection-channel-pair" {
+        deviate add {
+            must "/if:interfaces/if:interface[if:name = current()]/bbf-xpon:channel-pair/bbf-xpon:channel-pair-type = 'bbf-xpon-types:ngpon2-twdm'
+            and
+            /if:interfaces/if:interface[if:name = current()/../bbf-xponvani:preferred-channel-pair]/bbf-xpon:channel-pair/bbf-xpon:channel-pair-type = 'bbf-xpon-types:ngpon2-twdm'" 
+            {
+                error-message "If both a preferred channelpair and protection channelpair are configured, the preferred channelpair and protection channelpair must both be type NGPON2";
+            }
+        }
+    }
+
+    deviation "/if:interfaces/if:interface/bbf-xponvani:v-ani/bbf-xponvani:management-gemport-aes-indicator" {
+        deviate add {
+          must "(current() = 'false')
+            or
+                (current() = 'true'
+                 and
+                 /if:interfaces/if:interface[if:name = current()/../preferred-channel-pair]/bbf-xpon:channel-pair/bbf-xpon:channel-pair-type = 'bbf-xpon-types:gpon')"
+    		{
+                    error-message "For GPON case it can be false and true, for other cases it can be false";
+                }
+        }
+    }
+*/
+}

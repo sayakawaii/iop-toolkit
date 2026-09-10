@@ -1,0 +1,222 @@
+module nokia-ieee802-dot1q-cfm-common-si {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-ieee802-dot1q-cfm-common-si";
+
+  prefix nokia-ieee802-dot1q-cfm-common-si;
+
+  import nokia-sdan-service-impact {
+    prefix nokia-si;
+  }
+
+  import ieee802-dot1q-cfm {
+    prefix dot1q-cfm;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "This module contains a collection of YANG service impact deviations
+     on top of the IEEE DOT1Q CFM YANG module.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2025, Nokia. All Rights Reserved.";
+
+  revision 2025-06-10 {
+    description
+      "Service impact updates for CFM AIS feature.";
+    reference
+      "Nokia Specific.";
+  }
+
+  revision 2025-04-20 {
+    description
+      "Service impact deviations for CFM CCM YANG modifications.";
+    reference
+      "Nokia Specific.";
+  }
+
+  deviation "/dot1q-cfm:cfm/dot1q-cfm:maintenance-domain/dot1q-cfm:md-level" {
+    description
+      "When CCM based failure detection is in use for ERPS, and the CFM MD level parameter is modified,
+      as a consequence it may lead to notifying CCM failure clear(if CCM failure previously notified to ERPS)
+      indication to ERPS and this may result in wrong traffic switch over in the ERPS topology.The CCM failure shall
+      be detected by the remote NE MEP and it may trigger ERPS traffic switch over.
+
+      When AIS feature is supported and in use, and the CFM MD level is modified, as a consequence it may cause a
+      previously shut-down port (due to RX AIS or CCM faults) to come back online.Since the Customer Equipment (CE)
+      may not see any faults, it might route traffic through that port, potentially causing drops on our device.";
+
+    deviate add {
+      nokia-si:service-impact;
+    }
+  }
+
+  deviation "/dot1q-cfm:cfm/dot1q-cfm:maintenance-domain/dot1q-cfm:md-name" {
+    description
+      "When CCM based failure detection is in use for ERPS, and the CFM MD name parameter is modified,
+      as a consequence it shall lead to notifying CCM failure(due to MAID mismatch) to ERPS and this 
+      may result in wrong traffic switch over in the ERPS topology.The CCM failure shall also
+      be detected by the remote NE MEP and it may trigger ERPS traffic switch over.
+
+      When AIS feature is supported and in use, and the CFM MD Name is modified, as a consequence it may cause
+      a previously shut-down port (due to CCM faults) to come back online. Since the Customer Equipment (CE) may
+      not see any faults, it might route traffic through that port, potentially causing drops on our device.";
+
+    deviate add {
+      nokia-si:service-impact;
+    }
+  }
+
+  deviation "/dot1q-cfm:cfm/dot1q-cfm:maintenance-domain/dot1q-cfm:maintenance-association/dot1q-cfm:ma-name" {
+    description
+      "When CCM based failure detection is in use for ERPS, and the CFM MA name parameter is modified,
+      as a consequence it shall lead to notifying CCM failure(due to MAID mismatch) to ERPS and this
+      may result in wrong traffic switch over in the ERPS topology.The CCM failure shall also
+      be detected by the remote NE MEP and it may trigger ERPS traffic switch over.
+
+      When AIS feature is supported and in use, and the CFM MA name is modified, as a consequence it may cause a
+      previously shut-down port (due to CCM faults) to come back online. Since the Customer Equipment (CE) may not see
+      any faults, it might route traffic through that port, potentially causing drops on our device.";
+
+    deviate add {
+      nokia-si:service-impact;
+    }
+  }
+
+  deviation "/dot1q-cfm:cfm/dot1q-cfm:maintenance-group/dot1q-cfm:md-id" {
+    description
+      "When CCM based failure detection is in use for ERPS, and the CFM MD ID parameter is modified,
+      as a consequence it may lead to notifying CCM failure clear(if CCM failure previously notified to ERPS)
+      indication to ERPS and this may result in wrong traffic switch over in the ERPS topology.The CCM failure
+      shall be detected by the remote NE MEP and it may trigger ERPS traffic switch over.
+
+      When AIS feature is supported and in use, and the CFM MD ID is modified, as a consequence it may cause a
+      previously shut-down port (due to RX AIS or CCM faults) to come back online. Since the Customer Equipment (CE)
+      may not see any faults, it might route traffic through that port, potentially causing drops on our device.";
+
+    deviate add {
+      nokia-si:service-impact;
+    }
+  }
+
+  deviation "/dot1q-cfm:cfm/dot1q-cfm:maintenance-group/dot1q-cfm:ma-id" {
+    description
+      "When CCM based failure detection is in use for ERPS, and the CFM MA ID parameter is modified,
+      as a consequence it may lead to notifying CCM failure clear(if CCM failure previously notified to ERPS)
+      indication to ERPS and this may result in wrong traffic switch over in the ERPS topology.The CCM failure
+      shall be detected by the remote NE MEP and it may trigger ERPS traffic switch over.
+
+      When AIS feature is supported and in use, and the CFM MA ID is modified, as a consequence it may cause a previously
+      shut-down port (due to AIS or CCM faults) to come back online. Since the Customer Equipment (CE) may not see
+      any faults, it might route traffic through that port, potentially causing drops on our device.";
+
+    deviate add {
+      nokia-si:service-impact;
+    }
+  }
+
+  deviation "/dot1q-cfm:cfm/dot1q-cfm:maintenance-group/dot1q-cfm:mep/dot1q-cfm:enabled" {
+    description
+      "When CCM based failure detection is in use for ERPS, and the CFM MEP administative parameter is
+      modified to false from true, as a consequence it may lead to notifying CCM failure clear
+      (if CCM failure previously notified to ERPS)indication to ERPS and this may result in wrong traffic
+      switch over in the ERPS topology.The CCM failure shall be detected by the remote NE MEP and
+      it may trigger ERPS traffic switch over.
+
+      When AIS feature is supported and in use, and the CFM MEP administrative state is modified to false, as a
+      consequence it may cause a previously shut-down port (due to AIS or CCM faults) to come back online. Since the
+      Customer Equipment (CE) may not see any faults, it might route traffic through that port, potentially
+      causing drops on our device.";
+
+    deviate add {
+      nokia-si:service-impact;
+    }
+  }
+
+  deviation "/dot1q-cfm:cfm/dot1q-cfm:maintenance-group/dot1q-cfm:mep/dot1q-cfm:continuity-check/dot1q-cfm:ccm-enabled" {
+    description
+      "When CCM based failure detection is in use for ERPS, and the CFM MEP CCM transmission control flag
+      is modified to false from true, as a consequence it may lead to CCM failure detection at the remote
+      NE MEP and the remote NE may trigger traffic switch over in the ERPS topology.";
+    deviate add {
+      nokia-si:service-impact;
+    }
+  }
+
+  deviation "/dot1q-cfm:cfm/dot1q-cfm:maintenance-domain/dot1q-cfm:maintenance-association/dot1q-cfm:maintenance-association-mep" {
+    description
+      "When CCM based failure detection is in use for ERPS, and the remote MEP being monitored is removed from
+      this list, as a consequence it may lead to notifying CCM failure clear
+      (if CCM failure previously notified to ERPS)indication to ERPS and this may result in wrong traffic
+      switch over in the ERPS topology.The CCM failure shall also be detected by the remote NE MEP and
+      it may trigger ERPS traffic switch over.
+
+      When AIS feature is supported and in use, and the remote MEP being monitored is removed from this list, as a
+      consequence it may cause a previously shut-down port (due to AIS or CCM faults) to come back online. Since the Customer
+      Equipment (CE) may not see any faults, it might route traffic through that port, potentially causing drops
+      on our device.";
+
+    deviate add {
+      nokia-si:service-impact;
+    }
+  }
+
+  deviation "/dot1q-cfm:cfm/dot1q-cfm:maintenance-group/dot1q-cfm:mep/dot1q-cfm:direction" {
+    description
+      "When CCM based failure detection is in use for ERPS, and the MEP direction is changed,
+      as a consequence it may lead to notifying CCM failure clear
+      (if CCM failure previously notified to ERPS)indication to ERPS and this may result in wrong traffic
+      switch over in the ERPS topology.The CCM failure shall also be detected by the remote NE MEP and
+      it may trigger ERPS traffic switch over.
+
+      When AIS feature is supported and in use, and the CFM MEP direction is modified, as a consequence it may cause
+      a previously shut-down port (due to AIS or CCM faults) to come back online. Since the Customer Equipment (CE) may
+      not see any faults, it might route traffic through that port, potentially causing drops on our device.";
+
+    deviate add {
+      nokia-si:service-impact;
+    }
+  }
+
+}

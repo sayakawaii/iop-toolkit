@@ -1,0 +1,268 @@
+module nokia-file-transfer-common-dev {
+
+    yang-version 1.1;
+
+    namespace
+        "http://www.nokia.com/Fixed-Networks/BBA/yang/nokia-file-transfer-common-dev";
+
+    prefix nokia-file-transfer-common-dev;
+
+    import nokia-file-transfer {
+        prefix nokia-ft;
+    }
+
+    import iana-tls-cipher-suite-algs {
+        prefix "tlscsa";
+    }
+
+    organization
+        "Nokia";
+
+    contact
+      "Comments or questions about this Nokia YANG module should be
+       directed to <mailto:isam.yang@nokia.com>.";
+
+    description
+      "This module contains a collection of YANG definitions for
+       supporting Nokia specific requirements as applicable to its
+       access network equipment.
+
+       Specifically, this module identifies data that potentially
+       contains private data. Note that this classification is product
+       independent while the support of this data is product dependent.
+       I.e. it might be that data that is identified as private is not
+       supported in a particular product variant.
+
+       This specification is published by Nokia under Non-Disclosure
+       Agreement(s) (NDA) with specific parties and has to be considered
+       as Confidential Information as defined in such NDA. Nokia
+       reserves the right to revise this document for any reason,
+       including but not limited to conformity with standards
+       promulgated by various agencies, utilisation of advances in the
+       state of the technical areas, or the reflection of changes in the
+       design of any equipment, techniques, or procedures described or
+       referred to herein.
+
+       The product specifications and other technical or performance
+       information contained herein are subject to change without
+       notice. Updates of this document will be issued under the above
+       NDA's.
+
+       Nokia makes no representation or warranty, expressed or implied,
+       with respect to the sufficiency, accuracy, or utility of any
+       information or opinion contained herein. Nokia expressly advises
+       that any use of for any purpose or reliance upon this technical
+       reference is at the risk of the user and that Nokia shall not be
+       liable for any damage or injury incurred by any person arising
+       out of the sufficiency, accuracy, or utility of any information
+       or opinion contained herein.
+
+       This document is not to be construed as a suggestion to any
+       manufacturer to modify or change any of its products, nor does
+       this document represent any commitment by Nokia to sell or
+       purchase any product. Nothing contained herein shall be construed
+       as conferring by implication, estoppel, or otherwise any license
+       or right under any patent, whether or not the use of any
+       information herein necessarily employs an invention of any
+       existing or later issued patent.
+
+       Nokia reserves the right not to offer any or all of these
+       products and to withdraw any or all of them at any future time.
+
+       Copyright (C) 2020, Nokia. All Rights Reserved.";
+
+    revision 2025-11-26 {
+        description "Add deviation for supported ciphers";
+        reference "Nokia specific";
+    }
+
+    revision 2025-04-30 {
+      description
+        "lsr2509
+        2025-04-30 Add EST certificate support.";
+      reference
+        "Nokia Specific";
+    }
+
+
+    revision 2024-07-23 {
+      description "Cipher configuration support";
+      reference "Nokia specific.";
+    }
+
+    revision 2023-05-31 {
+      description
+        "fix YANG lint errors.";
+      reference
+        "Nokia Specific";
+    }
+
+    revision 2022-06-01 {
+      description "Support ztp-certificate download";
+      reference "Nokia specific";
+    }
+
+    revision 2021-07-20 {
+      description "adding description field for all deviations";
+      reference "Nokia specific";
+    }
+
+    revision 2020-05-12 {
+      description "adding not-supported deviations";
+      reference "Nokia specific";
+    }
+
+    deviation "/nokia-ft:file-transfer/nokia-ft:techsupport/nokia-ft:upload/nokia-ft:input/nokia-ft:credentials/nokia-ft:certificate/nokia-ft:server-auth" {
+      deviate delete { must 'pinned-ca-certs or pinned-server-certs';}
+    }
+
+    deviation "/nokia-ft:file-transfer/nokia-ft:techsupport/nokia-ft:upload/nokia-ft:input/nokia-ft:credentials/nokia-ft:certificate/nokia-ft:server-auth/nokia-ft:est-certificate-profile" {
+      deviate add {
+        must 'not(../pinned-server-certs) and not(../pinned-ca-certs)' {
+          error-message "Exactly one authentication mechanism (EST certificate profile, Certificate Pinning, or CA pinning) must be specified";
+          description "Specify exactly one authentication mechanism (EST certificate profile, Certificate Pinning, or CA pinning)";
+        }
+      }
+    }
+
+    deviation "/nokia-ft:file-transfer/nokia-ft:techsupport/nokia-ft:upload/nokia-ft:input/nokia-ft:credentials/nokia-ft:certificate/nokia-ft:server-auth/nokia-ft:pinned-ca-certs" {
+      deviate add {
+        must 'not(../pinned-server-certs) and not(../est-certificate-profile)' {
+          error-message "Exactly one authentication mechanism (EST certificate profile, Certificate Pinning, or CA pinning) must be specified";
+          description "Specify exactly one authentication mechanism (EST certificate profile, Certificate Pinning, or CA pinning)";
+        }
+      }
+    }
+
+    deviation "/nokia-ft:file-transfer/nokia-ft:techsupport/nokia-ft:upload/nokia-ft:input/nokia-ft:credentials/nokia-ft:certificate/nokia-ft:server-auth/nokia-ft:pinned-server-certs" {
+      deviate add {
+        must 'not(../est-certificate-profile) and not(../pinned-ca-certs)' {
+          error-message "Exactly one authentication mechanism (EST certificate profile, Certificate Pinning, or CA pinning) must be specified";
+          description "Specify exactly one authentication mechanism (EST certificate profile, Certificate Pinning, or CA pinning)";
+        }
+      }
+    }
+
+    deviation "/nokia-ft:file-transfer/nokia-ft:techsupport/nokia-ft:download/nokia-ft:input/nokia-ft:credentials/nokia-ft:certificate/nokia-ft:server-auth" {
+      deviate delete { must 'pinned-ca-certs or pinned-server-certs';}
+    }
+
+    deviation "/nokia-ft:file-transfer/nokia-ft:techsupport/nokia-ft:download/nokia-ft:input/nokia-ft:credentials/nokia-ft:certificate/nokia-ft:server-auth/nokia-ft:est-certificate-profile" {
+      deviate add {
+        must 'not(../pinned-server-certs) and not(../pinned-ca-certs)' {
+          error-message "Exactly one authentication mechanism (EST certificate profile, Certificate Pinning, or CA pinning) must be specified";
+          description "Specify exactly one authentication mechanism (EST certificate profile, Certificate Pinning, or CA pinning)";
+        }
+      }
+    }
+
+    deviation "/nokia-ft:file-transfer/nokia-ft:techsupport/nokia-ft:download/nokia-ft:input/nokia-ft:credentials/nokia-ft:certificate/nokia-ft:server-auth/nokia-ft:pinned-ca-certs" {
+      deviate add {
+        must 'not(../pinned-server-certs) and not(../est-certificate-profile)' {
+          error-message "Exactly one authentication mechanism (EST certificate profile, Certificate Pinning, or CA pinning) must be specified";
+          description "Specify exactly one authentication mechanism (EST certificate profile, Certificate Pinning, or CA pinning)";
+        }
+      }
+    }
+
+    deviation "/nokia-ft:file-transfer/nokia-ft:techsupport/nokia-ft:download/nokia-ft:input/nokia-ft:credentials/nokia-ft:certificate/nokia-ft:server-auth/nokia-ft:pinned-server-certs" {
+      deviate add {
+        must 'not(../est-certificate-profile) and not(../pinned-ca-certs)' {
+          error-message "Exactly one authentication mechanism (EST certificate profile, Certificate Pinning, or CA pinning) must be specified";
+          description "Specify exactly one authentication mechanism (EST certificate profile, Certificate Pinning, or CA pinning)";
+        }
+      }
+    }
+
+    deviation "/nokia-ft:file-transfer/nokia-ft:techsupport/nokia-ft:upload/nokia-ft:input/nokia-ft:category" {
+      deviate add {
+        must "( (./nokia-ft:category-type = 'nokia-ft:reboot-logs') and"
+             + "(count(./nokia-ft:directory) = 1) ) or "
+             + "(./nokia-ft:category-type != 'nokia-ft:reboot-logs')"{
+          error-message "Atmost one directory should be specified for reboot-logs category";
+          description "Specify the reboot-logs directory";
+        }
+      }
+    }
+
+    //operator
+
+    deviation "/nokia-ft:file-transfer/nokia-ft:upload/nokia-ft:input/nokia-ft:credentials/nokia-ft:certificate/nokia-ft:server-auth" {
+      deviate delete { must 'pinned-ca-certs or pinned-server-certs';}
+    }
+
+    deviation "/nokia-ft:file-transfer/nokia-ft:upload/nokia-ft:input/nokia-ft:credentials/nokia-ft:certificate/nokia-ft:server-auth/nokia-ft:est-certificate-profile" {
+      deviate add {
+        must 'not(../pinned-server-certs) and not(../pinned-ca-certs)' {
+          error-message "Exactly one authentication mechanism (EST certificate profile, Certificate Pinning, or CA pinning) must be specified";
+          description "Specify exactly one authentication mechanism (EST certificate profile, Certificate Pinning, or CA pinning)";
+        }
+      }
+    }
+
+    deviation "/nokia-ft:file-transfer/nokia-ft:upload/nokia-ft:input/nokia-ft:credentials/nokia-ft:certificate/nokia-ft:server-auth/nokia-ft:pinned-ca-certs" {
+      deviate add {
+        must 'not(../pinned-server-certs) and not(../est-certificate-profile)' {
+          error-message "Exactly one authentication mechanism (EST certificate profile, Certificate Pinning, or CA pinning) must be specified";
+          description "Specify exactly one authentication mechanism (EST certificate profile, Certificate Pinning, or CA pinning)";
+        }
+      }
+    }
+
+    deviation "/nokia-ft:file-transfer/nokia-ft:upload/nokia-ft:input/nokia-ft:credentials/nokia-ft:certificate/nokia-ft:server-auth/nokia-ft:pinned-server-certs" {
+      deviate add {
+        must 'not(../est-certificate-profile) and not(../pinned-ca-certs)' {
+          error-message "Exactly one authentication mechanism (EST certificate profile, Certificate Pinning, or CA pinning) must be specified";
+          description "Specify exactly one authentication mechanism (EST certificate profile, Certificate Pinning, or CA pinning)";
+        }
+      }
+    }
+
+    deviation "/nokia-ft:file-transfer/nokia-ft:download/nokia-ft:input/nokia-ft:credentials/nokia-ft:certificate/nokia-ft:server-auth" {
+      deviate delete { must 'pinned-ca-certs or pinned-server-certs';}
+    }
+
+    deviation "/nokia-ft:file-transfer/nokia-ft:download/nokia-ft:input/nokia-ft:credentials/nokia-ft:certificate/nokia-ft:server-auth/nokia-ft:est-certificate-profile" {
+      deviate add {
+        must 'not(../pinned-server-certs) and not(../pinned-ca-certs)' {
+          error-message "Exactly one authentication mechanism (EST certificate profile, Certificate Pinning, or CA pinning) must be specified";
+          description "Specify exactly one authentication mechanism (EST certificate profile, Certificate Pinning, or CA pinning)";
+        }
+      }
+    }
+
+    deviation "/nokia-ft:file-transfer/nokia-ft:download/nokia-ft:input/nokia-ft:credentials/nokia-ft:certificate/nokia-ft:server-auth/nokia-ft:pinned-ca-certs" {
+      deviate add {
+        must 'not(../pinned-server-certs) and not(../est-certificate-profile)' {
+          error-message "Exactly one authentication mechanism (EST certificate profile, Certificate Pinning, or CA pinning) must be specified";
+          description "Specify exactly one authentication mechanism (EST certificate profile, Certificate Pinning, or CA pinning)";
+        }
+      }
+    }
+
+    deviation "/nokia-ft:file-transfer/nokia-ft:download/nokia-ft:input/nokia-ft:credentials/nokia-ft:certificate/nokia-ft:server-auth/nokia-ft:pinned-server-certs" {
+      deviate add {
+        must 'not(../est-certificate-profile) and not(../pinned-ca-certs)' {
+          error-message "Exactly one authentication mechanism (EST certificate profile, Certificate Pinning, or CA pinning) must be specified";
+          description "Specify exactly one authentication mechanism (EST certificate profile, Certificate Pinning, or CA pinning)";
+        }
+      }
+    }
+
+    deviation "/nokia-ft:file-transfer/nokia-ft:tls-client-parameters/nokia-ft:hello-params/nokia-ft:cipher-suites/nokia-ft:cipher-suite" {
+      description "The YANG identifiers of the supported ciphers ordered by descending preference";
+      deviate add {
+        must "(current() = 'tlscsa:tls-aes-256-gcm-sha384' or current() = 'tlscsa:tls-chacha20-poly1305-sha256'"+
+           "or current() = 'tlscsa:tls-aes-128-gcm-sha256' or current() = 'tlscsa:tls-ecdhe-rsa-with-aes-256-gcm-sha384'"+
+           "or current() = 'tlscsa:tls-ecdhe-rsa-with-chacha20-poly1305-sha256' or current() = 'tlscsa:tls-ecdhe-rsa-with-aes-128-gcm-sha256'"+
+           "or current() = 'tlscsa:tls-ecdhe-rsa-with-aes-256-cbc-sha384' or current() = 'tlscsa:tls-ecdhe-rsa-with-aes-256-cbc-sha'"+
+           "or current() = 'tlscsa:tls-rsa-with-aes-256-gcm-sha384' or current() = 'tlscsa:tls-rsa-with-aes-256-cbc-sha256'"+
+           "or current() = 'tlscsa:tls-rsa-with-aes-256-cbc-sha' or current() = 'tlscsa:tls-ecdhe-rsa-with-aes-128-cbc-sha256'"+
+           "or current() = 'tlscsa:tls-ecdhe-rsa-with-aes-128-cbc-sha' or current() = 'tlscsa:tls-rsa-with-aes-128-gcm-sha256'"+
+           "or current() = 'tlscsa:tls-rsa-with-aes-128-cbc-sha256' or current() = 'tlscsa:tls-rsa-with-aes-128-cbc-sha')"{
+            error-message "this cipher is not supported";
+            description "The YANG identifiers of the supported ciphers ordered by descending preference";
+        }
+      }
+    }
+}

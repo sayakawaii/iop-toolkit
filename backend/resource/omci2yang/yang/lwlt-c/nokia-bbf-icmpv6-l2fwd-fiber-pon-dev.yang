@@ -1,0 +1,49 @@
+module nokia-bbf-icmpv6-l2fwd-fiber-pon-dev {
+
+  namespace
+     "urn:bbf:yang:nokia-bbf-icmpv6-l2fwd-fiber-pon-dev";
+
+  prefix  icmpv6-l2fwd-fiber-pon-dev;
+
+  import bbf-icmpv6 {
+      prefix bbf-icmpv6;
+  }
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import bbf-vlan-sub-interface-vector {
+    prefix bbf-vsi-vctr;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA BBF/bbf-icmpv6 YANG module supporting
+     deviations on top of standard.";
+
+
+  revision 2022-03-09 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia internal.";
+  }
+   
+
+  deviation "/if:interfaces/if:interface/bbf-icmpv6:icmpv6" {
+      deviate add{
+        must "((not(boolean(current()/../bbf-vsi-vctr:vector-profile))))"
+		{
+			error-message "protocols can be configured only when there is no vector profile attached to vlan-sub-interface.";
+		}
+	}
+}
+
+}
+

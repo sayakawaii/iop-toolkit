@@ -1,0 +1,70 @@
+module nokia-sdan-ssh-server-frommounted {
+  yang-version 1.1;
+ 
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+           + "nokia-sdan-ssh-server-frommounted";
+ 
+  prefix nokia-sdan-ssh-server-frommounted;
+ 
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+ 
+  organization
+    "Nokia";
+ 
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.mibsupport@nokia.com>.";
+ 
+  description
+    "This module contains a collection of YANG definitions for
+     managing the SSH server on an ONU.
+ 
+     Specifically, this module defines the configuration (the
+     'enabled' leaf), operational state, and the restart action for
+     the ONU SSH server.
+ 
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+ 
+     Copyright (C) 2026, Nokia. All Rights Reserved.";
+ 
+  revision 2026-04-28 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific";
+  }
+ 
+  augment '/onu:onus/onu:onu/onu:fromroot' {
+    description
+      "Augment ONU root with SSH server management.";
+ 
+    list ssh-server {
+      key "name";
+      description
+        "List of SSH server instances on the ONU.";
+ 
+      leaf name {
+        type string;
+        description
+          "The name of the SSH server instance.";
+      }
+ 
+      leaf enabled {
+        type boolean;
+        description
+          "Enables or disables the SSH server service. Setting this to
+           'true' starts the server; setting it to 'false' stops it.";
+      }
+    }
+  }
+}

@@ -1,0 +1,51 @@
+module nokia-bbf-xponani-mounted-eonu-dev {
+  yang-version 1.1;
+  namespace "urn:broadband-forum-org:yang:nokia-bbf-xponani-mounted-eonu-dev";
+  prefix nokia-bbf-xponani-mounted-eonu-dev;
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import bbf-xponani-mounted {
+    prefix bbf-xponani-mounted;
+  }
+  import ietf-interfaces-mounted {
+    prefix if-mounted;
+  }
+
+  organization
+    "Nokia";
+  contact
+    "Nokia";
+  description
+    "This module contains a collection of YANG deviations on top of standard for supporting BBF/bbf-xponani-ani-body YANG module";
+
+  revision 2025-12-09 {
+    description
+      "remove traffic-class deviation";
+    reference "Nokia specific";
+  }
+
+  revision 2022-01-21 {
+    description
+      "Updated xpaths based on latest xponani YANG module";
+    reference "Nokia specific";
+  }
+
+  revision 2021-04-21 {
+    description
+      "Adding deviations for not supported Yang leaves";
+    reference "Nokia specific";
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-xponani-mounted:ani/bbf-xponani-mounted:upstream-fec" {
+    deviate not-supported;
+  }
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-xponani-mounted:ani/bbf-xponani-mounted:management-gemport-aes-indicator" {
+    deviate not-supported;
+  }
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces/if-mounted:interface/bbf-xponani-mounted:ani/bbf-xponani-mounted:onu-id" {
+    deviate not-supported;
+  }
+}

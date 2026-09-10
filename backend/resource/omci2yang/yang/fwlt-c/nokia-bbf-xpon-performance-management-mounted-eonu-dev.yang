@@ -1,0 +1,457 @@
+module nokia-bbf-xpon-performance-management-mounted-eonu-dev {
+  namespace
+    "http://www.nokia.com/Fixed-Networks/BBA/yang/nokia-bbf-xpon-performance-management-mounted-eonu-dev";
+
+
+  prefix nokia-bbf-xpon-performance-management-mounted-eonu-dev;
+
+  import bbf-fiber-onu-emulated-mount {
+    prefix onu;
+  }
+
+  import ietf-interfaces-mounted {
+    prefix if-mounted;
+  }
+
+  import bbf-interfaces-performance-management-mounted {
+    prefix bbf-if-pm-mounted;
+  }
+
+  import bbf-xpon-performance-management-mounted{
+    prefix bbf-xpon-pm-mounted;
+  }
+
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+
+  description
+    "This module contains a collection of YANG deviations on top
+     of standard for supporting BBF/bbf-xpon-performance-management.yang YANG module.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.lic-appsufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2017-2018, Nokia. All Rights Reserved.";
+
+  /* revision */
+  revision 2025-02-14 {
+    description
+      "Removed deviations for lods and utilization containers and, hec-errors and key-errors. Added deviations for unsupported leaves under lods and utilization";
+    reference
+      "BBN-207889";
+
+  }
+
+  revision 2023-07-25 {
+    description
+      "Removed deviations";
+    reference
+      "Nokia specific";
+  }
+  
+  revision 2023-01-06 {
+    description
+      "Included deviations for unsupported leaves";
+    reference
+      "Nokia specific";
+  }
+
+  revision 2022-10-20 {
+    description
+      "Removed deviations for supported leaves";
+    reference
+      "Nokia specific";
+  }
+  
+  revision 2021-04-08 {
+    description
+      "Adding Deviations for not supported Yang leaves";
+    reference
+      "Nokia specific";
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/"
+        + "bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:current/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:lods/bbf-xpon-pm-mounted:restored/bbf-xpon-pm-mounted:precfg-protect-twdm" {
+   description
+       "This deviation assures that bbf-xpon-pm-mounted:lods container leaf precfg-protect-twdm is not supported in pm current counters.";
+    deviate not-supported;
+  }
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/"
+        + "bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:current/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:lods/bbf-xpon-pm-mounted:restored/bbf-xpon-pm-mounted:discretionary-twdm" {
+   description
+
+       "This deviation assures that bbf-xpon-pm-mounted:lods container leaf discretionary-twdm is not supported in pm current counters.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/"
+        + "bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:current/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:lods/bbf-xpon-pm-mounted:onu-reactivation/bbf-xpon-pm-mounted:after-us-hs-fail-precfg-twdm" {
+   description
+       "This deviation assures that bbf-xpon-pm-mounted:lods container leaf after-us-hs-fail-precfg-twdm is not supported in pm current counters.";
+    deviate not-supported;
+  }
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/"
+        + "bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:current/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:lods/bbf-xpon-pm-mounted:onu-reactivation/bbf-xpon-pm-mounted:after-us-hs-fail-discretionary-twdm" {
+   description
+       "This deviation assures that bbf-xpon-pm-mounted:lods container leaf after-us-hs-fail-discretionary-twdm is not supported in pm current counters.";
+    deviate not-supported;
+  }
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/"
+        + "bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:current/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:utilization/bbf-xpon-pm-mounted:bw-not-assigned" {
+   description
+
+       "This deviation assures that utilization container leaf bw-not-assigned is not supported in pm current counters.";
+    deviate not-supported;
+  }
+ 
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/"
+        + "bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:current/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:ploam/"
+        + "bbf-xpon-pm-mounted:sn-grants" {
+	description
+       "This deviation assures that bbf-xpon-pm-mounted:ploam/bbf-xpon-pm-mounted:sn-grants is not supported in pm current counters.";
+    deviate not-supported;
+  }
+ 
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/"
+        + "bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:current/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:ploam/"
+        + "bbf-xpon-pm-mounted:timeouts" {
+	description
+       "This deviation assures that bbf-xpon-pm-mounted:ploam/bbf-xpon-pm-mounted:timeouts is not supported in pm current counters.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/"
+        + "bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:current/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:ploam/"
+        + "bbf-xpon-pm-mounted:dying-gasps" {
+	description
+       "This deviation assures that bbf-xpon-pm-mounted:ploam/bbf-xpon-pm-mounted:dying-gasps is not supported in pm current counters.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/"
+        + "bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:current/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:ploam/"
+        + "bbf-xpon-pm-mounted:downstream-messages/bbf-xpon-pm-mounted:system-profile" {
+	description
+       "This deviation assures that ploam downstream system-profile is not supported in pm current counters.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/"
+        + "bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:current/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:ploam/"
+        + "bbf-xpon-pm-mounted:downstream-messages/bbf-xpon-pm-mounted:channel-profile" {
+	description
+       "This deviation assures that ploam downstream channel-profile is not supported in pm current counters.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/"
+        + "bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:current/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:ploam/"
+        + "bbf-xpon-pm-mounted:downstream-messages/bbf-xpon-pm-mounted:protect-control" {
+	description
+       "This deviation assures that ploam downstream protect-control is not supported in pm current counters.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/"
+        + "bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:current/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:ploam/"
+        + "bbf-xpon-pm-mounted:downstream-messages/bbf-xpon-pm-mounted:adjust-tx-wavelength" {
+	description
+       "This deviation assures that ploam downstream adjust-tx-wavelength is not supported in pm current counters.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/"
+        + "bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:current/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:ploam/"
+        + "bbf-xpon-pm-mounted:downstream-messages/bbf-xpon-pm-mounted:tuning-control" {
+	description
+       "This deviation assures that ploam downstream tuning-control is not supported in pm current counters.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/"
+        + "bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:current/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:ploam/"
+        + "bbf-xpon-pm-mounted:calibration-request" {
+	description
+       "This deviation assures that ploam calibration-request is not supported in pm current counters.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/"
+        + "bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:current/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:ploam/"
+        + "bbf-xpon-pm-mounted:upstream-messages/bbf-xpon-pm-mounted:serial-number-onu/bbf-xpon-pm-mounted:amcc" {
+	description
+       "This deviation assures that ploam upstream amcc message count is not supported in pm current counters.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/"
+        + "bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:current/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:ploam/"
+        + "bbf-xpon-pm-mounted:upstream-messages/bbf-xpon-pm-mounted:tuning-response" {
+	description
+       "This deviation assures that ploam upstream tuning-response message is not supported in pm current counters.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/"
+        + "bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:current/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:ploam/bbf-xpon-pm-mounted:upstream-messages/"
+        + "bbf-xpon-pm-mounted:power-consumption-report" {
+        description
+           "This deviation assures that ploam upstream power-consumption-report is not supported in pm current counters.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/"
+        + "bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:current/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:activation" {
+	description
+       "This deviation assures that bbf-xpon-pm-mounted:activation is not supported in pm current counters.";
+    deviate not-supported;
+  }
+ 
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/"
+        + "bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:current/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:tuning-control" {
+	description
+       "This deviation assures that bbf-xpon-pm-mounted:tuning-control is not supported in pm current counters.";
+    deviate not-supported;
+  }
+ 
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/"
+        + "bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:current/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:power-levelling" {
+	description
+       "This deviation assures that bbf-xpon-pm-mounted:power-levelling is not supported in pm current counters.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/"
+        + "bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:current/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:omci/"
+        + "bbf-xpon-pm-mounted:autonomus-messages" {
+	description
+       "This deviation assures that ploam OMCI autonomus-messages counter is not supported in pm current counters.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/"
+        + "bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:current/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:power-monitoring" {
+	description
+       "This deviation assures that bbf-xpon-pm-mounted:power-monitoring is not supported in pm current counters.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/"
+        + "bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:current/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:energy-conservation" {
+	description
+       "This deviation assures that bbf-xpon-pm-mounted:energy-conservation is not supported in pm current counters.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/"
+        + "bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:history/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:lods/bbf-xpon-pm-mounted:restored/bbf-xpon-pm-mounted:precfg-protect-twdm" {
+   description
+       "This deviation assures that bbf-xpon-pm-mounted:lods container leaf precfg-protect-twdm is not supported in pm history counters.";
+    deviate not-supported;
+  }
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/"
+        + "bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:history/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:lods/bbf-xpon-pm-mounted:restored/bbf-xpon-pm-mounted:discretionary-twdm" {
+   description
+
+       "This deviation assures that bbf-xpon-pm-mounted:lods container leaf discretionary-twdm is not supported in pm history counters.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/"
+        + "bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:history/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:lods/bbf-xpon-pm-mounted:onu-reactivation/bbf-xpon-pm-mounted:after-us-hs-fail-precfg-twdm" {
+   description
+       "This deviation assures that bbf-xpon-pm-mounted:lods container leaf after-us-hs-fail-precfg-twdm is not supported in pm history counters.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/"
+        + "bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:history/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:lods/bbf-xpon-pm-mounted:onu-reactivation/bbf-xpon-pm-mounted:after-us-hs-fail-discretionary-twdm" {
+   description
+       "This deviation assures that bbf-xpon-pm-mounted:lods container leaf after-us-hs-fail-discretionary-twdm is not supported in pm history counters.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/"
+        + "bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:history/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:utilization/bbf-xpon-pm-mounted:bw-not-assigned" {
+   description
+       "This deviation assures that utilization container leaf bw-not-assigned is not supported in pm history counters.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/"
+        + "bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:history/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:ploam/"
+        + "bbf-xpon-pm-mounted:sn-grants" {
+        description
+       "This deviation assures that bbf-xpon-pm-mounted:ploam/bbf-xpon-pm-mounted:sn-grants is not supported in pm history counters.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/"
+        + "bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:history/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:ploam/"
+        + "bbf-xpon-pm-mounted:timeouts" {
+        description
+       "This deviation assures that bbf-xpon-pm-mounted:ploam/bbf-xpon-pm-mounted:timeouts is not supported in pm history counters.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/"
+        + "bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:history/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:ploam/"
+        + "bbf-xpon-pm-mounted:dying-gasps" {
+        description
+       "This deviation assures that bbf-xpon-pm-mounted:ploam/bbf-xpon-pm-mounted:dying-gasps is not supported in pm history counters.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/"
+        + "bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:history/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:ploam/"
+        + "bbf-xpon-pm-mounted:downstream-messages/bbf-xpon-pm-mounted:system-profile" {
+        description
+       "This deviation assures that ploam downstream system-profile is not supported in pm history counters.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/"
+        + "bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:history/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:ploam/"
+        + "bbf-xpon-pm-mounted:downstream-messages/bbf-xpon-pm-mounted:channel-profile" {
+        description
+       "This deviation assures that ploam downstream channel-profile is not supported in pm history counters.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/"
+        + "bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:history/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:ploam/"
+        + "bbf-xpon-pm-mounted:downstream-messages/bbf-xpon-pm-mounted:protect-control" {
+        description
+       "This deviation assures that ploam downstream protect-control is not supported in pm history counters.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/"
+        + "bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:history/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:ploam/"
+        + "bbf-xpon-pm-mounted:downstream-messages/bbf-xpon-pm-mounted:adjust-tx-wavelength" {
+        description
+       "This deviation assures that ploam downstream adjust-tx-wavelength is not supported in pm history counters.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/"
+        + "bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:history/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:ploam/"
+        + "bbf-xpon-pm-mounted:downstream-messages/bbf-xpon-pm-mounted:tuning-control" {
+        description
+       "This deviation assures that ploam downstream tuning-control is not supported in pm history counters.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/"
+        + "bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:history/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:ploam/"
+        + "bbf-xpon-pm-mounted:calibration-request" {
+        description
+       "This deviation assures that ploam calibration-request is not supported in pm history counters.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/"
+        + "bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:history/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:ploam/"
+        + "bbf-xpon-pm-mounted:upstream-messages/bbf-xpon-pm-mounted:serial-number-onu/bbf-xpon-pm-mounted:amcc" {
+        description
+       "This deviation assures that ploam upstream amcc message count is not supported in pm history counters.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/"
+        + "bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:history/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:ploam/"
+        + "bbf-xpon-pm-mounted:upstream-messages/bbf-xpon-pm-mounted:tuning-response" {
+        description
+       "This deviation assures that ploam upstream tuning-response message is not supported in pm history counters.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/"
+        + "bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:history/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:ploam/bbf-xpon-pm-mounted:upstream-messages/"
+        + "bbf-xpon-pm-mounted:power-consumption-report" {
+        description
+           "This deviation assures that ploam upstream power-consumption-report is not supported in pm history counters.";
+        deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/"
+        + "bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:history/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:activation" {
+        description
+       "This deviation assures that bbf-xpon-pm-mounted:activation is not supported in pm history counters.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/"
+        + "bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:history/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:tuning-control" {
+        description
+       "This deviation assures that bbf-xpon-pm-mounted:tuning-control is not supported in pm history counters.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/"
+        + "bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:history/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:power-levelling" {
+        description
+       "This deviation assures that bbf-xpon-pm-mounted:power-levelling is not supported in pm history counters.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/"
+        + "bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:history/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:omci/"
+        + "bbf-xpon-pm-mounted:autonomus-messages" {
+        description
+       "This deviation assures that ploam OMCI autonomus-messages counter is not supported in pm history counters.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/"
+        + "bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:history/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:power-monitoring" {
+        description
+       "This deviation assures that bbf-xpon-pm-mounted:power-monitoring is not supported in pm history counters.";
+    deviate not-supported;
+  }
+
+  deviation "/onu:onus/onu:onu/onu:root/if-mounted:interfaces-state/if-mounted:interface/bbf-if-pm-mounted:performance/"
+        + "bbf-if-pm-mounted:intervals-15min/bbf-if-pm-mounted:history/bbf-xpon-pm-mounted:xpon/bbf-xpon-pm-mounted:energy-conservation" {
+        description
+       "This deviation assures that bbf-xpon-pm-mounted:energy-conservation is not supported in pm history counters.";
+    deviate not-supported;
+  }
+}
+
+

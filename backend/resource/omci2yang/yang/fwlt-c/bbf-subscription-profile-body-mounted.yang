@@ -1,0 +1,261 @@
+submodule bbf-subscription-profile-body-mounted {
+  yang-version 1.1;
+  belongs-to bbf-sip-voip-mounted  {
+    prefix bbf-sip-voip-mounted;
+  }
+  
+  import bbf-yang-types {
+    prefix bbf-yang;
+  } 
+  
+  import ietf-inet-types {
+    prefix inet;
+	reference
+      "RFC 6991: Common YANG Data Types.";
+  }
+  
+  organization
+    "Broadband Forum <https://www.broadband-forum.org>
+     Common YANG Work Area";
+
+  contact
+    "Comments or questions about this Broadband Forum YANG module
+     should be directed to <mailto:help@broadband-forum.org>.
+     Editor:      Frank Desseyn, Nokia
+     Editor:      Nadine Staelens, Nokia
+     PS Leader:   Joey Boyd, ADTRAN
+     PS Leader:   Ken Kerpez, ASSIA
+     WA Director: Joey Boyd, ADTRAN
+     WA Director: Sven Ooghe, Nokia";
+
+  description
+    "This submodule contains a collection of YANG definitions for
+     managing the vsp subscription profiles.
+	 Copyright (c) 2017-2018, Broadband Forum
+     Redistribution and use in source and binary forms, with or
+     without modification, are permitted provided that the following
+     conditions are met:
+     1. Redistributions of source code must retain the above copyright
+        notice, this list of conditions and the following disclaimer.
+     2. Redistributions in binary form must reproduce the above
+        copyright notice, this list of conditions and the following
+        disclaimer in the documentation and/or other materials
+        provided with the distribution.
+     3. Neither the name of the copyright holder nor the names of its
+        contributors may be used to endorse or promote products
+        derived from this software without specific prior written
+        permission.
+     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
+     CONTRIBUTORS \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+     INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+     DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+     CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+     SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+     NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+     CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+     STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+     ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+     ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     The above license is used as a license under copyright only.
+     Please reference the Forum IPR Policy for patent licensing terms
+     <https://www.broadband-forum.org/ipr-policy>.
+     Any moral rights which are necessary to exercise under the above
+     license grant are also deemed granted under this license.
+     This version of this YANG module is part of TR-383; see
+     the TR itself for full legal notices.";
+
+  revision 2023-01-06 {
+    description
+      "update description";
+  }
+
+  revision 2020-03-06 {
+    description
+      "Initial revision.
+       * Approval Date:    see revision date above.
+       * Publication Date: 2020-03-06.";
+    reference
+      " ";
+  }
+  
+	
+  grouping subscription {
+	leaf enabled {
+	  type enumeration {
+	    enum enable {
+		  value 1;
+		  description
+		    "The subscription for the SIP Event package is 
+			 enabled.";
+		}
+		enum disable {
+		  value 2;
+		  description
+		    "The subscription for the SIP Event package is 
+			 disabled.";
+		}	  
+	  }
+	  description
+	    "To enable or disable the subscription for the SIP 
+         Event package.";
+	}
+	container subscribe-method {
+	when "../enabled = 'enable'";
+	  description
+		"The SIP SUBSCRIBE method parameters.";
+      leaf subscription-method {
+        type enumeration {
+          enum implicit {
+            value 1;
+		    description
+		      "No SIP Subscribe has to be sent to request for a 
+			   notification of the SIP Event.";
+		  }
+		  enum explicit {
+            value 2;
+		    description
+		      "A SIP Subscribe has to be sent to request for a 
+			   notification of the SIP Event.";
+		  }
+	    }
+	    default implicit;
+	    description
+	      "Enables or disables the need to transmit the SIP SUBSCRIBE 
+		   message.";
+	  }
+	  container subscription-chars {
+	  when "../subscription-method = 'explicit'";
+	    description
+		  "The subscription characteristics.";
+	    leaf subscribe-uri {
+          type inet:uri;
+	      description
+		    "The SIP SUBSCRIBE request-uri to be used.";
+	    }
+	    leaf subscription-interval {
+		  type union {
+            type uint32 {range "60..86400";}
+            type enumeration {
+          	  enum disabled {
+			    description
+          		  "Indicates that the subscription
+		  	       refresh is disabled even if the
+		  	       server specifies an expiry interval.";
+		  	  }
+		    }
+		  }
+		  units seconds;
+		  default 3600;
+  		  description
+			"The SIP SUBSCRIBE method interval proposed 
+			 by the client.
+			 (Included in an Expires header of the 
+			 SIP SUBSCRIBE request.)";
+	    } 
+        leaf precursory-start-time {
+	     type union {
+           type uint32 {range "32..86400";}
+             type enumeration {
+             	enum disabled {
+	    	      value 0;			  
+	    	      description
+                 	"Indicates that the subscription precursory start
+	    		     time is disabled. The subscription refresh can be 
+	  			 disabled. in that case, this parameter must also be
+	  			 set to disabled.";
+	    	    }
+	        }
+	      }
+	      units seconds;
+	      default 600;			
+	      description
+	        "The number of seconds prior to the expiry of a 
+	  	   subscription at which the client sends a SUBSCRIBE request
+	  	   to refresh the subscription.";
+	    }	  
+	  } 
+	  container notification-characteristics {	
+	    leaf visual-indication {
+	      type enumeration {
+	  	  enum not-applic {
+	  	    value 1;
+	  		description
+	  		  "The notification of the SIP event will trigger no 
+	  		   visual indication on the phoneset.";
+	  	  }
+	  	  enum led {
+	  	    value 2;
+	  	    description
+	            "The notification of the SIP event will trigger 
+	  		   a led on the phoneset.";
+	  	  }
+	  	}
+	  	default not-applic;
+	  	description
+	  	  "The notification of the SIP event will trigger a 
+	  	   visual indication on the phoneset.";
+	    }
+	    leaf tone {
+	      type enumeration {
+      	  enum not-applic {
+	  	    value 1;
+	  	    description
+	  	      "The notification of the SIP event will trigger no 
+	  	       tone.";
+	  	  }
+	  	  enum special-tone {
+	  	    value 2;
+	  	    description
+	            "The notification of the SIP event will trigger a 
+	  		   special tone when the user goes off hook.";
+	  	  }
+	  	} 
+	  	default not-applic;		
+	  	description
+	        "The notification of the SIP event triggers a tone.";
+	    }	
+        leaf ring {
+	      type enumeration {
+	  	  enum not-applic {
+	  	    value 1;
+	  		description
+	  		  "The notification of the SIP event will trigger no 
+	  		   ring.";
+	  	  }
+	  	  enum short-ring {
+	  	    value 2;
+	  	    description
+	            "The notification of the SIP event will trigger a short
+	  		   ring.";
+	  	  }
+	  	}
+          default not-applic;		
+	  	description
+	        "The notification of the SIP event triggers a ring.";
+	    }	  
+	  }
+	}
+  }	
+  
+  grouping subscription-profile-body {
+    description 
+	  "The subscription profile groups a list of SIP event packages.";
+    list sip-event-package {
+      key "sip-event-package-name";
+   	  description
+        "List of SIP event packages, as described by IETF RFC 
+		 6665.";	
+   	  leaf sip-event-package-name {
+   	    type bbf-yang:string-ascii64;
+   	    description
+   	      "The SIP Event package token name as it is registered by 
+		   IANA and value of the Event header in the SIP subscribe 
+		   header.
+   		   Examples are 'message-summary' or 'ua-profile'";
+   	  }
+   	  uses subscription;
+    }
+  }
+} 

@@ -1,0 +1,52 @@
+module nokia-hardware-extension-fiber-dev {
+
+  namespace
+     "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+   + "nokia-hardware-extension-fiber-dev";
+
+  prefix nokia-hardware-extension-fiber-dev;
+
+  import ietf-hardware {
+    prefix hw;
+  }
+
+  import nokia-hardware-extension {
+    prefix nokia-hw-ext;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "Comments or questions about this Nokia YANG module should be
+     directed to <mailto:isam.yang@nokia.com>.";
+
+  description
+    "The NOKIA hardware/extension YANG module supporting
+     deviations on top of standard.";
+
+/* revision */
+
+  revision 2022-11-10 {
+    description
+      "Added not-supported deviations to un-used yang leafs ";
+    reference
+      "BBN-88491";
+  }
+
+  deviation "/hw:hardware-state/hw:component/nokia-hw-ext:ont-serial-num-base" {
+   deviate not-supported;
+  }
+
+  deviation "/hw:hardware-state/hw:component/nokia-hw-ext:fim" {
+   deviate not-supported;
+  }
+
+  deviation "/hw:hardware-state/hw:component/nokia-hw-ext:factory-id" {
+   deviate not-supported;
+  }
+
+  deviation "/hw:hardware-state/hw:component/nokia-hw-ext:customer-serial-num" {
+   deviate not-supported;
+  }
+}

@@ -1,0 +1,131 @@
+module nokia-persistent-connectivity-data {
+  yang-version 1.1;
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/nokia-persistent-connectivity-data";
+
+  prefix nokia-persistency;
+
+  import ietf-netconf-acm {
+    prefix nacm;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "This module contains a collection of YANG definitions for
+     supporting Nokia specific requirements as applicable to its
+     access network equipment.
+
+     Specifically, this module provides facility to persist connectivity
+     related parameters to NOR.
+
+     This specification is published by Nokia under Non-Disclosure
+     Agreement(s) (NDA) with specific parties and has to be considered
+     as Confidential Information as defined in such NDA. Nokia
+     reserves the right to revise this document for any reason,
+     including but not limited to conformity with standards
+     promulgated by various agencies, utilisation of advances in the
+     state of the technical areas, or the reflection of changes in the
+     design of any equipment, techniques, or procedures described or
+     referred to herein.
+
+     The product specifications and other technical or performance
+     information contained herein are subject to change without
+     notice. Updates of this document will be issued under the above
+     NDA's.
+
+     Nokia makes no representation or warranty, expressed or implied,
+     with respect to the sufficiency, accuracy, or utility of any
+     information or opinion contained herein. Nokia expressly advises
+     that any use of for any purpose or reliance upon this technical
+     reference is at the risk of the user and that Nokia shall not be
+     liable for any damage or injury incurred by any person arising
+     out of the sufficiency, accuracy, or utility of any information
+     or opinion contained herein.
+
+     This document is not to be construed as a suggestion to any
+     manufacturer to modify or change any of its products, nor does
+     this document represent any commitment by Nokia to sell or
+     purchase any product. Nothing contained herein shall be construed
+     as conferring by implication, estoppel, or otherwise any license
+     or right under any patent, whether or not the use of any
+     information herein necessarily employs an invention of any
+     existing or later issued patent.
+
+     Nokia reserves the right not to offer any or all of these
+     products and to withdraw any or all of them at any future time.
+
+     Copyright (C) 2017, Nokia. All Rights Reserved.";
+
+  revision 2024-01-17 {
+    description "Add state data for management change information.";
+    reference "Nokia specific";
+  }  
+  revision 2023-03-29 {
+    description "Add description to leaf result.";
+    reference "Nokia specific";
+  }
+  revision 2022-12-23 {
+    description
+      "Updates to description.";
+    reference
+      "Nokia specific.";
+  }
+
+  revision 2019-04-24 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia specific";
+  }
+
+  container persistent-connectivity-data {
+    description
+      "Provides capability to keep configuration related to management
+       connectivity persistent, even if datastore gets deleted.";
+    action save {
+      nacm:default-deny-all;
+      description
+        "Trigger to persist connectivity related parameters to NOR.";
+      output {
+        leaf result {
+          type enumeration {
+            enum success {
+              value 1;
+              description
+                "Operation success.";
+            }
+            enum failed {
+              value 2;
+              description
+                "Operation failed.";
+            }
+          }
+          description "The result of the Operation.";
+        }
+
+        leaf details {
+            type string;
+            description
+                "Contains the detailed information
+                 on the action result.";
+        }
+      }
+    }
+    action fetch-management-channel-information {
+      description
+        "The RPC returns a fragment of the datastore that includes the interfaces and hardware components related to the inband hierarchy, together with additional configuration needed to restore inband connectivity.";
+      output {
+        leaf reply {
+            type string;
+            description
+                "The YANG configuration in XML format that reflects a fragment of the datastore. The root node is <config>...</config> and the content is escaping XML characters.";
+        }
+      }
+    }
+  }
+}
+    

@@ -1,0 +1,54 @@
+module nokia-bbf-xpon-onu-state-common-dev {
+
+  namespace "http://www.nokia.com/Fixed-Networks/BBA/yang/"
+    + "nokia-bbf-xpon-onu-state-common-dev";
+
+  prefix nokia-bbf-xpon-onu-state-common-dev;
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import bbf-xpon{
+    prefix bbf-xpon;
+  }
+
+  import bbf-xpon-onu-state{
+    prefix bbf-xpon-onu-s;
+  }
+
+  organization
+    "Nokia";
+
+  contact
+    "isam.yang@nokia.com";
+
+  description
+    "The NOKIA IETF/System YANG module supporting
+     deviations on top of standard.";
+
+  revision 2024-05-09 {
+    description
+      "Add not supported parameter.";
+    reference
+      "Nokia Specific.";
+  }
+
+  revision 2022-12-10 {
+    description
+      "Initial revision.";
+    reference
+      "Nokia Specific.";
+  }
+
+  deviation "/if:interfaces/if:interface/bbf-xpon:channel-termination/bbf-xpon-onu-s:notifiable-onu-presence-states" {
+    description "This parameter is not supported.";
+    deviate not-supported;
+  }
+
+  deviation "/if:interfaces-state/if:interface/bbf-xpon:channel-termination/bbf-xpon-onu-s:onu-presence-state-change/bbf-xpon-onu-s:previous-onu-presence-state" {
+    description "This parameter is not supported.";
+    deviate not-supported;
+  }
+
+}
