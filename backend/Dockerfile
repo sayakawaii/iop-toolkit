@@ -38,6 +38,7 @@ ENV http_proxy=${HTTP_PROXY} \
 
 # graphviz -> `dot` for PlantUML rendering; default-jre-headless -> run plantuml.jar;
 # gettext-base -> `envsubst` used by the entrypoint to template config.yaml.
+# python3 + lxml + pyang -> run the omci2yang compiler (resource/omci2yang).
 RUN set -eux; \
     if [ -n "${APT_MIRROR}" ]; then \
         sed -i "s|http://deb.debian.org|${APT_MIRROR}|g" /etc/apt/sources.list.d/debian.sources 2>/dev/null || true; \
@@ -48,7 +49,11 @@ RUN set -eux; \
         graphviz \
         default-jre-headless \
         gettext-base \
-        ca-certificates; \
+        ca-certificates \
+        python3 \
+        python3-lxml \
+        python3-pip; \
+    pip3 install --no-cache-dir --break-system-packages pyang; \
     rm -rf /var/lib/apt/lists/*
 
 # Drop proxy so it does not leak into the running service.
@@ -64,6 +69,16 @@ COPY config/config.yaml.template ./config/config.yaml.template
 COPY docker-entrypoint.sh ./docker-entrypoint.sh
 
 RUN chmod +x ./omciAnalyzer ./docker-entrypoint.sh
+
+# Flatten each board's YANG modules into a schema index now, so the first
+# request does not pay for it. Building the index means loading ~1000 modules
+# into one pyang context, which takes ~17s per board; with the cache in the
+# image every compile is then a few hundred milliseconds.
+RUN set -eux; \
+    for board in ./resource/omci2yang/yang/*/; do \
+        python3 ./resource/omci2yang/src/validate/schema_index.py \
+            --yang-dir "$board"; \
+    done
 
 EXPOSE 8080
 

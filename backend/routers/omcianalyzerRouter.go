@@ -34,5 +34,7 @@ func omcianalyzerRouter(engine *gin.Engine) {
 		group.GET("/onus", con.GetOmciAnalyzerOnusData)
 		group.GET("/omci", con.GetOmciAnalyzerOmciData)
 		group.GET("/counters", con.GetOmciAnalyzerCounters)
+		group.GET("/yangboards", con.GetOmci2YangBoards)
+		group.POST("/generate", con.GenerateOmci2YangConfig)
 	}
 }

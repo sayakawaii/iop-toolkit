@@ -6,12 +6,14 @@ import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { title } from "@/components/primitives";
 import { API_BASE } from "@/config/api";
+import GenerateYangModal from "@/pages/omcianalyzer/GenerateYangModal";
 
 export default function OmciAnalyzerPageOnusPage() {
   const [rows, setRows] = React.useState<any[]>([]);
   const [showTable, setShowTable] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
+  const [yangOnu, setYangOnu] = React.useState<string | null>(null);
 
   const location = useLocation();
   const params = new URLSearchParams(location.search);
@@ -109,6 +111,13 @@ export default function OmciAnalyzerPageOnusPage() {
                                   OmciData
                                 </Button>
                               </a>
+                              <Button
+                                type="button"
+                                className={buttonStyles({ color: "secondary", radius: "full", variant: "shadow" })}
+                                onPress={() => setYangOnu(onuName)}
+                              >
+                                LS Config
+                              </Button>
                             </div>
                           </TableCell>
                         );
@@ -132,6 +141,13 @@ export default function OmciAnalyzerPageOnusPage() {
         {!loading && !showTable && !error && requestKey && (
           <div className="mt-3 text-sm text-gray-600">No ONUs returned for requestKey.</div>
         )}
+
+        <GenerateYangModal
+          isOpen={yangOnu !== null}
+          onClose={() => setYangOnu(null)}
+          requestKey={requestKey}
+          onuName={yangOnu ?? ""}
+        />
       </div>
     </DefaultLayout>
   );
