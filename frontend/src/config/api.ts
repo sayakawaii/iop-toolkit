@@ -3,7 +3,7 @@
 // Default is empty string => all requests use relative paths (same-origin),
 // which works both behind the nginx reverse proxy (production) and with the
 // Vite dev-server proxy (development). Override with VITE_API_BASE (e.g.
-// "http://10.101.15.238:8080") only when the frontend must target a remote
+// "http://10.101.15.238") only when the frontend must target a remote
 // backend from a different origin.
 export const API_BASE = (import.meta.env.VITE_API_BASE ?? "") as string;
 

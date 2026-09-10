@@ -209,6 +209,11 @@ services:
       - backend
     ports:
       - "${FRONTEND_PORT}:80"
+      # The backend used to answer on 8080 with its own copy of the SPA, so
+      # bookmarks and scripts point there. nginx now takes that port and
+      # serves the same site, reverse-proxying /api and /uploads as always,
+      # which keeps those URLs working instead of stranding them.
+      - "${FRONTEND_COMPAT_PORT}:80"
     networks:
       - iop-net
 

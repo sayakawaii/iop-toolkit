@@ -5,7 +5,6 @@ import (
 	"omciAnalyzer/controller"
 	"omciAnalyzer/dao"
 	"omciAnalyzer/global"
-	"strings"
 
 	// "omciAnalyzer/models"
 	"omciAnalyzer/routers"
@@ -43,13 +42,13 @@ func main() {
 	r.Use(cors.New(config))
 	routers.RouterInit(r)
 	r.NoRoute(func(c *gin.Context) {
-		if strings.HasPrefix(c.Request.URL.Path, "/api") {
-			c.JSON(404, gin.H{"error": "not found"})
-			return
-		}
-		c.File("./static/index.html")
+		c.JSON(404, gin.H{"error": "not found"})
 	})
-	r.Static("/assets", "./static/assets")
+	// The SPA is served by the frontend's nginx, which also reverse-proxies
+	// /api and /uploads here. This process used to serve a second copy of the
+	// built SPA as well, which meant every frontend change had to be rebuilt
+	// into backend/static by hand -- and when that was forgotten, the two
+	// entry points silently disagreed about what the UI was.
 	r.Static("/uploads", "./static/uploads")
 
 	r.Run(":" + global.AppConf.Server.HttpPort)

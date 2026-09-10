@@ -37,8 +37,8 @@ flowchart TD
 | `kafka` | `confluentinc/cp-kafka` | `9092`, `9094` | KRaft; dual listeners (see below) |
 | `kafka-init` | `confluentinc/cp-kafka` | - | One-shot: creates request/response topics |
 | `kafka-ui` | `provectuslabs/kafka-ui` | `9090` | Browser UI |
-| `backend` | `../backend` | `8080` | Depends on mysql (healthy) + init jobs |
-| `frontend` | `../frontend` | `80` | nginx serving SPA + `/api` proxy |
+| `backend` | `../backend` | `18080` | Depends on mysql (healthy) + init jobs; published only for direct API access |
+| `frontend` | `../frontend` | `80`, `8080` | nginx serving SPA + `/api` and `/uploads` proxy; `8080` is where the backend used to answer, kept so existing bookmarks resolve |
 | `collector` | `../collector` | host net | `privileged`, host networking |
 
 ## Kafka dual listeners
