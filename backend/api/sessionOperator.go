@@ -1,6 +1,6 @@
 /**
  * @file sessionOperator.go
- * @author Minghe Huang (minghe.huang@nokia-sbell.com)
+ * @author Minghe Huang (minghe.huang@nokia.com)
  * @brief
  * @version 0.1
  * @date 2023-11-22

@@ -30,7 +30,7 @@ export default function DocsPage() {
                 </p>
                 <Chip>Support</Chip>
                 <p>
-                Please contact Transport2 eonuMgnt team or send mail to minghe.huang@nokia-sbell.com
+                Please contact Transport2 eonuMgnt team or send mail to minghe.huang@nokia.com
                 </p>
                 <Chip>What's the parse speed?</Chip>
                 <p>
